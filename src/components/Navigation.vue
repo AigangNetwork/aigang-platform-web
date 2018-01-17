@@ -58,9 +58,9 @@ export default {
 .aig__navigation {
   position: relative;
   background: $gray;
-  padding: 60px 25px;
-  flex-basis: 260px;
-  width: 260px;
+  padding: 60px 15px;
+  flex-basis: 220px;
+  width: 220px;
   flex-shrink: 0;
   height: 100vh;
   a {
@@ -77,15 +77,12 @@ export default {
     list-style: none;
     li {
       margin: 0;
-      &+li {
-        border-top: 1px solid darken($gray, 5);
-      }
       a {
         border-radius: 5px;
         padding: 10px;
         @include transition;
         font-size: 14px;
-        height: 40px;
+        height: 36px;
         display: flex;
         align-items: center;
         .icon {

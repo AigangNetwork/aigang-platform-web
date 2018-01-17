@@ -23,6 +23,7 @@ export default {
 @import '~helpers/variables';
 
 .aig__app {
+  position: relative;
   font-family: $font-primary;
   overflow: hidden;
   width: 100%;
@@ -31,6 +32,15 @@ export default {
   line-height: 1;
   display: flex;
   align-items: column;
+  &:after {
+    content: '';
+    background: linear-gradient(90deg,#9549c8 0%,#5833b7 100%);
+    width: 100%;
+    height: 2px;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
 }
 
 .aig__view {
