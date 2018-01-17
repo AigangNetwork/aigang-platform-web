@@ -11,5 +11,7 @@ export default {
 </script>
 
 <style lang="scss">
-
+@import '~helpers/reset';
+@import '~helpers/variables';
+@import '~helpers/mixins';
 </style>
