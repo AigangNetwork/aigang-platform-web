@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="aig__view__head">
-      <div class="aig__view__title">Dashboard</div>
+      <div class="aig__view__title">Data</div>
     </div>
     <div class="aig__view__body">
       {{ msg }}
@@ -11,10 +11,10 @@
 
 <script>
 export default {
-  name: 'DashboardView',
+  name: 'DataView',
   data () {
     return {
-      msg: 'Dashboard view'
+      msg: 'Data view'
     }
   }
 }

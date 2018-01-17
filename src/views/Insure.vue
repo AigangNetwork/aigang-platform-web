@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="aig__view__head">
-      <div class="aig__view__title">Dashboard</div>
+      <div class="aig__view__title">Insure</div>
     </div>
     <div class="aig__view__body">
       {{ msg }}
@@ -11,11 +11,15 @@
 
 <script>
 export default {
-  name: 'DashboardView',
+  name: 'InsureView',
   data () {
     return {
-      msg: 'Dashboard view'
+      msg: 'Insure view'
     }
   }
 }
 </script>
+
+<style lang="scss" scoped>
+
+</style>
