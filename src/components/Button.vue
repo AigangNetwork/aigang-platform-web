@@ -35,9 +35,9 @@ export default {
   border-radius: 3px;
   cursor: pointer;
   display: inline-block;
-  height: 38px;
+  height: 36px;
   font-size: 14px;
-  line-height: 38px;
+  line-height: 36px;
   padding: 0 35px;
   margin: 0;
   border: 0;

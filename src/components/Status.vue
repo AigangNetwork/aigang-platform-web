@@ -1,8 +1,6 @@
 <template>
   <div class="aig__status" :class="statusClass">
-    <div class="aig__status__content" v-if="status === 'active'">
-      Active since {{ date }}
-    </div>
+    <div class="aig__status__content" v-if="status === 'active' && date !== ''"></div>
   </div>
 </template>
 
@@ -15,7 +13,7 @@ export default {
       type: String
     },
     date: {
-      required: true
+      default: ''
     }
   },
   computed: {
@@ -52,7 +50,7 @@ export default {
 
 }
 .aig__status__content {
-  margin-left: 5px;
+  margin-left: 6px;
   font-size: 12px;
   color: darken($gray, 50);
 }

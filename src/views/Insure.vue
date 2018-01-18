@@ -16,6 +16,12 @@ export default {
     return {
       msg: 'Insure view'
     }
+  },
+  mounted () {
+    this.$message({
+      message: 'Insure view mounted',
+      type: 'success'
+    })
   }
 }
 </script>

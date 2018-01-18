@@ -16,6 +16,12 @@ export default {
     return {
       msg: 'Predictions view'
     }
+  },
+  mounted () {
+    this.$message({
+      message: 'Predictions view mounted',
+      type: 'success'
+    })
   }
 }
 </script>

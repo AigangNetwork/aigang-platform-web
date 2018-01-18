@@ -16,6 +16,12 @@ export default {
     return {
       msg: 'Invest view'
     }
+  },
+  mounted () {
+    this.$message({
+      message: 'Invest view mounted',
+      type: 'success'
+    })
   }
 }
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <div class="aig__app">
+  <div class="aig__app" v-loading="loading" element-loading-background="rgba(255, 255, 255, 1)" element-loading-text="Mounting application...">
     <Navigation/>
     <router-view class="aig__view"/>
   </div>
@@ -12,6 +12,20 @@ export default {
   name: 'App',
   components: {
     Navigation
+  },
+  data () {
+    return {
+      loading: true
+    }
+  },
+  mounted () {
+    setTimeout(() => {
+      this.loading = false
+      this.$message({
+        message: 'Application successfully mounted',
+        type: 'success'
+      })
+    }, 1000)
   }
 }
 </script>
@@ -21,6 +35,28 @@ export default {
 
 @import '~helpers/reset';
 @import '~helpers/variables';
+
+.el-message {
+  font-family: $font-primary;
+  .el-message__content {
+    font-size: 12px;
+  }
+}
+
+.el-tooltip__popper {
+  font-family: $font-primary;
+  font-size: 12px;
+  font-weight: 300;
+}
+
+.el-loading-spinner {
+  .path {
+    stroke: $purple;
+  }
+  .el-loading-text {
+    color: darken($gray, 25);
+  }
+}
 
 .aig__app {
   padding-left: 250px;

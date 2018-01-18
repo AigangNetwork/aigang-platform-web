@@ -1,24 +1,30 @@
 <template>
   <div class="aig__data">
     <div class="aig__data__head">
+      <el-tooltip class="item" content="Top Left prompts info">
+        <Status :status="'active'"/>
+      </el-tooltip>
       <div class="title">Samsung Galaxy Tab 3</div>
     </div>
     <div class="aig__data__body">
       <div class="desc">Interdum et malesuada fames ac ante ipsum primis in faucibus. Nunc pharetra faucibus tellus.</div>
     </div>
     <div class="aig__data__footer">
-      <Status :status="'active'" :date="'2018.01.05'"/>
+      <Button>Details</Button>
+      <Button>Models</Button>
     </div>
   </div>
 </template>
 
 <script>
 import Status from '@/components/Status'
+import Button from '@/components/Button'
 
 export default {
   name: 'DataItem',
   components: {
-    Status
+    Status,
+    Button
   }
 }
 </script>
@@ -38,8 +44,35 @@ export default {
   .aig__data__body {
     margin-top: 7px;
   }
+  .aig__data__head {
+    display: flex;
+    align-items: center;
+    .aig__status {
+      margin-top: -1px;
+      &+.title {
+        margin-left: 6px;
+      }
+    }
+  }
   .aig__data__footer {
-    margin-top: 20px;
+    margin-top: 15px;
+    display: flex;
+    width: 100%;
+    .aig__button {
+      display: block;
+      width: 50%;
+      border-radius: 0;
+      &:first-child {
+        margin-right: 1px;
+        border-top-left-radius: 5px;
+        border-bottom-left-radius: 5px;
+      }
+      &:last-child {
+        margin-left: 1px;
+        border-top-right-radius: 5px;
+        border-bottom-right-radius: 5px;
+      }
+    }
   }
   .title {
     font-family: $font-secondary;
