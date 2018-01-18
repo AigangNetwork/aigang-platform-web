@@ -32,7 +32,12 @@ export default {
 <style lang="scss" scoped>
 @import '~helpers/mixins';
 .aig__datas {
-  @include clearfix;
   width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  > .aig__data {
+    flex-basis: calc(33.333% - 15px);
+  }
 }
 </style>

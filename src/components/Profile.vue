@@ -1,10 +1,10 @@
 <template>
   <div class="aig__profile">
+    <div class="photo"></div>
     <div class="information">
       <div class="name">Laurynas Puodžius</div>
       <div class="balance">10 000 AIX</div>
     </div>
-    <div class="photo"></div>
   </div>
 </template>
 
@@ -13,25 +13,29 @@
 @import '~helpers/mixins';
 
 .aig__profile {
-  font-size: 12px;
+  font-size: 13px;
   border-radius: 4px;
-  display: flex;
-  text-align: right;
-  align-items: center;
+  text-align: left;
   font-family: $font-secondary;
   font-weight: 500;
-  text-transform: uppercase;
+  text-align: center;
+  margin: 0 -25px;
+  padding-bottom: 30px;
   .photo {
-    height: 30px;
-    width: 30px;
+    margin: 0 auto;
+    height: 54px;
+    width: 54px;
     border-radius: 50%;
     background: darken($gray, 7);
-    margin-left: 8px;
+    margin-bottom: 15px;
   }
   .information {
+    .name {
+      font-size: 14px;
+    }
     .balance {
       font-size: 11px;
-      margin-top: 3px;
+      margin-top: 6px;
       color: $purple;
     }
   }

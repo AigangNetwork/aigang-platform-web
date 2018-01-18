@@ -1,5 +1,6 @@
 <template>
   <div class="aig__navigation">
+    <Profile/>
     <nav class="aig__navigation__menu">
       <ul>
         <li>
@@ -40,8 +41,13 @@
 </template>
 
 <script>
+import Profile from '@/components/Profile'
+
 export default {
-  name: 'Navigation'
+  name: 'Navigation',
+  components: {
+    Profile
+  }
 }
 </script>
 
@@ -50,19 +56,21 @@ export default {
 @import '~helpers/mixins';
 
 .aig__navigation {
+  position: fixed;
+  top: 0;
+  left: 0;
   box-shadow: 0 0 30px 0 rgba(0,0,0,.06);
-  position: relative;
   background: white;
-  padding: 30px 25px;
+  padding: 30px 25px 0 25px;
   flex-basis: 220px;
   width: 250px;
   flex-shrink: 0;
   height: 100%;
   a {
-    color: darken(#adbec5, 10);
-    text-transform: uppercase;
+    color: darken($gray, 50);
     font-weight: 500;
-    font-family: $font-secondary;
+    text-transform: uppercase;
+    font-size: 13px;
   }
 }
 
@@ -76,15 +84,16 @@ export default {
     list-style: none;
     li {
       a {
+        font-family: $font-secondary;
         overflow: hidden;
         padding: 0;
         @include transition;
-        font-size: 13px;
         height: 54px;
         display: flex;
         align-items: center;
         position: relative;
         margin: 0 -25px;
+        font-weight: 500;
         padding: 0 25px;
         &:before {
           @include transition;
@@ -102,7 +111,7 @@ export default {
           svg {
             width: 20px;
             height: auto;
-            fill: #5833b7;
+            fill: darken($gray, 25);
           }
         }
         &:hover {
@@ -110,6 +119,11 @@ export default {
         }
         &.router-link-active {
           color: black;
+          .icon {
+            svg {
+              fill: $purple;
+            }
+          }
           &:before {
             opacity: 1;
             background: $purple;
