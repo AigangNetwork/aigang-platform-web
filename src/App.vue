@@ -36,6 +36,10 @@ export default {
 @import '~helpers/reset';
 @import '~helpers/variables';
 
+.line.el-col {
+  text-align: center;
+}
+
 .el-message {
   font-family: $font-primary;
   .el-message__content {
@@ -56,6 +60,63 @@ export default {
   .el-loading-text {
     color: darken($gray, 25);
   }
+}
+
+.el-dialog__headerbtn:focus,
+.el-dialog__close,
+.el-dialog__headerbtn:hover .el-dialog__close {
+  color: $purple;
+}
+
+.el-button {
+  border: 0;
+  color: darken($gray, 25);
+  &:hover,
+  &:focus {
+    color: $purple;
+    border-color: $purple;
+    background-color: rgba($purple, .1);
+  }
+}
+
+
+.el-button--primary {
+  background: $purple;
+  color: white;
+  &:hover {
+    color: white;
+    background: lighten($purple, 5);
+  }
+  &:active {
+    background: darken($purple, 5);
+  }
+  &:focus {
+    background: $purple;
+  }
+}
+.el-button--primary:focus, .el-button--primary:hover
+
+.el-switch.is-checked {
+  .el-switch__core {
+    background: lighten($purple, 5);
+    border-color: $purple;
+  }
+}
+
+.el-textarea__inner,
+.el-input__inner {
+  &:focus {
+    border-color: $purple;
+  }
+}
+
+.v-modal {
+  background: $purple;
+  opacity: .9;
+}
+
+.el-dialog {
+  box-shadow: 0 0 41px 0 rgba(darken($gray, 50),.12);
 }
 
 .aig__app {
