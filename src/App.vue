@@ -1,50 +1,63 @@
 <template>
   <div class="aig__app">
-    <Navigation></Navigation>
+    <Navigation/>
+    <Profile/>
     <router-view class="aig__view"/>
   </div>
 </template>
 
 <script>
 import Navigation from '@/components/Navigation'
+import Profile from '@/components/Profile'
 
 export default {
   name: 'App',
   components: {
-    Navigation
+    Navigation,
+    Profile
   }
 }
 </script>
 
 <style lang="scss">
-@import url('https://fonts.googleapis.com/css?family=Open+Sans|Poppins');
+@import url('https://fonts.googleapis.com/css?family=Open+Sans|Saira:300,400,500,600&amp;subset=latin-ext');
 
 @import '~helpers/reset';
 @import '~helpers/variables';
 
+body {
+  // padding: 25px;
+  // background: linear-gradient(90deg,#9549c8 0%,#5833b7 100%);
+}
+
 .aig__app {
+  // border-radius: 4px;
+  // box-shadow: 0 0 50px 0 rgba(0,0,0,.12);
+  font-size: 0;
+  background: $gray;
   position: relative;
   font-family: $font-primary;
-  overflow: hidden;
   width: 100%;
-  min-height: 100vh;
+  height: 100%;
   font-size: 15px;
   line-height: 1;
   display: flex;
   align-items: column;
-  &:after {
-    content: '';
-    background: linear-gradient(90deg,#9549c8 0%,#5833b7 100%);
-    width: 100%;
-    height: 2px;
+
+  .aig__profile {
     position: absolute;
-    top: 0;
-    left: 0;
+    top: 25px;
+    right: 25px;
+  }
+
+  .aig__navigation {
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
   }
 }
 
 .aig__view {
-  min-height: 100vh;
+  min-height: 100%;
   width: 100%;
   padding: 60px;
   .aig__view__head {
@@ -53,8 +66,8 @@ export default {
     }
   }
   .aig__view__title {
-    font-size: 36px;
-    font-weight: 700;
+    font-size: 28px;
+    font-weight: 500;
     font-family: $font-secondary;
   }
 }

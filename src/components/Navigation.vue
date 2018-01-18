@@ -1,6 +1,5 @@
 <template>
   <div class="aig__navigation">
-    <Profile/>
     <nav class="aig__navigation__menu">
       <ul>
         <li>
@@ -41,13 +40,8 @@
 </template>
 
 <script>
-import Profile from '@/components/Profile'
-
 export default {
-  name: 'Navigation',
-  components: {
-    Profile
-  }
+  name: 'Navigation'
 }
 </script>
 
@@ -56,15 +50,19 @@ export default {
 @import '~helpers/mixins';
 
 .aig__navigation {
+  box-shadow: 0 0 30px 0 rgba(0,0,0,.06);
   position: relative;
-  background: $gray;
-  padding: 30px 15px;
+  background: white;
+  padding: 30px 25px;
   flex-basis: 220px;
-  width: 220px;
+  width: 250px;
   flex-shrink: 0;
-  height: 100vh;
+  height: 100%;
   a {
-    color: $black;
+    color: darken(#adbec5, 10);
+    text-transform: uppercase;
+    font-weight: 500;
+    font-family: $font-secondary;
   }
 }
 
@@ -73,22 +71,33 @@ export default {
   ul {
     width: 100%;
     display: block;
+    margin: 0;
     padding-left: 0;
     list-style: none;
     li {
-      margin: 0;
-      &+li {
-        margin-top: 5px;
-      }
       a {
-        border-radius: 5px;
+        overflow: hidden;
+        padding: 0;
         letter-spacing: 0.5px;
-        padding: 10px;
         @include transition;
         font-size: 13px;
-        height: 36px;
+        height: 54px;
         display: flex;
         align-items: center;
+        position: relative;
+        margin: 0 -25px;
+        padding: 0 25px;
+        &:before {
+          @include transition;
+          content: '';
+          position: absolute;
+          left: 0;
+          opacity: 0;
+          top: 0;
+          width: 3px;
+          height: 100%;
+          background: white;
+        }
         .icon {
           margin-right: 10px;
           svg {
@@ -98,19 +107,13 @@ export default {
           }
         }
         &:hover {
-          background: darken($gray, 5);
+          background: $gray;
         }
         &.router-link-active {
-          border-top: 0;
-          background: linear-gradient(90deg,#9549c8 0%,#5833b7 100%);
-          color: white;
-          .icon {
-            svg {
-              fill: white;
-            }
-          }
-          &+li {
-            border-top: 0;
+          color: black;
+          &:before {
+            opacity: 1;
+            background: $purple;
           }
         }
       }
