@@ -7,7 +7,7 @@
 
 <script>
 export default {
-  name: 'Data'
+  name: 'DataItem'
 }
 </script>
 

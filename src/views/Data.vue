@@ -5,21 +5,21 @@
     </div>
     <div class="aig__view__body">
       <div class="aig__datas">
-        <Data/>
-        <Data/>
-        <Data/>
+        <DataItem/>
+        <DataItem/>
+        <DataItem/>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import Data from '@/components/Data'
+import DataItem from '@/components/DataItem'
 
 export default {
   name: 'DataView',
   components: {
-    Data
+    DataItem
   },
   data () {
     return {
