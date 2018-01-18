@@ -59,7 +59,7 @@ body {
 .aig__view {
   min-height: 100%;
   width: 100%;
-  padding: 60px;
+  padding: 60px 8%;
   .aig__view__head {
     &+.aig__view__body {
       margin-top: 40px;
