@@ -78,7 +78,6 @@ export default {
       a {
         overflow: hidden;
         padding: 0;
-        letter-spacing: 0.5px;
         @include transition;
         font-size: 13px;
         height: 54px;

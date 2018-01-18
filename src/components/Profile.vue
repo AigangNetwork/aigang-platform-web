@@ -20,6 +20,7 @@
   align-items: center;
   font-family: $font-secondary;
   font-weight: 500;
+  text-transform: uppercase;
   .photo {
     height: 30px;
     width: 30px;
@@ -28,14 +29,9 @@
     margin-left: 8px;
   }
   .information {
-    .name {
-      font-size: 12px;
-      text-transform: uppercase;
-    }
     .balance {
       font-size: 11px;
       margin-top: 3px;
-      font-weight: 600;
       color: $purple;
     }
   }
