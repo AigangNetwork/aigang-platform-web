@@ -9,20 +9,33 @@
         <DataItem/>
         <DataItem/>
       </div>
+      <div style="margin-top: 30px;">
+        <Button color="purple" @click="modalUpload = true">Upload new data</Button>
+        <el-dialog title="Upload new data" :visible.sync="modalUpload" width="30%">
+          <span>This is a message</span>
+          <span slot="footer" class="dialog-footer">
+            <Button @click="modalUpload = false">Cancel</Button>
+            <Button color="purple" @click="modalUpload = false">Upload</Button>
+          </span>
+        </el-dialog>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import DataItem from '@/components/DataItem'
+import Button from '@/components/Button'
 
 export default {
   name: 'DataView',
   components: {
-    DataItem
+    DataItem,
+    Button
   },
   data () {
     return {
+      modalUpload: false,
       msg: 'Data view'
     }
   }

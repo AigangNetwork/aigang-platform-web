@@ -1,7 +1,7 @@
 <template>
   <div class="aig__data">
     <div class="aig__data__head">
-      <el-tooltip class="item" content="Top Left prompts info">
+      <el-tooltip class="item" content="Active since 2018.01.07" placement="top">
         <Status :status="'active'"/>
       </el-tooltip>
       <div class="title">Samsung Galaxy Tab 3</div>
@@ -62,16 +62,6 @@ export default {
       display: block;
       width: 50%;
       border-radius: 0;
-      &:first-child {
-        margin-right: 1px;
-        border-top-left-radius: 5px;
-        border-bottom-left-radius: 5px;
-      }
-      &:last-child {
-        margin-left: 1px;
-        border-top-right-radius: 5px;
-        border-bottom-right-radius: 5px;
-      }
     }
   }
   .title {
