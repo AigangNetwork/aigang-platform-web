@@ -7,7 +7,6 @@
 
 <script>
 import Navigation from '@/components/Navigation'
-import Profile from '@/components/Profile'
 
 export default {
   name: 'App',
@@ -23,14 +22,7 @@ export default {
 @import '~helpers/reset';
 @import '~helpers/variables';
 
-body {
-  // padding: 25px;
-  // background: linear-gradient(90deg,#9549c8 0%,#5833b7 100%);
-}
-
 .aig__app {
-  // border-radius: 4px;
-  // box-shadow: 0 0 50px 0 rgba(0,0,0,.12);
   padding-left: 250px;
   font-size: 13px;
   background: $gray;
