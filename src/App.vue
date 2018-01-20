@@ -36,111 +36,43 @@ export default {
 @import '~helpers/reset';
 @import '~helpers/variables';
 
-.line.el-col {
-  text-align: center;
-}
-
-.el-message {
+body.aig {
   font-family: $font-primary;
-  .el-message__content {
-    font-size: 12px;
-  }
-}
-
-.el-tooltip__popper {
-  font-family: $font-primary;
-  font-size: 12px;
-  font-weight: 300;
-}
-
-.el-loading-spinner {
-  .path {
-    stroke: $purple;
-  }
-  .el-loading-text {
-    color: darken($gray, 25);
-  }
-}
-
-.el-dialog__headerbtn:focus,
-.el-dialog__close,
-.el-dialog__headerbtn:hover .el-dialog__close {
-  color: $purple;
-}
-
-.el-button {
-  border: 0;
-  color: darken($gray, 25);
-  &:hover,
-  &:focus {
-    color: $purple;
-    border-color: $purple;
-    background-color: rgba($purple, .1);
-  }
-}
-
-
-.el-button--primary {
-  background: $purple;
-  color: white;
-  &:hover {
-    color: white;
-    background: lighten($purple, 5);
-  }
-  &:active {
-    background: darken($purple, 5);
-  }
-  &:focus {
-    background: $purple;
-  }
-}
-.el-button--primary:focus, .el-button--primary:hover
-
-.el-switch.is-checked {
-  .el-switch__core {
-    background: lighten($purple, 5);
-    border-color: $purple;
-  }
-}
-
-.el-textarea__inner,
-.el-input__inner {
-  &:focus {
-    border-color: $purple;
-  }
-}
-
-.v-modal {
-  background: $purple;
-  opacity: .9;
-}
-
-.el-dialog {
-  box-shadow: 0 0 41px 0 rgba(darken($gray, 50),.12);
 }
 
 .aig__app {
-  padding-left: 250px;
   font-size: 13px;
   background: $gray;
   position: relative;
   font-family: $font-primary;
   width: 100%;
+  padding-top: 50px;
+  min-height: 100%;
   font-size: 14px;
-  line-height: 1;
   display: flex;
   align-items: column;
+  line-height: 1;
   .aig__navigation {
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
   }
 }
 
-.aig__view {
+.aig__container {
+  max-width: 1140px;
+  padding: 0 20px;
+  margin: 0 auto;
   width: 100%;
-  min-height: 100vh;
-  height: auto;
-  padding: 60px;
+  align-items: center;
+  width: 100%;
+}
+
+.aig__view {
+  padding-top: 40px;
+  padding-bottom: 40px;
+  width: 100%;
+  min-height: 100%;
+  @extend .aig__container;
   .aig__view__head {
     &+.aig__view__body {
       margin-top: 40px;

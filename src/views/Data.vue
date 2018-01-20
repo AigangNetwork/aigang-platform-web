@@ -10,7 +10,7 @@
         <DataItem/>
       </div>
       <div style="margin-top: 30px;">
-        <Button color="purple" @click="modalUpload = true">Upload new data</Button>
+        <el-button type="primary" @click="modalUpload = true">Upload new data</el-button>
         <el-dialog title="Upload new data" :visible.sync="modalUpload" width="560px">
           <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="120px" class="demo-ruleForm">
             <el-form-item label="Activity name" prop="name">
@@ -60,13 +60,11 @@
 
 <script>
 import DataItem from '@/components/DataItem'
-import Button from '@/components/Button'
 
 export default {
   name: 'DataView',
   components: {
-    DataItem,
-    Button
+    DataItem
   },
   data () {
     return {

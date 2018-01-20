@@ -10,21 +10,19 @@
       <div class="desc">Interdum et malesuada fames ac ante ipsum primis in faucibus. Nunc pharetra faucibus tellus.</div>
     </div>
     <div class="aig__data__footer">
-      <Button>Details</Button>
-      <Button>Models</Button>
+      <el-button type="primary" size="small">Models</el-button>
+      <el-button size="small" icon="el-icon-more"></el-button>
     </div>
   </div>
 </template>
 
 <script>
 import Status from '@/components/Status'
-import Button from '@/components/Button'
 
 export default {
   name: 'DataItem',
   components: {
-    Status,
-    Button
+    Status
   }
 }
 </script>
@@ -35,7 +33,7 @@ export default {
 
 .aig__data {
   width: 100%;
-  padding: 25px;
+  padding: 20px;
   background: white;
   border-radius: 4px;
   box-shadow: 0 0 30px 0 rgba(0, 0, 0, 0.06);

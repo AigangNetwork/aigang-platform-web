@@ -2,7 +2,7 @@
   <div class="aig__profile">
     <div class="photo"></div>
     <div class="information">
-      <div class="name">Laurynas Puodžius</div>
+      Balance
       <div class="balance">10 000 AIX</div>
     </div>
   </div>
@@ -13,30 +13,35 @@
 @import '~helpers/mixins';
 
 .aig__profile {
-  font-size: 13px;
-  border-radius: 4px;
+  @include clearfix;
+  height: 100%;
+  flex-wrap: nowrap;
+  padding: 0 10px;
+  display: flex;
+  font-size: 11px;
   text-align: left;
   font-family: $font-secondary;
   font-weight: 500;
-  text-align: center;
-  margin: 0 -25px;
-  padding-bottom: 30px;
+  text-align: left;
+  align-items: center;
+  background: $purple;
+  background: linear-gradient(135deg,#9549c8 0%,#5833b7 100%);
   .photo {
-    margin: 0 auto;
-    height: 54px;
-    width: 54px;
-    border-radius: 50%;
-    background: darken($gray, 7);
-    margin-bottom: 15px;
+    flex-shrink: 0;
+    height: 28px;
+    width: 28px;
+    border-radius: 5px;
+    margin-right: 5px;
+    background: $blue-light;
   }
   .information {
-    .name {
-      font-size: 14px;
-    }
+    width: 65px;
+    color: $blue-light;
     .balance {
-      font-size: 11px;
-      margin-top: 6px;
-      color: $purple;
+      flex-basis: 100%;
+      font-size: 12px;
+      margin-top: 2px;
+      color: white;
     }
   }
 }
