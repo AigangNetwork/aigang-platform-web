@@ -18,7 +18,9 @@ export default {
       this.loading = false
       this.$message({
         message: 'Application successfully mounted',
-        type: 'success'
+        type: 'success',
+        duration: 0,
+        showClose: true
       })
     }, 1000)
   }

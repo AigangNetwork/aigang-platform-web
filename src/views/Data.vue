@@ -9,12 +9,12 @@
         <el-breadcrumb-item>Data</el-breadcrumb-item>
       </el-breadcrumb>
       <div class="aig__datas" style="margin-top: 30px">
+        <DataItem :creatable="true" @click="modalUpload = true" />
         <DataItem/>
         <DataItem/>
         <DataItem/>
       </div>
       <div style="margin-top: 30px;">
-        <el-button type="primary" @click="modalUpload = true">Upload new data</el-button>
         <el-dialog title="Upload new data" :visible.sync="modalUpload" width="560px">
           <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="120px" class="demo-ruleForm">
             <el-form-item label="Activity name" prop="name">
@@ -125,11 +125,13 @@ export default {
 @import '~helpers/mixins';
 .aig__datas {
   width: 100%;
+  font-size: 0;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
   > .aig__data {
-    flex-basis: calc(33.333% - 15px);
+    margin: 8px 0;
+    width: calc(25% - 8px);
   }
 }
 </style>

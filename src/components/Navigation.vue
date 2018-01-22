@@ -97,7 +97,7 @@ export default {
         }
         &.router-link-active {
           pointer-events: none;
-          color: $gray;
+          color: $blue-light;
           .icon {
             svg {
               fill: $purple;

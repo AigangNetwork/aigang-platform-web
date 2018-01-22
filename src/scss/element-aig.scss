@@ -1,17 +1,11 @@
 @import '~helpers/variables';
+@import '~helpers/mixins';
 $--color-primary: $purple;
 
 $--size-base: 13px !default;
 
 $--font-path: '~element-ui/lib/theme-chalk/fonts';
 @import '~element-ui/packages/theme-chalk/src/index';
-
-// Message
-.el-message {
-  .el-message__content {
-    font-size: $--size-base;
-  }
-}
 
 // Button
 .el-button {
@@ -46,7 +40,7 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
   box-shadow: 0 0 30px 0 rgba(0, 0, 0, 0.06);
   border-radius: 2px;
   font-weight: 400;
-  border: 1px solid #e8e6ea;
+  border: 1px solid darken($gray, 2);
 }
 .el-pagination.is-background .el-pager li.active {
   border: 0;
@@ -57,4 +51,36 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
 .el-pager li {
   font-size: 12px;
   line-height: 26px;
+}
+
+// message
+.el-message {
+  font-size: 12px;
+  font-family: $font-primary;
+  border: 0;
+  box-shadow: 0 0 30px 0 rgba(0, 0, 0, 0.06);
+  padding: 12px;
+  border-radius: 2px;
+  .el-icon-success {
+    color: darken($green, 10);
+  }
+  .el-message__content {
+    font-size: $--size-base;
+  }
+  &.el-message--success {
+    background: $green;
+    .el-message__content {
+      color: white;
+    }
+  }
+}
+
+.el-message__closeBtn {
+  @include transition;
+  color: darken($green, 10);
+  font-size: 14px;
+  right: 10px;
+  &:hover {
+    color: white;
+  }
 }

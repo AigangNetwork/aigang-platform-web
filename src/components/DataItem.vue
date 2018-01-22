@@ -1,5 +1,5 @@
 <template>
-  <div class="aig__data">
+  <div class="aig__data" v-if="!creatable">
     <div class="aig__data__head">
       <el-tooltip class="item" content="Active since 2018.01.07" placement="top">
         <Status :status="'active'"/>
@@ -14,6 +14,10 @@
       <el-button size="small" icon="el-icon-more"></el-button>
     </div>
   </div>
+  <button class="aig__data aig__data--creatable" @click="$emit('click', $event.target.value)" v-else>
+    <span class="title">Upload new data</span>
+    <span class="desc">Lorem ipsum dolar sit amet</span>
+  </button>
 </template>
 
 <script>
@@ -23,6 +27,13 @@ export default {
   name: 'DataItem',
   components: {
     Status
+  },
+  props: {
+    creatable: {
+      type: Boolean,
+      required: false,
+      default: false
+    }
   }
 }
 </script>
@@ -32,13 +43,39 @@ export default {
 @import '~helpers/mixins';
 
 .aig__data {
+  @include transition;
   width: 100%;
-  padding: 30px;
+  cursor: pointer;
+  padding: 25px;
   background: white;
   border-radius: 4px;
   box-shadow: 0 0 30px 0 rgba(0, 0, 0, 0.06);
   box-shadow: 0 0 30px 0 rgba(0, 0, 0, 0.06);
+  border: 1px solid darken($gray, 2);
   float: left;
+  height: 170px;
+  &.aig__data--creatable {
+    font-family: $font-secondary;
+    font-size: 16px;
+    font-weight: 400;
+    color: $black;
+    background: transparent;
+    box-shadow: none;
+    border: 2px dashed darken($gray, 10);
+    .title, .desc {
+      display: block;
+    }
+    &:hover {
+      border-color: darken($gray, 20);
+      .description {
+        color: $purple;
+      }
+    }
+    &:active {
+      border-color: $purple;
+      background: white;
+    }
+  }
   .aig__data__body {
     margin-top: 7px;
   }
