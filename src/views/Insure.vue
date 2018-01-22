@@ -1,31 +1,26 @@
 <template>
   <div>
-    <div class="aig__view__head">
-      <div class="aig__view__title">Insure</div>
-    </div>
-    <div class="aig__view__body">
-      {{ msg }}
+    <Header class="aig__view__head">
+      <div class="aig__view__title" slot="title">Insure</div>
+    </Header>
+    <div class="aig__view__body aig__container">
+      {{ $t('message.hello') }}
     </div>
   </div>
 </template>
 
 <script>
+import Header from '@/components/Header'
+
 export default {
   name: 'InsureView',
+  components: {
+    Header
+  },
   data () {
     return {
       msg: 'Insure view'
     }
-  },
-  mounted () {
-    this.$message({
-      message: 'Insure view mounted',
-      type: 'success'
-    })
   }
 }
 </script>
-
-<style lang="scss" scoped>
-
-</style>

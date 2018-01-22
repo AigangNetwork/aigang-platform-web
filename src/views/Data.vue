@@ -1,10 +1,14 @@
 <template>
   <div>
-    <div class="aig__view__head">
-      <div class="aig__view__title">Data</div>
-    </div>
-    <div class="aig__view__body">
-      <div class="aig__datas">
+    <Header>
+      <div class="aig__view__title" slot="title">Data</div>
+    </Header>
+    <div class="aig__view__body aig__container">
+      <el-breadcrumb separator-class="el-icon-arrow-right">
+        <el-breadcrumb-item :to="{ path: '/' }">AiGang Network</el-breadcrumb-item>
+        <el-breadcrumb-item>Data</el-breadcrumb-item>
+      </el-breadcrumb>
+      <div class="aig__datas" style="margin-top: 30px">
         <DataItem/>
         <DataItem/>
         <DataItem/>
@@ -54,17 +58,25 @@
           </el-form>
         </el-dialog>
       </div>
+      <el-pagination
+        style="text-align: center; margin-top: 30px;"
+        background
+        layout="prev, pager, next"
+        :total="1000">
+      </el-pagination>
     </div>
   </div>
 </template>
 
 <script>
 import DataItem from '@/components/DataItem'
+import Header from '@/components/Header'
 
 export default {
   name: 'DataView',
   components: {
-    DataItem
+    DataItem,
+    Header
   },
   data () {
     return {

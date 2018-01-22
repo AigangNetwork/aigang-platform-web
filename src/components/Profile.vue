@@ -1,10 +1,10 @@
 <template>
   <div class="aig__profile">
-    <div class="photo"></div>
     <div class="information">
       Balance
       <div class="balance">10 000 AIX</div>
     </div>
+    <div class="photo"></div>
   </div>
 </template>
 
@@ -16,32 +16,30 @@
   @include clearfix;
   height: 100%;
   flex-wrap: nowrap;
-  padding: 0 10px;
   display: flex;
   font-size: 11px;
-  text-align: left;
   font-family: $font-secondary;
   font-weight: 500;
-  text-align: left;
+  height: 50px;
+  text-align: right;
   align-items: center;
-  background: $purple;
-  background: linear-gradient(135deg,#9549c8 0%,#5833b7 100%);
+  font-size: 11px;
+  font-weight: 400;
   .photo {
     flex-shrink: 0;
-    height: 28px;
-    width: 28px;
+    height: 26px;
+    width: 26px;
     border-radius: 5px;
-    margin-right: 5px;
-    background: $blue-light;
+    margin-left: 7px;
+    background: rgba(0, 0, 0, .35);
   }
   .information {
-    width: 65px;
     color: $blue-light;
+    text-transform: uppercase;
     .balance {
       flex-basis: 100%;
-      font-size: 12px;
       margin-top: 2px;
-      color: white;
+      color: $gray;
     }
   }
 }

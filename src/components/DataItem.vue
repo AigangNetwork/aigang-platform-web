@@ -33,7 +33,7 @@ export default {
 
 .aig__data {
   width: 100%;
-  padding: 20px;
+  padding: 30px;
   background: white;
   border-radius: 4px;
   box-shadow: 0 0 30px 0 rgba(0, 0, 0, 0.06);

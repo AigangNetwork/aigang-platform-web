@@ -1,22 +1,60 @@
 @import '~helpers/variables';
-  $--color-primary: $purple;
+$--color-primary: $purple;
 
-  $--size-base: 13px !default;
+$--size-base: 13px !default;
 
-  // Message
-  .el-message {
-    .el-message__content {
-      font-size: $--size-base;
-    }
-  }
-
-  .el-button {
-    font-family: $font-secondary;
-    font-weight: 400;
-  }
-
-
-
-// core
 $--font-path: '~element-ui/lib/theme-chalk/fonts';
 @import '~element-ui/packages/theme-chalk/src/index';
+
+// Message
+.el-message {
+  .el-message__content {
+    font-size: $--size-base;
+  }
+}
+
+// Button
+.el-button {
+  font-family: $font-secondary;
+  font-weight: 400;
+}
+
+// Dialog
+.v-modal {
+  background: #9549c8;
+  background: linear-gradient(135deg,#9549c8 0%,#5833b7 100%);
+  opacity: 0.9;
+}
+
+.el-dialog {
+  box-shadow: 0 0px 41px rgba(0, 0, 0, 0.07);
+}
+
+.el-dialog__header {
+  padding: 30px;
+}
+.el-dialog__body {
+  padding: 30px;
+  padding-top: 0;
+}
+
+// pagination
+.el-pagination.is-background .btn-prev,
+.el-pagination.is-background .btn-next,
+.el-pagination.is-background .el-pager li {
+  background: white;
+  box-shadow: 0 0 30px 0 rgba(0, 0, 0, 0.06);
+  border-radius: 2px;
+  font-weight: 400;
+  border: 1px solid #e8e6ea;
+}
+.el-pagination.is-background .el-pager li.active {
+  border: 0;
+  line-height: 28px;
+  background: #9549c8;
+  background: linear-gradient(135deg,#9549c8 0%,#5833b7 100%);
+}
+.el-pager li {
+  font-size: 12px;
+  line-height: 26px;
+}
