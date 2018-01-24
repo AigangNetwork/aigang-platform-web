@@ -1,10 +1,10 @@
 <template>
   <div class="aig__data" v-if="!creatable">
     <div class="aig__data__head">
-      <el-tooltip class="item" content="Active since 2018.01.07" placement="top">
-        <Status :status="'active'"/>
+      <el-tooltip class="item" :content="`Created at ${this.data.createdUtc}`" placement="top">
+        <Status />
       </el-tooltip>
-      <div class="title">Samsung Galaxy Tab 3</div>
+      <div class="title">{{ data.title }}</div>
     </div>
     <div class="aig__data__body">
       <div class="desc">Interdum et malesuada fames ac ante ipsum primis in faucibus. Nunc pharetra faucibus tellus.</div>
@@ -33,6 +33,10 @@ export default {
       type: Boolean,
       required: false,
       default: false
+    },
+    data: {
+      required: false,
+      type: Object
     }
   }
 }

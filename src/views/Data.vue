@@ -10,9 +10,7 @@
       </el-breadcrumb>
       <div class="aig__datas" style="margin-top: 30px">
         <DataItem :creatable="true" @click="modalUpload = true" />
-        <DataItem/>
-        <DataItem/>
-        <DataItem/>
+        <DataItem v-for="dataItem in dataList" :data="dataItem" :key="dataItem.id" />
       </div>
       <div style="margin-top: 30px;">
         <el-dialog title="Upload new data" :visible.sync="modalUpload" width="560px">
@@ -52,7 +50,7 @@
               <el-input type="textarea" v-model="ruleForm.desc"></el-input>
             </el-form-item>
             <el-form-item>
-              <el-button type="primary" @click="submitForm('ruleForm')">Create</el-button>
+              <el-button type="primary" @click="submitForm('ruleForm')">Upload</el-button>
               <el-button @click="resetForm('ruleForm')">Reset</el-button>
             </el-form-item>
           </el-form>
@@ -80,6 +78,7 @@ export default {
   },
   data () {
     return {
+      dataList: [],
       modalUpload: false,
       msg: 'Data view',
       ruleForm: {
@@ -117,6 +116,12 @@ export default {
         ]
       }
     }
+  },
+  mounted () {
+    this.axios.get('/data/list?page=1').then(response => {
+      this.dataList = response.data.items
+      console.log(response)
+    })
   }
 }
 </script>

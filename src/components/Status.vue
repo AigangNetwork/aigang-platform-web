@@ -9,7 +9,7 @@ export default {
   name: 'Status',
   props: {
     status: {
-      required: true,
+      required: false,
       type: String
     },
     date: {
