@@ -1,30 +1,29 @@
 import Vue from 'vue'
 import App from '@/App'
 import router from '@/router'
-
-import ElementUI from 'element-ui'
-import 'element-ui/lib/theme-chalk/index.css'
-import '@/scss/element-aig.scss'
 import i18n from '@/i18n'
-import VueParticles from 'vue-particles'
+
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+import ElementUI from 'element-ui'
+
+import 'element-ui/lib/theme-chalk/index.css'
+import '@/scss/element-aig.scss'
 
 Vue.use(VueAxios, axios)
+Vue.use(ElementUI)
 
 Vue.axios.defaults.baseURL = 'http://aigangplatformapi.azurewebsites.net/api'
-
-Vue.use(ElementUI)
-Vue.use(VueParticles)
-
 Vue.config.productionTip = false
 Vue.config.lang = 'en'
 
 /* eslint-disable no-new */
-new Vue({
+let test = new Vue({
   i18n,
-  el: '.aig__app',
   router,
+  el: '.aig__app',
   components: { App },
   template: '<App/>'
 })
+
+console.log(test)

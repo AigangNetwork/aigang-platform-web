@@ -15,7 +15,7 @@
     </div>
   </div>
   <button class="aig__data aig__data--creatable" @click="$emit('click', $event.target.value)" v-else>
-    <span class="title">Upload new data</span>
+    <span class="title">{{ $t('message.uploadNewData') }}</span>
     <span class="desc">Lorem ipsum dolar sit amet</span>
   </button>
 </template>
