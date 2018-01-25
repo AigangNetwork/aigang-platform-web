@@ -1,6 +1,9 @@
 <template>
   <div class="aig__navigation">
     <div class="aig__container">
+      <div class="aig__logo">
+        <img src="/static/logo.png" alt="">
+      </div>
       <nav class="aig__navigation__menu">
       <ul>
         <li>
@@ -57,6 +60,19 @@ export default {
 @import '~helpers/variables';
 @import '~helpers/mixins';
 
+.aig__logo {
+  line-height: 50px;
+  float: left;
+  font-size: 0;
+  margin-right: 40px;
+  img {
+    display: inline-block;
+    vertical-align: middle;
+    height: 28px;
+    width: auto;
+  }
+}
+
 .aig__navigation {
   @include clearfix;
   z-index: 5;
@@ -74,6 +90,8 @@ export default {
     font-weight: 400;
     text-transform: uppercase;
     font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 1px;
   }
   .aig__profile {
     float: right;
