@@ -79,10 +79,9 @@ p {
 }
 
 .aig__items {
-  margin-top: -10px;
-  margin-bottom: -10px;
   .el-col {
-    margin: 10px 0;
+    padding-top: 10px;
+    padding-bottom: 10px;
   }
 }
 </style>

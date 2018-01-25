@@ -85,3 +85,16 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
     color: white;
   }
 }
+
+// upload
+.el-upload-dragger {
+  width: 100%;
+}
+
+.el-upload {
+  display: block;
+}
+
+.el-upload__tip {
+  line-height: 1;
+}
