@@ -25,7 +25,7 @@
               <el-input type="textarea" v-model="dataUploadForm.description"></el-input>
             </el-form-item>
             <el-form-item label="Upload file" prop="fileList" style="width: 100%">
-              <el-upload drag :file-list="dataUploadForm.fileList"
+              <el-upload drag :file-list="dataUploadForm.fileList" action="/"
               multiple>
               <i class="el-icon-upload"></i>
               <div class="el-upload__text">Drop file here or <em>click to upload</em></div>
