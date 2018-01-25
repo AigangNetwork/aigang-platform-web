@@ -1,6 +1,7 @@
 <template>
   <div class="aig__navigation">
-    <nav class="aig__navigation__menu">
+    <div class="aig__container">
+      <nav class="aig__navigation__menu">
       <ul>
         <li>
           <router-link to="/data" exact>
@@ -36,12 +37,19 @@
         </li>
       </ul>
     </nav>
+      <Profile/>
+    </div>
   </div>
 </template>
 
 <script>
+import Profile from '@/components/Profile'
+
 export default {
-  name: 'Navigation'
+  name: 'Navigation',
+  components: {
+    Profile
+  }
 }
 </script>
 
@@ -50,16 +58,30 @@ export default {
 @import '~helpers/mixins';
 
 .aig__navigation {
-  float: left;
+  @include clearfix;
+  z-index: 5;
+  background: #9549c8;
+  background: linear-gradient(to bottom right, rgba(#9549c8, .95) 0%, rgba(#5833b7, .94) 100%);
+  position: fixed;
+  height: 50px;
+  width: 100%;
+  top: 0;
+  left: 0;
+  flex-direction: column;
+  color: white;
   a {
     color: white;
     font-weight: 400;
     text-transform: uppercase;
     font-size: 13px;
   }
+  .aig__profile {
+    float: right;
+  }
 }
 
 .aig__navigation__menu {
+  float: left;
   ul {
     width: 100%;
     margin: 0;

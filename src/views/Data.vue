@@ -1,17 +1,20 @@
 <template>
   <div>
-    <Header>
-      <div class="aig__view__title" slot="title">Data</div>
-    </Header>
     <div class="aig__view__body aig__container">
       <el-breadcrumb separator-class="el-icon-arrow-right">
         <el-breadcrumb-item :to="{ path: '/' }">AiGang Network</el-breadcrumb-item>
         <el-breadcrumb-item>Data</el-breadcrumb-item>
       </el-breadcrumb>
-      <div class="aig__datas" style="margin-top: 30px">
-        <DataItem :creatable="true" @click="modalUpload = true" />
-        <DataItem v-for="dataItem in dataList" :data="dataItem" :key="dataItem.id" />
-      </div>
+
+      <el-row :gutter="20" class="aig__items">
+        <el-col :span="8">
+          <DataItem :creatable="true" @click="modalUpload = true" />
+        </el-col>
+        <el-col :span="8" v-for="dataItem in dataList">
+          <DataItem :data="dataItem" :key="dataItem.id" />
+        </el-col>
+      </el-row>
+
       <div style="margin-top: 30px;">
         <el-dialog title="Upload new data" :visible.sync="modalUpload" width="560px">
           <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="120px" class="demo-ruleForm">
@@ -68,13 +71,11 @@
 
 <script>
 import DataItem from '@/components/DataItem'
-import Header from '@/components/Header'
 
 export default {
   name: 'DataView',
   components: {
-    DataItem,
-    Header
+    DataItem
   },
   data () {
     return {

@@ -6,24 +6,6 @@
         <Profile/>
       </div>
     </div>
-    <!-- <div class="aig__header__body">
-      <div class="aig__container">
-        <slot name="title"></slot>
-      </div>
-    </div> -->
-    <vue-particles style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none;"
-      color="#dedede"
-      :particleOpacity="0.7"
-      :particlesNumber="80"
-      shapeType="edge"
-      :particleSize="2"
-      linesColor="#dedede"
-      :linesWidth="0"
-      :lineLinked="false"
-      :lineOpacity="0"
-      :linesDistance="0"
-      :moveSpeed="3"
-    ></vue-particles>
   </header>
 </template>
 

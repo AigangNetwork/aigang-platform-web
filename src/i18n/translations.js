@@ -1,14 +1,14 @@
-const translations = {
-  en: {
+const messages = {
+  ru: {
     message: {
-      hello: 'hello world'
+      hello: 'привет'
     }
   },
-  ja: {
+  en: {
     message: {
-      hello: 'こんにちは、世界'
+      hello: 'hello'
     }
   }
 }
 
-export default translations
+export default messages

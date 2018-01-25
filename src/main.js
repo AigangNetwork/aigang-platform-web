@@ -18,6 +18,7 @@ Vue.use(ElementUI)
 Vue.use(VueParticles)
 
 Vue.config.productionTip = false
+Vue.config.lang = 'en'
 
 /* eslint-disable no-new */
 new Vue({
@@ -25,8 +26,5 @@ new Vue({
   el: '.aig__app',
   router,
   components: { App },
-  template: '<App/>',
-  mounted () {
-    Vue.config.lang = 'en'
-  }
+  template: '<App/>'
 })

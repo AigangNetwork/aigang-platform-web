@@ -54,10 +54,12 @@ export default {
   background: white;
   border-radius: 4px;
   box-shadow: 0 0 30px 0 rgba(0, 0, 0, 0.06);
-  box-shadow: 0 0 30px 0 rgba(0, 0, 0, 0.06);
   border: 1px solid darken($gray, 2);
   float: left;
-  height: 170px;
+  height: 153px;
+  &:hover {
+    box-shadow: 0 0 30px 0 rgba($purple, 0.12);
+  }
   &.aig__data--creatable {
     font-family: $font-secondary;
     font-size: 16px;

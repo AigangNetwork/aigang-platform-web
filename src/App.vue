@@ -1,10 +1,12 @@
 <template>
   <div class="aig__app" v-loading="loading" element-loading-background="rgba(255, 255, 255, 1)" element-loading-text="Mounting application...">
+    <Navigation />
     <router-view class="aig__view"/>
   </div>
 </template>
 
 <script>
+import Navigation from '@/components/Navigation'
 
 export default {
   name: 'App',
@@ -13,13 +15,15 @@ export default {
       loading: true
     }
   },
+  components: {
+    Navigation
+  },
   mounted () {
     setTimeout(() => {
       this.loading = false
       this.$message({
         message: 'Application successfully mounted',
         type: 'success',
-        duration: 0,
         showClose: true
       })
     }, 1000)
@@ -38,16 +42,15 @@ body.aig {
 }
 
 .aig__app {
+  padding-top: 50px;
   font-size: 13px;
   background: #f9f9fb;
-  position: relative;
   font-family: $font-primary;
   width: 100%;
-  min-height: 100%;
   font-size: 14px;
-  display: flex;
   align-items: column;
   line-height: 1;
+  min-height: 100%;
 }
 
 .aig__container {
@@ -73,5 +76,13 @@ body.aig {
 
 p {
   line-height: 1.55;
+}
+
+.aig__items {
+  margin-top: -10px;
+  margin-bottom: -10px;
+  .el-col {
+    margin: 10px 0;
+  }
 }
 </style>
