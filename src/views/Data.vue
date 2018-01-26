@@ -15,7 +15,7 @@
         </el-col>
       </el-row>
 
-      <div style="margin-top: 30px;">
+      <div style="margin-top: 30px">
         <el-dialog title="Upload new data" :visible.sync="modalUpload" width="560px">
           <el-form :model="dataUploadForm" :rules="dataUploadFormRules" ref="dataUploadForm" label-width="120px">
             <el-form-item label="Title" prop="title">

@@ -4,12 +4,18 @@ import Predictions from '@/views/Predictions'
 import Invest from '@/views/Invest'
 import Insure from '@/views/Insure'
 import Profile from '@/views/Profile'
+import Login from '@/views/Login'
 
 const routes = [
   {
     path: '/',
     name: 'Dashboard',
     component: Dashboard
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    component: Login
   },
   {
     path: '/data',
