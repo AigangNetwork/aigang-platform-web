@@ -50,11 +50,11 @@ body.aig {
 
 .fade-enter-active, .fade-leave-active {
   transition-property: opacity;
-  transition-duration: .25s;
+  transition-duration: 150ms;
 }
 
 .fade-enter-active {
-  transition-delay: .25s;
+  transition-delay: 150ms;
 }
 
 .fade-enter, .fade-leave-active {
