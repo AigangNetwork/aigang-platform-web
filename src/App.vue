@@ -1,7 +1,14 @@
 <template>
   <div class="aig__app" v-loading="loading" element-loading-background="rgba(255, 255, 255, 1)" element-loading-text="Mounting application...">
     <Navigation />
-    <router-view class="aig__view"/>
+    <el-alert
+      title="AiGang Web Platform running in pre-alpha version"
+      type="info"
+      center>
+    </el-alert>
+    <transition name="fade">
+      <router-view class="aig__view"></router-view>
+    </transition>
   </div>
 </template>
 
@@ -39,6 +46,19 @@ export default {
 
 body.aig {
   font-family: $font-primary;
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition-property: opacity;
+  transition-duration: .25s;
+}
+
+.fade-enter-active {
+  transition-delay: .25s;
+}
+
+.fade-enter, .fade-leave-active {
+  opacity: 0
 }
 
 .aig__app {

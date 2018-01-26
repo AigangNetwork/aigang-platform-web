@@ -1,11 +1,11 @@
 <template>
-  <div class="aig__profile">
+  <router-link to="/profile" class="aig__profile">
     <div class="information">
       Balance
       <div class="balance">10 000 AIX</div>
     </div>
     <div class="photo"></div>
-  </div>
+  </router-link>
 </template>
 
 <style lang="scss" scoped>
@@ -14,6 +14,7 @@
 
 .aig__profile {
   @include clearfix;
+  font-weight: normal;
   height: 100%;
   flex-wrap: nowrap;
   display: flex;

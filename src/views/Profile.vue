@@ -1,0 +1,18 @@
+<template>
+  <div>
+    <div class="aig__view__body aig__container">
+      {{ $t('message.hello') }}
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'ProfileView',
+  data () {
+    return {
+      msg: 'Profile view'
+    }
+  }
+}
+</script>

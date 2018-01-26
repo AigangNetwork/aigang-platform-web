@@ -98,3 +98,12 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
 .el-upload__tip {
   line-height: 1;
 }
+
+// alert
+.el-alert--info {
+  border-color: #d3c4eb;
+  background-color: #f0ebf8;
+  .el-alert__content {
+    color: #6b3abd;
+  }
+}
