@@ -18,12 +18,15 @@ Vue.config.productionTip = false
 Vue.config.lang = 'en'
 
 /* eslint-disable no-new */
-let test = new Vue({
+new Vue({
   i18n,
   router,
   el: '.aig__app',
   components: { App },
-  template: '<App/>'
+  template: '<App/>',
+  mounted () {
+    // setTimeout(() => {
+    //   this._i18n.locale = 'ru'
+    // }, 4000)
+  }
 })
-
-console.log(test)
