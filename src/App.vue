@@ -46,6 +46,7 @@ export default {
 
 body.aig {
   font-family: $font-primary;
+  overflow-y: scroll;
 }
 
 .fade-enter-active, .fade-leave-active {

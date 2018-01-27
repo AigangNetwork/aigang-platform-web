@@ -48,18 +48,18 @@ export default {
       })
     },
     login () {
-      this.$store.commit('LOGIN')
-      // this.loading = true
-      // this.axios.post('/account/login', {
-      //   email: this.loginForm,
-      //   password: this.loginForm.password
-      // }, response => {
-      //   this.loading = false
-      //   console.log(response)
-      // }, error => {
-      //   this.loading = false
-      //   console.log(error)
-      // })
+      // this.$store.commit('LOGIN')
+      this.loading = true
+      this.axios.post('/account/login', {
+        email: this.loginForm.login,
+        password: this.loginForm.password
+      }, response => {
+        this.loading = false
+        console.log(response)
+      }, error => {
+        this.loading = false
+        console.log(error)
+      })
     }
   }
 }
