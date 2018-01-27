@@ -28,9 +28,8 @@ export default {
     return {
       loading: false,
       loginForm: {
-        email: '',
-        password: '',
-        rememberMe: false
+        email: 'test@test.lt',
+        password: 'Laikinas123'
       },
       loginFormRules: {
         email: { required: true, message: 'E-mail address is required', trigger: 'blur' },
@@ -44,24 +43,23 @@ export default {
         if (valid) {
           this.login()
         } else {
-          console.log('error submit!!')
           return false
         }
       })
     },
     login () {
-      this.loading = true
-      this.axios.post('account/login', {
-        email: this.loginForm.email,
-        password: this.loginForm.password,
-        rememberMe: this.loginForm.rememberMe
-      }, response => {
-        console.log(response)
-        this.loading = false
-      }, error => {
-        console.log(error)
-        this.loading = false
-      })
+      this.$store.commit('LOGIN')
+      // this.loading = true
+      // this.axios.post('/account/login', {
+      //   email: this.loginForm,
+      //   password: this.loginForm.password
+      // }, response => {
+      //   this.loading = false
+      //   console.log(response)
+      // }, error => {
+      //   this.loading = false
+      //   console.log(error)
+      // })
     }
   }
 }
