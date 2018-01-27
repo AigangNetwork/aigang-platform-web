@@ -1,14 +1,13 @@
 <template>
   <div>
-    <div class="aig__view__body">
-      <div class="aig__container">
-        <div class="aig__login">
+    <div class="aig__view__body aig__container">
+        <div class="aig__login" v-loading="loading" element-loading-text="Logging in...">
           <div class="aig__logo">
             <img src="/static/logo-color.png" alt="">
           </div>
           <el-form :model="loginForm" :rules="loginFormRules" ref="loginForm">
-            <el-form-item label="Username" prop="username">
-              <el-input v-model="loginForm.username" placeholder="example@aigang.network"></el-input>
+            <el-form-item label="Username" prop="email">
+              <el-input v-model="loginForm.email" placeholder="example@aigang.network"></el-input>
             </el-form-item>
             <el-form-item label="Password" prop="password">
               <el-input v-model="loginForm.password" type="password" placeholder="********"></el-input>
@@ -18,7 +17,6 @@
             </el-form-item>
           </el-form>
         </div>
-      </div>
     </div>
   </div>
 </template>
@@ -28,14 +26,42 @@ export default {
   name: 'LoginView',
   data () {
     return {
+      loading: false,
       loginForm: {
-        username: '',
-        password: ''
+        email: '',
+        password: '',
+        rememberMe: false
       },
       loginFormRules: {
-        username: { required: true, message: 'Username is required', trigger: 'blur' },
+        email: { required: true, message: 'E-mail address is required', trigger: 'blur' },
         password: { required: true, message: 'Password is required', trigger: 'blur' }
       }
+    }
+  },
+  methods: {
+    submitForm (formName) {
+      this.$refs[formName].validate(valid => {
+        if (valid) {
+          this.login()
+        } else {
+          console.log('error submit!!')
+          return false
+        }
+      })
+    },
+    login () {
+      this.loading = true
+      this.axios.post('account/login', {
+        email: this.loginForm.email,
+        password: this.loginForm.password,
+        rememberMe: this.loginForm.rememberMe
+      }, response => {
+        console.log(response)
+        this.loading = false
+      }, error => {
+        console.log(error)
+        this.loading = false
+      })
     }
   }
 }
