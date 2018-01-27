@@ -51,7 +51,7 @@ export default {
       // this.$store.commit('LOGIN')
       this.loading = true
       this.axios.post('/account/login', {
-        email: this.loginForm.login,
+        email: this.loginForm.email,
         password: this.loginForm.password
       }, response => {
         this.loading = false
