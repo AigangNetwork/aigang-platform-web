@@ -3,7 +3,7 @@
     <div class="aig__view__body aig__container">
       <el-breadcrumb separator-class="el-icon-arrow-right">
         <el-breadcrumb-item :to="{ path: '/' }">AiGang Network</el-breadcrumb-item>
-        <el-breadcrumb-item>Data</el-breadcrumb-item>
+        <el-breadcrumb-item>{{ $t('anchors.data') }}</el-breadcrumb-item>
       </el-breadcrumb>
 
       <el-row :gutter="20" class="aig__items" style="margin-top: 30px">

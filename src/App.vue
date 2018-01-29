@@ -1,11 +1,6 @@
 <template>
   <div class="aig__app" :class="authenticatedClass" v-loading="loading" element-loading-background="rgba(255, 255, 255, 1)" element-loading-text="Mounting application...">
-    <Navigation v-if="$store.getters.isAuthenticated" />
-    <el-alert
-      title="AiGang Web Platform running in pre-alpha version"
-      type="info"
-      center v-if="$store.getters.isAuthenticated">
-    </el-alert>
+    <Navigation/>
     <transition name="fade">
       <router-view class="aig__view"></router-view>
     </transition>
@@ -50,23 +45,11 @@ export default {
 
 @import '~helpers/reset';
 @import '~helpers/variables';
+@import '~helpers/transitions';
 
 body.aig {
   font-family: $font-primary;
   overflow-y: scroll;
-}
-
-.fade-enter-active, .fade-leave-active {
-  transition-property: opacity;
-  transition-duration: 150ms;
-}
-
-.fade-enter-active {
-  transition-delay: 150ms;
-}
-
-.fade-enter, .fade-leave-active {
-  opacity: 0
 }
 
 .aig__app {

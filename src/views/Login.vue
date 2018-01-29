@@ -6,14 +6,14 @@
             <img src="/static/logo-color.png" alt="">
           </div>
           <el-form :model="loginForm" :rules="loginFormRules" ref="loginForm">
-            <el-form-item label="Username" prop="email">
+            <el-form-item :label="$t('strings.email')" prop="email">
               <el-input v-model="loginForm.email" placeholder="example@aigang.network"></el-input>
             </el-form-item>
-            <el-form-item label="Password" prop="password">
+            <el-form-item :label="$t('strings.password')" prop="password">
               <el-input v-model="loginForm.password" type="password" placeholder="********"></el-input>
             </el-form-item>
             <el-form-item style="margin-bottom: 0">
-              <el-button type="primary" @click="submitForm('loginForm')" style="width: 100%">Login</el-button>
+              <el-button type="primary" @click="submitForm('loginForm')" style="width: 100%">{{ $t('actions.login') }}</el-button>
             </el-form-item>
           </el-form>
         </div>

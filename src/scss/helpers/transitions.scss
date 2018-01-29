@@ -1,0 +1,13 @@
+// Fade transition
+.fade-enter-active, .fade-leave-active {
+  transition-property: opacity;
+  transition-duration: 150ms;
+}
+
+.fade-enter-active {
+  transition-delay: 150ms;
+}
+
+.fade-enter, .fade-leave-active {
+  opacity: 0
+}

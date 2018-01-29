@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="aig__view__body aig__container">
-      {{ $t('message.hello') }}
+      {{ $t('strings.hello') }}
     </div>
   </div>
 </template>
