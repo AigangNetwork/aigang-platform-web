@@ -1,28 +1,28 @@
 // Fade transition
 .fade-enter-active, .fade-leave-active {
   transition-property: opacity;
-  transition-duration: 150ms;
+  transition-duration: 200ms;
 }
 
 .fade-enter-active {
-  transition-delay: 150ms;
+  transition-delay: 200ms;
 }
 
 .fade-enter, .fade-leave-active {
-  opacity: 0
+  opacity: 0;
 }
 
-// Slide Down Transition
+// Slide Down transition
 .slideDown-enter-active, .slideDown-leave-active {
   transition-property: all;
-  transition-duration: 400ms;
+  transition-duration: 200ms;
 }
 
 .slideDown-enter-active {
-  transition-delay: 400ms;
+  transition-delay: 200ms;
 }
 
 .slideDown-enter, .slideDown-leave-active {
-  transform: translateY(-50px);
+  transform: translateY(-15px);
   opacity: 0;
 }

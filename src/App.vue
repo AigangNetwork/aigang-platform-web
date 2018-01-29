@@ -44,8 +44,8 @@ export default {
 @import url('https://fonts.googleapis.com/css?family=Saira+Semi+Condensed:300,400,500,600|Ubuntu:300,300i,400,400i,500,500i,700,700i');
 
 @import '~helpers/reset';
-@import '~helpers/variables';
 @import '~helpers/mixins';
+@import '~helpers/variables';
 @import '~helpers/transitions';
 
 body.aig {
@@ -64,13 +64,15 @@ body.aig {
   line-height: 1;
   min-height: 100%;
   &.aig__app--authed {
-    .aig__view {
-      padding-top: 50px;
+    padding-top: 50px;
+    @include breakpoint(max-width 768px) {
+      padding-top: 70px;
     }
   }
 }
 
 .aig__container {
+  @include clearfix;
   max-width: 1140px;
   width: 100%;
   padding: 0 20px;
@@ -78,7 +80,6 @@ body.aig {
 }
 
 .aig__view {
-  @include transition;
   width: 100%;
   &.aig__view--centered {
     display: flex;

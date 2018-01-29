@@ -65,7 +65,6 @@ export default {
 @import '~helpers/mixins';
 
 .aig__logo {
-  line-height: 50px;
   float: left;
   font-size: 0;
   margin-right: 40px;
@@ -81,6 +80,7 @@ export default {
   z-index: 5;
   position: fixed;
   width: 100%;
+  line-height: 50px;
   top: 0;
   left: 0;
   .aig__navigation__body {
@@ -92,6 +92,15 @@ export default {
   }
   .aig__profile {
     float: right;
+  }
+  @include breakpoint(max-width 768px) {
+    .aig__navigation__body {
+      line-height: 40px;
+      height: auto;
+    }
+    .aig__profile {
+      height: 40px;
+    }
   }
 }
 
@@ -113,7 +122,6 @@ export default {
         user-select: none;
         font-family: $font-secondary;
         padding: 0;
-        height: 50px;
         display: flex;
         align-items: center;
         position: relative;
@@ -121,9 +129,9 @@ export default {
         color: white;
         font-weight: 400;
         text-transform: uppercase;
-        font-size: 13px;
+        font-size: 12px;
         font-weight: 500;
-        letter-spacing: 1px;
+        letter-spacing: 2px;
         .icon {
           display: none;
           margin-right: 10px;
@@ -146,6 +154,37 @@ export default {
             svg {
               fill: $purple;
             }
+          }
+        }
+      }
+    }
+  }
+  @include breakpoint(max-width 768px) {
+    float: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    z-index: 1;
+    background: white;
+    box-shadow: 0 0 30px 0 rgba(0, 0, 0, 0.06);
+    border-bottom: 1px solid #edf0f3;
+    line-height: 40px;
+    ul {
+      line-height: 30px;
+      padding: 0 10px;
+      li {
+        &+li {
+          margin-left: 0;
+        }
+        a {
+          padding: 0 10px;
+          letter-spacing: 0;
+          font-size: 13px;
+          height: auto;
+          color: $purple;
+          &:hover {
+            color: darken($gray, 50);
           }
         }
       }

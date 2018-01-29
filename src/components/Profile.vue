@@ -26,6 +26,7 @@
   align-items: center;
   font-size: 11px;
   font-weight: 400;
+  line-height: 1;
   .photo {
     flex-shrink: 0;
     height: 26px;
