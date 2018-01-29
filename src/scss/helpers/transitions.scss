@@ -11,3 +11,18 @@
 .fade-enter, .fade-leave-active {
   opacity: 0
 }
+
+// Slide Down Transition
+.slideDown-enter-active, .slideDown-leave-active {
+  transition-property: all;
+  transition-duration: 400ms;
+}
+
+.slideDown-enter-active {
+  transition-delay: 400ms;
+}
+
+.slideDown-enter, .slideDown-leave-active {
+  transform: translateY(-50px);
+  opacity: 0;
+}

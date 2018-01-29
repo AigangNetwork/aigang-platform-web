@@ -6,7 +6,7 @@
   }
 }
 
-@mixin transition($property: all, $time: 200ms, $method: ease) {
+@mixin transition($property: all, $time: 400ms, $method: ease-in-out) {
 	transition: $property $time $method;
 }
 

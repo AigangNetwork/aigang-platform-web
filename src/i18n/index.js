@@ -6,7 +6,7 @@ import messages from '@/i18n/messages'
 Vue.use(VueI18n)
 
 const i18n = new VueI18n({
-  locale: 'ru',
+  locale: 'en',
   messages
 })
 

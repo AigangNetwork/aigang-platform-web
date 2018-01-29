@@ -45,6 +45,7 @@ export default {
 
 @import '~helpers/reset';
 @import '~helpers/variables';
+@import '~helpers/mixins';
 @import '~helpers/transitions';
 
 body.aig {
@@ -63,7 +64,9 @@ body.aig {
   line-height: 1;
   min-height: 100%;
   &.aig__app--authed {
-    padding-top: 50px;
+    .aig__view {
+      padding-top: 50px;
+    }
   }
 }
 
@@ -75,6 +78,7 @@ body.aig {
 }
 
 .aig__view {
+  @include transition;
   width: 100%;
   &.aig__view--centered {
     display: flex;
