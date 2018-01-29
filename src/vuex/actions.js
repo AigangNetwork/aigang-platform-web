@@ -1,8 +1,9 @@
+import * as types from './mutation-types'
+import router from '@/router'
 
-export const LOGIN = ({ dispatch }, uid) => {
-  dispatch('LOGIN', uid)
+const logIn = ({ commit }, token) => {
+  commit(types.LOGIN, token)
+  router.push('/')
 }
 
-export const LOGOUT = ({ dispatch }) => {
-  dispatch('LOGOUT')
-}
+export { logIn }

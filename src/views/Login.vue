@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="aig__view--centered">
     <div class="aig__view__body aig__container">
         <div class="aig__login" v-loading="loading" element-loading-text="Logging in...">
           <div class="aig__logo">
@@ -48,15 +48,14 @@ export default {
       })
     },
     login () {
-      // this.$store.commit('LOGIN')
       this.loading = true
       this.axios.post('/account/login', {
         email: this.loginForm.email,
         password: this.loginForm.password
-      }, response => {
+      }).then(response => {
         this.loading = false
-        console.log(response)
-      }, error => {
+        this.$store.dispatch('logIn', response.data.authorization)
+      }).catch(error => {
         this.loading = false
         console.log(error)
       })

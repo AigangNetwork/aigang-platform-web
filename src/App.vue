@@ -1,10 +1,10 @@
 <template>
-  <div class="aig__app" v-loading="loading" element-loading-background="rgba(255, 255, 255, 1)" element-loading-text="Mounting application...">
-    <Navigation />
+  <div class="aig__app" :class="authenticatedClass" v-loading="loading" element-loading-background="rgba(255, 255, 255, 1)" element-loading-text="Mounting application...">
+    <Navigation v-if="$store.getters.isAuthenticated" />
     <el-alert
       title="AiGang Web Platform running in pre-alpha version"
       type="info"
-      center>
+      center v-if="$store.getters.isAuthenticated">
     </el-alert>
     <transition name="fade">
       <router-view class="aig__view"></router-view>
@@ -24,6 +24,13 @@ export default {
   },
   components: {
     Navigation
+  },
+  computed: {
+    authenticatedClass () {
+      return {
+        'aig__app--authed': this.$store.getters.isAuthenticated
+      }
+    }
   },
   mounted () {
     setTimeout(() => {
@@ -63,7 +70,7 @@ body.aig {
 }
 
 .aig__app {
-  padding-top: 50px;
+  padding-top: 0;
   font-size: 13px;
   background: #f9f9fb;
   font-family: $font-primary;
@@ -72,6 +79,9 @@ body.aig {
   align-items: column;
   line-height: 1;
   min-height: 100%;
+  &.aig__app--authed {
+    padding-top: 50px;
+  }
 }
 
 .aig__container {
@@ -83,7 +93,11 @@ body.aig {
 
 .aig__view {
   width: 100%;
-  min-height: 100%;
+  &.aig__view--centered {
+    display: flex;
+    min-height: 100vh;
+    align-items: center;
+  }
   .aig__view__body {
     padding-top: 40px;
     padding-bottom: 40px;

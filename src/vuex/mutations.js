@@ -1,6 +1,7 @@
 const mutations = {
-  'LOGIN' (state) {
+  'LOGIN' (state, token) {
     state.user.authenticated = true
+    state.user.token = token
   }
 }
 
