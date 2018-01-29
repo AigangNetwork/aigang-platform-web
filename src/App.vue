@@ -19,7 +19,7 @@ export default {
   name: 'App',
   data () {
     return {
-      loading: true
+      loading: false
     }
   },
   components: {
@@ -33,14 +33,14 @@ export default {
     }
   },
   mounted () {
-    setTimeout(() => {
-      this.loading = false
-      this.$message({
-        message: 'Application successfully mounted',
-        type: 'success',
-        showClose: true
-      })
-    }, 1000)
+    // setTimeout(() => {
+    //   this.loading = false
+    //   this.$message({
+    //     message: 'Application successfully mounted',
+    //     type: 'success',
+    //     showClose: true
+    //   })
+    // }, 1000)
   }
 }
 </script>

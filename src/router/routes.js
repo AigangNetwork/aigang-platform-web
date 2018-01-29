@@ -10,37 +10,58 @@ const routes = [
   {
     path: '/',
     name: 'Dashboard',
-    component: Dashboard
+    component: Dashboard,
+    meta: {
+      authRequired: true
+    }
   },
   {
     path: '/login',
     name: 'Login',
-    component: Login
+    component: Login,
+    meta: {
+      guestRequired: true
+    }
   },
   {
     path: '/data',
     name: 'Data',
-    component: Data
+    component: Data,
+    meta: {
+      authRequired: true
+    }
   },
   {
     path: '/predictions',
     name: 'Predictions',
-    component: Predictions
+    component: Predictions,
+    meta: {
+      authRequired: true
+    }
   },
   {
     path: '/invest',
     name: 'Invest',
-    component: Invest
+    component: Invest,
+    meta: {
+      authRequired: true
+    }
   },
   {
     path: '/insure',
     name: 'Insure',
-    component: Insure
+    component: Insure,
+    meta: {
+      authRequired: true
+    }
   },
   {
     path: '/profile',
     name: 'Profile',
-    component: Profile
+    component: Profile,
+    meta: {
+      authRequired: true
+    }
   }
 ]
 
