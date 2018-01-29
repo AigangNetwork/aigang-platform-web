@@ -3,6 +3,8 @@ import App from '@/App'
 import router from '@/router'
 import i18n from '@/i18n'
 
+import store from '@/vuex'
+
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 import ElementUI from 'element-ui'
@@ -19,6 +21,7 @@ Vue.config.lang = 'en'
 
 /* eslint-disable no-new */
 new Vue({
+  store,
   i18n,
   router,
   el: '.aig__app',

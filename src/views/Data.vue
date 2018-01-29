@@ -3,14 +3,14 @@
     <div class="aig__view__body aig__container">
       <el-breadcrumb separator-class="el-icon-arrow-right">
         <el-breadcrumb-item :to="{ path: '/' }">AiGang Network</el-breadcrumb-item>
-        <el-breadcrumb-item>Data</el-breadcrumb-item>
+        <el-breadcrumb-item>{{ $t('anchors.data') }}</el-breadcrumb-item>
       </el-breadcrumb>
 
       <el-row :gutter="20" class="aig__items" style="margin-top: 30px">
-        <el-col :span="8">
+        <el-col :xs="24" :sm="12" :md="12" :lg="8">
           <DataItem :creatable="true" @click="modalUpload = true" />
         </el-col>
-        <el-col :span="8" v-for="dataItem in dataList" :key="dataItem.id">
+        <el-col :xs="24" :sm="12" :md="12" :lg="8" v-for="dataItem in dataList" :key="dataItem.id">
           <DataItem :data="dataItem" :key="dataItem.id" />
         </el-col>
       </el-row>

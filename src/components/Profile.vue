@@ -1,7 +1,7 @@
 <template>
   <router-link to="/profile" class="aig__profile">
     <div class="information">
-      Balance
+      {{ $t('account.balance') }}
       <div class="balance">10 000 AIX</div>
     </div>
     <div class="photo"></div>

@@ -1,19 +1,19 @@
 <template>
-  <div>
+  <div class="aig__view--centered">
     <div class="aig__view__body aig__container">
         <div class="aig__login" v-loading="loading" element-loading-text="Logging in...">
           <div class="aig__logo">
             <img src="/static/logo-color.png" alt="">
           </div>
           <el-form :model="loginForm" :rules="loginFormRules" ref="loginForm">
-            <el-form-item label="Username" prop="email">
+            <el-form-item :label="$t('strings.email')" prop="email">
               <el-input v-model="loginForm.email" placeholder="example@aigang.network"></el-input>
             </el-form-item>
-            <el-form-item label="Password" prop="password">
+            <el-form-item :label="$t('strings.password')" prop="password">
               <el-input v-model="loginForm.password" type="password" placeholder="********"></el-input>
             </el-form-item>
             <el-form-item style="margin-bottom: 0">
-              <el-button type="primary" @click="submitForm('loginForm')" style="width: 100%">Login</el-button>
+              <el-button type="primary" @click="submitForm('loginForm')" style="width: 100%">{{ $t('actions.login') }}</el-button>
             </el-form-item>
           </el-form>
         </div>
@@ -28,9 +28,8 @@ export default {
     return {
       loading: false,
       loginForm: {
-        email: '',
-        password: '',
-        rememberMe: false
+        email: 'test@test.lt',
+        password: 'Laikinas123'
       },
       loginFormRules: {
         email: { required: true, message: 'E-mail address is required', trigger: 'blur' },
@@ -44,23 +43,21 @@ export default {
         if (valid) {
           this.login()
         } else {
-          console.log('error submit!!')
           return false
         }
       })
     },
     login () {
       this.loading = true
-      this.axios.post('account/login', {
+      this.axios.post('/account/login', {
         email: this.loginForm.email,
-        password: this.loginForm.password,
-        rememberMe: this.loginForm.rememberMe
-      }, response => {
-        console.log(response)
+        password: this.loginForm.password
+      }).then(response => {
         this.loading = false
-      }, error => {
+        this.$store.dispatch('logIn', response.data.authorization)
+      }).catch(error => {
+        this.loading = false
         console.log(error)
-        this.loading = false
       })
     }
   }
