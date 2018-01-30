@@ -1,17 +1,18 @@
 <template>
   <div class="aig__data" v-if="!creatable">
     <div class="aig__data__head">
-      <el-tooltip class="item" :content="`Created at ${this.data.createdUtc}`" placement="top">
+      <el-tooltip class="item" content="Pending" placement="top">
         <Status />
       </el-tooltip>
       <div class="title">{{ data.title }}</div>
     </div>
     <div class="aig__data__body">
-      <div class="desc">Interdum et malesuada fames ac ante ipsum primis in faucibus. Nunc pharetra faucibus tellus.</div>
+      <div class="desc">{{ data.description }}</div>
     </div>
     <div class="aig__data__footer">
-      <el-button type="primary" size="small">Models</el-button>
-      <el-button size="small" icon="el-icon-more"></el-button>
+      <el-button type="primary" size="mini">Models</el-button>
+      <el-button size="mini" icon="el-icon-more"></el-button>
+      <span class="desc" style="margin-top: 8px">Added {{ this.data.createdUtc | moment('from') }}</span>
     </div>
   </div>
   <button class="aig__data aig__data--creatable" @click="$emit('click', $event.target.value)" v-else>
@@ -49,18 +50,17 @@ export default {
 .aig__data {
   @include transition;
   width: 100%;
-  cursor: pointer;
   padding: 25px;
   background: white;
   border-radius: 4px;
   box-shadow: 0 0 30px 0 rgba(0, 0, 0, 0.06);
   border: 1px solid darken($gray, 2);
-  float: left;
-  height: 153px;
+  height: 150px;
   &:hover {
     box-shadow: 0 0 30px 0 rgba($purple, 0.12);
   }
   &.aig__data--creatable {
+    cursor: pointer;
     font-family: $font-secondary;
     font-size: 16px;
     font-weight: 400;
@@ -70,6 +70,7 @@ export default {
     border: 2px dashed darken($gray, 10);
     .title, .desc {
       display: block;
+      height: auto;
     }
     &:hover {
       border-color: darken($gray, 20);
@@ -97,12 +98,16 @@ export default {
   }
   .aig__data__footer {
     margin-top: 15px;
-    display: flex;
     width: 100%;
+    font-size: 0;
     .aig__button {
       display: block;
       width: 50%;
       border-radius: 0;
+    }
+    .desc {
+      margin-left: 10px;
+      font-size: 12px;
     }
   }
   .title {
@@ -114,6 +119,8 @@ export default {
     line-height: 1.3;
     color: darken($gray, 50);
     font-size: 13px;
+    height: 33px;
+    overflow: hidden;
   }
 }
 </style>
