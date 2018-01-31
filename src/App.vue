@@ -41,8 +41,6 @@ export default {
 </script>
 
 <style lang="scss">
-@import url('https://fonts.googleapis.com/css?family=Saira+Semi+Condensed:300,400,500,600|Ubuntu:300,300i,400,400i,500,500i,700,700i');
-
 @import '~helpers/reset';
 @import '~helpers/mixins';
 @import '~helpers/variables';
