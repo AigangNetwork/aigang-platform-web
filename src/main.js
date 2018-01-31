@@ -21,6 +21,11 @@ Vue.axios.defaults.baseURL = 'http://aigangplatformapi.azurewebsites.net/api'
 Vue.config.productionTip = false
 Vue.config.lang = 'en'
 
+let loaderInstance = ElementUI.Loading.service({
+  fullscreen: true,
+  text: 'Initializing application'
+})
+
 /* eslint-disable no-new */
 new Vue({
   store,
@@ -30,6 +35,8 @@ new Vue({
   components: { App },
   template: '<App/>',
   mounted () {
-    this.$i18n.locale = 'en'
+    this.$nextTick(() => {
+      loaderInstance.close()
+    })
   }
 })
