@@ -1,29 +1,41 @@
 <template>
   <div class="aig__view--centered">
-    <div class="aig__view__body aig__container">
-        <div class="aig__login" v-loading="loading" element-loading-text="Logging in...">
-          <div class="aig__logo">
-            <img src="/static/logo-color.png" alt="">
+    <div class="aig__view__body aig__container" style="max-width: 400px">
+        <Card>
+          <div slot="body" v-loading="loading" element-loading-text="Logging in...">
+            <div class="aig__logo">
+              <img src="/static/logo-color.png" alt="">
+            </div>
+            <el-form :model="loginForm" :rules="loginFormRules" ref="loginForm">
+              <el-form-item :label="$t('strings.email')" prop="email" size="small">
+                <el-input v-model="loginForm.email" placeholder="example@aigang.network"></el-input>
+              </el-form-item>
+              <el-form-item :label="$t('strings.password')" prop="password" size="small">
+                <el-input v-model="loginForm.password" type="password" placeholder="********"></el-input>
+              </el-form-item>
+              <el-form-item style="margin-bottom: 0">
+                <el-button type="primary" @click="submitForm('loginForm', login)" style="width: 100%">{{ $t('actions.login') }}</el-button>
+              </el-form-item>
+            </el-form>
           </div>
-          <el-form :model="loginForm" :rules="loginFormRules" ref="loginForm">
-            <el-form-item :label="$t('strings.email')" prop="email">
-              <el-input v-model="loginForm.email" placeholder="example@aigang.network"></el-input>
-            </el-form-item>
-            <el-form-item :label="$t('strings.password')" prop="password">
-              <el-input v-model="loginForm.password" type="password" placeholder="********"></el-input>
-            </el-form-item>
-            <el-form-item style="margin-bottom: 0">
-              <el-button type="primary" @click="submitForm('loginForm')" style="width: 100%">{{ $t('actions.login') }}</el-button>
-            </el-form-item>
-          </el-form>
-        </div>
+          <div slot="footer">
+            <router-link to="/register">Create new account</router-link>
+            <router-link to="/forgotten-password">Retrieve password</router-link>
+          </div>
+        </Card>
+        <!-- </div> -->
     </div>
   </div>
 </template>
 
 <script>
+import Card from '@/components/Card'
+
 export default {
   name: 'LoginView',
+  components: {
+    Card
+  },
   data () {
     return {
       loading: false,
@@ -38,26 +50,29 @@ export default {
     }
   },
   methods: {
-    submitForm (formName) {
+    submitForm (formName, successCallback, errorCallback) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          this.login()
+          successCallback()
         } else {
+          errorCallback()
           return false
         }
       })
     },
     login () {
       this.loading = true
-      this.axios.post('/account/login', {
-        email: this.loginForm.email,
-        password: this.loginForm.password
-      }).then(response => {
-        this.loading = false
-        this.$store.dispatch('logIn', response.data.authorization)
+      this.axios.post('/account/login', this.loginForm).then(response => {
+        console.log(response)
+        this.$store.dispatch('logIn', response.data)
       }).catch(error => {
+        console.log(error.response)
         this.loading = false
-        console.log(error)
+        this.$message({
+          type: 'error',
+          message: error.response.data.reason,
+          showClose: true
+        })
       })
     }
   }
@@ -74,22 +89,12 @@ export default {
   font-size: 0;
   margin-right: 40px;
   text-align: center;
+  margin-bottom: 15px;
   img {
     display: inline-block;
     vertical-align: middle;
     height: 36px;
     width: auto;
   }
-}
-
-.aig__login {
-  margin: 0 auto;
-  max-width: 360px;
-  width: 100%;
-  padding: 25px;
-  border-radius: 5px;
-  background: white;
-  box-shadow: 0 0 30px 0 rgba(0, 0, 0, 0.06);
-  border: 1px solid darken($gray, 2);
 }
 </style>

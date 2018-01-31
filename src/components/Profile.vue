@@ -4,7 +4,9 @@
       {{ $t('account.balance') }}
       <div class="balance">10 000 AIX</div>
     </div>
-    <div class="photo"></div>
+    <div class="photo">
+      {{ $store.state.user.profile.firstName.charAt(0) }}
+    </div>
   </router-link>
 </template>
 
@@ -28,12 +30,18 @@
   font-weight: 400;
   line-height: 1;
   .photo {
+    pointer-events: none;
     flex-shrink: 0;
     height: 26px;
     width: 26px;
-    border-radius: 5px;
+    border-radius: 50%;
     margin-left: 7px;
-    background: rgba(0, 0, 0, .35);
+    background: rgba($black, .45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(white, .25);
+    text-align: center;
   }
   .information {
     color: $blue-light;

@@ -53,6 +53,10 @@ body.aig {
   overflow-y: scroll;
 }
 
+a {
+  color: $purple;
+}
+
 .aig__breadcrumbs {
   margin-bottom: 40px;
 }

@@ -1,3 +1,6 @@
+import Login from '@/views/Login'
+import Register from '@/views/Register'
+
 import Dashboard from '@/views/Dashboard'
 import Data from '@/views/Data'
 import DataInner from '@/views/DataInner'
@@ -5,23 +8,30 @@ import Predictions from '@/views/Predictions'
 import Invest from '@/views/Invest'
 import Insure from '@/views/Insure'
 import Profile from '@/views/Profile'
-import Login from '@/views/Login'
 
 const routes = [
-  {
-    path: '/',
-    name: 'Dashboard',
-    component: Dashboard,
-    meta: {
-      authRequired: true
-    }
-  },
   {
     path: '/login',
     name: 'Login',
     component: Login,
     meta: {
       guestRequired: true
+    }
+  },
+  {
+    path: '/register',
+    name: 'Register',
+    component: Register,
+    meta: {
+      guestRequired: true
+    }
+  },
+  {
+    path: '/',
+    name: 'Dashboard',
+    component: Dashboard,
+    meta: {
+      authRequired: true
     }
   },
   {
