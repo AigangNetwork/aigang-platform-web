@@ -10,7 +10,9 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
   state: {
     user: {
-      authenticated: false
+      authenticated: false,
+      token: null,
+      profile: null
     }
   },
   mutations,

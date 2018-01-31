@@ -53,6 +53,10 @@ body.aig {
   overflow-y: scroll;
 }
 
+.aig__breadcrumbs {
+  margin-bottom: 40px;
+}
+
 .aig__app {
   padding-top: 0;
   font-size: 13px;
@@ -75,24 +79,28 @@ body.aig {
   @include clearfix;
   max-width: 1140px;
   width: 100%;
-  padding: 0 20px;
+  padding-left: 20px;
+  padding-right: 20px;
   margin: 0 auto;
 }
 
 .aig__view {
   width: 100%;
+  padding-top: 40px;
+  padding-bottom: 40px;
   &.aig__view--centered {
     display: flex;
     min-height: 100vh;
     align-items: center;
   }
-  .aig__view__body {
-    padding-top: 40px;
-    padding-bottom: 40px;
+  .aig__view__head {
+    &+.aig__view__body {
+      margin-top: 30px;
+    }
   }
   .aig__view__title {
     font-size: 32px;
-    font-weight: 300;
+    font-weight: 500;
     font-family: $font-secondary;
   }
 }

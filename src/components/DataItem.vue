@@ -11,7 +11,7 @@
     </div>
     <div class="aig__data__footer">
       <el-button type="primary" size="mini">Models</el-button>
-      <el-button size="mini" icon="el-icon-more"></el-button>
+      <el-button size="mini" icon="el-icon-more" @click="$router.push({ name: 'DataInner', params: { id: data.id }})"></el-button>
       <span class="desc" style="margin-top: 8px">Added {{ this.data.createdUtc | moment('from') }}</span>
     </div>
   </div>
@@ -50,12 +50,12 @@ export default {
 .aig__data {
   @include transition;
   width: 100%;
-  padding: 25px;
+  padding: 25px 25px 20px 25px;
   background: white;
   border-radius: 4px;
   box-shadow: 0 0 30px 0 rgba(0, 0, 0, 0.06);
   border: 1px solid darken($gray, 2);
-  height: 150px;
+  height: 145px;
   &:hover {
     box-shadow: 0 0 30px 0 rgba($purple, 0.12);
   }

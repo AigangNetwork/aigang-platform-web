@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <div class="aig__view__body aig__container">
+  <div class="aig__container">
+    <div class="aig__view__body">
       {{ $t('message.hello') }}
     </div>
   </div>

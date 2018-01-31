@@ -30,8 +30,6 @@ new Vue({
   components: { App },
   template: '<App/>',
   mounted () {
-    // setTimeout(() => {
-    //   this._i18n.locale = 'ru'
-    // }, 4000)
+    this.$i18n.locale = 'en'
   }
 })

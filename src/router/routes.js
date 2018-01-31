@@ -1,5 +1,6 @@
 import Dashboard from '@/views/Dashboard'
 import Data from '@/views/Data'
+import DataInner from '@/views/DataInner'
 import Predictions from '@/views/Predictions'
 import Invest from '@/views/Invest'
 import Insure from '@/views/Insure'
@@ -27,6 +28,14 @@ const routes = [
     path: '/data',
     name: 'Data',
     component: Data,
+    meta: {
+      authRequired: true
+    }
+  },
+  {
+    path: '/data/:id',
+    name: 'DataInner',
+    component: DataInner,
     meta: {
       authRequired: true
     }
