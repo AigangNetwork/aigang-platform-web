@@ -10,12 +10,6 @@
               <el-form-item :label="$t('strings.email')" prop="email" size="small">
                 <el-input v-model="registerForm.email" size="small" placeholder="example@aigang.network"></el-input>
               </el-form-item>
-              <el-form-item :label="$t('strings.firstName')" prop="email" size="small">
-                <el-input v-model="registerForm.firstName" size="small" placeholder="John"></el-input>
-              </el-form-item>
-              <el-form-item :label="$t('strings.lastName')" prop="email" size="small">
-                <el-input v-model="registerForm.lastName" placeholder="Doe"></el-input>
-              </el-form-item>
               <el-form-item :label="$t('strings.password')" prop="password" size="small">
                 <el-input v-model="registerForm.password" size="small" type="password" placeholder="********"></el-input>
               </el-form-item>
