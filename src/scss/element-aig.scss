@@ -61,8 +61,9 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
   box-shadow: 0 0 30px 0 rgba(0, 0, 0, 0.06);
   padding: 12px;
   border-radius: 2px;
-  .el-icon-success {
-    color: darken($green, 10);
+  .el-icon-success,
+  .el-icon-error {
+    color: rgba(black, .25);
   }
   .el-message__content {
     font-size: $--size-base;
@@ -74,11 +75,18 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
       color: white;
     }
   }
+  &.el-message--error {
+    background: $red;
+    background: linear-gradient(to bottom right, rgba(lighten($red, 10), .95) 0%, rgba($red, .9) 100%);
+    .el-message__content {
+      color: white;
+    }
+  }
 }
 
 .el-message__closeBtn {
   @include transition;
-  color: darken($green, 10);
+  color: rgba(black, .45);
   font-size: 14px;
   right: 10px;
   &:hover {
@@ -105,5 +113,12 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
   background-color: #f0ebf8;
   .el-alert__content {
     color: #6b3abd;
+  }
+}
+
+// loading
+.el-loading-spinner {
+  .el-loading-text {
+    font-family: $font-secondary;
   }
 }
