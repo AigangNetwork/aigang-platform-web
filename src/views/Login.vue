@@ -63,16 +63,14 @@ export default {
     login () {
       this.loading = true
       this.axios.post('/account/login', this.loginForm).then(response => {
-        console.log(response)
         this.$store.dispatch('logIn', response.data)
       }).catch(error => {
-        console.log(error.response)
-        this.loading = false
         this.$message({
           type: 'error',
           message: error.response.data.reason,
           showClose: true
         })
+        this.loading = false
       })
     }
   }
