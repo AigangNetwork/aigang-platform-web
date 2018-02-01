@@ -11,7 +11,7 @@
                 <el-input v-model="forgotPasswordForm.email" size="small" placeholder="example@aigang.network"></el-input>
               </el-form-item>
               <el-form-item style="margin-bottom: 0">
-                <el-button type="primary" @click="submitForm('registerForm')" style="width: 100%">{{ $t('actions.retrievePassword') }}</el-button>
+                <el-button type="primary" @click="submitForm('forgotPasswordForm')" style="width: 100%">{{ $t('actions.retrievePassword') }}</el-button>
               </el-form-item>
             </el-form>
           </div>
