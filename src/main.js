@@ -36,6 +36,7 @@ new Vue({
   template: '<App/>',
   mounted () {
     this.$nextTick(() => {
+      // this.$i18n.locale = 'ru'
       loaderInstance.close()
     })
   }

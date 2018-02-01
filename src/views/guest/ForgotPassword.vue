@@ -67,9 +67,6 @@ export default {
         console.log(error)
       })
     }
-  },
-  mounted () {
-    this.$i18n.locale = 'ru'
   }
 }
 </script>
