@@ -38,50 +38,32 @@ const routes = [
   {
     path: '/',
     name: 'Dashboard',
-    component: Dashboard,
-    meta: {
-      authRequired: true
-    }
+    component: Dashboard
   },
   {
     path: '/data',
     name: 'Data',
-    component: Data,
-    meta: {
-      authRequired: true
-    }
+    component: Data
   },
   {
     path: '/data/:id',
     name: 'DataInner',
-    component: DataInner,
-    meta: {
-      authRequired: true
-    }
+    component: DataInner
   },
   {
     path: '/predictions',
     name: 'Predictions',
-    component: Predictions,
-    meta: {
-      authRequired: true
-    }
+    component: Predictions
   },
   {
     path: '/invest',
     name: 'Invest',
-    component: Invest,
-    meta: {
-      authRequired: true
-    }
+    component: Invest
   },
   {
     path: '/insure',
     name: 'Insure',
-    component: Insure,
-    meta: {
-      authRequired: true
-    }
+    component: Insure
   },
   {
     path: '/profile',

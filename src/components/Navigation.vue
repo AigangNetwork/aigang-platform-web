@@ -1,6 +1,6 @@
 <template>
   <transition name="slideDown">
-    <div class="aig__navigation" v-if="$store.getters.isAuthenticated">
+    <div class="aig__navigation" v-if="!$route.meta.guestRequired">
       <div class="aig__navigation__body">
         <div class="aig__container">
           <router-link to="/" class="aig__logo">
@@ -42,7 +42,8 @@
               </li>
             </ul>
           </nav>
-          <Profile/>
+          <Profile v-if="this.$store.getters.isAuthenticated"/>
+          <el-button type="info" size="mini" class="aig--login" @click="$router.push({ name: 'Login' })" v-else>{{ $t('actions.login')}}</el-button>
         </div>
       </div>
     </div>
@@ -89,7 +90,12 @@ export default {
     background: linear-gradient(to bottom right, rgba(#9549c8, .95) 0%, rgba(#5833b7, .94) 100%);
     height: 50px;
     color: white;
+    .aig--login {
+      margin-top: 6px;
+      float: right;
+    }
   }
+
   .aig__profile {
     float: right;
   }

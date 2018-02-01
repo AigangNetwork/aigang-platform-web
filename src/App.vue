@@ -1,5 +1,5 @@
 <template>
-  <div class="aig__app" :class="authenticatedClass" v-loading="loading" element-loading-background="rgba(255, 255, 255, 1)" element-loading-text="Mounting application...">
+  <div class="aig__app" :class="appClass" v-loading="loading" element-loading-background="rgba(255, 255, 255, 1)" element-loading-text="Mounting application...">
     <Navigation/>
     <transition name="fade">
       <router-view class="aig__view"></router-view>
@@ -21,9 +21,10 @@ export default {
     Navigation
   },
   computed: {
-    authenticatedClass () {
+    appClass () {
       return {
-        'aig__app--authed': this.$store.getters.isAuthenticated
+        'aig--authed': this.$store.getters.isAuthenticated,
+        'aig--notAuthed': !this.$store.getters.isAuthenticated
       }
     }
   },
@@ -69,11 +70,9 @@ a {
   align-items: column;
   line-height: 1;
   min-height: 100%;
-  &.aig__app--authed {
-    padding-top: 50px;
-    @include breakpoint(max-width 768px) {
-      padding-top: 70px;
-    }
+  padding-top: 50px;
+  @include breakpoint(max-width 768px) {
+    padding-top: 70px;
   }
 }
 
