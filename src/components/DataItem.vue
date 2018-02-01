@@ -19,11 +19,7 @@
         </el-upload>
         </el-form-item>
         <el-form-item label="File visibility" prop="isPublic" size="small">
-          <!-- <el-select v-model="dataUploadForm.isPublic" placeholder="Select option" style="width: 100%">
-            <el-option label="Users only" value="users"></el-option>
-            <el-option label="Public" value="public"></el-option>
-          </el-select> -->
-          <el-radio-group v-model="dataUploadForm.isPublic" size="medium">
+          <el-radio-group v-model="dataUploadForm.isPublic" size="small">
             <el-radio-button :label="true">Public</el-radio-button>
             <el-radio-button :label="false">Users only</el-radio-button>
           </el-radio-group>
@@ -38,8 +34,8 @@
           <el-input type="textarea" v-model="dataUploadForm.preview"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="submitForm('ruleForm')">Upload</el-button>
-          <el-button @click="resetForm('ruleForm')">Reset</el-button>
+          <el-button type="primary" @click="submitForm('dataUploadForm')">Upload data</el-button>
+          <el-button @click="resetForm('dataUploadForm')">Reset</el-button>
         </el-form-item>
       </el-form>
     </el-dialog>
@@ -90,12 +86,11 @@ export default {
     return {
       modalUpload: false,
       dataUploadForm: {
-        id: '',
-        title: '',
-        description: '',
-        details: '',
-        structure: '',
-        preview: '',
+        title: 'Title',
+        description: 'Description',
+        details: 'Details',
+        structure: 'Structure',
+        preview: 'Preview',
         isPublic: true,
         file: []
       },
@@ -103,18 +98,31 @@ export default {
         title: { required: true, message: 'Title is required', trigger: 'blur' },
         description: { required: true, message: 'Description is required', trigger: 'blur' },
         structure: { required: true, message: 'Structure is required', trigger: 'blur' },
-        isPublic: { required: true, message: 'Select option', trigger: 'blur' },
+        isPublic: { required: true, message: 'File visibility is required', trigger: 'blur' },
         file: { required: true, message: 'File is required', trigger: 'blur' }
       }
     }
   },
   methods: {
-    submitForm () {
-
+    submitForm (formName) {
+      this.$refs[formName].validate(valid => {
+        if (valid) {
+          this.uploadData()
+        } else {
+          return false
+        }
+      })
     },
-    handleFileChange (file) {
+    handleFileChange (file, fileList) {
       console.log(file)
       this.dataUploadForm.file = file.raw
+    },
+    uploadData () {
+      this.axios.post('/data', this.dataUploadForm).then(response => {
+        console.log(response)
+      }, error => {
+        console.log(error)
+      })
     }
   },
   computed: {

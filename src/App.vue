@@ -1,7 +1,7 @@
 <template>
   <div class="aig__app" :class="appClass" v-loading="loading" element-loading-background="rgba(255, 255, 255, 1)" element-loading-text="Mounting application...">
     <Navigation/>
-    <transition name="fade">
+    <transition name="slideUp">
       <router-view class="aig__view"></router-view>
     </transition>
   </div>
@@ -48,6 +48,7 @@ export default {
 @import '~helpers/transitions';
 
 body.aig {
+  display: flex;
   font-family: $font-primary;
   overflow-y: scroll;
 }

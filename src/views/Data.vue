@@ -9,20 +9,24 @@
         {{ $t('anchors.data') }}
       </div>
     </div>
-    <div class="aig__view__body">
-      <el-row :gutter="20" class="aig__items" style="margin-top: 30px">
-        <el-col :xs="24" :sm="12" :md="12" :lg="8" v-if="$store.getters.isAuthenticated">
-          <DataItem :creatable="true" />
-        </el-col>
-        <el-col :xs="24" :sm="12" :md="12" :lg="8" v-for="dataItem in dataList" :key="dataItem.id">
-          <DataItem :data="dataItem" :key="dataItem.id" />
-        </el-col>
+    <div class="aig__view__body"  v-loading="loading" element-loading-background="transparent" element-loading-text="Loading data..">
+      <el-row :gutter="20" class="aig__items">
+        <transition-group name="list" tag="div">
+          <el-col :xs="24" :sm="12" :md="12" :lg="8" v-if="$store.getters.isAuthenticated">
+            <DataItem :creatable="true" />
+          </el-col>
+          <el-col :xs="24" :sm="12" :md="12" :lg="8" v-for="dataItem in dataList" :key="dataItem.id">
+            <DataItem :data="dataItem" :key="dataItem.id" />
+          </el-col>
+        </transition-group>
       </el-row>
       <el-pagination
+        v-if="this.dataList.length > 0"
         style="text-align: center; margin-top: 30px;"
         background
         layout="prev, pager, next"
-        :total="1000">
+        :total="1000"
+        size="small">
       </el-pagination>
     </div>
   </div>
@@ -38,6 +42,7 @@ export default {
   },
   data () {
     return {
+      loading: true,
       dataList: [],
       msg: 'Data view'
     }
@@ -45,6 +50,7 @@ export default {
   mounted () {
     this.axios.get('/data/list?page=1').then(response => {
       this.dataList = response.data.items
+      this.loading = false
     })
   }
 }

@@ -49,7 +49,7 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
   border: 0;
   line-height: 28px;
   background: #9549c8;
-  background: linear-gradient(135deg,#9549c8 0%,#5833b7 100%);
+  background: linear-gradient(45deg, rgba(88,51,183,1) 0%,rgba(149,73,200,1) 100%);
 }
 .el-pager li {
   font-size: 12px;
@@ -124,4 +124,8 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
   .el-loading-text {
     font-family: $font-secondary;
   }
+}
+
+.el-tooltip__popper.is-dark {
+  background: rgba(black, 0.85);
 }

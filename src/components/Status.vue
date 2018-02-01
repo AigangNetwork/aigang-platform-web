@@ -50,10 +50,8 @@ export default {
     height: 8px;
     background: darken($gray, 10);
     border-radius: 50%;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.12);
   }
-}
-.aig__status__badge {
-
 }
 .aig__status__content {
   margin-left: 6px;
