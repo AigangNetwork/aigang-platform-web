@@ -11,7 +11,7 @@
     </div>
     <div class="aig__view__body">
       <el-row :gutter="20" class="aig__items" style="margin-top: 30px">
-        <el-col :xs="24" :sm="12" :md="12" :lg="8">
+        <el-col :xs="24" :sm="12" :md="12" :lg="8" v-if="$store.getters.isAuthenticated">
           <DataItem :creatable="true" @click="modalUpload = true" />
         </el-col>
         <el-col :xs="24" :sm="12" :md="12" :lg="8" v-for="dataItem in dataList" :key="dataItem.id">
