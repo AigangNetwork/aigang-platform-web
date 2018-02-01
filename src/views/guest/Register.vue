@@ -44,8 +44,6 @@ export default {
       loading: false,
       registerForm: {
         email: '',
-        firstName: '',
-        lastName: '',
         password: '',
         rePassword: ''
       },
@@ -62,18 +60,15 @@ export default {
     submitForm (formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          this.login()
+          this.register()
         } else {
           return false
         }
       })
     },
-    login () {
+    register () {
       this.loading = true
-      this.axios.post('/account/login', {
-        email: this.registerForm.email,
-        password: this.registerForm.password
-      }).then(response => {
+      this.axios.post('/account/register', this.registerForm).then(response => {
         this.loading = false
         this.$store.dispatch('logIn', response.data.authorization)
       }).catch(error => {
