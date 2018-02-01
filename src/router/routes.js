@@ -1,5 +1,6 @@
-import Login from '@/views/Login'
-import Register from '@/views/Register'
+import Login from '@/views/guest/Login'
+import Register from '@/views/guest/Register'
+import ForgotPassword from '@/views/guest/ForgotPassword'
 
 import Dashboard from '@/views/Dashboard'
 import Data from '@/views/Data'
@@ -22,6 +23,14 @@ const routes = [
     path: '/register',
     name: 'Register',
     component: Register,
+    meta: {
+      guestRequired: true
+    }
+  },
+  {
+    path: '/forgot-password',
+    name: 'ForgotPassword',
+    component: ForgotPassword,
     meta: {
       guestRequired: true
     }

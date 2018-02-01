@@ -9,8 +9,11 @@ const messages = {
     },
     actions: {
       'login': 'Войти',
+      'loginToAccount': 'Войти в учетную запись',
       'upload_new_data': 'Загрузить новые данные',
-      'create_new_account': 'Создать учетную запись'
+      'createAccount': 'Создать учетную запись',
+      'retrievePassword': 'Вернуть пароль',
+      'forgotPassword': 'Забыли пароль?'
     },
     strings: {
       'hello': 'привет',
@@ -37,8 +40,11 @@ const messages = {
     },
     actions: {
       'login': 'Login',
+      'loginToAccount': 'Login to account',
       'upload_new_data': 'Upload new data',
-      'create_new_account': 'Create new account'
+      'createAccount': 'Create an account',
+      'retrievePassword': 'Retrieve password',
+      'forgotPassword': 'Forgot password?'
     },
     strings: {
       'hello': 'hello',

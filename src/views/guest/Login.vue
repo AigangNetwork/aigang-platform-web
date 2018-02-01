@@ -19,8 +19,8 @@
             </el-form>
           </div>
           <div slot="footer">
-            <router-link to="/register">Create new account</router-link>
-            <router-link to="/forgotten-password">Retrieve password</router-link>
+            <router-link to="/register">{{ $t('actions.createAccount') }}</router-link>
+            <router-link to="/forgot-password">{{ $t('actions.forgotPassword') }}</router-link>
           </div>
         </Card>
         <!-- </div> -->
@@ -44,7 +44,10 @@ export default {
         password: 'Laikinas123'
       },
       loginFormRules: {
-        email: { required: true, message: 'E-mail address is required', trigger: 'blur' },
+        email: [
+          { required: true, message: 'Please input email address', trigger: 'blur' },
+          { type: 'email', message: 'Please input correct email address', trigger: 'blur, change' }
+        ],
         password: { required: true, message: 'Password is required', trigger: 'blur' }
       }
     }

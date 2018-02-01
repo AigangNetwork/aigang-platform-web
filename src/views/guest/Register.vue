@@ -17,13 +17,13 @@
                 <el-input v-model="registerForm.rePassword" size="small" type="password" placeholder="********"></el-input>
               </el-form-item>
               <el-form-item style="margin-bottom: 0">
-                <el-button type="primary" @click="submitForm('registerForm')" style="width: 100%">{{ $t('actions.create_new_account') }}</el-button>
+                <el-button type="primary" @click="submitForm('registerForm')" style="width: 100%">{{ $t('actions.createAccount') }}</el-button>
               </el-form-item>
             </el-form>
           </div>
           <div slot="footer">
-            <router-link to="/login">Login to account</router-link>
-            <router-link to="/forgotten-password">Retrieve password</router-link>
+            <router-link to="/login">{{ $t('actions.loginToAccount') }}</router-link>
+            <router-link to="/forgot-password">{{ $t('actions.forgotPassword') }}</router-link>
           </div>
         </Card>
         <!-- </div> -->
@@ -50,7 +50,10 @@ export default {
         rePassword: ''
       },
       registerFormRules: {
-        email: { required: true, message: 'E-mail address is required', trigger: 'blur' },
+        email: [
+          { required: true, message: 'Please input email address', trigger: 'blur' },
+          { type: 'email', message: 'Please input correct email address', trigger: 'blur, change' }
+        ],
         password: { required: true, message: 'Password is required', trigger: 'blur' }
       }
     }
