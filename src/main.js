@@ -1,9 +1,11 @@
 import Vue from 'vue'
-import VueMoment from 'vue-moment'
 
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 import ElementUI from 'element-ui'
+
+import VueMoment from 'vue-moment'
+import 'moment/locale/ru'
 
 import App from '@/App'
 import i18n from '@/i18n'
@@ -36,7 +38,8 @@ new Vue({
   template: '<App/>',
   mounted () {
     this.$nextTick(() => {
-      // this.$i18n.locale = 'ru'
+      this.$i18n.locale = 'en'
+      this.$moment.locale('en')
       loaderInstance.close()
     })
   }
