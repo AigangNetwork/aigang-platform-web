@@ -19,7 +19,8 @@ export default {
   computed: {
     statusClass () {
       return {
-        'aig__status--green': this.status === 'active'
+        'aig__status--green': this.status === 'active',
+        'aig__status--red': this.status === 'closed'
       }
     }
   }
@@ -35,7 +36,12 @@ export default {
   align-items: center;
   &.aig__status--green {
     &:before {
-      background: $green;
+      background: linear-gradient(to bottom right, $green 0%, $green 100%);
+    }
+  }
+  &.aig__status--red {
+    &:before {
+      background: linear-gradient(to bottom right, $red 0%, $red 100%);
     }
   }
   &:before {

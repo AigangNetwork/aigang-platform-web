@@ -28,6 +28,11 @@ const messages = {
       'predictions': 'Прогнозы',
       'invest': 'Инвестиции',
       'insure': 'Страховка'
+    },
+    status: {
+      'active': 'Активный',
+      'closed': 'Закрытый',
+      'pending': 'Ожидает потверждения'
     }
   },
   // English
@@ -59,6 +64,11 @@ const messages = {
       'predictions': 'Predictions',
       'invest': 'Invest',
       'insure': 'Insure'
+    },
+    status: {
+      'active': 'Active',
+      'closed': 'Closed',
+      'pending': 'Pending'
     }
   }
 }
