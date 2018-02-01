@@ -1,7 +1,40 @@
 <template>
-  <button class="aig__data aig__data--creatable" @click="$emit('click', $event.target.value)" v-if="creatable">
+  <button class="aig__data aig__data--creatable" @click="modalUpload = true" v-if="creatable">
     <span class="title">{{ $t('actions.upload_new_data') }}</span>
     <span class="desc">Lorem ipsum dolar sit amet</span>
+    <el-dialog title="Upload new data" :visible.sync="modalUpload" width="480px">
+      <el-form :model="dataUploadForm" :rules="dataUploadFormRules" ref="dataUploadForm" label-width="95px">
+        <el-form-item label="Title" prop="title" size="small">
+          <el-input v-model="dataUploadForm.name"></el-input>
+        </el-form-item>
+        <el-form-item label="Description" prop="description" size="small">
+          <el-input type="textarea" v-model="dataUploadForm.description"></el-input>
+        </el-form-item>
+        <el-form-item label="Upload file" prop="file" style="width: 100%" size="small">
+          <el-upload drag :file-list="dataUploadForm.file" :action="`${axios.defaults.baseURL}/data`">
+          <i class="el-icon-upload"></i>
+          <div class="el-upload__text">Drop file here or <em>click to upload</em></div>
+          <div class="el-upload__tip" slot="tip">csv files only with a size less than 500kb</div>
+        </el-upload>
+        </el-form-item>
+        <el-form-item label="File visibility" prop="isPublic" size="small">
+          <el-select v-model="dataUploadForm.isPublic" placeholder="Select option" style="width: 100%">
+            <el-option label="Users only" value="users"></el-option>
+            <el-option label="Public" value="public"></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="Structure" prop="structure" size="small">
+          <el-input type="textarea" v-model="dataUploadForm.structure"></el-input>
+        </el-form-item>
+        <el-form-item label="Preview" prop="preview" size="small">
+          <el-input type="textarea" v-model="dataUploadForm.preview"></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="submitForm('ruleForm')">Upload</el-button>
+          <el-button @click="resetForm('ruleForm')">Reset</el-button>
+        </el-form-item>
+      </el-form>
+    </el-dialog>
   </button>
   <div class="aig__data" v-else>
     <div class="aig__data__head">
@@ -42,6 +75,33 @@ export default {
     data: {
       required: false,
       type: Object
+    }
+  },
+  data () {
+    return {
+      modalUpload: false,
+      dataUploadForm: {
+        id: '',
+        title: '',
+        description: '',
+        details: '',
+        structure: '',
+        preview: '',
+        isPublic: 'users',
+        file: []
+      },
+      dataUploadFormRules: {
+        title: { required: true, message: 'Title is required', trigger: 'blur' },
+        description: { required: true, message: 'Description is required', trigger: 'blur' },
+        structure: { required: true, message: 'Structure is required', trigger: 'blur' },
+        isPublic: { required: true, message: 'Select option', trigger: 'blur' },
+        file: { required: true, message: 'File is required', trigger: 'blur' }
+      }
+    }
+  },
+  methods: {
+    submitForm () {
+
     }
   },
   computed: {
