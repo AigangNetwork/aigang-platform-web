@@ -2,29 +2,37 @@
   <button class="aig__data aig__data--creatable" @click="modalUpload = true" v-if="creatable">
     <span class="title">{{ $t('actions.upload_new_data') }}</span>
     <span class="desc">Lorem ipsum dolar sit amet</span>
+    <!--  Upload data modal -->
     <el-dialog title="Upload new data" :visible.sync="modalUpload" width="480px">
-      <el-form :model="dataUploadForm" :rules="dataUploadFormRules" ref="dataUploadForm" label-width="95px">
+      <el-form :model="dataUploadForm" :rules="dataUploadFormRules" ref="dataUploadForm" label-width="95px" label-position="labelPosition">
         <el-form-item label="Title" prop="title" size="small">
-          <el-input v-model="dataUploadForm.name"></el-input>
+          <el-input v-model="dataUploadForm.title"></el-input>
         </el-form-item>
         <el-form-item label="Description" prop="description" size="small">
           <el-input type="textarea" v-model="dataUploadForm.description"></el-input>
         </el-form-item>
         <el-form-item label="Upload file" prop="file" style="width: 100%" size="small">
-          <el-upload drag :file-list="dataUploadForm.file" :action="`${axios.defaults.baseURL}/data`">
+          <el-upload ref="csvFile" drag :action="`${axios.defaults.baseURL}/data`" :multiple="false" :auto-upload="false" :on-change="handleFileChange" accept=".csv">
           <i class="el-icon-upload"></i>
           <div class="el-upload__text">Drop file here or <em>click to upload</em></div>
           <div class="el-upload__tip" slot="tip">csv files only with a size less than 500kb</div>
         </el-upload>
         </el-form-item>
         <el-form-item label="File visibility" prop="isPublic" size="small">
-          <el-select v-model="dataUploadForm.isPublic" placeholder="Select option" style="width: 100%">
+          <!-- <el-select v-model="dataUploadForm.isPublic" placeholder="Select option" style="width: 100%">
             <el-option label="Users only" value="users"></el-option>
             <el-option label="Public" value="public"></el-option>
-          </el-select>
+          </el-select> -->
+          <el-radio-group v-model="dataUploadForm.isPublic" size="medium">
+            <el-radio-button :label="true">Public</el-radio-button>
+            <el-radio-button :label="false">Users only</el-radio-button>
+          </el-radio-group>
         </el-form-item>
         <el-form-item label="Structure" prop="structure" size="small">
           <el-input type="textarea" v-model="dataUploadForm.structure"></el-input>
+        </el-form-item>
+        <el-form-item label="Details" prop="details" size="small">
+          <el-input type="textarea" v-model="dataUploadForm.details"></el-input>
         </el-form-item>
         <el-form-item label="Preview" prop="preview" size="small">
           <el-input type="textarea" v-model="dataUploadForm.preview"></el-input>
@@ -35,6 +43,7 @@
         </el-form-item>
       </el-form>
     </el-dialog>
+    <!-- /Upload data modal -->
   </button>
   <div class="aig__data" v-else>
     <div class="aig__data__head">
@@ -87,7 +96,7 @@ export default {
         details: '',
         structure: '',
         preview: '',
-        isPublic: 'users',
+        isPublic: true,
         file: []
       },
       dataUploadFormRules: {
@@ -102,6 +111,10 @@ export default {
   methods: {
     submitForm () {
 
+    },
+    handleFileChange (file) {
+      console.log(file)
+      this.dataUploadForm.file = file.raw
     }
   },
   computed: {
