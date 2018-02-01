@@ -21,7 +21,8 @@ const messages = {
       'password': 'Пароль',
       'rePassword': 'Повторите пароль',
       'firstName': 'Имя',
-      'lastName': 'Фамлия'
+      'lastName': 'Фамлия',
+      'added': 'Добавлено'
     },
     anchors: {
       'data': 'Данные',
@@ -57,7 +58,8 @@ const messages = {
       'password': 'Password',
       'rePassword': 'Repeat password',
       'firstName': 'First name',
-      'lastName': 'Last name'
+      'lastName': 'Last name',
+      'added': 'Added'
     },
     anchors: {
       'data': 'Data',
