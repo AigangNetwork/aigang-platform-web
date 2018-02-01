@@ -11,10 +11,10 @@
     </div>
     <div class="aig__view__body"  v-loading="loading" element-loading-background="transparent" element-loading-text="Loading data..">
       <el-row :gutter="20" class="aig__items">
+        <el-col :xs="24" :sm="12" :md="12" :lg="8" v-if="$store.getters.isAuthenticated">
+          <DataItem :creatable="true" />
+        </el-col>
         <transition-group name="list" tag="div">
-          <el-col :xs="24" :sm="12" :md="12" :lg="8" v-if="$store.getters.isAuthenticated">
-            <DataItem :creatable="true" />
-          </el-col>
           <el-col :xs="24" :sm="12" :md="12" :lg="8" v-for="dataItem in dataList" :key="dataItem.id">
             <DataItem :data="dataItem" :key="dataItem.id" />
           </el-col>
