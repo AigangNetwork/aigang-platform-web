@@ -57,7 +57,7 @@ export default {
     readableState () {
       if (this.data.state === 'active') {
         return this.$i18n.t('status.active')
-      } else if (this.data.state == 'closed') {
+      } else if (this.data.state === 'closed') {
         return this.$i18n.t('status.closed')
       } else {
         return this.$i18n.t('status.pending')
