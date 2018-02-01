@@ -5,6 +5,9 @@ import ForgotPassword from '@/views/guest/ForgotPassword'
 import Dashboard from '@/views/Dashboard'
 import Data from '@/views/Data'
 import DataInner from '@/views/DataInner'
+import DataModels from '@/views/DataModels'
+import DataDetails from '@/views/DataDetails'
+
 import Predictions from '@/views/Predictions'
 import Invest from '@/views/Invest'
 import Insure from '@/views/Insure'
@@ -47,8 +50,20 @@ const routes = [
   },
   {
     path: '/data/:id',
+    component: DataInner,
     name: 'DataInner',
-    component: DataInner
+    children: [
+      {
+        name: 'DataDetails',
+        path: 'details',
+        component: DataDetails
+      },
+      {
+        name: 'DataModels',
+        path: 'models',
+        component: DataModels
+      }
+    ]
   },
   {
     path: '/predictions',

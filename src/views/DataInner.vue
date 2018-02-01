@@ -13,8 +13,10 @@
         </div>
       </div>
     </div>
-    <div class="aig__view__body aig__container">
-
+    <div class="aig__view__body">
+      <transition name="slideUp">
+        <router-view></router-view>
+      </transition>
     </div>
   </div>
 </template>
