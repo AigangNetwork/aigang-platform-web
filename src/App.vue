@@ -167,7 +167,7 @@ a {
   }
   .aig__view__title {
     font-size: 32px;
-    font-weight: 500;
+    font-weight: 400;
     font-family: $font-secondary;
     &.aig__view__title--small {
       font-size: 24px;
