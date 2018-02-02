@@ -119,15 +119,18 @@ export default {
     },
     uploadData (formName) {
       console.log(this.$refs[formName].fields)
-      // this.axios.post('/data', this.dataUploadForm, {
-      //   headers: {
-      //     'Content-Type': 'multipart/form-data'
-      //   }
-      // }).then(response => {
-      //   console.log(response)
-      // }, error => {
-      //   console.log(error)
-      // })
+      // TODO: Make it cleaner
+      var uploadForm = new FormData()
+      uploadForm.append('Title', this.dataUploadForm.title)
+      uploadForm.append('Description', this.dataUploadForm.description)
+      uploadForm.append('Structure', this.dataUploadForm.structure)
+      uploadForm.append('Details', this.dataUploadForm.details)
+      uploadForm.append('File', this.dataUploadForm.file)
+      this.axios.post('/data', uploadForm).then(response => {
+        console.log(response)
+      }, error => {
+        console.log(error)
+      })
     }
   },
   computed: {
