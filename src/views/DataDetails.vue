@@ -1,6 +1,8 @@
 <template>
   <div>
-    Data details
+    <div class="aig__view__title aig__view__title--small">
+      Details
+    </div>
   </div>
 </template>
 

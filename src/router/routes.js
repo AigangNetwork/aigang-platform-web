@@ -51,7 +51,6 @@ const routes = [
   {
     path: '/data/:id',
     component: DataInner,
-    name: 'DataInner',
     children: [
       {
         name: 'DataDetails',

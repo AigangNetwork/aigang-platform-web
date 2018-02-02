@@ -14,9 +14,33 @@
       </div>
     </div>
     <div class="aig__view__body">
-      <transition name="slideUp">
-        <router-view></router-view>
-      </transition>
+      <el-row :gutter="40">
+        <el-col :lg="6">
+          <div class="aig__sidemenu">
+            <div class="aig__sidemenu__group">
+              <div class="head">
+                <div class="title">More information</div>
+              </div>
+              <div class="body">
+                <ul class="menu">
+                  <li>
+                    <router-link :to="{ name: 'DataDetails' }">Details</router-link>
+                  </li>
+                  <li>
+                    <router-link :to="{ name: 'DataModels' }">Models</router-link>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </el-col>
+        <el-col :lg="18">
+          <transition name="slideUp">
+            <router-view></router-view>
+          </transition>
+        </el-col>
+      </el-row>
+
     </div>
   </div>
 </template>

@@ -5,8 +5,11 @@
         <el-breadcrumb-item to="/">AiGang Network</el-breadcrumb-item>
         <el-breadcrumb-item>{{ $t('anchors.data') }}</el-breadcrumb-item>
       </el-breadcrumb>
-      <div class="aig__view__title">
-        {{ $t('anchors.data') }}
+      <div class="aig__view__heading">
+        <div class="aig__view__title">{{ $t('anchors.data') }}</div>
+        <div class="aig__view__description">
+          <p>Suspendisse potenti. Sed sagittis, nisl a interdum lacinia, sem odio tincidunt erat, at ultrices mauris quam at ligula.</p>
+        </div>
       </div>
     </div>
     <div class="aig__view__body"  v-loading="loading" element-loading-background="transparent" element-loading-text="Loading data..">
