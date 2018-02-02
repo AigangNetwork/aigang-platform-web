@@ -1,7 +1,13 @@
 <template>
-  <div>
-    <div class="aig__view__body aig__container">
-      {{ $t('strings.hello') }}
+  <div class="aig__container">
+    <div class="aig__view__head">
+      <el-breadcrumb class="aig__breadcrumbs" separator-class="el-icon-arrow-right">
+        <el-breadcrumb-item to="/">AiGang Network</el-breadcrumb-item>
+        <el-breadcrumb-item to="/">Dashboard</el-breadcrumb-item>
+      </el-breadcrumb>
+      <div class="aig__view__heading">
+        <div class="aig__view__title">Dashboard</div>
+      </div>
     </div>
   </div>
 </template>
