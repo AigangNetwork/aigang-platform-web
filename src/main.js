@@ -8,7 +8,7 @@ import VueMoment from 'vue-moment'
 import 'moment/locale/ru'
 
 import App from '@/App'
-import i18n from '@/i18n'
+import i18n from '@/lang'
 import store from '@/vuex'
 import router from '@/router'
 

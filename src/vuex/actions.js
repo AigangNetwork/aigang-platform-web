@@ -1,7 +1,7 @@
 import * as types from './mutation-types'
 import router from '@/router'
 import { Message } from 'element-ui'
-import i18n from '@/i18n'
+import i18n from '@/lang'
 import axios from 'axios'
 
 const logIn = ({ commit }, user) => {

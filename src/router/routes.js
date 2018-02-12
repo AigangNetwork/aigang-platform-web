@@ -13,6 +13,8 @@ import Invest from '@/views/Invest'
 import Insure from '@/views/Insure'
 import Profile from '@/views/Profile'
 
+import NotFound from '@/views/general/NotFound'
+
 const routes = [
   {
     path: '/login',
@@ -21,6 +23,11 @@ const routes = [
     meta: {
       guestRequired: true
     }
+  },
+  {
+    path: '*',
+    name: 'NotFoundComponent',
+    component: NotFound
   },
   {
     path: '/register',

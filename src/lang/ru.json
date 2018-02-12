@@ -1,0 +1,36 @@
+{
+    "notifications": {
+      "login_success": "Успешно вошли в систему"
+    },
+    "account": {
+      "balance": "Баланс"
+    },
+    "actions": {
+      "login": "Войти",
+      "loginToAccount": "Войти в учетную запись",
+      "upload_new_data": "Загрузить новые данные",
+      "createAccount": "Создать учетную запись",
+      "retrievePassword": "Вернуть пароль",
+      "forgotPassword": "Забыли пароль?"
+    },
+    "strings": {
+      "hello": "привет",
+      "email": "Адрес электроной почты",
+      "password": "Пароль",
+      "rePassword": "Повторите пароль",
+      "firstName": "Имя",
+      "lastName": "Фамлия",
+      "added": "Добавлено"
+    },
+    "anchors": {
+      "data": "Данные",
+      "predictions": "Прогнозы",
+      "invest": "Инвестиции",
+      "insure": "Страховка"
+    },
+    "status": {
+      "active": "Активный",
+      "closed": "Закрытый",
+      "pending": "Ожидает потверждения"
+    }
+}
