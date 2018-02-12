@@ -33,6 +33,11 @@
     "closed": "Closed",
     "pending": "Pending"
   },
+  "validation":{
+    "emailEmpty": "Please input email address",
+    "emailNotValid": "Please input correct email address",
+    "passwordEmpty": "Password is required"
+  },
   "errors": {
     "pagePathNotFound": "The page you are trying to access is not available"
   }

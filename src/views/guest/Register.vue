@@ -49,10 +49,11 @@ export default {
       },
       registerFormRules: {
         email: [
-          { required: true, message: 'Please input email address', trigger: 'blur' },
-          { type: 'email', message: 'Please input correct email address', trigger: 'blur, change' }
+          { required: true, message: this.$t('validation.emailEmpty'), trigger: 'blur' },
+          { type: 'email', message: this.$t('validation.emailNotValid'), trigger: 'blur, change' }
         ],
-        password: { required: true, message: 'Password is required', trigger: 'blur' }
+        password: { required: true, message: this.$t('validation.passwordEmpty'), trigger: 'blur' },
+        rePassword: { required: true, message: this.$t('validation.passwordEmpty'), trigger: 'blur' }
       }
     }
   },
