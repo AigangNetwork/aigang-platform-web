@@ -15,7 +15,7 @@
     <div class="aig__view__body"  v-loading="loading" element-loading-background="transparent" element-loading-text="Loading data..">
       <el-row :gutter="20" class="aig__items">
         <el-col :xs="24" :sm="12" :md="12" :lg="8" v-if="$store.getters.isAuthenticated">
-          <DataItem :creatable="true" />
+          <DataItem v-on:successfullUpload="loadDataItems" :creatable="true" />
         </el-col>
         <transition-group name="list" tag="div">
           <el-col :xs="24" :sm="12" :md="12" :lg="8" v-for="dataItem in dataList" :key="dataItem.id">
@@ -50,11 +50,16 @@ export default {
       msg: 'Data view'
     }
   },
+  methods: {
+    loadDataItems () {
+      this.axios.get('/data/list?page=1').then(response => {
+        this.dataList = response.data.items
+        this.loading = false
+      })
+    }
+  },
   mounted () {
-    this.axios.get('/data/list?page=1').then(response => {
-      this.dataList = response.data.items
-      this.loading = false
-    })
+    this.loadDataItems()
   }
 }
 </script>
