@@ -3,7 +3,7 @@
     <span class="title">{{ $t('actions.upload_new_data') }}</span>
     <span class="desc">Lorem ipsum dolar sit amet</span>
     <!--  Upload data modal -->
-    <el-dialog title="Upload new data" :visible.sync="modalUpload" width="480px">
+    <el-dialog title="Upload new data" v-loading="uploading" element-loading-text="Uploading..." :visible.sync="modalUpload" width="480px">
       <el-form :model="dataUploadForm" :rules="dataUploadFormRules" ref="dataUploadForm" label-width="95px" label-position="labelPosition">
         <el-form-item label="Title" prop="title" size="small">
           <el-input v-model="dataUploadForm.title"></el-input>
@@ -65,6 +65,7 @@
 
 <script>
 import Status from '@/components/Status'
+import { Message } from 'element-ui'
 
 export default {
   name: 'DataItem',
@@ -85,6 +86,7 @@ export default {
   data () {
     return {
       modalUpload: false,
+      uploading: false,
       dataUploadForm: {
         title: 'Title',
         description: 'Description',
@@ -118,7 +120,7 @@ export default {
       this.dataUploadForm.file = file.raw
     },
     uploadData (formName) {
-      console.log(this.$refs[formName].fields)
+      this.uploading = true
       // TODO: Make it cleaner
       var uploadForm = new FormData()
       uploadForm.append('Title', this.dataUploadForm.title)
@@ -126,21 +128,38 @@ export default {
       uploadForm.append('Structure', this.dataUploadForm.structure)
       uploadForm.append('Details', this.dataUploadForm.details)
       uploadForm.append('File', this.dataUploadForm.file)
+      uploadForm.append('IsPublic', this.isPublic)
       this.axios.post('/data', uploadForm).then(response => {
-        console.log(response)
+        this.successfullUpload()
       }, error => {
+        Message({
+          message: this.$t('data.upload.notifications.upload_error'),
+          type: 'error',
+          showClose: true
+        })
         console.log(error)
+        this.uploading = false
       })
+    },
+    successfullUpload () {
+      this.uploading = false
+      Message({
+        message: this.$t('data.upload.notifications.upload_success'),
+        type: 'success',
+        showClose: true
+      })
+      this.modalUpload = false
+      this.$emit('successfullUpload')
     }
   },
   computed: {
     readableState () {
       if (this.data.state === 'active') {
-        return this.$i18n.t('status.active')
+        return this.$t('status.active')
       } else if (this.data.state === 'closed') {
-        return this.$i18n.t('status.closed')
+        return this.$t('status.closed')
       } else {
-        return this.$i18n.t('status.pending')
+        return this.$t('status.pending')
       }
     }
   }

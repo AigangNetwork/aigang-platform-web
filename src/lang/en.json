@@ -1,7 +1,15 @@
 {
+  "data": {
+    "upload": {
+      "notifications": {
+        "upload_success": "Successfully uploaded data",
+        "upload_error": "Failed to upload data"
+      }
+    }
+  },
   "notifications": {
     "login_success": "Successfully signed in"
-  },
+    },
   "account": {
     "balance": "Balance"
   },
@@ -32,6 +40,9 @@
     "active": "Active",
     "closed": "Closed",
     "pending": "Pending"
+  },
+  "general": {
+    "uploading": "Uploading..."
   },
   "errors": {
     "pagePathNotFound": "The page you are trying to access is not available"
