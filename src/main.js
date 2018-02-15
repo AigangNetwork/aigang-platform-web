@@ -19,7 +19,8 @@ Vue.use(VueAxios, axios)
 Vue.use(ElementUI)
 Vue.use(VueMoment)
 
-Vue.axios.defaults.baseURL = 'https://aigangplatformapi.azurewebsites.net/api'
+// Vue.axios.defaults.baseURL = 'http://test.api.aigang.network/api'
+Vue.axios.defaults.baseURL = 'http://localhost:5000/api'
 Vue.config.productionTip = false
 Vue.config.lang = 'en'
 

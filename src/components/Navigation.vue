@@ -1,6 +1,6 @@
 <template>
   <transition name="slideDown">
-    <div class="aig__navigation" v-if="!$route.meta.guestRequired">
+    <div class="aig__navigation">
       <div class="aig__navigation__body">
         <div class="aig__container">
           <router-link to="/" class="aig__logo" exact>

@@ -2,7 +2,7 @@
   <div class="aig__view--centered">
     <div class="aig__view__body aig__container" style="max-width: 400px">
         <Card>
-          <div slot="body" v-loading="loading" element-loading-text="Logging in...">
+          <div slot="body" v-loading="loading" :element-loading-text="$t('general.loading')">
             <div class="aig__logo">
               <img src="/static/logo-color.png" alt="">
             </div>
@@ -20,10 +20,9 @@
           </div>
           <div slot="footer">
             <router-link to="/register">{{ $t('actions.createAccount') }}</router-link>
-            <router-link to="/forgot-password">{{ $t('actions.forgotPassword') }}</router-link>
+            <router-link to="/forgotPassword">{{ $t('actions.forgotPassword') }}</router-link>
           </div>
         </Card>
-        <!-- </div> -->
     </div>
   </div>
 </template>
@@ -74,6 +73,7 @@ export default {
           showClose: true
         })
         this.loading = false
+        console.log(error.response)
       })
     }
   }
