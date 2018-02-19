@@ -11,6 +11,7 @@ import App from '@/App'
 import i18n from '@/lang'
 import store from '@/vuex'
 import router from '@/router'
+import eventHub from './utils/eventHub'
 
 import 'element-ui/lib/theme-chalk/index.css'
 import '@/scss/element-aig.scss'
@@ -19,13 +20,18 @@ Vue.use(VueAxios, axios)
 Vue.use(ElementUI)
 Vue.use(VueMoment)
 
-Vue.axios.defaults.baseURL = 'https://aigangplatformapi.azurewebsites.net/api'
+Vue.axios.defaults.baseURL = 'https://aigangplatformapi.azurewebsites.net/api' // 'http://localhost:5000/api'
 Vue.config.productionTip = false
 Vue.config.lang = 'en'
 
 let loaderInstance = ElementUI.Loading.service({
   fullscreen: true,
   text: 'Initializing application'
+})
+
+axios.interceptors.response.use(undefined, err => {
+  eventHub.$emit('errorNotification', err.response)
+  return Promise.reject(err)
 })
 
 /* eslint-disable no-new */

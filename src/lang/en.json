@@ -3,7 +3,12 @@
     "upload": {
       "notifications": {
         "upload_success": "Successfully uploaded data",
-        "upload_error": "Failed to upload data"
+        "upload_error": "Failed to upload data",
+        "titles": {
+          "success": "Success",
+          "error": "Error",
+          "info": "Info"
+        }
       }
     }
   },
@@ -50,6 +55,13 @@
     "uploading": "Uploading..."
   },
   "errors": {
-    "pagePathNotFound": "The page you are trying to access is not available"
+    "pagePathNotFound": "The page you are trying to access is not available",
+    "validationError": "You have entered an invalid data",
+    "400": "You have entered bad request.",
+    "401": "You are unauthorized.",
+    "403": "This actions is forbbiden.",
+    "404": "Element was not found.",
+    "408": "Request timed out.",
+    "500": "Internal server failure."
   }
 }

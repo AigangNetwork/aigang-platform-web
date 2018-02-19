@@ -35,7 +35,7 @@
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="submitForm('dataUploadForm')">Upload data</el-button>
-          <el-button @click="resetForm('dataUploadForm')">Reset</el-button>
+          <el-button @click="resetForm()">Reset</el-button>
         </el-form-item>
       </el-form>
     </el-dialog>
@@ -65,8 +65,7 @@
 
 <script>
 import Status from '@/components/Status'
-import { Message } from 'element-ui'
-
+// import errorHanlder from '../utils/errorHandler'
 export default {
   name: 'DataItem',
   components: {
@@ -115,38 +114,39 @@ export default {
         }
       })
     },
+    resetForm () {
+      this.dataUploadForm = {
+        title: '',
+        description: '',
+        details: '',
+        structure: '',
+        preview: '',
+        isPublic: true,
+        file: []
+      }
+    },
     handleFileChange (file, fileList) {
-      console.log(file)
       this.dataUploadForm.file = file.raw
     },
     uploadData (formName) {
       this.uploading = true
-      // TODO: Make it cleaner
       var uploadForm = new FormData()
-      uploadForm.append('Title', this.dataUploadForm.title)
-      uploadForm.append('Description', this.dataUploadForm.description)
-      uploadForm.append('Structure', this.dataUploadForm.structure)
-      uploadForm.append('Details', this.dataUploadForm.details)
-      uploadForm.append('File', this.dataUploadForm.file)
-      uploadForm.append('IsPublic', this.isPublic)
+      for (var key in this.dataUploadForm) {
+        uploadForm.append(key, this.dataUploadForm[key])
+      }
       this.axios.post('/data', uploadForm).then(response => {
         this.successfullUpload()
       }, error => {
-        Message({
-          message: this.$t('data.upload.notifications.upload_error'),
-          type: 'error',
-          showClose: true
-        })
         console.log(error)
         this.uploading = false
       })
     },
     successfullUpload () {
       this.uploading = false
-      Message({
-        message: this.$t('data.upload.notifications.upload_success'),
+      this.$notify({
+        title: this.$t('data.upload.notifications.titles.success'),
         type: 'success',
-        showClose: true
+        message: this.$t('data.upload.notifications.upload_success')
       })
       this.modalUpload = false
       this.$emit('successfullUpload')

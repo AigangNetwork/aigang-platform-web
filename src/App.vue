@@ -4,11 +4,13 @@
     <transition name="slideUp">
       <router-view class="aig__view"></router-view>
     </transition>
+    <notification></notification>
   </div>
 </template>
 
 <script>
 import Navigation from '@/components/Navigation'
+import Notification from '@/components/Notification'
 
 export default {
   name: 'App',
@@ -18,7 +20,8 @@ export default {
     }
   },
   components: {
-    Navigation
+    Navigation,
+    Notification
   },
   computed: {
     appClass () {
