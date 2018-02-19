@@ -1,7 +1,5 @@
 import * as types from './mutation-types'
 import router from '@/router'
-import { Message } from 'element-ui'
-import i18n from '@/lang'
 import axios from 'axios'
 
 const logIn = ({ commit }, user) => {
@@ -19,12 +17,6 @@ const logIn = ({ commit }, user) => {
     commit(types.LOGIN, user)
     // push to / route
     router.push('/')
-    // push success notification
-    Message({
-      message: i18n.t('notifications.login_success'),
-      type: 'success',
-      showClose: true
-    })
   })
 }
 
