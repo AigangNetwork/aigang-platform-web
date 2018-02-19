@@ -5,7 +5,7 @@ import ru from './ru.json'
 
 Vue.use(VueI18n)
 
-const locale = 'en' // default locale
+let locale = 'en' // default locale
 
 const messages = {
   en: en,

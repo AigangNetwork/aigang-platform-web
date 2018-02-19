@@ -1,6 +1,7 @@
 import Login from '@/views/guest/Login'
 import Register from '@/views/guest/Register'
 import ForgotPassword from '@/views/guest/ForgotPassword'
+import ActivateEmail from '@/views/guest/ActivateEmail'
 
 import Dashboard from '@/views/Dashboard'
 import Data from '@/views/Data'
@@ -38,7 +39,15 @@ const routes = [
     }
   },
   {
-    path: '/forgot-password',
+    path: '/activateEmail',
+    name: 'ActivateEmail',
+    component: ActivateEmail
+    // meta: {
+    //   guestRequired: true
+    // }
+  },
+  {
+    path: '/forgotPassword',
     name: 'ForgotPassword',
     component: ForgotPassword,
     meta: {

@@ -16,23 +16,21 @@ router.beforeEach((to, from, next) => {
 
   if (authRequired) {
     if (!store.getters.isAuthenticated) {
-      next({
-        path: '/login'
-      })
+      next({ path: '/login' })
     } else {
       next()
     }
-  } else if (guestRequired) {
-    if (store.getters.isAuthenticated) {
-      next({
-        path: '/'
-      })
-    } else {
-      next()
-    }
-  } else {
-    next()
   }
+
+  if (guestRequired) {
+    if (store.getters.isAuthenticated) {
+      next({ path: '/' })
+    } else {
+      next()
+    }
+  }
+
+  next()
 })
 
 export default router

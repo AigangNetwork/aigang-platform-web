@@ -23,7 +23,7 @@
           </div>
           <div slot="footer">
             <router-link to="/login">{{ $t('actions.loginToAccount') }}</router-link>
-            <router-link to="/forgot-password">{{ $t('actions.forgotPassword') }}</router-link>
+            <router-link to="/forgotPassword">{{ $t('actions.forgotPassword') }}</router-link>
           </div>
         </Card>
         <!-- </div> -->
@@ -73,8 +73,22 @@ export default {
         this.loading = false
         this.$store.dispatch('logIn', response.data.authorization)
       }).catch(error => {
+        if (error.response.status === 400) {
+          this.$message({
+            type: 'error',
+            message: error.response.data.params.ValidationFailed[0].reason,
+            showClose: true
+          })
+        } else {
+          this.$message({
+            type: 'error',
+            message: error.response.data.reason,
+            showClose: true
+          })
+        }
+
         this.loading = false
-        console.log(error)
+        console.log(error.response)
       })
     }
   }

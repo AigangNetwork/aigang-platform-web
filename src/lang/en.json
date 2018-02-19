@@ -12,9 +12,12 @@
       }
     }
   },
+  "activateEmail": {
+    "activating": "Activating ..."
+  },
   "notifications": {
     "login_success": "Successfully signed in"
-    },
+  },
   "account": {
     "balance": "Balance"
   },
@@ -52,7 +55,8 @@
     "passwordEmpty": "Password is required"
   },
   "general": {
-    "uploading": "Uploading..."
+    "uploading": "Uploading ...",
+    "loading": "Loading ..."
   },
   "errors": {
     "pagePathNotFound": "The page you are trying to access is not available",
