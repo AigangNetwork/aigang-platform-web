@@ -47,10 +47,15 @@ export default {
       this.notificationVisible = true
       this.title = this.$t('errors.error')
 
-      if (error.status === 400) {
-        this.handle400(error.data)
+      if (error.response) {
+        if (error.response.status === 400) {
+          this.handle400(error.response.data)
+          return
+        }
+
+        this.messages.push(this.$t('errors.' + error.response.status.toString()))
       } else {
-        this.messages.push(this.$t('errors.' + error.status.toString()))
+        this.messages.push(this.$t('errors.unhandled') + error.message)
       }
     }
   },

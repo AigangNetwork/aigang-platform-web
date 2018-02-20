@@ -2,11 +2,14 @@
   <div class="aig__view--centered">
     <div class="aig__view__body aig__container" style="max-width: 400px">
         <Card>
+
           <div slot="body" v-loading="loading" :element-loading-text="$t('general.loading')">
+
             <div class="aig__logo">
               <img src="/static/logo-color.png" alt="">
             </div>
-            <el-form :model="registerForm" :rules="registerFormRules" ref="registerForm">
+
+            <el-form :model="registerForm" :rules="registerFormRules" ref="registerForm" v-show="!isVerificationVisisble">
               <el-form-item :label="$t('strings.email')" prop="email" size="small">
                 <el-input v-model="registerForm.email" size="small" placeholder="example@aigang.network"></el-input>
               </el-form-item>
@@ -20,6 +23,14 @@
                 <el-button type="primary" @click="submitForm('registerForm')" style="width: 100%">{{ $t('actions.createAccount') }}</el-button>
               </el-form-item>
             </el-form>
+
+            <div v-show="isVerificationVisisble">
+              <p>{{ $t('register.emailSent', [registerForm.email]) }}</p>
+              <p>{{ $t('register.dontReceiveEmail') }}
+                <el-button type="text" @click="resendEmail()" >{{ $t('general.here') }}</el-button>
+              </p>
+            </div>
+
           </div>
           <div slot="footer">
             <router-link to="/login">{{ $t('actions.loginToAccount') }}</router-link>
@@ -41,6 +52,7 @@ export default {
   data () {
     return {
       loading: false,
+      isVerificationVisisble: false,
       registerForm: {
         email: '',
         password: '',
@@ -55,7 +67,10 @@ export default {
           { required: true, message: this.$t('validation.passwordEmpty'), trigger: 'blur' },
           { min: 6, message: this.$t('validation.passwordTooShort'), trigger: 'blur' }
         ],
-        rePassword: { required: true, message: this.$t('validation.passwordEmpty'), trigger: 'blur' }
+        rePassword: [
+          { required: true, message: this.$t('validation.passwordEmpty'), trigger: 'blur' },
+          { min: 6, message: this.$t('validation.passwordTooShort'), trigger: 'blur' }
+        ]
       }
     }
   },
@@ -73,7 +88,16 @@ export default {
       this.loading = true
       this.axios.post('/account/register', this.registerForm).then(response => {
         this.loading = false
-        this.$store.dispatch('logIn', response.data.authorization)
+        this.isVerificationVisisble = true
+      })
+        .catch(e => {
+          this.loading = false
+        })
+    },
+    resendEmail () {
+      this.loading = true
+      this.axios.post(`/account/sendverifyemail?Email=${this.registerForm.email}`).then(response => {
+        this.loading = false
       })
         .catch(e => {
           this.loading = false

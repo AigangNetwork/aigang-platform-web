@@ -13,7 +13,12 @@
     }
   },
   "activateEmail": {
-    "activating": "Activating ..."
+    "activating": "Activating ...",
+    "activated": "Your account was successfully activated. Now you can Login"
+  },
+  "register": {
+    "emailSent": "Email was sent to {0}. Follow instructions provided in email.",
+    "dontReceiveEmail": "If you didn't receive email, click: "
   },
   "notifications": {
     "login_success": "Successfully signed in"
@@ -58,7 +63,8 @@
   "general": {
     "uploading": "Uploading ...",
     "loading": "Loading ...",
-    "ok": "OK"
+    "ok": "OK",
+    "here": "Here"
   },
   "errors": {
     "error": "Error",
@@ -68,12 +74,14 @@
     "404": "Not Found",
     "408": "Request Timeout",
     "500": "Internal Server Error",
+    "unhandled" : "Unhandled error: ",
     "validation": {
       "DuplicateUserName": "User name is taken. Please make it unique",
       "DuplicateEmail": "Email was registered earlier. Choose other email or use 'Forgot password'",
       "InvalidEmail": "Email is not valid",
       "PasswordNotMatchRePassword": "Passwords are not matching",
-      "PasswordTooShort": "Password is to short"
+      "PasswordTooShort": "Password is to short",
+      "InvalidQuery": "Request query is invalid"
     },
     "pagePathNotFound": "The page you are trying to access is not available",
     "validationError": "You have entered an invalid data"

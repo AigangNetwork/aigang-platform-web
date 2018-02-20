@@ -24,7 +24,7 @@ Vue.use(VueMoment)
 Vue.axios.defaults.baseURL = 'http://localhost:5000/api'
 
 axios.interceptors.response.use(undefined, err => {
-  eventHub.$emit(eventHub.eventCommunicationError, err.response)
+  eventHub.$emit(eventHub.eventCommunicationError, err)
   return Promise.reject(err)
 })
 
