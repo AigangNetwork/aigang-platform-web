@@ -22,17 +22,18 @@ Vue.use(VueMoment)
 
 // Vue.axios.defaults.baseURL = 'http://test.api.aigang.network/api'
 Vue.axios.defaults.baseURL = 'http://localhost:5000/api'
+
+axios.interceptors.response.use(undefined, err => {
+  eventHub.$emit(eventHub.eventCommunicationError, err.response)
+  return Promise.reject(err)
+})
+
 Vue.config.productionTip = false
 Vue.config.lang = 'en'
 
 let loaderInstance = ElementUI.Loading.service({
   fullscreen: true,
   text: 'Initializing application'
-})
-
-axios.interceptors.response.use(undefined, err => {
-  eventHub.$emit('errorNotification', err.response)
-  return Promise.reject(err)
 })
 
 /* eslint-disable no-new */

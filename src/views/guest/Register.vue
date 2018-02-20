@@ -2,7 +2,7 @@
   <div class="aig__view--centered">
     <div class="aig__view__body aig__container" style="max-width: 400px">
         <Card>
-          <div slot="body" v-loading="loading" element-loading-text="Creating new account...">
+          <div slot="body" v-loading="loading" :element-loading-text="$t('general.loading')">
             <div class="aig__logo">
               <img src="/static/logo-color.png" alt="">
             </div>
@@ -13,7 +13,7 @@
               <el-form-item :label="$t('strings.password')" prop="password" size="small">
                 <el-input v-model="registerForm.password" size="small" type="password" placeholder="********"></el-input>
               </el-form-item>
-              <el-form-item :label="$t('strings.rePassword')" prop="password" size="small">
+              <el-form-item :label="$t('strings.rePassword')" prop="rePassword" size="small">
                 <el-input v-model="registerForm.rePassword" size="small" type="password" placeholder="********"></el-input>
               </el-form-item>
               <el-form-item style="margin-bottom: 0">
@@ -26,7 +26,6 @@
             <router-link to="/forgotPassword">{{ $t('actions.forgotPassword') }}</router-link>
           </div>
         </Card>
-        <!-- </div> -->
     </div>
   </div>
 </template>
@@ -50,9 +49,12 @@ export default {
       registerFormRules: {
         email: [
           { required: true, message: this.$t('validation.emailEmpty'), trigger: 'blur' },
-          { type: 'email', message: this.$t('validation.emailNotValid'), trigger: 'blur, change' }
+          { type: 'email', message: this.$t('validation.emailNotValid'), trigger: 'blur' }
         ],
-        password: { required: true, message: this.$t('validation.passwordEmpty'), trigger: 'blur' },
+        password: [
+          { required: true, message: this.$t('validation.passwordEmpty'), trigger: 'blur' },
+          { min: 6, message: this.$t('validation.passwordTooShort'), trigger: 'blur' }
+        ],
         rePassword: { required: true, message: this.$t('validation.passwordEmpty'), trigger: 'blur' }
       }
     }
@@ -72,24 +74,10 @@ export default {
       this.axios.post('/account/register', this.registerForm).then(response => {
         this.loading = false
         this.$store.dispatch('logIn', response.data.authorization)
-      }).catch(error => {
-        if (error.response.status === 400) {
-          this.$message({
-            type: 'error',
-            message: error.response.data.params.ValidationFailed[0].reason,
-            showClose: true
-          })
-        } else {
-          this.$message({
-            type: 'error',
-            message: error.response.data.reason,
-            showClose: true
-          })
-        }
-
-        this.loading = false
-        console.log(error.response)
       })
+        .catch(e => {
+          this.loading = false
+        })
     }
   }
 }

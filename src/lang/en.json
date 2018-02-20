@@ -52,20 +52,30 @@
   "validation":{
     "emailEmpty": "Please input email address",
     "emailNotValid": "Please input correct email address",
-    "passwordEmpty": "Password is required"
+    "passwordEmpty": "Password is required",
+    "passwordTooShort": "Password must be at least 6 characters"
   },
   "general": {
     "uploading": "Uploading ...",
-    "loading": "Loading ..."
+    "loading": "Loading ...",
+    "ok": "OK"
   },
   "errors": {
+    "error": "Error",
+    "400": "Bad Request",
+    "401": "Unauthorized",
+    "403": "Forbidden",
+    "404": "Not Found",
+    "408": "Request Timeout",
+    "500": "Internal Server Error",
+    "validation": {
+      "DuplicateUserName": "User name is taken. Please make it unique",
+      "DuplicateEmail": "Email was registered earlier. Choose other email or use 'Forgot password'",
+      "InvalidEmail": "Email is not valid",
+      "PasswordNotMatchRePassword": "Passwords are not matching",
+      "PasswordTooShort": "Password is to short"
+    },
     "pagePathNotFound": "The page you are trying to access is not available",
-    "validationError": "You have entered an invalid data",
-    "400": "You have entered bad request.",
-    "401": "You are unauthorized.",
-    "403": "This actions is forbbiden.",
-    "404": "Element was not found.",
-    "408": "Request timed out.",
-    "500": "Internal server failure."
+    "validationError": "You have entered an invalid data"
   }
 }
