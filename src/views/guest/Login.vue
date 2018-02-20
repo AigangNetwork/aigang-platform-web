@@ -39,15 +39,18 @@ export default {
     return {
       loading: false,
       loginForm: {
-        email: 'test@test.lt',
-        password: 'Laikinas123'
+        email: 'test@test.lt', // todo remove
+        password: 'Laikinas123' // todo remove
       },
       loginFormRules: {
         email: [
           { required: true, message: this.$t('validation.emailEmpty'), trigger: 'blur' },
-          { type: 'email', message: this.$t('validation.emailNotValid'), trigger: 'blur, change' }
+          { type: 'email', message: this.$t('validation.emailNotValid'), trigger: 'blur' }
         ],
-        password: { required: true, message: this.$t('validation.passwordEmpty'), trigger: 'blur' }
+        password: [
+          { required: true, message: this.$t('validation.passwordEmpty'), trigger: 'blur' },
+          { min: 6, message: this.$t('validation.passwordTooShort'), trigger: 'blur' }
+        ]
       }
     }
   },
@@ -65,15 +68,9 @@ export default {
     login () {
       this.loading = true
       this.axios.post('/account/login', this.loginForm).then(response => {
-        this.$store.dispatch('logIn', response.data)
-      }).catch(error => {
-        this.$message({
-          type: 'error',
-          message: error.response.data.reason,
-          showClose: true
-        })
+        this.$store.dispatch('logIn', response)
+      }).catch(e => {
         this.loading = false
-        console.log(error.response)
       })
     }
   }

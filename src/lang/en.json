@@ -79,6 +79,7 @@
       "DuplicateUserName": "User name is taken. Please make it unique",
       "DuplicateEmail": "Email was registered earlier. Choose other email or use 'Forgot password'",
       "InvalidEmail": "Email is not valid",
+      "InvalidEmailOrPassword": "The email address or password you entered is not valid",
       "PasswordNotMatchRePassword": "Passwords are not matching",
       "PasswordTooShort": "Password is to short",
       "InvalidQuery": "Request query is invalid"
