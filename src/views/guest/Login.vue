@@ -69,6 +69,7 @@ export default {
       this.loading = true
       this.axios.post('/account/login', this.loginForm).then(response => {
         this.$store.dispatch('logIn', response)
+        this.router.push('/')
       }).catch(e => {
         this.loading = false
       })

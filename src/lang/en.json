@@ -43,6 +43,13 @@
     "lastName": "Last name",
     "added": "Added"
   },
+  "profile": {
+    "logout": "Logout",
+    "userName": "Nickname:",
+    "email": "Email:",
+    "firstName": "First name:",
+    "lastName": "Last name:"
+  },
   "anchors": {
     "data": "Data",
     "predictions": "Predictions",

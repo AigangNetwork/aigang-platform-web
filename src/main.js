@@ -62,6 +62,11 @@ new Vue({
   components: { App },
   template: '<App/>',
   mounted () {
+    debugger
+    if (this.$store.getters.isAuthenticated) {
+      axios.defaults.headers.common['Authorization'] = `Bearer ${this.$store.getters.token}`
+    }
+
     this.$nextTick(() => {
       this.$i18n.locale = 'en'
       this.$moment.locale('en')

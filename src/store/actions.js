@@ -1,6 +1,6 @@
 import * as types from './mutation-types'
 import router from '@/router'
-// import axios from 'axios'
+import axios from 'axios'
 
 const logIn = ({ commit }, loginResponse) => {
   // after successful login setup interceptor (save authorization header with token for next requests)
@@ -23,4 +23,9 @@ const logIn = ({ commit }, loginResponse) => {
   // })
 }
 
-export { logIn }
+const logOut = ({ commit }) => {
+  commit(types.LOGOUT)
+  delete axios.defaults.headers.common['Authorization']
+}
+
+export { logIn, logOut }
