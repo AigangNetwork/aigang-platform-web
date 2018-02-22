@@ -13,7 +13,12 @@
     }
   },
   "activateEmail": {
-    "activating": "Activating ..."
+    "activating": "Activating ...",
+    "activated": "Your account was successfully activated. Now you can Login"
+  },
+  "register": {
+    "emailSent": "Email was sent to {0}. Follow instructions provided in email.",
+    "dontReceiveEmail": "If you didn't receive email, click: "
   },
   "notifications": {
     "login_success": "Successfully signed in"
@@ -38,6 +43,13 @@
     "lastName": "Last name",
     "added": "Added"
   },
+  "profile": {
+    "logout": "Logout",
+    "userName": "Nickname:",
+    "email": "Email:",
+    "firstName": "First name:",
+    "lastName": "Last name:"
+  },
   "anchors": {
     "data": "Data",
     "predictions": "Predictions",
@@ -58,7 +70,8 @@
   "general": {
     "uploading": "Uploading ...",
     "loading": "Loading ...",
-    "ok": "OK"
+    "ok": "OK",
+    "here": "Here"
   },
   "errors": {
     "error": "Error",
@@ -68,10 +81,12 @@
     "404": "Not Found",
     "408": "Request Timeout",
     "500": "Internal Server Error",
+    "unhandled" : "Unhandled error: ",
     "validation": {
       "DuplicateUserName": "User name is taken. Please make it unique",
       "DuplicateEmail": "Email was registered earlier. Choose other email or use 'Forgot password'",
       "InvalidEmail": "Email is not valid",
+      "InvalidEmailOrPassword": "The email address or password you entered is not valid",
       "PasswordNotMatchRePassword": "Passwords are not matching",
       "PasswordTooShort": "Password is too short"
     },

@@ -10,7 +10,7 @@ import 'moment/locale/ru'
 
 import App from '@/App'
 import i18n from '@/lang'
-import store from '@/vuex'
+import store from '@/store'
 import router from '@/router'
 import eventHub from './utils/eventHub'
 
@@ -26,8 +26,25 @@ Vue.use(VueMoment)
 // Vue.axios.defaults.baseURL = 'http://test.api.aigang.network/api'
 Vue.axios.defaults.baseURL = 'http://localhost:5000/api'
 
+axios.interceptors.response.use(response => {
+  if (response.headers['set-authorization']) {
+    axios.defaults.headers.common['Authorization'] = `Bearer ${response.headers['set-authorization']}`
+  }
+  return response
+}, function (error) {
+  // Do something with response error
+  return Promise.reject(error)
+})
+
+axios.interceptors.response.use(response => {
+  if (response.headers['set-authorization']) {
+    axios.defaults.headers.common['Authorization'] = `Bearer ${response.headers['set-authorization']}`
+  }
+  return response
+}, undefined)
+
 axios.interceptors.response.use(undefined, err => {
-  eventHub.$emit(eventHub.eventCommunicationError, err.response)
+  eventHub.$emit(eventHub.eventCommunicationError, err)
   return Promise.reject(err)
 })
 
@@ -48,6 +65,11 @@ new Vue({
   components: { App },
   template: '<App/>',
   mounted () {
+    debugger
+    if (this.$store.getters.isAuthenticated) {
+      axios.defaults.headers.common['Authorization'] = `Bearer ${this.$store.getters.token}`
+    }
+
     this.$nextTick(() => {
       this.$i18n.locale = 'en'
       this.$moment.locale('en')

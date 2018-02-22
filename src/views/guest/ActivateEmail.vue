@@ -4,7 +4,7 @@
     <div class="aig__view__body aig__container" style="max-width: 400px">
       <Card>
         <div slot="body" v-loading="loading" :element-loading-text="$t('activateEmail.activating')">
-          <h1>{{ msg }}</h1>
+          <p>{{ msg }}</p>
         </div>
       </Card>
     </div>
@@ -31,32 +31,15 @@ export default {
 
     if (userId && token) {
       this.axios.post(`/account/verifyemail?Id=${userId}&Token=${token}`).then(response => {
-        this.msg = 'Your account was successfuly activated'
+        this.msg = this.$t('activateEmail.activated')
         this.loading = false
-      }).catch(error => {
-        this.$message({
-          type: 'error',
-          message: error.response.data.params.ValidationFailed[0].reason,
-          showClose: true
-        })
+      }).catch(e => {
         this.loading = false
-        console.log(error.response)
       })
-    } else { // TODO: invalid url show general error and log it
-      this.$message({
-        type: 'error',
-        message: 'Bad request',
-        showClose: true
-      })
-      this.msg = 'Bad request'
+    } else {
+      this.msg = this.$t('errors.400')
       this.loading = false
     }
   }
 }
 </script>
-
-<style lang="scss" scoped>
-@import '~helpers/mixins';
-@import '~helpers/variables';
-
-</style>
