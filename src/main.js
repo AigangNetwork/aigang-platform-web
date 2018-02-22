@@ -1,3 +1,4 @@
+import errorHandler from './utils/globalErrorHandler.js'
 import Vue from 'vue'
 
 import axios from 'axios'
@@ -15,6 +16,8 @@ import eventHub from './utils/eventHub'
 
 import 'element-ui/lib/theme-chalk/index.css'
 import '@/scss/element-aig.scss'
+
+Vue.config.errorHandler = errorHandler
 
 Vue.use(VueAxios, axios)
 Vue.use(ElementUI)

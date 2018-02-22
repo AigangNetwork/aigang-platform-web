@@ -73,7 +73,7 @@
       "DuplicateEmail": "Email was registered earlier. Choose other email or use 'Forgot password'",
       "InvalidEmail": "Email is not valid",
       "PasswordNotMatchRePassword": "Passwords are not matching",
-      "PasswordTooShort": "Password is to short"
+      "PasswordTooShort": "Password is too short"
     },
     "pagePathNotFound": "The page you are trying to access is not available",
     "validationError": "You have entered an invalid data"
