@@ -1,6 +1,6 @@
 @import '~node_modules/breakpoint-sass/stylesheets/_breakpoint';
 
-@mixin clearfix {
+@mixin clearfix {  // todo why to use it?
   &:after {
     content: '';
     display: table;

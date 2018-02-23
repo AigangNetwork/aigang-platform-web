@@ -43,7 +43,7 @@
             </ul>
           </nav>
           <Profile v-if="this.$store.getters.isAuthenticated"/>
-          <el-button type="info" size="mini" class="aig--login" @click="$router.push({ name: 'Login' })" v-else>{{ $t('actions.login')}}</el-button>
+          <el-button size="mini" plain class="aig--login" @click="$router.push({ name: 'Login' })" v-else>{{ $t('actions.login')}}</el-button>
         </div>
       </div>
     </div>
@@ -79,8 +79,8 @@ export default {
 
 .aig__navigation {
   text-align: right;
-  z-index: 5;
-  position: fixed;
+  // z-index: 5;
+ // position: fixed;
   width: 100%;
   line-height: 50px;
   top: 0;
@@ -137,7 +137,7 @@ export default {
       a {
         @include transition(all, 100ms, ease-in-out);
         user-select: none;
-        font-family: $font-secondary;
+        font-family: $font-primary;
         padding: 0;
         display: flex;
         align-items: center;
@@ -182,7 +182,7 @@ export default {
     top: 100%;
     left: 0;
     width: 100%;
-    z-index: 1;
+    // z-index: 1;
     background: white;
     box-shadow: 0 0 30px 0 rgba(0, 0, 0, 0.06);
     border-bottom: 1px solid #edf0f3;

@@ -1,6 +1,6 @@
 <template>
-  <div class="aig__view--centered">
-    <div class="aig__view__body aig__container" style="max-width: 400px">
+  <div class="">
+    <div class="aig__container" style="max-width: 400px">
         <Card>
           <div slot="body" v-loading="loading" :element-loading-text="$t('general.loading')">
             <div class="aig__logo">
@@ -18,7 +18,7 @@
                 <el-button type="primary" @click="submitForm('loginForm', login)" style="width: 100%">{{ $t('actions.login') }}</el-button>
               </el-form-item>
             </el-form>
-            
+
           </div>
           <div slot="footer">
             <router-link to="/register">{{ $t('actions.createAccount') }}</router-link>

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="aig__view__title aig__view__title--small">
+    <div class="">
       Models
     </div>
   </div>

@@ -1,18 +1,7 @@
 <template>
   <div class="aig__container">
-    <div class="aig__view__head">
-      <el-breadcrumb class="aig__breadcrumbs" separator-class="el-icon-arrow-right">
-        <el-breadcrumb-item to="/">AiGang Network</el-breadcrumb-item>
-        <el-breadcrumb-item>{{ $t('anchors.data') }}</el-breadcrumb-item>
-      </el-breadcrumb>
-      <div class="aig__view__heading">
-        <div class="aig__view__title">{{ $t('anchors.data') }}</div>
-        <div class="aig__view__description">
-          <p>Suspendisse potenti. Sed sagittis, nisl a interdum lacinia, sem odio tincidunt erat, at ultrices mauris quam at ligula.</p>
-        </div>
-      </div>
-    </div>
-    <div class="aig__view__body"  v-loading="loading" element-loading-background="transparent" element-loading-text="Loading data..">
+
+    <div class=""  v-loading="loading" element-loading-background="transparent" element-loading-text="Loading data..">
       <el-row :gutter="20" class="aig__items">
         <el-col :xs="24" :sm="12" :md="12" :lg="8" v-if="$store.getters.isAuthenticated">
           <button class="aig__data aig__data--creatable" @click="showDialog = true">
@@ -36,6 +25,7 @@
         size="small">
       </el-pagination>
     </div>
+
   </div>
 </template>
 
@@ -79,6 +69,7 @@ export default {
 .aig__data {
   @include transition;
   position: relative;
+
   width: 100%;
   padding: 25px 25px 20px 25px;
   background: white;
@@ -91,7 +82,7 @@ export default {
   }
   &.aig__data--creatable {
     cursor: pointer;
-    font-family: $font-secondary;
+    font-family: $font-primary;
     font-size: 16px;
     font-weight: 400;
     color: $black;
@@ -157,7 +148,7 @@ export default {
     }
   }
   .title {
-    font-family: $font-secondary;
+    font-family: $font-primary;
     font-weight: 500;
     font-size: 15px;
   }

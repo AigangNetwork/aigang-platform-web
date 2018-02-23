@@ -1,19 +1,21 @@
 @import '~helpers/variables';
+@import '~helpers/variables_el';
 @import '~helpers/mixins';
 
-$--color-primary: $purple;
-$--color-info: $blue-light;
 
-$--size-base: 13px !default;
-
-$--font-path: '~element-ui/lib/theme-chalk/fonts';
 @import '~element-ui/packages/theme-chalk/src/index';
 
 // Button
 .el-button {
-  font-family: $font-secondary;
+  font-family: $font-primary;
   font-weight: 400;
 }
+
+// Form item
+.el-form-item.is-success .el-input__inner{ // hack by default ir marks green
+  border-color: $gray;
+}
+
 
 // Dialog
 .v-modal {
@@ -35,7 +37,7 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
   padding-top: 0;
 }
 
-// pagination
+// Pagination
 .el-pagination.is-background .btn-prev,
 .el-pagination.is-background .btn-next,
 .el-pagination.is-background .el-pager li {
@@ -56,7 +58,7 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
   line-height: 26px;
 }
 
-// message
+// Message
 .el-message {
   font-size: 12px;
   font-family: $font-primary;
@@ -97,7 +99,7 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
   }
 }
 
-// upload
+// Upload
 .el-upload-dragger {
   width: 100%;
 }
@@ -110,7 +112,7 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
   line-height: 1;
 }
 
-// alert
+// Alert
 .el-alert--info {
   border-color: #d3c4eb;
   background-color: #f0ebf8;
@@ -119,10 +121,10 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
   }
 }
 
-// loading
+// Loading
 .el-loading-spinner {
   .el-loading-text {
-    font-family: $font-secondary;
+    font-family: $font-primary;
   }
 }
 

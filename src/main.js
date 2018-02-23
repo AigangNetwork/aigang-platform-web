@@ -26,13 +26,13 @@ Vue.use(VueMoment)
 // Vue.axios.defaults.baseURL = 'http://test.api.aigang.network/api'
 Vue.axios.defaults.baseURL = 'http://localhost:5000/api'
 
+// todo: extract to separete module
 axios.interceptors.response.use(response => {
   if (response.headers['set-authorization']) {
     axios.defaults.headers.common['Authorization'] = `Bearer ${response.headers['set-authorization']}`
   }
   return response
 }, function (error) {
-  // Do something with response error
   return Promise.reject(error)
 })
 

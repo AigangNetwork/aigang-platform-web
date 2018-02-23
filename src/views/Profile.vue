@@ -1,12 +1,9 @@
 <template>
   <div class="aig__container">
-    <div class="aig__view__head">
-      <el-breadcrumb class="aig__breadcrumbs" separator-class="el-icon-arrow-right">
-        <el-breadcrumb-item to="/">AiGang Network</el-breadcrumb-item>
-        <el-breadcrumb-item to="/">Profile</el-breadcrumb-item>
-      </el-breadcrumb>
-      <div class="aig__view__heading">
-        <div class="aig__view__title">Profile</div>
+    <div class="">
+
+      <div class="">
+        <div class="">Profile</div>
         <br>
         <br>
         <el-button type="warning" @click="logout()">{{ $t('profile.logout') }}</el-button>

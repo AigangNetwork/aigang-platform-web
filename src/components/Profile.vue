@@ -21,7 +21,7 @@
   flex-wrap: nowrap;
   display: flex;
   font-size: 11px;
-  font-family: $font-secondary;
+  font-family: $font-primary;
   font-weight: 500;
   height: 50px;
   text-align: right;

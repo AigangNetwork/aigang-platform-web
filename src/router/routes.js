@@ -3,11 +3,8 @@ import Register from '@/views/guest/Register'
 import ForgotPassword from '@/views/guest/ForgotPassword'
 import ActivateEmail from '@/views/guest/ActivateEmail'
 
-import Dashboard from '@/views/Dashboard'
 import Data from '@/views/Data'
-import DataInner from '@/views/DataInner'
-import DataModels from '@/views/DataModels'
-import DataDetails from '@/views/DataDetails'
+// import DataModels from '@/views/DataModels'
 
 import Predictions from '@/views/Predictions'
 import Invest from '@/views/Invest'
@@ -56,30 +53,29 @@ const routes = [
   },
   {
     path: '/',
-    name: 'Dashboard',
-    component: Dashboard
+    component: Data
   },
   {
     path: '/data',
     name: 'Data',
     component: Data
   },
-  {
-    path: '/data/:id',
-    component: DataInner,
-    children: [
-      {
-        name: 'DataDetails',
-        path: 'details',
-        component: DataDetails
-      },
-      {
-        name: 'DataModels',
-        path: 'models',
-        component: DataModels
-      }
-    ]
-  },
+  // {
+  //   path: '/data/:id',
+  //   component: DataInner,
+  //   children: [
+  //     {
+  //       name: 'DataDetails',
+  //       path: 'details',
+  //       component: DataDetails
+  //     },
+  //     {
+  //       name: 'DataModels',
+  //       path: 'models',
+  //       component: DataModels
+  //     }
+  //   ]
+  // },
   {
     path: '/predictions',
     name: 'Predictions',
