@@ -2,7 +2,7 @@
   <div class="aig__view--centered">
     <div class="aig__view__body aig__container" style="max-width: 400px">
         <Card>
-          <div slot="body" v-loading="loading" element-loading-text="Retrieving password...">
+          <div slot="body" v-loading="loading" :element-loading-text="$t('general.loading')">
             <div class="aig__logo">
               <img src="/static/logo-color.png" alt="">
             </div>

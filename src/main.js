@@ -1,4 +1,4 @@
-import errorHandler from './utils/globalErrorHandler.js'
+import errorHandler from './utils/globalErrorHandler'
 import Vue from 'vue'
 
 import axios from 'axios'
@@ -43,6 +43,10 @@ axios.interceptors.response.use(response => {
   return response
 }, undefined)
 
+if (store.getters.isAuthenticated) {
+  axios.defaults.headers.common['Authorization'] = `Bearer ${store.getters.token}`
+}
+
 axios.interceptors.response.use(undefined, err => {
   eventHub.$emit(eventHub.eventCommunicationError, err)
   return Promise.reject(err)
@@ -65,10 +69,9 @@ new Vue({
   components: { App },
   template: '<App/>',
   mounted () {
-    debugger
-    if (this.$store.getters.isAuthenticated) {
-      axios.defaults.headers.common['Authorization'] = `Bearer ${this.$store.getters.token}`
-    }
+    // if (this.$store.getters.isAuthenticated) {
+    //   axios.defaults.headers.common['Authorization'] = `Bearer ${this.$store.getters.token}`
+    // }
 
     this.$nextTick(() => {
       this.$i18n.locale = 'en'

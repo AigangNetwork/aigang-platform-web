@@ -6,6 +6,7 @@
             <div class="aig__logo">
               <img src="/static/logo-color.png" alt="">
             </div>
+
             <el-form :model="loginForm" :rules="loginFormRules" ref="loginForm">
               <el-form-item :label="$t('strings.email')" prop="email" size="small">
                 <el-input v-model="loginForm.email" placeholder="example@aigang.network"></el-input>
@@ -17,6 +18,7 @@
                 <el-button type="primary" @click="submitForm('loginForm', login)" style="width: 100%">{{ $t('actions.login') }}</el-button>
               </el-form-item>
             </el-form>
+            
           </div>
           <div slot="footer">
             <router-link to="/register">{{ $t('actions.createAccount') }}</router-link>
