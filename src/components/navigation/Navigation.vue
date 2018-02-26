@@ -17,7 +17,7 @@
           <div class="aig__profile__wrapper" v-on:click="selectProfile" v-bind:class="{ aig__bar__active : isProfileActive }" v-if="this.$store.getters.isAuthenticated">
             <Profile />
           </div>
-            <el-button size="mini" plain class="aig--login" @click="$router.push({ name: 'Login' })" v-else>{{ $t('actions.login')}}</el-button>
+            <el-button type="primary" class="aig--login" @click="$router.push({ name: 'Login' })" v-else>{{ $t('navigation.login')}}</el-button>
       </div>
     </div>
   </transition>

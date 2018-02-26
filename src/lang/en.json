@@ -59,7 +59,8 @@
     "data": "Data",
     "predictions": "Predictions",
     "invest": "Invest",
-    "insure": "Insure"
+    "insure": "Insure",
+    "login": "Sign Up/Log In"
   },
   "status": {
     "active": "Active",
