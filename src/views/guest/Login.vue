@@ -111,6 +111,7 @@ export default {
   justify-content: center;    /* center items vertically, in this case */
   align-items: center;        /* center items horizontally, in this case */
   height: 600px;
+  background-image: url("/static/background/backgroud_pattern.svg");
 }
 
 .card--center {
