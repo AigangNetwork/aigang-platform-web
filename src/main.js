@@ -15,7 +15,8 @@ import router from '@/router'
 import eventHub from './utils/eventHub'
 
 import 'element-ui/lib/theme-chalk/index.css'
-import '@/scss/element-aig.scss'
+import '@/scss/element.scss'
+import '@/scss/general.scss'
 
 Vue.config.errorHandler = errorHandler
 

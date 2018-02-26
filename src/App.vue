@@ -65,10 +65,6 @@ body.aig {
   margin: 0 auto;
 }
 
-p {
-  line-height: 1.55;
-}
-
 .aig__items {
   .el-col {
     padding-top: 10px;

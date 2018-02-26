@@ -12,6 +12,15 @@
       }
     }
   },
+  "login": {
+    "login": "Log in",
+    "title" : "Log in to Aigang Network",
+    "email": "Email",
+    "password": "Password",
+    "forgotPassword": "Forgot password?",
+    "dontHave": "Do not have account?",
+    "signUp": "Sign Up" 
+  },
   "activateEmail": {
     "activating": "Activating ...",
     "activated": "Your account was successfully activated. Now you can Login"
@@ -27,17 +36,13 @@
     "balance": "Balance"
   },
   "actions": {
-    "login": "Login",
     "loginToAccount": "Login to account",
     "upload_new_data": "Upload new data",
     "createAccount": "Create an account",
-    "retrievePassword": "Retrieve password",
-    "forgotPassword": "Forgot password?"
+    "retrievePassword": "Retrieve password"
   },
   "strings": {
     "hello": "hello",
-    "email": "E-mail address",
-    "password": "Password",
     "rePassword": "Repeat password",
     "firstName": "First name",
     "lastName": "Last name",
