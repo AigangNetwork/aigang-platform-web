@@ -50,7 +50,7 @@
     "firstName": "First name:",
     "lastName": "Last name:"
   },
-  "anchors": {
+  "navigation": {
     "data": "Data",
     "predictions": "Predictions",
     "invest": "Invest",
