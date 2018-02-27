@@ -1,8 +1,8 @@
 <template>
   <div class="">
-    <div class="aig__container" style="">
+    <div class="aig__container">
 
-        <Card class="card--center">
+        <Card style="width: 932px;">
 
           <div slot="body" v-loading="loading" :element-loading-text="$t('general.loading')">
 
@@ -17,19 +17,42 @@
              <el-row type="flex" justify="center">
 
               <el-col :span="10" >
-                <h2>{{ $t('login.title') }}</h2>
+                <h2 style="margin-top:40px;margin-bottom:40px;">{{ $t('login.title') }}</h2>
 
                 <el-form :model="loginForm" :rules="loginFormRules" ref="loginForm">
-                  <el-form-item :label="$t('login.email')" prop="email" size="small">
-                    <el-input v-model="loginForm.email" placeholder="example@aigang.network"></el-input>
-                  </el-form-item>
-                  <el-form-item :label="$t('login.password')" prop="password" size="small">
-                    <router-link to="/forgotPassword">{{ $t('login.forgotPassword') }}</router-link>
-                    <el-input v-model="loginForm.password" type="password" placeholder="********"></el-input>
-                  </el-form-item>
-                  <el-form-item style="margin-bottom: 0">
-                    <el-button type="primary" @click="submitForm('loginForm', login)" style="width: 100%">{{ $t('login.login') }}</el-button>
-                  </el-form-item>
+
+                  <el-row>
+                    <el-col><span class="label">{{ $t('login.email' )}}</span></el-col>
+                  </el-row>
+                  <el-row>
+                    <el-col>
+                      <el-form-item prop="email">
+                        <el-input v-model="loginForm.email" :placeholder="$t('login.email')"></el-input>
+                      </el-form-item>
+                    </el-col>
+                  </el-row>
+
+                  <el-row>
+                    <el-col :span="12"><span class="label">{{ $t('login.password' )}}</span></el-col>
+                    <el-col :span="12" style="text-align: right;"><router-link class="a--passive" to="/forgotPassword">{{ $t('login.forgotPassword') }}</router-link></el-col>
+                  </el-row>
+
+                  <el-row>
+                    <el-col>
+                      <el-form-item prop="password">
+                         <el-input v-model="loginForm.password" type="password" placeholder="********"></el-input>
+                      </el-form-item>
+                    </el-col>
+                  </el-row>
+
+                  <el-row>
+                     <el-col>
+                        <el-form-item>
+                          <el-button type="primary" @click="submitForm('loginForm', login)" style="width: 100%">{{ $t('login.login') }}</el-button>
+                        </el-form-item>
+                     </el-col>
+                  </el-row>
+
                 </el-form>
               </el-col>
 
@@ -38,13 +61,11 @@
             <el-row type="flex" justify="center" style="height:100px;align-items: flex-end;">
               <el-col :span="10" style="text-align: center;">
                 <span>{{ $t('login.dontHave') }}</span>
-                 <router-link to="/register">{{ $t('login.signUp') }}</router-link>
+                 <router-link class="a--active" to="/register">{{ $t('signUp.signUp') }}</router-link>
               </el-col>
             </el-row>
 
           </div>
-          <div slot="footer"></div>
-
         </Card>
 
     </div>
@@ -107,20 +128,16 @@ export default {
 @import '~helpers/variables';
 
 .aig__container {
-  display: flex;              /* establish flex container */
-  justify-content: center;    /* center items vertically, in this case */
-  align-items: center;        /* center items horizontally, in this case */
-  height: 600px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 700px;
   background-image: url("/static/background/backgroud_pattern.svg");
-}
-
-.card--center {
-    width: 932px;
 }
 
 .aig__logo {
   display: block;
-  line-height: 50px;
+  line-height: 80px;
   img {
     display: inline-block;
     vertical-align: middle;

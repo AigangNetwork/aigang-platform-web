@@ -9,7 +9,7 @@ p {
     font-stretch: normal;
     line-height: 1.63;
     letter-spacing: 0.5px;
-    color: #2f1f61;
+    color: $active-dark-purple;
 }
   
 h1 {
@@ -27,7 +27,7 @@ h2 {
     font-weight: normal;
     line-height: 1.33;
     letter-spacing: 0.5px;
-    color: #2f1f61;
+    color: $active-dark-purple;
     text-shadow: 0 2px 4px rgba(219, 224, 231, 0.5);
 }
 
@@ -37,7 +37,7 @@ h3 {
     font-weight: 500;
     line-height: 1.14;
     letter-spacing: 0.7px;
-    color: #2f1f61;
+    color: $active-dark-purple;
 }
 
 h4 {
@@ -47,3 +47,42 @@ h4 {
     letter-spacing: 0.6px;
     color: #9eb1c7;
 }  
+
+.label {
+    font-family: $font-secondary;
+    font-size: 14px;
+    font-weight: 500;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.86;
+    letter-spacing: 0.4px;    
+    color: $active-dark-purple;
+}
+
+.a--active {
+    font-family: $font-secondary;
+    font-size: 16px;
+    font-weight: 500;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.63;
+    letter-spacing: 0.5px;
+    color: #6139de;
+    &:hover {
+      font-weight: bold;
+    }
+  }
+  
+.a--passive {
+font-family: $font-secondary;
+font-size: 14px;
+font-weight: 300;
+font-style: normal;
+font-stretch: normal;
+line-height: 1.29;
+letter-spacing: 0.5px;
+color: #2f1f61;
+&:hover {
+    font-weight: bold;
+}
+}

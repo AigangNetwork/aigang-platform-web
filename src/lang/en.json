@@ -18,16 +18,20 @@
     "email": "Email",
     "password": "Password",
     "forgotPassword": "Forgot password?",
-    "dontHave": "Do not have account?",
-    "signUp": "Sign Up" 
+    "dontHave": "Do not have account?"
+  },
+  "signUp": {
+    "signUp": "Sign Up",
+    "description": "Creating an account in aigang.network you will get access to all products such as Data, Prediction market, Invest and Insure",
+    "haveAccount": "Have Aigang Network Account?",
+    "rePassword": "Repeat password",
+    "emailSent": "Email was sent to {0}. Follow instructions provided in the email.",
+    "dontReceiveEmail": "If you didn't receive email, click: ",
+    "waitingVerification": "Verification email was sent."
   },
   "activateEmail": {
     "activating": "Activating ...",
     "activated": "Your account was successfully activated. Now you can Login"
-  },
-  "register": {
-    "emailSent": "Email was sent to {0}. Follow instructions provided in email.",
-    "dontReceiveEmail": "If you didn't receive email, click: "
   },
   "notifications": {
     "login_success": "Successfully signed in"
@@ -37,13 +41,10 @@
   },
   "actions": {
     "loginToAccount": "Login to account",
-    "upload_new_data": "Upload new data",
-    "createAccount": "Create an account",
-    "retrievePassword": "Retrieve password"
+    "upload_new_data": "Upload new data"
   },
   "strings": {
     "hello": "hello",
-    "rePassword": "Repeat password",
     "firstName": "First name",
     "lastName": "Last name",
     "added": "Added"
@@ -94,7 +95,8 @@
       "InvalidEmail": "Email is not valid",
       "InvalidEmailOrPassword": "The email address or password you entered is not valid",
       "PasswordNotMatchRePassword": "Passwords are not matching",
-      "PasswordTooShort": "Password is too short"
+      "PasswordTooShort": "Password is too short",
+      "InvalidQuery": "Query is not valid"
     },
     "pagePathNotFound": "The page you are trying to access is not available",
     "validationError": "You have entered an invalid data"
