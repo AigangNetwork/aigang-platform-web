@@ -32,10 +32,13 @@
               {{ bar.name }}
              </router-link>
         </li>
-        <li v-on:click="selectProfile" v-bind:class="{ aig__bar__active : isProfileActive }">
+        <li v-if="this.$store.getters.isAuthenticated" v-on:click="selectProfile" v-bind:class="{ aig__bar__active : isProfileActive }">
            <router-link :to="'/profile'">
               {{ $t('navigation.profile') }}
              </router-link>
+        </li>
+        <li v-bind:class="{ aig__bar__active : isProfileActive }" v-else @click="selectProfile">
+          <router-link to="/login">{{ $t('navigation.login')}}</router-link>
         </li>
       </ul>
     </div>
@@ -164,6 +167,9 @@ export default {
         display: none;
       }
       .aig__profile__wrapper {
+        display: none;
+      }
+      .aig--login {
         display: none;
       }
     }
