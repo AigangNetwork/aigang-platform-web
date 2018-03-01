@@ -164,6 +164,7 @@ export default {
 @import '~helpers/variables';
 
 .aig__container {
+  max-width: 1200px;
   display: flex;
   justify-content: center;
   align-items: center;

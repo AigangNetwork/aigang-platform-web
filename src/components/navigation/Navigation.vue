@@ -3,13 +3,13 @@
   <transition name="slideDown">
     <div class="aig__navigation">
       <div class="aig__navigation__body">
-          <router-link to="/" class="aig__logo" exact>
+          <router-link to="/" class="aig__logo">
             <img src="/static/logo.png" alt="">
           </router-link>
           <nav class="aig__navigation__menu">
             <ul>
               <li v-on:click="selectTag(index)" :class="{ aig__bar__active: bar.active }" v-for="(bar, index) in navigationBars" :key="bar.name">
-                <router-link :to="bar.routeLink">
+                <router-link :to="bar.routeLink" exact>
                    {{ bar.name }}
                 </router-link>
               </li>
@@ -18,7 +18,7 @@
           <div class="aig__profile__wrapper" v-on:click="selectProfile" v-bind:class="{ aig__bar__active : isProfileActive }" v-if="this.$store.getters.isAuthenticated">
             <Profile />
           </div>
-            <el-button type="primary" class="aig--login" @click="$router.push({ name: 'Login' })" v-else>{{ $t('navigation.login')}}</el-button>
+            <el-button type="primary" class="aig--login" @click="selectLogin" v-else>{{ $t('navigation.login')}}</el-button>
             <div v-on:click="dropDownMenuActive = !dropDownMenuActive" class="aig__hamburger__wrapper">
               <hamburger v-bind:menuActive="dropDownMenuActive"></hamburger>
             </div>
@@ -28,12 +28,12 @@
   <div class="aig__dropdown" v-if="dropDownMenuActive">
       <ul>
         <li v-on:click="selectTag(index)" :class="{ aig__bar__active: bar.active }" v-for="(bar, index) in navigationBars" :key="bar.name">
-            <router-link :to="bar.routeLink">
+            <router-link :to="bar.routeLink" exact="bar.active">
               {{ bar.name }}
              </router-link>
         </li>
         <li v-if="this.$store.getters.isAuthenticated" v-on:click="selectProfile" v-bind:class="{ aig__bar__active : isProfileActive }">
-           <router-link :to="'/profile'">
+           <router-link :to="'/profile'" exact="isProfileActive">
               {{ $t('navigation.profile') }}
              </router-link>
         </li>
@@ -57,7 +57,7 @@ export default {
   data () {
     return {
       navigationBars: [
-        { name: this.$t('navigation.data'), routeLink: '/data', active: true },
+        { name: this.$t('navigation.data'), routeLink: '/data', active: false },
         { name: this.$t('navigation.predictions'), routeLink: '/predictions', active: false },
         { name: this.$t('navigation.invest'), routeLink: '/invest', active: false },
         { name: this.$t('navigation.insure'), routeLink: '/insure', active: false }
@@ -68,20 +68,22 @@ export default {
   },
   methods: {
     selectTag (index) {
-      this.navigationBars.forEach(function (val, key) {
-        val.active = false
-      })
+      this.clearBars()
       this.isProfileActive = false
       this.navigationBars[index].active = true
-      if (this.dropDownMenuActive) {
-        this.dropDownMenuActive = false
-      }
     },
     selectProfile () {
+      this.clearBars()
+      this.isProfileActive = true
+    },
+    selectLogin () {
+      this.clearBars()
+      this.$router.push({ name: 'Login' })
+    },
+    clearBars () {
       this.navigationBars.forEach(function (val, key) {
         val.active = false
       })
-      this.isProfileActive = true
       if (this.dropDownMenuActive) {
         this.dropDownMenuActive = false
       }
@@ -144,7 +146,7 @@ export default {
 
 .aig__navigation {
   margin: 0 auto;
-  max-width: 1520px;
+  max-width: 1440px;
   width: 100%;
   line-height: 50px;
   .aig__navigation__body {

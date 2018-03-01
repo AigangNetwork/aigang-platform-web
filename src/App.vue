@@ -58,14 +58,14 @@ body.aig {
 
 .aig__container {
   @include clearfix;
-  max-width: 1140px;
+  max-width: 1440px;
   width: 100%;
-  padding-left: 20px;
-  padding-right: 20px;
+  height: 100%;
   margin: 0 auto;
 }
 
 .aig__items {
+  margin-top: 15px;
   .el-col {
     padding-top: 10px;
     padding-bottom: 10px;

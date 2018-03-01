@@ -10,6 +10,15 @@
           "info": "Info"
         }
       }
+    },
+    "menu": {
+      "all": "All",
+      "uploaded": "Uploaded",
+      "models": "Models"
+    },
+    "card": {
+      "models": "Models",
+      "threads": "Comments"
     }
   },
   "login": {
