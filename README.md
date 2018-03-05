@@ -20,10 +20,10 @@ npm run build
 npm run build --report
 ```
 ## Environments
-**Production**
+**Production**  
 //TODO
 
- **QA**
+ **QA**  
 API (qa branch) - [http://test.api.aigang.network/swagger](http://test.api.aigang.network/swagger)  
 WEB (qa branch) - [http://test.platform.aigang.network](http://test.platform.aigang.network/)  
 
