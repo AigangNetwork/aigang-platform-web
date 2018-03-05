@@ -24,8 +24,8 @@ npm run build --report
 //TODO
 
  **QA**
-API (qa branch) - [http://test.api.aigang.network/swagger](http://test.api.aigang.network/swagger)
-WEB (qa branch) - [http://test.platform.aigang.network](http://test.platform.aigang.network/)
+API (qa branch) - [http://test.api.aigang.network/swagger](http://test.api.aigang.network/swagger)  
+WEB (qa branch) - [http://test.platform.aigang.network](http://test.platform.aigang.network/)  
 
 ## Documentation
 
