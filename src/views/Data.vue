@@ -17,8 +17,8 @@
           </el-col>
           <el-col :span="8">
             <div v-if="$store.getters.isAuthenticated" class="">
-              <el-button type="primary" @click="showDialog = true" class="aig__upload__btn">{{ $t('actions.upload_new_data')}}</el-button>
-              <UploadData v-on:successfullUpload="loadDataItems" v-if="showDialog" :show-dialog.sync="showDialog" />
+              <el-button type="primary" @click="$router.push({ name: 'Upload' })" class="aig__upload__btn">{{ $t('actions.upload_new_data')}}</el-button>
+              <!-- <UploadData v-on:successfullUpload="loadDataItems" v-if="showDialog" :show-dialog.sync="showDialog" /> -->
             </div>
           </el-col>
         </el-row>

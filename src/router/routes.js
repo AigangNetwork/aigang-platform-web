@@ -10,7 +10,7 @@ import Predictions from '@/views/Predictions'
 import Invest from '@/views/Invest'
 import Insure from '@/views/Insure'
 import Profile from '@/views/Profile'
-
+import UploadDataSet from '@/views/upload/UploadDataSet'
 import NotFound from '@/views/general/NotFound'
 
 const routes = [
@@ -59,6 +59,11 @@ const routes = [
     path: '/data',
     name: 'Data',
     component: Data
+  },
+  {
+    path: '/data/upload',
+    name: 'Upload',
+    component: UploadDataSet
   },
   // {
   //   path: '/data/:id',

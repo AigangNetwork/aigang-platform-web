@@ -9,6 +9,26 @@
           "error": "Error",
           "info": "Info"
         }
+      },
+      "titles": {
+        "upload": "Upload dataset",
+        "load": "Load",
+        "title": "Title",
+        "description": "Description",
+        "structure": "Structure"
+      },
+      "rules": {
+        "rule0": "CSV files only",
+        "rule1": "Maximum size of file: 10MB",
+        "rule2": "Your file is too large. Please provide remote access point to the file. (URL, Connection string etc.)"
+      },
+      "input": {
+        "placeholder": {
+          "fileAccess": "Enter access to the source file",
+          "title": "Set a title of dataset",
+          "description": "Describe dataset",
+          "column": "Describe a column"
+        }
       }
     },
     "menu": {
