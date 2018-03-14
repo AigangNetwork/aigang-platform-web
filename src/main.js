@@ -17,6 +17,7 @@ import eventHub from './utils/eventHub'
 import 'element-ui/lib/theme-chalk/index.css'
 import '@/scss/element.scss'
 import '@/scss/general.scss'
+import '@/scss/aigang.scss'
 
 Vue.config.errorHandler = errorHandler
 
@@ -28,24 +29,33 @@ Vue.axios.defaults.baseURL = 'http://test.api.aigang.network/api'
 // Vue.axios.defaults.baseURL = 'http://localhost:5000/api'
 
 // todo: extract to separate module
-axios.interceptors.response.use(response => {
-  if (response.headers['set-authorization']) {
-    axios.defaults.headers.common['Authorization'] = `Bearer ${response.headers['set-authorization']}`
+axios.interceptors.response.use(
+  response => {
+    if (response.headers['set-authorization']) {
+      axios.defaults.headers.common['Authorization'] = `Bearer ${
+        response.headers['set-authorization']
+      }`
+    }
+    return response
+  },
+  function (error) {
+    return Promise.reject(error)
   }
-  return response
-}, function (error) {
-  return Promise.reject(error)
-})
+)
 
 axios.interceptors.response.use(response => {
   if (response.headers['set-authorization']) {
-    axios.defaults.headers.common['Authorization'] = `Bearer ${response.headers['set-authorization']}`
+    axios.defaults.headers.common['Authorization'] = `Bearer ${
+      response.headers['set-authorization']
+    }`
   }
   return response
 }, undefined)
 
 if (store.getters.isAuthenticated) {
-  axios.defaults.headers.common['Authorization'] = `Bearer ${store.getters.token}`
+  axios.defaults.headers.common['Authorization'] = `Bearer ${
+    store.getters.token
+  }`
 }
 
 axios.interceptors.response.use(undefined, err => {
@@ -66,7 +76,7 @@ new Vue({
   store,
   i18n,
   router,
-  el: '.aig__app',
+  el: '.aig-app',
   components: { App },
   template: '<App/>',
   mounted () {
