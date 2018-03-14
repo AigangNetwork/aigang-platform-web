@@ -15,7 +15,8 @@
         "load": "Load",
         "title": "Title",
         "description": "Description",
-        "structure": "Structure"
+        "structure": "Structure",
+        "fileUploadPreferences": "File preferences"
       },
       "rules": {
         "rule0": "CSV files only",
@@ -28,7 +29,11 @@
           "fileAccess": "Enter access to the source file",
           "title": "Set a title of dataset",
           "description": "Describe dataset",
-          "column": "Describe a column"
+          "column": "Describe a column",
+          "structure": "Please briefly describe your file structure"
+        },
+        "validation": {
+          "emptyInputError": "Please make sure you have filled all fields"
         }
       }
     },

@@ -18,16 +18,12 @@
           <el-col :span="8">
             <div v-if="$store.getters.isAuthenticated" class="">
               <el-button type="primary" @click="$router.push({ name: 'Upload' })" class="aig__upload__btn">{{ $t('actions.upload_new_data')}}</el-button>
-              <!-- <UploadData v-on:successfullUpload="loadDataItems" v-if="showDialog" :show-dialog.sync="showDialog" /> -->
             </div>
           </el-col>
         </el-row>
          <el-row :gutter="20" class="aig__items">
 
         <transition-group name="list" tag="div">
-            <!-- <el-col :span="6"  v-for="dataItem in dataList" :key="dataItem.id">
-                <DataItem :data="dataItem" :key="dataItem.id" />
-            </el-col> -->
           <el-col :xs="24" :sm="12" :md="12" :lg="8" v-for="dataItem in dataList" :key="dataItem.id">
             <DataItem :data="dataItem" :key="dataItem.id" />
           </el-col>
@@ -48,13 +44,11 @@
 
 <script>
 import DataItem from '@/components/DataItem'
-import UploadData from '@/components/UploadData'
 
 export default {
   name: 'DataView',
   components: {
-    DataItem,
-    UploadData
+    DataItem
   },
   data () {
     return {
