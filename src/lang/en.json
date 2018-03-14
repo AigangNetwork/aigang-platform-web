@@ -63,7 +63,9 @@
   },
   "retrievePassword": {
     "title": "Reset Your Aigang Password",
-    "backTo": "Back to"
+    "backTo": "Back to",
+    "waitingVerification": "Reset email was sent.",
+    "dontReceiveEmail": "If you didn't receive email, click: "
   },
   "activateEmail": {
     "activating": "Activating ...",
@@ -136,7 +138,8 @@
         "The email address or password you entered is not valid",
       "PasswordNotMatchRePassword": "Passwords are not matching",
       "PasswordTooShort": "Password is too short",
-      "InvalidQuery": "Query is not valid"
+      "InvalidQuery": "Query is not valid",
+      "UserNotFound": "Email not found"
     },
     "pagePathNotFound": "The page you are trying to access is not available",
     "validationError": "You have entered an invalid data"
