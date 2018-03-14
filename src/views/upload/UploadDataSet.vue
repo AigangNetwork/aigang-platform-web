@@ -7,27 +7,26 @@
          <el-col :span="16">
           <el-form :model="dataUploadForm">
            <el-form-item prop="file" size="small">
-             <el-upload ref="csvFile" drag :action="`${axios.defaults.baseURL}/data`"  :multiple="false" :auto-upload="false" :on-change="handleFileChange" accept=".csv">
+             <el-upload ref="csvFile" drag :action="''" :multiple="false" :auto-upload="false" :on-change="handleFileChange" accept=".csv">
              <i class="el-icon-upload"></i>
-             <div class="el-upload__text">Drop file here or <em>click to upload</em></div>
+             <div class="el-upload__text">Drop file here or <em>click to upload</em></div> <!-- ADD THIS TO TRANSLATIONS -->
            </el-upload>
           </el-form-item>
           <el-button @click="loadFile('file')" class="aig__load__button" v-if="buttonActive" type="primary">{{$t('data.upload.titles.load')}}</el-button>
           <div v-if="invalidFile">
             <el-form-item >
               <p>{{$t('data.upload.rules.rule2')}}</p>
-              <el-input :placeholder="$t('data.upload.input.placeholder.fileAccess')" type="textarea" v-model="dataUploadForm.fileRemoteAccess"></el-input>
+              <el-input :placeholder="$t('data.upload.input.placeholder.fileAccess')" type="textarea" v-model="dataUploadForm.remoteFileAccessPoint"></el-input>
             </el-form-item>
             <el-button @click="loadFile()" class="aig__load__button" type="primary">{{$t('data.upload.titles.load')}}</el-button>
           </div>
-
           </el-form>
          </el-col>
          <el-col :span="10">
            <div class="aig__upload__info">
              <div class="aig__upload__info__header">
               <img src="/static/upload/info24px.svg" alt="threads">
-              <h5>File preferences</h5>
+              <h5>{{$t('data.upload.titles.fileUploadPreferences')}}</h5>
              </div>
              <div class="aig__upload__info__body">
                <ul>
@@ -47,11 +46,25 @@
           <div class="aig__file__information__container">
             <div class="header">
               <img src="/static/upload/doc64px.svg" alt="threads">
-              <h3>{{ dataUploadForm.file.name }} TestFileName.csv</h3>
+              <!-- Change this to file details -->
+              <h3>{{ dataUploadForm.file.name }}</h3>
             </div>
             <div class="footer">
-              <h4>For register users only</h4>
-              <p>By default datasets are with public access</p>
+              <div class="left">
+                <!-- Use translations -->
+                <h4>File visibility</h4>
+                <p>By default datasets are with public access</p>
+              </div>
+              <div class="right">
+                <el-form style="width: 100%">
+                  <el-form-item size="small">
+                    <el-radio-group v-model="dataUploadForm.isPublic" size="small">
+                    <el-radio-button :label="true">Public</el-radio-button>
+                    <el-radio-button :label="false">Users only</el-radio-button>
+                    </el-radio-group>
+                  </el-form-item>
+                </el-form>
+              </div>
             </div>
           </div>
           <el-form class="aig__dataset__upload__form" :model="dataUploadForm" ref="dataUploadForm">
@@ -63,9 +76,9 @@
             <el-form-item prop="description" size="small">
               <el-input :placeholder="$t('data.upload.input.placeholder.description')" type="textarea" v-model="dataUploadForm.description"></el-input>
             </el-form-item>
-            <div v-if="this.fileStructure.length > 0">
+            <div v-if="dynamicFileStructure.length > 0">
             <h4>{{$t('data.upload.titles.structure')}}</h4>
-            <el-row :gutter="20" type="flex" v-for="column in fileStructure" :key="column.name">
+            <el-row :gutter="20" type="flex" v-for="column in dynamicFileStructure" :key="column.name">
               <el-col :span="10">
                   <h5>{{column.name}}</h5>
               </el-col>
@@ -75,7 +88,8 @@
                 </el-form-item>
               </el-col>
               <el-col :span="10">
-               <el-select aria-required="true" v-model="column.dataType" placeholder="Data type">
+                 <!-- Move this to translations -->
+               <el-select size="medium" aria-required="true" v-model="column.dataType" placeholder="Data type">
                   <el-option
                     v-for="item in dataTypeOptions"
                     :key="item"
@@ -86,8 +100,19 @@
               </el-col>
             </el-row>
             </div>
+            <div v-else>
+              <h4>{{$t('data.upload.titles.structure')}}</h4>
+              <el-form-item>
+                <el-input :placeholder="$t('data.upload.input.placeholder.structure')" type="textarea" v-model="remoteFileStructure"></el-input>
+              </el-form-item>
+            </div>
           </el-form>
         </el-col>
+      </el-row>
+      <el-row v-if="!isValidForm">
+          <div class="aig__form__error">
+            {{$t('data.upload.input.validation.emptyInputError')}}
+          </div>
       </el-row>
       <el-row >
         <el-col :span="12" :offset="6">
@@ -100,6 +125,7 @@
 </template>
 <script>
 import Card from '@/components/Card'
+import router from '@/router'
 
 export default {
   components: {
@@ -111,25 +137,31 @@ export default {
       invalidFile: false,
       firstStepActive: true,
       secondStepActive: false,
-      fileStructure: [],
+      isValidForm: true,
+      dynamicFileStructure: [],
       dataTypeOptions: ['String', 'Numeric', 'Boolean'],
+      remoteFileStructure: '',
       dataUploadForm: {
         title: '',
         description: '',
         isPublic: true,
         file: [],
-        fileRemoteAccess: ''
+        remoteFileAccessPoint: ''
       }
     }
   },
   methods: {
     handleFileChange (file, fileList) {
+      console.log(file)
+      console.log(fileList)
       this.dataUploadForm.file = fileList = []
+      fileList.length = 0
       var fileSize = file.raw.size / 1024 / 1024 // filesize in mb
       if (fileSize <= 10) { // if less than 10MB
         this.dataUploadForm.file = file.raw
         this.invalidFile = false
         this.buttonActive = true
+        this.parseFileStructure()
         return
       }
       this.dataUploadForm.file = fileList = []
@@ -138,73 +170,95 @@ export default {
     },
     loadFile (file) {
       if (file) {
-        if (this.dataUploadForm.file.size > 0 && !this.invalidFile) {
+        if (this.dataUploadForm.file.size > 0 && !this.invalidFile) { // MAKE STEP ACTIVE METHOD
           this.firstStepActive = false
           this.secondStepActive = true
-          this.parseFileStructure()
           return
         }
-        console.log('no upload')
         return
       }
-      if (this.dataUploadForm.fileRemoteAccess.length > 0) {
+      if (this.dataUploadForm.remoteFileAccessPoint.length > 0) {
         this.firstStepActive = false
         this.secondStepActive = true
-        console.log('upload file access')
       }
     },
     parseFileStructure () {
+      var dynamicFileFields = []
       var fileReader = new FileReader()
-      fileReader.onload = function (event) {
-        var fileContent = event.target.result
-        var fileColumns = fileContent.split('\n').shift().split(',')
-        // TODO: fill file structure with json objects
-        var dynamicFileFields = []
-        fileColumns.forEach(col => {
-          dynamicFileFields.push(
-            {
-              name: col,
-              description: '',
-              dataType: ''
-            }
-          )
-        })
-        this.fileStructure = dynamicFileFields
-        console.log(this.fileStructure)
+      try {
+        fileReader.onload = function (event) {
+          var fileContent = event.target.result
+          var fileColumns = fileContent.split('\n').shift().split(',')
+          fileColumns.forEach(col => {
+            dynamicFileFields.push(
+              {
+                name: col,
+                description: '',
+                dataType: ''
+              }
+            )
+          })
+        }
+      } catch (error) {
+        console.log('make notification for user about invalid file and delete file')
       }
       fileReader.readAsText(this.dataUploadForm.file)
+      this.dynamicFileStructure = dynamicFileFields
     },
     uploadDataset () {
-      if (this.validForm()) {
-        console.log('submiting form')
-      } else {
-        console.log('throw an error dude')
+      this.validateForm()
+      if (this.isValidForm) {
+        var uploadForm = new FormData()
+        for (var key in this.dataUploadForm) {
+          uploadForm.append(key, this.dataUploadForm[key])
+        }
+        if (this.dynamicFileStructure.length > 0) {
+          uploadForm.append('structure', JSON.stringify(this.dynamicFileStructure))
+        } else {
+          uploadForm.append('structure', this.remoteFileStructure)
+        }
+        this.axios.post('/data', uploadForm).then(response => {
+          this.successfullUpload()
+        }, error => {
+          console.log(error)
+          this.uploading = false
+        })
       }
     },
-    validForm () {
-      var isValid = true
+    validateForm () {
+      this.isValidForm = true
       for (var key in this.dataUploadForm) {
         if (this.dataUploadForm[key] === undefined || this.dataUploadForm[key] === '') {
-          if (key === 'fileRemoteAccess') {
+          if (key === 'remoteFileAccessPoint') {
             continue
           } else {
-            isValid = false
-            return isValid
+            this.isValidForm = false
+            return
           }
         }
       }
-      if (this.fileStructure.length > 0) {
-        for (var obj in this.fileStructure) {
-          for (var prop in this.fileStructure[obj]) {
-            if (this.fileStructure[obj][prop] === undefined || this.fileStructure[obj][prop] === '') {
-              console.log('true')
-              isValid = false
-              return isValid
+      if (this.dynamicFileStructure.length > 0) {
+        for (var obj in this.dynamicFileStructure) {
+          for (var prop in this.dynamicFileStructure[obj]) {
+            if (this.dynamicFileStructure[obj][prop] === undefined || this.dynamicFileStructure[obj][prop] === '') {
+              this.isValidForm = false
+              return
             }
           }
         }
+      } else {
+        if (this.remoteFileStructure.length <= 0) {
+          this.isValidForm = false
+        }
       }
-      return isValid
+    },
+    successfullUpload () {
+      this.$notify({
+        title: this.$t('data.upload.notifications.titles.success'),
+        type: 'success',
+        message: this.$t('data.upload.notifications.upload_success')
+      })
+      router.push('/data')
     }
   }
 }
@@ -268,6 +322,13 @@ export default {
         border-bottom: solid 2px $light-border-blue;
       }
       .footer {
+        display: flex;
+        .left {
+          width: 70%;
+        }
+        .right {
+          margin: auto;
+        }
         h4 {
           margin: 10px 0px 0px 5px;
           color: $purple;
@@ -300,6 +361,11 @@ export default {
       .aig__upload__button {
         width: 100%;
       }
+    }
+    .aig__form__error {
+      text-align: center;
+      margin-bottom: 15px;
+      color: red;
     }
   }
 </style>
