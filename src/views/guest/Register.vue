@@ -1,94 +1,100 @@
 <template>
   <div>
-    <div class="aig__container">
-        <Card style="width: 932px;">
+    <div class="aig-card-container">
+      <Card class="guest-card">
 
-          <div slot="body" v-loading="loading" :element-loading-text="$t('general.loading')">
+        <div slot="body" v-loading="loading" :element-loading-text="$t('general.loading')">
 
-            <el-row>
-              <el-col>
-                 <div class="aig__logo">
-                    <img src="/static/logo-purple.png" alt="">
-                  </div>
-              </el-col>
-            </el-row>
+          <el-row>
+            <el-col>
+              <div class="aig-logo">
+                <img src="/static/logo-purple.png" alt="">
+              </div>
+            </el-col>
+          </el-row>
 
-            <el-row v-show="!isVerificationVisisble">
-              <el-col :span="12">
+          <el-row v-show="!isVerificationVisisble">
+            <el-col :span="12">
+
+              <el-row>
+                <h2>{{ $t('signUp.signUp') }}</h2>
+                <p style="padding-right:40px;"> {{ $t('signUp.description') }}</p>
+              </el-row>
+
+              <el-row type="flex" justify="center" style="height:100px;align-items: flex-end;">
+                <el-col>
+                  <span>{{ $t('signUp.haveAccount') }}</span>
+                  <router-link class="a-active" to="/login">{{ $t('login.login') }}</router-link>
+                </el-col>
+              </el-row>
+
+            </el-col>
+
+            <el-col :span="12">
+              <el-form :model="registerForm" :rules="registerFormRules" ref="registerForm">
 
                 <el-row>
-                  <h2 style="margin-top:40px;margin-bottom:40px">{{ $t('signUp.signUp') }}</h2>
-                  <p style="padding-right:40px;"> {{ $t('signUp.description') }}</p>
-                </el-row>
-
-                <el-row type="flex" justify="center" style="height:100px;align-items: flex-end;">
                   <el-col>
-                    <span>{{ $t('signUp.haveAccount') }}</span>
-                    <router-link class="a--active" to="/login">{{ $t('login.login') }}</router-link>
+                    <span class="label">{{ $t('login.email' )}}</span>
+                  </el-col>
+                </el-row>
+                <el-row>
+                  <el-col>
+                    <el-form-item prop="email">
+                      <el-input v-model="registerForm.email" :placeholder="$t('login.email')"></el-input>
+                    </el-form-item>
                   </el-col>
                 </el-row>
 
-              </el-col>
+                <el-row>
+                  <el-col>
+                    <span class="label">{{ $t('login.password' )}}</span>
+                  </el-col>
+                </el-row>
+                <el-row>
+                  <el-col>
+                    <el-form-item prop="password">
+                      <el-input class="aig-card-input" v-model="registerForm.password" type="password" placeholder="********"></el-input>
+                    </el-form-item>
+                  </el-col>
+                </el-row>
 
-              <el-col :span="12">
-                <el-form :model="registerForm" :rules="registerFormRules" ref="registerForm">
+                <el-row>
+                  <el-col>
+                    <span class="label">{{ $t('signUp.rePassword' )}}</span>
+                  </el-col>
+                </el-row>
+                <el-row>
+                  <el-col>
+                    <el-form-item prop="rePassword">
+                      <el-input class="aig-card-input" v-model="registerForm.rePassword" type="password" placeholder="********"></el-input>
+                    </el-form-item>
+                  </el-col>
+                </el-row>
 
-                  <el-row>
-                    <el-col><span class="label">{{ $t('login.email' )}}</span></el-col>
-                  </el-row>
-                  <el-row>
-                    <el-col>
-                      <el-form-item prop="email">
-                        <el-input v-model="registerForm.email" :placeholder="$t('login.email')"></el-input>
-                      </el-form-item>
-                    </el-col>
-                  </el-row>
+                <el-row>
+                  <el-col>
+                    <el-form-item>
+                      <el-button type="primary" @click="submitForm('registerForm')">{{ $t('signUp.signUp') }}</el-button>
+                    </el-form-item>
+                  </el-col>
+                </el-row>
 
-                  <el-row>
-                    <el-col><span class="label">{{ $t('login.password' )}}</span></el-col>
-                  </el-row>
-                  <el-row>
-                    <el-col>
-                      <el-form-item prop="password">
-                        <el-input v-model="registerForm.password" type="password" placeholder="********"></el-input>
-                      </el-form-item>
-                    </el-col>
-                  </el-row>
+              </el-form>
 
-                  <el-row>
-                    <el-col><span class="label">{{ $t('signUp.rePassword' )}}</span></el-col>
-                  </el-row>
-                  <el-row>
-                    <el-col>
-                      <el-form-item prop="rePassword">
-                        <el-input v-model="registerForm.rePassword" type="password" placeholder="********"></el-input>
-                      </el-form-item>
-                    </el-col>
-                  </el-row>
+            </el-col>
+          </el-row>
 
-                  <el-row style="margin-top:40px">
-                     <el-col>
-                        <el-form-item>
-                          <el-button type="primary" @click="submitForm('registerForm')" style="width: 100%">{{ $t('signUp.signUp') }}</el-button>
-                        </el-form-item>
-                     </el-col>
-                  </el-row>
+          <el-row v-show="isVerificationVisisble">
+            <h2>{{ $t('signUp.waitingVerification') }}</h2>
+            <p>{{ $t('signUp.emailSent', [registerForm.email]) }}</p>
+            <p>{{ $t('signUp.dontReceiveEmail') }}
+              <a class="a-active" type="text" @click="resendEmail()">{{ $t('general.here') }}</a>
+            </p>
+          </el-row>
 
-                </el-form>
-
-              </el-col>
-            </el-row>
-
-            <el-row v-show="isVerificationVisisble">
-              <h2 style="margin-top:40px;margin-bottom:40px">{{ $t('signUp.waitingVerification') }}</h2>
-              <p>{{ $t('signUp.emailSent', [registerForm.email]) }}</p>
-              <p>{{ $t('signUp.dontReceiveEmail') }}
-                <el-button class="a--active" type="text" @click="resendEmail()" >{{ $t('general.here') }}</el-button>
-              </p>
-            </el-row>
-
-          </div>
-        </Card>
+        </div>
+      </Card>
     </div>
   </div>
 </template>
@@ -158,29 +164,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss" scoped>
-@import '~helpers/mixins';
-@import '~helpers/variables';
-
-.aig__container {
-  max-width: 1200px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 650px;
-  background-image: url("/static/background/backgroud_pattern.svg");
-}
-
-.aig__logo {
-  display: block;
-  line-height: 80px;
-  img {
-    display: inline-block;
-    vertical-align: middle;
-    width: 86px;
-    height: 27px;
-    width: auto;
-  }
-}
-</style>
