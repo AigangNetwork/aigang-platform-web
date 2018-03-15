@@ -16,12 +16,16 @@
         "title": "Title",
         "description": "Description",
         "structure": "Structure",
-        "fileUploadPreferences": "File preferences"
+        "fileUploadPreferences": "File preferences",
+        "fileVisibility": "File visibility",
+        "fileAccess": "By default datasets are with public access",
+        "fileDetails": "File details"
       },
       "rules": {
         "rule0": "CSV files only",
         "rule1": "Maximum size of file: 10MB",
-        "rule2": "Your file is too large. Please provide remote access point to the file. (URL, Connection string etc.)"
+        "rule2":
+          "Your file is too large. Please provide remote access point to the file. (URL, Connection string etc.)"
       },
       "input": {
         "placeholder": {
@@ -29,10 +33,16 @@
           "title": "Set a title of dataset",
           "description": "Describe dataset",
           "column": "Describe a column",
-          "structure": "Please briefly describe your file structure"
+          "structure": "Please briefly describe your file structure",
+          "fileUploadPart0": "Drop file here or ",
+          "fileUploadPart1": "click to upload",
+          "dataType": "Data type"
         },
         "validation": {
-          "emptyInputError": "Please make sure you have filled all fields"
+          "emptyInputError": "Please make sure you have filled all fields",
+          "fileLimitExceed": "Please delete old file before uploading new one",
+          "unableAccessFileContent":
+            "File can not be accessed. Please reupload correct file"
         }
       }
     },
@@ -48,7 +58,7 @@
   },
   "login": {
     "login": "Log in",
-    "title" : "Log in to Aigang Network",
+    "title": "Log in to Aigang Network",
     "email": "Email",
     "password": "Password",
     "forgotPassword": "Forgot password?",
@@ -56,10 +66,12 @@
   },
   "signUp": {
     "signUp": "Sign Up",
-    "description": "Creating an account in aigang.network you will get access to all products such as Data, Prediction market, Invest and Insure",
+    "description":
+      "Creating an account in aigang.network you will get access to all products such as Data, Prediction market, Invest and Insure",
     "haveAccount": "Have Aigang Network Account?",
     "rePassword": "Repeat password",
-    "emailSent": "Email was sent to {0}. Follow instructions provided in the email.",
+    "emailSent":
+      "Email was sent to {0}. Follow instructions provided in the email.",
     "dontReceiveEmail": "If you didn't receive email, click: ",
     "waitingVerification": "Verification email was sent."
   },
@@ -103,7 +115,7 @@
     "closed": "Closed",
     "pending": "Pending"
   },
-  "validation":{
+  "validation": {
     "emailEmpty": "Please input email address",
     "emailNotValid": "Please input correct email address",
     "passwordEmpty": "Password is required",
@@ -123,12 +135,14 @@
     "404": "Not Found",
     "408": "Request Timeout",
     "500": "Internal Server Error",
-    "unhandled" : "Unhandled error: ",
+    "unhandled": "Unhandled error: ",
     "validation": {
       "DuplicateUserName": "User name is taken. Please make it unique",
-      "DuplicateEmail": "Email was registered earlier. Choose other email or use 'Forgot password'",
+      "DuplicateEmail":
+        "Email was registered earlier. Choose other email or use 'Forgot password'",
       "InvalidEmail": "Email is not valid",
-      "InvalidEmailOrPassword": "The email address or password you entered is not valid",
+      "InvalidEmailOrPassword":
+        "The email address or password you entered is not valid",
       "PasswordNotMatchRePassword": "Passwords are not matching",
       "PasswordTooShort": "Password is too short",
       "InvalidQuery": "Query is not valid"
