@@ -1,7 +1,7 @@
 <template>
-  <header class="aig__header">
-    <div class="aig__header__top">
-      <div class="aig__container">
+  <header class="aig-header">
+    <div class="aig-header-top">
+      <div class="aig-container">
         <Navigation/>
         <Profile/>
       </div>
@@ -23,27 +23,27 @@ export default {
 </script>
 
 <style lang="scss">
-@import '~helpers/variables';
+  @import '~helpers/variables';
 
-.aig__header {
-  position: relative;
-  background: #9549c8;
-  background: linear-gradient(to bottom right, #9549c8 0%, #5833b7 100%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  color: white;
-  .aig__header__top,
-  .aig__header__body,
-  .aig__header__footer {
-    width: 100%;
+  .aig-header {
+    position: relative;
+    background: #9549c8;
+    background: linear-gradient(to bottom right, #9549c8 0%, #5833b7 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: white;
+    .aig-header-top,
+    .aig-header-body,
+    .aig-header-footer {
+      width: 100%;
+    }
+    .aig-header-body {
+      padding-top: 20px;
+      padding-bottom: 20px;
+    }
+    .aig-profile {
+      float: right;
+    }
   }
-  .aig__header__body {
-    padding-top: 20px;
-    padding-bottom: 20px;
-  }
-  .aig__profile {
-    float: right;
-  }
-}
 </style>

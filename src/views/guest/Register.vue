@@ -31,7 +31,7 @@
             </el-col>
 
             <el-col :span="12">
-              <el-form :model="registerForm" :rules="registerFormRules" ref="registerForm">
+              <el-form @keyup.enter.native="submitForm('registerForm')" :model="registerForm" :rules="registerFormRules" ref="registerForm">
 
                 <el-row>
                   <el-col>
@@ -149,6 +149,7 @@ export default {
         this.isVerificationVisisble = true
       })
         .catch(e => {
+          console.log('opa')
           this.loading = false
         })
     },

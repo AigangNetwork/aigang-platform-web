@@ -1,6 +1,6 @@
 <template>
-  <div class="aig__card">
-    <div class="aig__card__body">
+  <div class="aig-card">
+    <div class="aig-card-body">
       <slot name="body"></slot>
     </div>
   </div>
@@ -13,19 +13,18 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~helpers/variables';
+  @import '~helpers/variables';
 
-.aig__card {
-  color: darken($gray, 50);
-  .aig__card__body {
-    margin: 0 auto;
-    width: 100%;
-    padding: 35px;
-    background: white;
-    box-shadow: 0 0 30px 0 rgba(0, 0, 0, 0.06);
-    border: 1px solid darken($gray, 2);
-    margin-bottom: 50px;
+  .aig-card {
+    color: darken($gray, 50);
+    .aig-card-body {
+      margin: 0 auto;
+      width: 100%;
+      padding: 35px;
+      background: white;
+      box-shadow: 0 0 30px 0 rgba(0, 0, 0, 0.06);
+      border: 1px solid darken($gray, 2);
+      margin-bottom: 50px;
+    }
   }
-}
-
 </style>

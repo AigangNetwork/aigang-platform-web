@@ -2,7 +2,6 @@
 @import '~helpers/variables_el';
 @import '~helpers/mixins';
 
-
 @import '~element-ui/packages/theme-chalk/src/index';
 
 // Button
@@ -12,15 +11,15 @@
 }
 
 // Form item
-.el-form-item.is-success .el-input__inner{ // hack by default ir marks green
+.el-form-item.is-success .el-input-inner {
+  // hack by default ir marks green
   border-color: $gray;
 }
-
 
 // Dialog
 .v-modal {
   background: #9549c8;
-  background: linear-gradient(135deg,#9549c8 0%,#5833b7 100%);
+  background: linear-gradient(135deg, #9549c8 0%, #5833b7 100%);
   opacity: 0.9;
 }
 
@@ -29,10 +28,10 @@
   box-shadow: 0 0px 41px rgba(0, 0, 0, 0.07);
 }
 
-.el-dialog__header {
+.el-dialog-header {
   padding: 30px;
 }
-.el-dialog__body {
+.el-dialog-body {
   padding: 30px;
   padding-top: 0;
 }
@@ -51,7 +50,11 @@
   border: 0;
   line-height: 28px;
   background: #9549c8;
-  background: linear-gradient(45deg, rgba(88,51,183,1) 0%,rgba(149,73,200,1) 100%);
+  background: linear-gradient(
+    45deg,
+    rgba(88, 51, 183, 1) 0%,
+    rgba(149, 73, 200, 1) 100%
+  );
 }
 .el-pager li {
   font-size: 12px;
@@ -68,30 +71,38 @@
   border-radius: 2px;
   .el-icon-success,
   .el-icon-error {
-    color: rgba(black, .25);
+    color: rgba(black, 0.25);
   }
-  .el-message__content {
+  .el-message-content {
     font-size: $--size-base;
   }
   &.el-message--success {
     background: $green;
-    background: linear-gradient(to bottom right, rgba(lighten($green, 10), .95) 0%, rgba($green, .9) 100%);
-    .el-message__content {
+    background: linear-gradient(
+      to bottom right,
+      rgba(lighten($green, 10), 0.95) 0%,
+      rgba($green, 0.9) 100%
+    );
+    .el-message-content {
       color: white;
     }
   }
   &.el-message--error {
     background: $red;
-    background: linear-gradient(to bottom right, rgba(lighten($red, 10), .95) 0%, rgba($red, .9) 100%);
-    .el-message__content {
+    background: linear-gradient(
+      to bottom right,
+      rgba(lighten($red, 10), 0.95) 0%,
+      rgba($red, 0.9) 100%
+    );
+    .el-message-content {
       color: white;
     }
   }
 }
 
-.el-message__closeBtn {
+.el-message-closeBtn {
   @include transition;
-  color: rgba(black, .45);
+  color: rgba(black, 0.45);
   font-size: 14px;
   right: 10px;
   &:hover {
@@ -108,7 +119,7 @@
   display: block;
 }
 
-.el-upload__tip {
+.el-upload-tip {
   line-height: 1;
 }
 
@@ -116,7 +127,7 @@
 .el-alert--info {
   border-color: #d3c4eb;
   background-color: #f0ebf8;
-  .el-alert__content {
+  .el-alert-content {
     color: #6b3abd;
   }
 }
@@ -128,6 +139,6 @@
   }
 }
 
-.el-tooltip__popper.is-dark {
+.el-tooltip-popper.is-dark {
   background: rgba(black, 0.85);
 }

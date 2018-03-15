@@ -4,7 +4,7 @@
     <Navigation/>
 
     <transition name="slideUp">
-      <router-view class="aig__view"></router-view>
+      <router-view class="aig-view"></router-view>
     </transition>
 
     <notification></notification>

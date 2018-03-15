@@ -1,7 +1,7 @@
 <template>
   <div class="">
-    <div class="aig__container" style="max-width: 800px">
-        <h1>{{ $t('errors.pagePathNotFound') }} </h1>
+    <div class="aig-container" style="max-width: 800px">
+      <h1>{{ $t('errors.pagePathNotFound') }} </h1>
     </div>
   </div>
 </template>
@@ -14,5 +14,4 @@ export default {
 </script>
 
 <style lang="scss">
-
 </style>

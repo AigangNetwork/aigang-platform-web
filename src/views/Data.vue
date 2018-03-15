@@ -1,35 +1,35 @@
 <template>
-<div class="aig__container">
-<el-container class="aig__container">
-      <el-aside width="20%" class="aig__data__menu">
+  <div class="aig-container">
+    <el-container class="aig-container">
+      <el-aside width="20%" class="aig-data-menu">
         <ul>
-         <li v-on:click="selectMenu(index)" :class="{ aig__menu__active: item.active }" v-for="(item, index) in dataMeniu" :key="item.name">
-           <router-link :to="item.routeLink">
-             {{ item.name }}
-           </router-link>
-         </li>
+          <li v-on:click="selectMenu(index)" :class="{ 'aig-menu-active': item.active }" v-for="(item, index) in dataMeniu" :key="item.name">
+            <router-link :to="item.routeLink">
+              {{ item.name }}
+            </router-link>
+          </li>
         </ul>
       </el-aside>
-      <el-main class="aig__data__container">
+      <el-main class="aig-data-container">
         <el-row :gutter="26">
           <el-col :span="16">
             <el-input placeholder="Search by name or keywords" v-model="searchInput"></el-input>
           </el-col>
           <el-col :span="8">
             <div v-if="$store.getters.isAuthenticated" class="">
-              <el-button type="primary" @click="$router.push({ name: 'Upload' })" class="aig__upload__btn">{{ $t('actions.upload_new_data')}}</el-button>
+              <el-button type="primary" @click="$router.push({ name: 'Upload' })" class="aig-upload-btn">{{ $t('actions.upload_new_data')}}</el-button>
             </div>
           </el-col>
         </el-row>
-         <el-row :gutter="20" class="aig__items">
+        <el-row :gutter="20" class="aig-items">
 
-        <transition-group name="list" tag="div">
-          <el-col :xs="24" :sm="12" :md="12" :lg="8" v-for="dataItem in dataList" :key="dataItem.id">
-            <DataItem :data="dataItem" :key="dataItem.id" />
-          </el-col>
-        </transition-group>
-      </el-row>
-      <!-- <el-pagination
+          <transition-group name="list" tag="div">
+            <el-col :xs="24" :sm="12" :md="12" :lg="8" v-for="dataItem in dataList" :key="dataItem.id">
+              <DataItem :data="dataItem" :key="dataItem.id" />
+            </el-col>
+          </transition-group>
+        </el-row>
+        <!-- <el-pagination
         v-if="this.dataList.length > 0"
         style="text-align: center; margin-top: 30px;"
         background
@@ -39,7 +39,7 @@
       </el-pagination> -->
       </el-main>
     </el-container>
-</div>
+  </div>
 </template>
 
 <script>
@@ -86,41 +86,44 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>@import '~helpers/variables';
-@import '~helpers/mixins';
+<style lang="scss" scoped>
+  @import '~helpers/variables';
+  @import '~helpers/mixins';
 
-.aig__data__container {
-  background-image: url("/static/background/backgroud_pattern.svg");
-  padding-left: 60px;
-  padding-right: 60px;
-  @include breakpoint(max-width 1150px) {
-    padding-left: 10px;
-    padding-right: 10px;
+  .aig-data-container {
+    background-image: url("/static/background/backgroud_pattern.svg");
+    padding-left: 60px;
+    padding-right: 60px;
+    @include breakpoint(max-width 1150px) {
+      padding-left: 10px;
+      padding-right: 10px;
+    }
   }
-}
-  .el-input__inner {
+
+  .el-input-inner {
     height: 100px;
   }
-.aig__upload__btn {
-  width: 100%;
-}
 
-.aig__data__menu {
-  border-right: 1px solid $light-border-blue;
-  ul {
-    font-size: 18pt;
-    padding: 15px;
-    list-style-type: none;
-    a {
-    color: #ccc9d6;
-      padding: 10px;
-      display: block;
-    }
-    .aig__menu__active {
+  .aig-upload-btn {
+    width: 100%;
+  }
+
+  .aig-data-menu {
+    border-right: 1px solid $light-border-blue;
+    ul {
+      font-size: 18pt;
+      padding: 15px;
+      list-style-type: none;
       a {
-        color: $purple
+        color: #ccc9d6;
+        padding: 10px;
+        display: block;
+      }
+      .aig-menu-active {
+        a {
+          color: $purple
+        }
       }
     }
   }
-}
 </style>
