@@ -16,7 +16,10 @@
         "title": "Title",
         "description": "Description",
         "structure": "Structure",
-        "fileUploadPreferences": "File preferences"
+        "fileUploadPreferences": "File preferences",
+        "fileVisibility": "File visibility",
+        "fileAccess": "By default datasets are with public access",
+        "fileDetails": "File details"
       },
       "rules": {
         "rule0": "CSV files only",
@@ -30,10 +33,16 @@
           "title": "Set a title of dataset",
           "description": "Describe dataset",
           "column": "Describe a column",
-          "structure": "Please briefly describe your file structure"
+          "structure": "Please briefly describe your file structure",
+          "fileUploadPart0": "Drop file here or ",
+          "fileUploadPart1": "click to upload",
+          "dataType": "Data type"
         },
         "validation": {
-          "emptyInputError": "Please make sure you have filled all fields"
+          "emptyInputError": "Please make sure you have filled all fields",
+          "fileLimitExceed": "Please delete old file before uploading new one",
+          "unableAccessFileContent":
+            "File can not be accessed. Please reupload correct file"
         }
       }
     },
