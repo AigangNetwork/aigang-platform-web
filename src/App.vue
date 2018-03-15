@@ -1,10 +1,10 @@
 <template>
-  <div class="aig__app" :class="appClass" v-loading="loading" >
+  <div class="aig-app" :class="appClass" v-loading="loading">
 
     <Navigation/>
 
     <transition name="slideUp">
-      <router-view class="aig__view"></router-view>
+      <router-view class="aig-view"></router-view>
     </transition>
 
     <notification></notification>
@@ -36,40 +36,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss">
-@import '~helpers/reset';
-@import '~helpers/mixins';
-@import '~helpers/variables';
-@import '~helpers/transitions';
-
-body.aig {
-  display: flex;
-  font-family: $font-primary;
-  overflow-y: scroll;
-}
-
-.aig__app {
-  width: 100%;
-    @include breakpoint(max-width 768px) {
-      // todo: compose menu items
-    }
-}
-
-.aig__container {
-  @include clearfix;
-  max-width: 1440px;
-  width: 100%;
-  height: 100%;
-  margin: 0 auto;
-}
-
-.aig__items {
-  margin-top: 15px;
-  .el-col {
-    padding-top: 10px;
-    padding-bottom: 10px;
-  }
-}
-
-</style>

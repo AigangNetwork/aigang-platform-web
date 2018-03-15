@@ -1,6 +1,6 @@
 <template>
-  <el-container class="aig__container">
-    <Card class="aig__upload__card" v-if="firstStepActive">
+  <el-container class="aig-container">
+    <Card class="aig-upload-card" v-if="firstStepActive">
       <div slot="body">
         <h4>{{$t('data.upload.titles.upload')}}</h4>
         <el-row type="flex">
@@ -15,29 +15,29 @@
                   </div>
                 </el-upload>
               </el-form-item>
-              <div v-if="isErrorOnFirstStep && !invalidFile" class="aig__form__error">
+              <div v-if="isErrorOnFirstStep && !invalidFile" class="aig-form-error">
                 {{errorMessage}}
               </div>
-              <el-button @click="loadFile('file')" class="aig__load__button" v-if="buttonActive" type="primary">{{$t('data.upload.titles.load')}}</el-button>
+              <el-button @click="loadFile('file')" class="aig-load-button" v-if="buttonActive" type="primary">{{$t('data.upload.titles.load')}}</el-button>
               <div v-if="invalidFile">
                 <el-form-item>
                   <p>{{$t('data.upload.rules.rule2')}}</p>
                   <el-input :placeholder="$t('data.upload.input.placeholder.fileAccess')" type="textarea" v-model="dataUploadForm.remoteFileAccessPoint"></el-input>
                 </el-form-item>
-                <div v-if="isErrorOnFirstStep" class="aig__form__error">
+                <div v-if="isErrorOnFirstStep" class="aig-form-error">
                   {{errorMessage}}
                 </div>
-                <el-button @click="loadFile()" class="aig__load__button" type="primary">{{$t('data.upload.titles.load')}}</el-button>
+                <el-button @click="loadFile()" class="aig-load-button" type="primary">{{$t('data.upload.titles.load')}}</el-button>
               </div>
             </el-form>
           </el-col>
           <el-col :span="10">
-            <div class="aig__upload__info">
-              <div class="aig__upload__info__header">
+            <div class="aig-upload-info">
+              <div class="aig-upload-info-header">
                 <img src="/static/upload/info24px.svg" alt="threads">
                 <h5>{{$t('data.upload.titles.fileUploadPreferences')}}</h5>
               </div>
-              <div class="aig__upload__info__body">
+              <div class="aig-upload-info-body">
                 <ul>
                   <li>{{$t('data.upload.rules.rule0')}}</li>
                   <li>{{$t('data.upload.rules.rule1')}}</li>
@@ -48,11 +48,11 @@
         </el-row>
       </div>
     </Card>
-    <Card class="aig__upload__card__step__2" v-if="secondStepActive">
+    <Card class="aig-upload-card-step-2" v-if="secondStepActive">
       <div slot="body" :element-loading-text="$t('general.loading')">
         <el-row>
           <el-col :span="24">
-            <div class="aig__file__information__container">
+            <div class="aig-file-information-container">
               <div class="header">
                 <img src="/static/upload/doc64px.svg" alt="threads">
                 <h3>{{$t('data.upload.titles.fileDetails')}}</h3>
@@ -74,7 +74,7 @@
                 </div>
               </div>
             </div>
-            <el-form class="aig__dataset__upload__form" :model="dataUploadForm" ref="dataUploadForm">
+            <el-form class="aig-dataset-upload-form" :model="dataUploadForm" ref="dataUploadForm">
               <h4>{{$t('data.upload.titles.title')}}</h4>
               <el-form-item prop="title" size="small">
                 <el-input :placeholder="$t('data.upload.input.placeholder.title')" v-model="dataUploadForm.title"></el-input>
@@ -112,13 +112,13 @@
           </el-col>
         </el-row>
         <el-row v-if="!isValidForm">
-          <div class="aig__form__error">
+          <div class="aig-form-error">
             {{$t('data.upload.input.validation.emptyInputError')}}
           </div>
         </el-row>
         <el-row>
           <el-col :span="12" :offset="6">
-            <el-button @click="uploadDataset" class="aig__upload__button" type="primary">{{$t('data.upload.titles.upload')}}</el-button>
+            <el-button @click="uploadDataset" class="aig-upload-button" type="primary">{{$t('data.upload.titles.upload')}}</el-button>
           </el-col>
         </el-row>
       </div>
@@ -289,14 +289,14 @@ export default {
 </script>
 <style lang="scss" scoped>
   @import '~helpers/variables';
-  .aig__container {
+  .aig-container {
     max-width: 1200px;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 650px;
     background-image: url("/static/background/backgroud_pattern.svg");
-    .aig__upload__card {
+    .aig-upload-card {
       width: 100%;
       max-width: 665px;
       height: 100%;
@@ -305,19 +305,19 @@ export default {
         text-transform: uppercase;
         margin: 0px 0px 15px 0px;
       }
-      .aig__upload__info {
+      .aig-upload-info {
         height: 100%;
         max-height: 176px;
         margin-left: 10px;
         padding: 10px;
-        .aig__upload__info__header {
+        .aig-upload-info-header {
           display: flex;
           h5 {
             font-size: 12pt;
             margin: 4px 0px 5px 5px;
           }
         }
-        .aig__upload__info__body {
+        .aig-upload-info-body {
           height: 100%;
           max-height: 180px;
           ul {
@@ -330,11 +330,11 @@ export default {
           }
         }
       }
-      .aig__load__button {
+      .aig-load-button {
         width: 100%;
       }
     }
-    .aig__file__information__container {
+    .aig-file-information-container {
       border: solid 1px $light-border-blue;
       border-radius: 5px;
       width: 100%;
@@ -364,7 +364,7 @@ export default {
         }
       }
     }
-    .aig__dataset__upload__form {
+    .aig-dataset-upload-form {
       h4 {
         margin-bottom: 5px;
         color: $purple;
@@ -377,16 +377,16 @@ export default {
         font-weight: 600;
       }
     }
-    .aig__upload__card__step__2 {
+    .aig-upload-card-step-2 {
       height: 100%;
       margin-top: 50px;
       width: 100%;
       max-width: 665px;
-      .aig__upload__button {
+      .aig-upload-button {
         width: 100%;
       }
     }
-    .aig__form__error {
+    .aig-form-error {
       text-align: center;
       margin-bottom: 15px;
       color: red;

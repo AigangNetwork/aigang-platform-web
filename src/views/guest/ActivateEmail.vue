@@ -1,7 +1,7 @@
 <template>
 
   <div class="">
-    <div class="aig__container" style="max-width: 400px">
+    <div class="aig-container" style="max-width: 400px">
       <Card>
         <div slot="body" v-loading="loading" :element-loading-text="$t('activateEmail.activating')">
           <p>{{ msg }}</p>

@@ -1,88 +1,92 @@
 @import '~helpers/variables';
 @import '~helpers/mixins';
 
-p {
-    font-family: $font-secondary;
-    font-size: 16px;
-    font-weight: 300;
-    font-style: normal;
-    font-stretch: normal;
-    line-height: 1.63;
-    letter-spacing: 0.5px;
-    color: $active-dark-purple;
+* {
+  box-sizing: border-box;
 }
-  
+
+p {
+  font-family: $font-secondary;
+  font-size: 16px;
+  font-weight: 300;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.63;
+  letter-spacing: 0.5px;
+  color: $active-dark-purple;
+}
+
 h1 {
-    font-family: $font-primary;
-    font-size: 40px;
-    font-weight: bold;
-    line-height: 1.2;
-    letter-spacing: 0.5px;
-    color: $purple;
+  font-family: $font-primary;
+  font-size: 40px;
+  font-weight: bold;
+  line-height: 1.2;
+  letter-spacing: 0.5px;
+  color: $purple;
 }
 
 h2 {
-    font-family: $font-primary;
-    font-size: 24px;
-    font-weight: normal;
-    line-height: 1.33;
-    letter-spacing: 0.5px;
-    color: $active-dark-purple;
-    text-shadow: 0 2px 4px rgba(219, 224, 231, 0.5);
+  font-family: $font-primary;
+  font-size: 24px;
+  font-weight: normal;
+  line-height: 1.33;
+  letter-spacing: 0.5px;
+  color: $active-dark-purple;
+  text-shadow: 0 2px 4px rgba(219, 224, 231, 0.5);
 }
 
 h3 {
-    font-family: $font-secondary;
-    font-size: 21px;
-    font-weight: 500;
-    line-height: 1.14;
-    letter-spacing: 0.7px;
-    color: $active-dark-purple;
+  font-family: $font-secondary;
+  font-size: 21px;
+  font-weight: 500;
+  line-height: 1.14;
+  letter-spacing: 0.7px;
+  color: $active-dark-purple;
 }
 
 h4 {
-    font-family: $font-primary;
-    font-size: 16px;
-    font-weight: bold;
-    letter-spacing: 0.6px;
-    color: #9eb1c7;
-}  
+  font-family: $font-primary;
+  font-size: 16px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  color: #9eb1c7;
+}
 
 .label {
-    font-family: $font-secondary;
-    font-size: 14px;
-    font-weight: 500;
-    font-style: normal;
-    font-stretch: normal;
-    line-height: 1.86;
-    letter-spacing: 0.4px;    
-    color: $active-dark-purple;
+  font-family: $font-secondary;
+  font-size: 14px;
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.86;
+  letter-spacing: 0.4px;
+  color: $active-dark-purple;
 }
 
-.a--active {
-    font-family: $font-secondary;
-    font-size: 16px;
-    font-weight: 500;
-    font-style: normal;
-    font-stretch: normal;
-    line-height: 1.63;
-    letter-spacing: 0.5px;
-    color: #6139de;
-    &:hover {
-      font-weight: bold;
-    }
-  }
-  
-.a--passive {
-font-family: $font-secondary;
-font-size: 14px;
-font-weight: 300;
-font-style: normal;
-font-stretch: normal;
-line-height: 1.29;
-letter-spacing: 0.5px;
-color: #2f1f61;
-&:hover {
+.a-active {
+  font-family: $font-secondary;
+  font-size: 16px;
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.63;
+  letter-spacing: 0.5px;
+  color: #6139de;
+  &:hover {
     font-weight: bold;
+  }
 }
+
+.a-passive {
+  font-family: $font-secondary;
+  font-size: 14px;
+  font-weight: 300;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.29;
+  letter-spacing: 0.5px;
+  color: #2f1f61;
+  &:hover {
+    font-weight: bold;
+  }
 }

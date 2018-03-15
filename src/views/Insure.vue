@@ -1,5 +1,5 @@
 <template>
-  <div class="aig__container">
+  <div class="aig-container">
     <div class="">
 
       <div class="">

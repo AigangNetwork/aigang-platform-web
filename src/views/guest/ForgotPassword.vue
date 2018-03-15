@@ -1,26 +1,67 @@
 <template>
   <div class="">
-    <div class="aig__container" style="max-width: 400px">
-        <Card>
-          <div slot="body" v-loading="loading" :element-loading-text="$t('general.loading')">
-            <div class="aig__logo">
-              <img src="/static/logo-color.png" alt="">
-            </div>
-            <el-form :model="forgotPasswordForm" :rules="forgotPasswordFormRules" ref="forgotPasswordForm">
-              <el-form-item :label="$t('strings.email')" prop="email" size="small">
-                <el-input v-model="forgotPasswordForm.email" size="small" placeholder="example@aigang.network"></el-input>
-              </el-form-item>
-              <el-form-item style="margin-bottom: 0">
-                <el-button type="primary" @click="submitForm('forgotPasswordForm')" style="width: 100%">{{ $t('actions.retrievePassword') }}</el-button>
-              </el-form-item>
-            </el-form>
+    <div class="aig-card-container">
+      <Card class="guest-card">
+
+        <div class="flex_wrap" slot="body" v-loading="loading" :element-loading-text="$t('general.loading')">
+
+          <el-row>
+            <el-col>
+              <div class="aig-logo">
+                <img src="/static/logo-purple.png" alt="">
+              </div>
+            </el-col>
+          </el-row>
+          <div v-if="!isVerificationVisisble">
+            <el-row type="flex" justify="center">
+              <el-col :span="10">
+                <h2>{{ $t('retrievePassword.title') }}</h2>
+                <el-form @submit.prevent.native="submitForm('forgotPasswordForm')" :model="forgotPasswordForm" :rules="forgotPasswordFormRules"
+                  ref="forgotPasswordForm">
+                  <el-row style="input_label">
+                    <el-col>
+                      <span class="label">{{ $t('login.email' )}}</span>
+                    </el-col>
+                  </el-row>
+
+                  <el-row>
+                    <el-col>
+                      <el-form-item prop="email">
+                        <el-input class="aig-card-input" v-model="forgotPasswordForm.email" placeholder="example@aigang.network"></el-input>
+                      </el-form-item>
+                    </el-col>
+                  </el-row>
+
+                  <el-form-item style="margin-bottom: 0;">
+                    <el-button type="primary" @click="submitForm('forgotPasswordForm')">{{ $t('actions.retrievePassword') }}</el-button>
+                  </el-form-item>
+                </el-form>
+              </el-col>
+            </el-row>
+
+            <el-row class="flex-column-wrap" justify="center" style="height:100px;">
+              <el-col style="text-align: center; flex-grow: 1; display: flex; align-items: flex-end;">
+                <p style="text-align: center; width: 100%; margin: 0;">
+                  <span>{{ $t('retrievePassword.backTo') }}</span>
+                  <router-link class="a-active" to="/login">{{ $t('login.login') }}</router-link>
+                </p>
+              </el-col>
+
+              <el-col style="text-align: center;">
+                <span>{{ $t('login.dontHave') }}</span>
+                <router-link class="a-active" to="/register">{{ $t('signUp.signUp') }}</router-link>
+              </el-col>
+            </el-row>
           </div>
-          <div slot="footer">
-            <router-link to="/register">{{ $t('actions.createAccount') }}</router-link>
-            <router-link to="/login">{{ $t('actions.loginToAccount') }}</router-link>
-          </div>
-        </Card>
-        <!-- </div> -->
+
+          <el-row v-if="isVerificationVisisble">
+            <h2>{{ $t('retrievePassword.waitingVerification') }}</h2>
+            <p>{{ $t('retrievePassword.dontReceiveEmail') }}
+              <a class="a-active" type="text" @click="retrievePassword()">{{ $t('general.here') }}</a>
+            </p>
+          </el-row>
+        </div>
+      </Card>
     </div>
   </div>
 </template>
@@ -29,7 +70,7 @@
 import Card from '@/components/Card'
 
 export default {
-  name: 'RegisterView',
+  name: 'ForgotPasswordView',
   components: {
     Card
   },
@@ -41,10 +82,19 @@ export default {
       },
       forgotPasswordFormRules: {
         email: [
-          { required: true, message: 'Please input email address', trigger: 'blur' },
-          { type: 'email', message: 'Please input correct email address', trigger: 'blur, change' }
+          {
+            required: true,
+            message: 'Please enter email address',
+            trigger: 'blur'
+          },
+          {
+            type: 'email',
+            message: 'Please enter correct email address',
+            trigger: 'blur'
+          }
         ]
-      }
+      },
+      isVerificationVisisble: false
     }
   },
   methods: {
@@ -59,34 +109,24 @@ export default {
     },
     retrievePassword () {
       this.loading = true
-      this.axios.post('/account/forgotpassword', this.forgotPasswordForm).then(response => {
-        this.loading = false
-        console.log(response)
-      }).catch(error => {
-        this.loading = false
-        console.log(error)
-      })
+      this.axios
+        .post('/account/forgotpassword', this.forgotPasswordForm)
+        .then(response => {
+          this.loading = false
+          this.isVerificationVisisble = true
+        })
+        .catch(e => {
+          this.isVerificationVisisble = false
+          this.loading = false
+        })
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-@import '~helpers/mixins';
-@import '~helpers/variables';
-
-.aig__logo {
-  display: block;
-  line-height: 50px;
-  font-size: 0;
-  margin-right: 40px;
-  text-align: center;
-  margin-bottom: 15px;
-  img {
-    display: inline-block;
-    vertical-align: middle;
-    height: 36px;
-    width: auto;
+  .flex-column-wrap {
+    display: flex;
+    flex-direction: column;
   }
-}
 </style>

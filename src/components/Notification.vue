@@ -1,19 +1,12 @@
 <template>
-  <el-dialog
-    :title="title"
-    :visible.sync="notificationVisible"
-    width="40%"
-    center>
+  <el-dialog class="notification-dialog" :title="title" :visible.sync="notificationVisible" width="40%" center>
     <div>
       <ul>
-        <!-- <template v-for="item in data.messages">
-          <li>{{ item }}</li>
-        </template> -->
-        <li v-for="item in messages" v-text="item" :key="item"></li>
+        <li class="notification-li" v-for="item in messages" v-text="item" :key="item"></li>
       </ul>
     </div>
     <span slot="footer" class="dialog-footer">
-      <el-button type="primary" @click="notificationVisible = false">{{ $t('general.ok') }}</el-button>
+      <el-button class="aig-button" type="primary" @click="notificationVisible = false">{{ $t('general.ok') }}</el-button>
     </span>
   </el-dialog>
 </template>
@@ -34,7 +27,7 @@ export default {
   methods: {
     handle400 (data) {
       if (data.params &&
-        data.params.ValidationFailed) {
+          data.params.ValidationFailed) {
         var val
         for (val of data.params.ValidationFailed) {
           this.messages.push(this.$t('errors.validation.' + val.reason))
@@ -78,3 +71,47 @@ export default {
   }
 }
 </script>
+<style>
+  .notification-dialog li {
+    list-style: none;
+    font-size: 16px;
+    color: black;
+  }
+
+  .notification-dialog .dialog-footer {
+    display: block;
+    width: 100%;
+    text-align: center;
+  }
+
+  .notification-dialog .el-dialog__body {
+    padding-left: 15px;
+  }
+
+  .notification-dialog .aig-button {
+    width: 140px;
+  }
+
+  .notification-dialog .el-dialog {
+    padding: 30px;
+  }
+
+  .notification-dialog .el-dialog__title {
+    font-family: "Raleway", sans-serif;
+    font-size: 24px;
+    font-weight: normal;
+    line-height: 1.33;
+    letter-spacing: 0.5px;
+    color: #423176;
+    text-shadow: 0 2px 4px rgba(219, 224, 231, 0.5);
+  }
+
+  .notification-dialog .el-dialog__header {
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+
+  .notification-dialog .el-dialog__header {
+    text-align: center;
+  }
+</style>

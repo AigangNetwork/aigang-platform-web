@@ -1,0 +1,105 @@
+@import '~helpers/reset';
+@import '~helpers/mixins';
+@import '~helpers/variables';
+@import '~helpers/transitions';
+
+body.aig {
+  display: flex;
+  font-family: $font-primary;
+  overflow-y: scroll;
+}
+
+.aig-app {
+  width: 100%;
+  @include breakpoint(max-width 768px) {
+    // todo: compose menu items
+  }
+}
+
+.aig-container {
+  @include clearfix;
+  max-width: 1440px;
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
+}
+
+.aig-card-container {
+  @include clearfix;
+  max-width: 1440px;
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 650px;
+  background-image: url('/static/background/backgroud_pattern.svg');
+}
+
+.aig-logo {
+  display: block;
+  img {
+    display: inline-block;
+    vertical-align: middle;
+    width: 86px;
+    height: 27px;
+    width: auto;
+  }
+}
+
+.aig-items {
+  margin-top: 15px;
+  .el-col {
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+}
+
+.aig-card-container h2 {
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+
+.aig-card-container button,
+.aig-button {
+  height: 48px;
+  margin-top: 15px;
+  width: 100%;
+}
+
+.aig-medium-button {
+  height: 48px;
+  margin-top: 15px;
+  width: 50%;
+}
+
+.aig-card-input,
+.aig-card-input input {
+  height: 48px;
+  border-radius: 2px;
+}
+
+.aig-card-input .input_label {
+  margin-bottom: 10px;
+}
+
+.aig-card-input .label {
+  font-size: 16px;
+}
+
+.guest-card {
+  width: 932px;
+  margin-top: 48px;
+  .label {
+    font-size: 16px;
+  }
+}
+
+.a-active,
+.a-passive {
+  transition: all 100ms;
+  &:hover {
+    cursor: pointer;
+  }
+}
