@@ -17,34 +17,16 @@
             <el-col :span="12">
 
               <el-row>
-                <h2>{{ $t('signUp.signUp') }}</h2>
-                <p style="padding-right:40px;"> {{ $t('signUp.description') }}</p>
-              </el-row>
-
-              <el-row type="flex" justify="center" style="height:100px;align-items: flex-end;">
-                <el-col>
-                  <span>{{ $t('signUp.haveAccount') }}</span>
-                  <router-link class="a-active" to="/login">{{ $t('login.login') }}</router-link>
-                </el-col>
+                <h2>{{ $t('retrievePassword.title') }}</h2>
+                <p v-if="msg === ''" style="padding-right:40px;"> {{ $t('retrievePassword.description') }}</p>
+                <p v-else style="padding-right:40px;"> {{ msg }}</p>
               </el-row>
 
             </el-col>
 
             <el-col :span="12">
-              <el-form @keyup.enter.native="submitForm('registerForm')" :model="registerForm" :rules="registerFormRules" ref="registerForm">
-
-                <el-row>
-                  <el-col>
-                    <span class="label">{{ $t('login.email' )}}</span>
-                  </el-col>
-                </el-row>
-                <el-row>
-                  <el-col>
-                    <el-form-item prop="email">
-                      <el-input v-model="registerForm.email" :placeholder="$t('login.email')"></el-input>
-                    </el-form-item>
-                  </el-col>
-                </el-row>
+              <el-form class="retrieve-pass" @keyup.enter.native="submitForm('resetPasswordForm')" :model="resetPasswordForm" :rules="resetPasswordFormRules"
+                ref="resetPasswordForm">
 
                 <el-row>
                   <el-col>
@@ -54,7 +36,7 @@
                 <el-row>
                   <el-col>
                     <el-form-item prop="password">
-                      <el-input class="aig-card-input" v-model="registerForm.password" type="password" placeholder="********"></el-input>
+                      <el-input class="aig-card-input" v-model="resetPasswordForm.password" type="password" placeholder="********"></el-input>
                     </el-form-item>
                   </el-col>
                 </el-row>
@@ -67,7 +49,7 @@
                 <el-row>
                   <el-col>
                     <el-form-item prop="rePassword">
-                      <el-input class="aig-card-input" v-model="registerForm.rePassword" type="password" placeholder="********"></el-input>
+                      <el-input class="aig-card-input" v-model="resetPasswordForm.rePassword" type="password" placeholder="********"></el-input>
                     </el-form-item>
                   </el-col>
                 </el-row>
@@ -75,7 +57,7 @@
                 <el-row>
                   <el-col>
                     <el-form-item>
-                      <el-button type="primary" @click="submitForm('registerForm')">{{ $t('signUp.signUp') }}</el-button>
+                      <el-button type="primary" @click="submitForm('resetPasswordForm')">{{ $t('retrievePassword.retrievePassword') }}</el-button>
                     </el-form-item>
                   </el-col>
                 </el-row>
@@ -85,11 +67,11 @@
             </el-col>
           </el-row>
 
-          <el-row v-show="isVerificationVisisble">
-            <h2>{{ $t('signUp.waitingVerification') }}</h2>
-            <p>{{ $t('signUp.emailSent', [registerForm.email]) }}</p>
-            <p>{{ $t('signUp.dontReceiveEmail') }}
-              <a class="a-active" type="text" @click="resendEmail()">{{ $t('general.here') }}</a>
+          <el-row v-if="isVerificationVisisble">
+            <h2>{{ $t('retrievePassword.changeSuccessTitle') }}</h2>
+            <p style="width: 100%; margin: 0;">
+              <span>{{ $t('retrievePassword.backTo') }}</span>
+              <router-link class="a-active" to="/login">{{ $t('login.login') }}</router-link>
             </p>
           </el-row>
 
@@ -103,24 +85,21 @@
 import Card from '@/components/Card'
 
 export default {
-  name: 'RegisterView',
+  name: 'ResetPasswordView',
   components: {
     Card
   },
   data () {
     return {
-      loading: false,
+      loading: true,
       isVerificationVisisble: false,
-      registerForm: {
-        email: '',
+      resetPasswordForm: {
+        userId: '',
+        token: '',
         password: '',
         rePassword: ''
       },
-      registerFormRules: {
-        email: [
-          { required: true, message: this.$t('validation.emailEmpty'), trigger: 'blur' },
-          { type: 'email', message: this.$t('validation.emailNotValid'), trigger: 'blur' }
-        ],
+      resetPasswordFormRules: {
         password: [
           { required: true, message: this.$t('validation.passwordEmpty'), trigger: 'blur' },
           { min: 6, message: this.$t('validation.passwordTooShort'), trigger: 'blur' }
@@ -136,30 +115,36 @@ export default {
     submitForm (formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          this.register()
+          this.resetPassword()
         } else {
           return false
         }
       })
     },
-    register () {
+    resetPassword () {
       this.loading = true
-      this.axios.post('/account/register', this.registerForm).then(response => {
-        this.loading = false
-        this.isVerificationVisisble = true
-      })
+      this.axios.post('/account/resetpassword', this.resetPasswordForm)
+        .then(response => {
+          this.loading = false
+          this.isVerificationVisisble = true
+        })
         .catch(e => {
           this.loading = false
         })
-    },
-    resendEmail () {
-      this.loading = true
-      this.axios.post(`/account/sendverifyemail?Email=${this.registerForm.email}`).then(response => {
-        this.loading = false
-      })
-        .catch(e => {
-          this.loading = false
-        })
+    }
+  },
+  created: function () {
+    let userId = this.$route.query.id
+    let token = this.$route.query.token
+
+    if (userId && token) {
+      this.resetPasswordForm.userId = userId
+      this.resetPasswordForm.token = token
+      this.loading = false
+      this.msg = ''
+    } else {
+      this.msg = this.$t('errors.400')
+      this.loading = false
     }
   }
 }
