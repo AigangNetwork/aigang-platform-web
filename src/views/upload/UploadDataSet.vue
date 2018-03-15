@@ -48,6 +48,7 @@
         </el-row>
       </div>
     </Card>
+    <el-button class="aig-back-btn" v-if="secondStepActive" @click="setPage(1)">Back</el-button>
     <Card class="aig-upload-card-step-2" v-if="secondStepActive">
       <div slot="body" :element-loading-text="$t('general.loading')">
         <el-row>
@@ -63,14 +64,8 @@
                   <p>{{$t('data.upload.titles.fileAccess')}}</p>
                 </div>
                 <div class="right">
-                  <el-form style="width: 100%">
-                    <el-form-item size="small">
-                      <el-radio-group v-model="dataUploadForm.isPublic" size="small">
-                        <el-radio-button :label="true">Public</el-radio-button>
-                        <el-radio-button :label="false">Users only</el-radio-button>
-                      </el-radio-group>
-                    </el-form-item>
-                  </el-form>
+                  <el-switch v-model="dataUploadForm.isPublic" active-text="On" inactive-text="Off">
+                  </el-switch>
                 </div>
               </div>
             </div>
@@ -291,6 +286,7 @@ export default {
   @import '~helpers/variables';
   .aig-container {
     max-width: 1200px;
+    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -390,6 +386,11 @@ export default {
       text-align: center;
       margin-bottom: 15px;
       color: red;
+    }
+    .aig-back-btn {
+      position: absolute;
+      left: 25px;
+      top: 15px;
     }
   }
 
