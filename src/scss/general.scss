@@ -52,9 +52,10 @@ h4 {
   color: #9eb1c7;
 }
 
-.label {
+.label,
+.el-checkbox__label {
   font-family: $font-secondary;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 500;
   font-style: normal;
   font-stretch: normal;

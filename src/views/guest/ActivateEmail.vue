@@ -1,13 +1,11 @@
 <template>
 
-  <div class="">
-    <div class="aig-container" style="max-width: 400px">
-      <Card>
-        <div slot="body" v-loading="loading" :element-loading-text="$t('activateEmail.activating')">
-          <p>{{ msg }}</p>
-        </div>
-      </Card>
-    </div>
+  <div class="aig-card-container" style="max-width: 400px">
+    <Card class="guest-card">
+      <div slot="body" v-loading="loading" :element-loading-text="$t('activateEmail.activating')">
+        <h2>{{ msg }}</h2>
+      </div>
+    </Card>
   </div>
 </template>
 
