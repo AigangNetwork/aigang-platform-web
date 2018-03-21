@@ -54,17 +54,6 @@
     "card": {
       "models": "Models",
       "threads": "Comments"
-    },
-    "dataset": {
-      "createdBy": "By",
-      "updated": "Last updated",
-      "downloadDataset": "Download dataset",
-      "navigation": {
-        "info": "Info",
-        "data": "Data",
-        "models": "Models",
-        "threads": "Threads"
-      }
     }
   },
   "login": {

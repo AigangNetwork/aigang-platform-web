@@ -11,12 +11,7 @@ import Invest from '@/views/Invest'
 import Insure from '@/views/Insure'
 import Profile from '@/views/Profile'
 import UploadDataSet from '@/views/upload/UploadDataSet'
-import Dataset from '@/views/data/Dataset'
 import NotFound from '@/views/general/NotFound'
-import DatasetInfo from '@/views/data/DatasetInfo'
-import DatasetModels from '@/views/data/DatasetModels'
-import DatasetThreads from '@/views/data/DatasetThreads'
-import DatasetData from '@/views/data/DatasetData'
 
 const routes = [
   {
@@ -70,31 +65,22 @@ const routes = [
     name: 'Upload',
     component: UploadDataSet
   },
-  {
-    path: '/data/:id',
-    component: Dataset,
-    props: true,
-    children: [
-      {
-        name: 'datasetInfo',
-        path: '',
-        component: DatasetInfo,
-        props: true
-      },
-      {
-        path: 'data',
-        component: DatasetData
-      },
-      {
-        path: 'models',
-        component: DatasetModels
-      },
-      {
-        path: 'threads',
-        component: DatasetThreads
-      }
-    ]
-  },
+  // {
+  //   path: '/data/:id',
+  //   component: DataInner,
+  //   children: [
+  //     {
+  //       name: 'DataDetails',
+  //       path: 'details',
+  //       component: DataDetails
+  //     },
+  //     {
+  //       name: 'DataModels',
+  //       path: 'models',
+  //       component: DataModels
+  //     }
+  //   ]
+  // },
   {
     path: '/predictions',
     name: 'Predictions',
