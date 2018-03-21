@@ -8,6 +8,7 @@
 .el-button {
   font-family: $font-primary;
   font-weight: bold;
+  height: 48px;
 }
 
 // Form item
@@ -141,4 +142,8 @@
 
 .el-tooltip-popper.is-dark {
   background: rgba(black, 0.85);
+}
+
+.el-input input {
+  height: 48px;
 }
