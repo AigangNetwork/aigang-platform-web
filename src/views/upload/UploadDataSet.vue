@@ -291,7 +291,6 @@ export default {
     justify-content: center;
     align-items: center;
     height: 650px;
-    background-image: url("/static/background/backgroud_pattern.svg");
     .aig-upload-card {
       width: 100%;
       max-width: 665px;
@@ -393,5 +392,4 @@ export default {
       top: 15px;
     }
   }
-
 </style>

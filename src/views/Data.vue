@@ -2,13 +2,15 @@
   <div class="aig-container">
     <el-container class="aig-container">
       <el-aside width="20%" class="aig-data-menu">
-        <ul>
-          <li v-on:click="selectMenu(index)" :class="{ 'aig-menu-active': item.active }" v-for="(item, index) in dataMeniu" :key="item.name">
-            <router-link :to="item.routeLink">
-              {{ item.name }}
-            </router-link>
-          </li>
-        </ul>
+        <span v-if="$store.state.user.authenticated">
+          <ul>
+            <li v-on:click="selectMenu(index)" :class="{ 'aig-menu-active': item.active }" v-for="(item, index) in dataMeniu" :key="item.name">
+              <router-link :to="item.routeLink">
+                {{ item.name }}
+              </router-link>
+            </li>
+          </ul>
+        </span>
       </el-aside>
       <el-main class="aig-data-container">
         <el-row :gutter="26">
@@ -91,7 +93,6 @@ export default {
   @import '~helpers/mixins';
 
   .aig-data-container {
-    background-image: url("/static/background/backgroud_pattern.svg");
     padding-left: 60px;
     padding-right: 60px;
     @include breakpoint(max-width 1150px) {
@@ -110,9 +111,11 @@ export default {
 
   .aig-data-menu {
     border-right: 1px solid $light-border-blue;
+    border-left: 1px solid $light-border-blue;
+    position: relative;
     ul {
       font-size: 18pt;
-      padding: 15px;
+      padding: 45px;
       list-style-type: none;
       a {
         color: #ccc9d6;
@@ -120,9 +123,22 @@ export default {
         display: block;
       }
       .aig-menu-active {
+
         a {
-          color: $purple
+          color: $purple;
+          &:before {
+            display: inline-block;
+            position: relative;
+            content: "";
+            height: 1px;
+            width: 45px;
+            background: purple;
+            margin-bottom: 8px;
+            margin-left: -55px;
+            margin-right: 5px
+          }
         }
+
       }
     }
   }

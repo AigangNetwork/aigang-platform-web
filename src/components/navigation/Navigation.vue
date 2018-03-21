@@ -147,11 +147,14 @@ export default {
 
   .aig-navigation {
     margin: 0 auto;
-    max-width: 1440px;
     width: 100%;
     line-height: 50px;
+    background: $purple;
+    width: 100%;
     .aig-navigation-body {
       @include clearfix;
+      margin: 0 auto;
+      max-width: 1440px;
       font-size: 0;
       background: $purple;
       height: 70px;
@@ -169,7 +172,7 @@ export default {
         .aig-navigation-menu ul {
           display: none;
         }
-        .aig-profile-wrapper {
+        .aig-navigation .aig-profile-wrapper {
           display: none;
         }
         .aig--login {
@@ -194,6 +197,7 @@ export default {
       height: 100%;
       justify-content: center;
       li {
+        list-style: none;
         &+li {
           margin-left: 25px;
         }

@@ -18,14 +18,29 @@ body.aig {
 
 .aig-container {
   @include clearfix;
-  max-width: 1440px;
-  width: 100%;
   height: 100%;
   margin: 0 auto;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-image: url('/static/background/backgroud_pattern.svg');
+  backg .aig-view {
+    width: 100%;
+  }
+  .aig-container {
+    max-width: 1440px;
+  }
+  &.aig-view {
+    background: url('/static/background/background_pattern.svg');
+    background-size: 274px;
+    background-clip: content-box;
+    background-repeat: repeat;
+    text-align: left;
+  }
+  .aig-data-menu {
+    height: 100%;
+    width: 200px;
+    background: white;
+  }
 }
 
 .aig-card-container {
@@ -38,7 +53,7 @@ body.aig {
   justify-content: center;
   align-items: center;
   height: 650px;
-  background-image: url('/static/background/backgroud_pattern.svg');
+  background: transparent;
 }
 
 .aig-logo {
