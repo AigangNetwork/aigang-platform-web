@@ -24,7 +24,6 @@ Vue.config.errorHandler = errorHandler
 Vue.use(VueAxios, axios)
 Vue.use(ElementUI)
 Vue.use(VueMoment)
-
 Vue.axios.defaults.baseURL = 'http://test.api.aigang.network/api'
 // Vue.axios.defaults.baseURL = 'http://localhost:5000/api'
 
