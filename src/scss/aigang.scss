@@ -2,7 +2,6 @@
 @import '~helpers/mixins';
 @import '~helpers/variables';
 @import '~helpers/transitions';
-
 body.aig {
   display: flex;
   font-family: $font-primary;
@@ -56,6 +55,17 @@ body.aig {
   background: transparent;
 }
 
+.aig-blue-bck-container {
+  width: 100%;
+  height: 100%;
+  max-height: 420px;
+  background-image: url('/static/background/blue-background.png');
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
 .aig-logo {
   display: block;
   img {
@@ -82,17 +92,20 @@ body.aig {
 
 .aig-card-container button,
 .aig-button {
+  height: 48px;
   margin-top: 15px;
   width: 100%;
 }
 
 .aig-medium-button {
+  height: 48px;
   margin-top: 15px;
   width: 50%;
 }
 
 .aig-card-input,
 .aig-card-input input {
+  height: 48px;
   border-radius: 2px;
 }
 
@@ -100,13 +113,12 @@ body.aig {
   margin-bottom: 10px;
 }
 
-.aig-card-input .label {
-  font-size: 16px;
+.aig-data-footer .label {
+  font-size: 14px;
 }
 
-.aig-footer-contrainer .label,
-.aig-footer-container-right .label {
-  font-size: 14px;
+.aig-card-input .label {
+  font-size: 16px;
 }
 
 .guest-card {
@@ -117,12 +129,6 @@ body.aig {
   }
 }
 
-.horizontal-line {
-  width: 100%;
-  height: 1px;
-  background-color: $gray;
-}
-
 .a-active,
 .a-passive {
   transition: all 100ms;
@@ -131,42 +137,17 @@ body.aig {
   }
 }
 
-.aig-checkbox {
-  height: 34px;
-  display: block;
-}
-
-.aig-checkbox .el-checkbox__inner {
-  height: 24px;
-  width: 24px;
-  border-radius: 0;
-  &:hover {
-    border-color: $gray;
-  }
-}
-
-.aig-checkbox .el-checkbox__input.is-checked .el-checkbox__inner {
-  background-color: $green;
-  border-color: $green;
-}
-
-.aig-checkbox .el-checkbox__inner::after {
-  height: 12px;
-  left: 9px;
-  top: 3px;
-}
-
-.aig-checkbox .el-checkbox__label {
-  color: $active-dark-purple !important;
-}
-
-.checkbox-description {
-  margin: 0 0 0 35px;
-  line-height: 20px;
-  color: $dark-gray;
-}
-
-.flex-container {
+.aig-download-dataset-btn {
+  width: 180px;
+  height: 30px;
+  margin-top: 10px;
+  background-color: transparent;
+  border: 1px solid white;
+  color: white;
   display: flex;
-  justify-content: space-between;
+  align-items: center;
+  font-size: 10pt;
+  &:hover {
+    border: 1px solid $orange;
+  }
 }

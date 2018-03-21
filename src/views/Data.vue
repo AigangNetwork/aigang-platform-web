@@ -15,7 +15,7 @@
       <el-main class="aig-data-container">
         <el-row :gutter="26">
           <el-col :span="16">
-            <el-input placeholder="Search by name or keywords" v-model="searchInput"></el-input>
+            <el-input :disabled="true" placeholder="Search by name or keywords" v-model="searchInput"></el-input>
           </el-col>
           <el-col :span="8">
             <div v-if="$store.getters.isAuthenticated" class="">
@@ -54,10 +54,21 @@ export default {
   },
   data () {
     return {
-      dataMeniu: [
-        { name: this.$t('data.menu.all'), routeLink: '/', active: true },
-        { name: this.$t('data.menu.uploaded'), routeLink: '/', active: false },
-        { name: this.$t('data.menu.models'), routeLink: '/', active: false }
+      dataMeniu: [{
+        name: this.$t('data.menu.all'),
+        routeLink: '/',
+        active: true
+      },
+      {
+        name: this.$t('data.menu.uploaded'),
+        routeLink: '/',
+        active: false
+      },
+      {
+        name: this.$t('data.menu.models'),
+        routeLink: '/',
+        active: false
+      }
       ],
       searchInput: '',
       loading: true,
@@ -86,6 +97,7 @@ export default {
     this.loadDataItems()
   }
 }
+
 </script>
 
 <style lang="scss" scoped>
@@ -142,4 +154,5 @@ export default {
       }
     }
   }
+
 </style>
