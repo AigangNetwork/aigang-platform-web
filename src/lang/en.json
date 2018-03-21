@@ -90,10 +90,7 @@
     "title": "Reset Your Aigang Password",
     "backTo": "Back to",
     "waitingVerification": "Reset email was sent.",
-    "dontReceiveEmail": "If you didn't receive email, click: ",
-    "description": "Enter your new password",
-    "retrievePassword": "Reset password",
-    "changeSuccessTitle": "Your password has been successfully updated"
+    "dontReceiveEmail": "If you didn't receive email, click: "
   },
   "activateEmail": {
     "activating": "Activating ...",
@@ -118,29 +115,10 @@
   },
   "profile": {
     "logout": "Logout",
-    "userName": "Nickname",
-    "email": "Email",
-    "firstName": "First name",
-    "lastName": "Last name",
-    "changePassword": "Change password",
-    "passwordDescription":
-      "Minimum password length must be 8 characters and consist of at least 2 alpha characters, 1 number and 1 special character ",
-    "oldPassword": "Old password",
-    "newPassword": "New password",
-    "update": "Update",
-    "emailPreferences": "Email preferences",
-    "emailDescription": "Choose newsletter options",
-    "emailModelComments": "Comments in my model",
-    "emailModelCommentsDescription":
-      "Recieve emails when somebody will comment your created model",
-    "emailDataSetsComments": "Comments in my data sets",
-    "emailDataSetsCommentsDescription":
-      "Recieve email notifications when somebody will comment your created data set",
-    "emailNewDataComments": "Uploading of new data sets",
-    "emailNewDataCommentsDescription":
-      "Recieve email notifications of uploading a new data set",
-    "emailNews": "Get news and updates about Aigang's product",
-    "passwordUpdated": "Password succesfully updated"
+    "userName": "Nickname:",
+    "email": "Email:",
+    "firstName": "First name:",
+    "lastName": "Last name:"
   },
   "navigation": {
     "profile": "Profile",
@@ -159,21 +137,13 @@
     "emailEmpty": "Please input email address",
     "emailNotValid": "Please input correct email address",
     "passwordEmpty": "Password is required",
-    "passwordTooShort": "Password must be at least 6 characters long",
-    "firstNameEmpty": "First name is required",
-    "firstNameTooShort": "First name must be at least 2 characters long",
-    "lastNameEmpty": "Last name is required",
-    "lastNameTooShort": "First name must be at least 2 characters long",
-    "userNameEmpty": "Nickname is required",
-    "userNameTooShort": "Nickname must be at least 6 characters long"
+    "passwordTooShort": "Password must be at least 6 characters"
   },
   "general": {
     "uploading": "Uploading ...",
     "loading": "Loading ...",
     "ok": "OK",
-    "here": "here",
-    "change": "Change",
-    "save": "Save"
+    "here": "Here"
   },
   "errors": {
     "error": "Error",
@@ -189,15 +159,12 @@
       "DuplicateEmail":
         "Email was registered earlier. Choose other email or use 'Forgot password'",
       "InvalidEmail": "Email is not valid",
-      "InvalidPassword": "Old password is not correct.",
       "InvalidEmailOrPassword":
         "The email address or password you entered is not valid",
       "PasswordNotMatchRePassword": "Passwords are not matching",
       "PasswordTooShort": "Password is too short",
       "InvalidQuery": "Query is not valid",
-      "UserNotFound": "Email not found",
-      "EmailNotConfirmed": "Email is not comfirmed yet",
-      "ValidationFailed": "We are unable to proccess your request"
+      "UserNotFound": "Email not found"
     },
     "pagePathNotFound": "The page you are trying to access is not available",
     "validationError": "You have entered an invalid data"

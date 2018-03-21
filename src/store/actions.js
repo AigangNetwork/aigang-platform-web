@@ -28,8 +28,4 @@ const logOut = ({ commit }) => {
   delete axios.defaults.headers.common['Authorization']
 }
 
-const changeProfileNames = ({ commit }, response) => {
-  commit(types.CHANGE_PROFILE_NAMES)
-}
-
-export { logIn, logOut, changeProfileNames }
+export { logIn, logOut }

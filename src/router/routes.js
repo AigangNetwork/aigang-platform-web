@@ -2,7 +2,6 @@ import Login from '@/views/guest/Login'
 import Register from '@/views/guest/Register'
 import ForgotPassword from '@/views/guest/ForgotPassword'
 import ActivateEmail from '@/views/guest/ActivateEmail'
-import ResetPassword from '@/views/guest/ResetPassword'
 
 import Data from '@/views/Data'
 // import DataModels from '@/views/DataModels'
@@ -56,11 +55,6 @@ const routes = [
     meta: {
       guestRequired: true
     }
-  },
-  {
-    path: '/resetPassword',
-    name: 'resetpassword',
-    component: ResetPassword
   },
   {
     path: '/',

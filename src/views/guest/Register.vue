@@ -149,6 +149,7 @@ export default {
         this.isVerificationVisisble = true
       })
         .catch(e => {
+          console.log('opa')
           this.loading = false
         })
     },
