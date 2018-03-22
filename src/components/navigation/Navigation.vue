@@ -9,7 +9,7 @@
           <nav class="aig-navigation-menu">
             <ul>
               <li v-on:click="selectTag(index)" :class="{ 'aig-bar-active': bar.active }" v-for="(bar, index) in navigationBars" :key="bar.name">
-                <router-link :to="bar.routeLink" exact>
+                <router-link :class="{'disabled': bar.disabled}" :to="bar.routeLink" exact>
                   {{ bar.name }}
                 </router-link>
               </li>
@@ -27,8 +27,8 @@
     </transition>
     <div class="aig-dropdown" v-if="dropDownMenuActive">
       <ul>
-        <li v-on:click="selectTag(index)" :class="{ 'aig-bar-active': bar.active }" v-for="(bar, index) in navigationBars" :key="bar.name">
-          <router-link :to="bar.routeLink" exact="bar.active">
+        <li v-on:click="selectTag(index)" v-for="(bar, index) in navigationBars" :key="bar.name">
+          <router-link :class="[{ 'aig-bar-active': bar.active }, {'disabled': bar.disabled}]" :to="bar.routeLink" exact>
             {{ bar.name }}
           </router-link>
         </li>
@@ -56,11 +56,30 @@ export default {
   },
   data () {
     return {
-      navigationBars: [
-        { name: this.$t('navigation.data'), routeLink: '/data', active: false },
-        { name: this.$t('navigation.predictions'), routeLink: '/predictions', active: false },
-        { name: this.$t('navigation.invest'), routeLink: '/invest', active: false },
-        { name: this.$t('navigation.insure'), routeLink: '/insure', active: false }
+      navigationBars: [{
+        name: this.$t('navigation.data'),
+        routeLink: '/data',
+        active: false,
+        disabled: false
+      },
+      {
+        name: this.$t('navigation.predictions'),
+        routeLink: '/predictions',
+        active: false,
+        disabled: true
+      },
+      {
+        name: this.$t('navigation.invest'),
+        routeLink: '/invest',
+        active: false,
+        disabled: true
+      },
+      {
+        name: this.$t('navigation.insure'),
+        routeLink: '/insure',
+        active: false,
+        disabled: true
+      }
       ],
       isProfileActive: false,
       dropDownMenuActive: false
@@ -68,6 +87,9 @@ export default {
   },
   methods: {
     selectTag (index) {
+      if (this.navigationBars[index].disabled) {
+        return
+      }
       this.clearBars()
       this.isProfileActive = false
       this.navigationBars[index].active = true
@@ -78,7 +100,9 @@ export default {
     },
     selectLogin () {
       this.clearBars()
-      this.$router.push({ name: 'Login' })
+      this.$router.push({
+        name: 'Login'
+      })
     },
     clearBars () {
       this.navigationBars.forEach(function (val, key) {
@@ -90,6 +114,7 @@ export default {
     }
   }
 }
+
 </script>
 
 <style lang="scss" scoped>
@@ -165,6 +190,10 @@ export default {
         margin-right: 15px;
       }
 
+      .disabled {
+        pointer-events: none;
+      }
+
       @include breakpoint(max-width 780px) {
         .aig-hamburger-wrapper {
           display: block;
@@ -224,4 +253,5 @@ export default {
       }
     }
   }
+
 </style>
