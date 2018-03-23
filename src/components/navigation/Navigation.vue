@@ -3,7 +3,7 @@
     <transition name="slideDown">
       <div class="aig-navigation">
         <div class="aig-navigation-body">
-          <router-link to="/" class="aig-logo">
+          <router-link to="/" class="aig-logo" @click.native="activateHomeBar">
             <img src="/static/logo.png" alt="">
           </router-link>
           <nav class="aig-navigation-menu">
@@ -16,7 +16,7 @@
             </ul>
           </nav>
           <div class="aig-profile-wrapper" v-on:click="selectProfile" v-bind:class="{ 'aig-bar-active' : isProfileActive }" v-if="this.$store.getters.isAuthenticated">
-            <Profile />
+            <UserTab />
           </div>
           <el-button type="primary" class="aig--login" @click="selectLogin" v-else>{{ $t('navigation.login')}}</el-button>
           <div v-on:click="dropDownMenuActive = !dropDownMenuActive" class="aig-hamburger-wrapper">
@@ -25,43 +25,46 @@
         </div>
       </div>
     </transition>
-    <div class="aig-dropdown" v-if="dropDownMenuActive">
-      <ul>
-        <li v-on:click="selectTag(index)" :class="{ 'aig-bar-active': bar.active }" v-for="(bar, index) in navigationBars" :key="bar.name">
-          <router-link :to="bar.routeLink" exact="bar.active">
-            {{ bar.name }}
-          </router-link>
-        </li>
-        <li v-if="this.$store.getters.isAuthenticated" v-on:click="selectProfile" v-bind:class="{ 'aig-bar-active' : isProfileActive }">
-          <router-link :to="'/profile'" exact="isProfileActive">
-            {{ $t('navigation.profile') }}
-          </router-link>
-        </li>
-        <li v-bind:class="{ 'aig-bar-active' : isProfileActive }" v-else @click="selectProfile">
-          <router-link to="/login">{{ $t('navigation.login')}}</router-link>
-        </li>
-      </ul>
-    </div>
+    <transition name="slideDown">
+      <div class="aig-dropdown" v-if="dropDownMenuActive">
+        <ul>
+          <li v-on:click="selectTag(index)" :class="{ 'aig-bar-active': bar.active }" v-for="(bar, index) in navigationBars" :key="bar.name">
+            <router-link :to="bar.routeLink" exact>
+              {{ bar.name }}
+            </router-link>
+          </li>
+          <li v-if="this.$store.getters.isAuthenticated" v-on:click="selectProfile" v-bind:class="{ 'aig-bar-active' : isProfileActive }">
+            <router-link :to="'/profile'" exact>
+              {{ $t('navigation.profile') }}
+            </router-link>
+          </li>
+          <li v-bind:class="{ 'aig-bar-active' : isProfileActive }" v-else @click="selectProfile">
+            <router-link to="/login">{{ $t('navigation.login')}}</router-link>
+          </li>
+        </ul>
+      </div>
+    </transition>
   </div>
 </template>
 <script>
-import Profile from '@/components/Profile'
+import UserTab from '@/components/UserTab'
 import Hamburger from './Hamburger'
 
 export default {
   name: 'Navigation',
   components: {
-    Profile,
+    UserTab,
     Hamburger
   },
   data () {
     return {
       navigationBars: [
-        { name: this.$t('navigation.data'), routeLink: '/data', active: false },
+        { name: this.$t('navigation.data'), routeLink: '/data', active: true },
         { name: this.$t('navigation.predictions'), routeLink: '/predictions', active: false },
         { name: this.$t('navigation.invest'), routeLink: '/invest', active: false },
         { name: this.$t('navigation.insure'), routeLink: '/insure', active: false }
       ],
+      homeRoute: '/data',
       isProfileActive: false,
       dropDownMenuActive: false
     }
@@ -87,6 +90,13 @@ export default {
       if (this.dropDownMenuActive) {
         this.dropDownMenuActive = false
       }
+    },
+    activateHomeBar () {
+      this.clearBars()
+      this.isProfileActive = false
+      let bars = this.navigationBars.filter(
+        (bar) => bar.routeLink === this.homeRoute)
+      bars[0].active = true
     }
   }
 }
@@ -105,7 +115,10 @@ export default {
     line-height: 3em;
     ul {
       list-style-type: none;
+      padding-left: 0;
       li {
+        width: 100%;
+        padding-left: 40px;
         a {
           color: $white;
           padding: 10px;
@@ -172,7 +185,7 @@ export default {
         .aig-navigation-menu ul {
           display: none;
         }
-        .aig-navigation .aig-profile-wrapper {
+        .aig-profile-wrapper {
           display: none;
         }
         .aig--login {

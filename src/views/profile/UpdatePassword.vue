@@ -135,4 +135,13 @@ export default {
   .success-message {
     color: $green;
   }
+
+  @media (min-device-width: 100px) and (max-device-width: 680px) {
+    .profile-password-container {
+      .profile-section-decription {
+        width: 90%;
+        height: min-content;
+      }
+    }
+  }
 </style>

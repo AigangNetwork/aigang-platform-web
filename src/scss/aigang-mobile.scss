@@ -1,0 +1,28 @@
+@media (min-device-width: 100px) and (max-device-width: 680px) {
+  .title,
+  h2 {
+    font-size: 14pt !important;
+  }
+
+  .label {
+    font-size: 12px !important;
+  }
+
+  .aig-card {
+    width: 90%;
+    &.guest-card {
+      margin-top: 80px;
+      .el-col-10 {
+        width: 90%;
+      }
+      .el-row {
+        display: flex;
+        align-items: flex-end;
+      }
+    }
+  }
+
+  .notification-dialog .el-dialog {
+    width: 90% !important;
+  }
+}

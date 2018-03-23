@@ -182,6 +182,7 @@ export default {
   .dataset-navigation-menu {
     width: 100%;
     color: black;
+    background: white;
     display: flex;
     justify-content: center;
     align-content: center;
@@ -215,4 +216,39 @@ export default {
     }
   }
 
+  @media (min-device-width: 680px) and (max-device-width: 1024px) {
+    .dataset-navigation-container {
+      .dataset-navigation-menu {
+        ul {
+          padding-left: 0;
+        }
+      }
+    }
+  }
+
+  @media (min-device-width: 280px) and (max-device-width: 680px) {
+    .dataset-navigation-container {
+      .dataset-content {
+        margin-top: 100px;
+      }
+      .dataset-navigation-menu {
+        ul {
+          padding-left: 0;
+          flex-direction: row;
+          flex-wrap: wrap;
+          flex-flow: row wrap;
+          justify-content: space-around;
+          li {
+            margin-left: 0
+          }
+        }
+      }
+    }
+
+    .dataset-content-container {
+      .dataset-content {
+        margin-top: 30px;
+      }
+    }
+  }
 </style>

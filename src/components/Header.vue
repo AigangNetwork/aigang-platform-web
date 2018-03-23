@@ -11,7 +11,7 @@
 
 <script>
 import Navigation from '@/components/Navigation'
-import Profile from '@/components/Profile'
+import Profile from '@/components/UserTab'
 
 export default {
   name: 'Header',

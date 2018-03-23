@@ -150,4 +150,24 @@ body.aig {
   &:hover {
     border: 1px solid $orange;
   }
+
+  .flex-container {
+    display: flex;
+  }
+}
+
+.horizontal-line {
+  width: 100%;
+  height: 1px;
+  background-color: $gray;
+}
+
+.flex-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.flex-column-wrap {
+  display: flex;
+  flex-direction: column;
 }

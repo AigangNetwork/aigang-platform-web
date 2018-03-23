@@ -54,7 +54,7 @@
             </el-row>
           </div>
 
-          <el-row v-if="isVerificationVisisble">
+          <el-row class="verification-container" v-if="isVerificationVisisble">
             <h2>{{ $t('retrievePassword.waitingVerification') }}</h2>
             <p>{{ $t('retrievePassword.dontReceiveEmail') }}
               <a class="a-active" type="text" @click="retrievePassword()">{{ $t('general.here') }}</a>
@@ -123,10 +123,11 @@ export default {
   }
 }
 </script>
-
-<style lang="scss" scoped>
-  .flex-column-wrap {
-    display: flex;
-    flex-direction: column;
+<style lang="scss">
+  @media (min-device-width: 100px) and (max-device-width: 680px) {
+    .aig-card.guest-card .el-row.verification-container {
+      flex-direction: column;
+      align-items: left;
+    }
   }
 </style>

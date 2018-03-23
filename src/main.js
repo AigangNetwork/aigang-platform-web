@@ -18,6 +18,8 @@ import 'element-ui/lib/theme-chalk/index.css'
 import '@/scss/element.scss'
 import '@/scss/general.scss'
 import '@/scss/aigang.scss'
+import '@/scss/aigang-mobile.scss'
+import '@/scss/aigang-tablet.scss'
 
 Vue.config.errorHandler = errorHandler
 

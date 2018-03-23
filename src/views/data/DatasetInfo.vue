@@ -6,7 +6,7 @@
       <div class="structure-content">
         <h4 class="info-title">{{$t('data.upload.titles.structure')}}</h4>
         <el-row v-if="isValidJson" class="structure-row" :gutter="20" type="flex" v-for="column in structure" :key="column.name">
-          <el-col :span="8">
+          <el-col :span="10">
             <div>
               <h5 class="column-name">{{column.name}}</h5>
             </div>
@@ -14,7 +14,7 @@
           <el-col>
             <h5 class="column-decsription">{{column.description}}</h5>
           </el-col>
-          <el-col class="column-decsription" :span="3">
+          <el-col class="column-decsription" :span="10">
             <h5>{{column.dataType}}</h5>
           </el-col>
         </el-row>
@@ -97,5 +97,4 @@ export default {
       border-bottom: 1px solid $light-grey-border;
     }
   }
-
 </style>

@@ -4,19 +4,17 @@
       <div slot="body" v-loading="loading" :element-loading-text="$t('general.loading')">
 
         <div class="flex-container">
-          <profile-info></profile-info>
+          <ProfileInfo/>
           <el-button class="logout-button" type="warning" @click="logout()">{{ $t('profile.logout') }}</el-button>
         </div>
         <div class="horizontal-line"></div>
 
-        <div class="horizontal-line"></div>
-
-        <update-password></update-password>
+        <UpdatePassword/>
 
         <!--
         <div class="horizontal-line"></div>
 
-        <email-preferences></email-preferences>
+        <EmailPreferences/>
         -->
 
       </div>
@@ -26,9 +24,9 @@
 
 <script>
 import Card from '@/components/Card'
-import ProfileInfo from '../components/profile/ProfileInfo'
-import UpdatePassword from '../components/profile/UpdatePassword'
-import EmailPreferences from '../components/profile/EmailPreferences'
+import ProfileInfo from './profile/ProfileInfo'
+import UpdatePassword from './profile/UpdatePassword'
+import EmailPreferences from './profile/EmailPreferences'
 
 export default {
   name: 'ProfileView',
@@ -145,5 +143,12 @@ export default {
     height: 52px;
     line-height: 1.63;
     color: $active-dark-purple;
+  }
+
+  @media (min-device-width: 100px) and (max-device-width: 680px) {
+    .flex-container {
+      flex-direction: column;
+      align-items: center;
+    }
   }
 </style>

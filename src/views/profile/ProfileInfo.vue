@@ -226,4 +226,20 @@ export default {
   .name-container .profile-button.change-button {
     margin-top: 22px;
   }
+
+  @media (min-device-width: 100px) and (max-device-width: 680px) {
+    .profile-info-container {
+      flex-direction: column;
+      transition: all 200ms;
+      align-items: center;
+      form {
+        height: 200px
+      }
+      .name-container {
+        margin-left: 0;
+        text-align: center;
+      }
+    }
+
+  }
 </style>

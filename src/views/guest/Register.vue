@@ -3,7 +3,7 @@
     <div class="aig-card-container">
       <Card class="guest-card">
 
-        <div slot="body" v-loading="loading" :element-loading-text="$t('general.loading')">
+        <div class="register-container" slot="body" v-loading="loading" :element-loading-text="$t('general.loading')">
 
           <el-row>
             <el-col>
@@ -16,12 +16,12 @@
           <el-row v-show="!isVerificationVisisble">
             <el-col :span="12">
 
-              <el-row>
+              <el-row class="">
                 <h2>{{ $t('signUp.signUp') }}</h2>
                 <p style="padding-right:40px;"> {{ $t('signUp.description') }}</p>
               </el-row>
 
-              <el-row type="flex" justify="center" style="height:100px;align-items: flex-end;">
+              <el-row type="flex" class="redirect-to-login" justify="center">
                 <el-col>
                   <span>{{ $t('signUp.haveAccount') }}</span>
                   <router-link class="a-active" to="/login">{{ $t('login.login') }}</router-link>
@@ -164,3 +164,41 @@ export default {
   }
 }
 </script>
+<style lang="scss">
+  .aig-card-body .register-container .redirect-to-login {
+    height: 100px;
+    align-items: flex-end;
+  }
+
+  @media (min-device-width: 100px) and (max-device-width: 680px) {
+
+    .aig-card.guest-card .aig-card-body {
+      margin-top: 190px !important;
+      .register-container {
+        .el-row {
+          display: flex;
+          flex-direction: column;
+          width: 100%;
+          .el-button {
+            margin-bottom: 60px;
+          }
+          h2 {
+            width: 100%;
+            text-align: center;
+            margin: 20px 0;
+          }
+        }
+        .el-col-12 {
+          width: 100%;
+        }
+        .redirect-to-login {
+          height: 20px;
+          margin-top: 390px;
+          margin-bottom: -410px;
+          text-align: center;
+          z-index: 2;
+        }
+      }
+    }
+  }
+</style>
