@@ -25,16 +25,16 @@
         </div>
       </div>
     </transition>
-    <<<<<<< HEAD <transition name="slideDown">
+    <transition name="slideDown">
       <div class="aig-dropdown" v-if="dropDownMenuActive">
         <ul>
-          <li v-on:click="selectTag(index)" :class="{ 'aig-bar-active': bar.active }" v-for="(bar, index) in navigationBars" :key="bar.name">
-            <router-link :to="bar.routeLink" exact>
+          <li v-on:click="selectTag(index)" v-for="(bar, index) in navigationBars" :key="bar.name">
+            <router-link :class="[{ 'aig-bar-active': bar.active }, {'disabled': bar.disabled}]" :to="bar.routeLink" exact>
               {{ bar.name }}
             </router-link>
           </li>
           <li v-if="this.$store.getters.isAuthenticated" v-on:click="selectProfile" v-bind:class="{ 'aig-bar-active' : isProfileActive }">
-            <router-link :to="'/profile'" exact>
+            <router-link :to="'/profile'" exact="isProfileActive">
               {{ $t('navigation.profile') }}
             </router-link>
           </li>
@@ -43,49 +43,21 @@
           </li>
         </ul>
       </div>
-      </transition>
-      =======
-      <transition name="slideDown">
-        <div class="aig-dropdown" v-if="dropDownMenuActive">
-          <ul>
-            <li v-on:click="selectTag(index)" v-for="(bar, index) in navigationBars" :key="bar.name">
-              <router-link :class="[{ 'aig-bar-active': bar.active }, {'disabled': bar.disabled}]" :to="bar.routeLink" exact>
-                {{ bar.name }}
-              </router-link>
-            </li>
-            <li v-if="this.$store.getters.isAuthenticated" v-on:click="selectProfile" v-bind:class="{ 'aig-bar-active' : isProfileActive }">
-              <router-link :to="'/profile'" exact="isProfileActive">
-                {{ $t('navigation.profile') }}
-              </router-link>
-            </li>
-            <li v-bind:class="{ 'aig-bar-active' : isProfileActive }" v-else @click="selectProfile">
-              <router-link to="/login">{{ $t('navigation.login')}}</router-link>
-            </li>
-          </ul>
-        </div>
-      </transition>
-      >>>>>>> c5e6207984e9d7354b8f0aca53cb8ec94003c643
+    </transition>
   </div>
 </template>
 <script>
-  import UserTab from '@/components/UserTab'
-  import Hamburger from './Hamburger'
+import UserTab from '@/components/UserTab'
+import Hamburger from './Hamburger'
 
-  export default {
-    name: 'Navigation',
-    components: {
-      UserTab,
-      Hamburger
-    },
-    data() {
-      return {
-<<<<<<< HEAD
-        navigationBars: [
-          { name: this.$t('navigation.data'), routeLink: '/data', active: true },
-          { name: this.$t('navigation.predictions'), routeLink: '/predictions', active: false },
-          { name: this.$t('navigation.invest'), routeLink: '/invest', active: false },
-          { name: this.$t('navigation.insure'), routeLink: '/insure', active: false }
-=======
+export default {
+  name: 'Navigation',
+  components: {
+    UserTab,
+    Hamburger
+  },
+  data () {
+    return {
       navigationBars: [{
         name: this.$t('navigation.data'),
         routeLink: '/data',
@@ -110,49 +82,48 @@
         active: false,
         disabled: true
       }
->>>>>>> c5e6207984e9d7354b8f0aca53cb8ec94003c643
-        ],
-        homeRoute: '/data',
-        isProfileActive: false,
-        dropDownMenuActive: false
+      ],
+      homeRoute: '/data',
+      isProfileActive: false,
+      dropDownMenuActive: false
+    }
+  },
+  methods: {
+    selectTag (index) {
+      if (this.navigationBars[index].disabled) {
+        return
+      }
+      this.clearBars()
+      this.isProfileActive = false
+      this.navigationBars[index].active = true
+    },
+    selectProfile () {
+      this.clearBars()
+      this.isProfileActive = true
+    },
+    selectLogin () {
+      this.clearBars()
+      this.$router.push({
+        name: 'Login'
+      })
+    },
+    clearBars () {
+      this.navigationBars.forEach(function (val, key) {
+        val.active = false
+      })
+      if (this.dropDownMenuActive) {
+        this.dropDownMenuActive = false
       }
     },
-    methods: {
-      selectTag(index) {
-        if (this.navigationBars[index].disabled) {
-          return
-        }
-        this.clearBars()
-        this.isProfileActive = false
-        this.navigationBars[index].active = true
-      },
-      selectProfile() {
-        this.clearBars()
-        this.isProfileActive = true
-      },
-      selectLogin() {
-        this.clearBars()
-        this.$router.push({
-          name: 'Login'
-        })
-      },
-      clearBars() {
-        this.navigationBars.forEach(function (val, key) {
-          val.active = false
-        })
-        if (this.dropDownMenuActive) {
-          this.dropDownMenuActive = false
-        }
-      },
-      activateHomeBar() {
-        this.clearBars()
-        this.isProfileActive = false
-        let bars = this.navigationBars.filter(
-          (bar) => bar.routeLink === this.homeRoute)
-        bars[0].active = true
-      }
+    activateHomeBar () {
+      this.clearBars()
+      this.isProfileActive = false
+      let bars = this.navigationBars.filter(
+        (bar) => bar.routeLink === this.homeRoute)
+      bars[0].active = true
     }
   }
+}
 
 </script>
 

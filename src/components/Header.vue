@@ -3,7 +3,7 @@
     <div class="aig-header-top">
       <div class="aig-container">
         <Navigation/>
-        <Profile/>
+        <UserTab/>
       </div>
     </div>
   </header>
@@ -11,13 +11,13 @@
 
 <script>
 import Navigation from '@/components/Navigation'
-import Profile from '@/components/UserTab'
+import UserTab from '@/components/UserTab'
 
 export default {
   name: 'Header',
   components: {
     Navigation,
-    Profile
+    UserTab
   }
 }
 </script>
