@@ -59,6 +59,7 @@
       "createdBy": "By",
       "updated": "Last updated",
       "downloadDataset": "Download dataset",
+      "invalidPreview": "This dataset does not contain visual preview. You can download file to check it out",
       "navigation": {
         "info": "Info",
         "data": "Data",

@@ -15,8 +15,8 @@
         <div class="dataset-navigation">
           <nav class="dataset-navigation-menu">
             <ul class="">
-              <li v-on:click="selectTag(index)" v-for="(bar, index) in navigationBars" :key="bar.name">
-                <router-link :to="bar.routeLink" :class="[ {'dataset-bar-active': bar.active}, {'disabled': bar.disabled} ]">
+              <li v-for="bar in navigationBars" :key="bar.name">
+                <router-link :to="bar.routeLink" active-class="dataset-bar-active" :class="{'disabled': bar.disabled}" exact>
                   <img class="file-img" :src="bar.imgSrc" alt=""> {{ bar.name }}
                 </router-link>
               </li>
@@ -51,28 +51,29 @@ export default {
           }
         },
         imgSrc: '/static/dataset/info24px.svg',
-        active: true,
         disabled: false
       },
       {
         name: this.$t('data.dataset.navigation.data'),
-        routeLink: '/data/' + this.$route.params.id + '/data',
+        routeLink: {
+          name: 'datasetData',
+          params: {
+            id: this.$route.params.id
+          }
+        },
         imgSrc: '/static/dataset/data24px.svg',
-        active: false,
         disabled: false
       },
       {
         name: this.$t('data.dataset.navigation.models'),
         routeLink: '/data/' + this.$route.params.id + '/models',
         imgSrc: '/static/models24px.svg',
-        active: false,
         disabled: true
       },
       {
         name: this.$t('data.dataset.navigation.threads'),
         routeLink: '/data/' + this.$route.params.id + '/threads',
         imgSrc: '/static/threads24px.svg',
-        active: false,
         disabled: true
       }
       ]
@@ -100,18 +101,6 @@ export default {
         this.loading = false
       }).catch(err => {
         console.log(err)
-      })
-    },
-    selectTag (index) {
-      if (this.navigationBars[index].disabled) {
-        return
-      }
-      this.clearBars()
-      this.navigationBars[index].active = true
-    },
-    clearBars () {
-      this.navigationBars.forEach(function (val, key) {
-        val.active = false
       })
     }
   }
@@ -256,4 +245,5 @@ export default {
       }
     }
   }
+
 </style>

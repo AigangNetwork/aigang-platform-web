@@ -171,3 +171,7 @@ body.aig {
   display: flex;
   flex-direction: column;
 }
+
+.aig-link-disabled {
+  pointer-events: none;
+}

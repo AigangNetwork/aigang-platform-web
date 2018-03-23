@@ -88,8 +88,10 @@ const routes = [
         props: true
       },
       {
+        name: 'datasetData',
         path: 'data',
-        component: DatasetData
+        component: DatasetData,
+        props: true
       },
       {
         path: 'models',

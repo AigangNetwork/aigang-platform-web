@@ -1,5 +1,5 @@
 <template>
-  <router-link to="/profile" class="aig-profile">
+  <router-link to="/profile" active-class="aig-bar-active" class="aig-profile" exact>
     <div class="photo">
       {{ $store.state.user.profile.firstName.charAt(0) }}
     </div>
@@ -51,4 +51,5 @@
       }
     }
   }
+
 </style>

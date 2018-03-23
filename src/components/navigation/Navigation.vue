@@ -3,19 +3,19 @@
     <transition name="slideDown">
       <div class="aig-navigation">
         <div class="aig-navigation-body">
-          <router-link to="/" class="aig-logo" @click.native="activateHomeBar">
+          <router-link to="/" class="aig-logo">
             <img src="/static/logo.png" alt="">
           </router-link>
           <nav class="aig-navigation-menu">
             <ul>
-              <li v-on:click="selectTag(index)" :class="{ 'aig-bar-active': bar.active }" v-for="(bar, index) in navigationBars" :key="bar.name">
-                <router-link :class="{'disabled': bar.disabled}" :to="bar.routeLink" exact>
+              <li v-for="bar in navigationBars" :key="bar.name">
+                <router-link active-class="aig-bar-active" :class="{'aig-link-disabled': bar.disabled}" :to="bar.routeLink" exact>
                   {{ bar.name }}
                 </router-link>
               </li>
             </ul>
           </nav>
-          <div class="aig-profile-wrapper" v-on:click="selectProfile" v-bind:class="{ 'aig-bar-active' : isProfileActive }" v-if="this.$store.getters.isAuthenticated">
+          <div class="aig-profile-wrapper" v-if="this.$store.getters.isAuthenticated">
             <UserTab />
           </div>
           <el-button type="primary" class="aig--login" @click="selectLogin" v-else>{{ $t('navigation.login')}}</el-button>
@@ -25,25 +25,23 @@
         </div>
       </div>
     </transition>
-    <transition name="slideDown">
-      <div class="aig-dropdown" v-if="dropDownMenuActive">
-        <ul>
-          <li v-on:click="selectTag(index)" v-for="(bar, index) in navigationBars" :key="bar.name">
-            <router-link :class="[{ 'aig-bar-active': bar.active }, {'disabled': bar.disabled}]" :to="bar.routeLink" exact>
-              {{ bar.name }}
-            </router-link>
-          </li>
-          <li v-if="this.$store.getters.isAuthenticated" v-on:click="selectProfile" v-bind:class="{ 'aig-bar-active' : isProfileActive }">
-            <router-link :to="'/profile'" exact="isProfileActive">
-              {{ $t('navigation.profile') }}
-            </router-link>
-          </li>
-          <li v-bind:class="{ 'aig-bar-active' : isProfileActive }" v-else @click="selectProfile">
-            <router-link to="/login">{{ $t('navigation.login')}}</router-link>
-          </li>
-        </ul>
-      </div>
-    </transition>
+    <div class="aig-dropdown" v-if="dropDownMenuActive">
+      <ul>
+        <li v-for="bar in navigationBars" :key="bar.name">
+          <router-link :class="{'aig-link-disabled': bar.disabled}" active-class="aig-bar-active" :to="bar.routeLink" exact>
+            {{ bar.name }}
+          </router-link>
+        </li>
+        <li v-if="this.$store.getters.isAuthenticated">
+          <router-link :to="'/profile'" active-class="aig-bar-active" exact>
+            {{ $t('navigation.profile') }}
+          </router-link>
+        </li>
+        <li v-else>
+          <router-link active-class="aig-bar-active" to="/login" exact>{{ $t('navigation.login')}}</router-link>
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 <script>
@@ -61,66 +59,32 @@ export default {
       navigationBars: [{
         name: this.$t('navigation.data'),
         routeLink: '/data',
-        active: false,
         disabled: false
       },
       {
         name: this.$t('navigation.predictions'),
-        routeLink: '/predictions',
-        active: false,
+        routeLink: '/predictions/',
         disabled: true
       },
       {
         name: this.$t('navigation.invest'),
-        routeLink: '/invest',
-        active: false,
+        routeLink: '/invest/',
         disabled: true
       },
       {
         name: this.$t('navigation.insure'),
-        routeLink: '/insure',
-        active: false,
+        routeLink: '/insure/',
         disabled: true
       }
       ],
-      homeRoute: '/data',
-      isProfileActive: false,
       dropDownMenuActive: false
     }
   },
   methods: {
-    selectTag (index) {
-      if (this.navigationBars[index].disabled) {
-        return
-      }
-      this.clearBars()
-      this.isProfileActive = false
-      this.navigationBars[index].active = true
-    },
-    selectProfile () {
-      this.clearBars()
-      this.isProfileActive = true
-    },
     selectLogin () {
-      this.clearBars()
       this.$router.push({
         name: 'Login'
       })
-    },
-    clearBars () {
-      this.navigationBars.forEach(function (val, key) {
-        val.active = false
-      })
-      if (this.dropDownMenuActive) {
-        this.dropDownMenuActive = false
-      }
-    },
-    activateHomeBar () {
-      this.clearBars()
-      this.isProfileActive = false
-      let bars = this.navigationBars.filter(
-        (bar) => bar.routeLink === this.homeRoute)
-      bars[0].active = true
     }
   }
 }
@@ -266,4 +230,5 @@ export default {
       }
     }
   }
+
 </style>
