@@ -1,5 +1,5 @@
 <template>
-  <el-container class="aig-container-dataset">
+  <el-container class="aig-container-dataset" v-loading="loading">
     <div class="aig-blue-bck-container">
       <div class="aig-dataset-header">
         <div class="creator-info">
@@ -41,6 +41,7 @@ export default {
   data () {
     return {
       dataset: {},
+      loading: false,
       navigationBars: [{
         name: this.$t('data.dataset.navigation.info'),
         routeLink: {
@@ -79,11 +80,14 @@ export default {
   },
   methods: {
     fetchDataset () {
+      this.loading = true
       this.axios.get('/data/' + this.$route.params.id).then(response => {
+        this.loading = false
         this.dataset = response.data.data
       })
     },
     downloadDataset () {
+      this.loading = true
       this.axios.get('data/' + this.$route.params.id + '/file', {
         responseType: 'blob'
       }).then((response) => {
@@ -93,6 +97,7 @@ export default {
         link.setAttribute('download', this.$route.params.id + '.csv')
         document.body.appendChild(link)
         link.click()
+        this.loading = false
       }).catch(err => {
         console.log(err)
       })
