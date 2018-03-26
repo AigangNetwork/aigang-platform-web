@@ -70,7 +70,7 @@ export default {
       },
       {
         name: this.$t('data.menu.models'),
-        routeLink: '/',
+        routeLink: '/models',
         active: false,
         disabled: true
       }
