@@ -119,7 +119,8 @@
     "hello": "hello",
     "firstName": "First name",
     "lastName": "Last name",
-    "added": "Added"
+    "added": "Added",
+    "notApproved": "waiting for approval"
   },
   "profile": {
     "logout": "Logout",

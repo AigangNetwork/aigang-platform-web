@@ -8,7 +8,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr v-for="row in rows" :key="row[0]">
+      <tr v-for="(row, index) in rows" :key="index">
         <td v-for="colData in row" :key="colData">
           {{colData}}
         </td>
