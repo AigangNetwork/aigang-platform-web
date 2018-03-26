@@ -18,6 +18,8 @@ import DatasetInfo from '@/views/data/DatasetInfo'
 import DatasetModels from '@/views/data/DatasetModels'
 import DatasetThreads from '@/views/data/DatasetThreads'
 import DatasetData from '@/views/data/DatasetData'
+import AllData from '@/views/data/AllData'
+import Uploaded from '@/views/data/Uploaded'
 
 const routes = [
   {
@@ -68,8 +70,22 @@ const routes = [
   },
   {
     path: '/data',
-    name: 'Data',
-    component: Data
+    component: Data,
+    props: true,
+    children: [
+      {
+        name: 'all',
+        path: '',
+        component: AllData,
+        props: true
+      },
+      {
+        name: 'mylist',
+        path: 'uploaded',
+        component: Uploaded,
+        props: true
+      }
+    ]
   },
   {
     path: '/data/upload',
