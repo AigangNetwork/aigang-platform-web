@@ -28,17 +28,17 @@
     <div class="aig-dropdown" v-if="dropDownMenuActive">
       <ul>
         <li v-for="bar in navigationBars" :key="bar.name">
-          <router-link :class="{'aig-link-disabled': bar.disabled}" active-class="aig-bar-active" :to="bar.routeLink">
+          <router-link :class="{'aig-link-disabled': bar.disabled}" active-class="aig-bar-active" :to="bar.routeLink" @click.native="dropDownMenuActive = false">
             {{ bar.name }}
           </router-link>
         </li>
         <li v-if="this.$store.getters.isAuthenticated">
-          <router-link :to="'/profile'" active-class="aig-bar-active">
+          <router-link :to="'/profile'" active-class="aig-bar-active" @click.native="dropDownMenuActive = false">
             {{ $t('navigation.profile') }}
           </router-link>
         </li>
         <li v-else>
-          <router-link active-class="aig-bar-active" to="/login" exact>{{ $t('navigation.login')}}</router-link>
+          <router-link active-class="aig-bar-active" to="/login" @click.native="dropDownMenuActive = false" exact>{{ $t('navigation.login')}}</router-link>
         </li>
       </ul>
     </div>
@@ -85,6 +85,9 @@ export default {
       this.$router.push({
         name: 'Login'
       })
+    },
+    shutOffMenu () {
+      console.log('test')
     }
   }
 }
