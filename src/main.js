@@ -29,6 +29,10 @@ Vue.use(VueMoment)
 
 Vue.axios.defaults.baseURL = process.env.API_ADDRESS
 
+Vue.filter('truncate', function (text, stop, clamp) {
+  return text.slice(0, stop) + (stop < text.length ? clamp || '...' : '')
+})
+
 // todo: extract to separate module
 axios.interceptors.response.use(
   response => {

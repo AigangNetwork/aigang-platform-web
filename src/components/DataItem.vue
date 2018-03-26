@@ -1,17 +1,16 @@
 <template>
-  <div class="aig-data">
+  <div class="aig-data" :class="{'aig-non-approved-data': data.state === 'created'}">
     <router-link :to="{ name: 'datasetInfo', params: { id: data.id}}" :class="{'aig-link-disabled': data.state === 'created'}">
       <div class="aig-data-head">
-        <div>
-          <span class="desc">{{ $t('strings.added') }} {{ this.data.createdUtc | moment('from') }}</span>
-        </div>
+        <div class="desc">{{ $t('strings.added') }} {{ this.data.createdUtc | moment('from') }}</div>
+        <div v-if="data.state === 'created'" class="desc">{{ $t('strings.notApproved') }}</div>
       </div>
       <div class="aig-data-head">
-        <div class="title">{{ data.title }}</div>
+        <div class="title">{{ data.title | truncate(50) }}</div>
       </div>
       <div class="aig-data-body">
         <div class="desc">
-          <p>{{ data.description }}</p>
+          <p>{{ data.description | truncate(70) }}</p>
         </div>
       </div>
     </router-link>
@@ -19,11 +18,11 @@
     <div class="aig-data-footer">
       <div class="aig-footer-container">
         <img src="/static/models24px.svg" alt="models">
-        <span class="label">{{ $t('data.card.models' )}} {{models}}</span>
+        <span class="label">{{ $t('data.card.models' )}}</span>
       </div>
       <div class="aig-footer-container-right">
         <img src="/static/threads24px.svg" alt="threads">
-        <span class="label">{{ $t('data.card.threads' )}} {{comments}}</span>
+        <span class="label">{{ $t('data.card.threads' )}}</span>
       </div>
     </div>
   </div>
@@ -66,6 +65,9 @@ export default {
 <style lang="scss" scoped>
   @import '~helpers/variables';
   @import '~helpers/mixins';
+  .aig-non-approved-data {
+    opacity: 0.5;
+  }
 
   .aig-data {
     @include transition;
@@ -81,11 +83,13 @@ export default {
     }
     .aig-data-head {
       display: flex;
-      align-items: center;
+      justify-content: space-between;
       height: 40px;
       margin-top: 0;
+      width: 100%;
     }
     .aig-data-footer {
+      opacity: 0.5;
       border-top: 1px solid $light-border-blue;
       height: 40px;
       width: 100%;
@@ -115,14 +119,9 @@ export default {
       font-size: 17pt;
     }
     .desc {
-      p {
-        color: $light-grey;
-        font-size: 14px;
-      }
       line-height: 1.3;
       font-size: 13px;
       height: 100%;
-      overflow: hidden;
     }
   }
 
