@@ -55,7 +55,7 @@ export default {
 
           this.$router.push('/data')
         })
-        .catch(e => {})
+        .catch(e => { })
     }
   }
 }
@@ -104,26 +104,27 @@ export default {
     }
   }
 
-  .profile-info-container .profile-info-input input {
-    padding: 8px;
-    border: none;
-    border-bottom: 1px solid $active-dark-purple;
-    border-radius: 0;
-    font-family: 'Raleway', sans-serif;
-    font-size: 18px;
-    font-weight: normal;
-    line-height: 1.33;
-    letter-spacing: 0.5px;
-    color: #423176;
-    text-shadow: 0 2px 4px rgba(219, 224, 231, 0.5);
-    height: 24px;
-    padding-top: 0;
-    min-width: 140px;
-    margin-right: 20px;
-  }
-
-  .profile-info-container .profile-info-input {
-    margin-bottom: 0px !important;
+  .profile-info-container {
+    .profile-info-input {
+      margin-bottom: 0px !important;
+      input {
+        padding: 8px;
+        border: none;
+        border-bottom: 1px solid $active-dark-purple;
+        border-radius: 0;
+        font-family: 'Raleway', sans-serif;
+        font-size: 18px;
+        font-weight: normal;
+        line-height: 1.33;
+        letter-spacing: 0.5px;
+        color: #423176;
+        text-shadow: 0 2px 4px rgba(219, 224, 231, 0.5);
+        height: 24px;
+        padding-top: 0;
+        min-width: 140px;
+        margin-right: 20px;
+      }
+    }
   }
 
   .profile-section-title {
@@ -146,11 +147,10 @@ export default {
     color: $active-dark-purple;
   }
 
-  @media (min-device-width: 100px) and (max-device-width: 680px) {
+  @media screen and (min-width: 100px) and (max-width: 680px) {
     .flex-container {
       flex-direction: column;
       align-items: center;
     }
   }
-
 </style>

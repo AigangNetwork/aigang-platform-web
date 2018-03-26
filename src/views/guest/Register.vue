@@ -170,7 +170,7 @@ export default {
     align-items: flex-end;
   }
 
-  @media (min-device-width: 100px) and (max-device-width: 680px) {
+  @media screen and (min-width: 100px) and (max-width: 680px) {
 
     .aig-card.guest-card .aig-card-body {
       margin-top: 190px !important;

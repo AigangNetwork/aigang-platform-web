@@ -92,6 +92,8 @@ export default {
       font-size: 0;
       display: flex;
       padding-top: 5px;
+      display: flex;
+      justify-content: space-between;
       .aig-footer-container {
         justify-content: left;
         display: flex;
@@ -104,7 +106,6 @@ export default {
       }
       .aig-footer-container-right {
         @extend .aig-footer-container;
-        padding-left: 15px;
       }
     }
     .title {
@@ -127,13 +128,13 @@ export default {
 
   /* Tablet */
 
-  @media (min-device-width: 680px) and (max-device-width: 1024px) {
+  @media screen and (min-width: 680px) and (max-width: 1024px) {
     .aig-data .aig-data-footer .aig-footer-container-right {
       padding-left: 0px;
     }
   }
 
-  @media (min-device-width: 100px) and (max-device-width: 380px) {
+  @media screen and (min-width: 100px) and (max-width: 380px) {
     .aig-data {
       height: 265px;
       .aig-data-head {
@@ -151,5 +152,4 @@ export default {
       }
     }
   }
-
 </style>

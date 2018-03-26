@@ -107,10 +107,10 @@ export default {
       padding-left: 0;
       li {
         width: 100%;
-        padding-left: 40px;
         a {
           color: $white;
           padding: 10px;
+          padding-left: 40px;
           display: block;
         }
       }
@@ -230,5 +230,4 @@ export default {
       }
     }
   }
-
 </style>

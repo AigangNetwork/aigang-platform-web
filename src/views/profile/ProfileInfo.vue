@@ -148,66 +148,60 @@ export default {
 
   .profile-img-container {
     width: 132px;
-  }
 
-  .profile-img-container div {
-    width: 132px;
-    height: 132px;
-    background-size: cover;
-    background-position: center center;
-    border-radius: 50%;
-    line-height: 132px;
-    text-align: center;
-    font-size: 48px;
-    border-radius: 50%;
-    background-image: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
+    div {
+      width: 132px;
+      height: 132px;
+      background-size: cover;
+      background-position: center center;
+      border-radius: 50%;
+      line-height: 132px;
+      text-align: center;
+      font-size: 48px;
+      border-radius: 50%;
+      background-image: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+    }
   }
 
   .profile-info-container {
     display: flex;
     max-width: 650px;
     min-height: 220px;
-  }
 
-  .profile-info-container .form-container {
-    max-width: 550px;
-  }
+    .form-container {
+      max-width: 550px;
+    }
 
-  .profile-info-container form {
-    transition: all 200ms;
-  }
+    form {
+      transition: all 200ms;
+    }
 
-  .profile-info-container .name-container {
-    margin-left: 48px;
-  }
+    .name-container {
+      margin-left: 48px;
 
-  .profile-info-container .name-container h2 {
-    margin: 8px 0px 14px 0px;
-  }
+      h2 {
+        margin: 8px 0px 14px 0px;
+      }
 
-  .profile-info-container .name-container div {
-    margin-bottom: 8px;
-    color: $light-grey;
-    font-weight: 300;
-  }
+      div {
+        margin-bottom: 8px;
+        color: $light-grey;
+        font-weight: 300;
+      }
 
-  .profile-info-container .info-change .el-row.nickname-container {
-    height: 40px;
-    margin-bottom: 40px;
-    padding-top: 16px;
-    max-width: 294px;
-  }
+      .profile-button.change-button {
+        margin-top: 22px;
+      }
+    }
 
-  .name-container .info-change {
-    display: block;
-    width: 100%;
-    height: 32px;
-    margin-top: 6px
-  }
+    .info-change .el-row.nickname-container {
+      height: 40px;
+      margin-bottom: 40px;
+      padding-top: 16px;
+      max-width: 294px;
+    }
 
-  .name-container .info-change .el-row {
-    height: 32px;
   }
 
   .col-3 {
@@ -223,11 +217,7 @@ export default {
     margin: 0 !important;
   }
 
-  .name-container .profile-button.change-button {
-    margin-top: 22px;
-  }
-
-  @media (min-device-width: 100px) and (max-device-width: 680px) {
+  @media screen and (min-width: 100px) and (max-width: 680px) {
     .profile-info-container {
       flex-direction: column;
       transition: all 200ms;

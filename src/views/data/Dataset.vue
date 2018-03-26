@@ -210,7 +210,7 @@ export default {
     }
   }
 
-  @media (min-device-width: 680px) and (max-device-width: 1024px) {
+  @media screen and (min-width: 680px) and (max-width: 1024px) {
     .dataset-navigation-container {
       .dataset-navigation-menu {
         ul {
@@ -220,7 +220,7 @@ export default {
     }
   }
 
-  @media (min-device-width: 280px) and (max-device-width: 680px) {
+  @media screen and (min-width: 280px) and (max-width: 680px) {
     .dataset-navigation-container {
       .dataset-content {
         margin-top: 100px;
@@ -245,5 +245,4 @@ export default {
       }
     }
   }
-
 </style>

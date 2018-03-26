@@ -120,12 +120,14 @@ export default {
     margin: 40px 0px 0px 0px;
   }
 
-  .profile-password-container .profile-button {
-    width: 165px;
-  }
+  .profile-password-container {
+    .profile-button {
+      width: 165px;
+    }
 
-  .profile-password-container .el-form-item {
-    margin-bottom: 32px
+    .el-form-item {
+      margin-bottom: 32px
+    }
   }
 
   .form-container {
@@ -136,7 +138,7 @@ export default {
     color: $green;
   }
 
-  @media (min-device-width: 100px) and (max-device-width: 680px) {
+  @media screen and (min-width: 100px) and (max-width: 680px) {
     .profile-password-container {
       .profile-section-decription {
         width: 90%;

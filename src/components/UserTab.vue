@@ -5,7 +5,7 @@
     </div>
     <div class="information">
       {{ $store.state.user.profile.firstName }}
-      <div class="balance">10 000 AIX</div>
+      <!-- <div class="balance">10 000 AIX</div> -->
     </div>
   </router-link>
 </template>
@@ -51,5 +51,4 @@
       }
     }
   }
-
 </style>

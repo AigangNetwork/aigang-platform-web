@@ -1,8 +1,8 @@
 <template>
   <div class="aig-container">
     <el-container class="aig-container">
-      <el-aside width="20%" class="aig-data-menu" :class="{ 'is-menu-open': isMenuOpen }">
-        <span v-if="$store.state.user.authenticated">
+      <el-aside v-if="$store.state.user.authenticated" width="20%" class="aig-data-menu" :class="{ 'is-menu-open': isMenuOpen }">
+        <span>
           <transition name="fade">
             <span class="side-menu-button" v-if="!isMenuOpen" @click="openSideMenu">
               <img src="../../static/right.svg">
@@ -20,7 +20,7 @@
           </ul>
         </span>
       </el-aside>
-      <el-main class="aig-data-container">
+      <el-main class="aig-data-container" :class="{ 'is-authenticated': $store.state.user.authenticated}">
         <el-row :gutter="26">
           <el-col class="data-search" :span="16">
             <el-input :disabled="true" placeholder="Search by name or keywords" v-model="searchInput"></el-input>
@@ -113,6 +113,9 @@ export default {
     padding-left: 60px;
     padding-right: 60px;
     overflow-x: hidden;
+    height: 100%;
+    max-width: 1200px;
+
     @include breakpoint(max-width 1150px) {
       padding-left: 10px;
       padding-right: 10px;
@@ -176,7 +179,7 @@ export default {
 
   /* Tablet */
 
-  @media (min-device-width: 681px) and (max-device-width: 1024px) {
+  @media screen and (min-width: 681px) and (max-width: 1024px) {
     .aig-container .aig-data-menu {
       ul {
         padding: 45px 15px;
@@ -197,11 +200,19 @@ export default {
 
   /* Mobile */
 
-  @media (min-device-width: 100px) and (max-device-width: 680px) {
+  @media screen and (min-width: 100px) and (max-width: 680px) {
+    .aig-container {
+      section.aig-container {
+        position: relative;
+      }
+    }
+
     .aig-container .aig-data-menu {
       position: absolute;
       z-index: 1;
       left: 0;
+      overflow-x: hidden;
+      height: 100%;
       .side-menu-button {
         display: block;
         cursor: pointer;
@@ -235,12 +246,17 @@ export default {
 
     .aig-container {
       .aig-data-container {
-        margin-left: 20%;
+
+        &.is-authenticated {
+          margin-left: 20%;
+        }
+
         .data-search {
           width: 100%;
           display: block;
           margin-bottom: 20px
         }
+
         .data-upload-button-container {
           width: 100%;
           display: block;
@@ -248,5 +264,4 @@ export default {
       }
     }
   }
-
 </style>

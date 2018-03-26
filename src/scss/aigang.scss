@@ -15,6 +15,17 @@ body.aig {
   }
 }
 
+.aig-view {
+  background: url('/static/background/background_pattern.svg');
+  background-size: 190px;
+  background-clip: content-box;
+  background-repeat: repeat;
+  max-width: 1400px;
+  height: 100%;
+  text-align: left;
+  overflow-x: hidden;
+}
+
 .aig-container {
   @include clearfix;
   height: 100%;
@@ -27,13 +38,6 @@ body.aig {
   }
   .aig-container {
     max-width: 1440px;
-  }
-  &.aig-view {
-    background: url('/static/background/background_pattern.svg');
-    background-size: 274px;
-    background-clip: content-box;
-    background-repeat: repeat;
-    text-align: left;
   }
   .aig-data-menu {
     height: 100%;

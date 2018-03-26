@@ -124,7 +124,7 @@ export default {
 }
 </script>
 <style lang="scss">
-  @media (min-device-width: 100px) and (max-device-width: 680px) {
+  @media screen and (min-width: 100px) and (max-width: 680px) {
     .aig-card.guest-card .el-row.verification-container {
       flex-direction: column;
       align-items: left;
