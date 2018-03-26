@@ -9,7 +9,7 @@
           <nav class="aig-navigation-menu">
             <ul>
               <li v-for="bar in navigationBars" :key="bar.name">
-                <router-link active-class="aig-bar-active" :class="{'aig-link-disabled': bar.disabled}" :to="bar.routeLink" exact>
+                <router-link active-class="aig-bar-active" :class="{'aig-link-disabled': bar.disabled}" :to="bar.routeLink">
                   {{ bar.name }}
                 </router-link>
               </li>
@@ -28,12 +28,12 @@
     <div class="aig-dropdown" v-if="dropDownMenuActive">
       <ul>
         <li v-for="bar in navigationBars" :key="bar.name">
-          <router-link :class="{'aig-link-disabled': bar.disabled}" active-class="aig-bar-active" :to="bar.routeLink" exact>
+          <router-link :class="{'aig-link-disabled': bar.disabled}" active-class="aig-bar-active" :to="bar.routeLink">
             {{ bar.name }}
           </router-link>
         </li>
         <li v-if="this.$store.getters.isAuthenticated">
-          <router-link :to="'/profile'" active-class="aig-bar-active" exact>
+          <router-link :to="'/profile'" active-class="aig-bar-active">
             {{ $t('navigation.profile') }}
           </router-link>
         </li>
