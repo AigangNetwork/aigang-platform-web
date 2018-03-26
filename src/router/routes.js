@@ -66,7 +66,7 @@ const routes = [
   },
   {
     path: '/',
-    component: Data
+    redirect: '/data'
   },
   {
     path: '/data',
