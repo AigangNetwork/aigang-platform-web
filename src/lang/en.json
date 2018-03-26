@@ -46,6 +46,9 @@
         }
       }
     },
+    "toolbar": {
+      "uploadDisabled": "You have to log in to upload new datasets"
+    },
     "menu": {
       "all": "All",
       "uploaded": "Uploaded",
@@ -59,7 +62,8 @@
       "createdBy": "By",
       "updated": "Last updated",
       "downloadDataset": "Download dataset",
-      "invalidPreview": "This dataset does not contain visual preview. You can download file to check it out",
+      "invalidPreview":
+        "This dataset does not contain visual preview. You can download file to check it out",
       "navigation": {
         "info": "Info",
         "data": "Data",

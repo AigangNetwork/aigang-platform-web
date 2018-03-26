@@ -26,9 +26,9 @@
             <el-input :disabled="true" placeholder="Search by name or keywords" v-model="searchInput"></el-input>
           </el-col>
           <el-col :span="8" class="data-upload-button-container">
-            <div>
+            <el-tooltip :disabled="$store.getters.isAuthenticated" effect="dark" :content="$t('data.toolbar.uploadDisabled')" placement="top">
               <el-button :disabled="!$store.getters.isAuthenticated" type="primary" @click="$router.push({ name: 'Upload' })" class="aig-upload-btn">{{ $t('actions.upload_new_data')}}</el-button>
-            </div>
+            </el-tooltip>
           </el-col>
         </el-row>
         <el-row :gutter="20" class="aig-items">
