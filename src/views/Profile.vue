@@ -53,12 +53,13 @@ export default {
         .then(response => {
           this.$store.dispatch('logOut')
 
-          this.$router.push('/')
+          this.$router.push('/data')
         })
-        .catch(e => { })
+        .catch(e => {})
     }
   }
 }
+
 </script>
 <style lang="scss">
   @import '~helpers/variables';
@@ -151,4 +152,5 @@ export default {
       align-items: center;
     }
   }
+
 </style>

@@ -12,8 +12,8 @@
             </span>
           </transition>
           <ul>
-            <li v-on:click="selectMenu(index)" :class="{ 'aig-menu-active': item.active }" v-for="(item, index) in dataMeniu" :key="item.name">
-              <router-link :to="item.routeLink">
+            <li v-for="item in dataMeniu" :key="item.name">
+              <router-link :class="{'aig-link-disabled': item.disabled}" active-class="aig-menu-active" :to="item.routeLink" exact>
                 {{ item.name }}
               </router-link>
             </li>
@@ -26,18 +26,13 @@
             <el-input :disabled="true" placeholder="Search by name or keywords" v-model="searchInput"></el-input>
           </el-col>
           <el-col :span="8" class="data-upload-button-container">
-            <div v-if="$store.getters.isAuthenticated">
-              <el-button type="primary" @click="$router.push({ name: 'Upload' })" class="aig-upload-btn">{{ $t('actions.upload_new_data')}}</el-button>
+            <div>
+              <el-button :disabled="!$store.getters.isAuthenticated" type="primary" @click="$router.push({ name: 'Upload' })" class="aig-upload-btn">{{ $t('actions.upload_new_data')}}</el-button>
             </div>
           </el-col>
         </el-row>
         <el-row :gutter="20" class="aig-items">
-
-          <transition-group name="list" tag="div">
-            <el-col :xs="24" :sm="12" :md="12" :lg="8" v-for="dataItem in dataList" :key="dataItem.id">
-              <DataItem :data="dataItem" :key="dataItem.id" />
-            </el-col>
-          </transition-group>
+          <router-view></router-view>
         </el-row>
         <!-- <el-pagination
         v-if="this.dataList.length > 0"
@@ -53,36 +48,36 @@
 </template>
 
 <script>
-import DataItem from '@/components/DataItem'
-
 export default {
   name: 'DataView',
-  components: {
-    DataItem
-  },
   data () {
     return {
       dataMeniu: [{
         name: this.$t('data.menu.all'),
-        routeLink: '/',
-        active: true
+        routeLink: {
+          name: 'all'
+        },
+        active: true,
+        disabled: false
       },
       {
         name: this.$t('data.menu.uploaded'),
-        routeLink: '/',
-        active: false
+        routeLink: {
+          name: 'mylist'
+        },
+        active: false,
+        disabled: false
       },
       {
         name: this.$t('data.menu.models'),
         routeLink: '/',
-        active: false
+        active: false,
+        disabled: true
       }
       ],
       searchInput: '',
       loading: true,
       showDialog: false,
-      dataList: [],
-      totalPageCount: 0,
       msg: 'Data view',
       isMenuOpen: false
     }
@@ -104,9 +99,6 @@ export default {
     openSideMenu () {
       this.isMenuOpen = !this.isMenuOpen
     }
-  },
-  mounted () {
-    this.loadDataItems()
   }
 }
 
@@ -166,19 +158,17 @@ export default {
         transition: all 200ms;
       }
       .aig-menu-active {
-        a {
-          color: $purple;
-          &:before {
-            display: inline-block;
-            position: relative;
-            content: "";
-            height: 1px;
-            width: 44px;
-            background: purple;
-            margin-bottom: 8px;
-            margin-left: -55px;
-            margin-right: 4px
-          }
+        color: $purple;
+        &:before {
+          display: inline-block;
+          position: relative;
+          content: "";
+          height: 1px;
+          width: 44px;
+          background: purple;
+          margin-bottom: 8px;
+          margin-left: -55px;
+          margin-right: 4px
         }
       }
     }
@@ -258,4 +248,5 @@ export default {
       }
     }
   }
+
 </style>

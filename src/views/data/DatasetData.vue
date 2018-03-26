@@ -45,7 +45,7 @@ export default {
       }
       this.preview = preview
       this.validJsonPreview = false
-      this.loading = true
+      this.loading = false
     },
     isJson (obj) {
       try {
