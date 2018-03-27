@@ -5,8 +5,7 @@
   "author": "Aigang Team",
   "private": true,
   "scripts": {
-    "dev":
-      "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js --env.API_ADDRESS=\"http://test.api.aigang.network/api\"",
+    "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js --env.API_ADDRESS=\"http://test.api.aigang.network/api\"",
     "start": "npm run dev",
     "lint": "eslint --ext .js,.vue src",
     "build": "NODE_ENV=production node build/build.js",
@@ -23,7 +22,8 @@
     "vue-moment": "^3.1.0",
     "vue-router": "^3.0.1",
     "vuex": "^3.0.1",
-    "vuex-persistedstate": "^2.4.2"
+    "vuex-persistedstate": "^2.4.2",
+    "win-node-env": "^0.1.0"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",
@@ -78,5 +78,9 @@
     "node": ">= 6.0.0",
     "npm": ">= 3.0.0"
   },
-  "browserslist": ["> 1%", "last 2 versions", "not ie <= 8"]
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not ie <= 8"
+  ]
 }
