@@ -2,6 +2,7 @@
 echo [custom] started deployment
 echo [custom] environment found: %NODE_ENV%
 echo [custom] deployment_target: %DEPLOYMENT_TARGET%
+echo [custom] node version %WEBSITE_NODE_DEFAULT_VERSION%
 
 call npm install
 
@@ -13,10 +14,19 @@ IF "%NODE_ENV%" == "qa" (
     call npm run build
 )
 
+echo [custom] build succeded
 call cd %DEPLOYMENT_TARGET%
-for /F "delims=" %%i in ('dir /b') do (rmdir "%%i" /s/q || del "%%i" /s/q)
+REM first the directories /ad option of dir
+for /F "delims=" %%i in ('dir /b /ad') do (echo rmdir "%%i" /s/q)
+REM now the files /a-d option of dir
+for /F "delims=" %%i in ('dir /b /a-d') do (echo del "%%i" /q)
 
+
+echo [custom] deployment_source %DEPLOYMENT_SOURCE%
+echo "[custom] copy dist folder" 
 xcopy /d %DEPLOYMENT_SOURCE%\dist\* %DEPLOYMENT_TARGET% /s /i
+
+echo "[custom] copy web.config" 
 xcopy /d %DEPLOYMENT_SOURCE%\web.config %DEPLOYMENT_TARGET%\web.config*
 
 echo [custom] Deployed
