@@ -77,16 +77,16 @@ export default {
     border: 1px solid $light-border-blue;
     height: 245px;
     .aig-data-body {
-      margin-top: 7px;
+      margin-top: 60px;
       height: 100%;
       max-height: 80px;
     }
     .aig-data-head {
       display: flex;
       justify-content: space-between;
-      height: 40px;
       margin-top: 0;
       width: 100%;
+      height: 20px;
     }
     .aig-data-footer {
       opacity: 0.5;
@@ -131,21 +131,35 @@ export default {
     .aig-data .aig-data-footer .aig-footer-container-right {
       padding-left: 0px;
     }
+
+    .aig-data .aig-data-body {
+      margin-top: 60px;
+    }
   }
 
   @media screen and (min-width: 100px) and (max-width: 380px) {
     .aig-data {
       height: 265px;
+
       .aig-data-head {
+        height: 40px;
         .title {
           width: 100%;
           word-wrap: break-word;
         }
       }
+
+      .aig-data-body {
+        margin-top: 35px;
+        height: 100%;
+        max-height: 80px;
+        p {
+          font-size: 13px;
+        }
+      }
       .aig-data-footer {
-        flex-direction: column;
+        justify-content: space-between;
         .aig-footer-container-right {
-          width: 100%;
           padding-left: 0;
         }
       }

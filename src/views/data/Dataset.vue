@@ -149,6 +149,7 @@ export default {
     width: 100%;
     max-width: 932px;
     margin: 0px 5px 0px 5px;
+    z-index: 1;
     .dataset-navigation {
       height: 90px;
       background-color: white;
@@ -180,6 +181,7 @@ export default {
     display: flex;
     justify-content: center;
     align-content: center;
+    z-index: 1;
     ul {
       list-style-type: none;
       display: flex;
@@ -222,10 +224,8 @@ export default {
 
   @media screen and (min-width: 280px) and (max-width: 680px) {
     .dataset-navigation-container {
-      .dataset-content {
-        margin-top: 100px;
-      }
       .dataset-navigation-menu {
+        padding-bottom: 10px;
         ul {
           padding-left: 0;
           flex-direction: row;
@@ -233,7 +233,8 @@ export default {
           flex-flow: row wrap;
           justify-content: space-around;
           li {
-            margin-left: 0
+            margin-left: 0;
+            width: 40%;
           }
         }
       }
@@ -241,8 +242,12 @@ export default {
 
     .dataset-content-container {
       .dataset-content {
-        margin-top: 30px;
+        margin-top: 42px;
       }
+    }
+
+    .aig-dataset-header {
+      margin-top: 75px;
     }
   }
 </style>
