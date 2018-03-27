@@ -7,7 +7,7 @@ call npm install
 
 IF "%NODE_ENV%" == "qa" (
     echo qa env was found
-    call npm run buildqa
+    call npm run qabuild
 )
 ELSE (
     echo qa was not found execute prod build
