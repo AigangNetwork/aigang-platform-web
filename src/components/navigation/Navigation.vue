@@ -3,12 +3,12 @@
     <transition name="slideDown">
       <div class="aig-navigation">
         <div class="aig-navigation-body">
-          <router-link to="/" class="aig-logo">
+          <router-link to="/data" class="aig-logo">
             <img src="/static/logo.png" alt="">
           </router-link>
           <nav class="aig-navigation-menu">
             <ul>
-              <li v-for="bar in navigationBars" :key="bar.name">
+              <li v-for="(bar, index) in navigationBars" :key="index" @click="handleInvest(index)">
                 <router-link active-class="aig-bar-active" :class="{'aig-link-disabled': bar.disabled}" :to="bar.routeLink">
                   {{ bar.name }}
                 </router-link>
@@ -68,7 +68,7 @@ export default {
       },
       {
         name: this.$t('navigation.invest'),
-        routeLink: '/invest/',
+        routeLink: '/invest',
         disabled: true
       },
       {
@@ -86,8 +86,10 @@ export default {
         name: 'Login'
       })
     },
-    shutOffMenu () {
-      console.log('test')
+    handleInvest (index) {
+      if (this.navigationBars[index].name === 'Invest') {
+        window.open('https://platform.aigang.network/insurer.html', '_blank')
+      }
     }
   }
 }

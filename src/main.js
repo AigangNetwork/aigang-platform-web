@@ -27,7 +27,11 @@ Vue.use(VueAxios, axios)
 Vue.use(ElementUI)
 Vue.use(VueMoment)
 
+// Vue.axios.defaults.baseURL = config.get('ApiAddress')
 Vue.axios.defaults.baseURL = process.env.API_ADDRESS
+console.log('env', process.env)
+console.log('API_ADDRESS', process.env.API_ADDRESS)
+// config.get('ApiAddress')
 
 Vue.filter('truncate', function (text, stop, clamp) {
   return text.slice(0, stop) + (stop < text.length ? clamp || '...' : '')
@@ -85,10 +89,6 @@ new Vue({
   components: { App },
   template: '<App/>',
   mounted () {
-    // if (this.$store.getters.isAuthenticated) {
-    //   axios.defaults.headers.common['Authorization'] = `Bearer ${this.$store.getters.token}`
-    // }
-
     this.$nextTick(() => {
       this.$i18n.locale = 'en'
       this.$moment.locale('en')
