@@ -1,13 +1,13 @@
 :: https://stackoverflow.com/questions/40007370/programatically-set-app-setting-env-variable-during-azure-kudu-deployment
 echo [custom] started deployment
-echo [custom] environment found:
-echo %NODE_ENV%
+echo [custom] environment found: %NODE_ENV%
 echo [custom] deployment_target: %DEPLOYMENT_TARGET%
 
 call npm install
 
-IF %NODE_ENV% == "qa" (
+IF "%NODE_ENV%" == "qa" (
     echo qa env was found
+    call npm run buildqa
 )
 ELSE (
     echo qa was not found execute prod build
