@@ -90,7 +90,10 @@ const routes = [
   {
     path: '/data/upload',
     name: 'Upload',
-    component: UploadDataSet
+    component: UploadDataSet,
+    meta: {
+      authRequired: true
+    }
   },
   {
     path: '/data/:id',

@@ -1,5 +1,5 @@
 <template>
-  <el-dialog class="notification-dialog" :title="title" :visible.sync="notificationVisible" width="40%" center>
+  <el-dialog class="notification-dialog" :title="title" :visible.sync="notificationVisible" center>
     <div>
       <ul>
         <li class="notification-li" v-for="item in messages" v-text="item" :key="item"></li>
@@ -46,23 +46,36 @@ export default {
       this.title = this.$t('errors.error')
 
       if (error.response) {
-        if (error.response.status === 400) {
-          this.handle400(error.response.data)
-          return
+        switch (error.response.status) {
+          case 400:
+            this.handle400(error.response.data)
+            break
+          case 401:
+            this.handle401()
+            break
+          case 403:
+            this.messages.push(this.$t('errors.403'))
+            break
+          case 404:
+            this.messages.push(this.$t('errors.404'))
+            break
+          case 408:
+            this.messages.push(this.$t('errors.validation.GatewayTimeout'))
+            break
+          case 500:
+            this.messages.push(this.$t('errors.500'))
+            this.messages.push(this.$t('errors.contactIfError'))
+            break
+          default:
+            this.messages.push(this.$t('errors.unhandled'))
+            this.messages.push(this.$t('errors.contactIfError'))
         }
-
-        if (error.response.status === 401) {
-          this.handle401()
-          return
-        }
-
-        this.messages.push(this.$t('errors.' + error.response.status.toString()))
       } else {
-        this.messages.push(this.$t('errors.unhandled') + error.message)
+        this.messages.push(this.$t('errors.serverNotFound'))
+        this.messages.push(this.$t('errors.contactIfError'))
       }
     }
   },
-
   mounted (event) {
     eventHub.$on(eventHub.eventCommunicationError, event => {
       this.messages = []
@@ -70,6 +83,7 @@ export default {
     })
   }
 }
+
 </script>
 <style>
   .notification-dialog li {
@@ -92,10 +106,6 @@ export default {
     width: 140px;
   }
 
-  .notification-dialog .el-dialog {
-    padding: 30px;
-  }
-
   .notification-dialog .el-dialog__title {
     font-family: "Raleway", sans-serif;
     font-size: 24px;
@@ -114,4 +124,5 @@ export default {
   .notification-dialog .el-dialog__header {
     text-align: center;
   }
+
 </style>
