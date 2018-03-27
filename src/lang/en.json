@@ -203,9 +203,15 @@
       "InvalidQuery": "Query is not valid",
       "UserNotFound": "Email not found",
       "EmailNotConfirmed": "Email is not comfirmed yet",
-      "ValidationFailed": "We are unable to proccess your request"
+      "ValidationFailed": "We are unable to proccess your request",
+      "EmptyRequest": "You sent an empty request. Please make sure all required values are set",
+      "FileTooLargeError": "Provided file is too large",
+      "BadFileContentType": "Bad file content type",
+      "GatewayTimeout": "Gateway time out"
     },
     "pagePathNotFound": "The page you are trying to access is not available",
-    "validationError": "You have entered an invalid data"
+    "validationError": "You have entered an invalid data",
+    "serverNotFound": "Server error",
+    "contactIfError": "If you see this error please contact us via email aigang.development@gmail.com"
   }
 }

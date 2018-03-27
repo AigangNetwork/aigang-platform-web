@@ -289,9 +289,10 @@ export default {
     position: relative;
     display: flex;
     justify-content: center;
-    align-items: center;
-    height: 650px;
+    height: 100%;
+    align-items: baseline;
     .aig-upload-card {
+      margin-top: 100px;
       width: 100%;
       max-width: 665px;
       height: 100%;
@@ -373,7 +374,6 @@ export default {
       }
     }
     .aig-upload-card-step-2 {
-      height: 100%;
       margin-top: 50px;
       width: 100%;
       max-width: 665px;
@@ -392,4 +392,5 @@ export default {
       top: 15px;
     }
   }
+
 </style>
