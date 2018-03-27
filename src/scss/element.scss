@@ -1,149 +1,135 @@
 @import '~helpers/variables';
 @import '~helpers/variables_el';
 @import '~helpers/mixins';
-
 @import '~element-ui/packages/theme-chalk/src/index';
-
 // Button
 .el-button {
-  font-family: $font-primary;
-  font-weight: bold;
-  height: 48px;
+    font-family: $font-primary;
+    font-weight: bold;
+    height: 48px;
 }
 
 // Form item
 .el-form-item.is-success .el-input-inner {
-  // hack by default ir marks green
-  border-color: $gray;
-}
-
-// Dialog
-.v-modal {
-  background: #9549c8;
-  background: linear-gradient(135deg, #9549c8 0%, #5833b7 100%);
-  opacity: 0.9;
+    // hack by default ir marks green
+    border-color: $gray;
 }
 
 .el-dialog {
-  text-align: left;
-  box-shadow: 0 0px 41px rgba(0, 0, 0, 0.07);
+    text-align: left;
+    box-shadow: 0 0px 41px rgba(0, 0, 0, 0.07);
+}
+
+.el-dialog--center {
+    width: 30%;
 }
 
 .el-dialog-header {
-  padding: 30px;
+    padding: 30px;
 }
+
 .el-dialog-body {
-  padding: 30px;
-  padding-top: 0;
+    padding: 30px;
+    padding-top: 0;
 }
 
 // Pagination
 .el-pagination.is-background .btn-prev,
 .el-pagination.is-background .btn-next,
 .el-pagination.is-background .el-pager li {
-  background: white;
-  box-shadow: 0 0 30px 0 rgba(0, 0, 0, 0.06);
-  border-radius: 2px;
-  font-weight: 400;
-  border: 1px solid darken($gray, 2);
+    background: white;
+    box-shadow: 0 0 30px 0 rgba(0, 0, 0, 0.06);
+    border-radius: 2px;
+    font-weight: 400;
+    border: 1px solid darken($gray, 2);
 }
+
 .el-pagination.is-background .el-pager li.active {
-  border: 0;
-  line-height: 28px;
-  background: #9549c8;
-  background: linear-gradient(
-    45deg,
-    rgba(88, 51, 183, 1) 0%,
-    rgba(149, 73, 200, 1) 100%
-  );
+    border: 0;
+    line-height: 28px;
+    background: #9549c8;
+    background: linear-gradient( 45deg, rgba(88, 51, 183, 1) 0%, rgba(149, 73, 200, 1) 100%);
 }
+
 .el-pager li {
-  font-size: 12px;
-  line-height: 26px;
+    font-size: 12px;
+    line-height: 26px;
 }
 
 // Message
 .el-message {
-  font-size: 12px;
-  font-family: $font-primary;
-  border: 0;
-  box-shadow: 0 0 30px 0 rgba(0, 0, 0, 0.06);
-  padding: 12px;
-  border-radius: 2px;
-  .el-icon-success,
-  .el-icon-error {
-    color: rgba(black, 0.25);
-  }
-  .el-message-content {
-    font-size: $--size-base;
-  }
-  &.el-message--success {
-    background: $green;
-    background: linear-gradient(
-      to bottom right,
-      rgba(lighten($green, 10), 0.95) 0%,
-      rgba($green, 0.9) 100%
-    );
-    .el-message-content {
-      color: white;
+    font-size: 12px;
+    font-family: $font-primary;
+    border: 0;
+    box-shadow: 0 0 30px 0 rgba(0, 0, 0, 0.06);
+    padding: 12px;
+    border-radius: 2px;
+    .el-icon-success,
+    .el-icon-error {
+        color: rgba(black, 0.25);
     }
-  }
-  &.el-message--error {
-    background: $red;
-    background: linear-gradient(
-      to bottom right,
-      rgba(lighten($red, 10), 0.95) 0%,
-      rgba($red, 0.9) 100%
-    );
     .el-message-content {
-      color: white;
+        font-size: $--size-base;
     }
-  }
+    &.el-message--success {
+        background: $green;
+        background: linear-gradient( to bottom right, rgba(lighten($green, 10), 0.95) 0%, rgba($green, 0.9) 100%);
+        .el-message-content {
+            color: white;
+        }
+    }
+    &.el-message--error {
+        background: $red;
+        background: linear-gradient( to bottom right, rgba(lighten($red, 10), 0.95) 0%, rgba($red, 0.9) 100%);
+        .el-message-content {
+            color: white;
+        }
+    }
 }
 
 .el-message-closeBtn {
-  @include transition;
-  color: rgba(black, 0.45);
-  font-size: 14px;
-  right: 10px;
-  &:hover {
-    color: white;
-  }
+    @include transition;
+    color: rgba(black, 0.45);
+    font-size: 14px;
+    right: 10px;
+    &:hover {
+        color: white;
+    }
 }
 
 // Upload
 .el-upload-dragger {
-  width: 100%;
+    width: 100%;
 }
 
 .el-upload {
-  display: block;
+    display: block;
 }
 
 .el-upload-tip {
-  line-height: 1;
+    line-height: 1;
 }
 
 // Alert
 .el-alert--info {
-  border-color: #d3c4eb;
-  background-color: #f0ebf8;
-  .el-alert-content {
-    color: #6b3abd;
-  }
+    border-color: #d3c4eb;
+    background-color: #f0ebf8;
+    .el-alert-content {
+        color: #6b3abd;
+    }
 }
 
 // Loading
 .el-loading-spinner {
-  .el-loading-text {
-    font-family: $font-primary;
-  }
+    .el-loading-text {
+        font-family: $font-primary;
+    }
 }
 
 .el-tooltip-popper.is-dark {
-  background: rgba(black, 0.85);
+    background: rgba(black, 0.85);
 }
 
 .el-input input {
-  height: 48px;
+    height: 48px;
 }
