@@ -32,7 +32,6 @@ export default {
 <style lang="scss" scoped>
   @import '~helpers/variables';
   table {
-    margin-top: 40px;
     margin-bottom: 40px;
     max-width: 823px;
     border: 1px solid $border-light-purple;

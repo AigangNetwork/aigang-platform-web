@@ -15,6 +15,7 @@
         "load": "Load",
         "title": "Title",
         "description": "Description",
+        "preview": "Preview",
         "structure": "Structure",
         "fileUploadPreferences": "File preferences",
         "fileVisibility": "File visibility",
@@ -66,7 +67,7 @@
       "updated": "Last updated",
       "downloadDataset": "Download dataset",
       "invalidPreview":
-        "This dataset does not contain visual preview. You can download file to check it out",
+        "This dataset does not contain visual preview. Download file to check it out",
       "navigation": {
         "info": "Info",
         "data": "Data",
