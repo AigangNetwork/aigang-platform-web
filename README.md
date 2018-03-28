@@ -11,10 +11,12 @@ This is presentation layer of [aigang.network](https://aigang.network) product f
 npm install
 
 # serve with hot reload at localhost:8080
-npm run dev
+npm run dev - use qa environment api 
+npm run localdev - use local api
 
 # build for production with minification
-npm run build
+npm run build - production configuration
+npm run qabuild - qa configuration
 
 # build for production and view the bundle analyzer report
 npm run build --report
