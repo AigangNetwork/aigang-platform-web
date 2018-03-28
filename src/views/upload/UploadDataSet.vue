@@ -41,6 +41,13 @@
                 <ul>
                   <li>{{$t('data.upload.rules.rule0')}}</li>
                   <li>{{$t('data.upload.rules.rule1')}}</li>
+                  <li>{{$t('data.upload.rules.rule3')}}</li>
+                  <li>{{$t('data.upload.rules.rule4')}}</li>
+                  <li>
+                    <router-link to="" @click.native="handleCsvInformaton">
+                      {{$t('data.upload.rules.rule5')}}
+                    </router-link>
+                  </li>
                 </ul>
               </div>
             </div>
@@ -286,6 +293,10 @@ export default {
     popUpMakdownRules (event) {
       event.preventDefault()
       window.open('http://miaolz123.github.io/vue-markdown/', '_blank')
+    },
+    handleCsvInformaton (event) {
+      event.preventDefault()
+      window.open('https://tools.ietf.org/html/rfc4180', '_blank')
     }
   }
 }
@@ -314,7 +325,6 @@ export default {
         height: 100%;
         max-height: 176px;
         margin-left: 10px;
-        padding: 10px;
         .aig-upload-info-header {
           display: flex;
           h5 {
@@ -326,11 +336,17 @@ export default {
           height: 100%;
           max-height: 180px;
           ul {
-            font-size: 11pt;
+            margin-top: 0px;
+            font-size: 12px;
             padding: 5px;
             list-style-type: none;
             li {
               margin: 3px 3px 5px 3px;
+              a {
+                &:hover {
+                  color: $orange;
+                }
+              }
             }
           }
         }

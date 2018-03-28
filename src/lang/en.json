@@ -25,7 +25,10 @@
         "rule0": "CSV files only",
         "rule1": "Maximum size of file: 10MB",
         "rule2":
-          "Your file is too large. Please provide remote access point to the file. (URL, Connection string etc.)"
+          "Your file is too large. Please provide remote access point to the file. (URL, Connection string etc.)",
+        "rule3": "Each record is on a separate line",
+        "rule4": "File must contain header line",
+        "rule5": "CSV file requirements"
       },
       "input": {
         "placeholder": {
@@ -180,7 +183,7 @@
     "here": "here",
     "change": "Change",
     "save": "Save",
-    "markupSupported": "Styling with VueMarkdown supported"
+    "markupSupported": "VueMarkdown supported"
   },
   "errors": {
     "error": "Error",
@@ -205,7 +208,8 @@
       "UserNotFound": "Email not found",
       "EmailNotConfirmed": "Email is not comfirmed yet",
       "ValidationFailed": "We are unable to proccess your request",
-      "EmptyRequest": "You sent an empty request. Please make sure all required values are set",
+      "EmptyRequest":
+        "You sent an empty request. Please make sure all required values are set",
       "FileTooLargeError": "Provided file is too large",
       "BadFileContentType": "Bad file content type",
       "GatewayTimeout": "Gateway time out"
@@ -213,6 +217,7 @@
     "pagePathNotFound": "The page you are trying to access is not available",
     "validationError": "You have entered an invalid data",
     "serverNotFound": "Server error",
-    "contactIfError": "If you see this error please contact us via email aigang.development@gmail.com"
+    "contactIfError":
+      "If you see this error please contact us via email aigang.development@gmail.com"
   }
 }
