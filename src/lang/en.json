@@ -179,7 +179,8 @@
     "ok": "OK",
     "here": "here",
     "change": "Change",
-    "save": "Save"
+    "save": "Save",
+    "markupSupported": "Styling with VueMarkdown supported"
   },
   "errors": {
     "error": "Error",

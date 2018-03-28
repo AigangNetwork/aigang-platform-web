@@ -2,7 +2,7 @@
   <div class="aig-dataset-info-container">
     <div v-loading="loading">
       <h4 class="info-title">{{$t('data.upload.titles.description')}}</h4>
-      <div class="info-content">{{dataset.description}}</div>
+      <vue-markdown :html="false" :source="dataset.description"></vue-markdown>
       <div class="structure-content">
         <h4 class="info-title">{{$t('data.upload.titles.structure')}}</h4>
         <el-row v-if="isValidJson" class="structure-row" :gutter="20" type="flex" v-for="column in structure" :key="column.name">
@@ -28,7 +28,11 @@
   </div>
 </template>
 <script>
+import VueMarkdown from 'vue-markdown'
 export default {
+  components: {
+    VueMarkdown
+  },
   data () {
     return {
       dataset: {},
@@ -97,4 +101,5 @@ export default {
       border-bottom: 1px solid $light-grey-border;
     }
   }
+
 </style>

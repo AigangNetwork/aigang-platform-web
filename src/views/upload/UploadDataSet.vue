@@ -74,7 +74,12 @@
               <el-form-item prop="title" size="small">
                 <el-input :placeholder="$t('data.upload.input.placeholder.title')" v-model="dataUploadForm.title"></el-input>
               </el-form-item>
-              <h4>{{$t('data.upload.titles.description')}}</h4>
+              <div class="description-header">
+                <h4>{{$t('data.upload.titles.description')}}</h4>
+                <router-link to="" @click.native="popUpMakdownRules">
+                  {{$t('general.markupSupported')}}
+                </router-link>
+              </div>
               <el-form-item prop="description" size="small">
                 <el-input :placeholder="$t('data.upload.input.placeholder.description')" type="textarea" v-model="dataUploadForm.description"></el-input>
               </el-form-item>
@@ -277,6 +282,10 @@ export default {
     },
     fileRemoved (file, fileList) {
       this.isErrorOnFirstStep = false
+    },
+    popUpMakdownRules (event) {
+      event.preventDefault()
+      window.open('http://miaolz123.github.io/vue-markdown/', '_blank')
     }
   }
 }
@@ -371,6 +380,17 @@ export default {
         margin: 5px 0px 0px 0px;
         color: $purple;
         font-weight: 600;
+      }
+      .description-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        a {
+          font-size: 13px;
+          &:hover {
+            color: $orange;
+          }
+        }
       }
     }
     .aig-upload-card-step-2 {
