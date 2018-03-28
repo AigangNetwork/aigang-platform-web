@@ -6,16 +6,6 @@ echo [custom] node version %WEBSITE_NODE_DEFAULT_VERSION%
 
 call npm install
 
-echo [custom] try to delete dist 
-set "DIR_TO_DELETE=D:\home\site\repository\build\dist\"
-
-IF EXIST %DIR_TO_DELETE% (
-    echo [custom] deleting %DIR_TO_DELETE%
-    FOR /D %%p IN ("%DIR_TO_DELETE%\*.*") DO rmdir "%%p" /S /Q
-    del %DIR_TO_DELETE%\*.* /F /Q
-    echo [custom] finish delete dist 
-)
-
 echo [custom] search env 
 IF "%NODE_ENV%" == "qa" (
     echo qa env was found
@@ -31,7 +21,7 @@ REM first the directories /ad option of dir
 REM for /F "delims=" %%i in ('dir /b /ad') do (echo rmdir "%%i" /s/q)
 REM now the files /a-d option of dir
 REM for /F "delims=" %%i in ('dir /b /a-d') do (echo del "%%i" /q)
-
+echo [custom] try to delete old app
 IF EXIST %DEPLOYMENT_TARGET% (
     echo [custom] started folders cleaning
     FOR /D %%p IN ("%DEPLOYMENT_TARGET%\*.*") DO rmdir "%%p" /S /Q
