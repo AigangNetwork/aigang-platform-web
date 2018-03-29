@@ -56,7 +56,7 @@
       </div>
     </Card>
     <el-button class="aig-back-btn" v-if="secondStepActive" @click="setPage(1)">Back</el-button>
-    <Card class="aig-upload-card-step-2" v-if="secondStepActive">
+    <Card class="aig-upload-card-step-2" v-if="secondStepActive" v-loading="loading">
       <div slot="body" :element-loading-text="$t('general.loading')">
         <el-row>
           <el-col :span="24">
@@ -151,6 +151,7 @@ export default {
       dynamicFileStructure: [],
       dataTypeOptions: ['String', 'Numeric', 'Boolean'],
       remoteFileStructure: '',
+      loading: false,
       dataUploadForm: {
         title: '',
         description: '',
@@ -219,6 +220,7 @@ export default {
     uploadDataset () {
       this.validateForm()
       if (this.isValidForm) {
+        this.loading = true
         var uploadForm = new FormData()
         for (var key in this.dataUploadForm) {
           uploadForm.append(key, this.dataUploadForm[key])
@@ -232,7 +234,7 @@ export default {
           this.successfullUpload()
         }, error => {
           console.log(error)
-          this.uploading = false
+          this.loading = false
         })
       }
     },
