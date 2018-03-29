@@ -25,4 +25,10 @@
   .notification-dialog .el-dialog {
     width: 90% !important;
   }
+
+  .aig-dataset-header-btn-container {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+  }
 }

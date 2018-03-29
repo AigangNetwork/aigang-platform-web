@@ -18,6 +18,7 @@ import DatasetInfo from '@/views/data/DatasetInfo'
 import DatasetModels from '@/views/data/DatasetModels'
 import DatasetThreads from '@/views/data/DatasetThreads'
 import DatasetData from '@/views/data/DatasetData'
+import DatasetEdit from '@/views/data/DatasetEdit'
 import AllData from '@/views/data/AllData'
 import Uploaded from '@/views/data/Uploaded'
 
@@ -121,6 +122,11 @@ const routes = [
         component: DatasetThreads
       }
     ]
+  },
+  {
+    path: '/data/edit/:id',
+    component: DatasetEdit,
+    props: true
   },
   {
     path: '/predictions',

@@ -28,7 +28,7 @@ Vue.use(ElementUI)
 Vue.use(VueMoment)
 
 // Vue.axios.defaults.baseURL = config.get('ApiAddress')
-Vue.axios.defaults.baseURL = process.env.API_ADDRESS
+Vue.axios.defaults.baseURL = 'http://localhost:5000/api' // process.env.API_ADDRESS
 console.log('env', process.env)
 console.log('API_ADDRESS', process.env.API_ADDRESS)
 // config.get('ApiAddress')

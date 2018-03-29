@@ -62,6 +62,7 @@
       "createdBy": "By",
       "updated": "Last updated",
       "downloadDataset": "Download dataset",
+      "editDataset": "Edit dataset",
       "invalidPreview":
         "This dataset does not contain visual preview. You can download file to check it out",
       "navigation": {
@@ -69,6 +70,19 @@
         "data": "Data",
         "models": "Models",
         "threads": "Threads"
+      },
+      "edit": {
+        "uploadNew": "Upload new",
+        "registeredOnly": "For registered users only",
+        "byDefaultPublicAccess": "By default datasets with public access",
+        "on": "On",
+        "off": "Off",
+        "title": "Title",
+        "description": "Description",
+        "structure": "Structure",
+        "structureName": "Name",
+        "structureDescription": "Description",
+        "structureDataType": "Data type"
       }
     }
   },
@@ -169,9 +183,23 @@
     "firstNameEmpty": "First name is required",
     "firstNameTooShort": "First name must be at least 2 characters long",
     "lastNameEmpty": "Last name is required",
-    "lastNameTooShort": "First name must be at least 2 characters long",
+    "lastNameTooShort": "Last name must be at least 2 characters long",
     "userNameEmpty": "Nickname is required",
-    "userNameTooShort": "Nickname must be at least 6 characters long"
+    "userNameTooShort": "Nickname must be at least 6 characters long",
+    "datasetTitleEmpty": "Title is required",
+    "datasetTitleTooShort": "Title must be at least 6 characters long",
+    "datasetDescriptionEmpty": "Description is required",
+    "datasetDescriptionTooShort":
+      "Description must be at least 6 characters long",
+    "datasetStructureTitleEmpty": "Row title is required",
+    "datasetStructureTitleTooShort":
+      "Row title must be at least 4 characters long",
+    "datasetStructureDescriptionEmpty": "Row description is required",
+    "datasetStructureDescriptionTooShort":
+      "Row title must be at least 6 characters long",
+    "datasetStructureDataTypeEmpty": "Row data type is required",
+    "datasetStructureDataTypeTooShort":
+      "Row data type must be at least 3 characters long"
   },
   "general": {
     "uploading": "Uploading ...",
@@ -204,7 +232,8 @@
       "UserNotFound": "Email not found",
       "EmailNotConfirmed": "Email is not comfirmed yet",
       "ValidationFailed": "We are unable to proccess your request",
-      "EmptyRequest": "You sent an empty request. Please make sure all required values are set",
+      "EmptyRequest":
+        "You sent an empty request. Please make sure all required values are set",
       "FileTooLargeError": "Provided file is too large",
       "BadFileContentType": "Bad file content type",
       "GatewayTimeout": "Gateway time out"
@@ -212,6 +241,7 @@
     "pagePathNotFound": "The page you are trying to access is not available",
     "validationError": "You have entered an invalid data",
     "serverNotFound": "Server error",
-    "contactIfError": "If you see this error please contact us via email aigang.development@gmail.com"
+    "contactIfError":
+      "If you see this error please contact us via email aigang.development@gmail.com"
   }
 }
