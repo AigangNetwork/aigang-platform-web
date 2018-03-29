@@ -1,8 +1,7 @@
 <template>
   <el-container class="aig-container-dataset" v-loading="loading">
     <div class="dataset-edit-container">
-      <DatasetFileCard :dataset="dataset" />
-
+      <DatasetFileCard v-model="datasetForm.isPublic" :showUploadButton="true" />
       <div class="dataset-body-container">
         <el-form @keyup.enter.native="submitForm('datasetForm')" :model="datasetForm" :rules="datasetFormRules" ref="datasetForm">
 
@@ -57,7 +56,7 @@
   </el-container>
 </template>
 <script>
-import DatasetFileCard from '@/components/data/edit/DatasetFileCard'
+import DatasetFileCard from '@/components/data/DatasetFileCard'
 
 export default {
   components: {
@@ -70,6 +69,7 @@ export default {
       datasetForm: {
         title: '',
         description: '',
+        isPublic: true,
         structure: []
       },
       datasetFormRules: {

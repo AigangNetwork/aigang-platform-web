@@ -2,22 +2,22 @@
   <div class="file-card-container">
     <div class="card-section">
       <img src="/static/dataset/csv_file_64px.svg">
-      <p> {{ dataset.title }}</p>
-      <el-button class="profile-button">{{ $t('data.dataset.edit.uploadNew') }}</el-button>
+      <p> {{$t('data.upload.titles.fileDetails')}} </p>
+      <el-button v-if="showUploadButton" @ class="profile-button">{{ $t('data.dataset.edit.uploadNew') }}</el-button>
     </div>
     <div class="card-section">
       <div>
         <p>{{ $t('data.dataset.edit.registeredOnly') }}</p>
         <p>{{ $t('data.dataset.edit.byDefaultPublicAccess') }}</p>
       </div>
-      <el-switch v-model="isDatasetPrivate" :active-text="$t('data.dataset.edit.on')" :inactive-text="$t('data.dataset.edit.off')">
+      <el-switch :value="value" @change="(value) => $emit('input', value)" :active-text="$t('data.dataset.edit.on')" :inactive-text="$t('data.dataset.edit.off')">
       </el-switch>
     </div>
   </div>
 </template>
 <script>
 export default {
-  props: ['dataset'],
+  props: ['showUploadButton', 'value'],
   data () {
     return {
       isDatasetPrivate: false
