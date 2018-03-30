@@ -1,6 +1,12 @@
 <template>
   <div class="table-container" v-loading="loading">
     <div class="aig-dataset-info-container">
+      <div v-if="dataset.remoteFileAccessPoint">
+        <h4 class="info-title">{{$t('data.upload.titles.remoteFileAccessPoint')}}</h4>
+        <div>
+          {{dataset.remoteFileAccessPoint}}
+        </div>
+      </div>
       <div class="structure-content">
         <h4 class="info-title">{{$t('data.upload.titles.structure')}}</h4>
         <el-row v-if="isValidJson" class="structure-row" :gutter="20" type="flex" v-for="column in structure" :key="column.name">
@@ -12,7 +18,7 @@
           <el-col>
             <h5 class="column-decsription">{{column.description}}</h5>
           </el-col>
-          <el-col class="column-decsription" :span="10">
+          <el-col class="column-datatype" :span="10">
             <h5>{{column.dataType}}</h5>
           </el-col>
         </el-row>
@@ -126,6 +132,12 @@ export default {
         word-wrap: break-word;
         font-weight: 400;
         color: $purple;
+      }
+      .column-datatype {
+        word-wrap: break-word;
+        font-weight: 400;
+        color: $purple;
+        text-align: right;
       }
     }
     .structure-row {

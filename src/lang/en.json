@@ -20,7 +20,8 @@
         "fileUploadPreferences": "File preferences",
         "fileVisibility": "File visibility",
         "fileAccess": "By default datasets are with public access",
-        "fileDetails": "File details"
+        "fileDetails": "File details",
+        "remoteFileAccessPoint": "Remote file access point"
       },
       "rules": {
         "rule0": "CSV files only",
@@ -184,7 +185,8 @@
     "here": "here",
     "change": "Change",
     "save": "Save",
-    "markupSupported": "VueMarkdown supported"
+    "markupSupported": "VueMarkdown supported",
+    "versionAlpha": "alpha"
   },
   "errors": {
     "error": "Error",
@@ -219,6 +221,6 @@
     "validationError": "You have entered an invalid data",
     "serverNotFound": "Server error",
     "contactIfError":
-      "If you see this error please contact us via email aigang.development@gmail.com"
+      "If you see this error please contact us via email info@aigang.network"
   }
 }

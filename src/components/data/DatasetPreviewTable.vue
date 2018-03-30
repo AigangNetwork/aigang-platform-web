@@ -1,20 +1,22 @@
 <template>
-  <table>
-    <thead class="table-header">
-      <tr>
-        <th v-for="key in cols" :key="key">
-          {{ key }}
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr v-for="(row, index) in rows" :key="index">
-        <td v-for="colData in row" :key="colData">
-          {{colData}}
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  <div class="table-container">
+    <table>
+      <thead class="table-header">
+        <tr>
+          <th v-for="key in cols" :key="key">
+            {{ key }}
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="(row, index) in rows" :key="index">
+          <td v-for="colData in row" :key="colData">
+            {{colData}}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </template>
 <script>
 export default {
@@ -31,6 +33,10 @@ export default {
 </script>
 <style lang="scss" scoped>
   @import '~helpers/variables';
+  .table-container {
+    display: flex;
+  }
+
   table {
     margin-bottom: 40px;
     max-width: 823px;

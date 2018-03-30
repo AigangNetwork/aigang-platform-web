@@ -7,7 +7,7 @@
           <div class="uploaded">{{$t('data.dataset.updated')}}: {{ this.dataset.createdUtc | moment('from') }}</div>
         </div>
         <div class="dataset-title">{{dataset.title}}</div>
-        <button @click="downloadDataset" class="aig-download-dataset-btn">
+        <button v-if="!dataset.remoteFileAccessPoint" @click="downloadDataset" class="aig-download-dataset-btn">
           <img class="file-img" src="/static/dataset/documents24px.svg" alt=""> {{$t('data.dataset.downloadDataset')}}
         </button>
       </div>
