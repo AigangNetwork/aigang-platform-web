@@ -9,9 +9,9 @@
           </el-switch>
         </el-row>
         <transition name="slideDown">
-          <el-row v-if="isRemoteFile">
+          <el-row v-if="isRemoteFile && showUploadOption">
             <div class="profile-info-input remote-input-container">
-              <el-input type="textarea" autosize v-model="url" :placeholder="$t('data.dataset.edit.describeRemoteAccessPoint' )"></el-input>
+              <el-input type="textarea" autosize v-model="remoteFileAccessPoint" @blur="debounceDispatch" :placeholder="$t('data.dataset.edit.describeRemoteAccessPoint' )"></el-input>
             </div>
           </el-row>
         </transition>
@@ -29,30 +29,35 @@
         <p>{{ $t('data.dataset.edit.registeredOnly') }}</p>
         <p>{{ $t('data.dataset.edit.byDefaultPublicAccess') }}</p>
       </div>
-      <el-switch v-model="isPublic" @change="setCurrentDatasetIsPublic" :inactive-text="$t('data.dataset.edit.public')" :active-text="$t('data.dataset.edit.loggedIn')">
+      <el-switch :value="value" @change="(value) => $emit('input', value)" :inactive-text="$t('data.dataset.edit.public')" :active-text="$t('data.dataset.edit.loggedIn')">
       </el-switch>
     </div>
   </div>
 </template>
 <script>
 export default {
-  props: ['showUploadOption', 'isFileAccessRemote'],
+  props: ['value', 'showUploadOption'],
   data () {
     return {
       isDatasetPrivate: false,
-      isPublic: false,
       isRemoteFile: false,
-      url: ''
+      remoteFileAccessPoint: ''
     }
   },
   methods: {
     setCurrentDatasetIsPublic () {
       this.$store.dispatch('setCurrentDatasetIsPublic', { isPublic: this.isPublic })
+    },
+    debounceDispatch () {
+      this.$store.dispatch('setRemoteFileAccessPoint', { remoteFileAccessPoint: this.remoteFileAccessPoint })
     }
   },
   created () {
-    this.isPublic = this.$store.state.currentDataset.isPublic
     this.isRemoteFile = this.$store.getters.isDatasetAccessPoint
+    if (this.showUploadOption) {
+      console.log(this.$store.state.currentDataset.remoteFileAccessPoint)
+      this.remoteFileAcccessPoint = this.$store.state.currentDataset.remoteFileAccessPoint
+    }
   }
 }
 </script>
@@ -103,5 +108,32 @@ export default {
         }
       }
     }
+
+  }
+
+  @media screen and (min-width: 100px) and (max-width: 680px) {
+    .file-card-container {
+      .card-section {
+        flex-direction: column;
+        align-items: flex-start;
+        .card-section-header {
+          margin: 0;
+        }
+        div {
+          display: block;
+          width: 100%;
+          p {
+            margin-left: 0;
+            height: 40px;
+            line-height: 20px
+          }
+        }
+        &:last-child {
+          padding-bottom: 40px;
+          min-height: 180px;
+        }
+      }
+    }
+
   }
 </style>

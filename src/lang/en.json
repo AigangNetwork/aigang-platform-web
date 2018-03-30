@@ -205,7 +205,8 @@
     "here": "here",
     "change": "Change",
     "save": "Save",
-    "back": "Back"
+    "back": "Back",
+    "markupSupported": "VueMarkdown supported"
   },
   "errors": {
     "error": "Error",

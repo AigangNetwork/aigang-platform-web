@@ -2,7 +2,8 @@
   <el-container class="aig-container-dataset" v-loading="loading">
     <el-button @click="$router.go(-1)" class="profile-button back-button">{{ $t('general.back') }}</el-button>
     <div class="dataset-edit-container">
-      <DatasetFileCard :showUploadOption="true" />
+      <DatasetFileCard v-model="datasetForm.isPublic" :showUploadOption="true" />
+
       <div class="dataset-body-container">
         <el-form @keyup.enter.native="submitForm('datasetForm')" :model="datasetForm" :rules="datasetFormRules" ref="datasetForm">
 
@@ -17,6 +18,7 @@
 
           <el-row class="profile-section-title">
             {{ $t('data.dataset.edit.description' )}}
+            <span class="markdown-label">{{ $t('general.markupSupported' )}}</span>
           </el-row>
           <el-row>
             <el-form-item prop="description">
@@ -39,7 +41,7 @@
                 <el-input class="profile-info-input description" type="textarea" v-model="column.description" :placeholder="$t('data.dataset.edit.structureDescription' )"></el-input>
               </el-form-item>
             </el-col>
-            <el-col class="column-decsription" :span="10">
+            <el-col class="column-description" :span="10">
               <el-form-item>
                 <el-select class="profile-info-input select-input" size="medium" aria-required="true" v-model="column.dataType" :placeholder="$t('data.upload.input.placeholder.dataType')">
                   <el-option v-for="item in dataTypeOptions" :key="item" :label="item" :value="item">
@@ -89,7 +91,8 @@ export default {
         structure: '',
         createdUtc: '',
         hasFileChanged: false,
-        file: null
+        file: null,
+        remoteFileAccessPoint: ''
       },
       datasetFormRules: {
         title: [
@@ -115,7 +118,7 @@ export default {
       }
 
       this.datasetForm.structure = JSON.stringify(this.datasetStructure)
-
+      this.datasetForm.remoteFileAccessPoint = this.$store.state.currentDataset.remoteFileAccessPoint
       this.$refs[formName].validate(valid => {
         if (valid) {
           this.updateDataset()
@@ -192,6 +195,18 @@ export default {
       margin-bottom: 4px;
       height: 19px;
       font-size: 14px;
+      width: 100%;
+      display: flex;
+      .markdown-label {
+        font-family: Roboto;
+        flex-grow: 1;
+        text-align: right;
+        color: black;
+        font-weight: 500;
+        font-size: 12px;
+        line-height: 19px;
+        text-transform: none;
+      }
     }
 
     .profile-info-input {
@@ -207,5 +222,28 @@ export default {
 
   .back-button {
     margin-top: 40px;
+  }
+
+  @media screen and (min-width: 680px) and (max-width: 1024px) {
+    .aig-container-dataset {
+      display: block;
+      .back-button {
+        margin: 20px;
+      }
+    }
+  }
+
+  @media screen and (min-width: 100px) and (max-width: 680px) {
+    .aig-container-dataset {
+      display: block;
+      .back-button {
+        margin: 20px;
+      }
+
+      .dataset-edit-container {
+        margin-top: 20px;
+        padding: 20px
+      }
+    }
   }
 </style>

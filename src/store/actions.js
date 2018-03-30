@@ -36,8 +36,8 @@ const setCurrentDataset = ({ commit }, response) => {
   commit(types.SET_CURRENT_DATASET, response.data)
 }
 
-const setCurrentDatasetIsPublic = ({ commit }, response) => {
-  commit(types.SET_CURRENT_DATASET_IS_PUBLIC, response)
+const setRemoteFileAccessPoint = ({ commit }, response) => {
+  commit(types.SET_REMOTE_FILE_ACCESS_POINT, response)
 }
 
 export {
@@ -45,5 +45,5 @@ export {
   logOut,
   changeProfileNames,
   setCurrentDataset,
-  setCurrentDatasetIsPublic
+  setRemoteFileAccessPoint
 }

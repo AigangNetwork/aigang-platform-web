@@ -17,8 +17,8 @@ const mutations = {
   SET_CURRENT_DATASET (state, payload) {
     state.currentDataset = payload.data
   },
-  SET_CURRENT_DATASET_IS_PUBLIC (state, payload) {
-    state.currentDataset.isPublic = payload.isPublic
+  SET_REMOTE_FILE_ACCESS_POINT (state, payload) {
+    state.currentDataset.remoteFileAccessPoint = payload.remoteFileAccessPoint
   }
 }
 
