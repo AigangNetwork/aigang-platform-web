@@ -157,8 +157,8 @@
     "profile": "Profile",
     "data": "Data",
     "predictions": "Predictions",
-    "invest": "Invest",
-    "insure": "Insure",
+    "invest": "Investment",
+    "insure": "Insurance",
     "login": "Sign Up/Log In"
   },
   "status": {
