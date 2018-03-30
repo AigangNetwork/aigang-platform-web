@@ -126,7 +126,10 @@ const routes = [
   {
     path: '/data/edit/:id',
     component: DatasetEdit,
-    props: true
+    props: true,
+    meta: {
+      authRequired: true
+    }
   },
   {
     path: '/predictions',

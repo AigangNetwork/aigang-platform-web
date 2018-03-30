@@ -19,7 +19,7 @@
 
       <transition name="fade">
         <el-upload v-if="showUploadOption && !isRemoteFile" class="profile-button" :limit="1" ref="csvFile" drag :action="''" :multiple="false"
-          :auto-upload="false" accept=".csv">
+          :auto-upload="false" :on-change="handleFileChange" accept=".csv">
           {{ $t('data.dataset.edit.uploadNew') }}
         </el-upload>
       </transition>
@@ -50,12 +50,14 @@ export default {
     },
     debounceDispatch () {
       this.$store.dispatch('setRemoteFileAccessPoint', { remoteFileAccessPoint: this.remoteFileAccessPoint })
+    },
+    handleFileChange (file) {
+      this.$store.dispatch('setCurrentDatasetFile', { file })
     }
   },
   created () {
     this.isRemoteFile = this.$store.getters.isDatasetAccessPoint
     if (this.showUploadOption) {
-      console.log(this.$store.state.currentDataset.remoteFileAccessPoint)
       this.remoteFileAcccessPoint = this.$store.state.currentDataset.remoteFileAccessPoint
     }
   }

@@ -19,6 +19,9 @@ const mutations = {
   },
   SET_REMOTE_FILE_ACCESS_POINT (state, payload) {
     state.currentDataset.remoteFileAccessPoint = payload.remoteFileAccessPoint
+  },
+  SET_CURRENT_DATASET_FILE (state, payload) {
+    state.currentDataset.file = payload.file
   }
 }
 

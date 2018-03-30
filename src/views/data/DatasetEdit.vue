@@ -119,6 +119,7 @@ export default {
 
       this.datasetForm.structure = JSON.stringify(this.datasetStructure)
       this.datasetForm.remoteFileAccessPoint = this.$store.state.currentDataset.remoteFileAccessPoint
+      this.datasetForm.file = this.$store.state.currentDataset.file.raw
       this.$refs[formName].validate(valid => {
         if (valid) {
           this.updateDataset()
@@ -137,6 +138,12 @@ export default {
       this.axios.post('/data/update', form)
         .then(response => {
           this.loading = false
+
+          this.$notify({
+            title: this.$t('data.upload.notifications.titles.success'),
+            type: 'success',
+            message: this.$t('data.dataset.edit.edit_success')
+          })
         })
         .catch(e => {
           this.loading = false

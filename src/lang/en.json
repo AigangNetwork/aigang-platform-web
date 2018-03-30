@@ -90,7 +90,8 @@
         "structureDataType": "Data type",
         "file": "File",
         "remoteAccessPoint": "Remote access point",
-        "describeRemoteAccessPoint": "Describe remote access point"
+        "describeRemoteAccessPoint": "Describe remote access point",
+        "edit_success": "Changes were successfully updated"
       },
       "validation": {
         "TitleEmpty": "Title is required",

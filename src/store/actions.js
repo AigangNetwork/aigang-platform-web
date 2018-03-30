@@ -40,10 +40,15 @@ const setRemoteFileAccessPoint = ({ commit }, response) => {
   commit(types.SET_REMOTE_FILE_ACCESS_POINT, response)
 }
 
+const setCurrentDatasetFile = ({ commit }, response) => {
+  commit(types.SET_CURRENT_DATASET_FILE, response)
+}
+
 export {
   logIn,
   logOut,
   changeProfileNames,
   setCurrentDataset,
-  setRemoteFileAccessPoint
+  setRemoteFileAccessPoint,
+  setCurrentDatasetFile
 }
