@@ -13,6 +13,15 @@ const mutations = {
     state.user.profile.firstName = payload.profile.firstName
     state.user.profile.firstName = payload.profile.lastName
     state.user.profile.firstName = payload.profile.userName
+  },
+  SET_CURRENT_DATASET (state, payload) {
+    state.currentDataset = payload.data
+  },
+  SET_REMOTE_FILE_ACCESS_POINT (state, payload) {
+    state.currentDataset.remoteFileAccessPoint = payload.remoteFileAccessPoint
+  },
+  SET_CURRENT_DATASET_FILE (state, payload) {
+    state.currentDataset.file = payload.file
   }
 }
 

@@ -4,6 +4,16 @@ const getters = {
   },
   token: state => {
     return state.user.token
+  },
+  dataset: state => {
+    return state.currentDataset
+  },
+  isDatasetAccessPoint: state => {
+    if (state.currentDataset.remoteFileAccessPoint) {
+      return true
+    } else {
+      return false
+    }
   }
 }
 

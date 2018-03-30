@@ -7,9 +7,15 @@
           <div class="uploaded">{{$t('data.dataset.updated')}}: {{ this.dataset.createdUtc | moment('from') }}</div>
         </div>
         <div class="dataset-title">{{dataset.title}}</div>
-        <button v-if="!dataset.remoteFileAccessPoint" @click="downloadDataset" class="aig-download-dataset-btn">
-          <img class="file-img" src="/static/dataset/documents24px.svg" alt=""> {{$t('data.dataset.downloadDataset')}}
-        </button>
+        <div class="aig-dataset-header-btn-container">
+          <button v-if="!dataset.remoteFileAccessPoint" @click="downloadDataset" class="aig-dataset-header-btn">
+            <img class="file-img" src="/static/dataset/documents24px.svg" alt=""> {{$t('data.dataset.downloadDataset')}}
+          </button>
+          <router-link v-if="isUserOwner" class="aig-dataset-header-btn" :to="editRoute" exact>
+            <img class="file-img" src="/static/dataset/edit21px.png" alt=""> {{$t('data.dataset.editDataset')}}
+          </router-link>
+
+        </div>
       </div>
       <div class="dataset-navigation-container">
         <div class="dataset-navigation">
@@ -42,6 +48,8 @@ export default {
     return {
       dataset: {},
       loading: false,
+      isUserOwner: false,
+      editRoute: '/data/edit/' + this.$route.params.id,
       navigationBars: [{
         name: this.$t('data.dataset.navigation.info'),
         routeLink: {
@@ -85,6 +93,11 @@ export default {
       this.axios.get('/data/' + this.$route.params.id).then(response => {
         this.loading = false
         this.dataset = response.data.data
+        this.$store.dispatch('setCurrentDataset', response)
+
+        if (this.$store.state.user.profile.id === this.dataset.userId) {
+          this.isUserOwner = true
+        }
       })
     },
     downloadDataset () {
@@ -254,4 +267,9 @@ export default {
     }
   }
 
+  @media screen and (min-width: 280px) and (max-width: 320px) {
+    .aig-dataset-header {
+      margin-top: 20px;
+    }
+  }
 </style>

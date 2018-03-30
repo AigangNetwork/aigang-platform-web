@@ -67,6 +67,7 @@
       "createdBy": "By",
       "updated": "Last updated",
       "downloadDataset": "Download dataset",
+      "editDataset": "Edit dataset",
       "invalidPreview":
         "This dataset does not contain visual preview. Download file to check it out",
       "navigation": {
@@ -74,6 +75,31 @@
         "data": "Data",
         "models": "Models",
         "threads": "Threads"
+      },
+      "edit": {
+        "uploadNew": "Upload new",
+        "registeredOnly": "For registered users only",
+        "byDefaultPublicAccess": "By default datasets with public access",
+        "public": "Public",
+        "loggedIn": "Logged in",
+        "title": "Title",
+        "description": "Description",
+        "structure": "Structure",
+        "structureName": "Name",
+        "structureDescription": "Description",
+        "structureDataType": "Data type",
+        "file": "File",
+        "remoteAccessPoint": "Remote access point",
+        "describeRemoteAccessPoint": "Describe remote access point",
+        "edit_success": "Changes were successfully updated"
+      },
+      "validation": {
+        "TitleEmpty": "Title is required",
+        "TitleTooShort": "Title must be at least 6 characters long",
+        "DescriptionEmpty": "Description is required",
+        "DescriptionTooShort": "Description must be at least 6 characters long",
+        "StructureFieldEmpty":
+          "Please make sure you have filled all structure fields"
       }
     }
   },
@@ -174,7 +200,7 @@
     "firstNameEmpty": "First name is required",
     "firstNameTooShort": "First name must be at least 2 characters long",
     "lastNameEmpty": "Last name is required",
-    "lastNameTooShort": "First name must be at least 2 characters long",
+    "lastNameTooShort": "Last name must be at least 2 characters long",
     "userNameEmpty": "Nickname is required",
     "userNameTooShort": "Nickname must be at least 6 characters long"
   },
@@ -185,6 +211,7 @@
     "here": "here",
     "change": "Change",
     "save": "Save",
+    "back": "Back",
     "markupSupported": "VueMarkdown supported",
     "versionAlpha": "alpha"
   },

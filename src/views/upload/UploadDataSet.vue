@@ -419,16 +419,10 @@ export default {
         width: 100%;
       }
     }
-    .aig-form-error {
-      text-align: center;
-      margin-bottom: 15px;
-      color: red;
-    }
     .aig-back-btn {
       position: absolute;
       left: 25px;
       top: 15px;
     }
   }
-
 </style>

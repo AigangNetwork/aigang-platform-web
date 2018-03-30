@@ -32,4 +32,23 @@ const changeProfileNames = ({ commit }, response) => {
   commit(types.CHANGE_PROFILE_NAMES)
 }
 
-export { logIn, logOut, changeProfileNames }
+const setCurrentDataset = ({ commit }, response) => {
+  commit(types.SET_CURRENT_DATASET, response.data)
+}
+
+const setRemoteFileAccessPoint = ({ commit }, response) => {
+  commit(types.SET_REMOTE_FILE_ACCESS_POINT, response)
+}
+
+const setCurrentDatasetFile = ({ commit }, response) => {
+  commit(types.SET_CURRENT_DATASET_FILE, response)
+}
+
+export {
+  logIn,
+  logOut,
+  changeProfileNames,
+  setCurrentDataset,
+  setRemoteFileAccessPoint,
+  setCurrentDatasetFile
+}

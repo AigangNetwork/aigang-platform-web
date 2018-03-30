@@ -142,7 +142,13 @@ body.aig {
   }
 }
 
-.aig-download-dataset-btn {
+.aig-dataset-header-btn-container {
+  display: flex;
+  justify-content: space-between;
+  max-width: 380px;
+}
+
+.aig-dataset-header-btn {
   width: 180px;
   height: 30px;
   margin-top: 10px;
@@ -151,12 +157,21 @@ body.aig {
   border: 1px solid white;
   color: white;
   display: flex;
+  line-height: 30px;
   align-items: center;
   font-size: 10pt;
+  color: white !important;
+  padding: 0 8px;
   &:hover {
     border: 1px solid $orange;
+    cursor: pointer;
   }
-
+  &:last-child {
+    .file-img {
+      height: 19px;
+      margin-left: 8px;
+    }
+  }
   .flex-container {
     display: flex;
   }
@@ -180,4 +195,143 @@ body.aig {
 
 .aig-link-disabled {
   pointer-events: none;
+}
+
+.profile-button {
+  margin-top: 8px;
+  margin-left: 0px;
+  width: 131px;
+  height: 32px;
+  background-color: $white;
+  color: $button-purple;
+  border: 1px solid $light-grey;
+  padding: 0;
+  border-radius: 2px;
+  &:hover {
+    background-color: $button-purple;
+    color: $white;
+    transition: all 200ms;
+  }
+}
+
+.profile-button span {
+  height: 16px;
+  font-size: 14px;
+  font-weight: bold;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: 0.5px;
+  text-align: center;
+}
+
+.dataset-edit-container {
+  .file-card-container {
+    .card-section {
+      .el-switch__label.is-active {
+        color: $button-purple;
+      }
+      .el-switch.is-checked .el-switch__core {
+        border-color: $button-purple;
+        background-color: $button-purple;
+      }
+      .el-switch__label * {
+        font-size: 16px;
+      }
+    }
+  }
+}
+
+.profile-info-input {
+  margin-bottom: 0px !important;
+  input,
+  textarea {
+    padding: 8px;
+    border: none;
+    border-bottom: 1px solid $active-dark-purple;
+    border-radius: 0;
+    font-family: 'Raleway', sans-serif;
+    font-size: 18px;
+    font-weight: normal;
+    line-height: 1.33;
+    letter-spacing: 0.5px;
+    color: $active-dark-purple;
+    text-shadow: 0 2px 4px rgba(219, 224, 231, 0.5);
+    height: 24px;
+    padding-top: 0;
+    min-width: 140px;
+    margin-right: 20px;
+    resize: none;
+  }
+}
+
+.dataset-body-container {
+  .profile-info-input {
+    input,
+    textarea {
+      font-size: 24px;
+      line-height: 40px;
+      width: 100%;
+    }
+  }
+  .profile-info-input.description,
+  .profile-info-input.select-input {
+    input,
+    textarea {
+      font-size: 16px;
+      font-weight: 300;
+      line-height: 1.63;
+      letter-spacing: 0.5px;
+      text-align: left;
+      height: 30px;
+    }
+  }
+  .profile-info-input.select-input input {
+    height: 30px;
+  }
+  .profile-info-input.description.structure-title {
+    input,
+    textarea {
+      font-weight: 500;
+    }
+  }
+}
+
+.profile-section-title {
+  width: 320px;
+  height: 19px;
+  font-family: $font-primary;
+  font-size: 16px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  text-align: left;
+  color: $dark-gray;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.aig-form-error {
+  text-align: center;
+  margin-bottom: 15px;
+  color: red;
+}
+
+.file-card-container .card-section {
+  .el-upload-dragger {
+    height: 30px;
+    line-height: 32px;
+    border: none;
+    color: $button-purple;
+    &:hover {
+      background: transparent;
+      color: white;
+    }
+  }
+}
+
+.remote-input-container {
+  textarea {
+    margin-top: 15px;
+    width: 100%;
+  }
 }

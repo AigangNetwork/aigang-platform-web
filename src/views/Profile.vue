@@ -65,17 +65,6 @@ export default {
   @import '~helpers/variables';
   @import '~helpers/mixins';
 
-  .profile-button span {
-    height: 16px;
-    font-size: 14px;
-    font-weight: bold;
-    font-style: normal;
-    font-stretch: normal;
-    line-height: normal;
-    letter-spacing: 0.5px;
-    text-align: center;
-  }
-
   .profile-card .el-button--warning {
     width: 100%;
     margin: 10px 0;
@@ -85,59 +74,6 @@ export default {
     width: 100px;
     display: inline;
     height: 40px;
-  }
-
-  .profile-button {
-    margin-top: 8px;
-    margin-left: 0px;
-    width: 131px;
-    height: 32px;
-    background-color: $white;
-    color: $button-purple;
-    border: 1px solid $light-grey;
-    padding: 0;
-    border-radius: 2px;
-    &:hover {
-      background-color: $button-purple;
-      color: $white;
-      transition: all 200ms;
-    }
-  }
-
-  .profile-info-container {
-    .profile-info-input {
-      margin-bottom: 0px !important;
-      input {
-        padding: 8px;
-        border: none;
-        border-bottom: 1px solid $active-dark-purple;
-        border-radius: 0;
-        font-family: 'Raleway', sans-serif;
-        font-size: 18px;
-        font-weight: normal;
-        line-height: 1.33;
-        letter-spacing: 0.5px;
-        color: #423176;
-        text-shadow: 0 2px 4px rgba(219, 224, 231, 0.5);
-        height: 24px;
-        padding-top: 0;
-        min-width: 140px;
-        margin-right: 20px;
-      }
-    }
-  }
-
-  .profile-section-title {
-    width: 320px;
-    height: 19px;
-    font-family: $font-primary;
-    font-size: 16px;
-    font-weight: bold;
-    letter-spacing: 0.6px;
-    text-align: left;
-    color: $dark-gray;
-    text-transform: uppercase;
-    margin: 0;
   }
 
   .profile-section-decription {
