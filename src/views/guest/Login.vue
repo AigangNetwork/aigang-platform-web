@@ -90,8 +90,8 @@ export default {
     return {
       loading: false,
       loginForm: {
-        email: 'test@test.lt', // todo remove
-        password: 'Laikinas123' // todo remove
+        email: '',
+        password: ''
       },
       loginFormRules: {
         email: [{
