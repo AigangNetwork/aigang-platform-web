@@ -20,7 +20,7 @@
           </ul>
         </span>
       </el-aside>
-      <el-main v-loading="loading" class="aig-data-container" :class="{ 'is-authenticated': $store.state.user.authenticated}">
+      <el-main class="aig-data-container" :class="{ 'is-authenticated': $store.state.user.authenticated}">
         <el-row :gutter="26">
           <el-col class="data-search" :span="16">
             <el-input :disabled="true" placeholder="Search by name or keywords" v-model="searchInput"></el-input>
@@ -76,21 +76,12 @@ export default {
       }
       ],
       searchInput: '',
-      loading: false,
       showDialog: false,
       msg: 'Data view',
       isMenuOpen: false
     }
   },
   methods: {
-    loadDataItems () {
-      this.loading = true
-      this.axios.get('/data/list?page=1').then(response => {
-        this.dataList = response.data.items
-        this.totalPageCount = response.data.totalPages
-        this.loading = false
-      })
-    },
     selectMenu (index) {
       this.dataMeniu.forEach(function (val, key) {
         val.active = false
