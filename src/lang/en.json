@@ -15,17 +15,22 @@
         "load": "Load",
         "title": "Title",
         "description": "Description",
+        "preview": "Preview",
         "structure": "Structure",
         "fileUploadPreferences": "File preferences",
         "fileVisibility": "File visibility",
         "fileAccess": "By default datasets are with public access",
-        "fileDetails": "File details"
+        "fileDetails": "File details",
+        "remoteFileAccessPoint": "Remote file access point"
       },
       "rules": {
         "rule0": "CSV files only",
         "rule1": "Maximum size of file: 10MB",
         "rule2":
-          "Your file is too large. Please provide remote access point to the file. (URL, Connection string etc.)"
+          "Your file is too large. Please provide remote access point to the file. (URL, Connection string etc.)",
+        "rule3": "Each record is on a separate line",
+        "rule4": "File must contain header line",
+        "rule5": "CSV file requirements"
       },
       "input": {
         "placeholder": {
@@ -64,7 +69,7 @@
       "downloadDataset": "Download dataset",
       "editDataset": "Edit dataset",
       "invalidPreview":
-        "This dataset does not contain visual preview. You can download file to check it out",
+        "This dataset does not contain visual preview. Download file to check it out",
       "navigation": {
         "info": "Info",
         "data": "Data",
@@ -206,7 +211,8 @@
     "change": "Change",
     "save": "Save",
     "back": "Back",
-    "markupSupported": "VueMarkdown supported"
+    "markupSupported": "VueMarkdown supported",
+    "versionAlpha": "alpha"
   },
   "errors": {
     "error": "Error",
@@ -241,6 +247,6 @@
     "validationError": "You have entered an invalid data",
     "serverNotFound": "Server error",
     "contactIfError":
-      "If you see this error please contact us via email aigang.development@gmail.com"
+      "If you see this error please contact us via email info@aigang.network"
   }
 }

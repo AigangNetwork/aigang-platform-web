@@ -76,20 +76,12 @@ export default {
       }
       ],
       searchInput: '',
-      loading: true,
       showDialog: false,
       msg: 'Data view',
       isMenuOpen: false
     }
   },
   methods: {
-    loadDataItems () {
-      this.axios.get('/data/list?page=1').then(response => {
-        this.dataList = response.data.items
-        this.totalPageCount = response.data.totalPages
-        this.loading = false
-      })
-    },
     selectMenu (index) {
       this.dataMeniu.forEach(function (val, key) {
         val.active = false
@@ -264,4 +256,5 @@ export default {
       }
     }
   }
+
 </style>

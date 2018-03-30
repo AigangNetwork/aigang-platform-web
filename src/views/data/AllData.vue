@@ -1,5 +1,5 @@
 <template>
-  <transition-group name="list" tag="div">
+  <transition-group v-loading="loading" name="list" tag="div">
     <el-col :xs="24" :sm="12" :md="12" :lg="8" v-for="dataItem in dataList" :key="dataItem.id">
       <DataItem :data="dataItem" :key="dataItem.id" />
     </el-col>
@@ -14,11 +14,13 @@ export default {
   data () {
     return {
       dataList: [],
-      totalPageCount: 0
+      totalPageCount: 0,
+      loading: false
     }
   },
   methods: {
     loadDataItems () {
+      this.loading = true
       this.axios.get('/data/list?page=1').then(response => {
         this.dataList = response.data.items
         this.totalPageCount = response.data.totalPages

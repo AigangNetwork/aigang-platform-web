@@ -5,6 +5,9 @@
         <div class="aig-navigation-body">
           <router-link to="/data" class="aig-logo">
             <img src="/static/logo.png" alt="">
+            <div class="alpha-container">
+              {{ $t('general.versionAlpha') }}
+            </div>
           </router-link>
           <nav class="aig-navigation-menu">
             <ul>
@@ -89,7 +92,7 @@ export default {
     },
     handleInvest (index) {
       if (this.navigationBars[index].name === 'Invest') {
-        window.open('https://platform.aigang.network/insurer.html', '_blank')
+        window.open('https://investment.aigang.network/insurer.html', '_blank')
       }
     }
   }
@@ -147,16 +150,23 @@ export default {
     height: 100%;
     padding: 10px;
     margin-left: 15px;
+    margin-top: 5px;
     img {
       vertical-align: middle;
       height: 30px;
+    }
+    .alpha-container {
+      color: white;
+      font-size: 9px;
+      display: flex;
+      justify-content: right;
+      font-weight: 600;
     }
   }
 
   .aig-navigation {
     margin: 0 auto;
     width: 100%;
-    line-height: 50px;
     background: $purple;
     width: 100%;
     .aig-navigation-body {
@@ -236,4 +246,5 @@ export default {
       }
     }
   }
+
 </style>

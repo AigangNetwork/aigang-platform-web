@@ -41,6 +41,13 @@
                 <ul>
                   <li>{{$t('data.upload.rules.rule0')}}</li>
                   <li>{{$t('data.upload.rules.rule1')}}</li>
+                  <li>{{$t('data.upload.rules.rule3')}}</li>
+                  <li>{{$t('data.upload.rules.rule4')}}</li>
+                  <li>
+                    <router-link to="" @click.native="handleCsvInformaton">
+                      {{$t('data.upload.rules.rule5')}}
+                    </router-link>
+                  </li>
                 </ul>
               </div>
             </div>
@@ -49,7 +56,7 @@
       </div>
     </Card>
     <el-button class="aig-back-btn" v-if="secondStepActive" @click="setPage(1)">Back</el-button>
-    <Card class="aig-upload-card-step-2" v-if="secondStepActive">
+    <Card class="aig-upload-card-step-2" v-if="secondStepActive" v-loading="loading">
       <div slot="body" :element-loading-text="$t('general.loading')">
         <el-row>
           <el-col :span="24">
@@ -74,7 +81,12 @@
               <el-form-item prop="title" size="small">
                 <el-input :placeholder="$t('data.upload.input.placeholder.title')" v-model="dataUploadForm.title"></el-input>
               </el-form-item>
-              <h4>{{$t('data.upload.titles.description')}}</h4>
+              <div class="description-header">
+                <h4>{{$t('data.upload.titles.description')}}</h4>
+                <router-link to="" @click.native="popUpMakdownRules">
+                  {{$t('general.markupSupported')}}
+                </router-link>
+              </div>
               <el-form-item prop="description" size="small">
                 <el-input :placeholder="$t('data.upload.input.placeholder.description')" type="textarea" v-model="dataUploadForm.description"></el-input>
               </el-form-item>
@@ -139,6 +151,7 @@ export default {
       dynamicFileStructure: [],
       dataTypeOptions: ['String', 'Numeric', 'Boolean'],
       remoteFileStructure: '',
+      loading: false,
       dataUploadForm: {
         title: '',
         description: '',
@@ -207,6 +220,7 @@ export default {
     uploadDataset () {
       this.validateForm()
       if (this.isValidForm) {
+        this.loading = true
         var uploadForm = new FormData()
         for (var key in this.dataUploadForm) {
           uploadForm.append(key, this.dataUploadForm[key])
@@ -220,7 +234,7 @@ export default {
           this.successfullUpload()
         }, error => {
           console.log(error)
-          this.uploading = false
+          this.loading = false
         })
       }
     },
@@ -277,6 +291,14 @@ export default {
     },
     fileRemoved (file, fileList) {
       this.isErrorOnFirstStep = false
+    },
+    popUpMakdownRules (event) {
+      event.preventDefault()
+      window.open('http://miaolz123.github.io/vue-markdown/', '_blank')
+    },
+    handleCsvInformaton (event) {
+      event.preventDefault()
+      window.open('https://tools.ietf.org/html/rfc4180', '_blank')
     }
   }
 }
@@ -305,7 +327,6 @@ export default {
         height: 100%;
         max-height: 176px;
         margin-left: 10px;
-        padding: 10px;
         .aig-upload-info-header {
           display: flex;
           h5 {
@@ -317,11 +338,17 @@ export default {
           height: 100%;
           max-height: 180px;
           ul {
-            font-size: 11pt;
+            margin-top: 0px;
+            font-size: 12px;
             padding: 5px;
             list-style-type: none;
             li {
               margin: 3px 3px 5px 3px;
+              a {
+                &:hover {
+                  color: $orange;
+                }
+              }
             }
           }
         }
@@ -371,6 +398,17 @@ export default {
         margin: 5px 0px 0px 0px;
         color: $purple;
         font-weight: 600;
+      }
+      .description-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        a {
+          font-size: 13px;
+          &:hover {
+            color: $orange;
+          }
+        }
       }
     }
     .aig-upload-card-step-2 {

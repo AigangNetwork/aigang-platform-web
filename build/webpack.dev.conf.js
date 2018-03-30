@@ -13,9 +13,9 @@ const portfinder = require('portfinder')
 const HOST = process.env.HOST
 const PORT = process.env.PORT && Number(process.env.PORT)
 
-const A = process.env.HOST
-
+// console.log('process.env.API_ADDRESS', process.env.API_ADDRESS)
 const env = require('./config/dev.env')
+env.API_ADDRESS = process.env.API_ADDRESS
 
 const devWebpackConfig = merge(baseWebpackConfig, {
   module: {

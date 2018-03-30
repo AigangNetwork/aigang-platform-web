@@ -8,7 +8,7 @@
         </div>
         <div class="dataset-title">{{dataset.title}}</div>
         <div class="aig-dataset-header-btn-container">
-          <button @click="downloadDataset" class="aig-dataset-header-btn">
+          <button v-if="!dataset.remoteFileAccessPoint" @click="downloadDataset" class="aig-dataset-header-btn">
             <img class="file-img" src="/static/dataset/documents24px.svg" alt=""> {{$t('data.dataset.downloadDataset')}}
           </button>
           <router-link v-if="isUserOwner" class="aig-dataset-header-btn" :to="editRoute" exact>
@@ -125,6 +125,7 @@ export default {
   @import '~helpers/mixins';
 
   .aig-container-dataset {
+    overflow: hidden;
     max-width: 1440px;
     width: 100%;
     height: 100%;
@@ -174,14 +175,16 @@ export default {
   }
 
   .dataset-content-container {
-    display: flex;
+    display: block;
+    height: 100%;
     width: 100%;
     background-color: $dark-grey-bck-grnd;
     justify-content: center;
     .dataset-content {
       width: 100%;
       max-width: 932px;
-      margin: 0px 5px 50px 5px;
+      margin: 0 auto;
+      margin-bottom: 40px;
       background-color: white;
       border: 1px solid $light-grey-border;
     }
