@@ -2,26 +2,57 @@
   <div class="file-card-container">
     <div class="card-section">
       <img src="/static/dataset/csv_file_64px.svg">
-      <p> {{$t('data.upload.titles.fileDetails')}} </p>
-      <el-button v-if="showUploadButton" @ class="profile-button">{{ $t('data.dataset.edit.uploadNew') }}</el-button>
+      <div class="card-section-header">
+        <p> {{$t('data.upload.titles.fileDetails')}} </p>
+        <el-row v-if="showUploadOption">
+          <el-switch v-model="isRemoteFile" :active-text="$t('data.dataset.edit.remoteAccessPoint')" :inactive-text="$t('data.dataset.edit.file')">
+          </el-switch>
+        </el-row>
+        <transition name="slideDown">
+          <el-row v-if="isRemoteFile">
+            <div class="profile-info-input remote-input-container">
+              <el-input type="textarea" autosize v-model="url" :placeholder="$t('data.dataset.edit.describeRemoteAccessPoint' )"></el-input>
+            </div>
+          </el-row>
+        </transition>
+      </div>
+
+      <transition name="fade">
+        <el-upload v-if="showUploadOption && !isRemoteFile" class="profile-button" :limit="1" ref="csvFile" drag :action="''" :multiple="false"
+          :auto-upload="false" accept=".csv">
+          {{ $t('data.dataset.edit.uploadNew') }}
+        </el-upload>
+      </transition>
     </div>
     <div class="card-section">
       <div>
         <p>{{ $t('data.dataset.edit.registeredOnly') }}</p>
         <p>{{ $t('data.dataset.edit.byDefaultPublicAccess') }}</p>
       </div>
-      <el-switch :value="value" @change="(value) => $emit('input', value)" :active-text="$t('data.dataset.edit.on')" :inactive-text="$t('data.dataset.edit.off')">
+      <el-switch v-model="isPublic" @change="setCurrentDatasetIsPublic" :inactive-text="$t('data.dataset.edit.public')" :active-text="$t('data.dataset.edit.loggedIn')">
       </el-switch>
     </div>
   </div>
 </template>
 <script>
 export default {
-  props: ['showUploadButton', 'value'],
+  props: ['showUploadOption', 'isFileAccessRemote'],
   data () {
     return {
-      isDatasetPrivate: false
+      isDatasetPrivate: false,
+      isPublic: false,
+      isRemoteFile: false,
+      url: ''
     }
+  },
+  methods: {
+    setCurrentDatasetIsPublic () {
+      this.$store.dispatch('setCurrentDatasetIsPublic', { isPublic: this.isPublic })
+    }
+  },
+  created () {
+    this.isPublic = this.$store.state.currentDataset.isPublic
+    this.isRemoteFile = this.$store.getters.isDatasetAccessPoint
   }
 }
 </script>
@@ -40,6 +71,15 @@ export default {
       &:first-child {
         border-bottom: 1px solid $light-grey-border;
       }
+      .card-section-header {
+        flex-grow: 1;
+        margin: 0 15px;
+        min-height: 100px;
+        p {
+          margin: 0;
+        }
+      }
+      .remote-input-container {}
       p {
         display: inline;
         line-height: 32px;

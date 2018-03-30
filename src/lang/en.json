@@ -75,14 +75,25 @@
         "uploadNew": "Upload new",
         "registeredOnly": "For registered users only",
         "byDefaultPublicAccess": "By default datasets with public access",
-        "on": "On",
-        "off": "Off",
+        "public": "Public",
+        "loggedIn": "Logged in",
         "title": "Title",
         "description": "Description",
         "structure": "Structure",
         "structureName": "Name",
         "structureDescription": "Description",
-        "structureDataType": "Data type"
+        "structureDataType": "Data type",
+        "file": "File",
+        "remoteAccessPoint": "Remote access point",
+        "describeRemoteAccessPoint": "Describe remote access point"
+      },
+      "validation": {
+        "TitleEmpty": "Title is required",
+        "TitleTooShort": "Title must be at least 6 characters long",
+        "DescriptionEmpty": "Description is required",
+        "DescriptionTooShort": "Description must be at least 6 characters long",
+        "StructureFieldEmpty":
+          "Please make sure you have filled all structure fields"
       }
     }
   },
@@ -185,21 +196,7 @@
     "lastNameEmpty": "Last name is required",
     "lastNameTooShort": "Last name must be at least 2 characters long",
     "userNameEmpty": "Nickname is required",
-    "userNameTooShort": "Nickname must be at least 6 characters long",
-    "datasetTitleEmpty": "Title is required",
-    "datasetTitleTooShort": "Title must be at least 6 characters long",
-    "datasetDescriptionEmpty": "Description is required",
-    "datasetDescriptionTooShort":
-      "Description must be at least 6 characters long",
-    "datasetStructureTitleEmpty": "Row title is required",
-    "datasetStructureTitleTooShort":
-      "Row title must be at least 4 characters long",
-    "datasetStructureDescriptionEmpty": "Row description is required",
-    "datasetStructureDescriptionTooShort":
-      "Row title must be at least 6 characters long",
-    "datasetStructureDataTypeEmpty": "Row data type is required",
-    "datasetStructureDataTypeTooShort":
-      "Row data type must be at least 3 characters long"
+    "userNameTooShort": "Nickname must be at least 6 characters long"
   },
   "general": {
     "uploading": "Uploading ...",
@@ -207,7 +204,8 @@
     "ok": "OK",
     "here": "here",
     "change": "Change",
-    "save": "Save"
+    "save": "Save",
+    "back": "Back"
   },
   "errors": {
     "error": "Error",

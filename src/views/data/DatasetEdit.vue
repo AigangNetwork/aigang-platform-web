@@ -1,7 +1,8 @@
 <template>
   <el-container class="aig-container-dataset" v-loading="loading">
+    <el-button @click="$router.go(-1)" class="profile-button back-button">{{ $t('general.back') }}</el-button>
     <div class="dataset-edit-container">
-      <DatasetFileCard v-model="datasetForm.isPublic" :showUploadButton="true" />
+      <DatasetFileCard :showUploadOption="true" />
       <div class="dataset-body-container">
         <el-form @keyup.enter.native="submitForm('datasetForm')" :model="datasetForm" :rules="datasetFormRules" ref="datasetForm">
 
@@ -10,7 +11,7 @@
           </el-row>
           <el-row>
             <el-form-item prop="title">
-              <el-input class="profile-info-input" type="textarea" autosize v-model="datasetForm.title" :placeholder="$t('data.dataset.edit.title' )"></el-input>
+              <el-input class="profile-info-input" type="textarea" autosize :maxlength="64" v-model="datasetForm.title" :placeholder="$t('data.dataset.edit.title' )"></el-input>
             </el-form-item>
           </el-row>
 
@@ -26,22 +27,32 @@
           <el-row class="profile-section-title">
             {{ $t('data.dataset.edit.structure' )}}
           </el-row>
-          <el-row class="structure-row" :gutter="20" type="flex" v-for="(column,index) in datasetForm.structure" :key="column.name">
+          <el-row v-if="datasetStructure" class="structure-row" :gutter="20" type="flex" v-for="(column,index) in datasetStructure"
+            :key="index">
             <el-col :span="10">
-              <el-form-item :prop="'datasetForm.structure['+index+'].name'">
-                <el-input class="profile-info-input description structure-title" type="text" autosize v-model="column.name" :placeholder="$t('data.dataset.edit.structureName' )"></el-input>
+              <el-form-item>
+                <el-input class="profile-info-input description structure-title" type="text" v-model="column.name" :placeholder="$t('data.dataset.edit.structureName' )"></el-input>
               </el-form-item>
             </el-col>
             <el-col>
-              <el-form-item :prop="'structureDescription'+index">
-                <el-input class="profile-info-input description" type="text" autosize v-model="column.description" :placeholder="$t('data.dataset.edit.structureDescription' )"></el-input>
+              <el-form-item>
+                <el-input class="profile-info-input description" type="textarea" v-model="column.description" :placeholder="$t('data.dataset.edit.structureDescription' )"></el-input>
               </el-form-item>
             </el-col>
             <el-col class="column-decsription" :span="10">
-              <el-form-item :prop="'structureDataType'+index">
-                <el-input class="profile-info-input description" type="text" autosize v-model="column.dataType" :placeholder="$t('data.dataset.edit.structureDataType' )"></el-input>
+              <el-form-item>
+                <el-select class="profile-info-input select-input" size="medium" aria-required="true" v-model="column.dataType" :placeholder="$t('data.upload.input.placeholder.dataType')">
+                  <el-option v-for="item in dataTypeOptions" :key="item" :label="item" :value="item">
+                  </el-option>
+                </el-select>
               </el-form-item>
             </el-col>
+          </el-row>
+
+          <el-row v-if="!isStructureValid">
+            <div class="aig-form-error">
+              {{$t('data.dataset.validation.StructureFieldEmpty')}}
+            </div>
           </el-row>
 
           <el-row>
@@ -66,89 +77,101 @@ export default {
     return {
       loading: false,
       dataset: {},
+      dataTypeOptions: ['String', 'Numeric', 'Boolean'],
+      isStructureValid: true,
+      datasetStructure: [],
+      isFileAccessRemote: false,
       datasetForm: {
+        id: '',
         title: '',
         description: '',
         isPublic: true,
-        structure: []
+        structure: '',
+        createdUtc: '',
+        hasFileChanged: false,
+        file: null
       },
       datasetFormRules: {
         title: [
-          { required: true, message: this.$t('validation.datasetTitleEmpty'), trigger: 'blur' },
-          { min: 6, message: this.$t('validation.datasetTitleTooShort'), trigger: 'blur' }
+          { required: true, message: this.$t('data.dataset.validation.TitleEmpty'), trigger: 'blur' },
+          { min: 6, message: this.$t('data.dataset.validation.TitleTooShort'), trigger: 'blur' }
         ],
         description: [
-          { required: true, message: this.$t('validation.datasetDescriptionEmpty'), trigger: 'blur' },
-          { min: 6, message: this.$t('validation.datasetDescriptionTooShort'), trigger: 'blur' }
+          { required: true, message: this.$t('data.dataset.validation.DescriptionEmpty'), trigger: 'blur' },
+          { min: 6, message: this.$t('data.dataset.validation.DescriptionTooShort'), trigger: 'blur' }
         ]
-        // structureTitle: [
-        //   { required: true, message: this.$t('validation.datasetStructureTitleEmpty'), trigger: 'blur' },
-        //   { min: 4, message: this.$t('validation.datasetStructureTitleTooShort'), trigger: 'blur' }
-        // ],
-        // structureDescription: [
-        //   { required: true, message: this.$t('validation.datasetStructureDescriptionEmpty'), trigger: 'blur' },
-        //   { min: 6, message: this.$t('validation.datasetStructureDescriptionTooShort'), trigger: 'blur' }
-        // ],
-        // structureDataType: [
-        //   { required: true, message: this.$t('validation.datasetStructureDataTypeEmpty'), trigger: 'blur' },
-        //   { min: 3, message: this.$t('validation.datasetStructureDataTypeTooShort'), trigger: 'blur' }
-        // ]
       }
     }
   },
   methods: {
-    fetchDataset () {
-      this.loading = true
-      this.axios.get('/data/' + this.$route.params.id).then(response => {
-        this.loading = false
-        this.dataset = response.data.data
-        if (this.$store.state.user.profile.id === this.dataset.userId) {
-          this.isUserOwner = true
-        }
-        this.initializeDatasetForm(this.dataset)
-      })
-    },
     submitForm (formName) {
       this.loading = true
+      this.isStructureValid = true
+      this.validateStructure(this.datasetStructure)
+
+      if (!this.isStructureValid) {
+        this.loading = false
+        return false
+      }
+
+      this.datasetForm.structure = JSON.stringify(this.datasetStructure)
+
       this.$refs[formName].validate(valid => {
         if (valid) {
-          // this.saveInfo()
+          this.updateDataset()
         } else {
           this.loading = false
           return false
         }
       })
     },
+    updateDataset () {
+      let form = new FormData()
+      for (var key in this.datasetForm) {
+        form.append(key, this.datasetForm[key])
+      }
+
+      this.axios.post('/data/update', form)
+        .then(response => {
+          this.loading = false
+        })
+        .catch(e => {
+          this.loading = false
+        })
+    },
     initializeDatasetForm (dataset) {
       this.datasetForm.title = dataset.title
       this.datasetForm.description = dataset.description
-      this.datasetForm.structure = JSON.parse(dataset.structure)
+      this.datasetForm.createdUtc = dataset.createdUtc
+      this.datasetForm.id = dataset.id
+      this.datasetForm.isPublic = dataset.isPublic
 
-      this.datasetForm.structure.forEach((item, index) => {
-        const structureTitle = 'datasetForm.structure[' + index + '].name'
-        const structureDescription = 'structureDescription' + index
-        const structureDataType = 'structureDataType' + index
-
-        const tempObj = {
-          [structureTitle]: [
-            { required: true, message: this.$t('validation.datasetStructureTitleEmpty'), trigger: 'blur' },
-            { min: 4, message: this.$t('validation.datasetStructureTitleTooShort'), trigger: 'blur' }
-          ],
-          [structureDescription]: [
-            { required: true, message: this.$t('validation.datasetStructureDescriptionEmpty'), trigger: 'blur' },
-            { min: 6, message: this.$t('validation.datasetStructureDescriptionTooShort'), trigger: 'blur' }
-          ],
-          [structureDataType]: [
-            { required: true, message: this.$t('validation.datasetStructureDataTypeEmpty'), trigger: 'blur' },
-            { min: 3, message: this.$t('validation.datasetStructureDataTypeTooShort'), trigger: 'blur' }
-          ]
+      try {
+        this.datasetStructure = JSON.parse(dataset.structure)
+      } catch (e) {
+        this.datasetStructure = null
+      }
+    },
+    validateStructure (structure) {
+      if (structure.length > 0) {
+        for (var obj in structure) {
+          for (var prop in structure[obj]) {
+            if (structure[obj][prop] === undefined || structure[obj][prop] === '') {
+              this.isStructureValid = false
+              return
+            }
+          }
         }
-        Object.assign(this.datasetFormRules, tempObj)
-      })
+      }
+      // } else {
+      //   if (this.remoteFileStructure.length <= 0) {
+      //     this.isValidForm = false
+      //   }
+      // }
     }
   },
   created () {
-    this.fetchDataset()
+    this.initializeDatasetForm(this.$store.getters.dataset)
   }
 }
 </script>
@@ -180,5 +203,9 @@ export default {
 
   .save-updated-dataset-btn button {
     width: 100%;
+  }
+
+  .back-button {
+    margin-top: 40px;
   }
 </style>

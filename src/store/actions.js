@@ -32,4 +32,18 @@ const changeProfileNames = ({ commit }, response) => {
   commit(types.CHANGE_PROFILE_NAMES)
 }
 
-export { logIn, logOut, changeProfileNames }
+const setCurrentDataset = ({ commit }, response) => {
+  commit(types.SET_CURRENT_DATASET, response.data)
+}
+
+const setCurrentDatasetIsPublic = ({ commit }, response) => {
+  commit(types.SET_CURRENT_DATASET_IS_PUBLIC, response)
+}
+
+export {
+  logIn,
+  logOut,
+  changeProfileNames,
+  setCurrentDataset,
+  setCurrentDatasetIsPublic
+}

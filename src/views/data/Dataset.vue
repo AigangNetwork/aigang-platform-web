@@ -93,6 +93,8 @@ export default {
       this.axios.get('/data/' + this.$route.params.id).then(response => {
         this.loading = false
         this.dataset = response.data.data
+        this.$store.dispatch('setCurrentDataset', response)
+
         if (this.$store.state.user.profile.id === this.dataset.userId) {
           this.isUserOwner = true
         }

@@ -13,6 +13,12 @@ const mutations = {
     state.user.profile.firstName = payload.profile.firstName
     state.user.profile.firstName = payload.profile.lastName
     state.user.profile.firstName = payload.profile.userName
+  },
+  SET_CURRENT_DATASET (state, payload) {
+    state.currentDataset = payload.data
+  },
+  SET_CURRENT_DATASET_IS_PUBLIC (state, payload) {
+    state.currentDataset.isPublic = payload.isPublic
   }
 }
 

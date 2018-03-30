@@ -238,14 +238,6 @@ body.aig {
       .el-switch__label * {
         font-size: 16px;
       }
-      .el-switch__core {
-        height: 22px;
-        width: 42px !important;
-        .el-switch__button {
-          width: 18px;
-          height: 18px;
-        }
-      }
     }
   }
 }
@@ -263,7 +255,7 @@ body.aig {
     font-weight: normal;
     line-height: 1.33;
     letter-spacing: 0.5px;
-    color: #423176;
+    color: $active-dark-purple;
     text-shadow: 0 2px 4px rgba(219, 224, 231, 0.5);
     height: 24px;
     padding-top: 0;
@@ -282,7 +274,8 @@ body.aig {
       width: 100%;
     }
   }
-  .profile-info-input.description {
+  .profile-info-input.description,
+  .profile-info-input.select-input {
     input,
     textarea {
       font-size: 16px;
@@ -291,6 +284,9 @@ body.aig {
       letter-spacing: 0.5px;
       text-align: left;
     }
+  }
+  .profile-info-input.select-input input {
+    height: 26px;
   }
   .profile-info-input.description.structure-title {
     input,
@@ -311,4 +307,30 @@ body.aig {
   color: $dark-gray;
   text-transform: uppercase;
   margin: 0;
+}
+
+.aig-form-error {
+  text-align: center;
+  margin-bottom: 15px;
+  color: red;
+}
+
+.file-card-container .card-section {
+  .el-upload-dragger {
+    height: 30px;
+    line-height: 32px;
+    border: none;
+    color: $button-purple;
+    &:hover {
+      background: transparent;
+      color: white;
+    }
+  }
+}
+
+.remote-input-container {
+  textarea {
+    margin-top: 15px;
+    width: 100%;
+  }
 }
