@@ -23,11 +23,12 @@ npm run build --report
 ```
 ## Environments
 **Production**  
-//TODO
+API (production branch) - [https://api.aigang.network/swagger](https://api.aigang.network/swagger)  
+WEB (production branch) - [https://platform.aigang.network](https://platform.aigang.network/)  
 
  **QA**  
-API (qa branch) - [http://test.api.aigang.network/swagger](http://test.api.aigang.network/swagger)  
-WEB (qa branch) - [http://test.platform.aigang.network](http://test.platform.aigang.network/)  
+API (qa branch) - [https://testapi.aigang.network/swagger](https://testapi.aigang.network/swagger)  
+WEB (qa branch) - [https://testplatform.aigang.network](https://testplatform.aigang.network/)  
 
 ## Documentation
 
