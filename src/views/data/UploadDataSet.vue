@@ -230,6 +230,7 @@ export default {
         } else {
           uploadForm.append('structure', this.remoteFileStructure)
         }
+
         this.axios.post('/data', uploadForm).then(response => {
           this.successfullUpload()
         }, error => {
@@ -425,4 +426,5 @@ export default {
       top: 15px;
     }
   }
+
 </style>
