@@ -91,7 +91,7 @@ export default {
       })
     },
     handleInvest (index) {
-      if (this.navigationBars[index].name === 'Invest') {
+      if (this.navigationBars[index].name === 'Investment') {
         window.open('https://investment.aigang.network/insurer.html', '_blank')
       }
     }
