@@ -4,7 +4,8 @@
       <div class="aig-dataset-header">
         <div class="creator-info">
           <div class="creator">{{$t('data.dataset.createdBy')}} {{dataset.createdBy}}</div>
-          <div class="uploaded">{{$t('data.dataset.updated')}}: {{ this.dataset.createdUtc | moment('from') }}</div>
+          <div class="uploaded">{{$t('data.dataset.updated')}}: {{ created }}</div>
+          <!-- TODO: fix to modified date -->
         </div>
         <div class="dataset-title">{{dataset.title}}</div>
         <div class="aig-dataset-header-btn-container">
@@ -38,6 +39,7 @@
   </el-container>
 </template>
 <script>
+import moment from 'moment'
 export default {
   created () {
     window.scroll(0, 0)
@@ -84,6 +86,13 @@ export default {
         disabled: true
       }
       ]
+    }
+  },
+  computed: {
+    created () {
+      let createdUtc = moment.utc(this.dataset.createdUtc)
+      let result = createdUtc.from(moment().utcNow)
+      return result
     }
   },
   methods: {
