@@ -18,7 +18,10 @@
 
           <el-row class="profile-section-title">
             {{ $t('data.dataset.edit.description' )}}
-            <span class="markdown-label">{{ $t('general.markupSupported' )}}</span>
+            <router-link class="markdown-label" to="" @click.native="popUpMakdownRules">
+              {{$t('general.markupSupported')}}
+            </router-link>
+            <!-- <span class="markdown-label">{{ $t('general.markupSupported' )}}</span> -->
           </el-row>
           <el-row>
             <el-form-item prop="description">
@@ -95,13 +98,27 @@ export default {
         remoteFileAccessPoint: ''
       },
       datasetFormRules: {
-        title: [
-          { required: true, message: this.$t('data.dataset.validation.TitleEmpty'), trigger: 'blur' },
-          { min: 6, message: this.$t('data.dataset.validation.TitleTooShort'), trigger: 'blur' }
+        title: [{
+          required: true,
+          message: this.$t('data.dataset.validation.TitleEmpty'),
+          trigger: 'blur'
+        },
+        {
+          min: 6,
+          message: this.$t('data.dataset.validation.TitleTooShort'),
+          trigger: 'blur'
+        }
         ],
-        description: [
-          { required: true, message: this.$t('data.dataset.validation.DescriptionEmpty'), trigger: 'blur' },
-          { min: 6, message: this.$t('data.dataset.validation.DescriptionTooShort'), trigger: 'blur' }
+        description: [{
+          required: true,
+          message: this.$t('data.dataset.validation.DescriptionEmpty'),
+          trigger: 'blur'
+        },
+        {
+          min: 6,
+          message: this.$t('data.dataset.validation.DescriptionTooShort'),
+          trigger: 'blur'
+        }
         ]
       }
     }
@@ -119,7 +136,8 @@ export default {
 
       this.datasetForm.structure = JSON.stringify(this.datasetStructure)
       this.datasetForm.remoteFileAccessPoint = this.$store.state.currentDataset.remoteFileAccessPoint
-      this.datasetForm.file = this.$store.state.currentDataset.file.raw
+      debugger
+      this.datasetForm.file = this.$store.state.currentDataset.file.raw // todo check file is empty
       this.$refs[formName].validate(valid => {
         if (valid) {
           this.updateDataset()
@@ -131,6 +149,7 @@ export default {
     },
     updateDataset () {
       let form = new FormData()
+
       for (var key in this.datasetForm) {
         form.append(key, this.datasetForm[key])
       }
@@ -144,8 +163,8 @@ export default {
             type: 'success',
             message: this.$t('data.dataset.edit.edit_success')
           })
-        })
-        .catch(e => {
+        }, error => {
+          console.log(error)
           this.loading = false
         })
     },
@@ -158,7 +177,7 @@ export default {
 
       try {
         this.datasetStructure = JSON.parse(dataset.structure)
-      } catch (e) {
+      } catch (e) { // todo why null?
         this.datasetStructure = null
       }
     },
@@ -178,12 +197,18 @@ export default {
       //     this.isValidForm = false
       //   }
       // }
+    },
+    popUpMakdownRules (event) {
+      event.preventDefault()
+      window.open('http://miaolz123.github.io/vue-markdown/', '_blank')
     }
   },
+
   created () {
     this.initializeDatasetForm(this.$store.getters.dataset)
   }
 }
+
 </script>
 <style lang="scss" scoped>
   .aig-container-dataset {
@@ -253,4 +278,5 @@ export default {
       }
     }
   }
+
 </style>
