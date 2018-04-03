@@ -61,7 +61,9 @@
     },
     "card": {
       "models": "Models",
-      "threads": "Comments"
+      "threads": "Comments",
+      "added": "Added",
+      "notApproved": "waiting for approval"
     },
     "dataset": {
       "createdBy": "By",
@@ -145,13 +147,6 @@
     "loginToAccount": "Login to account",
     "upload_new_data": "Upload new data",
     "retrievePassword": "Retrieve password"
-  },
-  "strings": {
-    "hello": "hello",
-    "firstName": "First name",
-    "lastName": "Last name",
-    "added": "Added",
-    "notApproved": "waiting for approval"
   },
   "profile": {
     "logout": "Logout",

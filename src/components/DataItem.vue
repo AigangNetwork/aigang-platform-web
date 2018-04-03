@@ -2,8 +2,8 @@
   <div class="aig-data">
     <router-link :to="{ name: 'datasetInfo', params: { id: data.id}}">
       <div class="aig-data-head">
-        <div class="desc">{{ $t('strings.added') }} {{ this.data.createdUtc | moment('from') }}</div>
-        <div v-if="data.state === 'created'" class="desc">{{ $t('strings.notApproved') }}</div>
+        <div class="desc">{{ $t('data.card.added') }} {{ this.data.createdUtc | moment('from', utcNow) }}</div>
+        <div v-if="data.state === 'created'" class="desc">{{ $t('data.card.notApproved') }}</div>
       </div>
       <div class="aig-data-head">
         <div class="title">{{ data.title | truncate(50) }}</div>
@@ -30,6 +30,8 @@
 
 <script>
 import Status from '@/components/Status'
+import moment from 'moment'
+
 export default {
   name: 'DataItem',
   components: {
@@ -43,6 +45,7 @@ export default {
   },
   data () {
     return {
+      utcNow: moment().utcNow,
       models: 3,
       comments: 12
     }
