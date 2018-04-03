@@ -1,7 +1,9 @@
 <template>
   <transition-group name="list" tag="div" v-loading="loading">
     <el-col :xs="24" :sm="12" :md="12" :lg="8" v-for="dataItem in myDataList" :key="dataItem.id">
-      <DataItem :data="dataItem" :key="dataItem.id" />
+      <div>
+        <DataItem :data="dataItem" :key="dataItem.id" />
+      </div>
     </el-col>
   </transition-group>
 </template>

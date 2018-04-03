@@ -1,6 +1,6 @@
 <template>
-  <div class="aig-data" :class="{'aig-non-approved-data': data.state === 'created'}">
-    <router-link :to="{ name: 'datasetInfo', params: { id: data.id}}" :class="{'aig-link-disabled': data.state === 'created'}">
+  <div class="aig-data">
+    <router-link :to="{ name: 'datasetInfo', params: { id: data.id}}">
       <div class="aig-data-head">
         <div class="desc">{{ $t('strings.added') }} {{ this.data.createdUtc | moment('from') }}</div>
         <div v-if="data.state === 'created'" class="desc">{{ $t('strings.notApproved') }}</div>
@@ -65,9 +65,6 @@ export default {
 <style lang="scss" scoped>
   @import '~helpers/variables';
   @import '~helpers/mixins';
-  .aig-non-approved-data {
-    opacity: 0.5;
-  }
 
   .aig-data {
     @include transition;
@@ -165,4 +162,5 @@ export default {
       }
     }
   }
+
 </style>

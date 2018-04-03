@@ -1,7 +1,9 @@
 <template>
   <transition-group v-loading="loading" name="list" tag="div">
     <el-col :xs="24" :sm="12" :md="12" :lg="8" v-for="dataItem in dataList" :key="dataItem.id">
-      <DataItem :data="dataItem" :key="dataItem.id" />
+      <div :class="[{'aig-non-approved-data': dataItem.state === 'created'}, {'aig-link-disabled': dataItem.state === 'created'}]">
+        <DataItem :data="dataItem" :key="dataItem.id" />
+      </div>
     </el-col>
   </transition-group>
 </template>
