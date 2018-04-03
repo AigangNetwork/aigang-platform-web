@@ -11,10 +11,9 @@
           <button v-if="!dataset.remoteFileAccessPoint" @click="downloadDataset" class="aig-dataset-header-btn">
             <img class="file-img" src="/static/dataset/documents24px.svg" alt=""> {{$t('data.dataset.downloadDataset')}}
           </button>
-          <!-- <router-link v-if="isUserOwner" class="aig-dataset-header-btn" :to="editRoute" exact>
+          <router-link v-if="isUserOwner" class="aig-dataset-header-btn" :to="editRoute" exact>
             <img class="file-img" src="/static/dataset/edit21px.png" alt=""> {{$t('data.dataset.editDataset')}}
-          </router-link> -->
-
+          </router-link>
         </div>
       </div>
       <div class="dataset-navigation-container">
