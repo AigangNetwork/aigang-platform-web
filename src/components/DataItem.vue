@@ -2,7 +2,7 @@
   <div class="aig-data">
     <router-link :to="{ name: 'datasetInfo', params: { id: data.id}}">
       <div class="aig-data-head">
-        <div class="desc">{{ $t('data.card.added') }} {{ this.data.createdUtc | moment('from', utcNow) }}</div>
+        <div class="desc">{{ $t('data.card.added') }} {{ created }}</div>
         <div v-if="data.state === 'created'" class="desc">{{ $t('data.card.notApproved') }}</div>
       </div>
       <div class="aig-data-head">
@@ -45,20 +45,15 @@ export default {
   },
   data () {
     return {
-      utcNow: moment().utcNow,
       models: 3,
       comments: 12
     }
   },
   computed: {
-    readableState () {
-      if (this.data.state === 'active') {
-        return this.$t('status.active')
-      } else if (this.data.state === 'closed') {
-        return this.$t('status.closed')
-      } else {
-        return this.$t('status.pending')
-      }
+    created () {
+      let createdUtc = moment.utc(this.data.createdUtc)
+      let result = createdUtc.from(moment().utcNow)
+      return result
     }
   }
 }
