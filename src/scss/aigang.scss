@@ -139,8 +139,6 @@ body.aig {
 
 .aig-dataset-header-btn-container {
     display: flex;
-    justify-content: space-between;
-    max-width: 380px;
 }
 
 .aig-dataset-header-btn {
@@ -148,6 +146,7 @@ body.aig {
     height: 30px;
     margin-top: 10px;
     margin-bottom: 10px;
+    margin-left: 10px;
     background-color: transparent;
     border: 1px solid white;
     color: white;

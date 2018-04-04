@@ -69,7 +69,9 @@
       "createdBy": "By",
       "updated": "Last updated",
       "downloadDataset": "Download dataset",
+      "deleteDataset": "Delete dataset",
       "editDataset": "Edit dataset",
+      "successDelete": "Dataset was successfully deleted",
       "invalidPreview":
         "This dataset does not contain visual preview. Download file to check it out",
       "navigation": {
@@ -208,7 +210,8 @@
     "save": "Save",
     "back": "Back",
     "markupSupported": "VueMarkdown supported",
-    "versionAlpha": "alpha"
+    "versionAlpha": "alpha",
+    "unableToFindYourDatasets": "Can not find your datasets"
   },
   "errors": {
     "error": "Error",
