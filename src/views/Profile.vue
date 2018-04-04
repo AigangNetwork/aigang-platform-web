@@ -49,13 +49,10 @@ export default {
   },
   methods: {
     logout () {
-      this.axios.post('/account/logout')
-        .then(response => {
-          this.$store.dispatch('logOut')
-
-          this.$router.push('/data')
-        })
-        .catch(e => { })
+      this.axios.post('/account/logout').then(response => {
+        this.$store.dispatch('logOut')
+        this.$router.push('/data')
+      })
     }
   }
 }
@@ -89,4 +86,5 @@ export default {
       align-items: center;
     }
   }
+
 </style>

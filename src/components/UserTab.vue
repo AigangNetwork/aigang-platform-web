@@ -15,7 +15,6 @@
   @import '~helpers/mixins';
 
   .aig-profile {
-    @include clearfix;
     float: right;
     font-weight: normal;
     height: 100%;

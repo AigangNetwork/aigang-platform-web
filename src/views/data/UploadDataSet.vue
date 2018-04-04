@@ -233,8 +233,7 @@ export default {
 
         this.axios.post('/data', uploadForm).then(response => {
           this.successfullUpload()
-        }, error => {
-          console.log(error)
+        }, e => {
           this.loading = false
         })
       }

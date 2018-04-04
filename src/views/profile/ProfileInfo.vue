@@ -64,7 +64,6 @@
 </template>
 
 <script>
-
 export default {
   name: 'ProfileInfo',
   data () {
@@ -81,17 +80,38 @@ export default {
         updatePassword: false
       },
       profileFormRules: {
-        firstName: [
-          { required: true, message: this.$t('validation.firstNameEmpty'), trigger: 'blur' },
-          { min: 2, message: this.$t('validation.firstNameTooShort'), trigger: 'blur' }
+        firstName: [{
+          required: true,
+          message: this.$t('validation.firstNameEmpty'),
+          trigger: 'blur'
+        },
+        {
+          min: 2,
+          message: this.$t('validation.firstNameTooShort'),
+          trigger: 'blur'
+        }
         ],
-        lastName: [
-          { required: true, message: this.$t('validation.lastNameEmpty'), trigger: 'blur' },
-          { min: 2, message: this.$t('validation.lastNameTooShort'), trigger: 'blur' }
+        lastName: [{
+          required: true,
+          message: this.$t('validation.lastNameEmpty'),
+          trigger: 'blur'
+        },
+        {
+          min: 2,
+          message: this.$t('validation.lastNameTooShort'),
+          trigger: 'blur'
+        }
         ],
-        userName: [
-          { required: true, message: this.$t('validation.userNameEmpty'), trigger: 'blur' },
-          { min: 6, message: this.$t('validation.userNameTooShort'), trigger: 'blur' }
+        userName: [{
+          required: true,
+          message: this.$t('validation.userNameEmpty'),
+          trigger: 'blur'
+        },
+        {
+          min: 6,
+          message: this.$t('validation.userNameTooShort'),
+          trigger: 'blur'
+        }
         ]
       }
     }
@@ -130,16 +150,21 @@ export default {
   },
   computed: {
     firstNameEntered () {
-      return { 'has-content': this.profileForm.firstName.length > 0 }
+      return {
+        'has-content': this.profileForm.firstName.length > 0
+      }
     },
     lastNameEntered () {
-      return { 'has-content': this.profileForm.lastName.length > 0 }
+      return {
+        'has-content': this.profileForm.lastName.length > 0
+      }
     }
   },
   created () {
     this.updateInfo()
   }
 }
+
 </script>
 <style lang="scss" scoped>
   @import '~helpers/variables';
@@ -232,4 +257,5 @@ export default {
     }
 
   }
+
 </style>

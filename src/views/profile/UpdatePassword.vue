@@ -69,13 +69,27 @@ export default {
         updatePassword: true
       },
       profileFormRules: {
-        oldPassword: [
-          { required: true, message: this.$t('validation.passwordEmpty'), trigger: 'blur' },
-          { min: 6, message: this.$t('validation.passwordTooShort'), trigger: 'blur' }
+        oldPassword: [{
+          required: true,
+          message: this.$t('validation.passwordEmpty'),
+          trigger: 'blur'
+        },
+        {
+          min: 6,
+          message: this.$t('validation.passwordTooShort'),
+          trigger: 'blur'
+        }
         ],
-        newPassword: [
-          { required: true, message: this.$t('validation.passwordEmpty'), trigger: 'blur' },
-          { min: 6, message: this.$t('validation.passwordTooShort'), trigger: 'blur' }
+        newPassword: [{
+          required: true,
+          message: this.$t('validation.passwordEmpty'),
+          trigger: 'blur'
+        },
+        {
+          min: 6,
+          message: this.$t('validation.passwordTooShort'),
+          trigger: 'blur'
+        }
         ]
       }
     }
@@ -110,6 +124,7 @@ export default {
     this.profileForm.id = this.$store.state.user.profile.id
   }
 }
+
 </script>
 <style lang="scss">
   @import '~helpers/variables';
@@ -146,4 +161,5 @@ export default {
       }
     }
   }
+
 </style>

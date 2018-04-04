@@ -154,19 +154,16 @@ export default {
         form.append(key, this.datasetForm[key])
       }
 
-      this.axios.post('/data/update', form)
-        .then(response => {
-          this.loading = false
-
-          this.$notify({
-            title: this.$t('data.upload.notifications.titles.success'),
-            type: 'success',
-            message: this.$t('data.dataset.edit.edit_success')
-          })
-        }, error => {
-          console.log(error)
-          this.loading = false
+      this.axios.post('/data/update', form).then(response => {
+        this.loading = false
+        this.$notify({
+          title: this.$t('data.upload.notifications.titles.success'),
+          type: 'success',
+          message: this.$t('data.dataset.edit.edit_success')
         })
+      }, e => {
+        this.loading = false
+      })
     },
     initializeDatasetForm (dataset) {
       this.datasetForm.title = dataset.title
