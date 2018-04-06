@@ -16,12 +16,25 @@ const mutations = {
   },
   SET_CURRENT_DATASET (state, payload) {
     state.currentDataset = payload.data
+    if (state.currentDataset.remoteFileAccessPoint) {
+      state.currentDataset.isFileRemote = true
+    } else {
+      state.currentDataset.isFileRemote = false
+    }
   },
   SET_REMOTE_FILE_ACCESS_POINT (state, payload) {
     state.currentDataset.remoteFileAccessPoint = payload.remoteFileAccessPoint
   },
   SET_CURRENT_DATASET_FILE (state, payload) {
     state.currentDataset.file = payload.file
+    state.currentDataset.isFileRemote = false
+    state.currentDataset.hasFileChanged = true
+  },
+  SET_IS_FILE_REMOTE (state, payload) {
+    state.currentDataset.isFileRemote = payload.isFileRemote
+  },
+  SET_HAS_FILE_CHANGED (state, payload) {
+    state.currentDataset.hasFileChanged = payload.hasFileChanged
   }
 }
 

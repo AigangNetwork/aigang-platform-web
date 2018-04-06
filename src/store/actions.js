@@ -44,11 +44,21 @@ const setCurrentDatasetFile = ({ commit }, response) => {
   commit(types.SET_CURRENT_DATASET_FILE, response)
 }
 
+const setIsFileRemote = ({ commit }, response) => {
+  commit(types.SET_IS_FILE_REMOTE, response)
+}
+
+const setHasFileChanged = ({ commit }, response) => {
+  commit(types.SET_HAS_FILE_CHANGED, response)
+}
+
 export {
   logIn,
   logOut,
   changeProfileNames,
   setCurrentDataset,
   setRemoteFileAccessPoint,
-  setCurrentDatasetFile
+  setCurrentDatasetFile,
+  setIsFileRemote,
+  setHasFileChanged
 }

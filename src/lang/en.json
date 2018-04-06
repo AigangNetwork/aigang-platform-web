@@ -99,7 +99,12 @@
         "DescriptionEmpty": "Description is required",
         "DescriptionTooShort": "Description must be at least 6 characters long",
         "StructureFieldEmpty":
-          "Please make sure you have filled all structure fields"
+          "Please make sure you have filled all structure fields",
+        "RemoteFileAccessPointEmpty": "Remote access point is required",
+        "RemoteFileAccessPointTooShort":
+          "Remote access must be at least 6 characters long",
+        "FileEmpty": "File is required",
+        "FileTooBig": "File is too large"
       }
     }
   },

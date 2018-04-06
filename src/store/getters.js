@@ -7,13 +7,6 @@ const getters = {
   },
   dataset: state => {
     return state.currentDataset
-  },
-  isDatasetAccessPoint: state => {
-    if (state.currentDataset.remoteFileAccessPoint) {
-      return true
-    } else {
-      return false
-    }
   }
 }
 

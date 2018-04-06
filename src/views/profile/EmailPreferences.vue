@@ -2,7 +2,7 @@
 
   <el-row class="profile-email-container">
     <el-col>
-      <p class="profile-section-title">{{ $t('profile.emailPreferences') }}</p>
+      <p class="input-section-title">{{ $t('profile.emailPreferences') }}</p>
     </el-col>
     <el-col>
       <p class="profile-section-decription">{{ $t('profile.emailDescription') }}</p>

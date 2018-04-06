@@ -225,23 +225,6 @@ body.aig {
   text-align: center;
 }
 
-.dataset-edit-container {
-  .file-card-container {
-    .card-section {
-      .el-switch__label.is-active {
-        color: $button-purple;
-      }
-      .el-switch.is-checked .el-switch__core {
-        border-color: $button-purple;
-        background-color: $button-purple;
-      }
-      .el-switch__label * {
-        font-size: 16px;
-      }
-    }
-  }
-}
-
 .profile-info-input {
   margin-bottom: 0px !important;
   input,
@@ -297,17 +280,21 @@ body.aig {
   }
 }
 
-.profile-section-title {
+.input-section-title {
   width: 320px;
   height: 19px;
   font-family: $font-primary;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: bold;
   letter-spacing: 0.6px;
   text-align: left;
   color: $dark-gray;
   text-transform: uppercase;
-  margin: 0;
+  margin: 40px 0 5px 0;
+}
+
+.edit-title-container input {
+  font-family: monospace;
 }
 
 .aig-form-error {
@@ -317,14 +304,20 @@ body.aig {
 }
 
 .file-card-container .card-section {
-  .el-upload-dragger {
-    height: 30px;
-    line-height: 32px;
-    border: none;
-    color: $button-purple;
-    &:hover {
-      background: transparent;
-      color: white;
+  .el-button {
+    width: 131px;
+    transition: all 200ms;
+
+    .el-upload {
+      height: 24px;
+      line-height: 24px;
+      border: none;
+      margin-bottom: 15px;
+    }
+    .el-upload-list {
+      width: 131px;
+      margin-left: -21px;
+      margin-bottom: -22px;
     }
   }
 }
