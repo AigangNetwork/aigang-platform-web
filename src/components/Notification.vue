@@ -37,8 +37,8 @@ export default {
       }
     },
     handle401 () {
+      this.notificationVisible = false
       this.$store.dispatch('logOut')
-      this.messages.push(this.$t('errors.401'))
       router.push('/login')
     },
     notifyMessage (error) {

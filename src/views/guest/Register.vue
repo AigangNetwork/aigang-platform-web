@@ -117,17 +117,38 @@ export default {
         rePassword: ''
       },
       registerFormRules: {
-        email: [
-          { required: true, message: this.$t('validation.emailEmpty'), trigger: 'blur' },
-          { type: 'email', message: this.$t('validation.emailNotValid'), trigger: 'blur' }
+        email: [{
+          required: true,
+          message: this.$t('validation.emailEmpty'),
+          trigger: 'blur'
+        },
+        {
+          type: 'email',
+          message: this.$t('validation.emailNotValid'),
+          trigger: 'blur'
+        }
         ],
-        password: [
-          { required: true, message: this.$t('validation.passwordEmpty'), trigger: 'blur' },
-          { min: 6, message: this.$t('validation.passwordTooShort'), trigger: 'blur' }
+        password: [{
+          required: true,
+          message: this.$t('validation.passwordEmpty'),
+          trigger: 'blur'
+        },
+        {
+          min: 6,
+          message: this.$t('validation.passwordTooShort'),
+          trigger: 'blur'
+        }
         ],
-        rePassword: [
-          { required: true, message: this.$t('validation.passwordEmpty'), trigger: 'blur' },
-          { min: 6, message: this.$t('validation.passwordTooShort'), trigger: 'blur' }
+        rePassword: [{
+          required: true,
+          message: this.$t('validation.passwordEmpty'),
+          trigger: 'blur'
+        },
+        {
+          min: 6,
+          message: this.$t('validation.passwordTooShort'),
+          trigger: 'blur'
+        }
         ]
       }
     }
@@ -147,22 +168,21 @@ export default {
       this.axios.post('/account/register', this.registerForm).then(response => {
         this.loading = false
         this.isVerificationVisisble = true
+      }).catch(e => {
+        this.loading = false
       })
-        .catch(e => {
-          this.loading = false
-        })
     },
     resendEmail () {
       this.loading = true
       this.axios.post(`/account/sendverifyemail?Email=${this.registerForm.email}`).then(response => {
         this.loading = false
+      }).catch(e => {
+        this.loading = false
       })
-        .catch(e => {
-          this.loading = false
-        })
     }
   }
 }
+
 </script>
 <style lang="scss">
   .aig-card-body .register-container .redirect-to-login {
@@ -201,4 +221,5 @@ export default {
       }
     }
   }
+
 </style>

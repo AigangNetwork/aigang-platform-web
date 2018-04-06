@@ -61,13 +61,17 @@
     },
     "card": {
       "models": "Models",
-      "threads": "Comments"
+      "threads": "Comments",
+      "added": "Added",
+      "notApproved": "waiting for approval"
     },
     "dataset": {
       "createdBy": "By",
       "updated": "Last updated",
       "downloadDataset": "Download dataset",
+      "deleteDataset": "Delete dataset",
       "editDataset": "Edit dataset",
+      "successDelete": "Dataset was successfully deleted",
       "invalidPreview":
         "This dataset does not contain visual preview. Download file to check it out",
       "navigation": {
@@ -151,13 +155,6 @@
     "upload_new_data": "Upload new data",
     "retrievePassword": "Retrieve password"
   },
-  "strings": {
-    "hello": "hello",
-    "firstName": "First name",
-    "lastName": "Last name",
-    "added": "Added",
-    "notApproved": "waiting for approval"
-  },
   "profile": {
     "logout": "Logout",
     "userName": "Nickname",
@@ -218,7 +215,8 @@
     "save": "Save",
     "back": "Back",
     "markupSupported": "VueMarkdown supported",
-    "versionAlpha": "alpha"
+    "versionAlpha": "alpha",
+    "unableToFindYourDatasets": "Can not find your datasets"
   },
   "errors": {
     "error": "Error",

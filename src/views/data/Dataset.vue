@@ -4,7 +4,7 @@
       <div class="aig-dataset-header">
         <div class="creator-info">
           <div class="creator">{{$t('data.dataset.createdBy')}} {{dataset.createdBy}}</div>
-          <div class="uploaded">{{$t('data.dataset.updated')}}: {{ this.dataset.createdUtc | moment('from') }}</div>
+          <div class="uploaded">{{$t('data.dataset.updated')}}: {{ updated }}</div>
         </div>
         <div class="dataset-title">{{dataset.title}}</div>
         <div class="aig-dataset-header-btn-container">
@@ -14,6 +14,9 @@
           <router-link v-if="isUserOwner" class="aig-dataset-header-btn" :to="editRoute" exact>
             <img class="file-img" src="/static/dataset/edit21px.png" alt=""> {{$t('data.dataset.editDataset')}}
           </router-link>
+          <button v-if="isUserOwner" @click="deleteDataset" class="aig-dataset-header-btn">
+            <img class="file-img" src="/static/dataset/trash24px.svg" alt=""> {{$t('data.dataset.deleteDataset')}}
+          </button>
         </div>
       </div>
       <div class="dataset-navigation-container">
@@ -38,6 +41,7 @@
   </el-container>
 </template>
 <script>
+import moment from 'moment'
 export default {
   created () {
     window.scroll(0, 0)
@@ -86,6 +90,11 @@ export default {
       ]
     }
   },
+  computed: {
+    updated () {
+      return moment(this.dataset.modifiedUtc).format('YYYY-MM-DD')
+    }
+  },
   methods: {
     fetchDataset () {
       this.loading = true
@@ -111,8 +120,19 @@ export default {
         document.body.appendChild(link)
         link.click()
         this.loading = false
-      }).catch(err => {
-        console.log(err)
+      })
+    },
+    deleteDataset () {
+      this.loading = true
+      this.axios.delete('data/' + this.$route.params.id).then(response => {
+        this.loading = false
+        this.$notify.success({
+          title: this.$t('data.upload.notifications.titles.success'),
+          message: this.$t('data.dataset.successDelete')
+        })
+        this.$router.push('/data')
+      }).catch(e => {
+        this.loading = false
       })
     }
   }

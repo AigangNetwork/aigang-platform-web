@@ -170,7 +170,6 @@ export default {
     background: $purple;
     width: 100%;
     .aig-navigation-body {
-      @include clearfix;
       margin: 0 auto;
       max-width: 1440px;
       font-size: 0;

@@ -8,7 +8,5 @@ export default function (error, vm, info) {
     level: 'error'
   }
   console.log(`Error message number: ${errorMessage.messageNumber}`)
-  axios.post('log', errorMessage).catch((error) => {
-    console.log(error)
-  })
+  axios.post('log', errorMessage)
 }

@@ -10,9 +10,6 @@ body.aig {
 
 .aig-app {
   width: 100%;
-  @include breakpoint(max-width 768px) {
-    // todo: compose menu items
-  }
 }
 
 .aig-view {
@@ -28,7 +25,6 @@ body.aig {
 }
 
 .aig-container {
-  @include clearfix;
   height: 100%;
   margin: 0 auto;
   display: flex;
@@ -48,7 +44,6 @@ body.aig {
 }
 
 .aig-card-container {
-  @include clearfix;
   max-width: 1440px;
   width: 100%;
   height: 100%;
@@ -144,8 +139,6 @@ body.aig {
 
 .aig-dataset-header-btn-container {
   display: flex;
-  justify-content: space-between;
-  max-width: 380px;
 }
 
 .aig-dataset-header-btn {
@@ -153,6 +146,7 @@ body.aig {
   height: 30px;
   margin-top: 10px;
   margin-bottom: 10px;
+  margin-left: 10px;
   background-color: transparent;
   border: 1px solid white;
   color: white;
@@ -327,4 +321,8 @@ body.aig {
     margin-top: 15px;
     width: 100%;
   }
+}
+
+.aig-non-approved-data {
+  opacity: 0.5;
 }

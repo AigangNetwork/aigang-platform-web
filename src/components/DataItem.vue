@@ -1,9 +1,9 @@
 <template>
-  <div class="aig-data" :class="{'aig-non-approved-data': data.state === 'created'}">
-    <router-link :to="{ name: 'datasetInfo', params: { id: data.id}}" :class="{'aig-link-disabled': data.state === 'created'}">
+  <div class="aig-data">
+    <router-link :to="{ name: 'datasetInfo', params: { id: data.id}}">
       <div class="aig-data-head">
-        <div class="desc">{{ $t('strings.added') }} {{ this.data.createdUtc | moment('from') }}</div>
-        <div v-if="data.state === 'created'" class="desc">{{ $t('strings.notApproved') }}</div>
+        <div class="desc">{{ $t('data.card.added') }} {{ created }}</div>
+        <div v-if="data.state === 'created'" class="desc">{{ $t('data.card.notApproved') }}</div>
       </div>
       <div class="aig-data-head">
         <div class="title">{{ data.title | truncate(50) }}</div>
@@ -30,6 +30,8 @@
 
 <script>
 import Status from '@/components/Status'
+import moment from 'moment'
+
 export default {
   name: 'DataItem',
   components: {
@@ -48,14 +50,10 @@ export default {
     }
   },
   computed: {
-    readableState () {
-      if (this.data.state === 'active') {
-        return this.$t('status.active')
-      } else if (this.data.state === 'closed') {
-        return this.$t('status.closed')
-      } else {
-        return this.$t('status.pending')
-      }
+    created () {
+      let createdUtc = moment.utc(this.data.createdUtc)
+      let result = createdUtc.from(moment().utcNow)
+      return result
     }
   }
 }
@@ -65,9 +63,6 @@ export default {
 <style lang="scss" scoped>
   @import '~helpers/variables';
   @import '~helpers/mixins';
-  .aig-non-approved-data {
-    opacity: 0.5;
-  }
 
   .aig-data {
     @include transition;
@@ -165,4 +160,5 @@ export default {
       }
     }
   }
+
 </style>
