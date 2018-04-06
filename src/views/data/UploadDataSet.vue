@@ -5,7 +5,7 @@
         <h4>{{$t('data.upload.titles.upload')}}</h4>
         <el-row type="flex">
           <el-col :span="16">
-            <el-form :model="dataUploadForm">
+            <el-form :model="dataUploadForm" ref="dataUploadForm" :rules="dataUploadFormRules" @keyup.enter.native="submitForm('dataUploadForm')">
               <el-form-item prop="file" size="small">
                 <el-upload :limit="1" :on-remove="fileRemoved" :on-exceed="fileLimitExeeded" ref="csvFile" drag :action="''" :multiple="false"
                   :auto-upload="false" :on-change="handleFileChange" accept=".csv">
@@ -56,65 +56,22 @@
       </div>
     </Card>
     <el-button class="aig-back-btn" v-if="secondStepActive" @click="setPage(1)">Back</el-button>
+
     <Card class="aig-upload-card-step-2" v-if="secondStepActive" v-loading="loading">
       <div slot="body" :element-loading-text="$t('general.loading')">
         <el-row>
           <el-col :span="24">
-            <div class="aig-file-information-container">
-              <div class="header">
-                <img src="/static/upload/doc64px.svg" alt="threads">
-                <h3>{{$t('data.upload.titles.fileDetails')}}</h3>
-              </div>
-              <div class="footer">
-                <div class="left">
-                  <h4>{{$t('data.upload.titles.fileVisibility')}}</h4>
-                  <p>{{$t('data.upload.titles.fileAccess')}}</p>
-                </div>
-                <div class="right">
-                  <el-switch v-model="dataUploadForm.isPublic" active-text="On" inactive-text="Off">
-                  </el-switch>
-                </div>
-              </div>
-            </div>
-            <el-form class="aig-dataset-upload-form" :model="dataUploadForm" ref="dataUploadForm">
-              <h4>{{$t('data.upload.titles.title')}}</h4>
-              <el-form-item prop="title" size="small">
-                <el-input :placeholder="$t('data.upload.input.placeholder.title')" v-model="dataUploadForm.title"></el-input>
-              </el-form-item>
-              <div class="description-header">
-                <h4>{{$t('data.upload.titles.description')}}</h4>
-                <router-link to="" @click.native="popUpMakdownRules">
-                  {{$t('general.markupSupported')}}
-                </router-link>
-              </div>
-              <el-form-item prop="description" size="small">
-                <el-input :placeholder="$t('data.upload.input.placeholder.description')" type="textarea" v-model="dataUploadForm.description"></el-input>
-              </el-form-item>
-              <div v-if="dynamicFileStructure.length > 0">
-                <h4>{{$t('data.upload.titles.structure')}}</h4>
-                <el-row :gutter="20" type="flex" v-for="column in dynamicFileStructure" :key="column.name">
-                  <el-col :span="10">
-                    <h5>{{column.name}}</h5>
-                  </el-col>
-                  <el-col>
-                    <el-form-item size="medium">
-                      <el-input :placeholder="$t('data.upload.input.placeholder.column')" v-model="column.description"></el-input>
-                    </el-form-item>
-                  </el-col>
-                  <el-col :span="10">
-                    <el-select size="medium" aria-required="true" v-model="column.dataType" :placeholder="$t('data.upload.input.placeholder.dataType')">
-                      <el-option v-for="item in dataTypeOptions" :key="item" :label="item" :value="item">
-                      </el-option>
-                    </el-select>
-                  </el-col>
-                </el-row>
-              </div>
-              <div v-else>
-                <h4>{{$t('data.upload.titles.structure')}}</h4>
-                <el-form-item>
-                  <el-input :placeholder="$t('data.upload.input.placeholder.structure')" type="textarea" v-model="remoteFileStructure"></el-input>
-                </el-form-item>
-              </div>
+            <DatasetFileCard v-model="dataUploadForm.isPublic" :showUploadOption="false" />
+
+            <el-form :model="dataUploadForm" :rules="dataUploadFormRules" ref="dataUploadForm">
+
+              <DatasetTitleEdit v-model="dataUploadForm.title" />
+
+              <DatasetDescriptionEdit v-model="dataUploadForm.description" />
+
+              <DatasetStructureEdit :structure="dynamicFileStructure" v-model="remoteFileStructure" ref="structureComponent" :isStructured="!invalidFile"
+              />
+
             </el-form>
           </el-col>
         </el-row>
@@ -125,20 +82,29 @@
         </el-row>
         <el-row>
           <el-col :span="12" :offset="6">
-            <el-button @click="uploadDataset" class="aig-upload-button" type="primary">{{$t('data.upload.titles.upload')}}</el-button>
+            <el-button @click="submitForm('dataUploadForm')" class="aig-upload-button" type="primary">{{$t('data.upload.titles.upload')}}</el-button>
           </el-col>
         </el-row>
       </div>
     </Card>
+
   </el-container>
 </template>
 <script>
 import Card from '@/components/Card'
+import DatasetFileCard from '@/components/data/DatasetFileCard'
+import DatasetTitleEdit from '@/components/data/DatasetTitleEdit'
+import DatasetDescriptionEdit from '@/components/data/DatasetDescriptionEdit'
+import DatasetStructureEdit from '@/components/data/DatasetStructureEdit'
 import router from '@/router'
 
 export default {
   components: {
-    Card
+    Card,
+    DatasetTitleEdit,
+    DatasetDescriptionEdit,
+    DatasetStructureEdit,
+    DatasetFileCard
   },
   data () {
     return {
@@ -149,7 +115,6 @@ export default {
       isValidForm: true,
       isErrorOnFirstStep: false,
       dynamicFileStructure: [],
-      dataTypeOptions: ['String', 'Numeric', 'Boolean'],
       remoteFileStructure: '',
       loading: false,
       dataUploadForm: {
@@ -159,13 +124,37 @@ export default {
         file: [],
         remoteFileAccessPoint: ''
       },
+      dataUploadFormRules: {
+        title: [{
+          required: true,
+          message: this.$t('data.dataset.validation.TitleEmpty'),
+          trigger: 'blur'
+        },
+        {
+          min: 6,
+          message: this.$t('data.dataset.validation.TitleTooShort'),
+          trigger: 'blur'
+        }
+        ],
+        description: [{
+          required: true,
+          message: this.$t('data.dataset.validation.DescriptionEmpty'),
+          trigger: 'blur'
+        },
+        {
+          min: 6,
+          message: this.$t('data.dataset.validation.DescriptionTooShort'),
+          trigger: 'blur'
+        }
+        ]
+      },
       errorMessage: ''
     }
   },
   methods: {
     handleFileChange (file, fileList) {
       this.isErrorOnFirstStep = false
-      var fileSize = file.raw.size / 1024 / 1024 // filesize in mb
+      const fileSize = file.raw.size / 1024 / 1024 // filesize in mb
       if (fileSize <= 10) { // if less than 10MB
         this.dataUploadForm.file = file.raw
         this.invalidFile = false
@@ -196,74 +185,68 @@ export default {
       }
     },
     parseFileStructure () {
-      var dynamicFileFields = []
-      var fileReader = new FileReader()
+      let dynamicFileFields = []
+      let fileReader = new FileReader()
+
       try {
-        fileReader.onload = function (event) {
-          var fileContent = event.target.result
-          var fileColumns = fileContent.split('\n').shift().split(',')
-          fileColumns.forEach(col => {
-            dynamicFileFields.push({
-              name: col,
-              description: '',
-              dataType: ''
+        fileReader.onload = (event) => {
+          let fileContent = event.target.result
+          if (fileContent.length > 0) {
+            var fileColumns = fileContent.split('\n').shift().split(',')
+            fileColumns.forEach(col => {
+              dynamicFileFields.push({
+                name: col,
+                description: '',
+                dataType: ''
+              })
             })
-          })
+          } else {
+            this.isErrorOnFirstStep = true
+          }
         }
       } catch (error) {
         this.isErrorOnFirstStep = true
         this.errorMessage = this.$t('data.upload.input.validation.unableAccessFileContent')
       }
+
       fileReader.readAsText(this.dataUploadForm.file)
       this.dynamicFileStructure = dynamicFileFields
     },
-    uploadDataset () {
-      this.validateForm()
-      if (this.isValidForm) {
-        this.loading = true
-        var uploadForm = new FormData()
-        for (var key in this.dataUploadForm) {
-          uploadForm.append(key, this.dataUploadForm[key])
-        }
-        if (this.dynamicFileStructure.length > 0) {
-          uploadForm.append('structure', JSON.stringify(this.dynamicFileStructure))
-        } else {
-          uploadForm.append('structure', this.remoteFileStructure)
-        }
+    submitForm (formName) {
+      this.loading = true
+      let isValid = true
 
-        this.axios.post('/data', uploadForm).then(response => {
-          this.successfullUpload()
-        }, e => {
+      if (!this.$refs.structureComponent.validate()) {
+        isValid = false
+      }
+
+      this.$refs[formName].validate(isFormValid => {
+        if (isFormValid && isValid) {
+          this.uploadDataset()
+        } else {
           this.loading = false
-        })
-      }
+          return false
+        }
+      })
     },
-    validateForm () {
-      this.isValidForm = true
+    uploadDataset () {
+      var uploadForm = new FormData()
+
       for (var key in this.dataUploadForm) {
-        if (this.dataUploadForm[key] === undefined || this.dataUploadForm[key] === '') {
-          if (key === 'remoteFileAccessPoint') {
-            continue
-          } else {
-            this.isValidForm = false
-            return
-          }
-        }
+        uploadForm.append(key, this.dataUploadForm[key])
       }
+
       if (this.dynamicFileStructure.length > 0) {
-        for (var obj in this.dynamicFileStructure) {
-          for (var prop in this.dynamicFileStructure[obj]) {
-            if (this.dynamicFileStructure[obj][prop] === undefined || this.dynamicFileStructure[obj][prop] === '') {
-              this.isValidForm = false
-              return
-            }
-          }
-        }
+        uploadForm.append('structure', JSON.stringify(this.dynamicFileStructure))
       } else {
-        if (this.remoteFileStructure.length <= 0) {
-          this.isValidForm = false
-        }
+        uploadForm.append('structure', this.remoteFileStructure)
       }
+
+      this.axios.post('/data', uploadForm).then(response => {
+        this.successfullUpload()
+      }, e => {
+        this.loading = false
+      })
     },
     successfullUpload () {
       this.$notify({
@@ -291,10 +274,6 @@ export default {
     },
     fileRemoved (file, fileList) {
       this.isErrorOnFirstStep = false
-    },
-    popUpMakdownRules (event) {
-      event.preventDefault()
-      window.open('http://miaolz123.github.io/vue-markdown/', '_blank')
     },
     handleCsvInformaton (event) {
       event.preventDefault()
@@ -387,30 +366,6 @@ export default {
         }
       }
     }
-    .aig-dataset-upload-form {
-      h4 {
-        margin-bottom: 5px;
-        color: $purple;
-        text-transform: uppercase;
-        font-weight: 600;
-      }
-      h5 {
-        margin: 5px 0px 0px 0px;
-        color: $purple;
-        font-weight: 600;
-      }
-      .description-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: baseline;
-        a {
-          font-size: 13px;
-          &:hover {
-            color: $orange;
-          }
-        }
-      }
-    }
     .aig-upload-card-step-2 {
       margin-top: 50px;
       width: 100%;
@@ -425,5 +380,4 @@ export default {
       top: 15px;
     }
   }
-
 </style>

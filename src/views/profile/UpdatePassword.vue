@@ -2,7 +2,7 @@
   <div v-loading="loading" :element-loading-text="$t('general.loading')">
     <el-row class="profile-password-container">
       <el-col>
-        <p class="profile-section-title">{{ $t('profile.changePassword') }}</p>
+        <p class="input-section-title">{{ $t('profile.changePassword') }}</p>
       </el-col>
       <el-col>
         <p class="profile-section-decription">{{ $t('profile.passwordDescription') }}</p>
@@ -130,7 +130,6 @@ export default {
   @import '~helpers/variables';
   @import '~helpers/mixins';
 
-  .profile-password-container,
   .profile-email-container {
     margin: 40px 0px 0px 0px;
   }

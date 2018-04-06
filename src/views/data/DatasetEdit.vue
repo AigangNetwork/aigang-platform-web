@@ -1,62 +1,25 @@
 <template>
   <el-container class="aig-container-dataset" v-loading="loading">
-    <el-button @click="$router.go(-1)" class="profile-button back-button">{{ $t('general.back') }}</el-button>
+    <el-button @click="$router.go(-1)" class="back-button">{{ $t('general.back') }}</el-button>
     <div class="dataset-edit-container">
-      <DatasetFileCard v-model="datasetForm.isPublic" :showUploadOption="true" />
-
       <div class="dataset-body-container">
         <el-form @keyup.enter.native="submitForm('datasetForm')" :model="datasetForm" :rules="datasetFormRules" ref="datasetForm">
 
-          <el-row class="profile-section-title">
-            {{ $t('data.dataset.edit.title' )}}
-          </el-row>
-          <el-row>
-            <el-form-item prop="title">
-              <el-input class="profile-info-input" type="textarea" autosize :maxlength="64" v-model="datasetForm.title" :placeholder="$t('data.dataset.edit.title' )"></el-input>
-            </el-form-item>
+          <DatasetFileCard v-model="datasetForm.isPublic" :showUploadOption="true" :onFileChange="parseFileStructure" ref="fileCardComponent"
+          />
+
+          <DatasetTitleEdit v-model="datasetForm.title" />
+
+          <DatasetDescriptionEdit v-model="datasetForm.description" />
+
+          <el-row v-if="structureValid">
+            <DatasetStructureEdit :structure="datasetStructure" v-model="datasetRemoteStructure" :isStructured="isStructured" ref="structureComponent"
+            />
           </el-row>
 
-          <el-row class="profile-section-title">
-            {{ $t('data.dataset.edit.description' )}}
-            <router-link class="markdown-label" to="" @click.native="popUpMakdownRules">
-              {{$t('general.markupSupported')}}
-            </router-link>
-            <!-- <span class="markdown-label">{{ $t('general.markupSupported' )}}</span> -->
-          </el-row>
-          <el-row>
-            <el-form-item prop="description">
-              <el-input class="profile-info-input description" type="textarea" autosize v-model="datasetForm.description" :placeholder="$t('data.dataset.edit.description' )"></el-input>
-            </el-form-item>
-          </el-row>
-
-          <el-row class="profile-section-title">
-            {{ $t('data.dataset.edit.structure' )}}
-          </el-row>
-          <el-row v-if="datasetStructure" class="structure-row" :gutter="20" type="flex" v-for="(column,index) in datasetStructure"
-            :key="index">
-            <el-col :span="10">
-              <el-form-item>
-                <el-input class="profile-info-input description structure-title" type="text" v-model="column.name" :placeholder="$t('data.dataset.edit.structureName' )"></el-input>
-              </el-form-item>
-            </el-col>
-            <el-col>
-              <el-form-item>
-                <el-input class="profile-info-input description" type="textarea" v-model="column.description" :placeholder="$t('data.dataset.edit.structureDescription' )"></el-input>
-              </el-form-item>
-            </el-col>
-            <el-col class="column-description" :span="10">
-              <el-form-item>
-                <el-select class="profile-info-input select-input" size="medium" aria-required="true" v-model="column.dataType" :placeholder="$t('data.upload.input.placeholder.dataType')">
-                  <el-option v-for="item in dataTypeOptions" :key="item" :label="item" :value="item">
-                  </el-option>
-                </el-select>
-              </el-form-item>
-            </el-col>
-          </el-row>
-
-          <el-row v-if="!isStructureValid">
+          <el-row v-if="!structureValid">
             <div class="aig-form-error">
-              {{$t('data.dataset.validation.StructureFieldEmpty')}}
+              {{$t('data.upload.input.validation.unableAccessFileContent')}}
             </div>
           </el-row>
 
@@ -73,19 +36,24 @@
 </template>
 <script>
 import DatasetFileCard from '@/components/data/DatasetFileCard'
+import DatasetTitleEdit from '@/components/data/DatasetTitleEdit'
+import DatasetDescriptionEdit from '@/components/data/DatasetDescriptionEdit'
+import DatasetStructureEdit from '@/components/data/DatasetStructureEdit'
 
 export default {
   components: {
-    DatasetFileCard
+    DatasetFileCard,
+    DatasetTitleEdit,
+    DatasetDescriptionEdit,
+    DatasetStructureEdit
   },
   data () {
     return {
       loading: false,
-      dataset: {},
-      dataTypeOptions: ['String', 'Numeric', 'Boolean'],
-      isStructureValid: true,
       datasetStructure: [],
-      isFileAccessRemote: false,
+      datasetRemoteStructure: '',
+      isStructured: false,
+      structureValid: true,
       datasetForm: {
         id: '',
         title: '',
@@ -95,7 +63,8 @@ export default {
         createdUtc: '',
         hasFileChanged: false,
         file: null,
-        remoteFileAccessPoint: ''
+        remoteFileAccessPoint: '',
+        isFileRemote: false
       },
       datasetFormRules: {
         title: [{
@@ -119,6 +88,17 @@ export default {
           message: this.$t('data.dataset.validation.DescriptionTooShort'),
           trigger: 'blur'
         }
+        ],
+        remoteFileAccessPoint: [{
+          required: true,
+          message: this.$t('data.dataset.validation.DescriptionEmpty'),
+          trigger: 'blur'
+        },
+        {
+          min: 6,
+          message: this.$t('data.dataset.validation.DescriptionTooShort'),
+          trigger: 'blur'
+        }
         ]
       }
     }
@@ -126,20 +106,18 @@ export default {
   methods: {
     submitForm (formName) {
       this.loading = true
-      this.isStructureValid = true
-      this.validateStructure(this.datasetStructure)
+      let isValid = true
 
-      if (!this.isStructureValid) {
-        this.loading = false
-        return false
+      if (!this.$refs.structureComponent.validate()) {
+        isValid = false
       }
 
-      this.datasetForm.structure = JSON.stringify(this.datasetStructure)
-      this.datasetForm.remoteFileAccessPoint = this.$store.state.currentDataset.remoteFileAccessPoint
-      debugger
-      this.datasetForm.file = this.$store.state.currentDataset.file.raw // todo check file is empty
-      this.$refs[formName].validate(valid => {
-        if (valid) {
+      if (!this.$refs.fileCardComponent.validate()) {
+        isValid = false
+      }
+
+      this.$refs[formName].validate(isFormValid => {
+        if (isFormValid && isValid && this.structureValid) {
           this.updateDataset()
         } else {
           this.loading = false
@@ -149,6 +127,22 @@ export default {
     },
     updateDataset () {
       let form = new FormData()
+      this.datasetForm.hasFileChanged = this.$store.state.currentDataset.hasFileChanged
+      this.datasetForm.isFileRemote = this.$store.state.currentDataset.isFileRemote
+
+      if (!this.$store.state.currentDataset.isFileRemote &&
+          this.$store.state.currentDataset.hasFileChanged) {
+        this.datasetForm.file = this.$store.state.currentDataset.file.raw
+        this.datasetForm.structure = JSON.stringify(this.datasetStructure)
+      } else if (!this.$store.state.currentDataset.isFileRemote) {
+        this.datasetForm.structure = JSON.stringify(this.datasetStructure)
+        this.datasetForm.file = null
+      } else {
+        this.$store.dispatch('setCurrentDatasetFile', { file: null })
+        this.datasetForm.file = null
+        this.datasetForm.structure = this.datasetRemoteStructure
+        this.datasetForm.isFileRemote = true
+      }
 
       for (var key in this.datasetForm) {
         form.append(key, this.datasetForm[key])
@@ -171,38 +165,70 @@ export default {
       this.datasetForm.createdUtc = dataset.createdUtc
       this.datasetForm.id = dataset.id
       this.datasetForm.isPublic = dataset.isPublic
+      this.datasetForm.remoteFileAccessPoint = dataset.remoteFileAccessPoint
+      this.datasetForm.hasFileChanged = dataset.hasFileChanged
+      this.datasetForm.isFileRemote = dataset.isFileRemote
 
       try {
         this.datasetStructure = JSON.parse(dataset.structure)
-      } catch (e) { // todo why null?
-        this.datasetStructure = null
+      } catch (e) {
+        this.datasetRemoteStructure = dataset.structure
       }
     },
-    validateStructure (structure) {
-      if (structure.length > 0) {
-        for (var obj in structure) {
-          for (var prop in structure[obj]) {
-            if (structure[obj][prop] === undefined || structure[obj][prop] === '') {
-              this.isStructureValid = false
-              return
-            }
+    parseFileStructure () {
+      if (!this.$store.state.currentDataset.file) {
+        try {
+          this.datasetStructure = JSON.parse(this.$store.state.currentDataset.structure)
+        } catch (e) {
+          this.datasetRemoteStructure = this.$store.state.currentDataset.structure
+        }
+        return
+      }
+
+      let dynamicFileFields = []
+      let fileReader = new FileReader()
+
+      try {
+        fileReader.onload = (event) => {
+          let fileContent = event.target.result
+          if (fileContent.length > 0) {
+            let fileColumns = fileContent.split('\n').shift().split(',')
+            fileColumns.forEach(col => {
+              dynamicFileFields.push({
+                name: col,
+                description: '',
+                dataType: ''
+              })
+            })
+          } else {
+            this.structureValid = false
           }
         }
+      } catch (error) {
+        this.structureValid = false
       }
-      // } else {
-      //   if (this.remoteFileStructure.length <= 0) {
-      //     this.isValidForm = false
-      //   }
-      // }
-    },
-    popUpMakdownRules (event) {
-      event.preventDefault()
-      window.open('http://miaolz123.github.io/vue-markdown/', '_blank')
+      fileReader.readAsText(this.$store.state.currentDataset.file.raw)
+      this.datasetStructure = dynamicFileFields
     }
   },
-
   created () {
     this.initializeDatasetForm(this.$store.getters.dataset)
+
+    if (this.$store.state.currentDataset.remoteFileAccessPoint) {
+      this.$store.dispatch('setIsFileRemote', { isFileRemote: true })
+    } else {
+      this.$store.dispatch('setIsFileRemote', { isFileRemote: false })
+    }
+
+    this.isStructured = !this.$store.state.currentDataset.isFileRemote
+
+    this.$root.$on('isFileRemote', (value) => {
+      this.isStructured = !value
+    })
+
+    this.$root.$on('remoteFileAccessPoint', (value) => {
+      this.datasetForm.remoteFileAccessPoint = value
+    })
   }
 }
 
@@ -219,7 +245,7 @@ export default {
   }
 
   .dataset-body-container {
-    .profile-section-title {
+    .input-section-title {
       margin-top: 40px;
       margin-bottom: 4px;
       height: 19px;
@@ -275,5 +301,4 @@ export default {
       }
     }
   }
-
 </style>

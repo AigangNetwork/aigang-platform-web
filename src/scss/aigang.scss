@@ -3,333 +3,326 @@
 @import '~helpers/variables';
 @import '~helpers/transitions';
 body.aig {
-    display: flex;
-    font-family: $font-primary;
-    overflow-y: scroll;
+  display: flex;
+  font-family: $font-primary;
+  overflow-y: scroll;
 }
 
 .aig-app {
-    width: 100%;
+  width: 100%;
 }
 
 .aig-view {
-    background: url('/static/background/background_pattern.svg');
-    background-size: 190px;
-    background-clip: content-box;
-    background-repeat: repeat;
-    max-width: 1400px;
-    height: 100%;
-    text-align: left;
-    margin: 0 auto;
-    overflow-x: hidden;
+  background: url('/static/background/background_pattern.svg');
+  background-size: 190px;
+  background-clip: content-box;
+  background-repeat: repeat;
+  max-width: 1400px;
+  height: 100%;
+  text-align: left;
+  margin: 0 auto;
+  overflow-x: hidden;
 }
 
 .aig-container {
+  height: 100%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  backg .aig-view {
+    width: 100%;
+  }
+  .aig-container {
+    max-width: 1440px;
+  }
+  .aig-data-menu {
     height: 100%;
-    margin: 0 auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    backg .aig-view {
-        width: 100%;
-    }
-    .aig-container {
-        max-width: 1440px;
-    }
-    .aig-data-menu {
-        height: 100%;
-        width: 200px;
-        background: white;
-    }
+    width: 200px;
+    background: white;
+  }
 }
 
 .aig-card-container {
-    max-width: 1440px;
-    width: 100%;
-    height: 100%;
-    margin: 0 auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 650px;
-    background: transparent;
+  max-width: 1440px;
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 650px;
+  background: transparent;
 }
 
 .aig-blue-bck-container {
-    width: 100%;
-    height: 100%;
-    max-height: 420px;
-    background-image: url('/static/background/blue-background.png');
-    align-items: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+  width: 100%;
+  height: 100%;
+  max-height: 420px;
+  background-image: url('/static/background/blue-background.png');
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .aig-logo {
-    display: block;
-    img {
-        display: inline-block;
-        vertical-align: middle;
-        width: 86px;
-        height: 27px;
-        width: auto;
-    }
+  display: block;
+  img {
+    display: inline-block;
+    vertical-align: middle;
+    width: 86px;
+    height: 27px;
+    width: auto;
+  }
 }
 
 .aig-items {
-    margin-top: 15px;
-    .el-col {
-        padding-top: 10px;
-        padding-bottom: 10px;
-    }
+  margin-top: 15px;
+  .el-col {
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
 }
 
 .aig-card-container h2 {
-    margin-top: 40px;
-    margin-bottom: 40px;
+  margin-top: 40px;
+  margin-bottom: 40px;
 }
 
 .aig-card-container button,
 .aig-button {
-    height: 48px;
-    margin-top: 15px;
-    width: 100%;
+  height: 48px;
+  margin-top: 15px;
+  width: 100%;
 }
 
 .aig-medium-button {
-    height: 48px;
-    margin-top: 15px;
-    width: 50%;
+  height: 48px;
+  margin-top: 15px;
+  width: 50%;
 }
 
 .aig-card-input,
 .aig-card-input input {
-    height: 48px;
-    border-radius: 2px;
+  height: 48px;
+  border-radius: 2px;
 }
 
 .aig-card-input .input_label {
-    margin-bottom: 10px;
+  margin-bottom: 10px;
 }
 
 .aig-data-footer .label {
-    font-size: 14px;
+  font-size: 14px;
 }
 
 .aig-card-input .label {
-    font-size: 16px;
+  font-size: 16px;
 }
 
 .guest-card {
-    width: 932px;
-    margin-top: 48px;
-    .label {
-        font-size: 16px;
-    }
+  width: 932px;
+  margin-top: 48px;
+  .label {
+    font-size: 16px;
+  }
 }
 
 .a-active,
 .a-passive {
-    transition: all 100ms;
-    &:hover {
-        cursor: pointer;
-    }
+  transition: all 100ms;
+  &:hover {
+    cursor: pointer;
+  }
 }
 
 .aig-dataset-header-btn-container {
-    display: flex;
+  display: flex;
 }
 
 .aig-dataset-header-btn {
-    width: 180px;
-    height: 30px;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    margin-left: 10px;
-    background-color: transparent;
-    border: 1px solid white;
-    color: white;
+  width: 180px;
+  height: 30px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-left: 10px;
+  background-color: transparent;
+  border: 1px solid white;
+  color: white;
+  display: flex;
+  line-height: 30px;
+  align-items: center;
+  font-size: 10pt;
+  color: white !important;
+  padding: 0 8px;
+  &:hover {
+    border: 1px solid $orange;
+    cursor: pointer;
+  }
+  &:last-child {
+    .file-img {
+      height: 19px;
+      margin-left: 8px;
+    }
+  }
+  .flex-container {
     display: flex;
-    line-height: 30px;
-    align-items: center;
-    font-size: 10pt;
-    color: white !important;
-    padding: 0 8px;
-    &:hover {
-        border: 1px solid $orange;
-        cursor: pointer;
-    }
-    &:last-child {
-        .file-img {
-            height: 19px;
-            margin-left: 8px;
-        }
-    }
-    .flex-container {
-        display: flex;
-    }
+  }
 }
 
 .horizontal-line {
-    width: 100%;
-    height: 1px;
-    background-color: $gray;
+  width: 100%;
+  height: 1px;
+  background-color: $gray;
 }
 
 .flex-container {
-    display: flex;
-    justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 }
 
 .flex-column-wrap {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 .aig-link-disabled {
-    pointer-events: none;
+  pointer-events: none;
 }
 
 .profile-button {
-    margin-top: 8px;
-    margin-left: 0px;
-    width: 131px;
-    height: 32px;
-    background-color: $white;
-    color: $button-purple;
-    border: 1px solid $light-grey;
-    padding: 0;
-    border-radius: 2px;
-    &:hover {
-        background-color: $button-purple;
-        color: $white;
-        transition: all 200ms;
-    }
+  margin-top: 8px;
+  margin-left: 0px;
+  width: 131px;
+  height: 32px;
+  background-color: $white;
+  color: $button-purple;
+  border: 1px solid $light-grey;
+  padding: 0;
+  border-radius: 2px;
+  &:hover {
+    background-color: $button-purple;
+    color: $white;
+    transition: all 200ms;
+  }
 }
 
 .profile-button span {
-    height: 16px;
-    font-size: 14px;
-    font-weight: bold;
-    font-style: normal;
-    font-stretch: normal;
-    line-height: normal;
-    letter-spacing: 0.5px;
-    text-align: center;
-}
-
-.dataset-edit-container {
-    .file-card-container {
-        .card-section {
-            .el-switch__label.is-active {
-                color: $button-purple;
-            }
-            .el-switch.is-checked .el-switch__core {
-                border-color: $button-purple;
-                background-color: $button-purple;
-            }
-            .el-switch__label * {
-                font-size: 16px;
-            }
-        }
-    }
+  height: 16px;
+  font-size: 14px;
+  font-weight: bold;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: 0.5px;
+  text-align: center;
 }
 
 .profile-info-input {
-    margin-bottom: 0px !important;
-    input,
-    textarea {
-        padding: 8px;
-        border: none;
-        border-bottom: 1px solid $active-dark-purple;
-        border-radius: 0;
-        font-family: 'Raleway', sans-serif;
-        font-size: 18px;
-        font-weight: normal;
-        line-height: 1.33;
-        letter-spacing: 0.5px;
-        color: $active-dark-purple;
-        text-shadow: 0 2px 4px rgba(219, 224, 231, 0.5);
-        height: 24px;
-        padding-top: 0;
-        min-width: 140px;
-        margin-right: 20px;
-        resize: none;
-    }
+  margin-bottom: 0px !important;
+  input,
+  textarea {
+    padding: 8px;
+    border: none;
+    border-bottom: 1px solid $active-dark-purple;
+    border-radius: 0;
+    font-family: 'Raleway', sans-serif;
+    font-size: 18px;
+    font-weight: normal;
+    line-height: 1.33;
+    letter-spacing: 0.5px;
+    color: $active-dark-purple;
+    text-shadow: 0 2px 4px rgba(219, 224, 231, 0.5);
+    height: 24px;
+    padding-top: 0;
+    min-width: 140px;
+    margin-right: 20px;
+    resize: none;
+  }
 }
 
 .dataset-body-container {
-    .profile-info-input {
-        input,
-        textarea {
-            font-size: 24px;
-            line-height: 40px;
-            width: 100%;
-        }
+  .profile-info-input {
+    input,
+    textarea {
+      font-size: 24px;
+      line-height: 40px;
+      width: 100%;
     }
-    .profile-info-input.description,
-    .profile-info-input.select-input {
-        input,
-        textarea {
-            font-size: 16px;
-            font-weight: 300;
-            line-height: 1.63;
-            letter-spacing: 0.5px;
-            text-align: left;
-            height: 30px;
-        }
+  }
+  .profile-info-input.description,
+  .profile-info-input.select-input {
+    input,
+    textarea {
+      font-size: 16px;
+      font-weight: 300;
+      line-height: 1.63;
+      letter-spacing: 0.5px;
+      text-align: left;
+      height: 30px;
     }
-    .profile-info-input.select-input input {
-        height: 30px;
+  }
+  .profile-info-input.select-input input {
+    height: 30px;
+  }
+  .profile-info-input.description.structure-title {
+    input,
+    textarea {
+      font-weight: 500;
     }
-    .profile-info-input.description.structure-title {
-        input,
-        textarea {
-            font-weight: 500;
-        }
-    }
+  }
 }
 
-.profile-section-title {
-    width: 320px;
-    height: 19px;
-    font-family: $font-primary;
-    font-size: 16px;
-    font-weight: bold;
-    letter-spacing: 0.6px;
-    text-align: left;
-    color: $dark-gray;
-    text-transform: uppercase;
-    margin: 0;
+.input-section-title {
+  width: 320px;
+  height: 19px;
+  font-family: $font-primary;
+  font-size: 14px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  text-align: left;
+  color: $dark-gray;
+  text-transform: uppercase;
+  margin: 40px 0 5px 0;
+}
+
+.edit-title-container input {
+  font-family: monospace;
 }
 
 .aig-form-error {
-    text-align: center;
-    margin-bottom: 15px;
-    color: red;
+  text-align: center;
+  margin-bottom: 15px;
+  color: red;
 }
 
 .file-card-container .card-section {
-    .el-upload-dragger {
-        height: 30px;
-        line-height: 32px;
-        border: none;
-        color: $button-purple;
-        &:hover {
-            background: transparent;
-            color: white;
-        }
+  .el-button {
+    width: 131px;
+    transition: all 200ms;
+
+    .el-upload {
+      height: 24px;
+      line-height: 24px;
+      border: none;
+      margin-bottom: 15px;
     }
+    .el-upload-list {
+      width: 131px;
+      margin-left: -21px;
+      margin-bottom: -22px;
+    }
+  }
 }
 
 .remote-input-container {
-    textarea {
-        margin-top: 15px;
-        width: 100%;
-    }
+  textarea {
+    margin-top: 15px;
+    width: 100%;
+  }
 }
 
 .aig-non-approved-data {
-    opacity: 0.5;
+  opacity: 0.5;
 }

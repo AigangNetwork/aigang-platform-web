@@ -2,26 +2,32 @@
   <div class="file-card-container">
     <div class="card-section">
       <img src="/static/dataset/csv_file_64px.svg">
-      <div class="card-section-header">
+      <div class="card-section-header" :class="{ 'hide-upload': !showUploadOption}">
         <p> {{$t('data.upload.titles.fileDetails')}} </p>
         <el-row v-if="showUploadOption">
-          <el-switch v-model="isRemoteFile" :active-text="$t('data.dataset.edit.remoteAccessPoint')" :inactive-text="$t('data.dataset.edit.file')">
+          <el-switch v-model="isRemoteFile" @change="setIsFileRemote" :active-text="$t('data.dataset.edit.remoteAccessPoint')" :inactive-text="$t('data.dataset.edit.file')">
           </el-switch>
         </el-row>
+
         <transition name="slideDown">
           <el-row v-if="isRemoteFile && showUploadOption">
-            <div class="profile-info-input remote-input-container">
-              <el-input type="textarea" autosize v-model="remoteFileAccessPoint" @blur="debounceDispatch" :placeholder="$t('data.dataset.edit.describeRemoteAccessPoint' )"></el-input>
-            </div>
+            <el-form-item prop="remoteFileAccessPoint" size="small" class="remote-input-container">
+              <el-input type="textarea" autosize v-model="remoteFileAccessPoint" @blur="handleRemoteFileChange" :placeholder="$t('data.dataset.edit.describeRemoteAccessPoint' )"></el-input>
+            </el-form-item>
           </el-row>
         </transition>
       </div>
 
       <transition name="fade">
-        <el-upload v-if="showUploadOption && !isRemoteFile" class="profile-button" :limit="1" ref="csvFile" drag :action="''" :multiple="false"
-          :auto-upload="false" :on-change="handleFileChange" accept=".csv">
-          {{ $t('data.dataset.edit.uploadNew') }}
-        </el-upload>
+        <div class="upload-button-container">
+          <el-upload class="el-button" v-if="showUploadOption && !isRemoteFile" :limit="1" ref="csvFile" :action="''" :multiple="false"
+            :auto-upload="false" :on-change="handleFileChange" :on-remove="fileRemoved" accept=".csv">
+            {{ $t('data.dataset.edit.uploadNew') }}
+          </el-upload>
+          <div v-if="!isValid && !isRemoteFile" class="aig-form-error">
+            {{ validationMessage }}
+          </div>
+        </div>
       </transition>
     </div>
     <div class="card-section">
@@ -29,36 +35,88 @@
         <p>{{ $t('data.dataset.edit.registeredOnly') }}</p>
         <p>{{ $t('data.dataset.edit.byDefaultPublicAccess') }}</p>
       </div>
-      <el-switch :value="value" @change="(value) => $emit('input', value)" :inactive-text="$t('data.dataset.edit.public')" :active-text="$t('data.dataset.edit.loggedIn')">
+      <el-switch :value="value" @change="(value) => $emit('input', value)" :active-text="$t('data.dataset.edit.public')" :inactive-text="$t('data.dataset.edit.loggedIn')">
       </el-switch>
     </div>
   </div>
 </template>
 <script>
 export default {
-  props: ['value', 'showUploadOption'],
+  props: ['value', 'showUploadOption', 'onFileChange'],
   data () {
     return {
       isDatasetPrivate: false,
       isRemoteFile: false,
-      remoteFileAccessPoint: ''
+      remoteFileAccessPoint: '',
+      isValid: true,
+      validationMessage: '',
+      isFileEmpty: false,
+      isInitiallyRemote: false
     }
   },
   methods: {
     setCurrentDatasetIsPublic () {
       this.$store.dispatch('setCurrentDatasetIsPublic', { isPublic: this.isPublic })
     },
-    debounceDispatch () {
-      this.$store.dispatch('setRemoteFileAccessPoint', { remoteFileAccessPoint: this.remoteFileAccessPoint })
+    handleRemoteFileChange () {
+      this.$store.dispatch('setRemoteFileAccessPoint',
+        { remoteFileAccessPoint: this.remoteFileAccessPoint })
+      this.$root.$emit('remoteFileAccessPoint', this.remoteFileAccessPoint)
     },
     handleFileChange (file) {
       this.$store.dispatch('setCurrentDatasetFile', { file })
+      this.$store.dispatch('setHasFileChanged', { hasFileChanged: true })
+      if (this.validate()) {
+        this.onFileChange()
+      }
+    },
+    fileRemoved () {
+      this.$store.dispatch('setCurrentDatasetFile', { file: null })
+      this.$store.dispatch('setHasFileChanged', { hasFileChanged: false })
+      this.onFileChange()
+    },
+    setIsFileRemote (value) {
+      this.$store.dispatch('setIsFileRemote', { isFileRemote: value })
+      this.$root.$emit('isFileRemote', value)
+    },
+    validate () {
+      if (!this.$store.state.currentDataset.hasFileChanged &&
+          !this.$store.state.currentDataset.isFileRemote &&
+          !this.isInitiallyRemote) {
+        return true
+      }
+
+      if (this.$store.state.currentDataset.isFileRemote) {
+        return true
+      }
+
+      if (!this.$store.state.currentDataset.isFileRemote &&
+          !this.$store.state.currentDataset.file) {
+        this.isValid = false
+        this.validationMessage = this.$t('data.dataset.validation.FileEmpty')
+        return false
+      }
+
+      const fileSize = this.$store.state.currentDataset.file.raw.size / 1024 / 1024
+      if (fileSize > 10) {
+        this.$refs.csvFile.clearFiles()
+        this.isValid = false
+        this.validationMessage = this.$t('data.dataset.validation.FileTooBig')
+        return false
+      }
+
+      this.isValid = true
+      return true
     }
   },
   created () {
-    this.isRemoteFile = this.$store.getters.isDatasetAccessPoint
+    if (this.$store.state.currentDataset.remoteFileAccessPoint) {
+      this.isRemoteFile = true
+      this.isInitiallyRemote = true
+    }
+
     if (this.showUploadOption) {
-      this.remoteFileAcccessPoint = this.$store.state.currentDataset.remoteFileAccessPoint
+      this.remoteFileAccessPoint = this.$store.state.currentDataset.remoteFileAccessPoint
     }
   }
 }
@@ -81,16 +139,25 @@ export default {
       .card-section-header {
         flex-grow: 1;
         margin: 0 15px;
-        min-height: 100px;
+        min-height: 115px;
         p {
           margin: 0;
+          &:first-child {
+            flex-grow: 1
+          }
         }
+        &.hide-upload {
+          min-height: 30px
+        }
+      }
+      .upload-button-container {
+        transition: all 200ms;
+        min-height: 80px;
       }
       .remote-input-container {}
       p {
         display: inline;
         line-height: 32px;
-        flex-grow: 1;
         color: $purple;
         font-size: 16px;
       }
@@ -109,6 +176,12 @@ export default {
           }
         }
       }
+    }
+
+    .aig-form-error {
+      margin-top: 5px;
+      font-size: 14px;
+      margin-bottom: -22px;
     }
 
   }
