@@ -11,6 +11,8 @@
 
         <UpdatePassword/>
 
+        <div class="horizontal-line"></div>
+        <DeactivateAccount/>
         <!--
         <div class="horizontal-line"></div>
 
@@ -27,6 +29,7 @@ import Card from '@/components/Card'
 import ProfileInfo from './profile/ProfileInfo'
 import UpdatePassword from './profile/UpdatePassword'
 import EmailPreferences from './profile/EmailPreferences'
+import DeactivateAccount from './profile/DeactivateAccount'
 
 export default {
   name: 'ProfileView',
@@ -34,7 +37,8 @@ export default {
     Card,
     ProfileInfo,
     UpdatePassword,
-    EmailPreferences
+    EmailPreferences,
+    DeactivateAccount
   },
   data () {
     return {
