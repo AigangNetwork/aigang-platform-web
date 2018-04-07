@@ -11,8 +11,9 @@ This is presentation layer of [aigang.network](https://aigang.network) product f
 npm install
 
 # serve with hot reload at localhost:8080
-npm run dev - use qa environment api 
+npm run dev - use qa environment api
 npm run localdev - use local api
+npm run windowsdev - use qa environment api for windows environment users
 
 # build for production with minification
 npm run build - production configuration
@@ -22,13 +23,13 @@ npm run qabuild - qa configuration
 npm run build --report
 ```
 ## Environments
-**Production**  
-API (production branch) - [https://api.aigang.network/swagger](https://api.aigang.network/swagger)  
-WEB (production branch) - [https://platform.aigang.network](https://platform.aigang.network/)  
+**Production**
+API (production branch) - [https://api.aigang.network/swagger](https://api.aigang.network/swagger)
+WEB (production branch) - [https://platform.aigang.network](https://platform.aigang.network/)
 
- **QA**  
-API (qa branch) - [https://testapi.aigang.network/swagger](https://testapi.aigang.network/swagger)  
-WEB (qa branch) - [https://testplatform.aigang.network](https://testplatform.aigang.network/)  
+ **QA**
+API (qa branch) - [https://testapi.aigang.network/swagger](https://testapi.aigang.network/swagger)
+WEB (qa branch) - [https://testplatform.aigang.network](https://testplatform.aigang.network/)
 
 ## Documentation
 
