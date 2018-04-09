@@ -179,7 +179,16 @@
     "emailNewDataCommentsDescription":
       "Recieve email notifications of uploading a new data set",
     "emailNews": "Get news and updates about Aigang's product",
-    "passwordUpdated": "Password succesfully updated"
+    "passwordUpdated": "Password succesfully updated",
+    "deactivateAccountTitle": "Deactivate your account",
+    "deactivateAccountDescription":
+      "If you decide that you no longer want to use Aigang Platform, it's easy to deactivate your account. When you deactivate your account, you're no longer availible to log in or access your private uploaded datasets.",
+      "deactivateAccount": "Deactivate account",
+      "warning": "Warning",
+      "confirmationText": "Are you sure you want to deactivate your account?",
+      "confirm": "Confirm",
+      "cancel": "Cancel",
+      "deactivationSuccessful": "Your account was successfuly deactivated"
   },
   "navigation": {
     "profile": "Profile",
@@ -245,7 +254,8 @@
         "You sent an empty request. Please make sure all required values are set",
       "FileTooLargeError": "Provided file is too large",
       "BadFileContentType": "Bad file content type",
-      "GatewayTimeout": "Gateway time out"
+      "GatewayTimeout": "Gateway time out",
+      "AccountIsLocked": "Your account is disabled"
     },
     "pagePathNotFound": "The page you are trying to access is not available",
     "validationError": "You have entered an invalid data",
