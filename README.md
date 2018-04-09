@@ -23,14 +23,14 @@ npm run qabuild - qa configuration
 npm run build --report
 ```
 ## Environments
-**Production**
-API (production branch) - [https://api.aigang.network/swagger](https://api.aigang.network/swagger)
-WEB (production branch) - [https://platform.aigang.network](https://platform.aigang.network/)
-
- **QA**
-API (qa branch) - [https://testapi.aigang.network/swagger](https://testapi.aigang.network/swagger)
-WEB (qa branch) - [https://testplatform.aigang.network](https://testplatform.aigang.network/)
-
+**Production**  
+API (production branch) - [https://api.aigang.network/swagger](https://api.aigang.network/swagger)  
+WEB (production branch) - [https://platform.aigang.network](https://platform.aigang.network/)  
+  
+**QA**  
+API (qa branch) - [https://testapi.aigang.network/swagger](https://testapi.aigang.network/swagger)  
+WEB (qa branch) - [https://testplatform.aigang.network](https://testplatform.aigang.network/)  
+  
 ## Documentation
 
 Read the  [manual](https://aigang.readthedocs.io/en/latest/)  for more details. Latest whitepaper can be found [here](https://aigang.network/whitepaper). Documentation repository can be found [here](https://github.com/AigangNetwork/aigang-docs). For a detailed explanation on how Vue work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
