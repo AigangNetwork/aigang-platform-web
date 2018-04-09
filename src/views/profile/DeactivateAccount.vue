@@ -2,7 +2,7 @@
   <div v-loading="deactivating">
     <el-row class="profile-password-container">
       <el-col>
-        <p class="profile-section-title">{{ $t('profile.deactivateAccountTitle') }}</p>
+        <p class="input-section-title">{{ $t('profile.deactivateAccountTitle') }}</p>
       </el-col>
       <el-col>
         <p class="profile-section-decription">{{ $t('profile.deactivateAccountDescription') }}</p>
