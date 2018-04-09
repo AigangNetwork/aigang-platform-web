@@ -94,6 +94,22 @@
     padding-bottom: 2px;
     width: 100%;
   }
+
+  .file-card-container .card-section {
+    .el-button {
+      .el-upload {
+        height: 24px;
+        line-height: 24px;
+        border: none;
+        margin-bottom: 15px;
+        width: 100%;
+      }
+      .el-upload-list {
+        width: 100%;
+        margin: 0 auto 0 auto;
+      }
+    }
+  }
 }
 
 @media screen and (min-width: 100px) and (max-width: 302px) {

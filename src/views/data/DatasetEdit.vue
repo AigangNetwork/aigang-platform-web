@@ -292,11 +292,11 @@ export default {
     .aig-container-dataset {
       display: block;
       .back-button {
-        margin: 20px;
+        margin: 20px 0 0 20px;
       }
 
       .dataset-edit-container {
-        margin-top: 20px;
+        margin-top: 0px;
         padding: 20px
       }
     }

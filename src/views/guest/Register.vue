@@ -31,7 +31,7 @@
             </el-col>
 
             <el-col :span="12">
-              <el-form @keyup.enter.native="submitForm('registerForm')" :model="registerForm" :rules="registerFormRules" ref="registerForm">
+              <el-form @keyup.enter.native="submitForm('registerForm', register)" :model="registerForm" :rules="registerFormRules" ref="registerForm">
 
                 <el-row>
                   <el-col>
@@ -75,7 +75,7 @@
                 <el-row>
                   <el-col>
                     <el-form-item>
-                      <el-button type="primary" @click="submitForm('registerForm')">{{ $t('signUp.signUp') }}</el-button>
+                      <el-button type="primary" @click="submitForm('registerForm', register)">{{ $t('signUp.signUp') }}</el-button>
                     </el-form-item>
                   </el-col>
                 </el-row>
@@ -101,12 +101,14 @@
 
 <script>
 import Card from '@/components/Card'
+import FormMixin from '@/components/mixins/FormMixin'
 
 export default {
   name: 'RegisterView',
   components: {
     Card
   },
+  mixins: [FormMixin],
   data () {
     return {
       loading: false,
@@ -154,15 +156,6 @@ export default {
     }
   },
   methods: {
-    submitForm (formName) {
-      this.$refs[formName].validate(valid => {
-        if (valid) {
-          this.register()
-        } else {
-          return false
-        }
-      })
-    },
     register () {
       this.loading = true
       this.axios.post('/account/register', this.registerForm).then(response => {
@@ -221,5 +214,4 @@ export default {
       }
     }
   }
-
 </style>

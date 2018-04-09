@@ -5,7 +5,7 @@
       <div v-if="isStructured && structure.length > 0">
         <h4 class="input-section-title">{{$t('data.upload.titles.structure')}}</h4>
         <el-row :gutter="20" type="flex" v-for="column in structure" :key="column.name">
-          <el-col :span="10">
+          <el-col :span="24">
             <h5 class="structure-type-title">{{column.name}}</h5>
           </el-col>
           <el-col>
@@ -13,7 +13,7 @@
               <el-input :placeholder="$t('data.upload.input.placeholder.column')" v-model="column.description"></el-input>
             </el-form-item>
           </el-col>
-          <el-col :span="10">
+          <el-col :span="24">
             <el-select size="medium" aria-required="true" v-model="column.dataType" :placeholder="$t('data.upload.input.placeholder.dataType')">
               <el-option v-for="item in dataTypeOptions" :key="item" :label="item" :value="item">
               </el-option>
@@ -78,5 +78,11 @@ export default {
     margin: 10px 0px 0px 0px;
     color: $purple;
     font-weight: 600;
+  }
+
+  @media screen and (min-width: 100px) and (max-width: 680px) {
+    .el-col.el-col-24 {
+      width: 33%;
+    }
   }
 </style>

@@ -104,6 +104,7 @@ export default {
         }
       }
       .aig-footer-container-right {
+        justify-content: right;
         @extend .aig-footer-container;
       }
     }
@@ -127,12 +128,17 @@ export default {
       padding-left: 0px;
     }
 
-    .aig-data .aig-data-body {
-      margin-top: 60px;
+    .aig-data {
+      .aig-data-head:nth-child(2) {
+        margin-top: 15px;
+      }
+      .aig-data-body {
+        margin-top: 45px;
+      }
     }
   }
 
-  @media screen and (min-width: 100px) and (max-width: 380px) {
+  @media screen and (min-width: 100px) and (max-width: 680px) {
     .aig-data {
       height: 265px;
 
@@ -160,5 +166,4 @@ export default {
       }
     }
   }
-
 </style>

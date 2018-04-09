@@ -16,7 +16,7 @@
             <el-row type="flex" justify="center">
               <el-col :span="10">
                 <h2>{{ $t('retrievePassword.title') }}</h2>
-                <el-form @submit.prevent.native="submitForm('forgotPasswordForm')" :model="forgotPasswordForm" :rules="forgotPasswordFormRules"
+                <el-form @submit.prevent.native="submitForm('forgotPasswordForm', retrievePassword)" :model="forgotPasswordForm" :rules="forgotPasswordFormRules"
                   ref="forgotPasswordForm">
                   <el-row style="input_label">
                     <el-col>
@@ -33,7 +33,7 @@
                   </el-row>
 
                   <el-form-item style="margin-bottom: 0;">
-                    <el-button type="primary" @click="submitForm('forgotPasswordForm')">{{ $t('actions.retrievePassword') }}</el-button>
+                    <el-button type="primary" @click="submitForm('forgotPasswordForm', retrievePassword)">{{ $t('actions.retrievePassword') }}</el-button>
                   </el-form-item>
                 </el-form>
               </el-col>
@@ -68,12 +68,14 @@
 
 <script>
 import Card from '@/components/Card'
+import FormMixin from '@/components/mixins/FormMixin'
 
 export default {
   name: 'ForgotPasswordView',
   components: {
     Card
   },
+  mixins: [FormMixin],
   data () {
     return {
       loading: false,
@@ -98,15 +100,6 @@ export default {
     }
   },
   methods: {
-    submitForm (formName) {
-      this.$refs[formName].validate(valid => {
-        if (valid) {
-          this.retrievePassword()
-        } else {
-          return false
-        }
-      })
-    },
     retrievePassword () {
       this.loading = true
       this.axios

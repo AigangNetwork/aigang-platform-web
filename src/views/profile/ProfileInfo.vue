@@ -19,7 +19,7 @@
             <el-button @click="isProfileChangeOn = !isProfileChangeOn" class="profile-button change-button">{{ $t('general.change') }}</el-button>
           </el-row>
 
-          <el-form v-if="isProfileChangeOn" @keyup.enter.native="submitForm('profileForm')" :model="profileForm" :rules="profileFormRules"
+          <el-form v-if="isProfileChangeOn" @keyup.enter.native="submitForm('profileForm', saveInfo)" :model="profileForm" :rules="profileFormRules"
             ref="profileForm">
             <el-row class="info-change">
               <el-row>
@@ -50,7 +50,7 @@
                   <strong>{{ $t('profile.email')}}: </strong>{{ $store.state.user.profile.email }}</div>
               </el-row>
               <el-row>
-                <el-button @click="submitForm('profileForm')" type="submit" v-show="isProfileChangeOn" class="profile-button no-margin">{{ $t('general.save') }}</el-button>
+                <el-button @click="submitForm('profileForm', saveInfo)" type="submit" v-show="isProfileChangeOn" class="profile-button no-margin">{{ $t('general.save') }}</el-button>
               </el-row>
 
             </el-row>
@@ -64,8 +64,11 @@
 </template>
 
 <script>
+import FormMixin from '@/components/mixins/FormMixin'
+
 export default {
   name: 'ProfileInfo',
+  mixins: [FormMixin],
   data () {
     return {
       isProfileChangeOn: false,
@@ -117,17 +120,6 @@ export default {
     }
   },
   methods: {
-    submitForm (formName) {
-      this.loading = true
-      this.$refs[formName].validate(valid => {
-        if (valid) {
-          this.saveInfo()
-        } else {
-          this.loading = false
-          return false
-        }
-      })
-    },
     saveInfo () {
       this.axios.put('/account/edit', this.profileForm)
         .then(response => {
@@ -257,5 +249,4 @@ export default {
     }
 
   }
-
 </style>

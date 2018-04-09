@@ -8,7 +8,7 @@
         <p class="profile-section-decription">{{ $t('profile.passwordDescription') }}</p>
       </el-col>
 
-      <el-form class="form-container" @keyup.enter.native="submitForm('profileForm')" :model="profileForm" :rules="profileFormRules"
+      <el-form class="form-container" @keyup.enter.native="submitForm('profileForm', edit)" :model="profileForm" :rules="profileFormRules"
         ref="profileForm">
         <el-row>
           <el-col>
@@ -45,7 +45,7 @@
         <el-row>
           <el-col>
             <el-form-item>
-              <el-button class="profile-button change-button" @click="submitForm('profileForm')">{{ $t('profile.changePassword') }}</el-button>
+              <el-button class="profile-button change-button" @click="submitForm('profileForm', edit)">{{ $t('profile.changePassword') }}</el-button>
             </el-form-item>
           </el-col>
         </el-row>
@@ -54,7 +54,10 @@
   </div>
 </template>
 <script>
+import FormMixin from '@/components/mixins/FormMixin'
+
 export default {
+  mixins: [FormMixin],
   data () {
     return {
       loading: false,
@@ -106,15 +109,6 @@ export default {
         .catch(e => {
           this.loading = false
         })
-    },
-    submitForm (formName) {
-      this.$refs[formName].validate(valid => {
-        if (valid) {
-          this.edit()
-        } else {
-          return false
-        }
-      })
     }
   },
   created () {
@@ -160,5 +154,4 @@ export default {
       }
     }
   }
-
 </style>

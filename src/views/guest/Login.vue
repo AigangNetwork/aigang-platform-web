@@ -80,12 +80,14 @@
 
 <script>
 import Card from '@/components/Card'
+import FormMixin from '@/components/mixins/FormMixin'
 
 export default {
   name: 'LoginView',
   components: {
     Card
   },
+  mixins: [FormMixin],
   data () {
     return {
       loading: false,
@@ -120,16 +122,6 @@ export default {
     }
   },
   methods: {
-    submitForm (formName, successCallback, errorCallback) {
-      this.$refs[formName].validate(valid => {
-        if (valid) {
-          successCallback()
-        } else {
-          errorCallback()
-          return false
-        }
-      })
-    },
     login () {
       this.loading = true
       this.axios.post('/account/login', this.loginForm).then(response => {

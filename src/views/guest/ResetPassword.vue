@@ -25,8 +25,8 @@
             </el-col>
 
             <el-col :span="12">
-              <el-form class="retrieve-pass" @keyup.enter.native="submitForm('resetPasswordForm')" :model="resetPasswordForm" :rules="resetPasswordFormRules"
-                ref="resetPasswordForm">
+              <el-form class="retrieve-pass" @keyup.enter.native="submitForm('resetPasswordForm', resetPassword)" :model="resetPasswordForm"
+                :rules="resetPasswordFormRules" ref="resetPasswordForm">
 
                 <el-row>
                   <el-col>
@@ -57,7 +57,7 @@
                 <el-row>
                   <el-col>
                     <el-form-item>
-                      <el-button type="primary" @click="submitForm('resetPasswordForm')">{{ $t('retrievePassword.retrievePassword') }}</el-button>
+                      <el-button type="primary" @click="submitForm('resetPasswordForm', resetPassword)">{{ $t('retrievePassword.retrievePassword') }}</el-button>
                     </el-form-item>
                   </el-col>
                 </el-row>
@@ -83,12 +83,14 @@
 
 <script>
 import Card from '@/components/Card'
+import FormMixin from '@/components/mixins/FormMixin'
 
 export default {
   name: 'ResetPasswordView',
   components: {
     Card
   },
+  mixins: [FormMixin],
   data () {
     return {
       loading: true,
@@ -112,15 +114,6 @@ export default {
     }
   },
   methods: {
-    submitForm (formName) {
-      this.$refs[formName].validate(valid => {
-        if (valid) {
-          this.resetPassword()
-        } else {
-          return false
-        }
-      })
-    },
     resetPassword () {
       this.loading = true
       this.axios.post('/account/resetpassword', this.resetPasswordForm)

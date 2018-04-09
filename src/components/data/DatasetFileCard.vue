@@ -1,8 +1,8 @@
 <template>
   <div class="file-card-container">
-    <div class="card-section">
+    <div class="card-section" :class="{ 'hide-upload': !showUploadOption}">
       <img src="/static/dataset/csv_file_64px.svg">
-      <div class="card-section-header" :class="{ 'hide-upload': !showUploadOption}">
+      <div class="card-section-header">
         <p> {{$t('data.upload.titles.fileDetails')}} </p>
         <el-row v-if="showUploadOption">
           <el-switch v-model="isRemoteFile" @change="setIsFileRemote" :active-text="$t('data.dataset.edit.remoteAccessPoint')" :inactive-text="$t('data.dataset.edit.file')">
@@ -136,6 +136,11 @@ export default {
       &:first-child {
         border-bottom: 1px solid $light-grey-border;
       }
+      &.hide-upload {
+        .card-section-header {
+          min-height: 30px
+        }
+      }
       .card-section-header {
         flex-grow: 1;
         margin: 0 15px;
@@ -145,9 +150,6 @@ export default {
           &:first-child {
             flex-grow: 1
           }
-        }
-        &.hide-upload {
-          min-height: 30px
         }
       }
       .upload-button-container {
@@ -191,8 +193,26 @@ export default {
       .card-section {
         flex-direction: column;
         align-items: flex-start;
+        img {
+          margin: 0 auto;
+        }
+        &.hide-upload {
+          height: 150px;
+          .card-section-header {
+            min-height: 20px;
+            height: 20px;
+            flex-grow: 0;
+          }
+          .upload-button-container {
+            min-height: 0;
+          }
+          p {
+            height: 20px;
+          }
+        }
         .card-section-header {
           margin: 0;
+          text-align: center;
         }
         div {
           display: block;
