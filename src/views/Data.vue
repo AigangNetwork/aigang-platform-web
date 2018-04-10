@@ -13,7 +13,7 @@
           </transition>
           <ul>
             <li v-for="item in dataMeniu" :key="item.name">
-              <router-link :class="{'aig-link-disabled': item.disabled}" active-class="aig-menu-active" :to="item.routeLink" exact>
+              <router-link :class="{'aig-link-disabled': item.disabled}" active-class="aig-menu-active" :to="item.routeLink">
                 {{ item.name }}
               </router-link>
             </li>
@@ -34,14 +34,6 @@
         <el-row :gutter="20" class="aig-items">
           <router-view></router-view>
         </el-row>
-        <!-- <el-pagination
-        v-if="this.dataList.length > 0"
-        style="text-align: center; margin-top: 30px;"
-        background
-        layout="prev, pager, next"
-        :total="totalPageCount"
-        size="small">
-      </el-pagination> -->
       </el-main>
     </el-container>
   </div>
@@ -55,7 +47,7 @@ export default {
       dataMeniu: [{
         name: this.$t('data.menu.all'),
         routeLink: {
-          name: 'all'
+          path: '/data/all'
         },
         active: true,
         disabled: false
@@ -63,7 +55,7 @@ export default {
       {
         name: this.$t('data.menu.uploaded'),
         routeLink: {
-          name: 'mylist'
+          path: '/data/uploaded'
         },
         active: false,
         disabled: false
@@ -256,4 +248,5 @@ export default {
       }
     }
   }
+
 </style>

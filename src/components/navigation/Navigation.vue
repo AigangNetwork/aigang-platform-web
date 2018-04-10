@@ -3,7 +3,7 @@
     <transition name="slideDown">
       <div class="aig-navigation">
         <div class="aig-navigation-body">
-          <router-link to="/data" class="aig-logo">
+          <router-link to="/data/all" class="aig-logo">
             <img src="/static/logo.png" alt="">
             <div class="alpha-container">
               {{ $t('general.versionAlpha') }}
