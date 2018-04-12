@@ -17,6 +17,15 @@ const store = new Vuex.Store({
       token: null,
       profile: null
     },
+    userWeb3: {
+      web3Instance: null,
+      isInjected: false,
+      ethBalance: null,
+      networkId: null,
+      coinbase: null,
+      aixBalance: null,
+      error: null
+    },
     currentDataset: null
   },
   mutations,

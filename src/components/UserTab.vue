@@ -5,7 +5,7 @@
     </div>
     <div class="information">
       {{ $store.state.user.profile.firstName }}
-      <!-- <div class="balance">10 000 AIX</div> -->
+      <div v-if="$store.state.userWeb3.isInjected" class="balance">{{$store.state.userWeb3.aixBalance}} AIX</div>
     </div>
   </router-link>
 </template>
@@ -50,4 +50,5 @@
       }
     }
   }
+
 </style>

@@ -183,12 +183,12 @@
     "deactivateAccountTitle": "Deactivate your account",
     "deactivateAccountDescription":
       "If you decide that you no longer want to use Aigang Platform, it's easy to deactivate your account. When you deactivate your account, you're no longer availible to log in or access your private uploaded datasets.",
-      "deactivateAccount": "Deactivate account",
-      "warning": "Warning",
-      "confirmationText": "Are you sure you want to deactivate your account?",
-      "confirm": "Confirm",
-      "cancel": "Cancel",
-      "deactivationSuccessful": "Your account was successfuly deactivated"
+    "deactivateAccount": "Deactivate account",
+    "warning": "Warning",
+    "confirmationText": "Are you sure you want to deactivate your account?",
+    "confirm": "Confirm",
+    "cancel": "Cancel",
+    "deactivationSuccessful": "Your account was successfuly deactivated"
   },
   "navigation": {
     "profile": "Profile",
@@ -229,6 +229,7 @@
   },
   "errors": {
     "error": "Error",
+    "information": "Information",
     "400": "Bad Request",
     "401": "Unauthorized",
     "403": "Forbidden",
@@ -261,6 +262,9 @@
     "validationError": "You have entered an invalid data",
     "serverNotFound": "Server error",
     "contactIfError":
-      "If you see this error please contact us via email info@aigang.network"
+      "If you see this error please contact us via email info@aigang.network",
+    "metamaskDetected":
+      "We have detected that you are using metamask extension. In order to see your account AIX balance please switch your network to ",
+      "useMetamask": "To use all of our Platform features please Log in to Metamask Extension"
   }
 }

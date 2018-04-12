@@ -2,7 +2,9 @@ import Vue from 'vue'
 
 const eventHub = new Vue({
   data: {
-    eventCommunicationError: 'eventCommunicationError'
+    eventCommunicationError: 'eventCommunicationError',
+    eventMetamaskNetworkError: 'eventMetamaskNetworkError',
+    eventMetamaskAccountWasNotFound: 'eventMetamaskAccountWasNotFound'
   }
 })
 

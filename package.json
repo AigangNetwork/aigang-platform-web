@@ -26,6 +26,7 @@
     "vue-router": "^3.0.1",
     "vuex": "^3.0.1",
     "vuex-persistedstate": "^2.4.2",
+    "web3": "^1.0.0-beta.33",
     "win-node-env": "^0.1.0"
   },
   "devDependencies": {
