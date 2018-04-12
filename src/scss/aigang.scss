@@ -206,6 +206,11 @@ body.aig {
     color: $white;
     transition: all 200ms;
   }
+  &:focus {
+    background-color: $white;
+    color: $button-purple;
+    border: 1px solid $light-grey;
+  }
 }
 
 .profile-button span {
@@ -325,4 +330,19 @@ body.aig {
 
 .aig-non-approved-data {
   opacity: 0.5;
+}
+
+.info-title {
+  color: $light-grey;
+  margin-top: 40px;
+  margin-bottom: 15px;
+  text-transform: uppercase;
+}
+
+.aig-dataset-info-container {
+  padding: 0px 53px 5px 53px;
+  .info-content {
+    word-wrap: break-word;
+    color: $purple;
+  }
 }

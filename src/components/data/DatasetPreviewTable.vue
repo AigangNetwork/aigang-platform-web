@@ -33,38 +33,9 @@ export default {
 </script>
 <style lang="scss" scoped>
   @import '~helpers/variables';
+  @import '~helpers/mixins';
+
   .table-container {
-    display: flex;
+    @include aig-table;
   }
-
-  table {
-    margin-bottom: 40px;
-    max-width: 823px;
-    border: 1px solid $border-light-purple;
-    border-radius: 4px;
-    display: block;
-    overflow-x: auto;
-    border-collapse: collapse;
-    .table-header {
-      color: white;
-      background-color: $button-purple;
-      height: 50px;
-    }
-    tr {
-      td {
-        align: center;
-        padding: 19px 17px 19px 17px;
-        max-width: 250px;
-        word-wrap: break-word;
-        border-bottom: 1px solid $border-light-purple;
-        border-right: 1px solid $border-light-purple;
-      }
-      th {
-        font-weight: 400;
-        word-wrap: break-word;
-        padding: 0 10px 0 10px;
-      }
-    }
-  }
-
 </style>

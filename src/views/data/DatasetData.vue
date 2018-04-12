@@ -102,23 +102,6 @@ export default {
 </script>
 <style lang="scss" scoped>
   @import '~helpers/variables';
-
-  .aig-dataset-info-container {
-    padding: 0px 53px 5px 53px;
-    .info-content {
-      word-wrap: break-word;
-      color: $purple;
-    }
-
-  }
-
-  .info-title {
-    color: $light-grey;
-    margin-top: 40px;
-    margin-bottom: 15px;
-    text-transform: uppercase;
-  }
-
   .table-container {
     align-items: center;
     .structure-content {
@@ -144,5 +127,4 @@ export default {
       border-bottom: 1px solid $light-grey-border;
     }
   }
-
 </style>

@@ -1,25 +1,59 @@
 @import '~node_modules/breakpoint-sass/stylesheets/_breakpoint';
 @mixin transition($property: all, $time: 400ms, $method: ease-in-out) {
-    transition: $property $time $method;
+  transition: $property $time $method;
 }
 
 @mixin optional-at-root($sel) {
-    @at-root #{if(not &, $sel, selector-append(&, $sel))} {
-        @content;
-    }
+  @at-root #{if(not &, $sel, selector-append(&, $sel))} {
+    @content;
+  }
 }
 
 @mixin placeholder {
-    @include optional-at-root('::-webkit-input-placeholder') {
-        @content;
+  @include optional-at-root('::-webkit-input-placeholder') {
+    @content;
+  }
+  @include optional-at-root(':-moz-placeholder') {
+    @content;
+  }
+  @include optional-at-root('::-moz-placeholder') {
+    @content;
+  }
+  @include optional-at-root(':-ms-input-placeholder') {
+    @content;
+  }
+}
+
+@mixin aig-table {
+  display: flex;
+
+  table {
+    margin-bottom: 40px;
+    max-width: 823px;
+    border: 1px solid $border-light-purple;
+    border-radius: 4px;
+    display: block;
+    overflow-x: auto;
+    border-collapse: collapse;
+    .table-header {
+      color: white;
+      background-color: $button-purple;
+      height: 50px;
     }
-    @include optional-at-root(':-moz-placeholder') {
-        @content;
+    tr {
+      td {
+        align: center;
+        padding: 19px 17px 19px 17px;
+        max-width: 250px;
+        word-wrap: break-word;
+        border-bottom: 1px solid $border-light-purple;
+        border-right: 1px solid $border-light-purple;
+      }
+      th {
+        font-weight: 400;
+        word-wrap: break-word;
+        padding: 0 10px 0 10px;
+      }
     }
-    @include optional-at-root('::-moz-placeholder') {
-        @content;
-    }
-    @include optional-at-root(':-ms-input-placeholder') {
-        @content;
-    }
+  }
 }

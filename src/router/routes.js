@@ -5,7 +5,6 @@ import ActivateEmail from '@/views/guest/ActivateEmail'
 import ResetPassword from '@/views/guest/ResetPassword'
 
 import Data from '@/views/Data'
-// import DataModels from '@/views/DataModels'
 
 import Predictions from '@/views/Predictions'
 import Invest from '@/views/Invest'
@@ -15,12 +14,13 @@ import UploadDataSet from '@/views/data/UploadDataSet'
 import Dataset from '@/views/data/Dataset'
 import NotFound from '@/views/general/NotFound'
 import DatasetInfo from '@/views/data/DatasetInfo'
-import DatasetModels from '@/views/data/DatasetModels'
+import DataModelList from '@/views/data/DataModelList'
 import DatasetThreads from '@/views/data/DatasetThreads'
 import DatasetData from '@/views/data/DatasetData'
 import DatasetEdit from '@/views/data/DatasetEdit'
 import AllData from '@/views/data/AllData'
 import Uploaded from '@/views/data/Uploaded'
+import DataModelUpload from '@/views/data/DataModelUpload'
 
 const routes = [
   {
@@ -114,12 +114,20 @@ const routes = [
         props: true
       },
       {
+        name: 'datasetModel',
         path: 'models',
-        component: DatasetModels
+        component: DataModelList,
+        props: true
       },
       {
         path: 'threads',
         component: DatasetThreads
+      },
+      {
+        name: 'uploadDataModel',
+        path: 'uploadDataModel',
+        component: DataModelUpload,
+        props: true
       }
     ]
   },

@@ -41,7 +41,8 @@
           "structure": "Please briefly describe your file structure",
           "fileUploadPart0": "Drop file here or ",
           "fileUploadPart1": "click to upload",
-          "dataType": "Data type"
+          "dataType": "Data type",
+          "premium": "1.5 ETH"
         },
         "validation": {
           "emptyInputError": "Please make sure you have filled all fields",
@@ -108,7 +109,29 @@
         "RemoteFileAccessPointTooShort":
           "Remote access must be at least 6 characters long",
         "FileEmpty": "File is required",
-        "FileTooBig": "File is too large"
+        "FileTooBig": "File is too large",
+        "PremiumEmpty": "Premium is required"
+      },
+      "model": {
+        "models": "Models",
+        "model": "Model",
+        "uploadModel": "Upload model",
+        "cancel": "Cancel",
+        "premium": "Premium",
+        "submitModel": "Submit model",
+        "newTable": "New table",
+        "on": "on",
+        "create": "Create",
+        "placeholder": {
+          "title": "Title",
+          "data": "Data"
+        },
+        "notification": {
+          "title": {
+            "success": "Success"
+          },
+          "successfullyUploaded": "Data model was successfully uploaded"
+        }
       }
     }
   },
@@ -183,12 +206,12 @@
     "deactivateAccountTitle": "Deactivate your account",
     "deactivateAccountDescription":
       "If you decide that you no longer want to use Aigang Platform, it's easy to deactivate your account. When you deactivate your account, you're no longer availible to log in or access your private uploaded datasets.",
-      "deactivateAccount": "Deactivate account",
-      "warning": "Warning",
-      "confirmationText": "Are you sure you want to deactivate your account?",
-      "confirm": "Confirm",
-      "cancel": "Cancel",
-      "deactivationSuccessful": "Your account was successfuly deactivated"
+    "deactivateAccount": "Deactivate account",
+    "warning": "Warning",
+    "confirmationText": "Are you sure you want to deactivate your account?",
+    "confirm": "Confirm",
+    "cancel": "Cancel",
+    "deactivationSuccessful": "Your account was successfuly deactivated"
   },
   "navigation": {
     "profile": "Profile",
@@ -223,6 +246,7 @@
     "change": "Change",
     "save": "Save",
     "back": "Back",
+    "cancel": "Cancel",
     "markupSupported": "VueMarkdown supported",
     "versionAlpha": "alpha",
     "unableToFindYourDatasets": "Can not find your datasets"

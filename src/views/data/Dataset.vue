@@ -22,14 +22,26 @@
       <div class="dataset-navigation-container">
         <div class="dataset-navigation">
           <nav class="dataset-navigation-menu">
-            <ul class="">
-              <li v-for="bar in navigationBars" :key="bar.name">
-                <router-link :to="bar.routeLink" active-class="dataset-bar-active" :class="{'disabled': bar.disabled}" exact>
-                  <img class="file-img" :src="bar.imgSrc" alt=""> {{ bar.name }}
-                </router-link>
-              </li>
-            </ul>
+
+            <transition name="fade">
+              <ul class="">
+                <li v-if="!uploadingModelActive" v-for="bar in navigationBars" :key="bar.name">
+                  <router-link :to="bar.routeLink" active-class="dataset-bar-active" :class="{'disabled': bar.disabled}" exact>
+                    <img class="file-img" :src="bar.imgSrc" alt=""> {{ bar.name }}
+                  </router-link>
+                </li>
+                <li v-if="uploadingModelActive">
+                  <h3>{{ $t('data.dataset.model.submitModel') }}</h3>
+                </li>
+                <li>
+                  <el-button v-if="!uploadingModelActive" class="upload-model-button" @click="$router.push({ name: 'uploadDataModel' })" type="warning">{{ $t('data.dataset.model.uploadModel') }}</el-button>
+                  <el-button v-if="uploadingModelActive" class="upload-model-button" @click="$router.go(-1)" type="warning">{{ $t('general.cancel') }}</el-button>
+                </li>
+              </ul>
+            </transition>
+
           </nav>
+
         </div>
       </div>
     </div>
@@ -77,9 +89,14 @@ export default {
       },
       {
         name: this.$t('data.dataset.navigation.models'),
-        routeLink: '/data/' + this.$route.params.id + '/models',
+        routeLink: {
+          name: 'datasetModel',
+          params: {
+            id: this.$route.params.id
+          }
+        },
         imgSrc: '/static/models24px.svg',
-        disabled: true
+        disabled: false
       },
       {
         name: this.$t('data.dataset.navigation.threads'),
@@ -93,6 +110,9 @@ export default {
   computed: {
     updated () {
       return moment(this.dataset.modifiedUtc).format('YYYY-MM-DD')
+    },
+    uploadingModelActive () {
+      return this.$route.path.includes('uploadDataModel')
     }
   },
   methods: {
@@ -220,10 +240,23 @@ export default {
     ul {
       list-style-type: none;
       display: flex;
+      width: 100%;
+      margin: 16px 53px 16px 53px;
+      padding-left: 0;
       li {
         justify-content: center;
+        max-height: 48px;
+        h3 {
+          height: 48px;
+          line-height: 48px;
+          margin: 2px;
+        }
         &+li {
           margin-left: 25px;
+        }
+        &:last-child {
+          flex-grow: 1;
+          text-align: right;
         }
         a {
           opacity: 0.35;
@@ -245,6 +278,11 @@ export default {
       border-bottom-color: $orange;
       opacity: 1;
     }
+  }
+
+  .upload-model-button {
+    margin-top: 2px;
+    min-width: 137px;
   }
 
   @media screen and (min-width: 680px) and (max-width: 1024px) {
