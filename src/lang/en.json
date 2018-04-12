@@ -47,8 +47,7 @@
         "validation": {
           "emptyInputError": "Please make sure you have filled all fields",
           "fileLimitExceed": "Please delete old file before uploading new one",
-          "unableAccessFileContent":
-            "File can not be accessed. Please reupload correct file"
+          "unableAccessFileContent": "File can not be accessed. Please reupload correct file"
         }
       }
     },
@@ -73,8 +72,7 @@
       "deleteDataset": "Delete dataset",
       "editDataset": "Edit dataset",
       "successDelete": "Dataset was successfully deleted",
-      "invalidPreview":
-        "This dataset does not contain visual preview. Download file to check it out",
+      "invalidPreview": "This dataset does not contain visual preview. Download file to check it out",
       "navigation": {
         "info": "Info",
         "data": "Data",
@@ -103,14 +101,15 @@
         "TitleTooShort": "Title must be at least 6 characters long",
         "DescriptionEmpty": "Description is required",
         "DescriptionTooShort": "Description must be at least 6 characters long",
-        "StructureFieldEmpty":
-          "Please make sure you have filled all structure fields",
+        "StructureFieldEmpty": "Please make sure you have filled all structure fields",
         "RemoteFileAccessPointEmpty": "Remote access point is required",
-        "RemoteFileAccessPointTooShort":
-          "Remote access must be at least 6 characters long",
+        "RemoteFileAccessPointTooShort": "Remote access must be at least 6 characters long",
         "FileEmpty": "File is required",
         "FileTooBig": "File is too large",
-        "PremiumEmpty": "Premium is required"
+        "PremiumEmpty": "Premium is required",
+        "PremiumInvalidNumber": "Premium must be a number",
+        "OnlyIntegersAllowed": "Only integers allowed",
+        "TableTooBig": "Maximum size of the table is 10x10"
       },
       "model": {
         "models": "Models",
@@ -122,6 +121,9 @@
         "newTable": "New table",
         "on": "on",
         "create": "Create",
+        "basePremium": "Base premium",
+        "eth": "ETH",
+        "by": "By",
         "placeholder": {
           "title": "Title",
           "data": "Data"
@@ -149,8 +151,7 @@
       "Creating an account in aigang.network you will get access to all products such as Data, Prediction market, Invest and Insure",
     "haveAccount": "Have Aigang Network Account?",
     "rePassword": "Repeat password",
-    "emailSent":
-      "Email was sent to {0}. Follow instructions provided in the email.",
+    "emailSent": "Email was sent to {0}. Follow instructions provided in the email.",
     "dontReceiveEmail": "If you didn't receive email, click: ",
     "waitingVerification": "Verification email was sent."
   },
@@ -193,14 +194,11 @@
     "emailPreferences": "Email preferences",
     "emailDescription": "Choose newsletter options",
     "emailModelComments": "Comments in my model",
-    "emailModelCommentsDescription":
-      "Recieve emails when somebody will comment your created model",
+    "emailModelCommentsDescription": "Recieve emails when somebody will comment your created model",
     "emailDataSetsComments": "Comments in my data sets",
-    "emailDataSetsCommentsDescription":
-      "Recieve email notifications when somebody will comment your created data set",
+    "emailDataSetsCommentsDescription": "Recieve email notifications when somebody will comment your created data set",
     "emailNewDataComments": "Uploading of new data sets",
-    "emailNewDataCommentsDescription":
-      "Recieve email notifications of uploading a new data set",
+    "emailNewDataCommentsDescription": "Recieve email notifications of uploading a new data set",
     "emailNews": "Get news and updates about Aigang's product",
     "passwordUpdated": "Password succesfully updated",
     "deactivateAccountTitle": "Deactivate your account",
@@ -262,20 +260,17 @@
     "unhandled": "Unhandled error: ",
     "validation": {
       "DuplicateUserName": "User name is taken. Please make it unique",
-      "DuplicateEmail":
-        "Email was registered earlier. Choose other email or use 'Forgot password'",
+      "DuplicateEmail": "Email was registered earlier. Choose other email or use 'Forgot password'",
       "InvalidEmail": "Email is not valid",
       "InvalidPassword": "Old password is not correct.",
-      "InvalidEmailOrPassword":
-        "The email address or password you entered is not valid",
+      "InvalidEmailOrPassword": "The email address or password you entered is not valid",
       "PasswordNotMatchRePassword": "Passwords are not matching",
       "PasswordTooShort": "Password is too short",
       "InvalidQuery": "Query is not valid",
       "UserNotFound": "Email not found",
       "EmailNotConfirmed": "Email is not comfirmed yet",
       "ValidationFailed": "We are unable to proccess your request",
-      "EmptyRequest":
-        "You sent an empty request. Please make sure all required values are set",
+      "EmptyRequest": "You sent an empty request. Please make sure all required values are set",
       "FileTooLargeError": "Provided file is too large",
       "BadFileContentType": "Bad file content type",
       "GatewayTimeout": "Gateway time out",
@@ -284,7 +279,6 @@
     "pagePathNotFound": "The page you are trying to access is not available",
     "validationError": "You have entered an invalid data",
     "serverNotFound": "Server error",
-    "contactIfError":
-      "If you see this error please contact us via email info@aigang.network"
+    "contactIfError": "If you see this error please contact us via email info@aigang.network"
   }
 }

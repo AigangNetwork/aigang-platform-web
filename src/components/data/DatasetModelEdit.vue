@@ -35,12 +35,14 @@
     </transition-group>
     <el-row class="table-create-container">
       <p>{{$t('data.dataset.model.newTable')}}</p>
-
-      <input type="number" v-model="colsLength" />
-      <p>{{$t('data.dataset.model.on')}}</p>
-      <input type="number" v-model="rowsLength" />
-
-      <div class="button-container">
+      <div>
+        <input v-model="colsLength" @input="event => validateInput(event)" />
+        <p>{{$t('data.dataset.model.on')}}</p>
+        <input v-model="rowsLength" @input="event => validateInput(event)" />
+      </div>
+      <span class="aig-error" v-if="lengthError">{{$t('data.dataset.validation.OnlyIntegersAllowed')}}</span>
+      <span class="aig-error" v-if="sizeError">{{$t('data.dataset.validation.TableTooBig')}}</span>
+      <div class="create-button-container">
         <el-button @click="createTable" class="profile-button">{{ $t('data.dataset.model.create') }}</el-button>
       </div>
     </el-row>
@@ -52,6 +54,8 @@ export default {
   props: ['dataModel'],
   data () {
     return {
+      lengthError: false,
+      sizeError: false,
       colsLength: '',
       rowsLength: '',
       colsArray: [],
@@ -60,8 +64,19 @@ export default {
   },
   methods: {
     createTable () {
+      if (this.lengthError) {
+        return
+      }
+
       const cols = parseInt(this.colsLength)
       const rows = parseInt(this.rowsLength)
+
+      if (cols > 10 || rows > 10) {
+        this.sizeError = true
+        return
+      } else {
+        this.sizeError = false
+      }
 
       let model = []
       model.push(new Array(cols).fill(this.$t('data.dataset.model.placeholder.title')))
@@ -91,6 +106,21 @@ export default {
       this.models[index].push(
         new Array(cols).fill(this.$t('data.dataset.model.placeholder.data'))
       )
+    },
+    validateInput (event) {
+      this.sizeError = false
+
+      if (event.target.value === '') {
+        return
+      }
+
+      const number = parseInt(event.target.value)
+
+      if (!number) {
+        this.lengthError = true
+      } else {
+        this.lengthError = false
+      }
     }
   }
 }
@@ -127,7 +157,7 @@ export default {
       margin: 0 8px 0 8px;
     }
 
-    .button-container {
+    .create-button-container {
       flex-grow: 1;
       text-align: right;
       margin-right: 12px;
@@ -200,10 +230,52 @@ export default {
 
   .table-wrapper {
     text-align: center;
+
     .table-action-button {
       margin-top: -10px;
       &:hover {
         cursor: pointer;
+      }
+    }
+  }
+
+  @media screen and (min-width: 100px) and (max-width: 680px) {
+    .table-create-container {
+      flex-wrap: wrap;
+      flex-flow: row wrap;
+
+      .create-button-container {
+        text-align: center;
+        margin: 20px 0;
+      }
+
+      >p:first-child {
+        margin-right: 26px;
+        width: 100%;
+        text-align: center
+      }
+
+      >div {
+        width: 100%;
+        text-align: center
+      }
+    }
+
+    .table-container {
+
+      .table-wrapper {
+        max-width: 100%;
+      }
+
+      input {
+        width: 120px;
+      }
+
+      table {
+        td,
+        th {
+          padding: 15px 12px !important;
+        }
       }
     }
   }

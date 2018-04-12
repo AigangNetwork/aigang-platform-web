@@ -14,13 +14,14 @@ import UploadDataSet from '@/views/data/UploadDataSet'
 import Dataset from '@/views/data/Dataset'
 import NotFound from '@/views/general/NotFound'
 import DatasetInfo from '@/views/data/DatasetInfo'
-import DataModelList from '@/views/data/DataModelList'
+import DatasetModelList from '@/views/data/DatasetModelList'
 import DatasetThreads from '@/views/data/DatasetThreads'
 import DatasetData from '@/views/data/DatasetData'
 import DatasetEdit from '@/views/data/DatasetEdit'
 import AllData from '@/views/data/AllData'
 import Uploaded from '@/views/data/Uploaded'
-import DataModelUpload from '@/views/data/DataModelUpload'
+import DatasetModelUpload from '@/views/data/DatasetModelUpload'
+import DatasetModel from '@/views/data/DatasetModel'
 
 const routes = [
   {
@@ -114,9 +115,9 @@ const routes = [
         props: true
       },
       {
-        name: 'datasetModel',
+        name: 'datasetModels',
         path: 'models',
-        component: DataModelList,
+        component: DatasetModelList,
         props: true
       },
       {
@@ -126,7 +127,7 @@ const routes = [
       {
         name: 'uploadDataModel',
         path: 'uploadDataModel',
-        component: DataModelUpload,
+        component: DatasetModelUpload,
         props: true
       }
     ]
@@ -138,6 +139,11 @@ const routes = [
     meta: {
       authRequired: true
     }
+  },
+  {
+    path: '/model/:id',
+    component: DatasetModel,
+    props: true
   },
   {
     path: '/predictions',

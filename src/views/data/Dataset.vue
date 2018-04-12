@@ -90,7 +90,7 @@ export default {
       {
         name: this.$t('data.dataset.navigation.models'),
         routeLink: {
-          name: 'datasetModel',
+          name: 'datasetModels',
           params: {
             id: this.$route.params.id
           }
@@ -261,12 +261,12 @@ export default {
         a {
           opacity: 0.35;
           padding: 15px 10px 5px 5px;
-          font-family: $font-primary;
+          font-family: $font-secondary;
           display: flex;
           align-items: center;
-          font-size: 14px;
-          font-weight: 600;
-          letter-spacing: 2px;
+          font-size: 16px;
+          font-weight: 500;
+          letter-spacing: 0.5px;
           &:hover {
             color: rgba(black, .65);
           }
@@ -308,6 +308,20 @@ export default {
           li {
             margin-left: 0;
             width: 40%;
+            h3 {
+              text-align: center;
+              line-height: 24px;
+              height: 24px;
+              margin-top: 12px;
+            }
+          }
+          li:last-child {
+            margin-top: 30px;
+            display: block;
+            width: 100%;
+            button {
+              width: 100%;
+            }
           }
         }
       }

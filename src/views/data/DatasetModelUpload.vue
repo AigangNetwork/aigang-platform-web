@@ -72,6 +72,10 @@ export default {
           required: true,
           message: this.$t('data.dataset.validation.PremiumEmpty'),
           trigger: 'blur'
+        }, {
+          pattern: /^\d*\.?\d*$/,
+          message: this.$t('data.dataset.validation.PremiumInvalidNumber'),
+          trigger: 'blur'
         }]
       }
     }
@@ -89,6 +93,7 @@ export default {
 
       this.axios.post('/data/uploadModel', uploadForm)
         .then(response => {
+          this.loading = false
           this.$notify({
             title: this.$t('data.dataset.model.notification.title.success'),
             type: 'success',
