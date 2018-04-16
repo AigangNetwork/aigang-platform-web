@@ -3,7 +3,7 @@
     <table>
       <thead class="table-header">
         <tr>
-          <th v-for="key in cols" :key="key">
+          <th v-for="(key, index) in cols" :key="index">
             {{ key }}
           </th>
         </tr>

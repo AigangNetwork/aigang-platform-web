@@ -24,25 +24,24 @@
   </div>
 </template>
 <script>
-import moment from 'moment'
+import CreatedDate from '@/components/mixins/CreatedDate'
 
 export default {
   props: ['model'],
+  mixins: [CreatedDate],
   data () {
     return {
-      modelRoute: { path: `/model/${this.model.id}` }
+      modelRoute: `models/${this.model.id}`
+    }
+  },
+  computed: {
+    createdUtc () {
+      return this.model.createdUtc
     }
   },
   methods: {
     navigateToModel () {
       this.$router.push(this.modelRoute)
-    }
-  },
-  computed: {
-    created () {
-      let createdUtc = moment.utc(this.model.createdUtc)
-      let result = createdUtc.from(moment().utcNow)
-      return result
     }
   }
 }
@@ -98,24 +97,6 @@ export default {
         border-bottom-left-radius: 50%;
       }
 
-    }
-
-    .small-text {
-      font-size: 10px;
-      letter-spacing: 0.4px;
-      align-self: flex-end;
-    }
-
-    .text-big {
-      font-size: 32px;
-      letter-spacing: 1.3px;
-      font-weight: bold;
-    }
-
-    .text-medium {
-      font-size: 16px;
-      letter-spacing: 1.1px;
-      font-weight: 400;
     }
 
     .author {

@@ -30,13 +30,14 @@
 
 <script>
 import Status from '@/components/Status'
-import moment from 'moment'
+import CreatedDate from '@/components/mixins/CreatedDate'
 
 export default {
   name: 'DataItem',
   components: {
     Status
   },
+  mixins: [CreatedDate],
   props: {
     data: {
       required: false,
@@ -47,13 +48,6 @@ export default {
     return {
       models: 3,
       comments: 12
-    }
-  },
-  computed: {
-    created () {
-      let createdUtc = moment.utc(this.data.createdUtc)
-      let result = createdUtc.from(moment().utcNow)
-      return result
     }
   }
 }

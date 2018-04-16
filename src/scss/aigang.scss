@@ -350,3 +350,26 @@ body.aig {
     color: $purple;
   }
 }
+
+.small-text {
+  font-size: 10px;
+  letter-spacing: 0.4px;
+  align-self: flex-end;
+}
+
+.text-big {
+  font-size: 32px;
+  letter-spacing: 1.3px;
+  font-weight: bold;
+}
+
+.text-medium {
+  font-size: 16px;
+  letter-spacing: 1.1px;
+  font-weight: 400;
+}
+
+.stick-to-right {
+  flex-grow: 1;
+  text-align: right;
+}

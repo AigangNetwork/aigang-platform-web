@@ -22,6 +22,7 @@ import AllData from '@/views/data/AllData'
 import Uploaded from '@/views/data/Uploaded'
 import DatasetModelUpload from '@/views/data/DatasetModelUpload'
 import DatasetModelInfo from '@/views/data/DatasetModelInfo'
+import DatasetModelTables from '@/views/data/DatasetModelTables'
 
 const routes = [
   {
@@ -106,19 +107,25 @@ const routes = [
         name: 'datasetInfo',
         path: '',
         component: DatasetInfo,
-        props: true
+        props: route => ({
+          requestPath: `/data/${route.params.id}`
+        })
       },
       {
         name: 'datasetData',
         path: 'data',
         component: DatasetData,
-        props: true
+        props: route => ({
+          requestPath: `/data/${route.params.id}`
+        })
       },
       {
         name: 'datasetModels',
         path: 'models',
         component: DatasetModelList,
-        props: true
+        props: route => ({
+          requestPath: `/data/${route.params.id}/models`
+        })
       },
       {
         path: 'threads',
@@ -133,17 +140,39 @@ const routes = [
     ]
   },
   {
+    path: '/data/:id/models/:modelId',
+    component: DatasetModelInfo,
+    props: true,
+    children: [
+      {
+        name: 'modelInfo',
+        path: '',
+        component: DatasetInfo,
+        props: route => ({
+          requestPath: `/data/${route.params.id}/models/${route.params.modelId}`
+        })
+      },
+      {
+        name: 'modelTables',
+        path: 'model',
+        component: DatasetModelTables,
+        props: route => ({
+          requestPath: `/data/${route.params.id}/models/${route.params.modelId}`
+        })
+      },
+      {
+        path: 'threads',
+        component: DatasetThreads
+      }
+    ]
+  },
+  {
     path: '/data/edit/:id',
     component: DatasetEdit,
     props: true,
     meta: {
       authRequired: true
     }
-  },
-  {
-    path: '/model/:id',
-    component: DatasetModelInfo,
-    props: true
   },
   {
     path: '/predictions',

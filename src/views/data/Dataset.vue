@@ -19,31 +19,16 @@
           </button>
         </div>
       </div>
-      <div class="dataset-navigation-container">
-        <div class="dataset-navigation">
-          <nav class="dataset-navigation-menu">
+      <DataNavigation :show="!uploadingModelActive" :navigationBars="navigationBars">
+        <li v-if="uploadingModelActive" class="upload-model-button">
+          <h3>{{ $t('data.dataset.model.submitModel') }}</h3>
+        </li>
+        <li class="stick-to-right">
+          <el-button v-if="!uploadingModelActive" class="upload-model-button" @click="$router.push({ name: 'uploadDataModel' })" type="warning">{{ $t('data.dataset.model.uploadModel') }}</el-button>
+          <el-button v-if="uploadingModelActive" class="upload-model-button" @click="$router.go(-1)" type="warning">{{ $t('general.cancel') }}</el-button>
+        </li>
+      </DataNavigation>
 
-            <transition name="fade">
-              <ul class="">
-                <li v-if="!uploadingModelActive" v-for="bar in navigationBars" :key="bar.name">
-                  <router-link :to="bar.routeLink" active-class="dataset-bar-active" :class="{'disabled': bar.disabled}" exact>
-                    <img class="file-img" :src="bar.imgSrc" alt=""> {{ bar.name }}
-                  </router-link>
-                </li>
-                <li v-if="uploadingModelActive">
-                  <h3>{{ $t('data.dataset.model.submitModel') }}</h3>
-                </li>
-                <li>
-                  <el-button v-if="!uploadingModelActive" class="upload-model-button" @click="$router.push({ name: 'uploadDataModel' })" type="warning">{{ $t('data.dataset.model.uploadModel') }}</el-button>
-                  <el-button v-if="uploadingModelActive" class="upload-model-button" @click="$router.go(-1)" type="warning">{{ $t('general.cancel') }}</el-button>
-                </li>
-              </ul>
-            </transition>
-
-          </nav>
-
-        </div>
-      </div>
     </div>
     <div class="dataset-content-container">
       <div class="dataset-content">
@@ -54,7 +39,12 @@
 </template>
 <script>
 import moment from 'moment'
+import DataNavigation from '@/components/navigation/DataNavigation'
+
 export default {
+  components: {
+    DataNavigation
+  },
   created () {
     window.scroll(0, 0)
     this.fetchDataset()
@@ -193,26 +183,6 @@ export default {
     }
   }
 
-  .file-img {
-    margin-right: 8px;
-    margin-left: 4px;
-  }
-
-  .dataset-navigation-container {
-    width: 100%;
-    max-width: 932px;
-    margin: 0px 5px 0px 5px;
-    z-index: 1;
-    .dataset-navigation {
-      height: 90px;
-      background-color: white;
-    }
-
-    .disabled {
-      pointer-events: none;
-    }
-  }
-
   .dataset-content-container {
     display: block;
     height: 100%;
@@ -229,104 +199,12 @@ export default {
     }
   }
 
-  .dataset-navigation-menu {
-    width: 100%;
-    color: black;
-    background: white;
-    display: flex;
-    justify-content: center;
-    align-content: center;
-    z-index: 1;
-    ul {
-      list-style-type: none;
-      display: flex;
-      width: 100%;
-      margin: 16px 53px 16px 53px;
-      padding-left: 0;
-      li {
-        justify-content: center;
-        max-height: 48px;
-        h3 {
-          height: 48px;
-          line-height: 48px;
-          margin: 2px;
-        }
-        &+li {
-          margin-left: 25px;
-        }
-        &:last-child {
-          flex-grow: 1;
-          text-align: right;
-        }
-        a {
-          opacity: 0.35;
-          padding: 15px 10px 5px 5px;
-          font-family: $font-secondary;
-          display: flex;
-          align-items: center;
-          font-size: 16px;
-          font-weight: 500;
-          letter-spacing: 0.5px;
-          &:hover {
-            color: rgba(black, .65);
-          }
-        }
-      }
-    }
-    .dataset-bar-active {
-      border-bottom: solid 2px;
-      border-bottom-color: $orange;
-      opacity: 1;
-    }
-  }
-
   .upload-model-button {
     margin-top: 2px;
     min-width: 137px;
   }
 
-  @media screen and (min-width: 680px) and (max-width: 1024px) {
-    .dataset-navigation-container {
-      .dataset-navigation-menu {
-        ul {
-          padding-left: 0;
-        }
-      }
-    }
-  }
-
   @media screen and (min-width: 280px) and (max-width: 680px) {
-    .dataset-navigation-container {
-      .dataset-navigation-menu {
-        padding-bottom: 10px;
-        ul {
-          padding-left: 0;
-          flex-direction: row;
-          flex-wrap: wrap;
-          flex-flow: row wrap;
-          justify-content: space-around;
-          li {
-            margin-left: 0;
-            width: 40%;
-            h3 {
-              text-align: center;
-              line-height: 24px;
-              height: 24px;
-              margin-top: 12px;
-            }
-          }
-          li:last-child {
-            margin-top: 30px;
-            display: block;
-            width: 100%;
-            button {
-              width: 100%;
-            }
-          }
-        }
-      }
-    }
-
     .dataset-content-container {
       .dataset-content {
         margin-top: 42px;

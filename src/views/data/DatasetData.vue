@@ -46,6 +46,7 @@ export default {
   components: {
     PreviewTable
   },
+  props: ['requestPath'],
   created () {
     this.fetchData()
   },
@@ -64,7 +65,7 @@ export default {
   methods: {
     fetchData () {
       this.loading = true
-      this.axios.get('data/' + this.$route.params.id).then(response => {
+      this.axios.get(this.requestPath).then(response => {
         this.parsePreview(response.data.data.preview)
         this.dataset = response.data.data
         if (this.isJson(this.dataset.structure)) {

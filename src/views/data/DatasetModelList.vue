@@ -11,6 +11,7 @@ export default {
   components: {
     DatasetModelCard
   },
+  props: ['requestPath'],
   data () {
     return {
       loading: false,
@@ -20,10 +21,9 @@ export default {
   methods: {
     fetchModels (dataId) {
       this.loading = true
-      this.axios.get(`data/${dataId}/modelList`)
+      this.axios.get(this.requestPath)
         .then(response => {
           this.modelsList = response.data.items
-          this.$store.dispatch('setDatasetModels', { models: this.modelsList })
           this.loading = false
         }).catch(e => {
           this.loading = false
@@ -31,8 +31,7 @@ export default {
     }
   },
   mounted () {
-    const dataId = this.$store.state.currentDataset.id
-    this.fetchModels(dataId)
+    this.fetchModels(this.$route.params.id)
   }
 }
 </script>
