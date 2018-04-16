@@ -1,15 +1,15 @@
 <template>
   <div class="models-container" v-loading="loading">
     <h4 class="info-title">{{$t('data.dataset.model.models')}}</h4>
-    <DataModelCard v-for="(model, index) in modelsList" :model="model" :key="index" />
+    <DatasetModelCard v-for="(model, index) in modelsList" :model="model" :key="index" />
   </div>
 </template>
 <script>
-import DataModelCard from '@/components/data/DataModelCard'
+import DatasetModelCard from '@/components/data/DatasetModelCard'
 
 export default {
   components: {
-    DataModelCard
+    DatasetModelCard
   },
   data () {
     return {
@@ -23,6 +23,7 @@ export default {
       this.axios.get(`data/${dataId}/modelList`)
         .then(response => {
           this.modelsList = response.data.items
+          this.$store.dispatch('setDatasetModels', { models: this.modelsList })
           this.loading = false
         }).catch(e => {
           this.loading = false

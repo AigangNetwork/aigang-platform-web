@@ -133,7 +133,8 @@
             "success": "Success"
           },
           "successfullyUploaded": "Data model was successfully uploaded"
-        }
+        },
+        "lastUpdated": "Last updated"
       }
     }
   },

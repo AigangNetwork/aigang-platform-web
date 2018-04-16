@@ -21,7 +21,7 @@ import DatasetEdit from '@/views/data/DatasetEdit'
 import AllData from '@/views/data/AllData'
 import Uploaded from '@/views/data/Uploaded'
 import DatasetModelUpload from '@/views/data/DatasetModelUpload'
-import DatasetModel from '@/views/data/DatasetModel'
+import DatasetModelInfo from '@/views/data/DatasetModelInfo'
 
 const routes = [
   {
@@ -142,7 +142,7 @@ const routes = [
   },
   {
     path: '/model/:id',
-    component: DatasetModel,
+    component: DatasetModelInfo,
     props: true
   },
   {

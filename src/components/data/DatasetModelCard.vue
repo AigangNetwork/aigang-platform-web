@@ -5,7 +5,6 @@
         <router-link :to="modelRoute">{{ model.title }}</router-link>
       </h3>
       <p> {{ model.description }}</p>
-      <!-- AUTHOR -->
       <div class="model-item-card-footer">
         <el-col>{{ $t('data.dataset.model.by') }}
           <span class="author">{{ model.firstName }} {{ model.lastName }}</span> &#8226; {{ created }}</el-col>
@@ -32,6 +31,11 @@ export default {
   data () {
     return {
       modelRoute: { path: `/model/${this.model.id}` }
+    }
+  },
+  methods: {
+    navigateToModel () {
+      this.$router.push(this.modelRoute)
     }
   },
   computed: {
@@ -89,7 +93,7 @@ export default {
         background: $button-purple;
         padding: 0 34px 0 64px;
         height: 150%;
-        margin-top: -20%;
+        margin-top: -17%;
         border-top-left-radius: 50%;
         border-bottom-left-radius: 50%;
       }
