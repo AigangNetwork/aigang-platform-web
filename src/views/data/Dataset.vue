@@ -24,7 +24,7 @@
           <h3>{{ $t('data.dataset.model.submitModel') }}</h3>
         </li>
         <li class="stick-to-right">
-          <el-button v-if="!uploadingModelActive" class="upload-model-button" @click="$router.push({ name: 'uploadDataModel' })" type="warning">{{ $t('data.dataset.model.uploadModel') }}</el-button>
+          <el-button v-if="!uploadingModelActive" class="upload-model-button" @click="$router.push({name: 'uploadDataModel'})" type="warning">{{ $t('data.dataset.model.uploadModel') }}</el-button>
           <el-button v-if="uploadingModelActive" class="upload-model-button" @click="$router.go(-1)" type="warning">{{ $t('general.cancel') }}</el-button>
         </li>
       </DataNavigation>

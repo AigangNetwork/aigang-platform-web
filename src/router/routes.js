@@ -14,15 +14,15 @@ import UploadDataSet from '@/views/data/UploadDataSet'
 import Dataset from '@/views/data/Dataset'
 import NotFound from '@/views/general/NotFound'
 import DatasetInfo from '@/views/data/DatasetInfo'
-import DatasetModelList from '@/views/data/DatasetModelList'
+import DatasetModelList from '@/views/data/model/DatasetModelList'
 import DatasetThreads from '@/views/data/DatasetThreads'
 import DatasetData from '@/views/data/DatasetData'
 import DatasetEdit from '@/views/data/DatasetEdit'
 import AllData from '@/views/data/AllData'
 import Uploaded from '@/views/data/Uploaded'
-import DatasetModelUpload from '@/views/data/DatasetModelUpload'
-import DatasetModelInfo from '@/views/data/DatasetModelInfo'
-import DatasetModelTables from '@/views/data/DatasetModelTables'
+import DatasetModelForm from '@/views/data/model/DatasetModelForm'
+import DatasetModelInfo from '@/views/data/model/DatasetModelInfo'
+import DatasetModelTables from '@/views/data/model/DatasetModelTables'
 
 const routes = [
   {
@@ -134,8 +134,12 @@ const routes = [
       {
         name: 'uploadDataModel',
         path: 'uploadDataModel',
-        component: DatasetModelUpload,
-        props: true
+        component: DatasetModelForm,
+        props: route => ({
+          isUpload: true,
+          postPath: '/data/uploadModel',
+          getPath: ''
+        })
       }
     ]
   },
@@ -163,6 +167,16 @@ const routes = [
       {
         path: 'threads',
         component: DatasetThreads
+      },
+      {
+        name: 'edit',
+        path: 'edit',
+        component: DatasetModelForm,
+        props: route => ({
+          isUpload: false,
+          getPath: `/data/${route.params.id}/models/${route.params.modelId}`,
+          postPath: `/data/${route.params.id}/models/${route.params.modelId}/update`
+        })
       }
     ]
   },

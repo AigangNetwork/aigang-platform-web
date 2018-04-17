@@ -4,7 +4,7 @@
       <el-row class="input-section-title">{{$t('data.dataset.model.model')}}</el-row>
     </el-row>
     <transition-group name="slideDown">
-      <div v-for="(model, index) in models" :key="index" v-if="model.length > 0">
+      <div v-for="(model, index) in value" :key="index" v-if="value.length > 0">
         <div class="table-container">
           <div class="table-wrapper">
             <table>
@@ -51,7 +51,7 @@
 <script>
 
 export default {
-  props: ['dataModel'],
+  props: ['value'],
   data () {
     return {
       lengthError: false,
@@ -90,7 +90,7 @@ export default {
       this.colsLength = ''
       this.rowsLength = ''
 
-      this.$emit('input', this.models)
+      this.$emit('input', this.value.concat(this.models))
     },
     addColumn (index) {
       this.models[index][0].push(this.$t('data.dataset.model.placeholder.title'))

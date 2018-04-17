@@ -15,7 +15,7 @@
 </template>
 <script>
 import Card from '@/components/Card'
-import DatasetModelHeader from '@/components/data/DatasetModelHeader'
+import DatasetModelHeader from '@/components/data/model/DatasetModelHeader'
 import DataNavigation from '@/components/navigation/DataNavigation'
 
 export default {

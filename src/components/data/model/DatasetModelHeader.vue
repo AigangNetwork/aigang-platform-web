@@ -18,7 +18,7 @@
         </p>
         <h1>{{ model.title }}</h1>
         <div class="aig-dataset-header-btn-container">
-          <router-link v-if="isUserOwner" :to="editRoute" exact class="aig-dataset-header-btn">
+          <router-link v-if="isUserOwner" :to="{ name: 'edit' }" exact class="aig-dataset-header-btn">
             <img class="file-img" src="/static/dataset/edit21px.png" alt=""> {{$t('data.dataset.editDataset')}}
           </router-link>
           <button v-if="isUserOwner" @click="deleteModel" class="aig-dataset-header-btn">
@@ -46,8 +46,7 @@ export default {
   data () {
     return {
       loading: false,
-      modelsRoute: `/data/${this.$route.params.id}/models`,
-      editRoute: ''
+      modelsRoute: `/data/${this.$route.params.id}/models`
     }
   },
   methods: {

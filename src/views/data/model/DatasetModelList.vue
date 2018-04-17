@@ -5,7 +5,7 @@
   </div>
 </template>
 <script>
-import DatasetModelCard from '@/components/data/DatasetModelCard'
+import DatasetModelCard from '@/components/data/model/DatasetModelCard'
 
 export default {
   components: {

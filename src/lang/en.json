@@ -126,6 +126,7 @@
         "eth": "ETH",
         "by": "By",
         "successDelete": "Model was successfully deleted",
+        "editModel": "Edit model",
         "placeholder": {
           "title": "Title",
           "data": "Data"
@@ -134,7 +135,8 @@
           "title": {
             "success": "Success"
           },
-          "successfullyUploaded": "Data model was successfully uploaded"
+          "successfullyUploaded": "Data model was successfully uploaded",
+          "successfullyUpdated": "Data model was successfully updated"
         },
         "lastUpdated": "Last updated"
       }
