@@ -1,6 +1,7 @@
 <template>
   <div class="models-container" v-loading="loading">
     <h4 class="info-title">{{$t('data.dataset.model.models')}}</h4>
+    <h3 v-if="noModelsExist">{{$t('data.dataset.model.noModelsExist')}}</h3>
     <DatasetModelCard v-for="(model, index) in modelsList" :model="model" :key="index" />
   </div>
 </template>
@@ -15,7 +16,8 @@ export default {
   data () {
     return {
       loading: false,
-      modelsList: []
+      modelsList: [],
+      noModelsExist: false
     }
   },
   methods: {
@@ -26,6 +28,9 @@ export default {
           this.modelsList = response.data.items
           this.loading = false
         }).catch(e => {
+          if (e.request.status === 404) {
+            this.noModelsExist = true
+          }
           this.loading = false
         })
     }

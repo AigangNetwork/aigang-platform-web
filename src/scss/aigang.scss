@@ -160,10 +160,11 @@ body.aig {
     border: 1px solid $orange;
     cursor: pointer;
   }
-  &:last-child {
+  &.fit {
     .file-img {
       height: 19px;
       margin-left: 8px;
+      margin-right: 4px;
     }
   }
   .flex-container {
@@ -351,7 +352,7 @@ body.aig {
   }
 }
 
-.small-text {
+.text-small {
   font-size: 10px;
   letter-spacing: 0.4px;
   align-self: flex-end;
@@ -361,6 +362,7 @@ body.aig {
   font-size: 32px;
   letter-spacing: 1.3px;
   font-weight: bold;
+  word-wrap: break-word;
 }
 
 .text-medium {

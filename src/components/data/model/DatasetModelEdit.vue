@@ -26,7 +26,7 @@
             <img src="/static/add-button.svg" alt="add-row-button" @click="addRow(index)" class="table-action-button">
           </div>
           <div class="buttons-container">
-            <img src="/static/delete-button.svg" alt="delete-button" @click="models.splice(index, 1)" class="table-action-button">
+            <img src="/static/delete-button.svg" alt="delete-button" @click="deleteTable(index)" class="table-action-button">
             <img src="/static/add-button.svg" alt="add-column-button" @click="addColumn(index)" class="table-action-button">
             <span></span>
           </div>
@@ -62,11 +62,18 @@ export default {
       models: []
     }
   },
+  watch: {
+    models () {
+      this.models = this.value
+    }
+  },
   methods: {
     createTable () {
       if (this.lengthError) {
         return
       }
+
+      this.models = this.value
 
       const cols = parseInt(this.colsLength)
       const rows = parseInt(this.rowsLength)
@@ -90,9 +97,10 @@ export default {
       this.colsLength = ''
       this.rowsLength = ''
 
-      this.$emit('input', this.value.concat(this.models))
+      this.$emit('input', this.models)
     },
     addColumn (index) {
+      this.models = this.value
       this.models[index][0].push(this.$t('data.dataset.model.placeholder.title'))
 
       this.models[index].forEach((value, index) => {
@@ -102,6 +110,7 @@ export default {
       })
     },
     addRow (index) {
+      this.models = this.value
       const cols = this.models[index][0].length
       this.models[index].push(
         new Array(cols).fill(this.$t('data.dataset.model.placeholder.data'))
@@ -121,6 +130,10 @@ export default {
       } else {
         this.lengthError = false
       }
+    },
+    deleteTable (index) {
+      this.models = this.value
+      this.models.splice(index, 1)
     }
   }
 }
@@ -237,6 +250,14 @@ export default {
         cursor: pointer;
       }
     }
+  }
+
+  @media screen and (min-width: 100px) and (max-width: 1024px) {
+    .table-container .table-action-button {
+      opacity: 1;
+      pointer-events: all;
+    }
+
   }
 
   @media screen and (min-width: 100px) and (max-width: 680px) {

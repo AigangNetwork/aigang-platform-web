@@ -127,6 +127,7 @@
         "by": "By",
         "successDelete": "Model was successfully deleted",
         "editModel": "Edit model",
+        "noModelsExist": "This dataset does not contain any models yet",
         "placeholder": {
           "title": "Title",
           "data": "Data"

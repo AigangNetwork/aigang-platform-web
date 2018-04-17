@@ -18,16 +18,16 @@
         </p>
         <h1>{{ model.title }}</h1>
         <div class="aig-dataset-header-btn-container">
-          <router-link v-if="isUserOwner" :to="{ name: 'edit' }" exact class="aig-dataset-header-btn">
+          <router-link v-if="isUserOwner" :to="{ name: 'edit' }" exact class="aig-dataset-header-btn fit">
             <img class="file-img" src="/static/dataset/edit21px.png" alt=""> {{$t('data.dataset.editDataset')}}
           </router-link>
-          <button v-if="isUserOwner" @click="deleteModel" class="aig-dataset-header-btn">
+          <button v-if="isUserOwner" @click="deleteModel" class="aig-dataset-header-btn fit">
             <img class="file-img" src="/static/dataset/trash24px.svg" alt=""> {{$t('data.dataset.deleteDataset')}}
           </button>
         </div>
       </div>
       <div class="header-right-section">
-        <span class="small-text">{{ $t('data.dataset.model.basePremium') }}</span>
+        <span class="text-small">{{ $t('data.dataset.model.basePremium') }}</span>
         <span>
           <span class="text-big">{{ model.premium }}</span>
           <span class="text-medium">{{ $t('data.dataset.model.eth') }} </span>
@@ -136,8 +136,16 @@ export default {
       justify-content: center;
       align-content: center;
       font-family: $font-secondary;
-      .small-text {
+      .text-small {
         align-self: center;
+        width: 100%;
+        text-align: center;
+      }
+
+      >span {
+        width: 100%;
+        padding: 0 20px;
+        text-align: center;
       }
     }
 

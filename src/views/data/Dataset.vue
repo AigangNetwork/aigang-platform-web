@@ -11,19 +11,21 @@
           <button v-if="!dataset.remoteFileAccessPoint" @click="downloadDataset" class="aig-dataset-header-btn">
             <img class="file-img" src="/static/dataset/documents24px.svg" alt=""> {{$t('data.dataset.downloadDataset')}}
           </button>
-          <router-link v-if="isUserOwner" class="aig-dataset-header-btn" :to="editRoute" exact>
+          <router-link v-if="isUserOwner" class="aig-dataset-header-btn fit" :to="editRoute" exact>
             <img class="file-img" src="/static/dataset/edit21px.png" alt=""> {{$t('data.dataset.editDataset')}}
           </router-link>
-          <button v-if="isUserOwner" @click="deleteDataset" class="aig-dataset-header-btn">
+          <button v-if="isUserOwner" @click="deleteDataset" class="aig-dataset-header-btn fit">
             <img class="file-img" src="/static/dataset/trash24px.svg" alt=""> {{$t('data.dataset.deleteDataset')}}
           </button>
         </div>
       </div>
       <DataNavigation :show="!uploadingModelActive" :navigationBars="navigationBars">
-        <li v-if="uploadingModelActive" class="upload-model-button">
+
+        <li v-if="uploadingModelActive" class="upload-model-button" key="upload-title">
           <h3>{{ $t('data.dataset.model.submitModel') }}</h3>
         </li>
-        <li class="stick-to-right">
+
+        <li class="stick-to-right" key="upload-button">
           <el-button v-if="!uploadingModelActive" class="upload-model-button" @click="$router.push({name: 'uploadDataModel'})" type="warning">{{ $t('data.dataset.model.uploadModel') }}</el-button>
           <el-button v-if="uploadingModelActive" class="upload-model-button" @click="$router.go(-1)" type="warning">{{ $t('general.cancel') }}</el-button>
         </li>
@@ -169,10 +171,12 @@ export default {
     max-height: 250px;
     margin: 150px 5px 0px 5px;
     color: #ffffff;
+
     .dataset-title {
       font-size: 24pt;
       font-weight: 700;
     }
+
     .creator-info {
       display: flex;
       margin-bottom: 5px;
@@ -180,6 +184,16 @@ export default {
       .creator {
         margin-right: 15px;
       }
+    }
+
+    .uploaded,
+    .creator {
+      font-family: $font-secondary;
+      font-weight: 300;
+      font-size: 14px;
+      line-height: 1.71;
+      letter-spacing: 0.4px;
+      height: 24px;
     }
   }
 
@@ -202,6 +216,15 @@ export default {
   .upload-model-button {
     margin-top: 2px;
     min-width: 137px;
+  }
+
+  .dataset-navigation li {
+    h3 {
+      margin: 0;
+      margin-top: 0;
+      height: 48px;
+      line-height: 48px;
+    }
   }
 
   @media screen and (min-width: 280px) and (max-width: 680px) {

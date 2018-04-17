@@ -14,7 +14,7 @@
     <div class="card-section">
       <div class="card-section-left"></div>
       <div class="card-section-right">
-        <span class="small-text">{{ $t('data.dataset.model.basePremium') }}</span>
+        <span class="text-small">{{ $t('data.dataset.model.basePremium') }}</span>
         <span>
           <span class="text-big">{{ model.premium }}</span>
           <span class="text-medium">{{ $t('data.dataset.model.eth') }} </span>
@@ -77,6 +77,9 @@ export default {
 
     .card-section {
       padding: 31px 34px;
+      .text-big {
+        max-width: 50px;
+      }
     }
 
     .card-section:last-child {
@@ -91,12 +94,18 @@ export default {
         z-index: 2;
         background: $button-purple;
         padding: 0 34px 0 64px;
-        height: 150%;
-        margin-top: -17%;
-        border-top-left-radius: 50%;
-        border-bottom-left-radius: 50%;
+        height: 228px;
+        width: 228px;
+        margin-top: -35px;
+        margin-bottom: -35px;
+        margin-right: -35px;
+        border-radius: 50%;
       }
 
+      .text-small {
+        text-align: left;
+        width: 100%;
+      }
     }
 
     .author {

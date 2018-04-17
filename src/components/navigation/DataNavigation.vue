@@ -2,16 +2,18 @@
   <div class="dataset-navigation-container">
     <div class="dataset-navigation">
       <nav class="dataset-navigation-menu">
-        <transition name="fade">
-          <ul>
+
+        <ul>
+          <transition-group name="fade">
             <li v-if="show" v-for="bar in navigationBars" :key="bar.name">
               <router-link :to="bar.routeLink" active-class="dataset-bar-active" :class="{'disabled': bar.disabled}" exact>
                 <img class="file-img" :src="bar.imgSrc" alt=""> {{ bar.name }}
               </router-link>
             </li>
             <slot></slot>
-          </ul>
-        </transition>
+          </transition-group>
+        </ul>
+
       </nav>
     </div>
   </div>
@@ -70,8 +72,8 @@ export default {
         justify-content: center;
         max-height: 48px;
         h3 {
-          height: 48px;
-          line-height: 48px;
+          height: 44px;
+          line-height: 44px;
           margin: 2px;
         }
         &+li {
@@ -94,6 +96,12 @@ export default {
             color: rgba(black, .65);
           }
         }
+      }
+
+      span {
+        list-style-type: none;
+        display: flex;
+        width: 100%;
       }
     }
   }
