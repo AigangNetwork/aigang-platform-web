@@ -72,6 +72,7 @@
       "deleteDataset": "Delete dataset",
       "editDataset": "Edit dataset",
       "successDelete": "Dataset was successfully deleted",
+      "deleteDialogBody": "Are you sure you want to delete this dataset?",
       "invalidPreview":
         "This dataset does not contain visual preview. Download file to check it out",
       "navigation": {
