@@ -10,7 +10,7 @@
       </thead>
       <tbody>
         <tr v-for="(row, index) in rows" :key="index">
-          <td v-for="colData in row" :key="colData">
+          <td v-for="(colData, index) in row" :key="index">
             {{colData}}
           </td>
         </tr>

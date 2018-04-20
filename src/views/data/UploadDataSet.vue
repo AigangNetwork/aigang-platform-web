@@ -1,9 +1,14 @@
 <template>
   <el-container class="aig-container">
+    <el-button class="aig-back-btn" v-if="secondStepActive" @click="setPage(1)">Back</el-button>
     <Card class="aig-upload-card" v-if="firstStepActive">
       <div slot="body">
-        <h4>{{$t('data.upload.titles.upload')}}</h4>
-        <el-row type="flex">
+        <div class="step1-header">
+          <h4>{{$t('data.upload.titles.upload')}}</h4>
+          <el-switch v-model="isRemoteFile" @change="switchChanged" :active-text="$t('data.dataset.edit.remoteAccessPoint')" :inactive-text="$t('data.dataset.edit.file')">
+          </el-switch>
+        </div>
+        <el-row v-if="!isRemoteFile" type="flex">
           <el-col :span="16">
             <el-form :model="dataUploadForm" ref="dataUploadForm" :rules="dataUploadFormRules" @keyup.enter.native="submitForm('dataUploadForm')">
               <el-form-item prop="file" size="small">
@@ -15,63 +20,40 @@
                   </div>
                 </el-upload>
               </el-form-item>
-              <div v-if="isErrorOnFirstStep && !invalidFile" class="aig-form-error">
+              <div v-if="isErrorOnFirstStep && invalidFile" class="aig-form-error">
                 {{errorMessage}}
               </div>
               <el-button @click="loadFile('file')" class="aig-load-button" v-if="buttonActive" type="primary">{{$t('data.upload.titles.load')}}</el-button>
-              <div v-if="invalidFile">
-                <el-form-item>
-                  <p>{{$t('data.upload.rules.rule2')}}</p>
-                  <el-input :placeholder="$t('data.upload.input.placeholder.fileAccess')" type="textarea" v-model="dataUploadForm.remoteFileAccessPoint"></el-input>
-                </el-form-item>
-                <div v-if="isErrorOnFirstStep" class="aig-form-error">
-                  {{errorMessage}}
-                </div>
-                <el-button @click="loadFile()" class="aig-load-button" type="primary">{{$t('data.upload.titles.load')}}</el-button>
-              </div>
             </el-form>
           </el-col>
           <el-col :span="10">
-            <div class="aig-upload-info">
-              <div class="aig-upload-info-header">
-                <img src="/static/upload/info24px.svg" alt="threads">
-                <h5>{{$t('data.upload.titles.fileUploadPreferences')}}</h5>
-              </div>
-              <div class="aig-upload-info-body">
-                <ul>
-                  <li>{{$t('data.upload.rules.rule0')}}</li>
-                  <li>{{$t('data.upload.rules.rule1')}}</li>
-                  <li>{{$t('data.upload.rules.rule3')}}</li>
-                  <li>{{$t('data.upload.rules.rule4')}}</li>
-                  <li>
-                    <router-link to="" @click.native="handleCsvInformaton">
-                      {{$t('data.upload.rules.rule5')}}
-                    </router-link>
-                  </li>
-                </ul>
-              </div>
-            </div>
+            <DatasetFilePreferences/>
           </el-col>
+        </el-row>
+        <el-row v-if="isRemoteFile" class="aig-remote-access-point-cointainer">
+          <el-form class="aig-remote-access-point-form">
+            <el-form-item>
+              <p>{{$t('data.upload.rules.rule2')}}</p>
+              <el-input :placeholder="$t('data.upload.input.placeholder.fileAccess')" type="textarea" v-model="dataUploadForm.remoteFileAccessPoint"></el-input>
+            </el-form-item>
+            <div v-if="isErrorOnFirstStep" class="aig-form-error">
+              {{errorMessage}}
+            </div>
+            <el-button @click="loadFile()" class="aig-load-button" type="primary">{{$t('data.upload.titles.load')}}</el-button>
+          </el-form>
         </el-row>
       </div>
     </Card>
-    <el-button class="aig-back-btn" v-if="secondStepActive" @click="setPage(1)">Back</el-button>
-
     <Card class="aig-upload-card-step-2" v-if="secondStepActive" v-loading="loading">
       <div slot="body" :element-loading-text="$t('general.loading')">
         <el-row>
           <el-col :span="24">
             <DatasetFileCard v-model="dataUploadForm.isPublic" :showUploadOption="false" />
-
             <el-form :model="dataUploadForm" :rules="dataUploadFormRules" ref="dataUploadForm">
-
               <DatasetTitleEdit v-model="dataUploadForm.title" />
-
               <DatasetDescriptionEdit v-model="dataUploadForm.description" />
-
               <DatasetStructureEdit :structure="dynamicFileStructure" v-model="remoteFileStructure" ref="structureComponent" :isStructured="!invalidFile"
               />
-
             </el-form>
           </el-col>
         </el-row>
@@ -87,7 +69,6 @@
         </el-row>
       </div>
     </Card>
-
   </el-container>
 </template>
 <script>
@@ -96,6 +77,7 @@ import DatasetFileCard from '@/components/data/DatasetFileCard'
 import DatasetTitleEdit from '@/components/data/DatasetTitleEdit'
 import DatasetDescriptionEdit from '@/components/data/DatasetDescriptionEdit'
 import DatasetStructureEdit from '@/components/data/DatasetStructureEdit'
+import DatasetFilePreferences from '@/components/data/upload/DatasetFilePreferences'
 import router from '@/router'
 
 export default {
@@ -104,11 +86,13 @@ export default {
     DatasetTitleEdit,
     DatasetDescriptionEdit,
     DatasetStructureEdit,
-    DatasetFileCard
+    DatasetFileCard,
+    DatasetFilePreferences
   },
   data () {
     return {
       buttonActive: true,
+      isRemoteFile: false,
       invalidFile: false,
       firstStepActive: true,
       secondStepActive: false,
@@ -154,19 +138,26 @@ export default {
   methods: {
     handleFileChange (file, fileList) {
       this.isErrorOnFirstStep = false
+      let regex = new RegExp('(.*?).(csv)$')
+      if (!regex.test(file.name)) {
+        this.invalidFile = true
+        this.isErrorOnFirstStep = true
+        this.errorMessage = this.$t('data.upload.input.validation.invalidFile')
+        this.$refs.csvFile.clearFiles()
+        return
+      }
       const fileSize = file.raw.size / 1024 / 1024 // filesize in mb
       if (fileSize <= 10) { // if less than 10MB
         this.dataUploadForm.file = file.raw
         this.invalidFile = false
         this.buttonActive = true
         this.parseFileStructure()
-        return
       } else {
         this.$refs.csvFile.clearFiles()
+        this.invalidFile = true
+        this.isErrorOnFirstStep = true
+        this.errorMessage = this.$t('data.upload.input.validation.fileTooLarge')
       }
-      this.dataUploadForm.file = []
-      this.buttonActive = false
-      this.invalidFile = true
     },
     loadFile (file) {
       if (file) {
@@ -181,13 +172,13 @@ export default {
         this.setPage(2)
       } else {
         this.isErrorOnFirstStep = true
+        this.invalidFile = true
         this.errorMessage = this.$t('data.upload.input.validation.emptyInputError')
       }
     },
     parseFileStructure () {
       let dynamicFileFields = []
       let fileReader = new FileReader()
-
       try {
         fileReader.onload = (event) => {
           let fileContent = event.target.result
@@ -197,7 +188,7 @@ export default {
               dynamicFileFields.push({
                 name: col,
                 description: '',
-                dataType: ''
+                dataType: 'String'
               })
             })
           } else {
@@ -208,18 +199,15 @@ export default {
         this.isErrorOnFirstStep = true
         this.errorMessage = this.$t('data.upload.input.validation.unableAccessFileContent')
       }
-
       fileReader.readAsText(this.dataUploadForm.file)
       this.dynamicFileStructure = dynamicFileFields
     },
     submitForm (formName) {
       this.loading = true
       let isValid = true
-
       if (!this.$refs.structureComponent.validate()) {
         isValid = false
       }
-
       this.$refs[formName].validate(isFormValid => {
         if (isFormValid && isValid) {
           this.uploadDataset()
@@ -271,6 +259,7 @@ export default {
     fileLimitExeeded (file, fileList) {
       this.errorMessage = this.$t('data.upload.input.validation.fileLimitExceed')
       this.isErrorOnFirstStep = true
+      this.invalidFile = true
     },
     fileRemoved (file, fileList) {
       this.isErrorOnFirstStep = false
@@ -278,6 +267,10 @@ export default {
     handleCsvInformaton (event) {
       event.preventDefault()
       window.open('https://tools.ietf.org/html/rfc4180', '_blank')
+    },
+    switchChanged () {
+      this.isErrorOnFirstStep = false
+      this.errorMessage = ''
     }
   }
 }
@@ -298,71 +291,23 @@ export default {
       max-width: 665px;
       height: 100%;
       max-height: 365px;
-      h4 {
-        text-transform: uppercase;
-        margin: 0px 0px 15px 0px;
-      }
-      .aig-upload-info {
-        height: 100%;
-        max-height: 176px;
-        margin-left: 10px;
-        .aig-upload-info-header {
-          display: flex;
-          h5 {
-            font-size: 12pt;
-            margin: 4px 0px 5px 5px;
-          }
-        }
-        .aig-upload-info-body {
-          height: 100%;
-          max-height: 180px;
-          ul {
-            margin-top: 0px;
-            font-size: 12px;
-            padding: 5px;
-            list-style-type: none;
-            li {
-              margin: 3px 3px 5px 3px;
-              a {
-                &:hover {
-                  color: $orange;
-                }
-              }
-            }
-          }
+      .step1-header {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+        h4 {
+          text-transform: uppercase;
+          margin: 0px 0px 15px 0px;
         }
       }
       .aig-load-button {
         width: 100%;
       }
-    }
-    .aig-file-information-container {
-      border: solid 1px $light-border-blue;
-      border-radius: 5px;
-      width: 100%;
-      padding: 10px;
-      max-width: 655px;
-      background-color: $darker-white;
-      .header {
+      .aig-remote-access-point-cointainer {
         display: flex;
-        border-bottom: solid 2px $light-border-blue;
-      }
-      .footer {
-        display: flex;
-        .left {
-          width: 70%;
-        }
-        .right {
-          margin: auto;
-        }
-        h4 {
-          margin: 10px 0px 0px 5px;
-          color: $purple;
-        }
-        p {
-          margin-left: 5px;
-          font-size: 11pt;
-          color: $light-grey;
+        justify-content: center;
+        .aig-remote-access-point-form {
+          max-width: 500px;
         }
       }
     }
@@ -379,5 +324,7 @@ export default {
       left: 25px;
       top: 15px;
     }
+
   }
+
 </style>

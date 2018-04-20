@@ -12,7 +12,7 @@
       },
       "titles": {
         "upload": "Upload dataset",
-        "load": "Load",
+        "load": "Continue",
         "title": "Title",
         "description": "Description",
         "preview": "Preview",
@@ -26,8 +26,7 @@
       "rules": {
         "rule0": "CSV files only",
         "rule1": "Maximum size of file: 10MB",
-        "rule2":
-          "Your file is too large. Please provide remote access point to the file. (URL, Connection string etc.)",
+        "rule2": "Please provide remote access point to the file. (URL, Connection string etc.)",
         "rule3": "Each record is on a separate line",
         "rule4": "File must contain header line",
         "rule5": "CSV file requirements"
@@ -45,9 +44,11 @@
         },
         "validation": {
           "emptyInputError": "Please make sure you have filled all fields",
-          "fileLimitExceed": "Please delete old file before uploading new one",
-          "unableAccessFileContent":
-            "File can not be accessed. Please reupload correct file"
+          "fileLimitExceed":
+            "You are able to upload only one .csv file. Please delete old file before uploading new one",
+          "unableAccessFileContent": "File can not be accessed. Please reupload correct file",
+          "invalidFile": "Invalid file content type. Please make sure you upload .csv files only!",
+          "fileTooLarge": "Please make sure you follow all file preferences. File is too large."
         }
       }
     },
@@ -73,8 +74,7 @@
       "editDataset": "Edit dataset",
       "successDelete": "Dataset was successfully deleted",
       "deleteDialogBody": "Are you sure you want to delete this dataset?",
-      "invalidPreview":
-        "This dataset does not contain visual preview. Download file to check it out",
+      "invalidPreview": "This dataset does not contain visual preview. Download file to check it out",
       "navigation": {
         "info": "Info",
         "data": "Data",
@@ -103,11 +103,9 @@
         "TitleTooShort": "Title must be at least 6 characters long",
         "DescriptionEmpty": "Description is required",
         "DescriptionTooShort": "Description must be at least 6 characters long",
-        "StructureFieldEmpty":
-          "Please make sure you have filled all structure fields",
+        "StructureFieldEmpty": "Please make sure you have filled all structure fields",
         "RemoteFileAccessPointEmpty": "Remote access point is required",
-        "RemoteFileAccessPointTooShort":
-          "Remote access must be at least 6 characters long",
+        "RemoteFileAccessPointTooShort": "Remote access must be at least 6 characters long",
         "FileEmpty": "File is required",
         "FileTooBig": "File is too large"
       }
@@ -127,8 +125,7 @@
       "Creating an account in aigang.network you will get access to all products such as Data, Prediction market, Invest and Insure",
     "haveAccount": "Have Aigang Network Account?",
     "rePassword": "Repeat password",
-    "emailSent":
-      "Email was sent to {0}. Follow instructions provided in the email.",
+    "emailSent": "Email was sent to {0}. Follow instructions provided in the email.",
     "dontReceiveEmail": "If you didn't receive email, click: ",
     "waitingVerification": "Verification email was sent."
   },
@@ -171,14 +168,11 @@
     "emailPreferences": "Email preferences",
     "emailDescription": "Choose newsletter options",
     "emailModelComments": "Comments in my model",
-    "emailModelCommentsDescription":
-      "Recieve emails when somebody will comment your created model",
+    "emailModelCommentsDescription": "Recieve emails when somebody will comment your created model",
     "emailDataSetsComments": "Comments in my data sets",
-    "emailDataSetsCommentsDescription":
-      "Recieve email notifications when somebody will comment your created data set",
+    "emailDataSetsCommentsDescription": "Recieve email notifications when somebody will comment your created data set",
     "emailNewDataComments": "Uploading of new data sets",
-    "emailNewDataCommentsDescription":
-      "Recieve email notifications of uploading a new data set",
+    "emailNewDataCommentsDescription": "Recieve email notifications of uploading a new data set",
     "emailNews": "Get news and updates about Aigang's product",
     "passwordUpdated": "Password succesfully updated",
     "deactivateAccountTitle": "Deactivate your account",
@@ -240,20 +234,17 @@
     "unhandled": "Unhandled error: ",
     "validation": {
       "DuplicateUserName": "User name is taken. Please make it unique",
-      "DuplicateEmail":
-        "Email was registered earlier. Choose other email or use 'Forgot password'",
+      "DuplicateEmail": "Email was registered earlier. Choose other email or use 'Forgot password'",
       "InvalidEmail": "Email is not valid",
       "InvalidPassword": "Old password is not correct.",
-      "InvalidEmailOrPassword":
-        "The email address or password you entered is not valid",
+      "InvalidEmailOrPassword": "The email address or password you entered is not valid",
       "PasswordNotMatchRePassword": "Passwords are not matching",
       "PasswordTooShort": "Password is too short",
       "InvalidQuery": "Query is not valid",
       "UserNotFound": "Email not found",
       "EmailNotConfirmed": "Email is not comfirmed yet",
       "ValidationFailed": "We are unable to proccess your request",
-      "EmptyRequest":
-        "You sent an empty request. Please make sure all required values are set",
+      "EmptyRequest": "You sent an empty request. Please make sure all required values are set",
       "FileTooLargeError": "Provided file is too large",
       "BadFileContentType": "Bad file content type",
       "GatewayTimeout": "Gateway time out",
@@ -262,10 +253,9 @@
     "pagePathNotFound": "The page you are trying to access is not available",
     "validationError": "You have entered an invalid data",
     "serverNotFound": "Server error",
-    "contactIfError":
-      "If you see this error please contact us via email info@aigang.network",
+    "contactIfError": "If you see this error please contact us via email info@aigang.network",
     "metamaskDetected":
       "We have detected that you are using metamask extension. In order to see your account AIX balance please switch your network to ",
-      "useMetamask": "To use all of our Platform features please Log in to Metamask Extension"
+    "useMetamask": "To use all of our Platform features please Log in to Metamask Extension"
   }
 }
