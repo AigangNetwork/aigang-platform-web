@@ -77,14 +77,19 @@ const routes = [
     props: true,
     children: [
       {
-        name: 'all',
+        name: 'data',
         path: '',
+        redirect: '/data/all'
+      },
+      {
+        name: 'all',
+        path: '/data/all',
         component: AllData,
         props: true
       },
       {
         name: 'mylist',
-        path: 'uploaded',
+        path: '/data/uploaded',
         component: Uploaded,
         props: true
       }

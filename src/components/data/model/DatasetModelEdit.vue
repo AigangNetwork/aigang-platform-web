@@ -215,6 +215,7 @@ export default {
       border-right: 1px solid $border-light-purple;
       margin: 20px auto;
     }
+
     &:hover {
       .table-action-button {
         opacity: 1;
@@ -236,8 +237,6 @@ export default {
     height: 24px;
     width: 24px;
     transition: all 200ms;
-    opacity: 0;
-    pointer-events: none;
     &:hover {
       cursor: pointer;
     }
@@ -254,15 +253,11 @@ export default {
     }
   }
 
-  @media screen and (min-width: 100px) and (max-width: 1024px) {
+  @media screen and (min-width: 100px) and (max-width: 680px) {
     .table-container .table-action-button {
       opacity: 1;
       pointer-events: all;
     }
-
-  }
-
-  @media screen and (min-width: 100px) and (max-width: 680px) {
     .table-create-container {
       flex-wrap: wrap;
       flex-flow: row wrap;

@@ -6,6 +6,9 @@
           <DataItem :data="dataItem" :key="dataItem.id" />
         </div>
       </el-col>
+      <el-col :key="totalPageCount">
+        <Pagination v-if="totalPageCount > 0" :callback="loadPage" :total-page-count="totalPageCount" :current-page="page" />
+      </el-col>
     </transition-group>
     <el-col v-if="errorOccured">
       <h2>
@@ -16,14 +19,17 @@
 </template>
 <script>
 import DataItem from '@/components/DataItem'
+import Pagination from '@/components/Pagination'
 export default {
   components: {
-    DataItem
+    DataItem,
+    Pagination
   },
   data () {
     return {
       myDataList: [],
       totalPageCount: 0,
+      page: 0,
       loading: false,
       errorOccured: false
     }
@@ -31,7 +37,8 @@ export default {
   methods: {
     loadDataItems () {
       this.loading = true
-      this.axios.get('/data/mylist?page=1').then(response => {
+      this.errorOccured = false
+      this.axios.get('/data/mylist?page=' + this.page).then(response => {
         this.myDataList = response.data.items
         this.totalPageCount = response.data.totalPages
         this.loading = false
@@ -39,10 +46,23 @@ export default {
         this.loading = false
         this.errorOccured = true
       })
+    },
+    loadPage (page) {
+      if (page <= this.totalPageCount) {
+        this.page = page
+        this.$router.push('/data/uploaded?page=' + page)
+        this.loadDataItems()
+      }
     }
   },
   created () {
-    this.loadDataItems()
+    if (this.$route.query.page) {
+      this.page = Number(this.$route.query.page)
+      this.loadDataItems()
+    } else {
+      this.page = 1
+      this.loadDataItems()
+    }
   }
 }
 

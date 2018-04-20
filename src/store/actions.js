@@ -1,6 +1,7 @@
 import * as types from './mutation-types'
 import router from '@/router'
 import axios from 'axios'
+import getWeb3 from '@/utils/web3/getWeb3'
 
 const logIn = ({ commit }, loginResponse) => {
   // after successful login setup interceptor (save authorization header with token for next requests)
@@ -13,6 +14,9 @@ const logIn = ({ commit }, loginResponse) => {
   // })
 
   commit(types.LOGIN, loginResponse.data)
+  getWeb3().then(result => {
+    commit(types.SET_WEB3_INSTANCE, result)
+  }).catch(e => {})
   router.push('/')
   // get account profile
   // axios.get('/account').then(response => {
@@ -25,6 +29,7 @@ const logIn = ({ commit }, loginResponse) => {
 
 const logOut = ({ commit }) => {
   commit(types.LOGOUT)
+  commit(types.CLEAR_WEB3_INSTANCE)
   delete axios.defaults.headers.common['Authorization']
 }
 
@@ -52,6 +57,16 @@ const setHasFileChanged = ({ commit }, response) => {
   commit(types.SET_HAS_FILE_CHANGED, response)
 }
 
+const registerWeb3Instance = ({ commit }, response) => {
+  getWeb3().then(result => {
+    commit(types.SET_WEB3_INSTANCE, result)
+  }).catch(e => {})
+}
+
+const clearWeb3Instance = ({commit}, response) => {
+  commit(types.CLEAR_WEB3_INSTANCE, response)
+}
+
 export {
   logIn,
   logOut,
@@ -60,5 +75,7 @@ export {
   setRemoteFileAccessPoint,
   setCurrentDatasetFile,
   setIsFileRemote,
-  setHasFileChanged
+  setHasFileChanged,
+  registerWeb3Instance,
+  clearWeb3Instance
 }

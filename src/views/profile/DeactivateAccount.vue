@@ -13,19 +13,16 @@
         </el-button>
       </el-row>
     </el-row>
-    <el-dialog class="notification-dialog" :title="$t('profile.warning')" :visible.sync="dialogVisible" center>
-      <div class="confimation-dialog">
-        <span>{{ $t('profile.confirmationText') }}</span>
-      </div>
-      <span slot="footer" class="dialog-footer">
-        <el-button @click="dialogVisible = false">{{ $t('profile.cancel') }}</el-button>
-        <el-button type="primary" @click="deactivateAccount">{{ $t('profile.confirm') }}</el-button>
-      </span>
-    </el-dialog>
+    <Dialog :title="$t('profile.warning')" :body="$t('profile.confirmationText')" :on-confirm="deactivateAccount" :is-visible="dialogVisible"
+      :on-cancel="cancel" />
   </div>
 </template>
 <script>
+import Dialog from '@/components/common/Dialog'
 export default {
+  components: {
+    Dialog
+  },
   data () {
     return {
       dialogVisible: false,
@@ -47,6 +44,9 @@ export default {
       }).catch(e => {
         this.deactivating = false
       })
+    },
+    cancel () {
+      this.dialogVisible = false
     }
   }
 }

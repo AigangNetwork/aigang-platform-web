@@ -72,6 +72,7 @@
       "deleteDataset": "Delete dataset",
       "editDataset": "Edit dataset",
       "successDelete": "Dataset was successfully deleted",
+      "deleteDialogBody": "Are you sure you want to delete this dataset?",
       "invalidPreview": "This dataset does not contain visual preview. Download file to check it out",
       "navigation": {
         "info": "Info",
@@ -130,6 +131,7 @@
         "successDelete": "Model was successfully deleted",
         "editModel": "Edit model",
         "noModelsExist": "This dataset does not contain any models yet",
+        "deleteDialogBody": "Are you sure you want to delete this model?",
         "placeholder": {
           "title": "Title",
           "data": "Data"
@@ -259,6 +261,7 @@
   },
   "errors": {
     "error": "Error",
+    "information": "Information",
     "400": "Bad Request",
     "401": "Unauthorized",
     "403": "Forbidden",
@@ -287,6 +290,9 @@
     "pagePathNotFound": "The page you are trying to access is not available",
     "validationError": "You have entered an invalid data",
     "serverNotFound": "Server error",
-    "contactIfError": "If you see this error please contact us via email info@aigang.network"
+    "contactIfError": "If you see this error please contact us via email info@aigang.network",
+    "metamaskDetected":
+      "We have detected that you are using metamask extension. In order to see your account AIX balance please switch your network to ",
+    "useMetamask": "To use all of our Platform features please Log in to Metamask Extension"
   }
 }

@@ -41,7 +41,7 @@ export default {
       this.$store.dispatch('logOut')
       router.push('/login')
     },
-    notifyMessage (error) {
+    notifyRequestError (error) {
       this.notificationVisible = true
       this.title = this.$t('errors.error')
 
@@ -76,10 +76,24 @@ export default {
       }
     }
   },
-  mounted (event) {
+  created (event) {
     eventHub.$on(eventHub.eventCommunicationError, event => {
       this.messages = []
-      this.notifyMessage(event)
+      this.notifyRequestError(event)
+    })
+    eventHub.$on(eventHub.eventMetamaskNetworkError, requiredNetworkName => {
+      this.$notify({
+        title: this.$t('errors.information'),
+        message: this.$t('errors.metamaskDetected') + requiredNetworkName,
+        type: 'warning'
+      })
+    })
+    eventHub.$on(eventHub.eventMetamaskAccountWasNotFound, () => {
+      this.$notify({
+        title: this.$t('errors.information'),
+        message: this.$t('errors.useMetamask'),
+        type: 'warning'
+      })
     })
   }
 }

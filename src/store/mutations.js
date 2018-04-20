@@ -35,6 +35,28 @@ const mutations = {
   },
   SET_HAS_FILE_CHANGED (state, payload) {
     state.currentDataset.hasFileChanged = payload.hasFileChanged
+  },
+  SET_WEB3_INSTANCE (state, payload) {
+    let result = payload
+    let web3Copy = state.userWeb3
+    web3Copy.coinbase = result.coinbase
+    web3Copy.networkId = result.networkId
+    web3Copy.ethBalance = parseInt(result.ethBalance, 10)
+    web3Copy.web3Instance = result.web3
+    web3Copy.aixBalance = parseInt(result.aixBalance, 10)
+    web3Copy.isInjected = result.isInjected
+    state.userWeb3 = web3Copy
+  },
+  CLEAR_WEB3_INSTANCE (state, payload) {
+    state.userWeb3 = {
+      web3Instance: null,
+      isInjected: false,
+      ethBalance: null,
+      networkId: null,
+      coinbase: null,
+      aixBalance: null,
+      error: null
+    }
   }
 }
 

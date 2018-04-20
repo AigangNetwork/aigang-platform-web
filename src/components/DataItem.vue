@@ -55,8 +55,12 @@ export default {
   data () {
     return {
       models: 3,
-      comments: 12
+      comments: 12,
+      createdUtc: ''
     }
+  },
+  created () {
+    this.createdUtc = this.data.createdUtc
   }
 }
 

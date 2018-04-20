@@ -21,7 +21,7 @@
           <router-link v-if="isUserOwner" :to="{ name: 'edit' }" exact class="aig-dataset-header-btn fit">
             <img class="file-img" src="/static/dataset/edit21px.png" alt=""> {{$t('data.dataset.editDataset')}}
           </router-link>
-          <button v-if="isUserOwner" @click="deleteModel" class="aig-dataset-header-btn fit">
+          <button v-if="isUserOwner" @click="dialogVisible = true" class="aig-dataset-header-btn fit">
             <img class="file-img" src="/static/dataset/trash24px.svg" alt=""> {{$t('data.dataset.deleteDataset')}}
           </button>
         </div>
@@ -35,18 +35,23 @@
       </div>
     </div>
 
+    <Dialog :title="$t('profile.warning')" :body="$t('data.dataset.model.deleteDialogBody')" :on-confirm="deleteModel" :is-visible="dialogVisible"
+      :on-cancel="cancel" />
   </div>
 </template>
 <script>
 import CreatedDate from '@/components/mixins/CreatedDate'
+import Dialog from '@/components/common/Dialog'
 
 export default {
   props: ['model'],
   mixins: [CreatedDate],
+  components: { Dialog },
   data () {
     return {
       loading: false,
-      modelsRoute: `/data/${this.$route.params.id}/models`
+      modelsRoute: `/data/${this.$route.params.id}/models`,
+      dialogVisible: false
     }
   },
   methods: {
@@ -63,6 +68,9 @@ export default {
         }).catch(e => {
           this.loading = false
         })
+    },
+    cancel () {
+      this.dialogVisible = false
     }
   },
   computed: {

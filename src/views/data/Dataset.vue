@@ -14,7 +14,7 @@
           <router-link v-if="isUserOwner" class="aig-dataset-header-btn fit" :to="editRoute" exact>
             <img class="file-img" src="/static/dataset/edit21px.png" alt=""> {{$t('data.dataset.editDataset')}}
           </router-link>
-          <button v-if="isUserOwner" @click="deleteDataset" class="aig-dataset-header-btn fit">
+          <button v-if="isUserOwner" @click="dialogVisible = true" class="aig-dataset-header-btn fit">
             <img class="file-img" src="/static/dataset/trash24px.svg" alt=""> {{$t('data.dataset.deleteDataset')}}
           </button>
         </div>
@@ -37,15 +37,18 @@
         <router-view></router-view>
       </div>
     </div>
+    <Dialog :title="$t('profile.warning')" :body="$t('data.dataset.deleteDialogBody')" :on-confirm="deleteDataset" :is-visible="dialogVisible"
+      :on-cancel="cancel" />
   </el-container>
 </template>
 <script>
 import moment from 'moment'
 import DataNavigation from '@/components/navigation/DataNavigation'
-
+import Dialog from '@/components/common/Dialog'
 export default {
   components: {
-    DataNavigation
+    DataNavigation,
+    Dialog
   },
   created () {
     window.scroll(0, 0)
@@ -53,6 +56,7 @@ export default {
   },
   data () {
     return {
+      dialogVisible: false,
       dataset: {},
       loading: false,
       isUserOwner: false,
@@ -152,6 +156,9 @@ export default {
       }).catch(e => {
         this.loading = false
       })
+    },
+    cancel () {
+      this.dialogVisible = false
     }
   }
 }
