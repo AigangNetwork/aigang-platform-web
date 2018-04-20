@@ -68,6 +68,7 @@ export default {
       this.axios.get(this.requestPath).then(response => {
         this.parsePreview(response.data.data.preview)
         this.dataset = response.data.data
+
         if (this.isJson(this.dataset.structure)) {
           this.structure = JSON.parse(this.dataset.structure)
           this.isValidJson = true

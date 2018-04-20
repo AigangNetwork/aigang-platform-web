@@ -102,15 +102,17 @@
         "TitleTooShort": "Title must be at least 6 characters long",
         "DescriptionEmpty": "Description is required",
         "DescriptionTooShort": "Description must be at least 6 characters long",
-        "StructureFieldEmpty": "Please make sure you have filled all structure fields",
+        "StructureFieldEmpty": "Make sure you have filled all structure fields",
         "RemoteFileAccessPointEmpty": "Remote access point is required",
         "RemoteFileAccessPointTooShort": "Remote access must be at least 6 characters long",
         "FileEmpty": "File is required",
         "FileTooBig": "File is too large",
         "PremiumEmpty": "Premium is required",
-        "PremiumInvalidNumber": "Premium must be a number",
+        "PremiumInvalid": "Invalid premium",
         "OnlyIntegersAllowed": "Only integers allowed",
-        "TableTooBig": "Maximum size of the table is 10x10"
+        "TableTooBig": "Maximum size of the table is 10x10",
+        "EmptyModel": "Model table is required",
+        "EmptyModelInput": "Make sure you have filled all table fields"
       },
       "model": {
         "models": "Models",

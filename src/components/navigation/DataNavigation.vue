@@ -49,7 +49,6 @@ export default {
 
     z-index: 1;
     .dataset-navigation {
-      height: 90px;
       background-color: white;
     }
   }
@@ -83,8 +82,20 @@ export default {
           flex-grow: 1;
           text-align: right;
         }
+        /* --------------------------------------------- */
+        /* REMOVE THIS OPACITY AFTER THREADS ARE ENABLED */
+        &:nth-child(4) {
+          a {
+            opacity: 0.5;
+          }
+        }
+        &:last-child {
+          a {
+            opacity: 0.5;
+          }
+        }
+        /* --------------------------------------------- */
         a {
-          opacity: 0.35;
           padding: 15px 10px 5px 5px;
           font-family: $font-secondary;
           display: flex;
@@ -116,36 +127,47 @@ export default {
     }
   }
 
-  @media screen and (min-width: 280px) and (max-width: 680px) {
+  @media screen and (min-width: 100px) and (max-width: 732px) {
     .dataset-navigation-container {
       .dataset-navigation-menu {
         padding-bottom: 10px;
-        ul {
+
+        ul span {
           padding-left: 0;
           flex-direction: row;
           flex-wrap: wrap;
           flex-flow: row wrap;
-          justify-content: space-around;
+          justify-content: space-between;
           li {
             margin-left: 0;
             width: 40%;
+            min-width: 135px;
             h3 {
               text-align: center;
               line-height: 24px;
               height: 24px;
               margin-top: 12px;
             }
+
           }
           li:last-child {
-            margin-top: 30px;
-            display: block;
-            width: 100%;
+            flex-grow: 0;
+
             button {
+              width: 100%;
+              margin: 30px;
+              display: block;
               width: 100%;
             }
           }
         }
       }
+    }
+  }
+
+  @media screen and (min-width: 100px) and (max-width: 376px) {
+    .dataset-navigation-container .dataset-navigation-menu ul span {
+      justify-content: space-around;
     }
   }
 </style>

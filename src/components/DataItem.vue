@@ -18,11 +18,15 @@
     <div class="aig-data-footer">
       <div class="aig-footer-container">
         <img src="/static/models24px.svg" alt="models">
-        <span class="label">{{ $t('data.card.models' )}}</span>
+        <router-link class="label" :to="{ name: 'datasetModels', params: { id: data.id}}">
+          {{ $t('data.card.models' )}}
+          <span v-if="data.modelsCount > 0">({{ data.modelsCount }})</span>
+        </router-link>
       </div>
       <div class="aig-footer-container-right">
         <img src="/static/threads24px.svg" alt="threads">
-        <span class="label">{{ $t('data.card.threads' )}}</span>
+        <span class="label">{{ $t('data.card.threads' )}}
+        </span>
       </div>
     </div>
   </div>
@@ -42,6 +46,10 @@ export default {
     data: {
       required: false,
       type: Object
+    },
+    modelsCount: {
+      required: false,
+      type: Number
     }
   },
   data () {
@@ -78,7 +86,6 @@ export default {
       height: 20px;
     }
     .aig-data-footer {
-      opacity: 0.5;
       border-top: 1px solid $light-border-blue;
       height: 40px;
       width: 100%;
@@ -99,6 +106,7 @@ export default {
       }
       .aig-footer-container-right {
         justify-content: right;
+        opacity: 0.5;
         @extend .aig-footer-container;
       }
     }

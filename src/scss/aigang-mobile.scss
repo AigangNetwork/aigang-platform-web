@@ -114,11 +114,16 @@
 
 @media screen and (min-width: 100px) and (max-width: 302px) {
   .dataset-edit-container {
-    .file-card-container
-      .card-section
-      .card-section-header
-      .el-switch__label--right {
+    .file-card-container .card-section .card-section-header .el-switch__label--right {
       margin-left: 0;
     }
+  }
+}
+
+@media screen and (min-width: 100px) and (max-width: 732px) {
+  .dataset-navigation-container .stick-to-right {
+    text-align: center;
+    margin-top: 20px;
+    width: 100%;
   }
 }

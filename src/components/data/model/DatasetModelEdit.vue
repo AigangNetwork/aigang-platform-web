@@ -51,7 +51,7 @@
 <script>
 
 export default {
-  props: ['value'],
+  props: ['value', 'validationCallback'],
   data () {
     return {
       lengthError: false,
@@ -98,6 +98,7 @@ export default {
       this.rowsLength = ''
 
       this.$emit('input', this.models)
+      this.validationCallback(this.models)
     },
     addColumn (index) {
       this.models = this.value
@@ -134,6 +135,7 @@ export default {
     deleteTable (index) {
       this.models = this.value
       this.models.splice(index, 1)
+      this.validationCallback(this.models)
     }
   }
 }
@@ -148,7 +150,7 @@ export default {
     display: flex;
     align-items: center;
     margin-top: 20px;
-    margin-bottom: 52px;
+    margin-bottom: 30px;
 
     p {
       &:first-child {

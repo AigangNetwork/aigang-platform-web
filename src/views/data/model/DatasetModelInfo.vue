@@ -45,7 +45,8 @@ export default {
         routeLink: {
           name: 'modelTables',
           params: {
-            id: this.$route.params.modelId
+            id: this.$route.params.id,
+            modelId: this.$route.params.modelId
           }
         },
         imgSrc: '/static/models24px.svg',
@@ -87,6 +88,7 @@ export default {
 
   .model-container .dataset-content {
     border-top: 1px solid $light-grey-border;
+    min-height: 150px
   }
 
   .model-card.aig-card {

@@ -13,7 +13,7 @@
         <p>
           {{ $t('data.dataset.model.by') }}
           <span class="author">{{ model.firstName }} {{ model.lastName }}</span>
-          <span class="white-space"></span>
+
           {{ $t('data.dataset.model.lastUpdated')}}: {{ created }}
         </p>
         <h1>{{ model.title }}</h1>
@@ -149,13 +149,25 @@ export default {
       }
     }
 
-    .white-space {
-      display: inline-block;
-      width: 38px;
-    }
-
     .author {
       text-decoration: underline;
+      margin-right: 38px;
+    }
+  }
+
+  @media screen and (min-width: 100px) and (max-width: 710px) {
+    .header-title-container {
+      flex-direction: column;
+      padding: 49px;
+
+      .header-right-section {
+        margin: 20px auto;
+      }
+
+      .author {
+        text-decoration: underline;
+        margin-right: 18px;
+      }
     }
   }
 </style>

@@ -118,6 +118,12 @@ export default {
         if (this.$store.state.user.profile.id === this.dataset.userId) {
           this.isUserOwner = true
         }
+
+        const modelsBar = this.navigationBars.find(bar => { return bar.routeLink.name === 'datasetModels' })
+        modelsBar.name = this.$t('data.dataset.navigation.models')
+        if (modelsBar && response.data.modelsCount > 0) {
+          modelsBar.name += ` (${response.data.modelsCount})`
+        }
       })
     },
     downloadDataset () {
@@ -169,7 +175,7 @@ export default {
     padding-left: 35px;
     max-width: 932px;
     max-height: 250px;
-    margin: 150px 5px 0px 5px;
+    margin: 150px 5px 50px 5px;
     color: #ffffff;
 
     .dataset-title {
@@ -179,7 +185,7 @@ export default {
 
     .creator-info {
       display: flex;
-      margin-bottom: 5px;
+      margin-bottom: 25px;
       font-size: 11pt;
       .creator {
         margin-right: 15px;
@@ -228,20 +234,17 @@ export default {
   }
 
   @media screen and (min-width: 280px) and (max-width: 680px) {
-    .dataset-content-container {
-      .dataset-content {
-        margin-top: 42px;
-      }
-    }
-
     .aig-dataset-header {
       margin-top: 75px;
+      margin-bottom: 75px;
     }
+
   }
 
   @media screen and (min-width: 280px) and (max-width: 320px) {
     .aig-dataset-header {
-      margin-top: 20px;
+      margin-top: 30px;
+      margin-bottom: 40px;
     }
   }
 </style>

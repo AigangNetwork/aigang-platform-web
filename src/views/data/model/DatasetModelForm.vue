@@ -1,7 +1,7 @@
 <template>
   <div class="aig-dataset-info-container" v-loading="loading">
     <h4 class="info-title">{{$t('data.dataset.model.editModel')}}</h4>
-    <el-form @keyup.enter.native="submitForm('modelForm', postDataModel)" :model="modelForm" :rules="modelFormRules" ref="modelForm">
+    <el-form @keyup.enter.native="formAction" :model="modelForm" :rules="modelFormRules" ref="modelForm">
 
       <DatasetTitleEdit v-model="modelForm.title" />
 
@@ -9,11 +9,23 @@
 
       <DatasetDescriptionEdit v-model="modelForm.description" />
 
-      <DatasetModelEdit v-model="model" />
+      <DatasetModelEdit v-model="model" :validationCallback="validate" />
+
+      <el-row v-if="!isModelValid">
+        <div class="aig-form-error">
+          {{$t('data.dataset.validation.EmptyModel')}}
+        </div>
+      </el-row>
+
+      <el-row v-if="!isModelInputsValid">
+        <div class="aig-form-error">
+          {{$t('data.dataset.validation.EmptyModelInput')}}
+        </div>
+      </el-row>
 
       <el-row>
         <el-form-item>
-          <el-button class="aig-button" type="primary" @click="submitForm('modelForm', postDataModel)">
+          <el-button class="aig-button" type="primary" @click="formAction">
             <template v-if="isUpload">{{ $t('data.dataset.model.submitModel') }}</template>
             <template v-else>{{ $t('general.save') }}</template>
           </el-button>
@@ -31,7 +43,7 @@ import FormMixin from '@/components/mixins/FormMixin'
 import DatasetModelEdit from '@/components/data/model/DatasetModelEdit'
 
 export default {
-  props: ['isUpload', 'getPath', 'postPath', 'callback'],
+  props: ['isUpload', 'getPath', 'postPath'],
   components: {
     DatasetTitleEdit,
     DatasetDescriptionEdit,
@@ -43,6 +55,8 @@ export default {
     return {
       loading: false,
       model: [],
+      isModelValid: true,
+      isModelInputsValid: true,
       modelForm: {
         title: '',
         description: '',
@@ -78,15 +92,23 @@ export default {
           message: this.$t('data.dataset.validation.PremiumEmpty'),
           trigger: 'blur'
         }, {
-          pattern: /^\d*\.?\d*$/,
-          message: this.$t('data.dataset.validation.PremiumInvalidNumber'),
+          pattern: /^(?:\d{1,6}\.\d{1,6}|[1-9]\d{0,5})$/,
+          message: this.$t('data.dataset.validation.PremiumInvalid'),
           trigger: 'blur'
         }]
       }
     }
   },
   methods: {
+    formAction () {
+      this.validate(this.model)
+      this.submitForm('modelForm', this.postDataModel)
+    },
     postDataModel () {
+      if (!this.isModelValid || !this.isModelInputsValid) {
+        return
+      }
+
       this.loading = true
       this.modelForm.model = JSON.stringify(this.model)
 
@@ -105,11 +127,29 @@ export default {
             message: this.isUpload ? this.$t('data.dataset.model.notification.successfullyUploaded')
               : this.$t('data.dataset.model.notification.successfullyUpdated')
           })
-          this.callback()
-          // TO_DO redirect to data models list page
+
+          this.$router.push({ name: 'datasetModels' })
         }).catch(e => {
           this.loading = false
         })
+    },
+    validate (model) {
+      if (model.length > 0) {
+        this.isModelValid = true
+      } else {
+        this.isModelValid = false
+      }
+
+      // we need to flatten 3d array
+      const tables = [].concat.apply([], model)
+      const tableInputs = [].concat.apply([], tables)
+
+      this.isModelInputsValid = true
+      tableInputs.forEach(input => {
+        if (input.length < 1) {
+          this.isModelInputsValid = false
+        }
+      })
     }
   },
   created () {

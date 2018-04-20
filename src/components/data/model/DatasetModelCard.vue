@@ -67,7 +67,6 @@ export default {
 
     h3 {
       margin: 0;
-      height: 26px;
     }
 
     .model-item-card-footer {
@@ -110,6 +109,23 @@ export default {
 
     .author {
       color: $button-purple;
+    }
+  }
+
+  @media screen and (min-width: 280px) and (max-width: 582px) {
+    .model-item-card {
+      flex-direction: column;
+
+      .card-section:last-child {
+        .card-section-right {
+          margin: 0 auto -55px auto;
+          padding: 0 30px 0 30px;
+
+          span {
+            text-align: center;
+          }
+        }
+      }
     }
   }
 </style>
