@@ -12,7 +12,7 @@
       },
       "titles": {
         "upload": "Upload dataset",
-        "load": "Load",
+        "load": "Continue",
         "title": "Title",
         "description": "Description",
         "preview": "Preview",
@@ -26,8 +26,7 @@
       "rules": {
         "rule0": "CSV files only",
         "rule1": "Maximum size of file: 10MB",
-        "rule2":
-          "Your file is too large. Please provide remote access point to the file. (URL, Connection string etc.)",
+        "rule2": "Please provide remote access point to the file. (URL, Connection string etc.)",
         "rule3": "Each record is on a separate line",
         "rule4": "File must contain header line",
         "rule5": "CSV file requirements"
@@ -46,8 +45,11 @@
         },
         "validation": {
           "emptyInputError": "Please make sure you have filled all fields",
-          "fileLimitExceed": "Please delete old file before uploading new one",
-          "unableAccessFileContent": "File can not be accessed. Please reupload correct file"
+          "fileLimitExceed":
+            "You are able to upload only one .csv file. Please delete old file before uploading new one",
+          "unableAccessFileContent": "File can not be accessed. Please reupload correct file",
+          "invalidFile": "Invalid file content type. Please make sure you upload .csv files only!",
+          "fileTooLarge": "Please make sure you follow all file preferences. File is too large."
         }
       }
     },

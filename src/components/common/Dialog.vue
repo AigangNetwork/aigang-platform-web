@@ -1,5 +1,5 @@
 <template>
-  <el-dialog class="notification-dialog" :title="title" :visible.sync="isVisible" center>
+  <el-dialog class="notification-dialog" :title="title" :visible.sync="isVisible" :show-close="false" center>
     <div class="confimation-dialog">
       <span>{{ body }}</span>
     </div>

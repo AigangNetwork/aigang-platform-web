@@ -14,7 +14,7 @@
             </el-form-item>
           </el-col>
           <el-col :span="24">
-            <el-select size="medium" aria-required="true" v-model="column.dataType" :placeholder="$t('data.upload.input.placeholder.dataType')">
+            <el-select size="medium" aria-required="true" v-model="column.dataType" :default-first-option="true" :placeholder="$t('data.upload.input.placeholder.dataType')">
               <el-option v-for="item in dataTypeOptions" :key="item" :label="item" :value="item">
               </el-option>
             </el-select>
@@ -85,4 +85,5 @@ export default {
       width: 33%;
     }
   }
+
 </style>
