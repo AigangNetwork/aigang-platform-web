@@ -11,10 +11,10 @@
           <button v-if="!dataset.remoteFileAccessPoint" @click="downloadDataset" class="aig-dataset-header-btn">
             <img class="file-img" src="/static/dataset/documents24px.svg" alt=""> {{$t('data.dataset.downloadDataset')}}
           </button>
-          <router-link v-if="isUserOwner" class="aig-dataset-header-btn fit" :to="editRoute" exact>
+          <router-link v-if="isUserOwner" class="aig-dataset-header-btn fit edit" :to="editRoute" exact>
             <img class="file-img" src="/static/dataset/edit21px.png" alt=""> {{$t('data.dataset.editDataset')}}
           </router-link>
-          <button v-if="isUserOwner" @click="dialogVisible = true" class="aig-dataset-header-btn fit">
+          <button v-if="isUserOwner" @click="dialogVisible = true" class="aig-dataset-header-btn fit delete">
             <img class="file-img" src="/static/dataset/trash24px.svg" alt=""> {{$t('data.dataset.deleteDataset')}}
           </button>
         </div>
@@ -45,6 +45,7 @@
 import moment from 'moment'
 import DataNavigation from '@/components/navigation/DataNavigation'
 import Dialog from '@/components/common/Dialog'
+
 export default {
   components: {
     DataNavigation,

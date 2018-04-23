@@ -7,7 +7,7 @@
       <p> {{ model.description }}</p>
       <div class="model-item-card-footer">
         <el-col>{{ $t('data.dataset.model.by') }}
-          <span class="author">{{ model.firstName }} {{ model.lastName }}</span> &#8226; {{ created }}</el-col>
+          <span class="author">{{ model.userName }}</span> &#8226; {{ created }}</el-col>
       </div>
     </div>
 

@@ -12,17 +12,17 @@
       <div class="header-left-section">
         <p>
           {{ $t('data.dataset.model.by') }}
-          <span class="author">{{ model.firstName }} {{ model.lastName }}</span>
+          <span class="author">{{ model.userName }}</span>
 
           {{ $t('data.dataset.model.lastUpdated')}}: {{ created }}
         </p>
         <h1>{{ model.title }}</h1>
         <div class="aig-dataset-header-btn-container">
-          <router-link v-if="isUserOwner" :to="{ name: 'edit' }" exact class="aig-dataset-header-btn fit">
-            <img class="file-img" src="/static/dataset/edit21px.png" alt=""> {{$t('data.dataset.editDataset')}}
+          <router-link v-if="isUserOwner" :to="{ name: 'edit' }" exact class="aig-dataset-header-btn fit edit">
+            <img class="file-img" src="/static/dataset/edit21px.png" alt=""> {{$t('data.dataset.model.editModel')}}
           </router-link>
-          <button v-if="isUserOwner" @click="dialogVisible = true" class="aig-dataset-header-btn fit">
-            <img class="file-img" src="/static/dataset/trash24px.svg" alt=""> {{$t('data.dataset.deleteDataset')}}
+          <button v-if="isUserOwner" @click="dialogVisible = true" class="aig-dataset-header-btn fit delete">
+            <img class="file-img" src="/static/dataset/trash24px.svg" alt=""> {{$t('data.dataset.model.deleteModel')}}
           </button>
         </div>
       </div>

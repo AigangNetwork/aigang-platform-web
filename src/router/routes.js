@@ -18,8 +18,7 @@ import DatasetModelList from '@/views/data/model/DatasetModelList'
 import DatasetThreads from '@/views/data/DatasetThreads'
 import DatasetData from '@/views/data/DatasetData'
 import DatasetEdit from '@/views/data/DatasetEdit'
-import AllData from '@/views/data/AllData'
-import Uploaded from '@/views/data/Uploaded'
+import DataItemsList from '@/views/data/DataItemsList'
 import DatasetModelForm from '@/views/data/model/DatasetModelForm'
 import DatasetModelInfo from '@/views/data/model/DatasetModelInfo'
 import DatasetModelTables from '@/views/data/model/DatasetModelTables'
@@ -84,14 +83,31 @@ const routes = [
       {
         name: 'all',
         path: '/data/all',
-        component: AllData,
-        props: true
+        component: DataItemsList,
+        props: route => ({
+          requestPath: '/data/list?page=',
+          routerPath: '/data/all?page='
+        })
       },
       {
         name: 'mylist',
         path: '/data/uploaded',
-        component: Uploaded,
-        props: true
+        component: DataItemsList,
+        props: route => ({
+          requestPath: '/data/mylist?page=',
+          routerPath: '/data/uploaded?page=',
+          isUpload: true
+        })
+      },
+      {
+        name: 'mymodelslist',
+        path: '/data/models',
+        component: DataItemsList,
+        props: route => ({
+          requestPath: '/data/mymodelslist?page=',
+          routerPath: '/data/models?page=',
+          isModels: true
+        })
       }
     ]
   },

@@ -69,6 +69,7 @@ export default {
         .then(response => {
           this.loading = false
           this.model = response.data.data
+          this.model.userName = response.data.userName
         }).catch(e => {
           this.loading = false
         })

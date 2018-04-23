@@ -159,10 +159,24 @@ body.aig {
     cursor: pointer;
   }
   &.fit {
+    font-family: $font-primary;
+    line-height: 30px;
+    font-weight: 500;
+
     .file-img {
       height: 19px;
       margin-left: 8px;
       margin-right: 4px;
+    }
+
+    &.delete {
+      .file-img {
+        height: 18px;
+      }
+    }
+
+    &.edit {
+      padding-top: 2px;
     }
   }
   .flex-container {
