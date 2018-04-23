@@ -5,9 +5,12 @@
   "author": "Aigang Team",
   "private": true,
   "scripts": {
-    "dev": "API_ADDRESS='\"https://testapi.aigang.network/api\"' webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
-    "windowsdev": "set API_ADDRESS='https://testapi.aigang.network/api'&&webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
-    "localdev": "API_ADDRESS='\"http://localhost:5000/api\"' webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
+    "dev":
+      "API_ADDRESS='\"https://testapi.aigang.network/api\"' webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
+    "windowsdev":
+      "set API_ADDRESS='https://testapi.aigang.network/api'&&webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
+    "localdev":
+      "API_ADDRESS='\"http://localhost:5000/api\"' webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
     "start": "npm run dev",
     "lint": "eslint --ext .js,.vue src",
     "build": "NODE_ENV=production node build/build.js",
@@ -26,7 +29,7 @@
     "vue-router": "^3.0.1",
     "vuex": "^3.0.1",
     "vuex-persistedstate": "^2.4.2",
-    "web3": "^1.0.0-beta.34",
+    "web3": "^1.0.0-beta.33",
     "win-node-env": "^0.1.0"
   },
   "devDependencies": {
@@ -82,9 +85,5 @@
     "node": ">= 8.9.0",
     "npm": ">= 5.4.2"
   },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions",
-    "not ie <= 8"
-  ]
+  "browserslist": ["> 1%", "last 2 versions", "not ie <= 8"]
 }
