@@ -11,27 +11,26 @@
           <button v-if="!dataset.remoteFileAccessPoint" @click="downloadDataset" class="aig-dataset-header-btn">
             <img class="file-img" src="/static/dataset/documents24px.svg" alt=""> {{$t('data.dataset.downloadDataset')}}
           </button>
-          <router-link v-if="isUserOwner" class="aig-dataset-header-btn" :to="editRoute" exact>
+          <router-link v-if="isUserOwner" class="aig-dataset-header-btn fit edit" :to="editRoute" exact>
             <img class="file-img" src="/static/dataset/edit21px.png" alt=""> {{$t('data.dataset.editDataset')}}
           </router-link>
-          <button v-if="isUserOwner" @click="dialogVisible = true" class="aig-dataset-header-btn">
+          <button v-if="isUserOwner" @click="dialogVisible = true" class="aig-dataset-header-btn fit delete">
             <img class="file-img" src="/static/dataset/trash24px.svg" alt=""> {{$t('data.dataset.deleteDataset')}}
           </button>
         </div>
       </div>
-      <div class="dataset-navigation-container">
-        <div class="dataset-navigation">
-          <nav class="dataset-navigation-menu">
-            <ul class="">
-              <li v-for="bar in navigationBars" :key="bar.name">
-                <router-link :to="bar.routeLink" active-class="dataset-bar-active" :class="{'disabled': bar.disabled}" exact>
-                  <img class="file-img" :src="bar.imgSrc" alt=""> {{ bar.name }}
-                </router-link>
-              </li>
-            </ul>
-          </nav>
-        </div>
-      </div>
+      <DataNavigation :show="!uploadingModelActive" :navigationBars="navigationBars">
+
+        <li v-if="uploadingModelActive" class="upload-model-button" key="upload-title">
+          <h3>{{ $t('data.dataset.model.submitModel') }}</h3>
+        </li>
+
+        <li class="stick-to-right" key="upload-button">
+          <el-button v-if="!uploadingModelActive" class="upload-model-button" @click="$router.push({name: 'uploadDataModel'})" type="warning">{{ $t('data.dataset.model.uploadModel') }}</el-button>
+          <el-button v-if="uploadingModelActive" class="upload-model-button" @click="$router.go(-1)" type="warning">{{ $t('general.cancel') }}</el-button>
+        </li>
+      </DataNavigation>
+
     </div>
     <div class="dataset-content-container">
       <div class="dataset-content">
@@ -44,9 +43,12 @@
 </template>
 <script>
 import moment from 'moment'
+import DataNavigation from '@/components/navigation/DataNavigation'
 import Dialog from '@/components/common/Dialog'
+
 export default {
   components: {
+    DataNavigation,
     Dialog
   },
   created () {
@@ -84,9 +86,14 @@ export default {
       },
       {
         name: this.$t('data.dataset.navigation.models'),
-        routeLink: '/data/' + this.$route.params.id + '/models',
+        routeLink: {
+          name: 'datasetModels',
+          params: {
+            id: this.$route.params.id
+          }
+        },
         imgSrc: '/static/models24px.svg',
-        disabled: true
+        disabled: false
       },
       {
         name: this.$t('data.dataset.navigation.threads'),
@@ -100,6 +107,9 @@ export default {
   computed: {
     updated () {
       return moment(this.dataset.modifiedUtc).format('YYYY-MM-DD')
+    },
+    uploadingModelActive () {
+      return this.$route.path.includes('uploadDataModel')
     }
   },
   methods: {
@@ -112,6 +122,12 @@ export default {
 
         if (this.$store.state.user.profile.id === this.dataset.userId) {
           this.isUserOwner = true
+        }
+
+        const modelsBar = this.navigationBars.find(bar => { return bar.routeLink.name === 'datasetModels' })
+        modelsBar.name = this.$t('data.dataset.navigation.models')
+        if (modelsBar && response.data.modelsCount > 0) {
+          modelsBar.name += ` (${response.data.modelsCount})`
         }
       })
     },
@@ -167,39 +183,31 @@ export default {
     padding-left: 35px;
     max-width: 932px;
     max-height: 250px;
-    margin: 150px 5px 0px 5px;
+    margin: 150px 5px 50px 5px;
     color: #ffffff;
+
     .dataset-title {
       font-size: 24pt;
       font-weight: 700;
     }
+
     .creator-info {
       display: flex;
-      margin-bottom: 5px;
+      margin-bottom: 25px;
       font-size: 11pt;
       .creator {
         margin-right: 15px;
       }
     }
-  }
 
-  .file-img {
-    margin-right: 8px;
-    margin-left: 4px;
-  }
-
-  .dataset-navigation-container {
-    width: 100%;
-    max-width: 932px;
-    margin: 0px 5px 0px 5px;
-    z-index: 1;
-    .dataset-navigation {
-      height: 90px;
-      background-color: white;
-    }
-
-    .disabled {
-      pointer-events: none;
+    .uploaded,
+    .creator {
+      font-family: $font-secondary;
+      font-weight: 300;
+      font-size: 14px;
+      line-height: 1.71;
+      letter-spacing: 0.4px;
+      height: 24px;
     }
   }
 
@@ -219,87 +227,32 @@ export default {
     }
   }
 
-  .dataset-navigation-menu {
-    width: 100%;
-    color: black;
-    background: white;
-    display: flex;
-    justify-content: center;
-    align-content: center;
-    z-index: 1;
-    ul {
-      list-style-type: none;
-      display: flex;
-      li {
-        justify-content: center;
-        &+li {
-          margin-left: 25px;
-        }
-        a {
-          opacity: 0.35;
-          padding: 15px 10px 5px 5px;
-          font-family: $font-primary;
-          display: flex;
-          align-items: center;
-          font-size: 14px;
-          font-weight: 600;
-          letter-spacing: 2px;
-          &:hover {
-            color: rgba(black, .65);
-          }
-        }
-      }
-    }
-    .dataset-bar-active {
-      border-bottom: solid 2px;
-      border-bottom-color: $orange;
-      opacity: 1;
-    }
+  .upload-model-button {
+    margin-top: 2px;
+    min-width: 137px;
   }
 
-  @media screen and (min-width: 680px) and (max-width: 1024px) {
-    .dataset-navigation-container {
-      .dataset-navigation-menu {
-        ul {
-          padding-left: 0;
-        }
-      }
+  .dataset-navigation li {
+    h3 {
+      margin: 0;
+      margin-top: 0;
+      height: 48px;
+      line-height: 48px;
     }
   }
 
   @media screen and (min-width: 280px) and (max-width: 680px) {
-    .dataset-navigation-container {
-      .dataset-navigation-menu {
-        padding-bottom: 10px;
-        ul {
-          padding-left: 0;
-          flex-direction: row;
-          flex-wrap: wrap;
-          flex-flow: row wrap;
-          justify-content: space-around;
-          li {
-            margin-left: 0;
-            width: 40%;
-          }
-        }
-      }
-    }
-
-    .dataset-content-container {
-      .dataset-content {
-        margin-top: 42px;
-      }
-    }
-
     .aig-dataset-header {
       margin-top: 75px;
+      margin-bottom: 75px;
     }
+
   }
 
   @media screen and (min-width: 280px) and (max-width: 320px) {
     .aig-dataset-header {
-      margin-top: 20px;
+      margin-top: 30px;
+      margin-bottom: 40px;
     }
   }
-
 </style>

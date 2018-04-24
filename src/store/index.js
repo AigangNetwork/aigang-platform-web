@@ -9,8 +9,7 @@ import * as actions from './actions'
 Vue.use(Vuex)
 
 const store = new Vuex.Store({
-  strict:
-    process.env.NODE_ENV !== 'production' || process.env.NODE_ENV !== 'qa',
+  strict: process.env.NODE_ENV !== 'production' || process.env.NODE_ENV !== 'qa',
   state: {
     user: {
       authenticated: false,

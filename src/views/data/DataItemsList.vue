@@ -8,12 +8,24 @@
     <el-col :key="totalPageCount">
       <Pagination v-if="totalPageCount > 0" :callback="loadPage" :total-page-count="totalPageCount" :current-page="page" />
     </el-col>
+    <el-col v-if="errorOccured && isUpload" key="uploadError">
+      <h2>
+        {{ $t('general.unableToFindYourDatasets') }}
+      </h2>
+    </el-col>
+    <el-col v-if="errorOccured && isModels" key="modelsError">
+      <h2>
+        {{ $t('general.unableToFindYourModels') }}
+      </h2>
+    </el-col>
   </transition-group>
 </template>
 <script>
 import DataItem from '@/components/DataItem'
 import Pagination from '@/components/Pagination'
+
 export default {
+  props: ['requestPath', 'routerPath', 'isUpload', 'isModels'],
   components: {
     DataItem,
     Pagination
@@ -23,22 +35,26 @@ export default {
       dataList: [],
       totalPageCount: 0,
       page: 0,
-      loading: false
+      loading: false,
+      errorOccured: false
     }
   },
   methods: {
     loadDataItems () {
       this.loading = true
-      this.axios.get('/data/list?page=' + this.page).then(response => {
+      this.axios.get(this.requestPath + this.page).then(response => {
         this.dataList = response.data.items
         this.totalPageCount = response.data.totalPages
         this.loading = false
+      }).catch(e => {
+        this.loading = false
+        this.errorOccured = true
       })
     },
     loadPage (page) {
       if (page <= this.totalPageCount) {
         this.page = page
-        this.$router.push('/data/all?page=' + page)
+        this.$router.push(this.routerPath + page)
         this.loadDataItems()
       }
     }

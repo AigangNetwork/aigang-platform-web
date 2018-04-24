@@ -32,7 +32,7 @@
           </el-col>
         </el-row>
         <el-row :gutter="20" class="aig-items">
-          <router-view></router-view>
+          <router-view :key="$route.path"></router-view>
         </el-row>
       </el-main>
     </el-container>
@@ -49,22 +49,19 @@ export default {
         routeLink: {
           path: '/data/all'
         },
-        active: true,
-        disabled: false
+        active: true
       },
       {
         name: this.$t('data.menu.uploaded'),
         routeLink: {
           path: '/data/uploaded'
         },
-        active: false,
-        disabled: false
+        active: false
       },
       {
         name: this.$t('data.menu.models'),
-        routeLink: '/models',
-        active: false,
-        disabled: true
+        routeLink: '/data/models',
+        active: false
       }
       ],
       searchInput: '',
@@ -248,5 +245,4 @@ export default {
       }
     }
   }
-
 </style>

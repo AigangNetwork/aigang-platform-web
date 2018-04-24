@@ -40,7 +40,8 @@
           "structure": "Please briefly describe your file structure",
           "fileUploadPart0": "Drop file here or ",
           "fileUploadPart1": "click to upload",
-          "dataType": "Data type"
+          "dataType": "Data type",
+          "premium": "Amount in ETH"
         },
         "validation": {
           "emptyInputError": "Please make sure you have filled all fields",
@@ -79,7 +80,8 @@
         "info": "Info",
         "data": "Data",
         "models": "Models",
-        "threads": "Threads"
+        "threads": "Threads",
+        "model": "Model"
       },
       "edit": {
         "uploadNew": "Upload new",
@@ -103,11 +105,48 @@
         "TitleTooShort": "Title must be at least 6 characters long",
         "DescriptionEmpty": "Description is required",
         "DescriptionTooShort": "Description must be at least 6 characters long",
-        "StructureFieldEmpty": "Please make sure you have filled all structure fields",
+        "StructureFieldEmpty": "Make sure you have filled all structure fields",
         "RemoteFileAccessPointEmpty": "Remote access point is required",
         "RemoteFileAccessPointTooShort": "Remote access must be at least 6 characters long",
         "FileEmpty": "File is required",
-        "FileTooBig": "File is too large"
+        "FileTooBig": "File is too large",
+        "PremiumEmpty": "Premium is required",
+        "PremiumInvalid": "Invalid premium",
+        "OnlyIntegersAllowed": "Only integers allowed",
+        "TableTooBig": "Maximum size of the table is 10x50",
+        "EmptyModel": "Model table is required",
+        "EmptyModelInput": "Make sure you have filled all table fields"
+      },
+      "model": {
+        "models": "Models",
+        "model": "Model",
+        "uploadModel": "Upload model",
+        "cancel": "Cancel",
+        "premium": "Premium",
+        "submitModel": "Submit model",
+        "newTable": "New table",
+        "on": "on",
+        "create": "Create",
+        "basePremium": "Base premium",
+        "eth": "ETH",
+        "by": "By",
+        "successDelete": "Model was successfully deleted",
+        "editModel": "Edit model",
+        "deleteModel": "Delete model",
+        "noModelsExist": "This dataset does not contain any models yet",
+        "deleteDialogBody": "Are you sure you want to delete this model?",
+        "placeholder": {
+          "title": "Title",
+          "data": "Data"
+        },
+        "notification": {
+          "title": {
+            "success": "Success"
+          },
+          "successfullyUploaded": "Data model was successfully uploaded",
+          "successfullyUpdated": "Data model was successfully updated"
+        },
+        "lastUpdated": "Last updated"
       }
     }
   },
@@ -218,9 +257,11 @@
     "change": "Change",
     "save": "Save",
     "back": "Back",
+    "cancel": "Cancel",
     "markupSupported": "VueMarkdown supported",
     "versionAlpha": "alpha",
-    "unableToFindYourDatasets": "Can not find your datasets"
+    "unableToFindYourDatasets": "Can not find your datasets",
+    "unableToFindYourModels": "Can not find any datasets containing your models"
   },
   "errors": {
     "error": "Error",

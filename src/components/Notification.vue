@@ -57,7 +57,7 @@ export default {
             this.messages.push(this.$t('errors.403'))
             break
           case 404:
-            this.messages.push(this.$t('errors.404'))
+            this.notificationVisible = false
             break
           case 408:
             this.messages.push(this.$t('errors.validation.GatewayTimeout'))
@@ -138,5 +138,4 @@ export default {
   .notification-dialog .el-dialog__header {
     text-align: center;
   }
-
 </style>

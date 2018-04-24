@@ -8,27 +8,39 @@
 </template>
 <script>
 import VueMarkdown from 'vue-markdown'
+
 export default {
   components: {
     VueMarkdown
   },
+  props: ['requestPath'],
   data () {
     return {
       dataset: {},
       loading: false
     }
   },
-  mounted () {
-    this.fetchDataset()
+  watch: {
+    data (val) {
+      if (this.useData) {
+        this.dataset = val
+      }
+    }
   },
   methods: {
     fetchDataset () {
       this.loading = true
-      this.axios.get('/data/' + this.$route.params.id).then(response => {
-        this.dataset = response.data.data
-        this.loading = false
-      })
+      this.axios.get(this.requestPath)
+        .then(response => {
+          this.dataset = response.data.data
+          this.loading = false
+        }).catch(e => {
+          this.loading = false
+        })
     }
+  },
+  created () {
+    this.fetchDataset()
   }
 }
 
@@ -47,5 +59,4 @@ export default {
       margin-bottom: 40px;
     }
   }
-
 </style>

@@ -5,7 +5,6 @@ import ActivateEmail from '@/views/guest/ActivateEmail'
 import ResetPassword from '@/views/guest/ResetPassword'
 
 import Data from '@/views/Data'
-// import DataModels from '@/views/DataModels'
 
 import Predictions from '@/views/Predictions'
 import Invest from '@/views/Invest'
@@ -15,12 +14,14 @@ import UploadDataSet from '@/views/data/UploadDataSet'
 import Dataset from '@/views/data/Dataset'
 import NotFound from '@/views/general/NotFound'
 import DatasetInfo from '@/views/data/DatasetInfo'
-import DatasetModels from '@/views/data/DatasetModels'
+import DatasetModelList from '@/views/data/model/DatasetModelList'
 import DatasetThreads from '@/views/data/DatasetThreads'
 import DatasetData from '@/views/data/DatasetData'
 import DatasetEdit from '@/views/data/DatasetEdit'
-import AllData from '@/views/data/AllData'
-import Uploaded from '@/views/data/Uploaded'
+import DataItemsList from '@/views/data/DataItemsList'
+import DatasetModelForm from '@/views/data/model/DatasetModelForm'
+import DatasetModelInfo from '@/views/data/model/DatasetModelInfo'
+import DatasetModelTables from '@/views/data/model/DatasetModelTables'
 
 const routes = [
   {
@@ -82,14 +83,31 @@ const routes = [
       {
         name: 'all',
         path: '/data/all',
-        component: AllData,
-        props: true
+        component: DataItemsList,
+        props: route => ({
+          requestPath: '/data/list?page=',
+          routerPath: '/data/all?page='
+        })
       },
       {
         name: 'mylist',
         path: '/data/uploaded',
-        component: Uploaded,
-        props: true
+        component: DataItemsList,
+        props: route => ({
+          requestPath: '/data/mylist?page=',
+          routerPath: '/data/uploaded?page=',
+          isUpload: true
+        })
+      },
+      {
+        name: 'mymodelslist',
+        path: '/data/models',
+        component: DataItemsList,
+        props: route => ({
+          requestPath: '/data/mymodelslist?page=',
+          routerPath: '/data/models?page=',
+          isModels: true
+        })
       }
     ]
   },
@@ -110,21 +128,76 @@ const routes = [
         name: 'datasetInfo',
         path: '',
         component: DatasetInfo,
-        props: true
+        props: route => ({
+          requestPath: `/data/${route.params.id}`
+        })
       },
       {
         name: 'datasetData',
         path: 'data',
         component: DatasetData,
-        props: true
+        props: route => ({
+          requestPath: `/data/${route.params.id}`
+        })
       },
       {
+        name: 'datasetModels',
         path: 'models',
-        component: DatasetModels
+        component: DatasetModelList,
+        props: route => ({
+          requestPath: `/data/${route.params.id}/models`
+        })
       },
       {
         path: 'threads',
         component: DatasetThreads
+      },
+      {
+        name: 'uploadDataModel',
+        path: 'uploadDataModel',
+        component: DatasetModelForm,
+        props: route => ({
+          isUpload: true,
+          postPath: '/data/uploadModel',
+          getPath: ''
+        })
+      }
+    ]
+  },
+  {
+    path: '/data/:id/models/:modelId',
+    component: DatasetModelInfo,
+    props: true,
+    children: [
+      {
+        name: 'modelInfo',
+        path: '',
+        component: DatasetInfo,
+        props: route => ({
+          requestPath: `/data/${route.params.id}/models/${route.params.modelId}`
+        })
+      },
+      {
+        name: 'modelTables',
+        path: 'model',
+        component: DatasetModelTables,
+        props: route => ({
+          requestPath: `/data/${route.params.id}/models/${route.params.modelId}`
+        })
+      },
+      {
+        path: 'threads',
+        component: DatasetThreads
+      },
+      {
+        name: 'edit',
+        path: 'edit',
+        component: DatasetModelForm,
+        props: route => ({
+          isUpload: false,
+          getPath: `/data/${route.params.id}/models/${route.params.modelId}`,
+          postPath: `/data/${route.params.id}/models/${route.params.modelId}/update`
+        })
       }
     ]
   },
