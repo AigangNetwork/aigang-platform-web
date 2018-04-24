@@ -101,6 +101,7 @@ export default {
   },
   methods: {
     formAction () {
+      this.removeEmptyRowsAndColumns(this.model)
       this.validate(this.model)
       this.submitForm('modelForm', this.postDataModel)
     },
@@ -149,6 +150,38 @@ export default {
         if (input.length < 1) {
           this.isModelInputsValid = false
         }
+      })
+    },
+    removeEmptyRowsAndColumns (model) {
+      let rowsToRemove = []
+
+      model.forEach(table => {
+        let columnsInputSum = new Array(table.length).fill('')
+
+        table.forEach((row, index) => {
+          let accumulator = ''
+
+          row.forEach((value, currentIndex) => {
+            columnsInputSum[currentIndex] += value
+            accumulator += value
+          })
+
+          if (accumulator === '') {
+            rowsToRemove.push(index)
+          }
+        })
+
+        rowsToRemove.forEach(index => {
+          table.splice(index, 1)
+        })
+
+        columnsInputSum.forEach((input, currentIndex) => {
+          if (input === '') {
+            table.forEach(value => {
+              value.splice(currentIndex, 1)
+            })
+          }
+        })
       })
     }
   },

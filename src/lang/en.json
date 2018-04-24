@@ -113,7 +113,7 @@
         "PremiumEmpty": "Premium is required",
         "PremiumInvalid": "Invalid premium",
         "OnlyIntegersAllowed": "Only integers allowed",
-        "TableTooBig": "Maximum size of the table is 10x10",
+        "TableTooBig": "Maximum size of the table is 10x50",
         "EmptyModel": "Model table is required",
         "EmptyModelInput": "Make sure you have filled all table fields"
       },

@@ -24,10 +24,14 @@
               </tbody>
             </table>
             <img src="/static/add-button.svg" alt="add-row-button" @click="addRow(index)" class="table-action-button">
+            <img src="/static/remove-button.svg" alt="add-row-button" @click="removeRow(index)" class="table-action-button">
           </div>
           <div class="buttons-container">
             <img src="/static/delete-button.svg" alt="delete-button" @click="deleteTable(index)" class="table-action-button">
-            <img src="/static/add-button.svg" alt="add-column-button" @click="addColumn(index)" class="table-action-button">
+            <span class="inner-buttons-container">
+              <img src="/static/add-button.svg" alt="add-column-button" @click="addColumn(index)" class="table-action-button">
+              <img src="/static/remove-button.svg" alt="add-row-button" @click="removeColumn(index)" class="table-action-button">
+            </span>
             <span></span>
           </div>
         </div>
@@ -78,7 +82,7 @@ export default {
       const cols = parseInt(this.colsLength)
       const rows = parseInt(this.rowsLength)
 
-      if (cols > 10 || rows > 10) {
+      if (cols > 10 || rows > 50) {
         this.sizeError = true
         return
       } else {
@@ -110,12 +114,20 @@ export default {
         }
       })
     },
+    removeColumn (index) {
+      this.models = this.value
+      this.models[index].forEach(value => value.pop())
+    },
     addRow (index) {
       this.models = this.value
       const cols = this.models[index][0].length
       this.models[index].push(
         new Array(cols).fill(this.$t('data.dataset.model.placeholder.data'))
       )
+    },
+    removeRow (index) {
+      this.models = this.value
+      this.models[index].pop()
     },
     validateInput (event) {
       this.sizeError = false
@@ -215,6 +227,16 @@ export default {
       border-right: 1px solid $border-light-purple;
       margin: 20px auto;
     }
+
+    .inner-buttons-container {
+      display: flex;
+      flex-direction: column;
+
+      .table-action-button {
+        margin-bottom: 3px;
+      }
+    }
+
     .table-action-button {
       opacity: 0;
       pointer-events: none;
