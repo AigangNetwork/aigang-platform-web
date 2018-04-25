@@ -10,15 +10,15 @@
       <div class="structure-content">
         <h4 class="info-title">{{$t('data.upload.titles.structure')}}</h4>
         <el-row v-if="isValidJson" class="structure-row" :gutter="20" type="flex" v-for="column in structure" :key="column.name">
-          <el-col :span="10">
+          <el-col :span="24">
             <div>
-              <h5 class="column-name">{{column.name}}</h5>
+              <h5 class="column-name">{{column.name || truncate(15) }}</h5>
             </div>
           </el-col>
           <el-col>
-            <h5 class="column-decsription">{{column.description}}</h5>
+            <h5 class="column-decsription">{{column.description | truncate(15) }}</h5>
           </el-col>
-          <el-col class="column-datatype" :span="10">
+          <el-col class="column-datatype" :span="24">
             <h5>{{column.dataType}}</h5>
           </el-col>
         </el-row>

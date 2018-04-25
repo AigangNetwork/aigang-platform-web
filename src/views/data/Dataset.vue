@@ -129,6 +129,8 @@ export default {
         if (modelsBar && response.data.modelsCount > 0) {
           modelsBar.name += ` (${response.data.modelsCount})`
         }
+      }).catch(e => {
+        this.loading = false
       })
     },
     downloadDataset () {
