@@ -14,9 +14,11 @@ const logIn = ({ commit }, loginResponse) => {
   // })
 
   commit(types.LOGIN, loginResponse.data)
-  getWeb3().then(result => {
-    commit(types.SET_WEB3_INSTANCE, result)
-  }).catch(e => {})
+  getWeb3()
+    .then(result => {
+      commit(types.SET_WEB3_INSTANCE, result)
+    })
+    .catch(e => {})
   router.push('/')
   // get account profile
   // axios.get('/account').then(response => {
@@ -34,7 +36,7 @@ const logOut = ({ commit }) => {
 }
 
 const changeProfileNames = ({ commit }, response) => {
-  commit(types.CHANGE_PROFILE_NAMES)
+  commit(types.CHANGE_PROFILE_NAMES, response)
 }
 
 const setCurrentDataset = ({ commit }, response) => {
@@ -58,12 +60,14 @@ const setHasFileChanged = ({ commit }, response) => {
 }
 
 const registerWeb3Instance = ({ commit }, response) => {
-  getWeb3().then(result => {
-    commit(types.SET_WEB3_INSTANCE, result)
-  }).catch(e => {})
+  getWeb3()
+    .then(result => {
+      commit(types.SET_WEB3_INSTANCE, result)
+    })
+    .catch(e => {})
 }
 
-const clearWeb3Instance = ({commit}, response) => {
+const clearWeb3Instance = ({ commit }, response) => {
   commit(types.CLEAR_WEB3_INSTANCE, response)
 }
 
