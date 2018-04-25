@@ -10,7 +10,7 @@
       </div>
       <div class="aig-data-body">
         <div class="desc">
-          <p>{{ data.description | truncate(70) }}</p>
+          <p>{{ data.description | truncate(60) }}</p>
         </div>
       </div>
     </router-link>
@@ -20,7 +20,7 @@
         <img src="/static/models24px.svg" alt="models">
         <router-link class="label" :to="{ name: 'datasetModels', params: { id: data.id}}">
           {{ $t('data.card.models' )}}
-          <span v-if="data.modelsCount > 0">({{ data.modelsCount }})</span>
+          <span v-if="data.modelsCount > 0" class="bold"> {{ data.modelsCount }}</span>
         </router-link>
       </div>
       <div class="aig-footer-container-right">
@@ -77,17 +77,29 @@ export default {
     box-shadow: 0 0 30px 0 #e9f0f6;
     border: 1px solid $light-border-blue;
     height: 245px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
     .aig-data-body {
-      margin-top: 60px;
       height: 100%;
       max-height: 80px;
+
+      p {
+        margin: 0;
+        max-height: 50px;
+        font-size: 14px;
+      }
     }
     .aig-data-head {
       display: flex;
       justify-content: space-between;
       margin-top: 0;
       width: 100%;
-      height: 20px;
+
+      &:first-child {
+        min-height: 33.5px;
+      }
     }
     .aig-data-footer {
       border-top: 1px solid $light-border-blue;
@@ -98,14 +110,18 @@ export default {
       padding-top: 5px;
       display: flex;
       justify-content: space-between;
+      height: 30px;
+      background: white;
+
       .aig-footer-container {
         justify-content: left;
         display: flex;
         width: 50%;
         height: 100%;
         .label {
-          margin-top: 4px;
           margin-left: 4px;
+          font-weight: 300;
+          font-family: $font-secondary;
         }
       }
       .aig-footer-container-right {
@@ -123,7 +139,6 @@ export default {
     .desc {
       line-height: 1.3;
       font-size: 13px;
-      height: 100%;
     }
   }
 
@@ -133,23 +148,13 @@ export default {
     .aig-data .aig-data-footer .aig-footer-container-right {
       padding-left: 0px;
     }
-
-    .aig-data {
-      .aig-data-head:nth-child(2) {
-        margin-top: 15px;
-      }
-      .aig-data-body {
-        margin-top: 45px;
-      }
-    }
   }
 
   @media screen and (min-width: 100px) and (max-width: 680px) {
     .aig-data {
-      height: 265px;
+      height: 245px;
 
       .aig-data-head {
-        height: 40px;
         .title {
           width: 100%;
           word-wrap: break-word;
@@ -157,9 +162,6 @@ export default {
       }
 
       .aig-data-body {
-        margin-top: 35px;
-        height: 100%;
-        max-height: 80px;
         p {
           font-size: 13px;
         }
