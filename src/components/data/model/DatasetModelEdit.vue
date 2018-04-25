@@ -44,8 +44,8 @@
         <p>{{$t('data.dataset.model.on')}}</p>
         <input v-model="rowsLength" @input="event => validateInput(event)" />
       </div>
-      <span class="aig-error" v-if="lengthError">{{$t('data.dataset.validation.OnlyIntegersAllowed')}}</span>
-      <span class="aig-error" v-if="sizeError">{{$t('data.dataset.validation.TableTooBig')}}</span>
+      <span class="aig-error" v-if="lengthError">{{$t('data.dataset.validation.onlyIntegersAllowed')}}</span>
+      <span class="aig-error" v-if="sizeError">{{$t('data.dataset.validation.tableTooBig')}}</span>
       <div class="create-button-container">
         <el-button @click="createTable" class="profile-button">{{ $t('data.dataset.model.create') }}</el-button>
       </div>

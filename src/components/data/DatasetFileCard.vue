@@ -93,7 +93,7 @@ export default {
       if (!this.$store.state.currentDataset.isFileRemote &&
           !this.$store.state.currentDataset.file) {
         this.isValid = false
-        this.validationMessage = this.$t('data.dataset.validation.FileEmpty')
+        this.validationMessage = this.$t('data.dataset.validation.fileEmpty')
         return false
       }
 
@@ -101,7 +101,7 @@ export default {
       if (fileSize > 10) {
         this.$refs.csvFile.clearFiles()
         this.isValid = false
-        this.validationMessage = this.$t('data.dataset.validation.FileTooBig')
+        this.validationMessage = this.$t('data.dataset.validation.fileTooBig')
         return false
       }
 

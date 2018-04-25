@@ -33,7 +33,7 @@
 
     <el-row v-if="!isStructureValid">
       <div class="aig-form-error">
-        {{$t('data.dataset.validation.StructureFieldEmpty')}}
+        {{$t('data.dataset.validation.structureFieldEmpty')}}
       </div>
     </el-row>
   </el-row>
@@ -85,5 +85,4 @@ export default {
       width: 33%;
     }
   }
-
 </style>

@@ -10,9 +10,9 @@ const mutations = {
     state.user.profile = ''
   },
   CHANGE_PROFILE_NAMES (state, payload) {
-    state.user.profile.firstName = payload.profile.firstName
-    state.user.profile.firstName = payload.profile.lastName
-    state.user.profile.firstName = payload.profile.userName
+    state.user.profile.firstName = payload.data.profile.firstName
+    state.user.profile.lastName = payload.data.profile.lastName
+    state.user.profile.userName = payload.data.profile.userName
   },
   SET_CURRENT_DATASET (state, payload) {
     state.currentDataset = payload.data

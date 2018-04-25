@@ -13,13 +13,13 @@
 
       <el-row v-if="!isModelValid">
         <div class="aig-form-error">
-          {{$t('data.dataset.validation.EmptyModel')}}
+          {{$t('data.dataset.validation.emptyModel')}}
         </div>
       </el-row>
 
       <el-row v-if="!isModelInputsValid">
         <div class="aig-form-error">
-          {{$t('data.dataset.validation.EmptyModelInput')}}
+          {{$t('data.dataset.validation.emptyModelInput')}}
         </div>
       </el-row>
 
@@ -67,33 +67,33 @@ export default {
       modelFormRules: {
         title: [{
           required: true,
-          message: this.$t('data.dataset.validation.TitleEmpty'),
+          message: this.$t('data.dataset.validation.titleEmpty'),
           trigger: 'blur'
         },
         {
           min: 6,
-          message: this.$t('data.dataset.validation.TitleTooShort'),
+          message: this.$t('data.dataset.validation.titleTooShort'),
           trigger: 'blur'
         }
         ],
         description: [{
           required: true,
-          message: this.$t('data.dataset.validation.DescriptionEmpty'),
+          message: this.$t('data.dataset.validation.descriptionEmpty'),
           trigger: 'blur'
         },
         {
           min: 6,
-          message: this.$t('data.dataset.validation.DescriptionTooShort'),
+          message: this.$t('data.dataset.validation.descriptionTooShort'),
           trigger: 'blur'
         }
         ],
         premium: [{
           required: true,
-          message: this.$t('data.dataset.validation.PremiumEmpty'),
+          message: this.$t('data.dataset.validation.premiumEmpty'),
           trigger: 'blur'
         }, {
           pattern: /^(?:\d{1,6}\.\d{1,6}|[1-9]\d{0,5})$/,
-          message: this.$t('data.dataset.validation.PremiumInvalid'),
+          message: this.$t('data.dataset.validation.premiumInvalid'),
           trigger: 'blur'
         }]
       }

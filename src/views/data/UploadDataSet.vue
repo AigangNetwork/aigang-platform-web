@@ -111,23 +111,23 @@ export default {
       dataUploadFormRules: {
         title: [{
           required: true,
-          message: this.$t('data.dataset.validation.TitleEmpty'),
+          message: this.$t('data.dataset.validation.titleEmpty'),
           trigger: 'blur'
         },
         {
           min: 6,
-          message: this.$t('data.dataset.validation.TitleTooShort'),
+          message: this.$t('data.dataset.validation.titleTooShort'),
           trigger: 'blur'
         }
         ],
         description: [{
           required: true,
-          message: this.$t('data.dataset.validation.DescriptionEmpty'),
+          message: this.$t('data.dataset.validation.descriptionEmpty'),
           trigger: 'blur'
         },
         {
           min: 6,
-          message: this.$t('data.dataset.validation.DescriptionTooShort'),
+          message: this.$t('data.dataset.validation.descriptionTooShort'),
           trigger: 'blur'
         }
         ]
@@ -326,5 +326,4 @@ export default {
     }
 
   }
-
 </style>
