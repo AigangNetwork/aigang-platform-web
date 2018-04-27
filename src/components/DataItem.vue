@@ -135,10 +135,14 @@ export default {
       color: $purple;
       font-weight: 600;
       font-size: 17pt;
+      word-wrap: break-word;
+      max-width: 100%;
     }
     .desc {
       line-height: 1.3;
       font-size: 13px;
+      word-wrap: break-word;
+      max-width: 100%;
     }
   }
 

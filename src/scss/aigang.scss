@@ -30,6 +30,7 @@ body.aig {
   display: flex;
   justify-content: center;
   align-items: center;
+
   backg .aig-view {
     width: 100%;
   }
@@ -58,6 +59,7 @@ body.aig {
 .aig-blue-bck-container {
   width: 100%;
   background-image: url('/static/background/blue-background.png');
+  background-size: cover;
   align-items: center;
   display: flex;
   flex-direction: column;
@@ -109,6 +111,15 @@ body.aig {
 
 .aig-card-input .input_label {
   margin-bottom: 10px;
+}
+
+.aig-card {
+  max-width: 932px;
+  width: 100%;
+}
+
+.aig-card.centered {
+  margin: 40px auto;
 }
 
 .aig-data-footer .label {
@@ -390,4 +401,21 @@ body.aig {
 
 .bold {
   font-weight: 600;
+}
+
+.markup-content {
+  p {
+    word-wrap: break-word;
+  }
+}
+
+.no-wrap {
+  white-space: nowrap;
+  word-wrap: none;
+  display: block;
+}
+
+.text-big-medium {
+  font-size: 20px;
+  width: 100%;
 }

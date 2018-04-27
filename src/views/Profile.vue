@@ -1,5 +1,5 @@
 <template>
-  <div class="aig-container">
+  <div class="aig-container profile-container">
     <Card class="profile-card">
       <div slot="body" v-loading="loading" :element-loading-text="$t('general.loading')">
 
@@ -66,6 +66,14 @@ export default {
   @import '~helpers/variables';
   @import '~helpers/mixins';
 
+  .aig-container.profile-container {
+    align-items: flex-start;
+  }
+
+  .profile-card.aig-card {
+    margin-top: 44px;
+  }
+
   .profile-card .el-button--warning {
     width: 100%;
     margin: 10px 0;
@@ -90,5 +98,4 @@ export default {
       align-items: center;
     }
   }
-
 </style>

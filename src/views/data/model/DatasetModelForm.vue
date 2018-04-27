@@ -74,6 +74,11 @@ export default {
           min: 6,
           message: this.$t('data.dataset.validation.titleTooShort'),
           trigger: 'blur'
+        },
+        {
+          max: 64,
+          message: this.$t('data.dataset.validation.titleTooLong'),
+          trigger: 'blur'
         }
         ],
         description: [{

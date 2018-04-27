@@ -57,6 +57,11 @@ export default {
     }
     .markup-content {
       margin-bottom: 40px;
+
+      p {
+        word-wrap: break-word;
+        max-width: 100%;
+      }
     }
   }
 </style>

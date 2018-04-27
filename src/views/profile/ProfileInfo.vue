@@ -93,7 +93,7 @@ export default {
         },
         {
           max: 50,
-          message: this.$t('validation.firstNameTooLong'),
+          message: this.$t('validation.nameTooLong'),
           trigger: 'blur'
         },
         {
@@ -114,7 +114,7 @@ export default {
         },
         {
           max: 50,
-          message: this.$t('validation.lastNameTooLong'),
+          message: this.$t('validation.nameTooLong'),
           trigger: 'blur'
         },
         {
@@ -135,7 +135,7 @@ export default {
         },
         {
           max: 50,
-          message: this.$t('validation.userNameTooLong'),
+          message: this.$t('validation.nameTooLong'),
           trigger: 'blur'
         },
         {

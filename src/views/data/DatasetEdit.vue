@@ -1,37 +1,46 @@
 <template>
   <el-container class="aig-container-dataset" v-loading="loading">
-    <el-button @click="$router.go(-1)" class="back-button">{{ $t('general.back') }}</el-button>
-    <div class="dataset-edit-container">
-      <div class="dataset-body-container">
-        <el-form @keyup.enter.native="submitForm('datasetForm')" :model="datasetForm" :rules="datasetFormRules" ref="datasetForm">
+    <template v-if="!datasetNotFound">
+      <el-button @click="$router.push(dataRoute)" class="back-button">{{ $t('general.back') }}</el-button>
+      <div class="dataset-edit-container">
+        <div class="dataset-body-container">
+          <el-form @keyup.enter.native="submitForm('datasetForm')" :model="datasetForm" :rules="datasetFormRules" ref="datasetForm">
 
-          <DatasetFileCard v-model="datasetForm.isPublic" :showUploadOption="true" :onFileChange="parseFileStructure" ref="fileCardComponent"
-          />
-
-          <DatasetTitleEdit v-model="datasetForm.title" />
-
-          <DatasetDescriptionEdit v-model="datasetForm.description" />
-
-          <el-row v-if="structureValid">
-            <DatasetStructureEdit :structure="datasetStructure" v-model="datasetRemoteStructure" :isStructured="isStructured" ref="structureComponent"
+            <DatasetFileCard v-model="datasetForm.isPublic" :showUploadOption="true" :onFileChange="parseFileStructure" ref="fileCardComponent"
             />
-          </el-row>
 
-          <el-row v-if="!structureValid">
-            <div class="aig-form-error">
-              {{$t('data.upload.input.validation.unableAccessFileContent')}}
-            </div>
-          </el-row>
+            <DatasetTitleEdit v-model="datasetForm.title" />
 
-          <el-row>
-            <el-form-item>
-              <el-button class="aig-button" type="primary" @click="submitForm('datasetForm')">{{ $t('general.save') }}</el-button>
-            </el-form-item>
-          </el-row>
+            <DatasetDescriptionEdit v-model="datasetForm.description" />
 
-        </el-form>
+            <el-row v-if="structureValid">
+              <DatasetStructureEdit :structure="datasetStructure" v-model="datasetRemoteStructure" :isStructured="isStructured" ref="structureComponent"
+              />
+            </el-row>
+
+            <el-row v-if="!structureValid">
+              <div class="aig-form-error">
+                {{$t('data.upload.input.validation.unableAccessFileContent')}}
+              </div>
+            </el-row>
+
+            <el-row>
+              <el-form-item>
+                <el-button class="aig-button" type="primary" @click="submitForm('datasetForm')">{{ $t('general.save') }}</el-button>
+              </el-form-item>
+            </el-row>
+
+          </el-form>
+        </div>
       </div>
-    </div>
+    </template>
+    <template v-else>
+      <Card class="aig-card centered">
+        <div slot="body" v-loading="loading" :element-loading-text="$t('general.loading')">
+          <h3>{{$t('data.dataset.datasetNotFound')}}</h3>
+        </div>
+      </Card>
+    </template>
   </el-container>
 </template>
 <script>
@@ -54,6 +63,8 @@ export default {
       datasetRemoteStructure: '',
       isStructured: false,
       structureValid: true,
+      dataRoute: `/data/${this.$route.params.id}`,
+      datasetNotFound: false,
       datasetForm: {
         id: '',
         title: '',
@@ -75,6 +86,11 @@ export default {
         {
           min: 6,
           message: this.$t('data.dataset.validation.titleTooShort'),
+          trigger: 'blur'
+        },
+        {
+          max: 64,
+          message: this.$t('data.dataset.validation.titleTooLong'),
           trigger: 'blur'
         }
         ],

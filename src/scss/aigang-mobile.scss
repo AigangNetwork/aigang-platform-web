@@ -115,6 +115,14 @@
   .aig-dataset-info-container {
     padding: 0px 23px 5px 23px;
   }
+
+  .aig-dataset-header-btn-container {
+    align-items: center;
+
+    .aig-dataset-header-btn {
+      margin-left: 0;
+    }
+  }
 }
 
 @media screen and (min-width: 100px) and (max-width: 302px) {

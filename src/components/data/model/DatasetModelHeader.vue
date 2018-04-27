@@ -11,10 +11,9 @@
     <div class="header-title-container">
       <div class="header-left-section">
         <p>
-          {{ $t('data.dataset.model.by') }}
+          <span>{{ $t('data.dataset.model.by') }} </span>
           <span class="author">{{ model.userName }}</span>
-
-          {{ $t('data.dataset.model.lastUpdated')}}: {{ created }}
+          <span class="no-wrap">{{ $t('data.dataset.model.lastUpdated')}}: {{ created }}</span>
         </p>
         <h1>{{ model.title }}</h1>
         <div class="aig-dataset-header-btn-container">
@@ -28,10 +27,8 @@
       </div>
       <div class="header-right-section">
         <span class="text-small">{{ $t('data.dataset.model.basePremium') }}</span>
-        <span>
-          <span class="text-big">{{ model.premium }}</span>
-          <span class="text-medium">{{ $t('data.dataset.model.eth') }} </span>
-        </span>
+        <span :class="{'text-big': isPremiumBig, 'text-big-medium': !isPremiumBig}">{{ model.premium }}</span>
+        <span class="text-medium">{{ $t('data.dataset.model.eth') }} </span>
       </div>
     </div>
 
@@ -79,6 +76,9 @@ export default {
     },
     isUserOwner () {
       return this.$store.state.user.profile.id === this.model.userId
+    },
+    isPremiumBig () {
+      return !(String(this.model.premium).length > 7)
     }
   }
 }
@@ -106,9 +106,10 @@ export default {
     align-items: center;
     padding: 35px;
     h3 {
-      height: 28px;
       line-height: 26px;
       margin: 0;
+      max-width: calc(100% - 36px);
+      word-wrap: break-word;
     }
   }
 
@@ -117,12 +118,15 @@ export default {
     justify-content: space-between;
     background-image: linear-gradient(to bottom, #135cb2, #83b4ed);
     color: white;
-    padding: 49px 75px 49px 55px;
+    padding: 49px 55px 49px 55px;
+    align-items: center;
 
     p,
     span,
     h1 {
       color: white;
+      max-width: 100%;
+      word-wrap: break-word;
     }
 
     p {
@@ -157,19 +161,32 @@ export default {
       }
     }
 
+    .header-left-section {
+      max-width: 70%;
+      margin-right: 20px;
+    }
+
     .author {
       text-decoration: underline;
-      margin-right: 38px;
     }
   }
 
   @media screen and (min-width: 100px) and (max-width: 710px) {
     .header-title-container {
       flex-direction: column;
-      padding: 49px;
+      padding: 35px;
 
       .header-right-section {
         margin: 20px auto;
+      }
+
+      .header-left-section {
+        max-width: 100%;
+        margin-right: 0;
+
+        h1 {
+          font-size: 24pt;
+        }
       }
 
       .author {

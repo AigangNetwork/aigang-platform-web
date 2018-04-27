@@ -1,7 +1,7 @@
 <template>
   <div class="models-container" v-loading="loading">
     <h4 class="info-title">{{$t('data.dataset.model.models')}}</h4>
-    <h3 v-if="noModelsExist">{{$t('data.dataset.model.noModelsExist')}}</h3>
+    <h3 v-if="modelsNotFound">{{$t('data.dataset.model.modelsNotFound')}}</h3>
     <DatasetModelCard v-for="(model, index) in modelsList" :model="model" :key="index" />
   </div>
 </template>
@@ -17,22 +17,25 @@ export default {
     return {
       loading: false,
       modelsList: [],
-      noModelsExist: false
+      modelsNotFound: false
     }
   },
   methods: {
-    fetchModels (dataId) {
+    async fetchModels (dataId) {
       this.loading = true
-      this.axios.get(this.requestPath)
-        .then(response => {
+      try {
+        let response = await this.axios.get(this.requestPath)
+
+        if (response.data.items) {
           this.modelsList = response.data.items
-          this.loading = false
-        }).catch(e => {
-          if (e.request.status === 404) {
-            this.noModelsExist = true
-          }
-          this.loading = false
-        })
+        } else {
+          this.modelsNotFound = true
+        }
+
+        this.loading = false
+      } catch (e) {
+        this.loading = false
+      }
     }
   },
   mounted () {

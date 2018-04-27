@@ -270,6 +270,7 @@ export default {
 
   .table-wrapper {
     text-align: center;
+    max-width: 100%;
 
     .table-action-button {
       margin-top: -10px;
@@ -312,7 +313,7 @@ export default {
     .table-container {
 
       .table-wrapper {
-        max-width: 100%;
+        max-width: calc(100% - 14px);
       }
 
       input {

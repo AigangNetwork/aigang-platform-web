@@ -2,13 +2,18 @@
   <div class="aig-container aig-view model-container">
     <Card class="model-card">
       <div slot="body" v-loading="loading" :element-loading-text="$t('general.loading')">
-        <DatasetModelHeader :model="model" />
-        <DataNavigation :show="true" :navigationBars="navigationBars" />
-        <div class="dataset-content-container">
-          <div class="dataset-content">
-            <router-view></router-view>
+        <template v-if="!modelNotFound">
+          <DatasetModelHeader :model="model" />
+          <DataNavigation :show="true" :navigationBars="navigationBars" />
+          <div class="dataset-content-container">
+            <div class="dataset-content">
+              <router-view></router-view>
+            </div>
           </div>
-        </div>
+        </template>
+        <template v-else>
+          <h3 class="not-found-message">{{$t('data.dataset.model.modelNotFound')}}</h3>
+        </template>
       </div>
     </Card>
   </div>
@@ -28,6 +33,7 @@ export default {
     return {
       loading: false,
       model: {},
+      modelNotFound: false,
       navigationBars: [{
         name: this.$t('data.dataset.navigation.info'),
         routeLink: {
@@ -62,17 +68,23 @@ export default {
     }
   },
   methods: {
-    fetchModel (id, modelId) {
+    async fetchModel (id, modelId) {
       this.loading = true
 
-      this.axios.get(`data/${id}/models/${modelId}`)
-        .then(response => {
-          this.loading = false
+      try {
+        const response = await this.axios.get(`data/${id}/models/${modelId}`)
+
+        if (response.data.data) {
           this.model = response.data.data
           this.model.userName = response.data.userName
-        }).catch(e => {
-          this.loading = false
-        })
+        } else {
+          this.modelNotFound = true
+        }
+
+        this.loading = false
+      } catch (error) {
+        this.loading = false
+      }
     }
   },
   created () {
@@ -93,13 +105,14 @@ export default {
   }
 
   .model-card.aig-card {
-    max-width: 932px;
-    width: 100%;
     margin-top: 44px;
 
     .aig-card-body {
       padding: 0 !important;
-
     }
+  }
+
+  .not-found-message {
+    padding: 40px;
   }
 </style>
