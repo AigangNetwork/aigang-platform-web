@@ -147,6 +147,17 @@
           "successfullyUpdated": "Data model was successfully updated"
         },
         "lastUpdated": "Last updated"
+      },
+      "threads": {
+        "threads": "Threads",
+        "commentPlaceholder": "Start typing to add comment",
+        "postButton": "Post",
+        "commentButton": "Comment",
+        "successFullPost": "Your comment was successfully submited",
+        "replies": "replies",
+        "validation": {
+          "commentFieldRequired": "Comment is required"
+        }
       }
     }
   },

@@ -99,7 +99,7 @@ export default {
         name: this.$t('data.dataset.navigation.threads'),
         routeLink: '/data/' + this.$route.params.id + '/threads',
         imgSrc: '/static/threads24px.svg',
-        disabled: true
+        disabled: false
       }
       ]
     }

@@ -24,6 +24,7 @@
 export default {
   props: ['navigationBars', 'show']
 }
+
 </script>
 <style lang="scss" scoped>
   @import '~helpers/variables';
@@ -82,19 +83,6 @@ export default {
           flex-grow: 1;
           text-align: right;
         }
-        /* --------------------------------------------- */
-        /* REMOVE THIS OPACITY AFTER THREADS ARE ENABLED */
-        &:nth-child(4) {
-          a {
-            opacity: 0.5;
-          }
-        }
-        &:last-child {
-          a {
-            opacity: 0.5;
-          }
-        }
-        /* --------------------------------------------- */
         a {
           padding: 15px 10px 5px 5px;
           font-family: $font-secondary;
@@ -170,4 +158,5 @@ export default {
       justify-content: space-around;
     }
   }
+
 </style>
