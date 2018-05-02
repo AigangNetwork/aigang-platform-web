@@ -32,7 +32,8 @@ export default {
           title: this.$t('data.upload.notifications.titles.success'),
           message: this.$t('data.dataset.threads.successFullPost')
         })
-        this.$router.go(this.$router.currentRoute)
+        this.replyFrom.text = null
+        this.$emit('refresh-comment')
       })
     }
   },
@@ -86,6 +87,16 @@ export default {
         }
       }
     }
+  }
+
+  @media screen and (min-width: 100px) and (max-width: 680px) {
+    .reply-comment {
+      display: block;
+      .reply-form {
+        display: block;
+      }
+    }
+
   }
 
 </style>

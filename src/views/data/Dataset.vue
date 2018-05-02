@@ -124,10 +124,20 @@ export default {
           this.isUserOwner = true
         }
 
-        const modelsBar = this.navigationBars.find(bar => { return bar.routeLink.name === 'datasetModels' })
+        const modelsBar = this.navigationBars.find(bar => {
+          return bar.routeLink.name === 'datasetModels'
+        })
         modelsBar.name = this.$t('data.dataset.navigation.models')
         if (modelsBar && response.data.modelsCount > 0) {
           modelsBar.name += ` (${response.data.modelsCount})`
+        }
+
+        const threadsBar = this.navigationBars.find(bar => {
+          return bar.name === 'Threads'
+        })
+        threadsBar.name = this.$t('data.dataset.navigation.threads')
+        if (threadsBar && response.data.commentsCount > 0) {
+          threadsBar.name += ` (${response.data.commentsCount})`
         }
       })
     },
@@ -255,4 +265,5 @@ export default {
       margin-bottom: 40px;
     }
   }
+
 </style>

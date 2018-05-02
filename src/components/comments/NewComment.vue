@@ -42,7 +42,9 @@ export default {
           title: this.$t('data.upload.notifications.titles.success'),
           message: this.$t('data.dataset.threads.successFullPost')
         })
-        this.$router.go(this.$router.currentRoute)
+
+        this.commentForm.text = null
+        this.$emit('refresh-comment')
       })
     }
   },

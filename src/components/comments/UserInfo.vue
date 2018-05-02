@@ -64,4 +64,11 @@ export default {
     }
   }
 
+  @media screen and (min-width: 100px) and (max-width: 680px) {
+    .profile {
+      justify-content: center;
+    }
+
+  }
+
 </style>

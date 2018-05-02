@@ -4,14 +4,15 @@
     <div v-if="$store.state.user.authenticated">
       <el-row>
         <el-col class="comment-column">
-          <NewComment />
+          <NewComment @refresh-comment="fetchComments()" />
         </el-col>
         <el-col class="comment-column" v-for="(comment, index) in comments" v-bind:key="index">
-          <Comment :show-reply-button="true" :comment="comment" />
+          <Comment :show-reply-button="true" @refresh-comment="fetchComments()" :comment="comment" :is-owner="isOwner(comment.userId)"
+          />
           <div v-if="comment.replies" v-for="(reply, index) in comment.replies" v-bind:key="index">
-            <Comment :is-reply="true" :comment="reply" />
+            <Comment :is-reply="true" :comment="reply" :is-owner="isOwner(reply.userId)" @refresh-comment="fetchComments()" />
           </div>
-          <ReplyComment :parent-id="comment.id" />
+          <ReplyComment :parent-id="comment.id" @refresh-comment="fetchComments()" />
         </el-col>
       </el-row>
     </div>
@@ -42,6 +43,9 @@ export default {
       }).catch(e => {
         this.loading = false
       })
+    },
+    isOwner (userId) {
+      return this.$store.state.user.profile.id === userId
     }
   },
   created () {

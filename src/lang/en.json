@@ -151,9 +151,16 @@
       "threads": {
         "threads": "Threads",
         "commentPlaceholder": "Start typing to add comment",
+        "deleteCommentDialogContent": "Are you sure you want to delete your comment?",
+        "editTooltip": "Edit comment",
+        "removeTooltip": "Remove comment",
         "postButton": "Post",
+        "update": "Update",
+        "cancel": "Cancel",
         "commentButton": "Comment",
         "successFullPost": "Your comment was successfully submited",
+        "successFullUpdate": "Your comment was successfully updated",
+        "successFullDelete": "Your comment was successfully deleted",
         "replies": "replies",
         "validation": {
           "commentFieldRequired": "Comment is required"
@@ -262,6 +269,7 @@
   },
   "general": {
     "uploading": "Uploading ...",
+    "updating": "Updating ...",
     "loading": "Loading ...",
     "ok": "OK",
     "here": "here",
