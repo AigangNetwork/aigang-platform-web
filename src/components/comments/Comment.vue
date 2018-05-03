@@ -108,7 +108,6 @@ export default {
     },
     deleteComment () {
       if (this.isOwner) {
-        console.log('commentId', this.comment.id)
         this.axios.delete('/comment/' + this.comment.id).then(response => {
           this.$notify.success({
             title: this.$t('data.upload.notifications.titles.success'),
