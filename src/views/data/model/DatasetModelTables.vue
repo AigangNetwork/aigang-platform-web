@@ -12,7 +12,7 @@
 import PreviewTable from '@/components/data/DatasetPreviewTable.vue'
 
 export default {
-  props: ['requestPath'],
+
   components: {
     PreviewTable
   },
@@ -23,19 +23,20 @@ export default {
     }
   },
   methods: {
-    fetchModel () {
+    async fetchModel (datasetId, modelId) {
       this.loading = true
-      this.axios.get(this.requestPath)
-        .then(response => {
-          this.models = JSON.parse(response.data.data.model)
-          this.loading = false
-        }).catch(e => {
-          this.loading = false
-        })
+
+      try {
+        await this.$store.dispatch('loadCurrentModel', { datasetId, modelId })
+        this.models = JSON.parse(this.$store.state.currentModel.model)
+        this.loading = false
+      } catch (e) {
+        this.loading = false
+      }
     }
   },
   created () {
-    this.fetchModel()
+    this.fetchModel(this.$route.params.id, this.$route.params.modelId)
   }
 }
 

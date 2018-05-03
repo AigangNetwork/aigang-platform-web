@@ -39,8 +39,15 @@ const changeProfileNames = ({ commit }, response) => {
   commit(types.CHANGE_PROFILE_NAMES, response)
 }
 
-const setCurrentDataset = ({ commit }, response) => {
-  commit(types.SET_CURRENT_DATASET, response.data)
+const loadCurrentDataset = async ({ commit, state }, id) => {
+  if (!state.currentDataset || state.currentDataset.id !== id) {
+    const response = await axios.get('/data/' + id)
+    if (response.data.data) {
+      commit(types.LOAD_CURRENT_DATASET, response.data)
+    } else {
+      commit(types.CLEAR_CURRENT_DATASET)
+    }
+  }
 }
 
 const setRemoteFileAccessPoint = ({ commit }, response) => {
@@ -71,15 +78,23 @@ const clearWeb3Instance = ({ commit }, response) => {
   commit(types.CLEAR_WEB3_INSTANCE, response)
 }
 
+const loadCurrentModel = async ({ commit, state }, payload) => {
+  if (!state.currentModel || state.currentModel.id !== payload.modelId) {
+    const response = await axios.get(`/data/${payload.datasetId}/models/${payload.modelId}`)
+    commit(types.LOAD_CURRENT_MODEL, response.data)
+  }
+}
+
 export {
   logIn,
   logOut,
   changeProfileNames,
-  setCurrentDataset,
+  loadCurrentDataset,
   setRemoteFileAccessPoint,
   setCurrentDatasetFile,
   setIsFileRemote,
   setHasFileChanged,
   registerWeb3Instance,
-  clearWeb3Instance
+  clearWeb3Instance,
+  loadCurrentModel
 }

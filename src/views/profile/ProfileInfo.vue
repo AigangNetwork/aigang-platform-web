@@ -289,10 +289,28 @@ export default {
         margin-left: 0;
         text-align: center;
         width: 100%;
+        height: 200px;
+
+        .col-3 {
+          width: 100%;
+        }
+
+        div {
+          margin-bottom: 0;
+        }
 
         .name-field {
           max-width: 100%;
         }
+      }
+
+      .info-change .el-row.nickname-container {
+        padding-top: 0;
+        margin-bottom: 10px;
+      }
+
+      .no-margin {
+        margin: 8px !important;
       }
     }
 

@@ -129,7 +129,7 @@ const routes = [
         path: '',
         component: DatasetInfo,
         props: route => ({
-          requestPath: `/data/${route.params.id}`
+          isDataset: true
         })
       },
       {
@@ -137,7 +137,7 @@ const routes = [
         path: 'data',
         component: DatasetData,
         props: route => ({
-          requestPath: `/data/${route.params.id}`
+          isDataset: true
         })
       },
       {
@@ -174,16 +174,13 @@ const routes = [
         path: '',
         component: DatasetInfo,
         props: route => ({
-          requestPath: `/data/${route.params.id}/models/${route.params.modelId}`
+          isModel: true
         })
       },
       {
         name: 'modelTables',
         path: 'model',
-        component: DatasetModelTables,
-        props: route => ({
-          requestPath: `/data/${route.params.id}/models/${route.params.modelId}`
-        })
+        component: DatasetModelTables
       },
       {
         path: 'threads',

@@ -46,7 +46,7 @@ export default {
   components: {
     PreviewTable
   },
-  props: ['requestPath'],
+  props: ['isDataset', 'isModel'],
   created () {
     this.fetchData()
   },
@@ -63,19 +63,35 @@ export default {
     }
   },
   methods: {
-    fetchData () {
+    async fetchData () {
       this.loading = true
-      this.axios.get(this.requestPath).then(response => {
-        this.parsePreview(response.data.data.preview)
-        this.dataset = response.data.data
 
-        if (this.isJson(this.dataset.structure)) {
-          this.structure = JSON.parse(this.dataset.structure)
-          this.isValidJson = true
-        } else {
-          this.isValidJson = false
+      if (this.isDataset) {
+        try {
+          await this.$store.dispatch('loadCurrentDataset', this.$route.params.id)
+          this.dataset = this.$store.state.currentDataset
+        } catch (e) {
+          this.loading = false
         }
-      })
+      }
+
+      if (this.isModel) {
+        try {
+          await this.$store.dispatch('loadCurrentDataset', this.$route.params.id)
+          this.dataset = this.$store.state.currentDataset
+        } catch (e) {
+          this.loading = false
+        }
+      }
+
+      this.parsePreview(this.dataset.preview)
+      if (this.isJson(this.dataset.structure)) {
+        this.structure = JSON.parse(this.dataset.structure)
+        this.isValidJson = true
+      } else {
+        this.isValidJson = false
+      }
+      this.loading = false
     },
     parsePreview (preview) {
       if (this.isJson(preview)) {

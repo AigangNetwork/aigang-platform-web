@@ -2,7 +2,7 @@
   <div class="aig-dataset-info-container">
     <div v-loading="loading">
       <h4 class="info-title">{{$t('data.upload.titles.description')}}</h4>
-      <vue-markdown class="markup-content" :html="false" :source="dataset.description"></vue-markdown>
+      <vue-markdown class="markup-content" :html="false" :source="data.description"></vue-markdown>
     </div>
   </div>
 </template>
@@ -13,34 +13,37 @@ export default {
   components: {
     VueMarkdown
   },
-  props: ['requestPath'],
+  props: ['isDataset', 'isModel'],
   data () {
     return {
-      dataset: {},
+      data: {},
       loading: false
     }
   },
-  watch: {
-    data (val) {
-      if (this.useData) {
-        this.dataset = val
+  methods: {
+    async fetchData (datasetId, modelId) {
+      this.loading = true
+      try {
+        if (this.isDataset) {
+          await this.$store.dispatch('loadCurrentDataset', datasetId)
+          this.data = this.$store.state.currentDataset
+          this.loading = false
+        } else if (this.isModel) {
+          await this.$store.dispatch('loadCurrentModel', { datasetId, modelId })
+          this.data = this.$store.state.currentModel
+          this.loading = false
+        }
+      } catch (e) {
+        this.loading = false
+      }
+
+      if (!this.data) {
+        this.data = {}
       }
     }
   },
-  methods: {
-    fetchDataset () {
-      this.loading = true
-      this.axios.get(this.requestPath)
-        .then(response => {
-          this.dataset = response.data.data
-          this.loading = false
-        }).catch(e => {
-          this.loading = false
-        })
-    }
-  },
-  created () {
-    this.fetchDataset()
+  mounted () {
+    this.fetchData(this.$route.params.id, this.$route.params.modelId)
   }
 }
 

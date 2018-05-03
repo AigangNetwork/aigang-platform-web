@@ -72,15 +72,11 @@ export default {
       this.loading = true
 
       try {
-        const response = await this.axios.get(`data/${id}/models/${modelId}`)
-
-        if (response.data.data) {
-          this.model = response.data.data
-          this.model.userName = response.data.userName
-        } else {
+        await this.$store.dispatch('loadCurrentModel', { id, modelId })
+        this.model = this.$store.state.currentModel
+        if (!this.model) {
           this.modelNotFound = true
         }
-
         this.loading = false
       } catch (error) {
         this.loading = false

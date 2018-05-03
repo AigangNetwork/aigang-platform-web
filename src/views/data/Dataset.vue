@@ -62,7 +62,7 @@ export default {
     Dialog,
     Card
   },
-  created () {
+  mounted () {
     window.scroll(0, 0)
     this.fetchDataset()
   },
@@ -125,30 +125,35 @@ export default {
     }
   },
   methods: {
-    fetchDataset () {
+    async fetchDataset () {
       this.loading = true
-      this.axios.get('/data/' + this.$route.params.id).then(response => {
+
+      try {
+        await this.$store.dispatch('loadCurrentDataset', this.$route.params.id)
+      } catch (error) {
         this.loading = false
+        this.dataset = {}
+        this.datasetNotFound = true
+        return
+      }
 
-        if (response.data.data) {
-          this.dataset = response.data.data
-          this.$store.dispatch('setCurrentDataset', response)
+      if (this.$store.state.currentDataset) {
+        this.dataset = this.$store.state.currentDataset
 
-          if (this.$store.state.user.profile.id === this.dataset.userId) {
-            this.isUserOwner = true
-          }
-
-          const modelsBar = this.navigationBars.find(bar => { return bar.routeLink.name === 'datasetModels' })
-          modelsBar.name = this.$t('data.dataset.navigation.models')
-          if (modelsBar && response.data.modelsCount > 0) {
-            modelsBar.name += ` (${response.data.modelsCount})`
-          }
-        } else {
-          this.datasetNotFound = true
+        if (this.$store.state.user.profile.id === this.dataset.userId) {
+          this.isUserOwner = true
         }
-      }).catch(e => {
-        this.loading = false
-      })
+
+        const modelsBar = this.navigationBars.find(bar => { return bar.routeLink.name === 'datasetModels' })
+        modelsBar.name = this.$t('data.dataset.navigation.models')
+        if (modelsBar && this.dataset.modelsCount > 0) {
+          modelsBar.name += ` (${this.dataset.modelsCount})`
+        }
+      } else {
+        this.datasetNotFound = true
+      }
+
+      this.loading = false
     },
     downloadDataset () {
       this.loading = true

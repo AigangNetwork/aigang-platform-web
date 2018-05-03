@@ -14,7 +14,7 @@ const mutations = {
     state.user.profile.lastName = payload.data.profile.lastName
     state.user.profile.userName = payload.data.profile.userName
   },
-  SET_CURRENT_DATASET (state, payload) {
+  LOAD_CURRENT_DATASET (state, payload) {
     state.currentDataset = payload.data
     if (state.currentDataset.remoteFileAccessPoint) {
       state.currentDataset.isFileRemote = true
@@ -57,6 +57,12 @@ const mutations = {
       aixBalance: null,
       error: null
     }
+  },
+  LOAD_CURRENT_MODEL (state, payload) {
+    state.currentModel = payload.data
+  },
+  CLEAR_CURRENT_DATASET (state, payload) {
+    state.currentDataset = null
   }
 }
 

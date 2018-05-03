@@ -165,6 +165,9 @@ export default {
       }
 
       this.axios.post('/data/update', form).then(response => {
+        this.$store.state.currentDataset = null
+        this.$store.dispatch('loadCurrentDataset', this.$route.params.id)
+
         this.loading = false
         this.$notify({
           title: this.$t('data.upload.notifications.titles.success'),
@@ -225,26 +228,39 @@ export default {
       }
       fileReader.readAsText(this.$store.state.currentDataset.file.raw)
       this.datasetStructure = dynamicFileFields
+    },
+    async onMounted (id) {
+      try {
+        await this.$store.dispatch('loadCurrentDataset', this.$route.params.id)
+      } catch (e) {
+        this.loading = false
+      }
+      if (!this.$store.state.currentDataset) {
+        this.$router.push('/data/' + id)
+        return
+      }
+
+      this.initializeDatasetForm(this.$store.getters.dataset)
+
+      if (this.$store.state.currentDataset.remoteFileAccessPoint) {
+        this.$store.dispatch('setIsFileRemote', { isFileRemote: true })
+      } else {
+        this.$store.dispatch('setIsFileRemote', { isFileRemote: false })
+      }
+
+      this.isStructured = !this.$store.state.currentDataset.isFileRemote
+
+      this.$root.$on('isFileRemote', (value) => {
+        this.isStructured = !value
+      })
+
+      this.$root.$on('remoteFileAccessPoint', (value) => {
+        this.datasetForm.remoteFileAccessPoint = value
+      })
     }
   },
-  created () {
-    this.initializeDatasetForm(this.$store.getters.dataset)
-
-    if (this.$store.state.currentDataset.remoteFileAccessPoint) {
-      this.$store.dispatch('setIsFileRemote', { isFileRemote: true })
-    } else {
-      this.$store.dispatch('setIsFileRemote', { isFileRemote: false })
-    }
-
-    this.isStructured = !this.$store.state.currentDataset.isFileRemote
-
-    this.$root.$on('isFileRemote', (value) => {
-      this.isStructured = !value
-    })
-
-    this.$root.$on('remoteFileAccessPoint', (value) => {
-      this.datasetForm.remoteFileAccessPoint = value
-    })
+  mounted () {
+    this.onMounted(this.$route.params.id)
   }
 }
 

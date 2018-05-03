@@ -109,7 +109,11 @@ export default {
       return true
     }
   },
-  created () {
+  mounted () {
+    if (!this.$store.state.currentDataset) {
+      return
+    }
+
     if (this.$store.state.currentDataset.remoteFileAccessPoint) {
       this.isRemoteFile = true
       this.isInitiallyRemote = true
