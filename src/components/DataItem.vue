@@ -25,8 +25,10 @@
       </div>
       <div class="aig-footer-container-right">
         <img src="/static/threads24px.svg" alt="threads">
-        <span class="label">{{ $t('data.card.threads' )}}
-        </span>
+        <router-link class="label" :to="{ name: 'datasetThreads', params: { id: data.id}}">
+          {{ $t('data.card.threads' )}}
+          <span v-if="data.commentsCount > 0">({{ data.commentsCount }})</span>
+        </router-link>
       </div>
     </div>
   </div>
@@ -105,12 +107,15 @@ export default {
         height: 100%;
         .label {
           margin-top: 4px;
-          margin-left: 4px;
+          margin-left: 2px;
+          display: flex;
+          span {
+            margin-left: 2px;
+          }
         }
       }
       .aig-footer-container-right {
         justify-content: right;
-        opacity: 0.5;
         @extend .aig-footer-container;
       }
     }
@@ -172,4 +177,5 @@ export default {
       }
     }
   }
+
 </style>

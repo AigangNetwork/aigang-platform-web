@@ -54,9 +54,15 @@ export default {
       },
       {
         name: this.$t('data.dataset.navigation.threads'),
-        routeLink: '/data/' + this.$route.params.modelId + '/threads',
+        routeLink: {
+          name: 'modelThreads',
+          params: {
+            id: this.$route.params.id,
+            modelId: this.$route.params.modelId
+          }
+        },
         imgSrc: '/static/threads24px.svg',
-        disabled: true
+        disabled: false
       }
       ]
     }
@@ -102,4 +108,5 @@ export default {
 
     }
   }
+
 </style>

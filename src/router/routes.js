@@ -22,6 +22,7 @@ import DataItemsList from '@/views/data/DataItemsList'
 import DatasetModelForm from '@/views/data/model/DatasetModelForm'
 import DatasetModelInfo from '@/views/data/model/DatasetModelInfo'
 import DatasetModelTables from '@/views/data/model/DatasetModelTables'
+import DatasetModelThreads from '@/views/data/model/DatasetModelThreads'
 
 const routes = [
   {
@@ -149,8 +150,12 @@ const routes = [
         })
       },
       {
+        name: 'datasetThreads',
         path: 'threads',
-        component: DatasetThreads
+        component: DatasetThreads,
+        props: route => ({
+          requestPath: `/data/${route.params.id}/threads`
+        })
       },
       {
         name: 'uploadDataModel',
@@ -186,8 +191,12 @@ const routes = [
         })
       },
       {
+        name: 'modelThreads',
         path: 'threads',
-        component: DatasetThreads
+        component: DatasetModelThreads,
+        props: route => ({
+          requestPath: `/data/${route.params.id}/models/${route.params.modelId}`
+        })
       },
       {
         name: 'edit',

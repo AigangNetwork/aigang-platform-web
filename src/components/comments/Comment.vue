@@ -135,9 +135,12 @@ export default {
     border: solid 1px #c8d0f1;
     padding: 15px;
     .comment-header {
-      .comment-icon {
-        height: 19px;
-        margin-right: 5px;
+      .icon-container {
+        display: flex;
+        .comment-icon {
+          height: 19px;
+          margin-right: 5px;
+        }
       }
     }
     .comment-content {
