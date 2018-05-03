@@ -34,7 +34,6 @@ body.aig {
   display: flex;
   justify-content: center;
   align-items: center;
-
   backg .aig-view {
     width: 100%;
   }
@@ -83,7 +82,6 @@ body.aig {
 
 .aig-items {
   margin-top: 15px;
-  flex-grow: 1;
 
   .el-col {
     padding-top: 10px;
@@ -156,6 +154,11 @@ body.aig {
   display: flex;
 }
 
+.aig-pagination {
+  display: flex;
+  justify-content: center;
+}
+
 .aig-dataset-header-btn {
   width: 180px;
   height: 30px;
@@ -196,6 +199,7 @@ body.aig {
       padding-top: 2px;
     }
   }
+
   .flex-container {
     display: flex;
   }
@@ -347,6 +351,7 @@ body.aig {
       border: none;
       margin-bottom: 15px;
     }
+
     .el-upload-list {
       width: 131px;
       margin-left: -21px;
@@ -375,6 +380,7 @@ body.aig {
 
 .aig-dataset-info-container {
   padding: 0px 53px 5px 53px;
+
   .info-content {
     word-wrap: break-word;
     color: $purple;
