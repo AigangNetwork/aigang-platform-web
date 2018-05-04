@@ -13,6 +13,7 @@ import Profile from '@/views/Profile'
 import UploadDataSet from '@/views/data/UploadDataSet'
 import Dataset from '@/views/data/Dataset'
 import NotFound from '@/views/general/NotFound'
+import AccessDenied from '@/views/general/AccessDenied'
 import DatasetInfo from '@/views/data/DatasetInfo'
 import DatasetModelList from '@/views/data/model/DatasetModelList'
 import DatasetThreads from '@/views/data/DatasetThreads'
@@ -36,6 +37,11 @@ const routes = [
     path: '*',
     name: 'NotFound',
     component: NotFound
+  },
+  {
+    path: '/forbidden',
+    name: 'AccessDenied',
+    component: AccessDenied
   },
   {
     path: '/register',

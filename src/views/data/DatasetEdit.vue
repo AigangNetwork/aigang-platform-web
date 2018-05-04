@@ -1,46 +1,37 @@
 <template>
   <el-container class="aig-container-dataset" v-loading="loading">
-    <template v-if="!datasetNotFound">
-      <el-button @click="$router.push(dataRoute)" class="back-button">{{ $t('general.back') }}</el-button>
-      <div class="dataset-edit-container">
-        <div class="dataset-body-container">
-          <el-form @keyup.enter.native="submitForm('datasetForm')" :model="datasetForm" :rules="datasetFormRules" ref="datasetForm">
+    <el-button @click="$router.push(dataRoute)" class="back-button">{{ $t('general.back') }}</el-button>
+    <div class="dataset-edit-container">
+      <div class="dataset-body-container">
+        <el-form :model="datasetForm" :rules="datasetFormRules" ref="datasetForm">
 
-            <DatasetFileCard v-model="datasetForm.isPublic" :showUploadOption="true" :onFileChange="parseFileStructure" ref="fileCardComponent"
+          <DatasetFileCard v-model="datasetForm.isPublic" :showUploadOption="true" :onFileChange="parseFileStructure" ref="fileCardComponent"
+          />
+
+          <DatasetTitleEdit v-model="datasetForm.title" />
+
+          <DatasetDescriptionEdit v-model="datasetForm.description" />
+
+          <el-row v-if="structureValid">
+            <DatasetStructureEdit :structure="datasetStructure" v-model="datasetRemoteStructure" :isStructured="isStructured" ref="structureComponent"
             />
+          </el-row>
 
-            <DatasetTitleEdit v-model="datasetForm.title" />
+          <el-row v-if="!structureValid">
+            <div class="aig-form-error">
+              {{$t('data.upload.input.validation.unableAccessFileContent')}}
+            </div>
+          </el-row>
 
-            <DatasetDescriptionEdit v-model="datasetForm.description" />
+          <el-row>
+            <el-form-item>
+              <el-button class="aig-button" type="primary" @click="submitForm('datasetForm')">{{ $t('general.save') }}</el-button>
+            </el-form-item>
+          </el-row>
 
-            <el-row v-if="structureValid">
-              <DatasetStructureEdit :structure="datasetStructure" v-model="datasetRemoteStructure" :isStructured="isStructured" ref="structureComponent"
-              />
-            </el-row>
-
-            <el-row v-if="!structureValid">
-              <div class="aig-form-error">
-                {{$t('data.upload.input.validation.unableAccessFileContent')}}
-              </div>
-            </el-row>
-
-            <el-row>
-              <el-form-item>
-                <el-button class="aig-button" type="primary" @click="submitForm('datasetForm')">{{ $t('general.save') }}</el-button>
-              </el-form-item>
-            </el-row>
-
-          </el-form>
-        </div>
+        </el-form>
       </div>
-    </template>
-    <template v-else>
-      <Card class="aig-card centered">
-        <div slot="body" v-loading="loading" :element-loading-text="$t('general.loading')">
-          <h3>{{$t('data.dataset.datasetNotFound')}}</h3>
-        </div>
-      </Card>
-    </template>
+    </div>
   </el-container>
 </template>
 <script>
@@ -48,13 +39,15 @@ import DatasetFileCard from '@/components/data/DatasetFileCard'
 import DatasetTitleEdit from '@/components/data/DatasetTitleEdit'
 import DatasetDescriptionEdit from '@/components/data/DatasetDescriptionEdit'
 import DatasetStructureEdit from '@/components/data/DatasetStructureEdit'
+import Card from '@/components/Card'
 
 export default {
   components: {
     DatasetFileCard,
     DatasetTitleEdit,
     DatasetDescriptionEdit,
-    DatasetStructureEdit
+    DatasetStructureEdit,
+    Card
   },
   data () {
     return {
@@ -64,7 +57,6 @@ export default {
       isStructured: false,
       structureValid: true,
       dataRoute: `/data/${this.$route.params.id}`,
-      datasetNotFound: false,
       datasetForm: {
         id: '',
         title: '',
@@ -259,8 +251,12 @@ export default {
       })
     }
   },
-  mounted () {
-    this.onMounted(this.$route.params.id)
+  async mounted () {
+    await this.onMounted(this.$route.params.id)
+
+    if (this.$store.state.currentDataset.userId !== this.$store.state.user.profile.id) {
+      this.$router.push({ name: 'AccessDenied' })
+    }
   }
 }
 

@@ -1,7 +1,7 @@
 <template>
   <div class="aig-dataset-info-container" v-loading="loading">
     <h4 class="info-title">{{$t('data.dataset.model.editModel')}}</h4>
-    <el-form @keyup.enter.native="formAction" :model="modelForm" :rules="modelFormRules" ref="modelForm">
+    <el-form :model="modelForm" :rules="modelFormRules" ref="modelForm">
 
       <DatasetTitleEdit v-model="modelForm.title" />
 
@@ -192,18 +192,22 @@ export default {
       })
     }
   },
-  created () {
+  async created () {
     if (!this.isUpload) {
       this.loading = true
-      this.axios.get(this.getPath)
-        .then(response => {
-          this.loading = false
-          this.modelForm = response.data.data
-          this.model = JSON.parse(response.data.data.model)
-        })
-        .catch(e => {
-          this.loading = false
-        })
+
+      try {
+        const response = await this.axios.get(this.getPath)
+        this.loading = false
+        this.modelForm = response.data.data
+        this.model = JSON.parse(response.data.data.model)
+      } catch (error) {
+        this.loading = false
+      }
+
+      if (this.modelForm.userId !== this.$store.state.user.profile.id) {
+        this.$router.push({ name: 'AccessDenied' })
+      }
     }
   },
   mounted () {
