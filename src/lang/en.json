@@ -113,7 +113,7 @@
         "fileEmpty": "File is required",
         "fileTooBig": "File is too large",
         "premiumEmpty": "Premium is required",
-        "premiumInvalid": "Invalid premium",
+        "premiumInvalid": "Invalid premium. Value e.g. 000000.000000",
         "onlyIntegersAllowed": "Only integers allowed",
         "tableTooBig": "Maximum size of the table is 10x50",
         "tableTooSmall": "Minimum size of the table is 1x1",
@@ -249,14 +249,14 @@
     "passwordTooShort": "Password must be at least 6 characters long",
     "firstNameEmpty": "First name is required",
     "firstNameTooShort": "First name must be at least 2 characters long",
-    "firstNameInvalid": "First name contains invalid characters",
+    "firstNameInvalid": "First name contains invalid characters. Only A-z characters are allowed",
     "lastNameEmpty": "Last name is required",
     "lastNameTooShort": "Last name must be at least 2 characters long",
     "nameTooLong": "Maximum 50 characters",
-    "lastNameInvalid": "Last name contains invalid characters",
+    "lastNameInvalid": "Last name contains invalid characters. Only A-z characters are allowed",
     "userNameEmpty": "Nickname is required",
     "userNameTooShort": "Nickname must be at least 6 characters long",
-    "userNameInvalid": "Nickname contains invalid characters"
+    "userNameInvalid": "Nickname contains invalid characters. Only A-z characters are allowed"
   },
   "general": {
     "uploading": "Uploading ...",
