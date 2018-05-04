@@ -202,6 +202,7 @@ export default {
         this.modelForm = response.data.data
         this.model = JSON.parse(response.data.data.model)
       } catch (error) {
+        this.modelForm = {}
         this.loading = false
       }
 
@@ -211,6 +212,9 @@ export default {
     }
   },
   mounted () {
+    if (this.$store.state.currentDataset && this.$store.state.currentDataset.state !== 'active') {
+      this.$router.push({ name: 'AccessDenied' })
+    }
     this.modelForm.dataId = this.$store.state.currentDataset.id
   }
 }

@@ -81,6 +81,7 @@ export default {
         }
         this.loading = false
       } catch (error) {
+        this.modelNotFound = true
         this.loading = false
       }
     }
