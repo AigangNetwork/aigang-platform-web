@@ -97,7 +97,7 @@ export default {
           trigger: 'blur'
         },
         {
-          pattern: /^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/,
+          pattern: /^[A-z]+$/,
           message: this.$t('validation.firstNameInvalid'),
           trigger: 'blur'
         }
@@ -118,7 +118,7 @@ export default {
           trigger: 'blur'
         },
         {
-          pattern: /^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/,
+          pattern: /^[A-z]+$/,
           message: this.$t('validation.lastNameInvalid'),
           trigger: 'blur'
         }
@@ -139,7 +139,7 @@ export default {
           trigger: 'blur'
         },
         {
-          pattern: /^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/,
+          pattern: /^[A-z]+$/,
           message: this.$t('validation.userNameInvalid'),
           trigger: 'blur'
         }
