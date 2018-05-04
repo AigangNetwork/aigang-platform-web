@@ -10,17 +10,15 @@
       <div class="structure-content">
         <h4 class="info-title">{{$t('data.upload.titles.structure')}}</h4>
         <el-row v-if="isValidJson" class="structure-row" :gutter="20" type="flex" v-for="column in structure" :key="column.name">
-          <el-col :span="24">
-            <div>
-              <h5 class="column-name">{{column.name || truncate(15) }}</h5>
-            </div>
-          </el-col>
-          <el-col>
-            <h5 class="column-decsription">{{column.description | truncate(15) }}</h5>
-          </el-col>
-          <el-col class="column-datatype" :span="24">
+          <div class="column-name">
+            <h5>{{column.name}}</h5>
+          </div>
+          <div class="column-description">
+            <h5>{{column.description}}</h5>
+          </div>
+          <div class="column-datatype">
             <h5>{{column.dataType}}</h5>
-          </el-col>
+          </div>
         </el-row>
         <el-row v-if="!isValidJson">
           <div class="info-content">
@@ -122,27 +120,55 @@ export default {
   @import '~helpers/variables';
   .table-container {
     align-items: center;
+
     .structure-content {
       margin-bottom: 25px;
+
       .column-name {
-        word-wrap: break-word;
-        color: $active-dark-purple;
-        font-weight: 600;
+        width: 15%;
+        min-width: 50px;
+
+        h5 {
+          word-wrap: break-word;
+          color: $active-dark-purple;
+          font-weight: 600;
+        }
       }
-      .column-decsription {
-        word-wrap: break-word;
-        font-weight: 400;
-        color: $purple;
+
+      .column-description {
+        width: 70%;
+
+        h5 {
+          word-wrap: break-word;
+          font-weight: 400;
+          color: $purple;
+        }
       }
+
       .column-datatype {
         word-wrap: break-word;
         font-weight: 400;
         color: $purple;
         text-align: right;
+        width: 15%;
+        min-width: 50px;
       }
     }
+
     .structure-row {
       border-bottom: 1px solid $light-grey-border;
+      width: 100%;
+
+      >div {
+        padding: 0 10px;
+      }
     }
   }
+
+  @media screen and (min-width: 100px) and (max-width: 680px) {
+    .table-container .structure-row>div {
+      padding: 0 5px;
+    }
+  }
+
 </style>
