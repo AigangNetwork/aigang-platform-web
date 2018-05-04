@@ -1,6 +1,6 @@
 <template>
 
-  <transition-group class="data-items-container" name="slideUp" v-loading.body="loading" tag="div">
+  <transition-group class="data-items-container" name="slideUp" v-loading.body="loading">
     <el-col :xs="24" :sm="12" :md="12" :lg="8" v-for="dataItem in dataList" :key="dataItem.id">
       <div :class="[{'aig-non-approved-data': dataItem.state === 'created'}, {'aig-link-disabled': dataItem.state === 'created'}]">
         <DataItem :data="dataItem" :key="dataItem.id" />
@@ -79,5 +79,6 @@ export default {
     height: 100%;
     display: inline-block;
     width: 100%;
+    min-height: 250px;
   }
 </style>

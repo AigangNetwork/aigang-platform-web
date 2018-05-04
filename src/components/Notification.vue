@@ -113,7 +113,7 @@ export default {
   }
 
   .notification-dialog .el-dialog__body {
-    padding-left: 15px;
+    padding-left: 20px;
   }
 
   .notification-dialog .aig-button {

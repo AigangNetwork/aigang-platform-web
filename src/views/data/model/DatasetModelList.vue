@@ -1,8 +1,10 @@
 <template>
-  <div class="models-container" v-loading="loading">
-    <h4 class="info-title">{{$t('data.dataset.model.models')}}</h4>
-    <h3 v-if="modelsNotFound">{{$t('data.dataset.model.modelsNotFound')}}</h3>
-    <DatasetModelCard v-for="(model, index) in modelsList" :model="model" :key="index" />
+  <div class="models-container">
+    <div v-loading="loading">
+      <h4 class="info-title">{{$t('data.dataset.model.models')}}</h4>
+      <h3 v-if="modelsNotFound">{{$t('data.dataset.model.modelsNotFound')}}</h3>
+      <DatasetModelCard v-for="(model, index) in modelsList" :model="model" :key="index" />
+    </div>
   </div>
 </template>
 <script>

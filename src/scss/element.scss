@@ -17,11 +17,11 @@
 
 .el-dialog {
   text-align: left;
-  box-shadow: 0 0px 41px rgba(0, 0, 0, 0.07);
 }
 
 .el-dialog--center {
-  width: 30%;
+  width: 100%;
+  max-width: 420px;
 }
 
 .el-dialog-header {
@@ -142,4 +142,8 @@
 
 .el-loading-mask {
   z-index: 1000;
+}
+
+.el-notification {
+  max-width: 80%;
 }

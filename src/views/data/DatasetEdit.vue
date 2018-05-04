@@ -165,7 +165,7 @@ export default {
       }
 
       this.axios.post('/data/update', form).then(response => {
-        this.$store.state.currentDataset = null
+        this.$store.dispatch('clearCurrentDataset')
         this.$store.dispatch('loadCurrentDataset', this.$route.params.id)
 
         this.loading = false
@@ -216,7 +216,7 @@ export default {
               dynamicFileFields.push({
                 name: col,
                 description: '',
-                dataType: ''
+                dataType: 'String'
               })
             })
           } else {

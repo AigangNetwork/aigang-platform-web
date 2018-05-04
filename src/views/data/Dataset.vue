@@ -35,7 +35,9 @@
       </div>
       <div class="dataset-content-container">
         <div class="dataset-content">
-          <router-view></router-view>
+          <transition name="slideUp">
+            <router-view></router-view>
+          </transition>
         </div>
       </div>
       <Dialog :title="$t('profile.warning')" :body="$t('data.dataset.deleteDialogBody')" :on-confirm="deleteDataset" :is-visible="dialogVisible"

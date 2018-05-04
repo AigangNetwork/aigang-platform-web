@@ -134,7 +134,7 @@ export default {
               : this.$t('data.dataset.model.notification.successfullyUpdated')
           })
 
-          this.$store.state.currentModel = null
+          this.$store.dispatch('clearCurrentDataset')
           this.$store.dispatch('loadCurrentModel', { datasetId: this.$route.params.id, modelId: this.$route.params.modelId })
           this.$router.push({ name: 'datasetModels' })
         }).catch(e => {
