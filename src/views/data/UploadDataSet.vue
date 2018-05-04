@@ -10,7 +10,7 @@
         </div>
         <el-row v-if="!isRemoteFile" type="flex">
           <el-col :span="16">
-            <el-form :model="dataUploadForm" ref="dataUploadForm" :rules="dataUploadFormRules" @keyup.enter.native="submitForm('dataUploadForm')">
+            <el-form :model="dataUploadForm" ref="dataUploadForm" :rules="dataUploadFormRules">
               <el-form-item prop="file" size="small">
                 <el-upload :limit="1" :on-remove="fileRemoved" :on-exceed="fileLimitExeeded" ref="csvFile" drag :action="''" :multiple="false"
                   :auto-upload="false" :on-change="handleFileChange" accept=".csv">

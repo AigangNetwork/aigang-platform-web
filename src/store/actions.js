@@ -40,13 +40,11 @@ const changeProfileNames = ({ commit }, response) => {
 }
 
 const loadCurrentDataset = async ({ commit, state }, id) => {
-  if (!state.currentDataset || state.currentDataset.id !== id) {
-    const response = await axios.get('/data/' + id)
-    if (response.data.data) {
-      commit(types.LOAD_CURRENT_DATASET, response.data)
-    } else {
-      commit(types.CLEAR_CURRENT_DATASET)
-    }
+  const response = await axios.get('/data/' + id)
+  if (response.data.data) {
+    commit(types.LOAD_CURRENT_DATASET, response.data)
+  } else {
+    commit(types.CLEAR_CURRENT_DATASET)
   }
 }
 
@@ -83,10 +81,8 @@ const clearWeb3Instance = ({ commit }, response) => {
 }
 
 const loadCurrentModel = async ({ commit, state }, payload) => {
-  if (!state.currentModel || state.currentModel.id !== payload.modelId) {
-    const response = await axios.get(`/data/${payload.datasetId}/models/${payload.modelId}`)
-    commit(types.LOAD_CURRENT_MODEL, response.data)
-  }
+  const response = await axios.get(`/data/${payload.datasetId}/models/${payload.modelId}`)
+  commit(types.LOAD_CURRENT_MODEL, response.data)
 }
 
 export {
