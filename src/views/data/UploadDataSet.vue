@@ -20,10 +20,13 @@
                   </div>
                 </el-upload>
               </el-form-item>
+              <div v-if="fileAttached">
+                <h5 class="file-header">{{$t('data.dataset.edit.file')}} {{dataUploadForm.file.name}} {{$t('data.dataset.edit.fileAttached')}}</h5>
+              </div>
               <div v-if="isErrorOnFirstStep && invalidFile" class="aig-form-error">
                 {{errorMessage}}
               </div>
-              <el-button @click="loadFile('file')" class="aig-load-button" v-if="buttonActive" type="primary">{{$t('data.upload.titles.load')}}</el-button>
+              <el-button @click="loadFile('file')" class="aig-load-button" :disabled="!fileAttached" v-if="buttonActive" type="primary">{{$t('data.upload.titles.load')}}</el-button>
             </el-form>
           </el-col>
           <el-col :span="10">
@@ -94,6 +97,7 @@ export default {
       buttonActive: true,
       isRemoteFile: false,
       invalidFile: false,
+      fileAttached: false,
       firstStepActive: true,
       secondStepActive: false,
       isValidForm: true,
@@ -154,6 +158,7 @@ export default {
       const fileSize = file.raw.size / 1024 / 1024 // filesize in mb
       if (fileSize <= 10) { // if less than 10MB
         this.dataUploadForm.file = file.raw
+        this.fileAttached = true
         this.invalidFile = false
         this.buttonActive = true
         this.parseFileStructure()
@@ -276,6 +281,11 @@ export default {
     switchChanged () {
       this.isErrorOnFirstStep = false
       this.errorMessage = ''
+      if (this.isRemoteFile) {
+        this.dynamicFileStructure = []
+        this.uploadDataset.file = []
+        this.fileAttached = false
+      }
     }
   }
 }
@@ -296,6 +306,10 @@ export default {
       max-width: 665px;
       height: 100%;
       max-height: 365px;
+      .file-header {
+        margin-left: 5px;
+        word-wrap: break-word;
+      }
       .step1-header {
         display: flex;
         justify-content: space-between;
@@ -331,4 +345,5 @@ export default {
     }
 
   }
+
 </style>

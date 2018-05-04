@@ -99,7 +99,8 @@
         "file": "File",
         "remoteAccessPoint": "Remote access point",
         "describeRemoteAccessPoint": "Describe remote access point",
-        "edit_success": "Changes were successfully updated"
+        "edit_success": "Changes were successfully updated",
+        "fileAttached": "was attached."
       },
       "validation": {
         "titleEmpty": "Title is required",
