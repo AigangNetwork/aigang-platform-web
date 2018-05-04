@@ -19,7 +19,7 @@
           <div class="column-datatype">
             <h5>{{column.dataType}}</h5>
           </div>
-        </el-row class="column-decsription">
+        </el-row>
         <el-row v-if="!isValidJson">
           <div class="info-content">
             {{dataset.structure}}
@@ -170,4 +170,5 @@ export default {
       padding: 0 5px;
     }
   }
+
 </style>
