@@ -22,14 +22,16 @@
         </div>
         <DataNavigation :show="!uploadingModelActive" :navigationBars="navigationBars">
 
-          <li v-if="uploadingModelActive" class="upload-model-button" key="upload-title">
-            <h3>{{ $t('data.dataset.model.submitModel') }}</h3>
-          </li>
+          <template v-if="showUpload">
+            <li v-if="uploadingModelActive" class="upload-model-button" key="upload-title">
+              <h3>{{ $t('data.dataset.model.submitModel') }}</h3>
+            </li>
 
-          <li class="stick-to-right" key="upload-button">
-            <el-button v-if="!uploadingModelActive" class="upload-model-button" @click="$router.push({name: 'uploadDataModel'})" type="warning">{{ $t('data.dataset.model.uploadModel') }}</el-button>
-            <el-button v-if="uploadingModelActive" class="upload-model-button" @click="$router.push('/data/' + $route.params.id)" type="warning">{{ $t('general.cancel') }}</el-button>
-          </li>
+            <li class="stick-to-right" key="upload-button">
+              <el-button v-if="!uploadingModelActive" class="upload-model-button" @click="$router.push({name: 'uploadDataModel'})" type="warning">{{ $t('data.dataset.model.uploadModel') }}</el-button>
+              <el-button v-if="uploadingModelActive" class="upload-model-button" @click="$router.push('/data/' + $route.params.id)" type="warning">{{ $t('general.cancel') }}</el-button>
+            </li>
+          </template>
         </DataNavigation>
 
       </div>
@@ -64,9 +66,12 @@ export default {
     Dialog,
     Card
   },
-  mounted () {
+  async mounted () {
     window.scroll(0, 0)
-    this.fetchDataset()
+    await this.fetchDataset()
+    if (this.dataset.state !== 'active') {
+      this.showUpload = false
+    }
   },
   data () {
     return {
@@ -76,6 +81,7 @@ export default {
       isUserOwner: false,
       editRoute: '/data/edit/' + this.$route.params.id,
       datasetNotFound: false,
+      showUpload: true,
       navigationBars: [{
         name: this.$t('data.dataset.navigation.info'),
         routeLink: {

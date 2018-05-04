@@ -2,9 +2,7 @@
 
   <transition-group class="data-items-container" name="slideUp" v-loading.body="loading">
     <el-col :xs="24" :sm="12" :md="12" :lg="8" v-for="dataItem in dataList" :key="dataItem.id">
-      <div :class="[{'aig-non-approved-data': dataItem.state === 'created'}, {'aig-link-disabled': dataItem.state === 'created'}]">
-        <DataItem :data="dataItem" :key="dataItem.id" />
-      </div>
+      <DataItem :data="dataItem" :key="dataItem.id" />
     </el-col>
     <el-col :key="totalPageCount">
       <Pagination v-if="totalPageCount > 0" :callback="loadPage" :total-page-count="totalPageCount" :current-page="page" />

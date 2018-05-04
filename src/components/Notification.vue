@@ -41,6 +41,10 @@ export default {
       this.$store.dispatch('logOut')
       router.push('/login')
     },
+    handle403 () {
+      this.notificationVisible = false
+      this.$router.push({ name: 'AccessDenied' })
+    },
     notifyRequestError (error) {
       this.notificationVisible = true
       this.title = this.$t('errors.error')
@@ -54,7 +58,7 @@ export default {
             this.handle401()
             break
           case 403:
-            this.messages.push(this.$t('errors.403'))
+            this.handle403()
             break
           case 404:
             this.notificationVisible = false
