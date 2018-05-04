@@ -4,7 +4,7 @@
     <transition name="slideDown">
       <div v-if="isStructured && structure.length > 0">
         <h4 class="input-section-title">{{$t('data.upload.titles.structure')}}</h4>
-        <el-row :gutter="20" type="flex" v-for="column in structure" :key="column.name">
+        <el-row :gutter="20" type="flex" v-for="(column, index) in structure" :key="index">
           <el-col :span="24">
             <h5 class="structure-type-title">{{column.name}}</h5>
           </el-col>
@@ -15,7 +15,7 @@
           </el-col>
           <el-col :span="24">
             <el-select size="medium" aria-required="true" v-model="column.dataType" :default-first-option="true" :placeholder="$t('data.upload.input.placeholder.dataType')">
-              <el-option v-for="item in dataTypeOptions" :key="item" :label="item" :value="item">
+              <el-option v-for="(item, index) in dataTypeOptions" :key="index" :label="item" :value="item">
               </el-option>
             </el-select>
           </el-col>
@@ -85,4 +85,5 @@ export default {
       width: 33%;
     }
   }
+
 </style>
