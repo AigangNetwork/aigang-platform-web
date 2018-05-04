@@ -72,6 +72,7 @@
         </el-row>
       </div>
     </Card>
+    <div v-if="secondStepActive"></div>
   </el-container>
 </template>
 <script>
@@ -297,11 +298,12 @@ export default {
     max-width: 1200px;
     position: relative;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     height: 100%;
-    align-items: baseline;
+    align-items: flex-start;
+
     .aig-upload-card {
-      margin-top: 100px;
+      margin: 100px auto 0 auto;
       width: 100%;
       max-width: 665px;
       height: 100%;
@@ -331,19 +333,46 @@ export default {
       }
     }
     .aig-upload-card-step-2 {
-      margin-top: 50px;
+      margin-top: 40px;
       width: 100%;
       max-width: 665px;
+
       .aig-upload-button {
         width: 100%;
       }
     }
     .aig-back-btn {
-      position: absolute;
-      left: 25px;
-      top: 15px;
+      margin-top: 40px;
     }
 
   }
 
+  @media screen and (min-width: 680px) and (max-width: 1024px) {
+    .aig-container {
+      display: block;
+
+      .aig-back-btn {
+        margin: 20px;
+      }
+    }
+
+    .dataset-edit {
+      margin-top: 0px;
+    }
+  }
+
+  @media screen and (min-width: 100px) and (max-width: 680px) {
+    .aig-container {
+      display: block;
+
+      .aig-back-btn {
+        margin: 20px 0 0 20px;
+      }
+
+      .dataset-edit {
+        margin-top: 0px;
+        padding: 20px
+      }
+    }
+  }
 </style>

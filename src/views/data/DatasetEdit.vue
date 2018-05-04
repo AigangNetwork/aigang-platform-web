@@ -39,15 +39,13 @@ import DatasetFileCard from '@/components/data/DatasetFileCard'
 import DatasetTitleEdit from '@/components/data/DatasetTitleEdit'
 import DatasetDescriptionEdit from '@/components/data/DatasetDescriptionEdit'
 import DatasetStructureEdit from '@/components/data/DatasetStructureEdit'
-import Card from '@/components/Card'
 
 export default {
   components: {
     DatasetFileCard,
     DatasetTitleEdit,
     DatasetDescriptionEdit,
-    DatasetStructureEdit,
-    Card
+    DatasetStructureEdit
   },
   data () {
     return {
@@ -222,6 +220,8 @@ export default {
       this.datasetStructure = dynamicFileFields
     },
     async onMounted (id) {
+      this.loading = true
+
       try {
         await this.$store.dispatch('loadCurrentDataset', this.$route.params.id)
       } catch (e) {
@@ -249,6 +249,8 @@ export default {
       this.$root.$on('remoteFileAccessPoint', (value) => {
         this.datasetForm.remoteFileAccessPoint = value
       })
+
+      this.loading = false
     }
   },
   async mounted () {
@@ -264,6 +266,7 @@ export default {
 <style lang="scss" scoped>
   .aig-container-dataset {
     background: white;
+    max-width: 1200px;
   }
 
   .dataset-edit-container {
@@ -280,6 +283,7 @@ export default {
       font-size: 14px;
       width: 100%;
       display: flex;
+
       .markdown-label {
         font-family: Roboto;
         flex-grow: 1;
@@ -310,15 +314,21 @@ export default {
   @media screen and (min-width: 680px) and (max-width: 1024px) {
     .aig-container-dataset {
       display: block;
+
       .back-button {
         margin: 20px;
       }
+    }
+
+    .dataset-edit-container {
+      margin-top: 0px;
     }
   }
 
   @media screen and (min-width: 100px) and (max-width: 680px) {
     .aig-container-dataset {
       display: block;
+
       .back-button {
         margin: 20px 0 0 20px;
       }
