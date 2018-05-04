@@ -41,14 +41,16 @@ export default {
     }
   },
   methods: {
-    fetchComments () {
+    async fetchComments () {
       this.loading = true
-      this.axios.get('/comment/' + this.$route.params.id).then(response => {
-        this.comments = response.data.comments
-        this.loading = false
-      }).catch(e => {
-        this.loading = false
-      })
+      this.comments = await this.fetchCommentsCallback()
+      this.loading = false
+      // this.axios.get('/comment/' + this.$route.params.id).then(response => {
+      //   this.comments = response.data.comments
+      //   this.loading = false
+      // }).catch(e => {
+      //   this.loading = false
+      // })
     },
     isOwner (userId) {
       return this.$store.state.user.profile.id === userId
