@@ -11,14 +11,14 @@
               <thead class="table-header">
                 <tr>
                   <th v-for="(key, index) in model[0]" :key="index">
-                    <input v-model="model[0][index]" />
+                    <input v-model="model[0][index]" maxlength="10" />
                   </th>
                 </tr>
               </thead>
               <tbody>
                 <tr v-for="(row, index) in model" v-if="index !== 0" :key="index">
                   <td v-for="(colData, i) in row" :key="i">
-                    <input v-model="row[i]" />
+                    <input v-model="row[i]" maxlength="3" />
                   </td>
                 </tr>
               </tbody>
