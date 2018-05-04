@@ -69,7 +69,6 @@ export default {
   async mounted () {
     window.scroll(0, 0)
     await this.fetchDataset()
-    console.log(this.dataset.state)
     if (this.dataset.state !== 'active') {
       this.showUpload = false
     }

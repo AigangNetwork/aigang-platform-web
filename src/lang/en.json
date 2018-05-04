@@ -116,6 +116,7 @@
         "premiumInvalid": "Invalid premium",
         "onlyIntegersAllowed": "Only integers allowed",
         "tableTooBig": "Maximum size of the table is 10x50",
+        "tableTooSmall": "Minimum size of the table is 1x1",
         "emptyModel": "Model table is required",
         "emptyModelInput": "Make sure you have filled all table fields",
         "titleTooLong": "Maximum 64 characters"
