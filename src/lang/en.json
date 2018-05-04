@@ -297,6 +297,7 @@
       "EmptyRequest": "You sent an empty request. Please make sure all required values are set",
       "FileTooLargeError": "Provided file is too large",
       "BadFileContentType": "Bad file content type",
+      "BadRequest": "Bad Request was sent to back-end. Try again later.",
       "GatewayTimeout": "Gateway time out",
       "AccountIsLocked": "Your account is disabled",
       "NameTooLong": "First name, last name or the username can not be longer than 200 characters.",
