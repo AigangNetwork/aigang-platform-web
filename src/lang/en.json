@@ -65,7 +65,8 @@
       "models": "Models",
       "threads": "Comments",
       "added": "Added",
-      "notApproved": "waiting for approval"
+      "notApproved": "waiting for approval",
+      "closed": "closed"
     },
     "dataset": {
       "createdBy": "By",
