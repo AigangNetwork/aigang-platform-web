@@ -114,6 +114,7 @@
         "fileTooBig": "File is too large",
         "premiumEmpty": "Premium is required",
         "premiumInvalid": "Invalid premium. Value e.g. 000000.000000",
+        "premiumZero": "Premium cannot be zero",
         "onlyIntegersAllowed": "Only integers allowed",
         "tableTooBig": "Maximum size of the table is 10x50",
         "tableTooSmall": "Minimum size of the table is 1x1",

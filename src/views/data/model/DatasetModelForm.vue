@@ -52,6 +52,11 @@ export default {
   },
   mixins: [FormMixin],
   data () {
+    const checkMinPremium = (rule, value, callback) => {
+      if (parseFloat(value) < 0.000001) {
+        return callback(new Error(this.$t('data.dataset.validation.premiumZero')))
+      }
+    }
     return {
       loading: false,
       model: [],
@@ -97,8 +102,12 @@ export default {
           message: this.$t('data.dataset.validation.premiumEmpty'),
           trigger: 'blur'
         }, {
-          pattern: /^(?:\d{1,6}\.\d{1,6}|[1-9]\d{0,5})$/,
+          pattern: /^(?:\d{1,6}\.\d{1,6}|[0-9]\d{0,5})$/,
           message: this.$t('data.dataset.validation.premiumInvalid'),
+          trigger: 'blur'
+        },
+        {
+          validator: checkMinPremium,
           trigger: 'blur'
         }]
       }
