@@ -5,7 +5,7 @@
         <img src="@/../static/left.svg">
       </router-link>
       <h3>
-        {{ $store.state.currentDataset.title }}
+        {{ dataset.title }}
       </h3>
     </el-row>
     <div class="header-title-container">
@@ -39,6 +39,7 @@
 <script>
 import CreatedDate from '@/components/mixins/CreatedDate'
 import Dialog from '@/components/common/Dialog'
+import { mapGetters } from 'vuex'
 
 export default {
   props: ['model'],
@@ -48,7 +49,8 @@ export default {
     return {
       loading: false,
       modelsRoute: `/data/${this.$route.params.id}/models`,
-      dialogVisible: false
+      dialogVisible: false,
+      datasetTitle: ''
     }
   },
   methods: {
@@ -71,6 +73,7 @@ export default {
     }
   },
   computed: {
+    ...mapGetters(['dataset']),
     createdUtc () {
       return this.model.createdUtc
     },
@@ -79,6 +82,11 @@ export default {
     },
     isPremiumBig () {
       return !(String(this.model.premium).length > 7)
+    }
+  },
+  async created () {
+    if (!this.dataset) {
+      await this.$store.dispatch('loadCurrentDataset', this.$route.params.id)
     }
   }
 }
