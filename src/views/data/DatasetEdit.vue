@@ -184,6 +184,9 @@ export default {
         this.datasetRemoteStructure = dataset.structure
       }
     },
+    onFileChange () {
+      this.parseFileStructure()
+    },
     parseFileStructure () {
       if (!this.$store.state.currentDataset.file) {
         try {
