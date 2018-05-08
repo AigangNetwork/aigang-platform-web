@@ -16,7 +16,7 @@
           <span class="no-wrap">{{ $t('data.dataset.model.lastUpdated')}}: {{ created }}</span>
         </p>
         <h1>{{ model.title }}</h1>
-        <div class="aig-dataset-header-btn-container">
+        <div class="aig-dataset-header-btn-container" v-if="isDatasetActive">
           <router-link v-if="isUserOwner" :to="{ name: 'edit' }" exact class="aig-dataset-header-btn fit edit">
             <img class="file-img" src="/static/dataset/edit21px.png" alt=""> {{$t('data.dataset.model.editModel')}}
           </router-link>
@@ -49,8 +49,7 @@ export default {
     return {
       loading: false,
       modelsRoute: `/data/${this.$route.params.id}/models`,
-      dialogVisible: false,
-      datasetTitle: ''
+      dialogVisible: false
     }
   },
   methods: {
@@ -82,6 +81,9 @@ export default {
     },
     isPremiumBig () {
       return !(String(this.model.premium).length > 7)
+    },
+    isDatasetActive () {
+      return this.dataset.state === 'active'
     }
   },
   async created () {

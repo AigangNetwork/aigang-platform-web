@@ -138,7 +138,6 @@ export default {
 
       this.axios.post(this.postPath, uploadForm)
         .then(response => {
-          this.loading = false
           this.$notify({
             title: this.$t('data.dataset.model.notification.title.success'),
             type: 'success',
@@ -146,9 +145,15 @@ export default {
               : this.$t('data.dataset.model.notification.successfullyUpdated')
           })
 
-          this.$store.dispatch('clearCurrentDataset')
           this.$store.dispatch('loadCurrentModel', { datasetId: this.$route.params.id, modelId: this.$route.params.modelId })
-          this.$router.push({ name: 'datasetModels' })
+
+          if (this.isUpload) {
+            this.$router.push({ name: 'datasetModels' })
+          } else {
+            this.$router.push({ name: 'modelInfo' })
+          }
+
+          this.loading = false
         }).catch(e => {
           this.loading = false
         })
@@ -226,7 +231,9 @@ export default {
       this.loading = false
     }
   },
-  mounted () {
+  async mounted () {
+    await this.$store.dispatch('loadCurrentDataset', this.$route.params.id)
+
     if (this.$store.state.currentDataset && this.$store.state.currentDataset.state !== 'active') {
       this.$router.push({ name: 'AccessDenied' })
     }

@@ -164,6 +164,8 @@ export default {
           type: 'success',
           message: this.$t('data.dataset.edit.edit_success')
         })
+
+        this.$router.push('/data/' + this.$route.params.id)
       }, e => {
         this.loading = false
       })
@@ -219,6 +221,7 @@ export default {
       } catch (error) {
         this.structureValid = false
       }
+
       fileReader.readAsText(this.$store.state.currentDataset.file.raw)
       this.datasetStructure = dynamicFileFields
     },
@@ -234,6 +237,7 @@ export default {
       } catch (e) {
         this.loading = false
       }
+
       if (!this.$store.state.currentDataset) {
         this.$router.push('/data/' + id)
         return

@@ -7,6 +7,9 @@ const getters = {
   },
   dataset: state => {
     return state.currentDataset
+  },
+  model: state => {
+    return state.currentModel
   }
 }
 
