@@ -38,7 +38,13 @@ export default {
           required: true,
           message: this.$t('data.dataset.threads.validation.commentFieldRequired'),
           trigger: 'blur'
-        }]
+        },
+        {
+          max: 1000,
+          message: this.$t('data.dataset.threads.validation.commentTooLong'),
+          trigger: 'blur'
+        }
+        ]
       }
     }
   },

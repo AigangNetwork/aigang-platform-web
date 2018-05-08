@@ -162,7 +162,8 @@
         "successFullDelete": "Your comment was successfully deleted",
         "replies": "replies",
         "validation": {
-          "commentFieldRequired": "Comment is required"
+          "commentFieldRequired": "Comment is required",
+          "commentTooLong": "Comment lenght limit was reached."
         }
       }
     }
