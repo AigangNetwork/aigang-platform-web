@@ -43,6 +43,11 @@ export default {
           max: 1000,
           message: this.$t('data.dataset.threads.validation.commentTooLong'),
           trigger: 'blur'
+        },
+        {
+          min: 5,
+          message: this.$t('data.dataset.threads.validation.commentTooShort'),
+          trigger: 'blur'
         }
         ]
       }

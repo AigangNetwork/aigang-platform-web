@@ -163,7 +163,8 @@
         "replies": "replies",
         "validation": {
           "commentFieldRequired": "Comment is required",
-          "commentTooLong": "Comment lenght limit was reached."
+          "commentTooLong": "Comment lenght limit was reached",
+          "commentTooShort": "Comment is too short"
         }
       }
     }
