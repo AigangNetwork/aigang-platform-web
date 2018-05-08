@@ -306,7 +306,7 @@
       "NameInvalid": "First name, last name or the username contains invalid characters.",
       "TitleTooLong": "Title can not be longer than 200 characters.",
       "TitleOrDescriptionTooShort": "Title or description can not be shorter than 6 characters.",
-      "Forbidden": "Access denied",
+      "Forbidden": "You are trying to access forbidden resources",
       "NotFound": "Not found"
     },
     "pagePathNotFound": "The page you are trying to access is not available",
@@ -316,6 +316,6 @@
     "metamaskDetected":
       "We have detected that you are using metamask extension. In order to see your account AIX balance please switch your network to ",
     "useMetamask": "To use all of our Platform features please Log in to Metamask Extension",
-    "accessDenied": "Access denied"
+    "accessDenied": "You are trying to access forbidden resources"
   }
 }

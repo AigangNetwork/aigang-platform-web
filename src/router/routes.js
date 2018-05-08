@@ -205,7 +205,8 @@ const routes = [
     ]
   },
   {
-    path: '/data/edit/:id',
+    name: 'EditDataset',
+    path: '/data/:id/edit',
     component: DatasetEdit,
     props: true,
     meta: {

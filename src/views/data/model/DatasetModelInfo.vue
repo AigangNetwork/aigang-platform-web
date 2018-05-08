@@ -87,7 +87,6 @@ export default {
     }
   },
   created () {
-    console.log(this.$route.params.id)
     this.fetchModel(this.$route.params.id, this.$route.params.modelId)
   }
 }

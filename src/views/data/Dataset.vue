@@ -81,7 +81,7 @@ export default {
       dataset: {},
       loading: false,
       isUserOwner: false,
-      editRoute: '/data/edit/' + this.$route.params.id,
+      editRoute: '/data/' + this.$route.params.id + '/edit',
       datasetNotFound: false,
       showUpload: true,
       navigationBars: [{
