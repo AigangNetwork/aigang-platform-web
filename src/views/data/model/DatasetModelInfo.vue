@@ -74,7 +74,7 @@ export default {
       this.loading = true
 
       try {
-        await this.$store.dispatch('loadCurrentModel', { id, modelId })
+        await this.$store.dispatch('loadCurrentModel', { datasetId: id, modelId: modelId })
         this.model = this.$store.state.currentModel
         if (!this.model) {
           this.modelNotFound = true
@@ -87,6 +87,7 @@ export default {
     }
   },
   created () {
+    console.log(this.$route.params.id)
     this.fetchModel(this.$route.params.id, this.$route.params.modelId)
   }
 }

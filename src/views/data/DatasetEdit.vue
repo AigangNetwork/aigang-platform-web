@@ -227,6 +227,10 @@ export default {
 
       try {
         await this.$store.dispatch('loadCurrentDataset', this.$route.params.id)
+        if (this.$store.state.currentDataset.userId !== this.$store.state.user.profile.id) {
+          this.$router.push({ name: 'AccessDenied' })
+          return
+        }
       } catch (e) {
         this.loading = false
       }
@@ -258,10 +262,6 @@ export default {
   },
   async mounted () {
     await this.onMounted(this.$route.params.id)
-
-    if (this.$store.state.currentDataset.userId !== this.$store.state.user.profile.id) {
-      this.$router.push({ name: 'AccessDenied' })
-    }
   }
 }
 

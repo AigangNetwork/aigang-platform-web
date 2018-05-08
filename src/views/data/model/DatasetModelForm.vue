@@ -54,7 +54,9 @@ export default {
   data () {
     const checkMinPremium = (rule, value, callback) => {
       if (parseFloat(value) < 0.000001) {
-        return callback(new Error(this.$t('data.dataset.validation.premiumZero')))
+        callback(new Error(this.$t('data.dataset.validation.premiumZero')))
+      } else {
+        callback()
       }
     }
     return {
@@ -126,6 +128,7 @@ export default {
 
       this.loading = true
       this.modelForm.model = JSON.stringify(this.model)
+      this.modelForm.dataId = this.$route.params.id
 
       let uploadForm = new FormData()
 
@@ -207,7 +210,12 @@ export default {
 
       try {
         const response = await this.axios.get(this.getPath)
-        this.loading = false
+
+        if (response.data.data.userId !== this.$store.state.user.profile.id) {
+          this.$router.push({ name: 'AccessDenied' })
+          return
+        }
+
         this.modelForm = response.data.data
         this.model = JSON.parse(response.data.data.model)
       } catch (error) {
@@ -215,9 +223,7 @@ export default {
         this.loading = false
       }
 
-      if (this.modelForm.userId !== this.$store.state.user.profile.id) {
-        this.$router.push({ name: 'AccessDenied' })
-      }
+      this.loading = false
     }
   },
   mounted () {

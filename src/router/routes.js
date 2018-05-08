@@ -39,7 +39,7 @@ const routes = [
     component: NotFound
   },
   {
-    path: '/forbidden',
+    path: '/access-denied',
     name: 'AccessDenied',
     component: AccessDenied
   },

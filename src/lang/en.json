@@ -306,7 +306,8 @@
       "NameInvalid": "First name, last name or the username contains invalid characters.",
       "TitleTooLong": "Title can not be longer than 200 characters.",
       "TitleOrDescriptionTooShort": "Title or description can not be shorter than 6 characters.",
-      "Forbidden": "Access denied"
+      "Forbidden": "Access denied",
+      "NotFound": "Not found"
     },
     "pagePathNotFound": "The page you are trying to access is not available",
     "validationError": "You have entered an invalid data",
