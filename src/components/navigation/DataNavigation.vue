@@ -127,7 +127,6 @@ export default {
           justify-content: space-between;
           li {
             margin-left: 0;
-            width: 40%;
             min-width: 135px;
             h3 {
               text-align: center;

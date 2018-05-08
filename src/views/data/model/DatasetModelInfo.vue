@@ -3,7 +3,9 @@
     <Card class="model-card">
       <div slot="body" v-loading="loading" :element-loading-text="$t('general.loading')">
         <DatasetModelHeader :model="model" />
-        <DataNavigation :show="true" :navigationBars="navigationBars" />
+        <DataNavigation :show="true" :navigationBars="navigationBars">
+          <li class="stick-to-right" key="model-space-ship"></li>
+        </DataNavigation>
         <div class="dataset-content-container">
           <div class="dataset-content">
             <router-view></router-view>
@@ -76,6 +78,14 @@ export default {
           this.loading = false
           this.model = response.data.data
           this.model.userName = response.data.userName
+
+          const threadsBar = this.navigationBars.find(bar => {
+            return bar.routeLink.name === 'modelThreads'
+          })
+          threadsBar.name = this.$t('data.dataset.navigation.threads')
+          if (threadsBar && response.data.commentsCount > 0) {
+            threadsBar.name += ` (${response.data.commentsCount})`
+          }
         }).catch(e => {
           this.loading = false
         })

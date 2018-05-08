@@ -1,5 +1,5 @@
 <template>
-  <CommentsView :fetch-comments-callback="fetchComments" />
+  <CommentsView :entity-id="this.$route.params.id" :fetch-comments-url="fetchPath" />
 </template>
 <script>
 import CommentsView from '@/components/comments/CommentsView.vue'
@@ -8,11 +8,9 @@ export default {
   components: {
     CommentsView
   },
-  methods: {
-    fetchComments () {
-      this.axios.get('/comment/' + this.$route.params.id).then(response => {
-        return response.data.comments
-      })
+  data () {
+    return {
+      fetchPath: '/comment/' + this.$route.params.id
     }
   }
 }

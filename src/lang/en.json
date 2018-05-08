@@ -45,8 +45,7 @@
         },
         "validation": {
           "emptyInputError": "Please make sure you have filled all fields",
-          "fileLimitExceed":
-            "You are able to upload only one .csv file. Please delete old file before uploading new one",
+          "fileLimitExceed": "You are able to upload only one .csv file. Please delete old file before uploading new one",
           "unableAccessFileContent": "File can not be accessed. Please reupload correct file",
           "invalidFile": "Invalid file content type. Please make sure you upload .csv files only!",
           "fileTooLarge": "Please make sure you follow all file preferences. File is too large."
@@ -80,7 +79,7 @@
         "info": "Info",
         "data": "Data",
         "models": "Models",
-        "threads": "Threads",
+        "threads": "Comments",
         "model": "Model"
       },
       "edit": {
@@ -149,7 +148,7 @@
         "lastUpdated": "Last updated"
       },
       "threads": {
-        "threads": "Threads",
+        "threads": "Comments",
         "commentPlaceholder": "Start typing to add comment",
         "deleteCommentDialogContent": "Are you sure you want to delete your comment?",
         "editTooltip": "Edit comment",
@@ -178,8 +177,7 @@
   },
   "signUp": {
     "signUp": "Sign Up",
-    "description":
-      "Creating an account in aigang.network you will get access to all products such as Data, Prediction market, Invest and Insure",
+    "description": "Creating an account in aigang.network you will get access to all products such as Data, Prediction market, Invest and Insure",
     "haveAccount": "Have Aigang Network Account?",
     "rePassword": "Repeat password",
     "emailSent": "Email was sent to {0}. Follow instructions provided in the email.",
@@ -217,8 +215,7 @@
     "firstName": "First name",
     "lastName": "Last name",
     "changePassword": "Change password",
-    "passwordDescription":
-      "Minimum password length must be 8 characters and consist of at least 2 alpha characters, 1 number and 1 special character ",
+    "passwordDescription": "Minimum password length must be 8 characters and consist of at least 2 alpha characters, 1 number and 1 special character ",
     "oldPassword": "Old password",
     "newPassword": "New password",
     "update": "Update",
@@ -233,8 +230,7 @@
     "emailNews": "Get news and updates about Aigang's product",
     "passwordUpdated": "Password succesfully updated",
     "deactivateAccountTitle": "Deactivate your account",
-    "deactivateAccountDescription":
-      "If you decide that you no longer want to use Aigang Platform, it's easy to deactivate your account. When you deactivate your account, you're no longer availible to log in or access your private uploaded datasets.",
+    "deactivateAccountDescription": "If you decide that you no longer want to use Aigang Platform, it's easy to deactivate your account. When you deactivate your account, you're no longer availible to log in or access your private uploaded datasets.",
     "deactivateAccount": "Deactivate account",
     "warning": "Warning",
     "confirmationText": "Are you sure you want to deactivate your account?",
@@ -314,8 +310,7 @@
     "validationError": "You have entered an invalid data",
     "serverNotFound": "Server error",
     "contactIfError": "If you see this error please contact us via email info@aigang.network",
-    "metamaskDetected":
-      "We have detected that you are using metamask extension. In order to see your account AIX balance please switch your network to ",
+    "metamaskDetected": "We have detected that you are using metamask extension. In order to see your account AIX balance please switch your network to ",
     "useMetamask": "To use all of our Platform features please Log in to Metamask Extension"
   }
 }

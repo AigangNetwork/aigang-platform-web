@@ -4,7 +4,7 @@
       <UserInfo :date="comment.createdUtc" :show-username="true" :user-name="comment.username" />
       <div class="icon-container" v-if="isOwner">
         <el-tooltip :content="$t('data.dataset.threads.editTooltip')">
-          <img @click="editComment" class="comment-icon" src="/static/dataset/edit_black24px.png" alt="">
+          <img @click="editComment" class="comment-icon-left" src="/static/dataset/edit_black24px.png" alt="">
         </el-tooltip>
         <el-tooltip :content="$t('data.dataset.threads.removeTooltip')">
           <img @click="dialogVisible = true" class="comment-icon" src="/static/dataset/trash_black24px.png" alt="">
@@ -28,13 +28,9 @@
       </div>
     </div>
     <div class="comment-footer">
-      <div>
-        <div v-if="comment.replies">
-          <span class="replies">
-            {{ comment.replies.length }} {{$t('data.dataset.threads.replies')}}
-          </span>
-        </div>
-      </div>
+      <span class="replies" v-if="comment.replies">
+        {{ comment.replies.length }} {{$t('data.dataset.threads.replies')}}
+      </span>
     </div>
     <Dialog :title="$t('profile.warning')" :body="$t('data.dataset.threads.deleteCommentDialogContent')" :on-confirm="deleteComment"
       :is-visible="dialogVisible" :on-cancel="cancelDelete" />
@@ -132,19 +128,23 @@ export default {
 <style lang="scss">
   @import '~helpers/variables';
   .user-comment-container {
-    border: solid 1px #c8d0f1;
-    padding: 15px;
+    border: solid 1px #f2f2f2;
+    padding: 10px;
     .comment-header {
       .icon-container {
         display: flex;
         .comment-icon {
           height: 19px;
-          margin-right: 5px;
+        }
+        .comment-icon-left {
+          height: 19px;
+          margin-right: 10px;
         }
       }
     }
     .comment-content {
-      padding: 15px;
+      padding: 10px 0px 0px 15px;
+      font-size: 10pt;
       .comment-form {
         align-items: center;
         width: 100%;
@@ -165,7 +165,8 @@ export default {
     }
     .comment-footer {
       display: flex;
-      justify-content: space-between;
+      justify-content: right;
+      font-size: 9pt;
       .button {
         height: 30px;
         width: 99px;

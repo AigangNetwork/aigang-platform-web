@@ -1,5 +1,5 @@
 <template>
-  <div class="user-comment-container">
+  <div class="user-comment-container" v-loading="loading">
     <UserInfo :show-username="true" :user-name="$store.state.user.profile.userName" />
     <el-form :rules="commentFormRules" class="comment-form" :model="commentForm" ref="commentForm">
       <el-form-item prop="text">
@@ -15,12 +15,19 @@
 import UserInfo from '@/components/comments/UserInfo.vue'
 import FormMixin from '@/components/mixins/FormMixin'
 export default {
+  props: {
+    entityId: {
+      required: true,
+      type: String
+    }
+  },
   components: {
     UserInfo
   },
   mixins: [FormMixin],
   data () {
     return {
+      loading: false,
       commentForm: {
         text: '',
         parentId: null,
@@ -37,7 +44,9 @@ export default {
   },
   methods: {
     submitComment () {
+      this.loading = true
       this.axios.post('/comment', this.commentForm).then(response => {
+        this.loading = false
         this.$notify.success({
           title: this.$t('data.upload.notifications.titles.success'),
           message: this.$t('data.dataset.threads.successFullPost')
@@ -49,7 +58,7 @@ export default {
     }
   },
   created () {
-    this.commentForm.entityId = this.$route.params.id
+    this.commentForm.entityId = this.entityId
   }
 }
 

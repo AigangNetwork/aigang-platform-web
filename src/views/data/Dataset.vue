@@ -97,7 +97,12 @@ export default {
       },
       {
         name: this.$t('data.dataset.navigation.threads'),
-        routeLink: '/data/' + this.$route.params.id + '/threads',
+        routeLink: {
+          name: 'datasetThreads',
+          params: {
+            id: this.$route.params.id
+          }
+        },
         imgSrc: '/static/threads24px.svg',
         disabled: false
       }
@@ -133,7 +138,7 @@ export default {
         }
 
         const threadsBar = this.navigationBars.find(bar => {
-          return bar.name === 'Threads'
+          return bar.routeLink.name === 'datasetThreads'
         })
         threadsBar.name = this.$t('data.dataset.navigation.threads')
         if (threadsBar && response.data.commentsCount > 0) {

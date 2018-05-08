@@ -1,5 +1,5 @@
 <template>
-  <div class="reply-comment">
+  <div class="reply-comment" v-loading="loading">
     <UserInfo :show-username="false" :user-name="$store.state.user.profile.userName" />
     <el-form :rules="replyFormRules" class="reply-form" :model="replyFrom" ref="replyFrom">
       <el-form-item class="input-form-item" prop="text">
@@ -23,11 +23,17 @@ export default {
     parentId: {
       required: true,
       type: String
+    },
+    entityId: {
+      required: true,
+      type: String
     }
   },
   methods: {
     submitReply () {
+      this.loading = true
       this.axios.post('/comment', this.replyFrom).then(response => {
+        this.loading = false
         this.$notify.success({
           title: this.$t('data.upload.notifications.titles.success'),
           message: this.$t('data.dataset.threads.successFullPost')
@@ -39,6 +45,7 @@ export default {
   },
   data () {
     return {
+      loading: false,
       replyFrom: {
         entityId: null,
         parentId: null,
@@ -55,7 +62,7 @@ export default {
   },
   created () {
     this.replyFrom.parentId = this.parentId
-    this.replyFrom.entityId = this.$route.params.id
+    this.replyFrom.entityId = this.entityId
   }
 }
 
@@ -63,9 +70,10 @@ export default {
 <style lang="scss">
   .reply-comment {
     border: solid 1px #c8d0f1;
-    padding: 15px 15px 15px 40px;
+    padding: 10px 10px 0px 40px;
     display: flex;
     .reply-form {
+      font-size: 10pt;
       display: flex;
       width: 100%;
       .input-form-item {
@@ -87,16 +95,6 @@ export default {
         }
       }
     }
-  }
-
-  @media screen and (min-width: 100px) and (max-width: 680px) {
-    .reply-comment {
-      display: block;
-      .reply-form {
-        display: block;
-      }
-    }
-
   }
 
 </style>

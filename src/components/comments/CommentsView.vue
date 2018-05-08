@@ -4,7 +4,7 @@
     <div v-if="$store.state.user.authenticated">
       <el-row>
         <el-col class="comment-column">
-          <NewComment @refresh-comment="fetchComments()" />
+          <NewComment :entity-id="entityId" @refresh-comment="fetchComments()" />
         </el-col>
         <el-col class="comment-column" v-for="(comment, index) in comments" v-bind:key="index">
           <Comment :show-reply-button="true" @refresh-comment="fetchComments()" :comment="comment" :is-owner="isOwner(comment.userId)"
@@ -12,7 +12,7 @@
           <div v-if="comment.replies" v-for="(reply, index) in comment.replies" v-bind:key="index">
             <Comment :is-reply="true" :comment="reply" :is-owner="isOwner(reply.userId)" @refresh-comment="fetchComments()" />
           </div>
-          <ReplyComment :parent-id="comment.id" @refresh-comment="fetchComments()" />
+          <ReplyComment :entity-id="entityId" :parent-id="comment.id" @refresh-comment="fetchComments()" />
         </el-col>
       </el-row>
     </div>
@@ -24,9 +24,13 @@ import ReplyComment from '@/components/comments/ReplyComment.vue'
 import Comment from '@/components/comments/Comment.vue'
 export default {
   props: {
-    fetchCommentsCallback: {
+    fetchCommentsUrl: {
       required: true,
-      type: Function
+      type: String
+    },
+    entityId: {
+      required: true,
+      type: String
     }
   },
   components: {
@@ -41,22 +45,20 @@ export default {
     }
   },
   methods: {
-    async fetchComments () {
+    fetchComments () {
       this.loading = true
-      this.comments = await this.fetchCommentsCallback()
-      this.loading = false
-      // this.axios.get('/comment/' + this.$route.params.id).then(response => {
-      //   this.comments = response.data.comments
-      //   this.loading = false
-      // }).catch(e => {
-      //   this.loading = false
-      // })
+      this.axios.get(this.fetchCommentsUrl).then(response => {
+        this.comments = response.data.comments
+        this.loading = false
+      }).catch(e => {
+        this.loading = false
+      })
     },
     isOwner (userId) {
       return this.$store.state.user.profile.id === userId
     }
   },
-  created () {
+  mounted () {
     this.fetchComments()
   }
 }
@@ -66,6 +68,12 @@ export default {
   .comment-column {
     margin-bottom: 45px;
     border: solid 1px #c8d0f1;
+  }
+
+  @media screen and (min-width: 100px) and (max-width: 680px) {
+    .aig-dataset-info-container {
+      padding: 0px 5px 0px 5px;
+    }
   }
 
 </style>
