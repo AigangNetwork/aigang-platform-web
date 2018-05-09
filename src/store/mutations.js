@@ -59,8 +59,10 @@ const mutations = {
     }
   },
   LOAD_CURRENT_MODEL (state, payload) {
-    state.currentModel = payload.data
-    state.currentModel.userName = payload.userName
+    if (payload.data) {
+      state.currentModel = payload.data
+      state.currentModel.userName = payload.userName
+    }
   },
   CLEAR_CURRENT_DATASET (state, payload) {
     state.currentDataset = null

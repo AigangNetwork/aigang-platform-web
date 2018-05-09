@@ -82,6 +82,7 @@ export default {
         if (!this.model.id) {
           this.modelNotFound = true
         }
+
         this.loading = false
       } catch (error) {
         this.modelNotFound = true
