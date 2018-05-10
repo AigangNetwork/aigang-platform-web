@@ -130,13 +130,7 @@ export default {
       this.modelForm.model = JSON.stringify(this.model)
       this.modelForm.dataId = this.$route.params.id
 
-      let uploadForm = new FormData()
-
-      for (let key in this.modelForm) {
-        uploadForm.append(key, this.modelForm[key])
-      }
-
-      this.axios.post(this.postPath, uploadForm)
+      this.axios.post(this.postPath, this.modelForm)
         .then(response => {
           this.$notify({
             title: this.$t('data.dataset.model.notification.title.success'),
