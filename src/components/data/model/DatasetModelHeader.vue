@@ -5,7 +5,7 @@
         <img src="@/../static/left.svg">
       </router-link>
       <h3>
-        {{ $store.state.currentDataset.title }}
+        {{ dataset.title }}
       </h3>
     </el-row>
     <div class="header-title-container">
@@ -16,7 +16,7 @@
           <span class="no-wrap">{{ $t('data.dataset.model.lastUpdated')}}: {{ created }}</span>
         </p>
         <h1>{{ model.title }}</h1>
-        <div class="aig-dataset-header-btn-container">
+        <div class="aig-dataset-header-btn-container" v-if="isDatasetActive">
           <router-link v-if="isUserOwner" :to="{ name: 'edit' }" exact class="aig-dataset-header-btn fit edit">
             <img class="file-img" src="/static/dataset/edit21px.png" alt=""> {{$t('data.dataset.model.editModel')}}
           </router-link>
@@ -39,6 +39,7 @@
 <script>
 import CreatedDate from '@/components/mixins/CreatedDate'
 import Dialog from '@/components/common/Dialog'
+import { mapGetters } from 'vuex'
 
 export default {
   props: ['model'],
@@ -71,6 +72,7 @@ export default {
     }
   },
   computed: {
+    ...mapGetters(['dataset']),
     createdUtc () {
       return this.model.createdUtc
     },
@@ -79,6 +81,14 @@ export default {
     },
     isPremiumBig () {
       return !(String(this.model.premium).length > 7)
+    },
+    isDatasetActive () {
+      return this.dataset.state === 'active'
+    }
+  },
+  async created () {
+    if (!this.dataset) {
+      await this.$store.dispatch('loadCurrentDataset', this.$route.params.id)
     }
   }
 }
