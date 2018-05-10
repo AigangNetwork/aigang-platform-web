@@ -143,7 +143,7 @@ export default {
       }
     }
     .comment-content {
-      padding: 10px 0px 0px 15px;
+      padding: 10px 0px 2px 15px;
       font-size: 10pt;
       .comment-form {
         align-items: center;

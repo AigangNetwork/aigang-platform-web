@@ -1,9 +1,9 @@
 <template>
   <div class="aig-dataset-info-container" v-loading="loading">
     <h4 class="info-title">{{$t('data.dataset.threads.threads')}}</h4>
-    <div v-if="$store.state.user.authenticated">
+    <div>
       <el-row>
-        <el-col class="comment-column">
+        <el-col class="comment-column" v-if="$store.state.user.authenticated">
           <NewComment :entity-id="entityId" @refresh-comment="fetchComments()" />
         </el-col>
         <el-col class="comment-column" v-for="(comment, index) in comments" v-bind:key="index">
@@ -12,7 +12,8 @@
           <div v-if="comment.replies" v-for="(reply, index) in comment.replies" v-bind:key="index">
             <Comment :is-reply="true" :comment="reply" :is-owner="isOwner(reply.userId)" @refresh-comment="fetchComments()" />
           </div>
-          <ReplyComment :entity-id="entityId" :parent-id="comment.id" @refresh-comment="fetchComments()" />
+          <ReplyComment :entity-id="entityId" :parent-id="comment.id" @refresh-comment="fetchComments()" v-if="$store.state.user.authenticated"
+          />
         </el-col>
       </el-row>
     </div>
