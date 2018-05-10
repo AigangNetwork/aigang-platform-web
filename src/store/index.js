@@ -25,7 +25,8 @@ const store = new Vuex.Store({
       aixBalance: null,
       error: null
     },
-    currentDataset: null
+    currentDataset: null,
+    currentModel: null
   },
   mutations,
   getters,

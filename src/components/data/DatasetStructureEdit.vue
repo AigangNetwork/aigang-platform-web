@@ -4,36 +4,38 @@
     <transition name="slideDown">
       <div v-if="isStructured && structure.length > 0">
         <h4 class="input-section-title">{{$t('data.upload.titles.structure')}}</h4>
-        <el-row :gutter="20" type="flex" v-for="column in structure" :key="column.name">
-          <el-col :span="24">
+        <el-row :gutter="20" type="flex" v-for="(column, index) in structure" :key="index">
+          <div class="column-name">
             <h5 class="structure-type-title">{{column.name}}</h5>
-          </el-col>
-          <el-col>
+          </div>
+          <div class="column-description">
             <el-form-item size="medium">
-              <el-input :placeholder="$t('data.upload.input.placeholder.column')" v-model="column.description"></el-input>
+              <el-input type="textarea" :placeholder="$t('data.upload.input.placeholder.column')" v-model="column.description"></el-input>
             </el-form-item>
-          </el-col>
-          <el-col :span="24">
-            <el-select size="medium" aria-required="true" v-model="column.dataType" :default-first-option="true" :placeholder="$t('data.upload.input.placeholder.dataType')">
-              <el-option v-for="item in dataTypeOptions" :key="item" :label="item" :value="item">
+          </div>
+          <div class="column-type">
+            <el-select size=" medium " aria-required="true " v-model="column.dataType " :default-first-option="true
+            " :placeholder="$t( 'data.upload.input.placeholder.dataType') ">
+              <el-option v-for="(item, index) in dataTypeOptions " :key="index " :label="item " :value="item ">
               </el-option>
             </el-select>
-          </el-col>
+          </div>
         </el-row>
       </div>
     </transition>
-    <transition name="slideDown">
-      <div v-if="!isStructured || structure.length === 0">
-        <h4 class="input-section-title">{{$t('data.upload.titles.structure')}}</h4>
+    <transition name="slideDown ">
+      <div v-if="!isStructured || structure.length===0 ">
+        <h4 class="input-section-title ">{{$t('data.upload.titles.structure')}}</h4>
         <el-form-item>
-          <el-input :placeholder="$t('data.upload.input.placeholder.structure')" type="textarea" :value="value" @change="value => $emit('input',value)"></el-input>
+          <el-input :placeholder="$t( 'data.upload.input.placeholder.structure') " type="textarea " :value="value
+            " @change="value=> $emit('input',value)"></el-input>
         </el-form-item>
       </div>
     </transition>
 
     <el-row v-if="!isStructureValid">
       <div class="aig-form-error">
-        {{$t('data.dataset.validation.StructureFieldEmpty')}}
+        {{$t('data.dataset.validation.structureFieldEmpty')}}
       </div>
     </el-row>
   </el-row>
@@ -80,10 +82,41 @@ export default {
     font-weight: 600;
   }
 
-  @media screen and (min-width: 100px) and (max-width: 680px) {
-    .el-col.el-col-24 {
-      width: 33%;
+  .column-name,
+  .column-type {
+    width: 15%;
+    padding: 0 10px;
+
+    h5 {
+      word-wrap: break-word;
     }
   }
 
+  .column-description {
+    width: 70%;
+    padding: 0 10px;
+  }
+
+  @media screen and (min-width: 100px) and (max-width: 480px) {
+    .structure-type-title {
+      margin: 10px 0px 0px 0px;
+      color: $purple;
+      font-weight: 600;
+    }
+
+    .column-name {
+      width: 20%;
+      padding: 0 5px;
+    }
+
+    .column-type {
+      width: 40%;
+      padding: 0 5px;
+    }
+
+    .column-description {
+      width: 40%;
+      padding: 0 10px;
+    }
+  }
 </style>

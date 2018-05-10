@@ -1,9 +1,8 @@
 <template>
-  <transition-group v-loading="loading" name="list" tag="div">
+
+  <transition-group class="data-items-container" name="slideUp" v-loading.body="loading">
     <el-col :xs="24" :sm="12" :md="12" :lg="8" v-for="dataItem in dataList" :key="dataItem.id">
-      <div :class="[{'aig-non-approved-data': dataItem.state === 'created'}, {'aig-link-disabled': dataItem.state === 'created'}]">
-        <DataItem :data="dataItem" :key="dataItem.id" />
-      </div>
+      <DataItem :data="dataItem" :key="dataItem.id" />
     </el-col>
     <el-col :key="totalPageCount">
       <Pagination v-if="totalPageCount > 0" :callback="loadPage" :total-page-count="totalPageCount" :current-page="page" />
@@ -19,6 +18,7 @@
       </h2>
     </el-col>
   </transition-group>
+
 </template>
 <script>
 import DataItem from '@/components/DataItem'
@@ -43,9 +43,9 @@ export default {
     loadDataItems () {
       this.loading = true
       this.axios.get(this.requestPath + this.page).then(response => {
+        this.loading = false
         this.dataList = response.data.items
         this.totalPageCount = response.data.totalPages
-        this.loading = false
       }).catch(e => {
         this.loading = false
         this.errorOccured = true
@@ -71,3 +71,12 @@ export default {
 }
 
 </script>
+
+<style lang="scss" scoped>
+  .data-items-container {
+    height: 100%;
+    display: inline-block;
+    width: 100%;
+    min-height: 250px;
+  }
+</style>

@@ -43,6 +43,9 @@
     .information {
       color: $white;
       margin-right: 10px;
+      max-width: calc(100% - 70px);
+      word-wrap: break-word;
+
       .balance {
         flex-basis: 100%;
         margin-top: 2px;
@@ -50,5 +53,4 @@
       }
     }
   }
-
 </style>

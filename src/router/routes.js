@@ -13,6 +13,7 @@ import Profile from '@/views/Profile'
 import UploadDataSet from '@/views/data/UploadDataSet'
 import Dataset from '@/views/data/Dataset'
 import NotFound from '@/views/general/NotFound'
+import AccessDenied from '@/views/general/AccessDenied'
 import DatasetInfo from '@/views/data/DatasetInfo'
 import DatasetModelList from '@/views/data/model/DatasetModelList'
 import DatasetThreads from '@/views/data/DatasetThreads'
@@ -37,6 +38,11 @@ const routes = [
     path: '*',
     name: 'NotFound',
     component: NotFound
+  },
+  {
+    path: '/forbidden',
+    name: 'AccessDenied',
+    component: AccessDenied
   },
   {
     path: '/register',
@@ -130,7 +136,7 @@ const routes = [
         path: '',
         component: DatasetInfo,
         props: route => ({
-          requestPath: `/data/${route.params.id}`
+          isDataset: true
         })
       },
       {
@@ -138,7 +144,7 @@ const routes = [
         path: 'data',
         component: DatasetData,
         props: route => ({
-          requestPath: `/data/${route.params.id}`
+          isDataset: true
         })
       },
       {
@@ -179,16 +185,13 @@ const routes = [
         path: '',
         component: DatasetInfo,
         props: route => ({
-          requestPath: `/data/${route.params.id}/models/${route.params.modelId}`
+          isModel: true
         })
       },
       {
         name: 'modelTables',
         path: 'model',
-        component: DatasetModelTables,
-        props: route => ({
-          requestPath: `/data/${route.params.id}/models/${route.params.modelId}`
-        })
+        component: DatasetModelTables
       },
       {
         name: 'modelThreads',

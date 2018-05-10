@@ -22,6 +22,10 @@ body.aig {
   text-align: left;
   margin: 0 auto;
   overflow-x: hidden;
+
+  &.aig-container {
+    height: calc(100% - 70px);
+  }
 }
 
 .aig-container {
@@ -58,6 +62,7 @@ body.aig {
 .aig-blue-bck-container {
   width: 100%;
   background-image: url('/static/background/blue-background.png');
+  background-size: cover;
   align-items: center;
   display: flex;
   flex-direction: column;
@@ -77,6 +82,7 @@ body.aig {
 
 .aig-items {
   margin-top: 15px;
+
   .el-col {
     padding-top: 10px;
     padding-bottom: 10px;
@@ -111,6 +117,15 @@ body.aig {
   margin-bottom: 10px;
 }
 
+.aig-card {
+  max-width: 932px;
+  width: 100%;
+}
+
+.aig-card.centered {
+  margin: 40px auto;
+}
+
 .aig-data-footer .label {
   font-size: 14px;
 }
@@ -137,6 +152,11 @@ body.aig {
 
 .aig-dataset-header-btn-container {
   display: flex;
+}
+
+.aig-pagination {
+  display: flex;
+  justify-content: center;
 }
 
 .aig-dataset-header-btn {
@@ -179,6 +199,7 @@ body.aig {
       padding-top: 2px;
     }
   }
+
   .flex-container {
     display: flex;
   }
@@ -330,6 +351,7 @@ body.aig {
       border: none;
       margin-bottom: 15px;
     }
+
     .el-upload-list {
       width: 131px;
       margin-left: -21px;
@@ -345,10 +367,6 @@ body.aig {
   }
 }
 
-.aig-non-approved-data {
-  opacity: 0.5;
-}
-
 .info-title {
   color: $light-grey;
   margin-top: 40px;
@@ -358,6 +376,7 @@ body.aig {
 
 .aig-dataset-info-container {
   padding: 0px 53px 5px 53px;
+
   .info-content {
     word-wrap: break-word;
     color: $purple;
@@ -386,4 +405,25 @@ body.aig {
 .stick-to-right {
   flex-grow: 1;
   text-align: right;
+}
+
+.bold {
+  font-weight: 600;
+}
+
+.markup-content {
+  p {
+    word-wrap: break-word;
+  }
+}
+
+.no-wrap {
+  white-space: nowrap;
+  word-wrap: none;
+  display: block;
+}
+
+.text-big-medium {
+  font-size: 20px;
+  width: 100%;
 }

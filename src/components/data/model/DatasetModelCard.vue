@@ -2,9 +2,9 @@
   <div class="model-item-card">
     <div class="card-section">
       <h3>
-        <router-link :to="modelRoute">{{ model.title }}</router-link>
+        <router-link :to="modelRoute">{{ model.title | truncate(50) }}</router-link>
       </h3>
-      <p> {{ model.description }}</p>
+      <p> {{ model.description | truncate(60) }}</p>
       <div class="model-item-card-footer">
         <el-col>{{ $t('data.dataset.model.by') }}
           <span class="author">{{ model.userName }}</span> &#8226; {{ created }}</el-col>
@@ -15,10 +15,8 @@
       <div class="card-section-left"></div>
       <div class="card-section-right">
         <span class="text-small">{{ $t('data.dataset.model.basePremium') }}</span>
-        <span>
-          <span class="text-big">{{ model.premium }}</span>
-          <span class="text-medium">{{ $t('data.dataset.model.eth') }} </span>
-        </span>
+        <span :class="{'text-big': isPremiumBig, 'text-big-medium': !isPremiumBig}">{{ model.premium }}</span>
+        <span class="text-medium">{{ $t('data.dataset.model.eth') }} </span>
       </div>
     </div>
   </div>
@@ -37,6 +35,9 @@ export default {
   computed: {
     createdUtc () {
       return this.model.createdUtc
+    },
+    isPremiumBig () {
+      return !(String(this.model.premium).length > 7)
     }
   },
   methods: {
@@ -75,9 +76,13 @@ export default {
     }
 
     .card-section {
+      max-width: 65%;
       padding: 31px 34px;
-      .text-big {
-        max-width: 50px;
+
+      h3,
+      p {
+        max-width: 100%;
+        word-wrap: break-word;
       }
     }
 
@@ -93,12 +98,17 @@ export default {
         z-index: 2;
         background: $button-purple;
         padding: 0 34px 0 64px;
-        height: 228px;
-        width: 228px;
-        margin-top: -35px;
-        margin-bottom: -35px;
-        margin-right: -35px;
+        height: 258px;
+        width: 258px;
+        margin-top: -30px;
+        margin-bottom: -55px;
+        margin-right: -45px;
         border-radius: 50%;
+
+        span: {
+          max-width: calc(100% - 55px);
+          word-wrap: break-word;
+        }
       }
 
       .text-small {
@@ -109,6 +119,8 @@ export default {
 
     .author {
       color: $button-purple;
+      max-width: 100%;
+      word-wrap: break-word;
     }
   }
 
@@ -116,13 +128,17 @@ export default {
     .model-item-card {
       flex-direction: column;
 
-      .card-section:last-child {
-        .card-section-right {
-          margin: 0 auto -55px auto;
-          padding: 0 30px 0 30px;
+      .card-section {
+        max-width: 100%;
 
-          span {
-            text-align: center;
+        &:last-child {
+          .card-section-right {
+            margin: 0 auto -55px auto;
+            padding: 0 30px 0 30px;
+
+            span {
+              text-align: center;
+            }
           }
         }
       }

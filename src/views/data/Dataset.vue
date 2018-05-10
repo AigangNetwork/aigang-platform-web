@@ -1,59 +1,77 @@
 <template>
   <el-container class="aig-container-dataset" v-loading="loading">
-    <div class="aig-blue-bck-container">
-      <div class="aig-dataset-header">
-        <div class="creator-info">
-          <div class="creator">{{$t('data.dataset.createdBy')}} {{dataset.createdBy}}</div>
-          <div class="uploaded">{{$t('data.dataset.updated')}}: {{ updated }}</div>
+    <template v-if="!datasetNotFound">
+      <div class="aig-blue-bck-container">
+        <div class="aig-dataset-header">
+          <div class="creator-info">
+            <div class="creator">{{$t('data.dataset.createdBy')}} {{dataset.createdBy}}</div>
+            <div class="uploaded">{{$t('data.dataset.updated')}}: {{ updated }}</div>
+          </div>
+          <div class="dataset-title">{{dataset.title}}</div>
+          <div class="aig-dataset-header-btn-container">
+            <button v-if="!dataset.remoteFileAccessPoint" @click="downloadDataset" class="aig-dataset-header-btn">
+              <img class="file-img" src="/static/dataset/documents24px.svg" alt=""> {{$t('data.dataset.downloadDataset')}}
+            </button>
+            <router-link v-if="isUserOwner" class="aig-dataset-header-btn fit edit" :to="editRoute" exact>
+              <img class="file-img" src="/static/dataset/edit21px.png" alt=""> {{$t('data.dataset.editDataset')}}
+            </router-link>
+            <button v-if="isUserOwner" @click="dialogVisible = true" class="aig-dataset-header-btn fit delete">
+              <img class="file-img" src="/static/dataset/trash24px.svg" alt=""> {{$t('data.dataset.deleteDataset')}}
+            </button>
+          </div>
         </div>
-        <div class="dataset-title">{{dataset.title}}</div>
-        <div class="aig-dataset-header-btn-container">
-          <button v-if="!dataset.remoteFileAccessPoint" @click="downloadDataset" class="aig-dataset-header-btn">
-            <img class="file-img" src="/static/dataset/documents24px.svg" alt=""> {{$t('data.dataset.downloadDataset')}}
-          </button>
-          <router-link v-if="isUserOwner" class="aig-dataset-header-btn fit edit" :to="editRoute" exact>
-            <img class="file-img" src="/static/dataset/edit21px.png" alt=""> {{$t('data.dataset.editDataset')}}
-          </router-link>
-          <button v-if="isUserOwner" @click="dialogVisible = true" class="aig-dataset-header-btn fit delete">
-            <img class="file-img" src="/static/dataset/trash24px.svg" alt=""> {{$t('data.dataset.deleteDataset')}}
-          </button>
+        <DataNavigation :show="!uploadingModelActive" :navigationBars="navigationBars">
+
+          <template v-if="showUpload">
+            <li v-if="uploadingModelActive" class="upload-model-button" key="upload-title">
+              <h3>{{ $t('data.dataset.model.submitModel') }}</h3>
+            </li>
+
+            <li class="stick-to-right" key="upload-button">
+              <el-button v-if="!uploadingModelActive" class="upload-model-button" @click="$router.push({name: 'uploadDataModel'})" type="warning">{{ $t('data.dataset.model.uploadModel') }}</el-button>
+              <el-button v-if="uploadingModelActive" class="upload-model-button" @click="$router.push('/data/' + $route.params.id)" type="warning">{{ $t('general.cancel') }}</el-button>
+            </li>
+          </template>
+        </DataNavigation>
+
+      </div>
+      <div class="dataset-content-container">
+        <div class="dataset-content">
+          <transition name="slideUp">
+            <router-view></router-view>
+          </transition>
         </div>
       </div>
-      <DataNavigation :show="!uploadingModelActive" :navigationBars="navigationBars">
-
-        <li v-if="uploadingModelActive" class="upload-model-button" key="upload-title">
-          <h3>{{ $t('data.dataset.model.submitModel') }}</h3>
-        </li>
-
-        <li class="stick-to-right" key="upload-button">
-          <el-button v-if="!uploadingModelActive" class="upload-model-button" @click="$router.push({name: 'uploadDataModel'})" type="warning">{{ $t('data.dataset.model.uploadModel') }}</el-button>
-          <el-button v-if="uploadingModelActive" class="upload-model-button" @click="$router.go(-1)" type="warning">{{ $t('general.cancel') }}</el-button>
-        </li>
-      </DataNavigation>
-
-    </div>
-    <div class="dataset-content-container">
-      <div class="dataset-content">
-        <router-view></router-view>
-      </div>
-    </div>
-    <Dialog :title="$t('profile.warning')" :body="$t('data.dataset.deleteDialogBody')" :on-confirm="deleteDataset" :is-visible="dialogVisible"
-      :on-cancel="cancel" />
+      <Dialog :title="$t('profile.warning')" :body="$t('data.dataset.deleteDialogBody')" :on-confirm="deleteDataset" :is-visible="dialogVisible"
+        :on-cancel="cancel" />
+    </template>
+    <template v-else>
+      <Card class="aig-card centered">
+        <div slot="body" v-loading="loading" :element-loading-text="$t('general.loading')">
+          <h3>{{$t('data.dataset.datasetNotFound')}}</h3>
+        </div>
+      </Card>
+    </template>
   </el-container>
 </template>
 <script>
 import moment from 'moment'
 import DataNavigation from '@/components/navigation/DataNavigation'
 import Dialog from '@/components/common/Dialog'
+import Card from '@/components/Card'
 
 export default {
   components: {
     DataNavigation,
-    Dialog
+    Dialog,
+    Card
   },
-  created () {
+  async mounted () {
     window.scroll(0, 0)
-    this.fetchDataset()
+    await this.fetchDataset()
+    if (this.dataset.state !== 'active') {
+      this.showUpload = false
+    }
   },
   data () {
     return {
@@ -62,6 +80,8 @@ export default {
       loading: false,
       isUserOwner: false,
       editRoute: '/data/edit/' + this.$route.params.id,
+      datasetNotFound: false,
+      showUpload: true,
       navigationBars: [{
         name: this.$t('data.dataset.navigation.info'),
         routeLink: {
@@ -118,33 +138,44 @@ export default {
     }
   },
   methods: {
-    fetchDataset () {
+    async fetchDataset () {
       this.loading = true
-      this.axios.get('/data/' + this.$route.params.id).then(response => {
+
+      try {
+        await this.$store.dispatch('loadCurrentDataset', this.$route.params.id)
+      } catch (error) {
         this.loading = false
-        this.dataset = response.data.data
-        this.$store.dispatch('setCurrentDataset', response)
+        this.dataset = {}
+        this.datasetNotFound = true
+        return
+      }
+
+      if (this.$store.state.currentDataset) {
+        this.dataset = this.$store.state.currentDataset
 
         if (this.$store.state.user.profile.id === this.dataset.userId) {
           this.isUserOwner = true
         }
-
         const modelsBar = this.navigationBars.find(bar => {
           return bar.routeLink.name === 'datasetModels'
         })
         modelsBar.name = this.$t('data.dataset.navigation.models')
-        if (modelsBar && response.data.modelsCount > 0) {
-          modelsBar.name += ` (${response.data.modelsCount})`
+        if (modelsBar && this.dataset.modelsCount > 0) {
+          modelsBar.name += ` (${this.dataset.modelsCount})`
         }
 
         const threadsBar = this.navigationBars.find(bar => {
           return bar.routeLink.name === 'datasetThreads'
         })
         threadsBar.name = this.$t('data.dataset.navigation.threads')
-        if (threadsBar && response.data.commentsCount > 0) {
-          threadsBar.name += ` (${response.data.commentsCount})`
+        if (threadsBar && this.dataset.commentsCount > 0) {
+          threadsBar.name += ` (${this.dataset.commentsCount})`
         }
-      })
+      } else {
+        this.datasetNotFound = true
+      }
+
+      this.loading = false
     },
     downloadDataset () {
       this.loading = true
@@ -195,21 +226,24 @@ export default {
 
   .aig-dataset-header {
     width: 100%;
-    padding-left: 35px;
+    padding: 0 35px;
     max-width: 932px;
-    max-height: 250px;
+    min-height: 250px;
     margin: 150px 5px 50px 5px;
     color: #ffffff;
 
     .dataset-title {
       font-size: 24pt;
       font-weight: 700;
+      max-width: 100%;
+      word-wrap: break-word;
     }
 
     .creator-info {
       display: flex;
       margin-bottom: 25px;
       font-size: 11pt;
+
       .creator {
         margin-right: 15px;
       }
@@ -222,7 +256,8 @@ export default {
       font-size: 14px;
       line-height: 1.71;
       letter-spacing: 0.4px;
-      height: 24px;
+      max-width: 100%;
+      word-wrap: break-word;
     }
   }
 
@@ -262,6 +297,9 @@ export default {
       margin-bottom: 75px;
     }
 
+    .creator-info {
+      flex-direction: column;
+    }
   }
 
   @media screen and (min-width: 280px) and (max-width: 320px) {

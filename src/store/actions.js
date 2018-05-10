@@ -14,9 +14,11 @@ const logIn = ({ commit }, loginResponse) => {
   // })
 
   commit(types.LOGIN, loginResponse.data)
-  getWeb3().then(result => {
-    commit(types.SET_WEB3_INSTANCE, result)
-  }).catch(e => {})
+  getWeb3()
+    .then(result => {
+      commit(types.SET_WEB3_INSTANCE, result)
+    })
+    .catch(e => {})
   router.push('/')
   // get account profile
   // axios.get('/account').then(response => {
@@ -34,11 +36,20 @@ const logOut = ({ commit }) => {
 }
 
 const changeProfileNames = ({ commit }, response) => {
-  commit(types.CHANGE_PROFILE_NAMES)
+  commit(types.CHANGE_PROFILE_NAMES, response)
 }
 
-const setCurrentDataset = ({ commit }, response) => {
-  commit(types.SET_CURRENT_DATASET, response.data)
+const loadCurrentDataset = async ({ commit, state }, id) => {
+  const response = await axios.get('/data/' + id)
+  if (response.data.data) {
+    commit(types.LOAD_CURRENT_DATASET, response.data)
+  } else {
+    commit(types.CLEAR_CURRENT_DATASET)
+  }
+}
+
+const clearCurrentDataset = ({ commit }) => {
+  commit(types.CLEAR_CURRENT_DATASET)
 }
 
 const setRemoteFileAccessPoint = ({ commit }, response) => {
@@ -58,24 +69,33 @@ const setHasFileChanged = ({ commit }, response) => {
 }
 
 const registerWeb3Instance = ({ commit }, response) => {
-  getWeb3().then(result => {
-    commit(types.SET_WEB3_INSTANCE, result)
-  }).catch(e => {})
+  getWeb3()
+    .then(result => {
+      commit(types.SET_WEB3_INSTANCE, result)
+    })
+    .catch(e => {})
 }
 
-const clearWeb3Instance = ({commit}, response) => {
+const clearWeb3Instance = ({ commit }, response) => {
   commit(types.CLEAR_WEB3_INSTANCE, response)
+}
+
+const loadCurrentModel = async ({ commit, state }, payload) => {
+  const response = await axios.get(`/data/${payload.datasetId}/models/${payload.modelId}`)
+  commit(types.LOAD_CURRENT_MODEL, response.data)
 }
 
 export {
   logIn,
   logOut,
   changeProfileNames,
-  setCurrentDataset,
+  loadCurrentDataset,
   setRemoteFileAccessPoint,
   setCurrentDatasetFile,
   setIsFileRemote,
   setHasFileChanged,
   registerWeb3Instance,
-  clearWeb3Instance
+  clearWeb3Instance,
+  loadCurrentModel,
+  clearCurrentDataset
 }

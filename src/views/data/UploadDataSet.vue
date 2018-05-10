@@ -10,7 +10,7 @@
         </div>
         <el-row v-if="!isRemoteFile" type="flex">
           <el-col :span="16">
-            <el-form :model="dataUploadForm" ref="dataUploadForm" :rules="dataUploadFormRules" @keyup.enter.native="submitForm('dataUploadForm')">
+            <el-form :model="dataUploadForm" ref="dataUploadForm" :rules="dataUploadFormRules">
               <el-form-item prop="file" size="small">
                 <el-upload :limit="1" :on-remove="fileRemoved" :on-exceed="fileLimitExeeded" ref="csvFile" drag :action="''" :multiple="false"
                   :auto-upload="false" :on-change="handleFileChange" accept=".csv">
@@ -20,10 +20,13 @@
                   </div>
                 </el-upload>
               </el-form-item>
+              <div v-if="fileAttached">
+                <h5 class="file-header">{{$t('data.dataset.edit.file')}} {{dataUploadForm.file.name}} {{$t('data.dataset.edit.fileAttached')}}</h5>
+              </div>
               <div v-if="isErrorOnFirstStep && invalidFile" class="aig-form-error">
                 {{errorMessage}}
               </div>
-              <el-button @click="loadFile('file')" class="aig-load-button" v-if="buttonActive" type="primary">{{$t('data.upload.titles.load')}}</el-button>
+              <el-button @click="loadFile('file')" class="aig-load-button" :disabled="!fileAttached" v-if="buttonActive" type="primary">{{$t('data.upload.titles.load')}}</el-button>
             </el-form>
           </el-col>
           <el-col :span="10">
@@ -69,6 +72,7 @@
         </el-row>
       </div>
     </Card>
+    <div v-if="secondStepActive"></div>
   </el-container>
 </template>
 <script>
@@ -94,6 +98,7 @@ export default {
       buttonActive: true,
       isRemoteFile: false,
       invalidFile: false,
+      fileAttached: false,
       firstStepActive: true,
       secondStepActive: false,
       isValidForm: true,
@@ -111,23 +116,28 @@ export default {
       dataUploadFormRules: {
         title: [{
           required: true,
-          message: this.$t('data.dataset.validation.TitleEmpty'),
+          message: this.$t('data.dataset.validation.titleEmpty'),
           trigger: 'blur'
         },
         {
           min: 6,
-          message: this.$t('data.dataset.validation.TitleTooShort'),
+          message: this.$t('data.dataset.validation.titleTooShort'),
+          trigger: 'blur'
+        },
+        {
+          max: 64,
+          message: this.$t('data.dataset.validation.titleTooLong'),
           trigger: 'blur'
         }
         ],
         description: [{
           required: true,
-          message: this.$t('data.dataset.validation.DescriptionEmpty'),
+          message: this.$t('data.dataset.validation.descriptionEmpty'),
           trigger: 'blur'
         },
         {
           min: 6,
-          message: this.$t('data.dataset.validation.DescriptionTooShort'),
+          message: this.$t('data.dataset.validation.descriptionTooShort'),
           trigger: 'blur'
         }
         ]
@@ -149,6 +159,7 @@ export default {
       const fileSize = file.raw.size / 1024 / 1024 // filesize in mb
       if (fileSize <= 10) { // if less than 10MB
         this.dataUploadForm.file = file.raw
+        this.fileAttached = true
         this.invalidFile = false
         this.buttonActive = true
         this.parseFileStructure()
@@ -271,6 +282,11 @@ export default {
     switchChanged () {
       this.isErrorOnFirstStep = false
       this.errorMessage = ''
+      if (this.isRemoteFile) {
+        this.dynamicFileStructure = []
+        this.uploadDataset.file = []
+        this.fileAttached = false
+      }
     }
   }
 }
@@ -282,15 +298,20 @@ export default {
     max-width: 1200px;
     position: relative;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     height: 100%;
-    align-items: baseline;
+    align-items: flex-start;
+
     .aig-upload-card {
-      margin-top: 100px;
+      margin: 100px auto 0 auto;
       width: 100%;
       max-width: 665px;
       height: 100%;
       max-height: 365px;
+      .file-header {
+        margin-left: 5px;
+        word-wrap: break-word;
+      }
       .step1-header {
         display: flex;
         justify-content: space-between;
@@ -312,19 +333,46 @@ export default {
       }
     }
     .aig-upload-card-step-2 {
-      margin-top: 50px;
+      margin-top: 40px;
       width: 100%;
       max-width: 665px;
+
       .aig-upload-button {
         width: 100%;
       }
     }
     .aig-back-btn {
-      position: absolute;
-      left: 25px;
-      top: 15px;
+      margin-top: 40px;
     }
 
   }
 
+  @media screen and (min-width: 680px) and (max-width: 1024px) {
+    .aig-container {
+      display: block;
+
+      .aig-back-btn {
+        margin: 20px;
+      }
+    }
+
+    .dataset-edit {
+      margin-top: 0px;
+    }
+  }
+
+  @media screen and (min-width: 100px) and (max-width: 680px) {
+    .aig-container {
+      display: block;
+
+      .aig-back-btn {
+        margin: 20px 0 0 20px;
+      }
+
+      .dataset-edit {
+        margin-top: 0px;
+        padding: 20px
+      }
+    }
+  }
 </style>

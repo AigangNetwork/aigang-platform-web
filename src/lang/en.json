@@ -75,6 +75,7 @@
       "successDelete": "Dataset was successfully deleted",
       "deleteDialogBody": "Are you sure you want to delete this dataset?",
       "invalidPreview": "This dataset does not contain visual preview. Download file to check it out",
+      "datasetNotFound": "Dataset not found",
       "navigation": {
         "info": "Info",
         "data": "Data",
@@ -97,24 +98,27 @@
         "file": "File",
         "remoteAccessPoint": "Remote access point",
         "describeRemoteAccessPoint": "Describe remote access point",
-        "edit_success": "Changes were successfully updated"
+        "edit_success": "Changes were successfully updated",
+        "fileAttached": "was attached."
       },
       "validation": {
-        "TitleEmpty": "Title is required",
-        "TitleTooShort": "Title must be at least 6 characters long",
-        "DescriptionEmpty": "Description is required",
-        "DescriptionTooShort": "Description must be at least 6 characters long",
-        "StructureFieldEmpty": "Make sure you have filled all structure fields",
-        "RemoteFileAccessPointEmpty": "Remote access point is required",
-        "RemoteFileAccessPointTooShort": "Remote access must be at least 6 characters long",
-        "FileEmpty": "File is required",
-        "FileTooBig": "File is too large",
-        "PremiumEmpty": "Premium is required",
-        "PremiumInvalid": "Invalid premium",
-        "OnlyIntegersAllowed": "Only integers allowed",
-        "TableTooBig": "Maximum size of the table is 10x50",
-        "EmptyModel": "Model table is required",
-        "EmptyModelInput": "Make sure you have filled all table fields"
+        "titleEmpty": "Title is required",
+        "titleTooShort": "Title must be at least 6 characters long",
+        "descriptionEmpty": "Description is required",
+        "descriptionTooShort": "Description must be at least 6 characters long",
+        "structureFieldEmpty": "Make sure you have filled all structure fields",
+        "remoteFileAccessPointEmpty": "Remote access point is required",
+        "remoteFileAccessPointTooShort": "Remote access must be at least 6 characters long",
+        "fileEmpty": "File is required",
+        "fileTooBig": "File is too large",
+        "premiumEmpty": "Premium is required",
+        "premiumInvalid": "Invalid premium. Value e.g. 000000.000000",
+        "onlyIntegersAllowed": "Only integers allowed",
+        "tableTooBig": "Maximum size of the table is 10x50",
+        "tableTooSmall": "Minimum size of the table is 1x1",
+        "emptyModel": "Model table is required",
+        "emptyModelInput": "Make sure you have filled all table fields",
+        "titleTooLong": "Maximum 64 characters"
       },
       "model": {
         "models": "Models",
@@ -132,7 +136,8 @@
         "successDelete": "Model was successfully deleted",
         "editModel": "Edit model",
         "deleteModel": "Delete model",
-        "noModelsExist": "This dataset does not contain any models yet",
+        "modelNotFound": "Model not found",
+        "modelsNotFound": "This dataset does not contain any models yet",
         "deleteDialogBody": "Are you sure you want to delete this model?",
         "placeholder": {
           "title": "Title",
@@ -260,10 +265,14 @@
     "passwordTooShort": "Password must be at least 6 characters long",
     "firstNameEmpty": "First name is required",
     "firstNameTooShort": "First name must be at least 2 characters long",
+    "firstNameInvalid": "First name contains invalid characters. Only A-z characters are allowed",
     "lastNameEmpty": "Last name is required",
     "lastNameTooShort": "Last name must be at least 2 characters long",
+    "nameTooLong": "Maximum 50 characters",
+    "lastNameInvalid": "Last name contains invalid characters. Only A-z characters are allowed",
     "userNameEmpty": "Nickname is required",
-    "userNameTooShort": "Nickname must be at least 6 characters long"
+    "userNameTooShort": "Nickname must be at least 6 characters long",
+    "userNameInvalid": "Nickname contains invalid characters. Only A-z characters are allowed"
   },
   "general": {
     "uploading": "Uploading ...",
@@ -305,14 +314,22 @@
       "EmptyRequest": "You sent an empty request. Please make sure all required values are set",
       "FileTooLargeError": "Provided file is too large",
       "BadFileContentType": "Bad file content type",
+      "BadRequest": "Bad Request was sent to back-end. Try again later.",
       "GatewayTimeout": "Gateway time out",
-      "AccountIsLocked": "Your account is disabled"
+      "AccountIsLocked": "Your account is disabled",
+      "NameTooLong": "First name, last name or the username can not be longer than 200 characters.",
+      "NameInvalid": "First name, last name or the username contains invalid characters.",
+      "TitleTooLong": "Title can not be longer than 200 characters.",
+      "TitleOrDescriptionTooShort": "Title or description can not be shorter than 6 characters.",
+      "Forbidden": "Access denied"
     },
     "pagePathNotFound": "The page you are trying to access is not available",
     "validationError": "You have entered an invalid data",
     "serverNotFound": "Server error",
     "contactIfError": "If you see this error please contact us via email info@aigang.network",
-    "metamaskDetected": "We have detected that you are using metamask extension. In order to see your account AIX balance please switch your network to ",
-    "useMetamask": "To use all of our Platform features please Log in to Metamask Extension"
+    "metamaskDetected":
+      "We have detected that you are using metamask extension. In order to see your account AIX balance please switch your network to ",
+    "useMetamask": "To use all of our Platform features please Log in to Metamask Extension",
+    "accessDenied": "Access denied"
   }
 }

@@ -1,9 +1,9 @@
 <template>
   <el-container class="aig-container-dataset" v-loading="loading">
-    <el-button @click="$router.go(-1)" class="back-button">{{ $t('general.back') }}</el-button>
+    <el-button @click="$router.push(dataRoute)" class="back-button">{{ $t('general.back') }}</el-button>
     <div class="dataset-edit-container">
       <div class="dataset-body-container">
-        <el-form @keyup.enter.native="submitForm('datasetForm')" :model="datasetForm" :rules="datasetFormRules" ref="datasetForm">
+        <el-form :model="datasetForm" :rules="datasetFormRules" ref="datasetForm">
 
           <DatasetFileCard v-model="datasetForm.isPublic" :showUploadOption="true" :onFileChange="parseFileStructure" ref="fileCardComponent"
           />
@@ -54,6 +54,7 @@ export default {
       datasetRemoteStructure: '',
       isStructured: false,
       structureValid: true,
+      dataRoute: `/data/${this.$route.params.id}`,
       datasetForm: {
         id: '',
         title: '',
@@ -69,34 +70,39 @@ export default {
       datasetFormRules: {
         title: [{
           required: true,
-          message: this.$t('data.dataset.validation.TitleEmpty'),
+          message: this.$t('data.dataset.validation.titleEmpty'),
           trigger: 'blur'
         },
         {
           min: 6,
-          message: this.$t('data.dataset.validation.TitleTooShort'),
+          message: this.$t('data.dataset.validation.titleTooShort'),
+          trigger: 'blur'
+        },
+        {
+          max: 64,
+          message: this.$t('data.dataset.validation.titleTooLong'),
           trigger: 'blur'
         }
         ],
         description: [{
           required: true,
-          message: this.$t('data.dataset.validation.DescriptionEmpty'),
+          message: this.$t('data.dataset.validation.descriptionEmpty'),
           trigger: 'blur'
         },
         {
           min: 6,
-          message: this.$t('data.dataset.validation.DescriptionTooShort'),
+          message: this.$t('data.dataset.validation.descriptionTooShort'),
           trigger: 'blur'
         }
         ],
         remoteFileAccessPoint: [{
           required: true,
-          message: this.$t('data.dataset.validation.DescriptionEmpty'),
+          message: this.$t('data.dataset.validation.remoteFileAccessPointEmpty'),
           trigger: 'blur'
         },
         {
           min: 6,
-          message: this.$t('data.dataset.validation.DescriptionTooShort'),
+          message: this.$t('data.dataset.validation.remoteFileAccessPointTooShort'),
           trigger: 'blur'
         }
         ]
@@ -149,6 +155,9 @@ export default {
       }
 
       this.axios.post('/data/update', form).then(response => {
+        this.$store.dispatch('clearCurrentDataset')
+        this.$store.dispatch('loadCurrentDataset', this.$route.params.id)
+
         this.loading = false
         this.$notify({
           title: this.$t('data.upload.notifications.titles.success'),
@@ -197,7 +206,7 @@ export default {
               dynamicFileFields.push({
                 name: col,
                 description: '',
-                dataType: ''
+                dataType: 'String'
               })
             })
           } else {
@@ -209,26 +218,47 @@ export default {
       }
       fileReader.readAsText(this.$store.state.currentDataset.file.raw)
       this.datasetStructure = dynamicFileFields
+    },
+    async onMounted (id) {
+      this.loading = true
+
+      try {
+        await this.$store.dispatch('loadCurrentDataset', this.$route.params.id)
+      } catch (e) {
+        this.loading = false
+      }
+      if (!this.$store.state.currentDataset) {
+        this.$router.push('/data/' + id)
+        return
+      }
+
+      this.initializeDatasetForm(this.$store.getters.dataset)
+
+      if (this.$store.state.currentDataset.remoteFileAccessPoint) {
+        this.$store.dispatch('setIsFileRemote', { isFileRemote: true })
+      } else {
+        this.$store.dispatch('setIsFileRemote', { isFileRemote: false })
+      }
+
+      this.isStructured = !this.$store.state.currentDataset.isFileRemote
+
+      this.$root.$on('isFileRemote', (value) => {
+        this.isStructured = !value
+      })
+
+      this.$root.$on('remoteFileAccessPoint', (value) => {
+        this.datasetForm.remoteFileAccessPoint = value
+      })
+
+      this.loading = false
     }
   },
-  created () {
-    this.initializeDatasetForm(this.$store.getters.dataset)
+  async mounted () {
+    await this.onMounted(this.$route.params.id)
 
-    if (this.$store.state.currentDataset.remoteFileAccessPoint) {
-      this.$store.dispatch('setIsFileRemote', { isFileRemote: true })
-    } else {
-      this.$store.dispatch('setIsFileRemote', { isFileRemote: false })
+    if (this.$store.state.currentDataset.userId !== this.$store.state.user.profile.id) {
+      this.$router.push({ name: 'AccessDenied' })
     }
-
-    this.isStructured = !this.$store.state.currentDataset.isFileRemote
-
-    this.$root.$on('isFileRemote', (value) => {
-      this.isStructured = !value
-    })
-
-    this.$root.$on('remoteFileAccessPoint', (value) => {
-      this.datasetForm.remoteFileAccessPoint = value
-    })
   }
 }
 
@@ -236,6 +266,7 @@ export default {
 <style lang="scss" scoped>
   .aig-container-dataset {
     background: white;
+    max-width: 1200px;
   }
 
   .dataset-edit-container {
@@ -252,6 +283,7 @@ export default {
       font-size: 14px;
       width: 100%;
       display: flex;
+
       .markdown-label {
         font-family: Roboto;
         flex-grow: 1;
@@ -282,15 +314,21 @@ export default {
   @media screen and (min-width: 680px) and (max-width: 1024px) {
     .aig-container-dataset {
       display: block;
+
       .back-button {
         margin: 20px;
       }
+    }
+
+    .dataset-edit-container {
+      margin-top: 0px;
     }
   }
 
   @media screen and (min-width: 100px) and (max-width: 680px) {
     .aig-container-dataset {
       display: block;
+
       .back-button {
         margin: 20px 0 0 20px;
       }

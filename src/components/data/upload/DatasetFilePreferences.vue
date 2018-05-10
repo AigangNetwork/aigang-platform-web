@@ -19,6 +19,17 @@
     </div>
   </div>
 </template>
+<script>
+export default {
+  methods: {
+    handleCsvInformaton (event) {
+      event.preventDefault()
+      window.open('https://tools.ietf.org/html/rfc4180', '_blank')
+    }
+  }
+}
+
+</script>
 <style lang="scss" scoped>
   @import '~helpers/variables';
   .aig-upload-info {

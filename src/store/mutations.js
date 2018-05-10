@@ -10,12 +10,14 @@ const mutations = {
     state.user.profile = ''
   },
   CHANGE_PROFILE_NAMES (state, payload) {
-    state.user.profile.firstName = payload.profile.firstName
-    state.user.profile.firstName = payload.profile.lastName
-    state.user.profile.firstName = payload.profile.userName
+    state.user.profile.firstName = payload.data.profile.firstName
+    state.user.profile.lastName = payload.data.profile.lastName
+    state.user.profile.userName = payload.data.profile.userName
   },
-  SET_CURRENT_DATASET (state, payload) {
+  LOAD_CURRENT_DATASET (state, payload) {
     state.currentDataset = payload.data
+    state.currentDataset.commentsCount = payload.commentsCount
+    state.currentDataset.modelsCount = payload.modelsCount
     if (state.currentDataset.remoteFileAccessPoint) {
       state.currentDataset.isFileRemote = true
     } else {
@@ -57,6 +59,14 @@ const mutations = {
       aixBalance: null,
       error: null
     }
+  },
+  LOAD_CURRENT_MODEL (state, payload) {
+    state.currentModel = payload.data
+    state.currentModel.userName = payload.userName
+    state.currentModel.commentsCount = payload.commentsCount
+  },
+  CLEAR_CURRENT_DATASET (state, payload) {
+    state.currentDataset = null
   }
 }
 

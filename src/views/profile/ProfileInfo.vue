@@ -5,61 +5,59 @@
         {{ $store.state.user.profile.firstName.charAt(0) }}
       </div>
     </el-col>
-    <div v-loading="loading" :element-loading-text="$t('general.loading')">
-      <el-col class="name-container form-container">
+    <el-col v-loading="loading" :element-loading-text="$t('general.loading')" class="name-container form-container">
 
-        <transition name="slideUp" mode="out-in">
+      <transition name="slideUp" mode="out-in">
 
-          <el-row class="no-margin" v-if="!isProfileChangeOn">
-            <h2>{{ profileForm.firstName }} {{ profileForm.lastName }}</h2>
-            <div class="no-margin">
-              <strong>{{ $t('profile.userName')}}: </strong>{{ profileForm.userName }}</div>
-            <div class="no-margin">
-              <strong>{{ $t('profile.email')}}: </strong>{{ $store.state.user.profile.email }}</div>
-            <el-button @click="isProfileChangeOn = !isProfileChangeOn" class="profile-button change-button">{{ $t('general.change') }}</el-button>
-          </el-row>
+        <el-row class="no-margin" v-if="!isProfileChangeOn">
+          <h2 class="name-field">{{ profileForm.firstName }} {{ profileForm.lastName }}</h2>
+          <div class="no-margin name-field">
+            <strong>{{ $t('profile.userName')}}: </strong>{{ profileForm.userName }}</div>
+          <div class="no-margin name-field">
+            <strong>{{ $t('profile.email')}}: </strong>{{ $store.state.user.profile.email }}</div>
+          <el-button @click="isProfileChangeOn = !isProfileChangeOn" class="profile-button change-button">{{ $t('general.change') }}</el-button>
+        </el-row>
 
-          <el-form v-if="isProfileChangeOn" @keyup.enter.native="submitForm('profileForm', saveInfo)" :model="profileForm" :rules="profileFormRules"
-            ref="profileForm">
-            <el-row class="info-change">
-              <el-row>
+        <el-form v-if="isProfileChangeOn" @keyup.enter.native="submitForm('profileForm', saveInfo)" :model="profileForm" :rules="profileFormRules"
+          ref="profileForm">
+          <el-row class="info-change">
+            <el-row>
 
-                <div class="col-3">
-                  <el-form-item prop="firstName">
-                    <el-input class="profile-info-input" type="text" v-model="profileForm.firstName" :placeholder="$t('profile.firstName' )"></el-input>
-                  </el-form-item>
-                </div>
-
-                <div class="col-3">
-                  <el-form-item prop="lastName">
-                    <el-input class="profile-info-input" type="text" v-model="profileForm.lastName" :placeholder="$t('profile.lastName' )"></el-input>
-                  </el-form-item>
-                </div>
-
-              </el-row>
-              <el-row class="nickname-container">
-
-                <el-form-item prop="userName">
-                  <el-input class="profile-info-input" type="text" v-model="profileForm.userName" :placeholder="$t('profile.userName' )"></el-input>
+              <div class="col-3">
+                <el-form-item prop="firstName">
+                  <el-input class="profile-info-input" type="text" v-model="profileForm.firstName" :placeholder="$t('profile.firstName' )"></el-input>
                 </el-form-item>
+              </div>
 
-              </el-row>
-
-              <el-row>
-                <div>
-                  <strong>{{ $t('profile.email')}}: </strong>{{ $store.state.user.profile.email }}</div>
-              </el-row>
-              <el-row>
-                <el-button @click="submitForm('profileForm', saveInfo)" type="submit" v-show="isProfileChangeOn" class="profile-button no-margin">{{ $t('general.save') }}</el-button>
-              </el-row>
+              <div class="col-3">
+                <el-form-item prop="lastName">
+                  <el-input class="profile-info-input" type="text" v-model="profileForm.lastName" :placeholder="$t('profile.lastName' )"></el-input>
+                </el-form-item>
+              </div>
 
             </el-row>
-          </el-form>
+            <el-row class="nickname-container">
 
-        </transition>
+              <el-form-item prop="userName">
+                <el-input class="profile-info-input" type="text" v-model="profileForm.userName" :placeholder="$t('profile.userName' )"></el-input>
+              </el-form-item>
 
-      </el-col>
-    </div>
+            </el-row>
+
+            <el-row>
+              <div>
+                <strong>{{ $t('profile.email')}}: </strong>{{ $store.state.user.profile.email }}</div>
+            </el-row>
+            <el-row>
+              <el-button @click="submitForm('profileForm', saveInfo)" type="submit" v-show="isProfileChangeOn" class="profile-button no-margin">{{ $t('general.save') }}</el-button>
+            </el-row>
+
+          </el-row>
+        </el-form>
+
+      </transition>
+
+    </el-col>
   </el-row>
 </template>
 
@@ -92,6 +90,16 @@ export default {
           min: 2,
           message: this.$t('validation.firstNameTooShort'),
           trigger: 'blur'
+        },
+        {
+          max: 50,
+          message: this.$t('validation.nameTooLong'),
+          trigger: 'blur'
+        },
+        {
+          pattern: /^[A-z]+$/,
+          message: this.$t('validation.firstNameInvalid'),
+          trigger: 'blur'
         }
         ],
         lastName: [{
@@ -102,6 +110,16 @@ export default {
         {
           min: 2,
           message: this.$t('validation.lastNameTooShort'),
+          trigger: 'blur'
+        },
+        {
+          max: 50,
+          message: this.$t('validation.nameTooLong'),
+          trigger: 'blur'
+        },
+        {
+          pattern: /^[A-z]+$/,
+          message: this.$t('validation.lastNameInvalid'),
           trigger: 'blur'
         }
         ],
@@ -114,6 +132,16 @@ export default {
           min: 6,
           message: this.$t('validation.userNameTooShort'),
           trigger: 'blur'
+        },
+        {
+          max: 50,
+          message: this.$t('validation.nameTooLong'),
+          trigger: 'blur'
+        },
+        {
+          pattern: /^[A-z]+$/,
+          message: this.$t('validation.userNameInvalid'),
+          trigger: 'blur'
         }
         ]
       }
@@ -121,6 +149,7 @@ export default {
   },
   methods: {
     saveInfo () {
+      this.loading = true
       this.axios.put('/account/edit', this.profileForm)
         .then(response => {
           this.loading = false
@@ -152,7 +181,7 @@ export default {
       }
     }
   },
-  created () {
+  mounted () {
     this.updateInfo()
   }
 }
@@ -185,6 +214,7 @@ export default {
     display: flex;
     max-width: 650px;
     min-height: 220px;
+    width: calc(100% - 100px);
 
     .form-container {
       max-width: 550px;
@@ -194,11 +224,22 @@ export default {
       transition: all 200ms;
     }
 
+    .col-3 {
+      width: 37%;
+    }
+
     .name-container {
       margin-left: 48px;
+      margin-bottom: 20px;
+      width: calc(100% - 96px);
 
       h2 {
         margin: 8px 0px 14px 0px;
+      }
+
+      .name-field {
+        max-width: 70%;
+        word-wrap: break-word;
       }
 
       div {
@@ -239,12 +280,37 @@ export default {
       flex-direction: column;
       transition: all 200ms;
       align-items: center;
+      width: 100%;
+
       form {
         height: 200px
       }
       .name-container {
         margin-left: 0;
         text-align: center;
+        width: 100%;
+        height: 200px;
+
+        .col-3 {
+          width: 100%;
+        }
+
+        div {
+          margin-bottom: 0;
+        }
+
+        .name-field {
+          max-width: 100%;
+        }
+      }
+
+      .info-change .el-row.nickname-container {
+        padding-top: 0;
+        margin-bottom: 10px;
+      }
+
+      .no-margin {
+        margin: 8px !important;
       }
     }
 

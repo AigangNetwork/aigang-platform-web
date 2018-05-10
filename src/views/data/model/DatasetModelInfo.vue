@@ -2,15 +2,23 @@
   <div class="aig-container aig-view model-container">
     <Card class="model-card">
       <div slot="body" v-loading="loading" :element-loading-text="$t('general.loading')">
-        <DatasetModelHeader :model="model" />
-        <DataNavigation :show="true" :navigationBars="navigationBars">
-          <li class="stick-to-right" key="model-space-ship"></li>
-        </DataNavigation>
-        <div class="dataset-content-container">
-          <div class="dataset-content">
-            <router-view></router-view>
+        <template v-if="!modelNotFound">
+          <DatasetModelHeader :model="model" />
+          <DataNavigation :show="true" :navigationBars="navigationBars">
+            <li class="stick-to-right" key="space">
+            </li>
+          </DataNavigation>
+          <div class="dataset-content-container">
+            <div class="dataset-content">
+              <transition name="slideUp">
+                <router-view></router-view>
+              </transition>
+            </div>
           </div>
-        </div>
+        </template>
+        <template v-else>
+          <h3 class="not-found-message">{{$t('data.dataset.model.modelNotFound')}}</h3>
+        </template>
       </div>
     </Card>
   </div>
@@ -30,6 +38,7 @@ export default {
     return {
       loading: false,
       model: {},
+      modelNotFound: false,
       navigationBars: [{
         name: this.$t('data.dataset.navigation.info'),
         routeLink: {
@@ -70,25 +79,31 @@ export default {
     }
   },
   methods: {
-    fetchModel (id, modelId) {
+    async fetchModel (id, modelId) {
       this.loading = true
 
-      this.axios.get(`data/${id}/models/${modelId}`)
-        .then(response => {
-          this.loading = false
-          this.model = response.data.data
-          this.model.userName = response.data.userName
-
-          const threadsBar = this.navigationBars.find(bar => {
-            return bar.routeLink.name === 'modelThreads'
-          })
-          threadsBar.name = this.$t('data.dataset.navigation.threads')
-          if (threadsBar && response.data.commentsCount > 0) {
-            threadsBar.name += ` (${response.data.commentsCount})`
-          }
-        }).catch(e => {
-          this.loading = false
+      try {
+        await this.$store.dispatch('loadCurrentModel', {
+          id,
+          modelId
         })
+        this.model = this.$store.state.currentModel
+        if (!this.model) {
+          this.modelNotFound = true
+        }
+
+        const threadsBar = this.navigationBars.find(bar => {
+          return bar.routeLink.name === 'modelThreads'
+        })
+        threadsBar.name = this.$t('data.dataset.navigation.threads')
+        if (threadsBar && this.model.commentsCount > 0) {
+          threadsBar.name += ` (${this.model.commentsCount})`
+        }
+        this.loading = false
+      } catch (error) {
+        this.modelNotFound = true
+        this.loading = false
+      }
     }
   },
   created () {
@@ -109,14 +124,15 @@ export default {
   }
 
   .model-card.aig-card {
-    max-width: 932px;
-    width: 100%;
     margin-top: 44px;
 
     .aig-card-body {
       padding: 0 !important;
-
     }
+  }
+
+  .not-found-message {
+    padding: 40px;
   }
 
 </style>

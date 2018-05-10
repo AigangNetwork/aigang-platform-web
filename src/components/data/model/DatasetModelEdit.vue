@@ -11,14 +11,14 @@
               <thead class="table-header">
                 <tr>
                   <th v-for="(key, index) in model[0]" :key="index">
-                    <input v-model="model[0][index]" />
+                    <input v-model="model[0][index]" maxlength="100" />
                   </th>
                 </tr>
               </thead>
               <tbody>
                 <tr v-for="(row, index) in model" v-if="index !== 0" :key="index">
                   <td v-for="(colData, i) in row" :key="i">
-                    <input v-model="row[i]" />
+                    <input v-model="row[i]" maxlength="150" />
                   </td>
                 </tr>
               </tbody>
@@ -44,8 +44,9 @@
         <p>{{$t('data.dataset.model.on')}}</p>
         <input v-model="rowsLength" @input="event => validateInput(event)" />
       </div>
-      <span class="aig-error" v-if="lengthError">{{$t('data.dataset.validation.OnlyIntegersAllowed')}}</span>
-      <span class="aig-error" v-if="sizeError">{{$t('data.dataset.validation.TableTooBig')}}</span>
+      <span class="aig-error" v-if="lengthError">{{$t('data.dataset.validation.onlyIntegersAllowed')}}</span>
+      <span class="aig-error" v-if="sizeTooBigError">{{$t('data.dataset.validation.tableTooBig')}}</span>
+      <span class="aig-error" v-if="sizeTooSmallError">{{$t('data.dataset.validation.tableTooSmall')}}</span>
       <div class="create-button-container">
         <el-button @click="createTable" class="profile-button">{{ $t('data.dataset.model.create') }}</el-button>
       </div>
@@ -59,7 +60,8 @@ export default {
   data () {
     return {
       lengthError: false,
-      sizeError: false,
+      sizeTooBigError: false,
+      sizeTooSmallError: false,
       colsLength: '',
       rowsLength: '',
       colsArray: [],
@@ -83,10 +85,14 @@ export default {
       const rows = parseInt(this.rowsLength)
 
       if (cols > 10 || rows > 50) {
-        this.sizeError = true
+        this.sizeTooBigError = true
+        return
+      } else if (cols < 1 || rows < 1) {
+        this.sizeTooSmallError = true
         return
       } else {
-        this.sizeError = false
+        this.sizeTooBigError = false
+        this.sizeTooSmallError = false
       }
 
       let model = []
@@ -270,6 +276,7 @@ export default {
 
   .table-wrapper {
     text-align: center;
+    max-width: 100%;
 
     .table-action-button {
       margin-top: -10px;
@@ -312,7 +319,7 @@ export default {
     .table-container {
 
       .table-wrapper {
-        max-width: 100%;
+        max-width: calc(100% - 14px);
       }
 
       input {

@@ -17,11 +17,11 @@
 
 .el-dialog {
   text-align: left;
-  box-shadow: 0 0px 41px rgba(0, 0, 0, 0.07);
 }
 
 .el-dialog--center {
-  width: 30%;
+  width: 100%;
+  max-width: 420px;
 }
 
 .el-dialog-header {
@@ -48,11 +48,7 @@
   border: 0;
   line-height: 28px;
   background: #9549c8;
-  background: linear-gradient(
-    45deg,
-    rgba(88, 51, 183, 1) 0%,
-    rgba(149, 73, 200, 1) 100%
-  );
+  background: linear-gradient(45deg, rgba(88, 51, 183, 1) 0%, rgba(149, 73, 200, 1) 100%);
 }
 
 .el-pager li {
@@ -77,22 +73,14 @@
   }
   &.el-message--success {
     background: $green;
-    background: linear-gradient(
-      to bottom right,
-      rgba(lighten($green, 10), 0.95) 0%,
-      rgba($green, 0.9) 100%
-    );
+    background: linear-gradient(to bottom right, rgba(lighten($green, 10), 0.95) 0%, rgba($green, 0.9) 100%);
     .el-message-content {
       color: white;
     }
   }
   &.el-message--error {
     background: $red;
-    background: linear-gradient(
-      to bottom right,
-      rgba(lighten($red, 10), 0.95) 0%,
-      rgba($red, 0.9) 100%
-    );
+    background: linear-gradient(to bottom right, rgba(lighten($red, 10), 0.95) 0%, rgba($red, 0.9) 100%);
     .el-message-content {
       color: white;
     }
@@ -150,4 +138,12 @@
   .el-loading-spinner {
     margin-top: 60px;
   }
+}
+
+.el-loading-mask {
+  z-index: 1000;
+}
+
+.el-notification {
+  max-width: 80%;
 }
