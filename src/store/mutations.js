@@ -61,12 +61,17 @@ const mutations = {
     }
   },
   LOAD_CURRENT_MODEL (state, payload) {
-    state.currentModel = payload.data
-    state.currentModel.userName = payload.userName
-    state.currentModel.commentsCount = payload.commentsCount
+    if (payload.data) {
+      state.currentModel = payload.data
+      state.currentModel.userName = payload.userName
+      state.currentModel.commentsCount = payload.commentsCount
+    }
   },
   CLEAR_CURRENT_DATASET (state, payload) {
     state.currentDataset = null
+  },
+  CLEAR_CURRENT_MODEL (state, payload) {
+    state.currentModel = {}
   }
 }
 

@@ -164,6 +164,8 @@ export default {
           type: 'success',
           message: this.$t('data.dataset.edit.edit_success')
         })
+
+        this.$router.push('/data/' + this.$route.params.id)
       }, e => {
         this.loading = false
       })
@@ -183,6 +185,9 @@ export default {
       } catch (e) {
         this.datasetRemoteStructure = dataset.structure
       }
+    },
+    onFileChange () {
+      this.parseFileStructure()
     },
     parseFileStructure () {
       if (!this.$store.state.currentDataset.file) {
@@ -216,6 +221,7 @@ export default {
       } catch (error) {
         this.structureValid = false
       }
+
       fileReader.readAsText(this.$store.state.currentDataset.file.raw)
       this.datasetStructure = dynamicFileFields
     },
@@ -224,9 +230,14 @@ export default {
 
       try {
         await this.$store.dispatch('loadCurrentDataset', this.$route.params.id)
+        if (this.$store.state.currentDataset.userId !== this.$store.state.user.profile.id) {
+          this.$router.push({ name: 'AccessDenied' })
+          return
+        }
       } catch (e) {
         this.loading = false
       }
+
       if (!this.$store.state.currentDataset) {
         this.$router.push('/data/' + id)
         return
@@ -255,10 +266,6 @@ export default {
   },
   async mounted () {
     await this.onMounted(this.$route.params.id)
-
-    if (this.$store.state.currentDataset.userId !== this.$store.state.user.profile.id) {
-      this.$router.push({ name: 'AccessDenied' })
-    }
   }
 }
 

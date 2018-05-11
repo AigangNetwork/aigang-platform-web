@@ -27,6 +27,7 @@
 import Card from '@/components/Card'
 import DatasetModelHeader from '@/components/data/model/DatasetModelHeader'
 import DataNavigation from '@/components/navigation/DataNavigation'
+import { mapGetters } from 'vuex'
 
 export default {
   components: {
@@ -37,7 +38,6 @@ export default {
   data () {
     return {
       loading: false,
-      model: {},
       modelNotFound: false,
       navigationBars: [{
         name: this.$t('data.dataset.navigation.info'),
@@ -78,6 +78,9 @@ export default {
       ]
     }
   },
+  computed: {
+    ...mapGetters(['model'])
+  },
   methods: {
     async fetchModel (id, modelId) {
       this.loading = true
@@ -106,7 +109,8 @@ export default {
       }
     }
   },
-  created () {
+  mounted () {
+    this.$store.dispatch('clearCurrentModel')
     this.fetchModel(this.$route.params.id, this.$route.params.modelId)
   }
 }

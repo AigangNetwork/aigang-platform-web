@@ -8,6 +8,8 @@
             <div class="uploaded">{{$t('data.dataset.updated')}}: {{ updated }}</div>
           </div>
           <div class="dataset-title">{{dataset.title}}</div>
+          <div class="dataset-state" v-if="dataset.state === 'created'">Status: {{ $t('data.card.notApproved') }}</div>
+          <div class="dataset-state" v-if="dataset.state === 'closed'">Status: {{ $t('data.card.closed') }}</div>
           <div class="aig-dataset-header-btn-container">
             <button v-if="!dataset.remoteFileAccessPoint" @click="downloadDataset" class="aig-dataset-header-btn">
               <img class="file-img" src="/static/dataset/documents24px.svg" alt=""> {{$t('data.dataset.downloadDataset')}}
@@ -79,7 +81,7 @@ export default {
       dataset: {},
       loading: false,
       isUserOwner: false,
-      editRoute: '/data/edit/' + this.$route.params.id,
+      editRoute: '/data/' + this.$route.params.id + '/edit',
       datasetNotFound: false,
       showUpload: true,
       navigationBars: [{
@@ -289,6 +291,11 @@ export default {
       height: 48px;
       line-height: 48px;
     }
+  }
+
+  .dataset-state {
+    font-size: 18px;
+    margin: 20px 0 20px 0;
   }
 
   @media screen and (min-width: 280px) and (max-width: 680px) {

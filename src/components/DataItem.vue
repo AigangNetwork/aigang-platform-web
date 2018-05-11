@@ -4,6 +4,7 @@
       <div class="aig-data-head">
         <div class="desc">{{ $t('data.card.added') }} {{ created }}</div>
         <div v-if="data.state === 'created'" class="desc">{{ $t('data.card.notApproved') }}</div>
+        <div v-if="data.state === 'closed'" class="desc">{{ $t('data.card.closed') }}</div>
       </div>
       <div class="aig-data-head">
         <div class="title">{{ data.title | truncate(50) }}</div>
