@@ -312,7 +312,6 @@
     "contactIfError": "If you see this error please contact us via email info@aigang.network",
     "metamaskDetected":
       "We have detected that you are using metamask extension. In order to see your account AIX balance please switch your network to ",
-    "useMetamask": "To use all of our Platform features please Log in to Metamask Extension",
-    "accessDenied": "Access denied"
+    "useMetamask": "To use all of our Platform features please Log in to Metamask Extension"
   }
 }
