@@ -39,7 +39,7 @@ const routes = [
     component: NotFound
   },
   {
-    path: '/forbidden',
+    path: '/access-denied',
     name: 'AccessDenied',
     component: AccessDenied
   },
@@ -205,7 +205,8 @@ const routes = [
     ]
   },
   {
-    path: '/data/edit/:id',
+    name: 'EditDataset',
+    path: '/data/:id/edit',
     component: DatasetEdit,
     props: true,
     meta: {

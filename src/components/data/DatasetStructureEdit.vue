@@ -84,7 +84,7 @@ export default {
 
   .column-name,
   .column-type {
-    width: 15%;
+    width: 20%;
     padding: 0 10px;
 
     h5 {
@@ -93,8 +93,8 @@ export default {
   }
 
   .column-description {
-    width: 70%;
-    padding: 0 10px;
+    width: 60%;
+    padding: 0x 10px;
   }
 
   @media screen and (min-width: 100px) and (max-width: 480px) {
@@ -105,18 +105,17 @@ export default {
     }
 
     .column-name {
-      width: 20%;
+      width: 28%;
       padding: 0 5px;
     }
 
     .column-type {
-      width: 40%;
+      width: 32%;
       padding: 0 5px;
     }
 
     .column-description {
       width: 40%;
-      padding: 0 10px;
     }
   }
 </style>

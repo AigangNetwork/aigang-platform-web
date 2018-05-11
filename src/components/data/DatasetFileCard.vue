@@ -20,7 +20,7 @@
 
       <transition name="fade">
         <div class="upload-button-container">
-          <el-upload class="el-button" v-if="showUploadOption && !isRemoteFile" :limit="1" ref="csvFile" :action="''" :multiple="false"
+          <el-upload class="el-button" v-if="showUploadOption && !isRemoteFile" :limit="2" ref="csvFile" :action="''" :multiple="false"
             :auto-upload="false" :on-change="handleFileChange" :on-remove="fileRemoved" accept=".csv">
             {{ $t('data.dataset.edit.uploadNew') }}
           </el-upload>
@@ -63,7 +63,11 @@ export default {
         { remoteFileAccessPoint: this.remoteFileAccessPoint })
       this.$root.$emit('remoteFileAccessPoint', this.remoteFileAccessPoint)
     },
-    handleFileChange (file) {
+    handleFileChange (file, fileList) {
+      if (fileList.length > 1) {
+        fileList.shift()
+      }
+
       this.$store.dispatch('setCurrentDatasetFile', { file })
       this.$store.dispatch('setHasFileChanged', { hasFileChanged: true })
       if (this.validate()) {

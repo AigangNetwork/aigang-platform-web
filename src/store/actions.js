@@ -52,6 +52,10 @@ const clearCurrentDataset = ({ commit }) => {
   commit(types.CLEAR_CURRENT_DATASET)
 }
 
+const clearCurrentModel = ({ commit }) => {
+  commit(types.CLEAR_CURRENT_MODEL)
+}
+
 const setRemoteFileAccessPoint = ({ commit }, response) => {
   commit(types.SET_REMOTE_FILE_ACCESS_POINT, response)
 }
@@ -97,5 +101,6 @@ export {
   registerWeb3Instance,
   clearWeb3Instance,
   loadCurrentModel,
-  clearCurrentDataset
+  clearCurrentDataset,
+  clearCurrentModel
 }

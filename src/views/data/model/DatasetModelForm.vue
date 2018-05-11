@@ -52,6 +52,13 @@ export default {
   },
   mixins: [FormMixin],
   data () {
+    const checkMinPremium = (rule, value, callback) => {
+      if (parseFloat(value) < 0.000001) {
+        callback(new Error(this.$t('data.dataset.validation.premiumZero')))
+      } else {
+        callback()
+      }
+    }
     return {
       loading: false,
       model: [],
@@ -97,8 +104,12 @@ export default {
           message: this.$t('data.dataset.validation.premiumEmpty'),
           trigger: 'blur'
         }, {
-          pattern: /^(?:\d{1,6}\.\d{1,6}|[1-9]\d{0,5})$/,
+          pattern: /^(?:\d{1,6}\.\d{1,6}|[0-9]\d{0,5})$/,
           message: this.$t('data.dataset.validation.premiumInvalid'),
+          trigger: 'blur'
+        },
+        {
+          validator: checkMinPremium,
           trigger: 'blur'
         }]
       }
@@ -117,16 +128,10 @@ export default {
 
       this.loading = true
       this.modelForm.model = JSON.stringify(this.model)
+      this.modelForm.dataId = this.$route.params.id
 
-      let uploadForm = new FormData()
-
-      for (let key in this.modelForm) {
-        uploadForm.append(key, this.modelForm[key])
-      }
-
-      this.axios.post(this.postPath, uploadForm)
+      this.axios.post(this.postPath, this.modelForm)
         .then(response => {
-          this.loading = false
           this.$notify({
             title: this.$t('data.dataset.model.notification.title.success'),
             type: 'success',
@@ -134,9 +139,15 @@ export default {
               : this.$t('data.dataset.model.notification.successfullyUpdated')
           })
 
-          this.$store.dispatch('clearCurrentDataset')
           this.$store.dispatch('loadCurrentModel', { datasetId: this.$route.params.id, modelId: this.$route.params.modelId })
-          this.$router.push({ name: 'datasetModels' })
+
+          if (this.isUpload) {
+            this.$router.push({ name: 'datasetModels' })
+          } else {
+            this.$router.push({ name: 'modelInfo' })
+          }
+
+          this.loading = false
         }).catch(e => {
           this.loading = false
         })
@@ -198,7 +209,12 @@ export default {
 
       try {
         const response = await this.axios.get(this.getPath)
-        this.loading = false
+
+        if (response.data.data.userId !== this.$store.state.user.profile.id) {
+          this.$router.push({ name: 'AccessDenied' })
+          return
+        }
+
         this.modelForm = response.data.data
         this.model = JSON.parse(response.data.data.model)
       } catch (error) {
@@ -206,12 +222,12 @@ export default {
         this.loading = false
       }
 
-      if (this.modelForm.userId !== this.$store.state.user.profile.id) {
-        this.$router.push({ name: 'AccessDenied' })
-      }
+      this.loading = false
     }
   },
-  mounted () {
+  async mounted () {
+    await this.$store.dispatch('loadCurrentDataset', this.$route.params.id)
+
     if (this.$store.state.currentDataset && this.$store.state.currentDataset.state !== 'active') {
       this.$router.push({ name: 'AccessDenied' })
     }
