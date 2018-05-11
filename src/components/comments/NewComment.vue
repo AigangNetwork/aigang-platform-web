@@ -3,10 +3,10 @@
     <UserInfo :show-username="true" :user-name="$store.state.user.profile.userName" />
     <el-form :rules="commentFormRules" class="comment-form" :model="commentForm" ref="commentForm">
       <el-form-item prop="text">
-        <el-input type="textarea" :placeholder="$t('data.dataset.threads.commentPlaceholder')" v-model="commentForm.text"></el-input>
+        <el-input type="textarea" :placeholder="$t('data.dataset.comment.commentPlaceholder')" v-model="commentForm.text"></el-input>
       </el-form-item>
       <el-form-item class="button-container">
-        <el-button @click="submitForm('commentForm', submitComment)" class="button">{{$t('data.dataset.threads.postButton')}}</el-button>
+        <el-button @click="submitForm('commentForm', submitComment)" class="button">{{$t('data.dataset.comment.postButton')}}</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -36,17 +36,17 @@ export default {
       commentFormRules: {
         text: [{
           required: true,
-          message: this.$t('data.dataset.threads.validation.commentFieldRequired'),
+          message: this.$t('data.dataset.comment.validation.commentFieldRequired'),
           trigger: 'blur'
         },
         {
           max: 1000,
-          message: this.$t('data.dataset.threads.validation.commentTooLong'),
+          message: this.$t('data.dataset.comment.validation.commentTooLong'),
           trigger: 'blur'
         },
         {
           min: 5,
-          message: this.$t('data.dataset.threads.validation.commentTooShort'),
+          message: this.$t('data.dataset.comment.validation.commentTooShort'),
           trigger: 'blur'
         }
         ]
@@ -60,7 +60,7 @@ export default {
         this.loading = false
         this.$notify.success({
           title: this.$t('data.upload.notifications.titles.success'),
-          message: this.$t('data.dataset.threads.successFullPost')
+          message: this.$t('data.dataset.comment.successFullPost')
         })
 
         this.commentForm.text = null

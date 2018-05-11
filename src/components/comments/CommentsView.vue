@@ -1,6 +1,6 @@
 <template>
   <div class="aig-dataset-info-container" v-loading="loading">
-    <h4 class="info-title">{{$t('data.dataset.threads.threads')}}</h4>
+    <h4 class="info-title">{{$t('data.dataset.comment.comment')}}</h4>
     <div>
       <el-row>
         <el-col class="comment-column" v-if="$store.state.user.authenticated">

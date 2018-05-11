@@ -1,7 +1,7 @@
 <template>
   <div class="aig-upload-info">
     <div class="aig-upload-info-header">
-      <img src="/static/upload/info24px.svg" alt="threads">
+      <img src="/static/upload/info24px.svg" alt="comment">
       <h5>{{$t('data.upload.titles.fileUploadPreferences')}}</h5>
     </div>
     <div class="aig-upload-info-body">

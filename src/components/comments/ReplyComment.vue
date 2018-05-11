@@ -3,10 +3,10 @@
     <UserInfo :show-username="false" :user-name="$store.state.user.profile.userName" />
     <el-form :rules="replyFormRules" class="reply-form" :model="replyFrom" ref="replyFrom">
       <el-form-item class="input-form-item" prop="text">
-        <el-input class="input" :placeholder="$t('data.dataset.threads.commentPlaceholder')" v-model="replyFrom.text"></el-input>
+        <el-input class="input" :placeholder="$t('data.dataset.comment.commentPlaceholder')" v-model="replyFrom.text"></el-input>
       </el-form-item>
       <el-form-item class="button-container">
-        <el-button @click="submitForm('replyFrom', submitReply)" class="button">{{$t('data.dataset.threads.commentButton')}}</el-button>
+        <el-button @click="submitForm('replyFrom', submitReply)" class="button">{{$t('data.dataset.comment.commentButton')}}</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -36,7 +36,7 @@ export default {
         this.loading = false
         this.$notify.success({
           title: this.$t('data.upload.notifications.titles.success'),
-          message: this.$t('data.dataset.threads.successFullPost')
+          message: this.$t('data.dataset.comment.successFullPost')
         })
         this.replyFrom.text = null
         this.$emit('refresh-comment')
@@ -54,17 +54,17 @@ export default {
       replyFormRules: {
         text: [{
           required: true,
-          message: this.$t('data.dataset.threads.validation.commentFieldRequired'),
+          message: this.$t('data.dataset.comment.validation.commentFieldRequired'),
           trigger: 'blur'
         },
         {
           max: 1000,
-          message: this.$t('data.dataset.threads.validation.commentTooLong'),
+          message: this.$t('data.dataset.comment.validation.commentTooLong'),
           trigger: 'blur'
         },
         {
           min: 5,
-          message: this.$t('data.dataset.threads.validation.commentTooShort'),
+          message: this.$t('data.dataset.comment.validation.commentTooShort'),
           trigger: 'blur'
         }
         ]

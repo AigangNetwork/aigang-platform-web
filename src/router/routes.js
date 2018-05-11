@@ -156,11 +156,11 @@ const routes = [
         })
       },
       {
-        name: 'datasetThreads',
-        path: 'threads',
+        name: 'datasetcomment',
+        path: 'comment',
         component: DatasetThreads,
         props: route => ({
-          requestPath: `/data/${route.params.id}/threads`
+          requestPath: `/data/${route.params.id}/comment`
         })
       },
       {
@@ -194,8 +194,8 @@ const routes = [
         component: DatasetModelTables
       },
       {
-        name: 'modelThreads',
-        path: 'threads',
+        name: 'modelcomment',
+        path: 'comment',
         component: DatasetModelThreads,
         props: route => ({
           requestPath: `/data/${route.params.id}/models/${route.params.modelId}`

@@ -3,10 +3,10 @@
     <div class="comment-header" style="display: flex; justify-content: space-between;">
       <UserInfo :date="comment.createdUtc" :show-username="true" :user-name="comment.username" />
       <div class="icon-container" v-if="isOwner">
-        <el-tooltip :content="$t('data.dataset.threads.editTooltip')">
+        <el-tooltip :content="$t('data.dataset.comment.editTooltip')">
           <img @click="editComment" class="comment-icon-left" src="/static/dataset/edit_black24px.png" alt="">
         </el-tooltip>
-        <el-tooltip :content="$t('data.dataset.threads.removeTooltip')">
+        <el-tooltip :content="$t('data.dataset.comment.removeTooltip')">
           <img @click="dialogVisible = true" class="comment-icon" src="/static/dataset/trash_black24px.png" alt="">
         </el-tooltip>
       </div>
@@ -15,11 +15,11 @@
       <div v-if="isOnEdit" v-loading="loading" :element-loading-text="$t('general.updating')">
         <el-form :rules="commentFormRules" class="comment-form" :model="updateCommentForm" ref="updateCommentForm">
           <el-form-item prop="text">
-            <el-input type="textarea" :placeholder="$t('data.dataset.threads.commentPlaceholder')" v-model="updateCommentForm.text"></el-input>
+            <el-input type="textarea" :placeholder="$t('data.dataset.comment.commentPlaceholder')" v-model="updateCommentForm.text"></el-input>
           </el-form-item>
           <el-form-item class="button-container">
-            <el-button @click="cancelEdit()" class="button">{{$t('data.dataset.threads.cancel')}}</el-button>
-            <el-button @click="submitForm('updateCommentForm', updateComment)" class="button">{{$t('data.dataset.threads.update')}}</el-button>
+            <el-button @click="cancelEdit()" class="button">{{$t('general.cancel')}}</el-button>
+            <el-button @click="submitForm('updateCommentForm', updateComment)" class="button">{{$t('data.dataset.comment.update')}}</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -29,10 +29,10 @@
     </div>
     <div class="comment-footer">
       <span class="replies" v-if="comment.replies">
-        {{ comment.replies.length }} {{$t('data.dataset.threads.replies')}}
+        {{ comment.replies.length }} {{$t('data.dataset.comment.replies')}}
       </span>
     </div>
-    <Dialog :title="$t('profile.warning')" :body="$t('data.dataset.threads.deleteCommentDialogContent')" :on-confirm="deleteComment"
+    <Dialog :title="$t('profile.warning')" :body="$t('data.dataset.comment.deleteCommentDialogContent')" :on-confirm="deleteComment"
       :is-visible="dialogVisible" :on-cancel="cancelDelete" />
   </div>
 </template>
@@ -72,7 +72,7 @@ export default {
       commentFormRules: {
         text: [{
           required: true,
-          message: this.$t('data.dataset.threads.validation.commentFieldRequired'),
+          message: this.$t('data.dataset.comment.validation.commentFieldRequired'),
           trigger: 'blur'
         }]
       }
@@ -89,7 +89,7 @@ export default {
       this.axios.put('/comment', this.updateCommentForm).then(response => {
         this.$notify.success({
           title: this.$t('data.upload.notifications.titles.success'),
-          message: this.$t('data.dataset.threads.successFullUpdate')
+          message: this.$t('data.dataset.comment.successFullUpdate')
         })
         this.isOnEdit = false
         this.loading = false
@@ -107,7 +107,7 @@ export default {
         this.axios.delete('/comment/' + this.comment.id).then(response => {
           this.$notify.success({
             title: this.$t('data.upload.notifications.titles.success'),
-            message: this.$t('data.dataset.threads.successFullDelete')
+            message: this.$t('data.dataset.comment.successFullDelete')
           })
           this.dialogVisible = false
           this.$emit('refresh-comment')

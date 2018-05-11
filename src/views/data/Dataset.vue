@@ -118,9 +118,9 @@ export default {
         disabled: false
       },
       {
-        name: this.$t('data.dataset.navigation.threads'),
+        name: this.$t('data.dataset.navigation.comment'),
         routeLink: {
-          name: 'datasetThreads',
+          name: 'datasetcomment',
           params: {
             id: this.$route.params.id
           }
@@ -166,12 +166,12 @@ export default {
           modelsBar.name += ` (${this.dataset.modelsCount})`
         }
 
-        const threadsBar = this.navigationBars.find(bar => {
-          return bar.routeLink.name === 'datasetThreads'
+        const commentBar = this.navigationBars.find(bar => {
+          return bar.routeLink.name === 'datasetcomment'
         })
-        threadsBar.name = this.$t('data.dataset.navigation.threads')
-        if (threadsBar && this.dataset.commentsCount > 0) {
-          threadsBar.name += ` (${this.dataset.commentsCount})`
+        commentBar.name = this.$t('data.dataset.navigation.comment')
+        if (commentBar && this.dataset.commentsCount > 0) {
+          commentBar.name += ` (${this.dataset.commentsCount})`
         }
       } else {
         this.datasetNotFound = true

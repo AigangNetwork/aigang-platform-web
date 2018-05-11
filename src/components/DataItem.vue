@@ -25,9 +25,9 @@
         </router-link>
       </div>
       <div class="aig-footer-container-right">
-        <img src="/static/threads24px.svg" alt="threads">
-        <router-link class="label" :to="{ name: 'datasetThreads', params: { id: data.id}}">
-          {{ $t('data.card.threads' )}}
+        <img src="/static/threads24px.svg" alt="comment">
+        <router-link class="label" :to="{ name: 'datasetcomment', params: { id: data.id}}">
+          {{ $t('data.card.comment' )}}
           <span v-if="data.commentsCount > 0">({{ data.commentsCount }})</span>
         </router-link>
       </div>
