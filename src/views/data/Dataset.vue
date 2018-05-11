@@ -24,7 +24,7 @@
         </div>
         <DataNavigation :show="!uploadingModelActive" :navigationBars="navigationBars">
 
-          <template v-if="showUpload">
+          <template v-if="showUpload && $store.getters.isAuthenticated">
             <li v-if="uploadingModelActive" class="upload-model-button" key="upload-title">
               <h3>{{ $t('data.dataset.model.submitModel') }}</h3>
             </li>
