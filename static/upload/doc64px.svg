@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="64" height="64" viewBox="0 0 64 64">
+  <defs>
+    <path id="doc-a" d="M26.9058918,7 L49,7 C50.1045695,7 51,7.8954305 51,9 L51,55 C51,56.1045695 50.1045695,57 49,57 L13,57 C11.8954305,57 11,56.1045695 11,55 L11,22.226138 L26.9058918,7 Z"/>
+    <path id="doc-c" d="M11.604812,23.1549838 L25.8075928,23.1549838 C26.9121623,23.1549838 27.8075928,22.2595533 27.8075928,21.1549838 L27.8075928,7.88437894"/>
+    <filter id="doc-b" width="192.6%" height="198.2%" x="-46.3%" y="-36%" filterUnits="objectBoundingBox">
+      <feMorphology in="SourceAlpha" operator="dilate" radius=".5" result="shadowSpreadOuter1"/>
+      <feOffset dy="2" in="shadowSpreadOuter1" result="shadowOffsetOuter1"/>
+      <feGaussianBlur in="shadowOffsetOuter1" result="shadowBlurOuter1" stdDeviation="2"/>
+      <feComposite in="shadowBlurOuter1" in2="SourceAlpha" operator="out" result="shadowBlurOuter1"/>
+      <feColorMatrix in="shadowBlurOuter1" values="0 0 0 0 0.79424426   0 0 0 0 0.79424426   0 0 0 0 0.79424426  0 0 0 0.5 0"/>
+    </filter>
+  </defs>
+  <g fill="none" fill-rule="evenodd">
+    <use fill="#FCFCFE" xlink:href="#doc-a"/>
+    <path stroke="#9EB1C7" d="M27.1066329,7.5 L11.5,22.4396683 L11.5,55 C11.5,55.8284271 12.1715729,56.5 13,56.5 L49,56.5 C49.8284271,56.5 50.5,55.8284271 50.5,55 L50.5,9 C50.5,8.17157288 49.8284271,7.5 49,7.5 L27.1066329,7.5 Z"/>
+    <use fill="#000" filter="url(#doc-b)" xlink:href="#doc-c"/>
+    <use fill="#FCFCFE" stroke="#9EB1C7" xlink:href="#doc-c"/>
+    <text fill="#9EB1C7" font-family="Fabrik-Regular, Fabrik" font-size="12" letter-spacing=".429">
+      <tspan x="26" y="51">.csv</tspan>
+    </text>
+  </g>
+</svg>

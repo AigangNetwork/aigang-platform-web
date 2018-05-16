@@ -1,0 +1,32 @@
+html {
+    min-height: 100%;
+    height: 100%;
+}
+
+body {
+    min-height: 100%;
+    margin: 0;
+}
+
+html,
+input {
+    box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+    box-sizing: inherit;
+}
+
+*:focus {
+    outline: 0;
+}
+
+a {
+    text-decoration: none;
+}
+
+a:link {
+    color: initial;
+}

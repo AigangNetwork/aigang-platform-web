@@ -1,0 +1,142 @@
+@media screen and (min-width: 100px) and (max-width: 680px) {
+  .title,
+  h2 {
+    font-size: 14pt !important;
+  }
+
+  .label {
+    font-size: 12px !important;
+  }
+
+  .aig-card {
+    width: 90%;
+    &.guest-card {
+      margin-top: 80px;
+      .el-col-10 {
+        width: 90%;
+      }
+      .el-row {
+        display: flex;
+        align-items: flex-end;
+      }
+    }
+  }
+
+  .notification-dialog .el-dialog {
+    width: 90% !important;
+  }
+
+  .aig-dataset-header-btn-container {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+  }
+
+  .remote-input-container {
+    textarea {
+      height: auto;
+    }
+  }
+
+  .dataset-edit-container {
+    .file-card-container {
+      .card-section {
+        .el-switch__label * {
+          font-size: 14px;
+        }
+        .card-section-header {
+          .el-row {
+            min-height: 40px;
+          }
+          .el-switch__label--right {
+            font-size: 14px;
+          }
+        }
+      }
+    }
+
+    .structure-row {
+      display: flex;
+      justify-content: space-between;
+      .el-col-10 {
+        width: 30%;
+        input {
+          min-width: 100%;
+          width: 100%;
+        }
+      }
+      .el-col-24 {
+        width: 40%;
+        textarea {
+          min-width: 100%;
+          width: 100%;
+        }
+      }
+      .profile-info-input.description {
+        input,
+        textarea {
+          font-size: 14px;
+          height: 18px;
+          padding-bottom: 2px;
+          line-height: 1;
+        }
+        &.el-textarea {
+          height: 28px;
+          margin-bottom: 10px;
+        }
+      }
+    }
+  }
+
+  .dataset-body-container .profile-info-input.select-input input {
+    font-size: 14px;
+    line-height: 14px;
+    height: 18px;
+    padding-bottom: 2px;
+    width: 100%;
+  }
+
+  .file-card-container .card-section {
+    .el-button {
+      .el-upload {
+        height: 24px;
+        line-height: 24px;
+        border: none;
+        margin-bottom: 15px;
+        width: 100%;
+      }
+      .el-upload-list {
+        width: 100%;
+        margin: 0 auto 0 auto;
+      }
+    }
+  }
+
+  .aig-dataset-info-container {
+    padding: 0px 23px 5px 23px;
+  }
+
+  .aig-dataset-header-btn-container {
+    align-items: center;
+
+    .aig-dataset-header-btn {
+      margin-left: 0;
+    }
+  }
+}
+
+@media screen and (min-width: 100px) and (max-width: 302px) {
+  .dataset-edit-container {
+    .file-card-container .card-section .card-section-header .el-switch__label--right {
+      margin-left: 0;
+    }
+  }
+}
+
+@media screen and (min-width: 100px) and (max-width: 732px) {
+  .dataset-navigation-container .stick-to-right {
+    text-align: center;
+    margin-top: 20px;
+    width: 100%;
+  }
+}

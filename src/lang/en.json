@@ -1,0 +1,349 @@
+{
+  "data": {
+    "upload": {
+      "notifications": {
+        "upload_success": "Successfully uploaded data",
+        "upload_error": "Failed to upload data",
+        "titles": {
+          "success": "Success",
+          "error": "Error",
+          "info": "Info"
+        }
+      },
+      "titles": {
+        "upload": "Upload dataset",
+        "load": "Continue",
+        "title": "Title",
+        "description": "Description",
+        "preview": "Preview",
+        "structure": "Structure",
+        "fileUploadPreferences": "File preferences",
+        "fileVisibility": "File visibility",
+        "fileAccess": "By default datasets are with public access",
+        "fileDetails": "File details",
+        "remoteFileAccessPoint": "Remote file access point"
+      },
+      "rules": {
+        "rule0": "CSV files only",
+        "rule1": "Maximum size of file: 10MB",
+        "rule2": "Please provide remote access point to the file. (URL, Connection string etc.)",
+        "rule3": "Each record is on a separate line",
+        "rule4": "File must contain header line",
+        "rule5": "CSV file requirements"
+      },
+      "input": {
+        "placeholder": {
+          "fileAccess": "Enter access to the source file",
+          "title": "Set a title of dataset",
+          "description": "Describe dataset",
+          "column": "Describe a column",
+          "structure": "Please briefly describe your file structure",
+          "fileUploadPart0": "Drop file here or ",
+          "fileUploadPart1": "click to upload",
+          "dataType": "Data type",
+          "premium": "Amount in ETH"
+        },
+        "validation": {
+          "emptyInputError": "Please make sure you have filled all fields",
+          "fileLimitExceed":
+            "You are able to upload only one .csv file. Please delete old file before uploading new one",
+          "unableAccessFileContent": "File can not be accessed. Please reupload correct file",
+          "invalidFile": "Invalid file content type. Please make sure you upload .csv files only!",
+          "fileTooLarge": "Please make sure you follow all file preferences. File is too large."
+        }
+      }
+    },
+    "toolbar": {
+      "uploadDisabled": "You have to log in to upload new datasets"
+    },
+    "menu": {
+      "all": "All",
+      "uploaded": "Uploaded",
+      "models": "Models"
+    },
+    "card": {
+      "models": "Models",
+      "comment": "Comments",
+      "added": "Added",
+      "notApproved": "waiting for approval",
+      "closed": "closed"
+    },
+    "dataset": {
+      "createdBy": "By",
+      "updated": "Last updated",
+      "downloadDataset": "Download dataset",
+      "deleteDataset": "Delete dataset",
+      "deleteDatasetTitle": "Delete your dataset",
+      "deleteDatasetDescription":
+        "This dataset and all files, data, models and comments associated with it will be permanently deleted. You won't be able to recover it later on.",
+      "editDataset": "Edit dataset",
+      "successDelete": "Dataset was successfully deleted",
+      "deleteDialogBody": "Are you sure you want to delete this dataset?",
+      "invalidPreview": "This dataset does not contain visual preview. Download file to check it out",
+      "notApprovedTooltip": "Dataset is waiting for approval",
+      "closedTooltip": "Dataset is closed",
+      "publicTooltip": "Dataset is visible for all visitors",
+      "privateTooltip": "thisDataset is visible only for logged in users",
+      "navigation": {
+        "info": "Info",
+        "data": "Data",
+        "models": "Models",
+        "comment": "Comments",
+        "model": "Model"
+      },
+      "edit": {
+        "uploadNew": "Upload new",
+        "registeredOnly": "For registered users only",
+        "byDefaultPublicAccess": "By default datasets with public access",
+        "public": "Public",
+        "loggedIn": "Logged in",
+        "title": "Title",
+        "description": "Description",
+        "structure": "Structure",
+        "structureName": "Name",
+        "structureDescription": "Description",
+        "structureDataType": "Data type",
+        "file": "File",
+        "remoteAccessPoint": "Remote access point",
+        "describeRemoteAccessPoint": "Describe remote access point",
+        "edit_success": "Changes were successfully updated",
+        "fileAttached": "was attached."
+      },
+      "validation": {
+        "titleEmpty": "Title is required",
+        "titleTooShort": "Title must be at least 6 characters long",
+        "descriptionEmpty": "Description is required",
+        "descriptionTooShort": "Description must be at least 6 characters long",
+        "structureFieldEmpty": "Make sure you have filled all structure fields",
+        "remoteFileAccessPointEmpty": "Remote access point is required",
+        "remoteFileAccessPointTooShort": "Remote access must be at least 6 characters long",
+        "fileEmpty": "File is required",
+        "fileTooBig": "File is too large",
+        "premiumEmpty": "Premium is required",
+        "premiumInvalid": "Invalid premium. Value e.g. 000000.000000",
+        "premiumZero": "Premium cannot be zero",
+        "onlyIntegersAllowed": "Only integers allowed",
+        "tableTooBig": "Maximum size of the table is 10x50",
+        "tableTooSmall": "Minimum size of the table is 1x1",
+        "emptyModel": "Model table is required",
+        "emptyModelInput": "Make sure you have filled all table fields",
+        "titleTooLong": "Maximum 64 characters"
+      },
+      "model": {
+        "models": "Models",
+        "model": "Model",
+        "uploadModel": "Upload model",
+        "cancel": "Cancel",
+        "premium": "Premium",
+        "submitModel": "Submit model",
+        "newTable": "New table",
+        "on": "on",
+        "create": "Create",
+        "basePremium": "Base premium",
+        "eth": "ETH",
+        "by": "By",
+        "successDelete": "Model was successfully deleted",
+        "editModel": "Edit model",
+        "deleteModel": "Delete model",
+        "deleteModelTitle": "Delete your model",
+        "deleteModelDescription":
+          "This model and all data and comments associated with it will be permanently deleted. You won't be able to recover it later on.",
+        "modelsNotFound": "This dataset does not contain any models yet",
+        "deleteDialogBody": "Are you sure you want to delete this model?",
+        "placeholder": {
+          "title": "Title",
+          "data": "Data"
+        },
+        "notification": {
+          "title": {
+            "success": "Success"
+          },
+          "successfullyUploaded": "Data model was successfully uploaded",
+          "successfullyUpdated": "Data model was successfully updated"
+        },
+        "lastUpdated": "Last updated"
+      },
+      "comment": {
+        "comment": "Comments",
+        "commentPlaceholder": "Start typing to add comment",
+        "deleteCommentDialogContent": "Are you sure you want to delete your comment?",
+        "editTooltip": "Edit comment",
+        "removeTooltip": "Remove comment",
+        "postButton": "Post",
+        "update": "Update",
+        "commentButton": "Comment",
+        "successFullPost": "Your comment was successfully submited",
+        "successFullUpdate": "Your comment was successfully updated",
+        "successFullDelete": "Your comment was successfully deleted",
+        "replies": "replies",
+        "validation": {
+          "commentFieldRequired": "Comment is required",
+          "commentTooLong": "Comment lenght limit was reached",
+          "commentTooShort": "Comment is too short"
+        }
+      }
+    }
+  },
+  "login": {
+    "login": "Log in",
+    "title": "Log in to Aigang Network",
+    "email": "Email",
+    "password": "Password",
+    "forgotPassword": "Forgot password?",
+    "dontHave": "Do not have account?"
+  },
+  "signUp": {
+    "signUp": "Sign Up",
+    "description":
+      "Creating an account in aigang.network you will get access to all products such as Data, Prediction market, Invest and Insure",
+    "haveAccount": "Have Aigang Network Account?",
+    "rePassword": "Repeat password",
+    "emailSent": "Email was sent to {0}. Follow instructions provided in the email.",
+    "dontReceiveEmail": "If you didn't receive email, click: ",
+    "waitingVerification": "Verification email was sent."
+  },
+  "retrievePassword": {
+    "title": "Reset Your Aigang Password",
+    "backTo": "Back to",
+    "waitingVerification": "Reset email was sent.",
+    "dontReceiveEmail": "If you didn't receive email, click: ",
+    "description": "Enter your new password",
+    "retrievePassword": "Reset password",
+    "changeSuccessTitle": "Your password has been successfully updated"
+  },
+  "activateEmail": {
+    "activating": "Activating ...",
+    "activated": "Your account was successfully activated. Now you can Login"
+  },
+  "notifications": {
+    "login_success": "Successfully signed in"
+  },
+  "account": {
+    "balance": "Balance"
+  },
+  "actions": {
+    "loginToAccount": "Login to account",
+    "upload_new_data": "Upload new data",
+    "retrievePassword": "Retrieve password"
+  },
+  "profile": {
+    "logout": "Logout",
+    "userName": "Nickname",
+    "email": "Email",
+    "firstName": "First name",
+    "lastName": "Last name",
+    "changePassword": "Change password",
+    "passwordDescription":
+      "Minimum password length must be 8 characters and consist of at least 2 alpha characters, 1 number and 1 special character ",
+    "oldPassword": "Old password",
+    "newPassword": "New password",
+    "update": "Update",
+    "emailPreferences": "Email preferences",
+    "emailDescription": "Choose newsletter options",
+    "emailModelComments": "Comments in my model",
+    "emailModelCommentsDescription": "Recieve emails when somebody will comment your created model",
+    "emailDataSetsComments": "Comments in my data sets",
+    "emailDataSetsCommentsDescription": "Recieve email notifications when somebody will comment your created data set",
+    "emailNewDataComments": "Uploading of new data sets",
+    "emailNewDataCommentsDescription": "Recieve email notifications of uploading a new data set",
+    "emailNews": "Get news and updates about Aigang's product",
+    "passwordUpdated": "Password succesfully updated",
+    "deactivateAccountTitle": "Deactivate your account",
+    "deactivateAccountDescription":
+      "If you decide that you no longer want to use Aigang Platform, it's easy to deactivate your account. When you deactivate your account, you're no longer availible to log in or access your private uploaded datasets.",
+    "deactivateAccount": "Deactivate account",
+    "warning": "Warning",
+    "confirmationText": "Are you sure you want to deactivate your account?",
+    "confirm": "Confirm",
+    "cancel": "Cancel",
+    "deactivationSuccessful": "Your account was successfuly deactivated"
+  },
+  "navigation": {
+    "profile": "Profile",
+    "data": "Data",
+    "predictions": "Predictions",
+    "invest": "Investment",
+    "insure": "Insurance",
+    "login": "Sign Up/Log In"
+  },
+  "status": {
+    "active": "Active",
+    "closed": "Closed",
+    "pending": "Pending"
+  },
+  "validation": {
+    "emailEmpty": "Please input email address",
+    "emailNotValid": "Please input correct email address",
+    "passwordEmpty": "Password is required",
+    "passwordTooShort": "Password must be at least 6 characters long",
+    "firstNameEmpty": "First name is required",
+    "firstNameTooShort": "First name must be at least 2 characters long",
+    "firstNameInvalid": "First name contains invalid characters. Only A-z characters are allowed",
+    "lastNameEmpty": "Last name is required",
+    "lastNameTooShort": "Last name must be at least 2 characters long",
+    "nameTooLong": "Maximum 50 characters",
+    "lastNameInvalid": "Last name contains invalid characters. Only A-z characters are allowed",
+    "userNameEmpty": "Nickname is required",
+    "userNameTooShort": "Nickname must be at least 6 characters long",
+    "userNameInvalid": "Nickname contains invalid characters. Only A-z characters are allowed"
+  },
+  "general": {
+    "uploading": "Uploading ...",
+    "updating": "Updating ...",
+    "loading": "Loading ...",
+    "ok": "OK",
+    "here": "here",
+    "change": "Change",
+    "save": "Save",
+    "back": "Back",
+    "cancel": "Cancel",
+    "markupSupported": "VueMarkdown supported",
+    "versionAlpha": "alpha",
+    "unableToFindYourDatasets": "Can not find your datasets",
+    "unableToFindYourModels": "Can not find any datasets containing your models"
+  },
+  "errors": {
+    "error": "Error",
+    "information": "Information",
+    "400": "Bad Request",
+    "401": "Unauthorized",
+    "403": "Forbidden",
+    "404": "Not Found",
+    "408": "Request Timeout",
+    "500": "Internal Server Error",
+    "unhandled": "Unhandled error: ",
+    "validation": {
+      "DuplicateUserName": "User name is taken. Please make it unique",
+      "DuplicateEmail": "Email was registered earlier. Choose other email or use 'Forgot password'",
+      "InvalidEmail": "Email is not valid",
+      "InvalidPassword": "Old password is not correct.",
+      "InvalidEmailOrPassword": "The email address or password you entered is not valid",
+      "PasswordNotMatchRePassword": "Passwords are not matching",
+      "PasswordTooShort": "Password is too short",
+      "InvalidQuery": "Query is not valid",
+      "UserNotFound": "Email not found",
+      "EmailNotConfirmed": "Email is not comfirmed yet",
+      "ValidationFailed": "We are unable to proccess your request",
+      "EmptyRequest": "You sent an empty request. Please make sure all required values are set",
+      "FileTooLargeError": "Provided file is too large",
+      "BadFileContentType": "Bad file content type",
+      "BadRequest": "Bad Request was sent to back-end. Try again later.",
+      "GatewayTimeout": "Gateway time out",
+      "AccountIsLocked": "Your account is disabled",
+      "NameTooLong": "First name, last name or the username can not be longer than 200 characters.",
+      "NameInvalid": "First name, last name or the username contains invalid characters.",
+      "TitleTooLong": "Title can not be longer than 200 characters.",
+      "TitleOrDescriptionTooShort": "Title or description can not be shorter than 6 characters.",
+      "Forbidden": "You are trying to access forbidden resources",
+      "NotFound": "Not found",
+      "CommentTooLong": "Comment lenght limit was reached"
+    },
+    "pagePathNotFound": "The page you are trying to access is not available",
+    "validationError": "You have entered an invalid data",
+    "serverNotFound": "Server error",
+    "contactIfError": "If you see this error please contact us via email info@aigang.network",
+    "metamaskDetected":
+      "We have detected that you are using metamask extension. In order to see your account AIX balance please switch your network to ",
+    "useMetamask": "To use all of our Platform features please Log in to Metamask Extension"
+  }
+}
