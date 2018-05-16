@@ -32,7 +32,9 @@
 </template>
 <script>
 import CreatedDate from '@/components/mixins/CreatedDate'
-import { mapGetters } from 'vuex'
+import {
+  mapGetters
+} from 'vuex'
 
 export default {
   props: ['model'],
@@ -50,7 +52,10 @@ export default {
       return this.model.createdUtc
     },
     isUserOwner () {
-      return this.$store.state.user.profile.id === this.model.userId
+      if (this.$store.state.user.profile) {
+        return this.$store.state.user.profile.id === this.model.userId
+      }
+      return false
     },
     isPremiumBig () {
       return !(String(this.model.premium).length > 7)
@@ -178,4 +183,5 @@ export default {
       }
     }
   }
+
 </style>

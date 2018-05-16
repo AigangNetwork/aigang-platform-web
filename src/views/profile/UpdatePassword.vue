@@ -112,10 +112,12 @@ export default {
     }
   },
   created () {
-    this.profileForm.firstName = this.$store.state.user.profile.firstName
-    this.profileForm.lastName = this.$store.state.user.profile.lastName
-    this.profileForm.userName = this.$store.state.user.profile.email
-    this.profileForm.id = this.$store.state.user.profile.id
+    if (this.$store.state.user.profile) {
+      this.profileForm.firstName = this.$store.state.user.profile.firstName
+      this.profileForm.lastName = this.$store.state.user.profile.lastName
+      this.profileForm.userName = this.$store.state.user.profile.email
+      this.profileForm.id = this.$store.state.user.profile.id
+    }
   }
 }
 
@@ -154,4 +156,5 @@ export default {
       }
     }
   }
+
 </style>

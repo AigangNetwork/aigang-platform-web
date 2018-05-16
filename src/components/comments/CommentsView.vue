@@ -64,7 +64,10 @@ export default {
       })
     },
     isOwner (userId) {
-      return this.$store.state.user.profile.id === userId
+      if (this.$store.state.user.profile) {
+        return this.$store.state.user.profile.id === userId
+      }
+      return false
     }
   },
   mounted () {
