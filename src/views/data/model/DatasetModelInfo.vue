@@ -4,7 +4,8 @@
       <div slot="body" v-loading="loading" :element-loading-text="$t('general.loading')">
         <DatasetModelHeader :model="model" />
         <DataNavigation :show="true" :navigationBars="navigationBars">
-          <li class="stick-to-right" key="space">
+          <li class="stick-to-right" key="DatasetModelVote">
+            <DatasetModelVote/>
           </li>
         </DataNavigation>
         <div class="dataset-content-container">
@@ -22,16 +23,16 @@
 import Card from '@/components/Card'
 import DatasetModelHeader from '@/components/data/model/DatasetModelHeader'
 import DataNavigation from '@/components/navigation/DataNavigation'
-import {
-  mapGetters
-} from 'vuex'
+import DatasetModelVote from '@/components/data/model/DatasetModelVote'
+import { mapGetters } from 'vuex'
 import eventHub from '@/utils/eventHub'
 
 export default {
   components: {
     Card,
     DatasetModelHeader,
-    DataNavigation
+    DataNavigation,
+    DatasetModelVote
   },
   data () {
     return {

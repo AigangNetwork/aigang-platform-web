@@ -49,4 +49,10 @@ export default {
   .models-container {
     padding: 0 54px 54px 54px;
   }
+
+  @media screen and (min-width: 100px) and (max-width: 680px) {
+    .models-container {
+      padding: 0 20px 54px 20px;
+    }
+  }
 </style>

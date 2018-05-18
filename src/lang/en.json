@@ -150,6 +150,8 @@
           "This model and all data and comments associated with it will be permanently deleted. You won't be able to recover it later on.",
         "modelsNotFound": "This dataset does not contain any models yet",
         "deleteDialogBody": "Are you sure you want to delete this model?",
+        "usersVoted": "users upvoted this model",
+        "unauthorizedVoting": "You must be logged to be able to vote",
         "placeholder": {
           "title": "Title",
           "data": "Data"
@@ -300,7 +302,8 @@
     "markupSupported": "VueMarkdown supported",
     "versionAlpha": "alpha",
     "unableToFindYourDatasets": "Can not find your datasets",
-    "unableToFindYourModels": "Can not find any datasets containing your models"
+    "unableToFindYourModels": "Can not find any datasets containing your models",
+    "upvote": "Upvote"
   },
   "errors": {
     "error": "Error",
