@@ -43,11 +43,21 @@ export default {
     },
     handle403 () {
       this.notificationVisible = false
-      this.$router.push({ name: 'AccessDenied' })
+      this.$router.push({
+        name: 'AccessDenied'
+      })
     },
     notifyRequestError (error) {
       this.notificationVisible = true
       this.title = this.$t('errors.error')
+
+      if (!error.response) {
+        this.messages.push(this.$t('errors.serverNotFound'))
+        this.messages.push(this.$t('errors.serverNotFoundRule1'))
+        this.messages.push(this.$t('errors.serverNotFoundRule2'))
+        this.messages.push(this.$t('errors.contactIfError'))
+        return
+      }
 
       if (error.response) {
         switch (error.response.status) {
@@ -74,9 +84,6 @@ export default {
             this.messages.push(this.$t('errors.unhandled'))
             this.messages.push(this.$t('errors.contactIfError'))
         }
-      } else {
-        this.messages.push(this.$t('errors.serverNotFound'))
-        this.messages.push(this.$t('errors.contactIfError'))
       }
     }
   },
@@ -108,6 +115,7 @@ export default {
     list-style: none;
     font-size: 16px;
     color: black;
+    margin-bottom: 10px;
   }
 
   .notification-dialog .dialog-footer {
@@ -142,4 +150,5 @@ export default {
   .notification-dialog .el-dialog__header {
     text-align: center;
   }
+
 </style>
