@@ -1,6 +1,11 @@
 <template>
   <div class="model-item-card">
     <div class="card-section">
+      <el-tooltip :content="votesTooltipMessage">
+        <div class="vote-count">
+          {{ voteCount }}
+        </div>
+      </el-tooltip>
       <h3>
         <router-link :to="modelRoute">{{ model.title | truncate(50) }}</router-link>
       </h3>
@@ -38,6 +43,18 @@ export default {
     },
     isPremiumBig () {
       return !(String(this.model.premium).length > 7)
+    },
+    voteCount () {
+      if (this.model.voteCount > 1000) {
+        return `+${this.model.voteCount / 1000}K`
+      } else if (this.model.voteCount > 0) {
+        return `+${this.model.voteCount}`
+      } else {
+        return '0'
+      }
+    },
+    votesTooltipMessage () {
+      return this.voteCount + ' ' + this.$t('data.dataset.model.usersVoted')
     }
   },
   methods: {
@@ -121,6 +138,19 @@ export default {
       color: $button-purple;
       max-width: 100%;
       word-wrap: break-word;
+    }
+
+    .vote-count {
+      color: white;
+      background: $green;
+      font-size: 14px;
+      font-weight: 400;
+      padding: 8px 12px;
+      border-radius: 16px;
+      height: 32px;
+      width: 63px;
+      text-align: center;
+      margin-bottom: 12px;
     }
   }
 

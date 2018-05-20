@@ -162,7 +162,6 @@ export default {
 
         this.setComments(this.dataset.commentsCount)
       } else {
-        console.log('opa')
         this.$router.push({ name: 'NotFound' })
       }
 

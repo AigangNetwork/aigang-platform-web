@@ -3,16 +3,16 @@
     <div>
       <div class="aig-data-head">
         <div class="desc">{{ $t('data.card.added') }} {{ created }}</div>
-        <el-tooltip v-if="data.state === 'closed'" :content="$t('data.dataset.closedTooltip')" placement="top-start" effect="light">
+        <el-tooltip v-if="data.state === 'closed'" :content="$t('data.dataset.closedTooltip')" placement="top-start">
           <div class="status-bubble grey"></div>
         </el-tooltip>
-        <el-tooltip v-else-if="data.state === 'created'" :content="$t('data.dataset.notApprovedTooltip')" placement="top-start" effect="light">
+        <el-tooltip v-else-if="data.state === 'created'" :content="$t('data.dataset.notApprovedTooltip')" placement="top-start">
           <div class="status-bubble yellow"></div>
         </el-tooltip>
-        <el-tooltip v-else-if="data.isPublic" :content="$t('data.dataset.publicTooltip')" placement="top-start" effect="light">
+        <el-tooltip v-else-if="data.isPublic" :content="$t('data.dataset.publicTooltip')" placement="top-start">
           <div class="status-bubble green"> </div>
         </el-tooltip>
-        <el-tooltip v-else :content="$t('data.dataset.privateTooltip')" placement="top-start" effect="light">
+        <el-tooltip v-else :content="$t('data.dataset.privateTooltip')" placement="top-start">
           <div class="status-bubble green-border"> </div>
         </el-tooltip>
       </div>

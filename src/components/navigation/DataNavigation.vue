@@ -114,7 +114,7 @@ export default {
     }
   }
 
-  @media screen and (min-width: 100px) and (max-width: 732px) {
+  @media screen and (min-width: 100px) and (max-width: 765px) {
     .dataset-navigation-container {
       .dataset-navigation-menu {
         padding-bottom: 10px;
@@ -127,12 +127,20 @@ export default {
           justify-content: space-between;
           li {
             margin-left: 0;
-            min-width: 135px;
+            width: 50%;
+            min-width: 155px;
+            flex-grow: 1;
+
             h3 {
               text-align: center;
               line-height: 24px;
               height: 24px;
               margin-top: 12px;
+            }
+
+            a {
+              width: 155px;
+              margin: 0 auto;
             }
 
           }
@@ -154,7 +162,11 @@ export default {
   @media screen and (min-width: 100px) and (max-width: 376px) {
     .dataset-navigation-container .dataset-navigation-menu ul span {
       justify-content: space-around;
-    }
-  }
 
+      li {
+        width: 100%;
+      }
+    }
+
+  }
 </style>
