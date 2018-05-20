@@ -16,7 +16,7 @@
       <div class="card-section-right">
         <span class="text-small">{{ $t('data.dataset.model.basePremium') }}</span>
         <span :class="{'text-big': isPremiumBig, 'text-big-medium': !isPremiumBig}">{{ model.premium }}</span>
-        <span class="text-medium">{{ $t('data.dataset.model.eth') }} </span>
+        <span class="text-medium">{{ $t('data.dataset.model.aix') }} </span>
       </div>
     </div>
   </div>

@@ -37,7 +37,7 @@ export default {
     return {
       loading: false,
       navigationBars: [{
-        name: this.$t('data.dataset.navigation.info'),
+        name: this.$t('data.dataset.navigation.model'),
         routeLink: {
           name: 'modelInfo',
           params: {
@@ -49,7 +49,7 @@ export default {
         disabled: false
       },
       {
-        name: this.$t('data.dataset.navigation.model'),
+        name: this.$t('data.dataset.navigation.coefficients'),
         routeLink: {
           name: 'modelTables',
           params: {
@@ -89,13 +89,17 @@ export default {
         })
 
         if (!this.model.id) {
-          this.$router.push({ name: 'NotFound' })
+          this.$router.push({
+            name: 'NotFound'
+          })
         }
 
         this.printCommentsBar(this.model.commentsCount)
         this.loading = false
       } catch (error) {
-        this.$router.push({ name: 'NotFound' })
+        this.$router.push({
+          name: 'NotFound'
+        })
         this.loading = false
       }
     },
@@ -142,4 +146,5 @@ export default {
   .not-found-message {
     padding: 40px;
   }
+
 </style>
