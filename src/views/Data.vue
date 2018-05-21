@@ -27,7 +27,9 @@
           </el-col>
           <el-col :span="8" class="data-upload-button-container">
             <el-tooltip :disabled="$store.getters.isAuthenticated" effect="dark" :content="$t('data.toolbar.uploadDisabled')" placement="top">
-              <el-button :disabled="!$store.getters.isAuthenticated" type="primary" @click="$router.push({ name: 'Upload' })" class="aig-upload-btn">{{ $t('actions.upload_new_data')}}</el-button>
+              <span class="wrapper el-button">
+                <el-button :disabled="!$store.getters.isAuthenticated" type="primary" @click="$router.push({ name: 'Upload' })" class="aig-upload-btn">{{ $t('actions.upload_new_data')}}</el-button>
+              </span>
             </el-tooltip>
           </el-col>
         </el-row>
@@ -101,6 +103,10 @@ export default {
       padding-left: 10px;
       padding-right: 10px;
     }
+  }
+
+  .wrapper.el-button {
+    width: 100%;
   }
 
   .el-input-inner {

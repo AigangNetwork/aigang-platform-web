@@ -28,13 +28,15 @@
 </template>
 <script>
 import CreatedDate from '@/components/mixins/CreatedDate'
+import VoteCount from '@/components/mixins/VoteCount'
 
 export default {
   props: ['model'],
-  mixins: [CreatedDate],
+  mixins: [CreatedDate, VoteCount],
   data () {
     return {
-      modelRoute: `models/${this.model.id}`
+      modelRoute: `models/${this.model.id}`,
+      count: 0
     }
   },
   computed: {
@@ -43,24 +45,15 @@ export default {
     },
     isPremiumBig () {
       return !(String(this.model.premium).length > 7)
-    },
-    voteCount () {
-      if (this.model.voteCount > 1000) {
-        return `+${this.model.voteCount / 1000}K`
-      } else if (this.model.voteCount > 0) {
-        return `+${this.model.voteCount}`
-      } else {
-        return '0'
-      }
-    },
-    votesTooltipMessage () {
-      return this.voteCount + ' ' + this.$t('data.dataset.model.usersVoted')
     }
   },
   methods: {
     navigateToModel () {
       this.$router.push(this.modelRoute)
     }
+  },
+  mounted () {
+    this.count = this.model.voteCount
   }
 }
 </script>
