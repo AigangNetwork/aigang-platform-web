@@ -1,43 +1,35 @@
 <template>
   <div class="vote-container">
-    <div class="vote-count">
-      <transition name="slideUp" mode="out-in">
-        <el-tooltip :content="votesTooltipMessage">
-          <p :key="count">{{ count }}</p>
-        </el-tooltip>
-      </transition>
-    </div>
-    <el-tooltip :content="$t('data.dataset.model.unauthorizedVoting')" :value="showUnauthorizedVoting" :manual="true">
-      <el-button class="vote-button" :class="{ 'active' : hasVoted }" @click="vote">
-        {{ $t('general.upvote') }}
-      </el-button>
+    <el-tooltip :content="votesTooltipMessage">
+      <div class="vote-count">
+        <transition name="slideUp" mode="out-in">
+          <p :key="count">{{ voteCount }}</p>
+        </transition>
+      </div>
+    </el-tooltip>
+    <el-tooltip :disabled="$store.getters.isAuthenticated" :content="$t('data.dataset.model.votingDisabled')">
+      <span class="wrapper el-button">
+        <el-button :disabled="!$store.getters.isAuthenticated" class="vote-button" :class="{ 'active' : hasVoted, 'disabled': !$store.getters.isAuthenticated }"
+          @click="vote">
+          {{ $t('general.upvote') }}
+        </el-button>
+      </span>
     </el-tooltip>
   </div>
 </template>
 
 <script>
+import VoteCount from '@/components/mixins/VoteCount'
+
 export default {
+  mixins: [VoteCount],
   data () {
     return {
-      voteCount: 0,
+      count: 0,
       hasVoted: false,
       canVote: false,
       showUnauthorizedVoting: false,
       votingDisabled: false
-    }
-  },
-  computed: {
-    count () {
-      if (this.voteCount > 1000) {
-        return '+' + (this.voteCount % 1000) + 'K'
-      } else if (this.voteCount > 0) {
-        return '+' + this.voteCount
-      } else {
-        return '0'
-      }
-    },
-    votesTooltipMessage () {
-      return this.voteCount + ' ' + this.$t('data.dataset.model.usersVoted')
     }
   },
   methods: {
@@ -55,7 +47,7 @@ export default {
 
       if (this.hasVoted) {
         try {
-          this.voteCount--
+          this.count--
           this.hasVoted = false
           this.votingDisabled = true
 
@@ -63,11 +55,11 @@ export default {
           this.votingDisabled = false
         } catch (e) {
           this.hasVoted = false
-          this.voteCOunt++
+          this.count++
         }
       } else {
         try {
-          this.voteCount++
+          this.count++
           this.hasVoted = true
           this.votingDisabled = true
 
@@ -81,9 +73,9 @@ export default {
     async fetchVotesCount () {
       try {
         const response = await this.axios.get(`/vote/model/count/${this.$route.params.modelId}`)
-        this.voteCount = response.data.count
+        this.count = response.data.count
       } catch (e) {
-        this.voteCount = 0
+        this.count = 0
       }
     },
     async fetchHasUserVoted () {
@@ -146,6 +138,16 @@ export default {
       &:hover {
         background: $light-yellow;
         color: white
+      }
+
+      &.disabled {
+        color: #c0c4cc;
+        border-color: #ebeef5;
+      }
+
+      &.disabled:hover {
+        background: white;
+        color: #c0c4cc;
       }
     }
   }
