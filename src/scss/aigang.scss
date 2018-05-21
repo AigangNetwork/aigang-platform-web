@@ -22,7 +22,6 @@ body.aig {
   text-align: left;
   margin: 0 auto;
   overflow-x: hidden;
-
   &.aig-container {
     height: calc(100% - 70px);
   }
@@ -82,7 +81,6 @@ body.aig {
 
 .aig-items {
   margin-top: 15px;
-
   .el-col {
     padding-top: 10px;
     padding-bottom: 10px;
@@ -182,24 +180,20 @@ body.aig {
     font-family: $font-primary;
     line-height: 30px;
     font-weight: 500;
-
     .file-img {
       height: 19px;
       margin-left: 8px;
       margin-right: 4px;
     }
-
     &.delete {
       .file-img {
         height: 18px;
       }
     }
-
     &.edit {
       padding-top: 2px;
     }
   }
-
   .flex-container {
     display: flex;
   }
@@ -344,14 +338,12 @@ body.aig {
   .el-button {
     width: 131px;
     transition: all 200ms;
-
     .el-upload {
       height: 24px;
       line-height: 24px;
       border: none;
       margin-bottom: 15px;
     }
-
     .el-upload-list {
       width: 131px;
       margin-left: -21px;
@@ -376,10 +368,14 @@ body.aig {
 
 .aig-dataset-info-container {
   padding: 0px 53px 5px 53px;
-
   .info-content {
     word-wrap: break-word;
     color: $purple;
+  }
+  @media screen and (min-width: 100px) and (max-width: 680px) {
+    .aig-dataset-info-container {
+      padding: 0px 23px 5px 23px;
+    }
   }
 }
 
@@ -412,8 +408,21 @@ body.aig {
 }
 
 .markup-content {
+  ul {
+    font-family: "Roboto", sans-serif;
+    font-size: 16px;
+    font-weight: 300;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.63;
+    letter-spacing: 0.5px;
+    color: #423176;
+  }
   p {
     word-wrap: break-word;
+  }
+  img {
+    max-width: 100%;
   }
 }
 
