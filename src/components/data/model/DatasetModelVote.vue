@@ -11,7 +11,12 @@
       <span class="wrapper el-button">
         <el-button :disabled="!$store.getters.isAuthenticated" class="vote-button" :class="{ 'active' : hasVoted, 'disabled': !$store.getters.isAuthenticated }"
           @click="vote">
-          {{ $t('general.upvote') }}
+          <transition name="slideUp" mode="out-in">
+            <span>
+              <template v-if="hasVoted">{{ $t('general.downvote') }} </template>
+              <template v-else>{{ $t('general.upvote') }}</template>
+            </span>
+          </transition>
         </el-button>
       </span>
     </el-tooltip>
@@ -109,7 +114,7 @@ export default {
   .vote-container {
     display: flex;
     margin-left: auto;
-    max-width: 152px;
+    max-width: 171px;
 
     .vote-count {
       width: 64px;
@@ -133,6 +138,7 @@ export default {
       border-radius: 0;
       color: $yellow;
       border: 1px solid $light-yellow;
+      min-width: 109px;
 
       &.active {
         background: $light-yellow;
@@ -159,7 +165,7 @@ export default {
   @media screen and (max-width: 765px) and (min-width: 100px) {
     .vote-container {
       margin: 0 auto;
-      max-width: 132px;
+      max-width: 151px;
 
       .vote-count {
         margin: 0 auto;
