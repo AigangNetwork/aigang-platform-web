@@ -162,6 +162,8 @@
         "userVoted": "user upvoted this model",
         "noUsersVoted": "Model does not have any upvotes yet",
         "votingDisabled": "You have to log in to upvote",
+        "tableRows": "Table rows",
+        "tableColumns": "Table columns",
         "placeholder": {
           "modelTitle": "Set a title of model",
           "title": "Title",

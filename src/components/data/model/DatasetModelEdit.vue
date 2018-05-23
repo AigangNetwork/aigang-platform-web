@@ -54,13 +54,17 @@
     <el-row class="table-create-container">
       <p>{{$t('data.dataset.model.newTable')}}</p>
       <div>
-        <input v-model="colsLength" @input="event=> validateInput(event)" />
+        <el-tooltip :content="$t('data.dataset.model.tableColumns')">
+          <input v-model="colsLength" @input="event=> validateInput(event)" />
+        </el-tooltip>
         <p>{{$t('data.dataset.model.on')}}</p>
-        <input v-model="rowsLength" @input="event => validateInput(event)" />
+        <el-tooltip :content="$t('data.dataset.model.tableRows')">
+          <input v-model="rowsLength" @input="event => validateInput(event)" />
+        </el-tooltip>
       </div>
       <span class="aig-error" v-if="lengthError">{{$t('data.dataset.validation.onlyIntegersAllowed')}}</span>
-      <span class="aig-error" v-if="sizeTooBigError">{{$t('data.dataset.validation.tableTooBig')}}</span>
-      <span class="aig-error" v-if="sizeTooSmallError">{{$t('data.dataset.validation.tableTooSmall')}}</span>
+      <span class="aig-error" v-else-if="sizeTooBigError">{{$t('data.dataset.validation.tableTooBig')}}</span>
+      <span class="aig-error" v-else-if="sizeTooSmallError">{{$t('data.dataset.validation.tableTooSmall')}}</span>
       <div class="create-button-container">
         <el-button @click="createTable" class="profile-button">{{ $t('data.dataset.model.create') }}</el-button>
       </div>
