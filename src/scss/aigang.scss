@@ -366,12 +366,24 @@ body.aig {
   text-transform: uppercase;
 }
 
+.section-title {
+  font-family: 'Roboto', sans-serif;
+  font-size: 21px;
+  font-weight: 500;
+  line-height: 1.14;
+  letter-spacing: 0.7px;
+  color: #423176;
+  margin: 40px 0px 0px 0px;
+}
+
 .aig-dataset-info-container {
-  padding: 0px 53px 5px 53px;
+  padding: 0px 53px 53px 53px;
+
   .info-content {
     word-wrap: break-word;
     color: $purple;
   }
+
   @media screen and (min-width: 100px) and (max-width: 680px) {
     .aig-dataset-info-container {
       padding: 0px 23px 5px 23px;
@@ -409,7 +421,7 @@ body.aig {
 
 .markup-content {
   ul {
-    font-family: "Roboto", sans-serif;
+    font-family: 'Roboto', sans-serif;
     font-size: 16px;
     font-weight: 300;
     font-style: normal;
@@ -446,4 +458,18 @@ body.aig {
   padding: 0;
   margin: 0;
   border: none;
+}
+
+.table-container table {
+  .el-form-item textarea {
+    background: none;
+    border: none;
+    min-height: 52px !important;
+    min-width: 186px !important;
+    resize: both;
+  }
+
+  th .el-form-item textarea {
+    color: white;
+  }
 }

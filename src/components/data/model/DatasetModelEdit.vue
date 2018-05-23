@@ -1,36 +1,50 @@
 <template>
   <div>
-    <el-row>
-      <el-row class="input-section-title">{{$t('data.dataset.model.model')}}</el-row>
-    </el-row>
+    <h3 class="section-title">{{$t('data.dataset.navigation.coefficients')}}</h3>
     <transition-group name="slideDown">
-      <div v-for="(model, index) in value" :key="index" v-if="value.length > 0">
-        <div class="table-container">
-          <div class="table-wrapper">
+      <div v-for="(model, tableIndex) in value.data" :key="tableIndex" v-if="value.data.length > 0">
+        <el-row>
+          <el-row class="input-section-title">{{$t('data.dataset.model.tableTitle')}}</el-row>
+          <el-form-item :prop="'model.titles.' + tableIndex" :rules="{
+            required: true, message: $t('data.dataset.validation.modelTitleEmpty'), trigger: 'blur'
+          }">
+            <el-input :placeholder=" $t( 'data.dataset.model.placeholder.modelTitle') " v-model="models.titles[tableIndex]"></el-input>
+          </el-form-item>
+        </el-row>
+        <div class="table-container ">
+          <div class="table-wrapper ">
             <table>
-              <thead class="table-header">
+              <thead class="table-header ">
                 <tr>
-                  <th v-for="(key, index) in model[0]" :key="index">
-                    <input v-model="model[0][index]" maxlength="100" />
+                  <th v-for="(key, index) in model[0] " :key="index ">
+                    <el-form-item :prop="'model.data.' + tableIndex + '.0.' + index" :rules="{
+                        required: true, message: $t('data.dataset.validation.tableCellEmpty'), trigger: 'blur'
+                      }">
+                      <el-input type="textarea" v-model="model[0][index] " :placeholder="$t('data.dataset.model.placeholder.title')" maxlength="100 "></el-input>
+                    </el-form-item>
                   </th>
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="(row, index) in model" v-if="index !== 0" :key="index">
-                  <td v-for="(colData, i) in row" :key="i">
-                    <input v-model="row[i]" maxlength="150" />
+                <tr v-for="(row, index) in model " v-if="index !==0 " :key="index ">
+                  <td v-for="(colData, i) in row " :key="i ">
+                    <el-form-item :prop="'model.data.' + tableIndex + '.' + index + '.' + i" :rules="{
+                      required: true, message: $t('data.dataset.validation.tableCellEmpty'), trigger: 'blur'
+                    }">
+                      <el-input type="textarea" v-model="row[i]" :placeholder="$t('data.dataset.model.placeholder.data')" maxlength="150 "></el-input>
+                    </el-form-item>
                   </td>
                 </tr>
               </tbody>
             </table>
-            <img src="/static/add-button.svg" alt="add-row-button" @click="addRow(index)" class="table-action-button">
-            <img src="/static/remove-button.svg" alt="add-row-button" @click="removeRow(index)" class="table-action-button">
+            <img src="/static/add-button.svg " alt="add-row-button " @click="addRow(tableIndex) " class="table-action-button ">
+            <img src="/static/remove-button.svg " alt="add-row-button " @click="removeRow(tableIndex) " class="table-action-button ">
           </div>
-          <div class="buttons-container">
-            <img src="/static/delete-button.svg" alt="delete-button" @click="deleteTable(index)" class="table-action-button">
-            <span class="inner-buttons-container">
-              <img src="/static/add-button.svg" alt="add-column-button" @click="addColumn(index)" class="table-action-button">
-              <img src="/static/remove-button.svg" alt="add-row-button" @click="removeColumn(index)" class="table-action-button">
+          <div class="buttons-container ">
+            <img src="/static/delete-button.svg " alt="delete-button " @click="deleteTable(tableIndex) " class="table-action-button ">
+            <span class="inner-buttons-container ">
+              <img src="/static/add-button.svg " alt="add-column-button " @click="addColumn(tableIndex) " class="table-action-button ">
+              <img src="/static/remove-button.svg " alt="add-row-button " @click="removeColumn(intableIndexdex) " class="table-action-button ">
             </span>
             <span></span>
           </div>
@@ -40,7 +54,7 @@
     <el-row class="table-create-container">
       <p>{{$t('data.dataset.model.newTable')}}</p>
       <div>
-        <input v-model="colsLength" @input="event => validateInput(event)" />
+        <input v-model="colsLength" @input="event=> validateInput(event)" />
         <p>{{$t('data.dataset.model.on')}}</p>
         <input v-model="rowsLength" @input="event => validateInput(event)" />
       </div>
@@ -56,7 +70,7 @@
 <script>
 
 export default {
-  props: ['value', 'validationCallback'],
+  props: ['value', 'validateField'],
   data () {
     return {
       lengthError: false,
@@ -69,71 +83,72 @@ export default {
     }
   },
   watch: {
-    models () {
+    value () {
       this.models = this.value
     }
   },
   methods: {
     createTable () {
-      if (this.lengthError) {
-        return
-      }
+      if (this.lengthError) return
 
       this.models = this.value
 
       const cols = parseInt(this.colsLength)
       const rows = parseInt(this.rowsLength)
 
-      if (cols > 10 || rows > 50) {
-        this.sizeTooBigError = true
-        return
-      } else if (cols < 1 || rows < 1) {
-        this.sizeTooSmallError = true
-        return
-      } else {
-        this.sizeTooBigError = false
-        this.sizeTooSmallError = false
-      }
+      if (!this.isTableSizeValid(cols, rows)) return
 
       let model = []
-      model.push(new Array(cols).fill(this.$t('data.dataset.model.placeholder.title')))
+      model.push(new Array(cols).fill(''))
 
       for (let i = 0; i < rows; i++) {
-        model.push(new Array(cols).fill(this.$t('data.dataset.model.placeholder.data')))
+        model.push(new Array(cols).fill(''))
       }
 
-      this.models.push(model)
+      this.models.titles.push('')
+      this.models.data.push(model)
 
       this.colsLength = ''
       this.rowsLength = ''
-
       this.$emit('input', this.models)
-      this.validationCallback(this.models)
     },
     addColumn (index) {
       this.models = this.value
-      this.models[index][0].push(this.$t('data.dataset.model.placeholder.title'))
+      this.models.data[index][0].push('')
 
-      this.models[index].forEach((value, index) => {
+      this.models.data[index].forEach((value, index) => {
         if (index !== 0) {
-          value.push(this.$t('data.dataset.model.placeholder.data'))
+          value.push('')
         }
       })
     },
     removeColumn (index) {
       this.models = this.value
-      this.models[index].forEach(value => value.pop())
+      this.models.data[index].forEach(value => value.pop())
     },
     addRow (index) {
       this.models = this.value
-      const cols = this.models[index][0].length
-      this.models[index].push(
-        new Array(cols).fill(this.$t('data.dataset.model.placeholder.data'))
+      const cols = this.models.data[index][0].length
+      this.models.data[index].push(
+        new Array(cols).fill('')
       )
     },
     removeRow (index) {
       this.models = this.value
-      this.models[index].pop()
+      this.models.data[index].pop()
+    },
+    isTableSizeValid (cols, rows) {
+      if (cols > 10 || rows > 50) {
+        this.sizeTooBigError = true
+        return false
+      } else if (cols < 1 || rows < 1) {
+        this.sizeTooSmallError = true
+        return false
+      } else {
+        this.sizeTooBigError = false
+        this.sizeTooSmallError = false
+        return true
+      }
     },
     validateInput (event) {
       this.sizeError = false
@@ -152,10 +167,21 @@ export default {
     },
     deleteTable (index) {
       this.models = this.value
-      this.models.splice(index, 1)
-      this.validationCallback(this.models)
+      this.models.data.splice(index, 1)
+      this.models.titles.splice(index, 1)
+
+      for (let tableIndex in this.models.data) {
+        this.validateField('model.titles.' + tableIndex)
+
+        for (let index in this.models.data[tableIndex]) {
+          for (let i in this.models.data[tableIndex][index]) {
+            this.validateField('model.data.' + tableIndex + '.' + index + '.' + i)
+          }
+        }
+      }
     }
   }
+
 }
 </script>
 <style lang="scss" scoped>
@@ -209,29 +235,21 @@ export default {
       &:last-child {
         border-right: $border-light-purple;
       }
-      input {
-        font-size: 16px;
-      }
-    }
-    input {
-      height: 30px;
-      font-size: 14px;
-      border: none;
-      border-bottom: 1px solid $light-grey-border;
-      text-align: center;
-    }
-    thead {
-      input {
-        background: none;
-        border-bottom: 1px solid white;
-        color: white;
-      }
     }
     table {
       border: none;
       border-left: 1px solid $border-light-purple;
       border-right: 1px solid $border-light-purple;
       margin: 20px auto;
+
+      .el-form-item {
+        margin-bottom: 0px;
+      }
+
+      tr td,
+      tr th {
+        max-width: min-content;
+      }
     }
 
     .inner-buttons-container {
@@ -320,10 +338,6 @@ export default {
 
       .table-wrapper {
         max-width: calc(100% - 14px);
-      }
-
-      input {
-        width: 120px;
       }
 
       table {

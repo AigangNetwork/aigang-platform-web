@@ -37,5 +37,11 @@ export default {
 
   .table-container {
     @include aig-table;
+
+    table tr th {
+      padding: 19px 17px 19px 17px;
+      word-wrap: break-word;
+      max-width: 250px;
+    }
   }
 </style>

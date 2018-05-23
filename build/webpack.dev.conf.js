@@ -73,14 +73,7 @@ const devWebpackConfig = merge(baseWebpackConfig, {
         to: config.dev.assetsSubDirectory,
         ignore: ['.*']
       }
-    ]),
-    // Improve loading speed by caching modules
-    new HardSourcePlugin({
-      cacheDirectory: path.join(__dirname, 'node_modules/.cache/hard-source/[confighash]'),
-      configHash: function () {
-        return process.env.NODE_ENV + process.env.API_ADDRESS
-      }
-    })
+    ])
   ]
 })
 
