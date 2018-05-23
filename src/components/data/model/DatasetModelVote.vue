@@ -27,7 +27,6 @@ export default {
     return {
       count: 0,
       hasVoted: false,
-      canVote: false,
       showUnauthorizedVoting: false,
       votingDisabled: false
     }
@@ -87,10 +86,15 @@ export default {
       }
     }
   },
+  computed: {
+    canVote () {
+      return this.$store.getters.dataset &&
+          this.$store.getters.dataset.state === 'active' &&
+          this.$store.getters.isAuthenticated
+    }
+  },
   mounted () {
     this.fetchVotesCount()
-
-    this.canVote = this.$store.getters.dataset.state === 'active' && this.$store.getters.isAuthenticated
 
     if (this.canVote) {
       this.fetchHasUserVoted()

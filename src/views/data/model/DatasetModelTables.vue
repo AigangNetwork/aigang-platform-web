@@ -1,11 +1,11 @@
 <template>
   <div class="table-container" v-loading="loading">
     <div class="aig-dataset-info-container">
-      <div class="tables-container">
-        <PreviewTable v-for="(model, index) in models" v-if="true" :cols="model[0]" :rows="model.slice(1, model.length)" :key="index"></PreviewTable>
+      <div v-for="(data, index) in model.data" :key="index" class="tables-container">
+        <h4 class="info-title">{{ model.titles[index] }}</h4>
+        <PreviewTable v-if="true" :cols="data[0]" :rows="data.slice(1, data.length)" :key="index"></PreviewTable>
       </div>
     </div>
-
   </div>
 </template>
 
@@ -19,7 +19,7 @@ export default {
   },
   data () {
     return {
-      models: [],
+      model: {},
       loading: false
     }
   },
@@ -32,7 +32,7 @@ export default {
           datasetId,
           modelId
         })
-        this.models = JSON.parse(this.$store.state.currentModel.model)
+        this.model = JSON.parse(this.$store.state.currentModel.model)
         this.loading = false
       } catch (e) {
         this.loading = false
@@ -49,20 +49,25 @@ export default {
   @import '~helpers/variables';
   .tables-container {
     margin-top: 30px;
+
     .table-container {
       align-items: center;
+
       .structure-content {
         margin-bottom: 25px;
+
         .column-name {
           word-wrap: break-word;
           color: $active-dark-purple;
           font-weight: 600;
         }
+
         .column-decsription {
           word-wrap: break-word;
           font-weight: 400;
           color: $purple;
         }
+
         .column-datatype {
           word-wrap: break-word;
           font-weight: 400;
@@ -70,10 +75,10 @@ export default {
           text-align: right;
         }
       }
+
       .structure-row {
         border-bottom: 1px solid $light-grey-border;
       }
     }
   }
-
 </style>

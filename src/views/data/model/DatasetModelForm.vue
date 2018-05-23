@@ -1,6 +1,6 @@
 <template>
   <div class="aig-dataset-info-container" v-loading="loading">
-    <h4 class="info-title">{{$t('data.dataset.model.editModel')}}</h4>
+    <h3 class="section-title" v-if="!isUpload">{{$t('data.dataset.model.editModel')}}</h3>
     <el-form :model="modelForm" :rules="modelFormRules" ref="modelForm">
 
       <DatasetTitleEdit v-model="modelForm.title" />
@@ -9,17 +9,11 @@
 
       <DatasetDescriptionEdit v-model="modelForm.description" />
 
-      <DatasetModelEdit v-model="model" :validationCallback="validate" />
+      <DatasetModelEdit v-model="modelForm.model" :validateField="validateField" />
 
       <el-row v-if="!isModelValid">
         <div class="aig-form-error">
           {{$t('data.dataset.validation.emptyModel')}}
-        </div>
-      </el-row>
-
-      <el-row v-if="!isModelInputsValid">
-        <div class="aig-form-error">
-          {{$t('data.dataset.validation.emptyModelInput')}}
         </div>
       </el-row>
 
@@ -72,8 +66,12 @@ export default {
   },
   mixins: [FormMixin],
   data () {
-    const checkMinPremium = (rule, value, callback) => {
-      if (parseFloat(value) < 0.000001) {
+    const checkPremiumValue = (rule, value, callback) => {
+      if (Number(value) > 100000) {
+        callback(new Error(this.$t('data.dataset.validation.premiumMax')))
+      } else if (Number(value) < 0.000001) {
+        callback(new Error(this.$t('data.dataset.validation.premiumMin')))
+      } else if (Number(value) === 0) {
         callback(new Error(this.$t('data.dataset.validation.premiumZero')))
       } else {
         callback()
@@ -81,16 +79,17 @@ export default {
     }
     return {
       loading: false,
-      model: [],
       isModelValid: true,
-      isModelInputsValid: true,
       dialogVisible: false,
       modelForm: {
         title: '',
         description: '',
         premium: '',
-        model: '',
-        dataId: ''
+        dataId: '',
+        model: {
+          titles: [],
+          data: []
+        }
       },
       modelFormRules: {
         title: [{
@@ -107,8 +106,7 @@ export default {
           max: 64,
           message: this.$t('data.dataset.validation.titleTooLong'),
           trigger: 'blur'
-        }
-        ],
+        }],
         description: [{
           required: true,
           message: this.$t('data.dataset.validation.descriptionEmpty'),
@@ -118,19 +116,19 @@ export default {
           min: 6,
           message: this.$t('data.dataset.validation.descriptionTooShort'),
           trigger: 'blur'
-        }
-        ],
+        }],
         premium: [{
           required: true,
           message: this.$t('data.dataset.validation.premiumEmpty'),
           trigger: 'blur'
-        }, {
-          pattern: /^(?:\d{1,6}\.\d{1,6}|[0-9]\d{0,5})$/,
-          message: this.$t('data.dataset.validation.premiumInvalid'),
+        },
+        {
+          validator: checkPremiumValue,
           trigger: 'blur'
         },
         {
-          validator: checkMinPremium,
+          pattern: /^(?:\d{1,6}\.\d{1,6}|[0-9]\d{0,5})$/,
+          message: this.$t('data.dataset.validation.premiumInvalid'),
           trigger: 'blur'
         }]
       }
@@ -138,20 +136,18 @@ export default {
   },
   methods: {
     formAction () {
-      this.removeEmptyRowsAndColumns(this.model)
-      this.validate(this.model)
+      this.validate(this.modelForm.model.data)
       this.submitForm('modelForm', this.postDataModel)
     },
     postDataModel () {
-      if (!this.isModelValid || !this.isModelInputsValid) {
-        return
-      }
+      if (!this.isModelValid) return
 
       this.loading = true
-      this.modelForm.model = JSON.stringify(this.model)
-      this.modelForm.dataId = this.$route.params.id
+      let form = { ...this.modelForm }
+      form.model = JSON.stringify(this.modelForm.model)
+      form.dataId = this.$route.params.id
 
-      this.axios.post(this.postPath, this.modelForm)
+      this.axios.post(this.postPath, form)
         .then(response => {
           this.$notify({
             title: this.$t('data.dataset.model.notification.title.success'),
@@ -173,56 +169,6 @@ export default {
           this.loading = false
         })
     },
-    validate (model) {
-      if (model.length > 0) {
-        this.isModelValid = true
-      } else {
-        this.isModelValid = false
-      }
-
-      // we need to flatten 3d array
-      const tables = [].concat.apply([], model)
-      const tableInputs = [].concat.apply([], tables)
-
-      this.isModelInputsValid = true
-      tableInputs.forEach(input => {
-        if (input.length < 1) {
-          this.isModelInputsValid = false
-        }
-      })
-    },
-    removeEmptyRowsAndColumns (model) {
-      let rowsToRemove = []
-
-      model.forEach(table => {
-        let columnsInputSum = new Array(table.length).fill('')
-
-        table.forEach((row, index) => {
-          let accumulator = ''
-
-          row.forEach((value, currentIndex) => {
-            columnsInputSum[currentIndex] += value
-            accumulator += value
-          })
-
-          if (accumulator === '') {
-            rowsToRemove.push(index)
-          }
-        })
-
-        rowsToRemove.forEach(index => {
-          table.splice(index, 1)
-        })
-
-        columnsInputSum.forEach((input, currentIndex) => {
-          if (input === '') {
-            table.forEach(value => {
-              value.splice(currentIndex, 1)
-            })
-          }
-        })
-      })
-    },
     deleteModel () {
       this.loading = true
       this.axios.delete(`/data/${this.$route.params.id}/models/${this.$route.params.modelId}`)
@@ -239,6 +185,16 @@ export default {
     },
     cancel () {
       this.dialogVisible = false
+    },
+    validate (model) {
+      if (model.length > 0) {
+        this.isModelValid = true
+      } else {
+        this.isModelValid = false
+      }
+    },
+    validateField (prop) {
+      this.$refs['modelForm'].validateField(prop)
     }
   },
   async created () {
@@ -254,7 +210,7 @@ export default {
         }
 
         this.modelForm = response.data.data
-        this.model = JSON.parse(response.data.data.model)
+        this.modelForm.model = JSON.parse(this.modelForm.model)
       } catch (error) {
         this.modelForm = {}
         this.loading = false
@@ -269,6 +225,7 @@ export default {
     if (this.$store.state.currentDataset && this.$store.state.currentDataset.state !== 'active') {
       this.$router.push({ name: 'AccessDenied' })
     }
+
     this.modelForm.dataId = this.$store.state.currentDataset.id
   }
 }

@@ -83,7 +83,7 @@
       "notApprovedTooltip": "Dataset is waiting for approval",
       "closedTooltip": "Dataset is closed",
       "publicTooltip": "Dataset is visible for all visitors",
-      "privateTooltip": "thisDataset is visible only for logged in users",
+      "privateTooltip": "Dataset is visible only for logged in users",
       "uploadModelDisabled": "You have to log in to upload new model",
       "navigation": {
         "info": "Info",
@@ -122,8 +122,12 @@
         "fileEmpty": "File is required",
         "fileTooBig": "File is too large",
         "premiumEmpty": "Premium is required",
-        "premiumInvalid": "Invalid premium. Value e.g. 000000.000000",
-        "premiumZero": "Premium cannot be zero",
+        "modelTitleEmpty": "Model title is required",
+        "tableCellEmpty": "Field is required",
+        "premiumInvalid": "Invalid base premium. Value e.g. 000000.000000",
+        "premiumZero": "Base premium cannot be zero",
+        "premiumMin": "Base premium cannot be less than 0.000001",
+        "premiumMax": "Base premium cannot be more than 100000",
         "onlyIntegersAllowed": "Only integers allowed",
         "tableTooBig": "Maximum size of the table is 10x50",
         "tableTooSmall": "Minimum size of the table is 1x1",
@@ -134,6 +138,7 @@
       "model": {
         "models": "Models",
         "model": "Model",
+        "tableTitle": "Table title",
         "uploadModel": "Upload model",
         "cancel": "Cancel",
         "premium": "Base premium",
@@ -158,6 +163,7 @@
         "noUsersVoted": "Model does not have any upvotes yet",
         "votingDisabled": "You have to log in to upvote",
         "placeholder": {
+          "modelTitle": "Set a title of model",
           "title": "Title",
           "data": "Data"
         },
