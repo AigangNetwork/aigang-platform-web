@@ -45,8 +45,7 @@
         },
         "validation": {
           "emptyInputError": "Please make sure you have filled all fields",
-          "fileLimitExceed":
-            "You are able to upload only one .csv file. Please delete old file before uploading new one",
+          "fileLimitExceed": "You are able to upload only one .csv file. Please delete old file before uploading new one",
           "unableAccessFileContent": "File can not be accessed. Please reupload correct file",
           "invalidFile": "Invalid file content type. Please make sure you upload .csv files only!",
           "fileTooLarge": "Please make sure you follow all file preferences. File is too large."
@@ -74,12 +73,11 @@
       "downloadDataset": "Download dataset",
       "deleteDataset": "Delete dataset",
       "deleteDatasetTitle": "Delete your dataset",
-      "deleteDatasetDescription":
-        "This dataset and all files, data, models and comments associated with it will be permanently deleted. You won't be able to recover it later on.",
+      "deleteDatasetDescription": "This dataset and all files, data, models and comments associated with it will be permanently deleted. You won't be able to recover it later on.",
       "editDataset": "Edit dataset",
       "successDelete": "Dataset was successfully deleted",
       "deleteDialogBody": "Are you sure you want to delete this dataset?",
-      "invalidPreview": "This dataset does not contain svisual preview. Download file to check it out",
+      "invalidPreview": "This dataset does not contain visual preview.",
       "notApprovedTooltip": "Dataset is waiting for approval",
       "closedTooltip": "Dataset is closed",
       "publicTooltip": "Dataset is visible for all visitors",
@@ -154,8 +152,7 @@
         "editModel": "Edit model",
         "deleteModel": "Delete model",
         "deleteModelTitle": "Delete your model",
-        "deleteModelDescription":
-          "This model and all data and comments associated with it will be permanently deleted. You won't be able to recover it later on.",
+        "deleteModelDescription": "This model and all data and comments associated with it will be permanently deleted. You won't be able to recover it later on.",
         "modelsNotFound": "This dataset does not contain any models yet",
         "deleteDialogBody": "Are you sure you want to delete this model?",
         "usersVoted": "users upvoted this model",
@@ -209,8 +206,7 @@
   },
   "signUp": {
     "signUp": "Sign Up",
-    "description":
-      "Creating an account in aigang.network you will get access to all products such as Data, Prediction market, Invest and Insure",
+    "description": "Creating an account in aigang.network you will get access to all products such as Data, Prediction market, Invest and Insure",
     "haveAccount": "Have Aigang Network Account?",
     "rePassword": "Repeat password",
     "emailSent": "Email was sent to {0}. Follow instructions provided in the email.",
@@ -248,8 +244,7 @@
     "firstName": "First name",
     "lastName": "Last name",
     "changePassword": "Change password",
-    "passwordDescription":
-      "Minimum password length must be 8 characters and consist of at least 2 alpha characters, 1 number and 1 special character ",
+    "passwordDescription": "Minimum password length must be 8 characters and consist of at least 2 alpha characters, 1 number and 1 special character ",
     "oldPassword": "Old password",
     "newPassword": "New password",
     "update": "Update",
@@ -264,8 +259,7 @@
     "emailNews": "Get news and updates about Aigang's product",
     "passwordUpdated": "Password succesfully updated",
     "deactivateAccountTitle": "Deactivate your account",
-    "deactivateAccountDescription":
-      "If you decide that you no longer want to use Aigang Platform, it's easy to deactivate your account. When you deactivate your account, you're no longer availible to log in or access your private uploaded datasets.",
+    "deactivateAccountDescription": "If you decide that you no longer want to use Aigang Platform, it's easy to deactivate your account. When you deactivate your account, you're no longer availible to log in or access your private uploaded datasets.",
     "deactivateAccount": "Deactivate account",
     "warning": "Warning",
     "confirmationText": "Are you sure you want to deactivate your account?",
@@ -352,7 +346,8 @@
       "TitleOrDescriptionTooShort": "Title or description can not be shorter than 6 characters.",
       "Forbidden": "You are trying to access forbidden resources",
       "NotFound": "Not found",
-      "CommentTooLong": "Comment lenght limit was reached"
+      "CommentTooLong": "Comment lenght limit was reached",
+      "RemoteAccessPointNotSet": "Remote access point is not set."
     },
     "pagePathNotFound": "The page you are trying to access is not available",
     "validationError": "You have entered an invalid data",
@@ -360,8 +355,7 @@
     "serverNotFoundRule1": "Make sure you are connected to the Internet.",
     "serverNotFoundRule2": "This might occur when the browser can not reach the server. Please try again later.",
     "contactIfError": "If you see this error please contact us via email info@aigang.network",
-    "metamaskDetected":
-      "We have detected that you are using metamask extension. In order to see your account AIX balance please switch your network to ",
+    "metamaskDetected": "We have detected that you are using metamask extension. In order to see your account AIX balance please switch your network to ",
     "useMetamask": "To use all of our Platform features please Log in to Metamask Extension"
   }
 }

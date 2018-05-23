@@ -29,12 +29,9 @@
       <h4 class="info-title">{{$t('data.upload.titles.preview')}}</h4>
       <PreviewTable v-if="validJsonPreview" :cols="cols" :rows="rows"></PreviewTable>
       <div class="invalid-preview" v-else>
-        <h3>
-          {{$t('data.dataset.invalidPreview')}}
-        </h3>
+        {{$t('data.dataset.invalidPreview')}}
       </div>
     </div>
-
   </div>
 </template>
 
@@ -163,6 +160,10 @@ export default {
         padding: 0 10px;
       }
     }
+  }
+
+  .invalid-preview {
+    margin-bottom: 20px;
   }
 
   @media screen and (min-width: 100px) and (max-width: 680px) {
