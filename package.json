@@ -15,6 +15,7 @@
     "qabuild": "NODE_ENV=qa node build/build.js"
   },
   "dependencies": {
+    "@johmun/vue-tags-input": "^1.4.1",
     "axios": "^0.18.0",
     "breakpoint-sass": "^2.7.1",
     "element-ui": "^2.3.8",

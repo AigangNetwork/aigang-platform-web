@@ -21,6 +21,9 @@
             </el-select>
           </div>
         </el-row>
+        <div v-if="!isStructureValid" class="aig-form-error">
+          {{$t('data.dataset.validation.structureFieldEmpty')}}
+        </div>
       </div>
     </transition>
     <transition name="slideDown ">
@@ -29,15 +32,13 @@
         <el-form-item>
           <el-input :placeholder="$t( 'data.upload.input.placeholder.structure') " type="textarea " :value="value
             " @change="value=> $emit('input',value)"></el-input>
+
+          <div v-if="!isStructureValid" class="aig-form-error">
+            {{$t('data.dataset.validation.structureFieldEmpty')}}
+          </div>
         </el-form-item>
       </div>
     </transition>
-
-    <el-row v-if="!isStructureValid">
-      <div class="aig-form-error">
-        {{$t('data.dataset.validation.structureFieldEmpty')}}
-      </div>
-    </el-row>
   </el-row>
 </template>
 <script>
@@ -118,4 +119,5 @@ export default {
       width: 40%;
     }
   }
+
 </style>

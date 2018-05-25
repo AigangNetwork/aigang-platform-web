@@ -38,10 +38,10 @@
             <el-form-item>
               <p>{{$t('data.upload.rules.rule2')}}</p>
               <el-input :placeholder="$t('data.upload.input.placeholder.fileAccess')" type="textarea" v-model="dataUploadForm.remoteFileAccessPoint"></el-input>
+              <div v-if="isErrorOnFirstStep" class="aig-form-error">
+                {{errorMessage}}
+              </div>
             </el-form-item>
-            <div v-if="isErrorOnFirstStep" class="aig-form-error">
-              {{errorMessage}}
-            </div>
             <el-button @click="loadFile()" class="aig-load-button" type="primary">{{$t('data.upload.titles.load')}}</el-button>
           </el-form>
         </el-row>
@@ -55,6 +55,15 @@
             <el-form :model="dataUploadForm" :rules="dataUploadFormRules" ref="dataUploadForm">
               <DatasetTitleEdit v-model="dataUploadForm.title" />
               <DatasetDescriptionEdit v-model="dataUploadForm.description" />
+              <el-row>
+                <el-row class="input-section-title">{{$t('data.upload.titles.tags')}}</el-row>
+                <vue-tags-input class="custom-try" :autocomplete-items="autoCompleteTags" v-model="tag" @input="inputChanged" @blur="onLeave"
+                  :tags="dynamicTags" :validation="tagsValidation" @before-adding-tag="checkTag" @tags-changed="newTags => dynamicTags = newTags"
+                />
+                <div v-if="errorOnTag" class="aig-form-error">
+                  {{errorMessage}}
+                </div>
+              </el-row>
               <DatasetStructureEdit :structure="dynamicFileStructure" v-model="remoteFileStructure" ref="structureComponent" :isStructured="!invalidFile"
               />
             </el-form>
@@ -82,6 +91,7 @@ import DatasetTitleEdit from '@/components/data/DatasetTitleEdit'
 import DatasetDescriptionEdit from '@/components/data/DatasetDescriptionEdit'
 import DatasetStructureEdit from '@/components/data/DatasetStructureEdit'
 import DatasetFilePreferences from '@/components/data/upload/DatasetFilePreferences'
+import VueTagsInput from '@johmun/vue-tags-input'
 import router from '@/router'
 
 export default {
@@ -91,7 +101,8 @@ export default {
     DatasetDescriptionEdit,
     DatasetStructureEdit,
     DatasetFileCard,
-    DatasetFilePreferences
+    DatasetFilePreferences,
+    VueTagsInput
   },
   data () {
     return {
@@ -99,13 +110,15 @@ export default {
       isRemoteFile: false,
       invalidFile: false,
       fileAttached: false,
-      firstStepActive: true,
-      secondStepActive: false,
+      firstStepActive: false,
+      secondStepActive: true,
       isValidForm: true,
       isErrorOnFirstStep: false,
       dynamicFileStructure: [],
       remoteFileStructure: '',
       loading: false,
+      tag: '',
+      dynamicTags: [],
       dataUploadForm: {
         title: '',
         description: '',
@@ -142,7 +155,16 @@ export default {
         }
         ]
       },
-      errorMessage: ''
+      errorMessage: '',
+      tagsValidation: [{
+        type: 'allowed-symbols',
+        rule (text) {
+          return /[^a-zA-Z0-9-]/.test(text)
+        },
+        disableAdd: true
+      }],
+      errorOnTag: false,
+      autoCompleteTags: []
     }
   },
   methods: {
@@ -240,6 +262,10 @@ export default {
       } else {
         uploadForm.append('structure', this.remoteFileStructure)
       }
+      if (this.dynamicTags.length > 0) {
+        var arr = this.dynamicTags.map(t => t.text)
+        uploadForm.append('tags', JSON.stringify(arr))
+      }
 
       this.axios.post('/data', uploadForm).then(response => {
         this.successfullUpload()
@@ -286,6 +312,30 @@ export default {
         this.dynamicFileStructure = []
         this.uploadDataset.file = []
         this.fileAttached = false
+      }
+    },
+    checkTag (obj) {
+      this.errorOnTag = false
+      if (/[^a-zA-Z0-9-]/.test(obj.tag.text)) {
+        this.errorOnTag = true
+        this.errorMessage = this.$t('data.dataset.validation.invalidTag')
+        return
+      }
+      obj.addTag()
+    },
+    onLeave (value) {
+      this.errorOnTag = false
+    },
+    inputChanged (text) {
+      if (!this.errorOnTag && text.length >= 2) {
+        setTimeout(async () => {
+          var response = await this.axios.get('tags/' + text)
+          if (response.data) {
+            this.autoCompleteTags = response.data.map(tag => ({
+              text: tag
+            }))
+          }
+        }, 300)
       }
     }
   }
@@ -344,7 +394,6 @@ export default {
     .aig-back-btn {
       margin-top: 40px;
     }
-
   }
 
   @media screen and (min-width: 680px) and (max-width: 1024px) {
@@ -384,4 +433,5 @@ export default {
       }
     }
   }
+
 </style>

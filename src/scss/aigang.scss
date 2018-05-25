@@ -325,9 +325,10 @@ body.aig {
 }
 
 .aig-form-error {
-  text-align: center;
+  margin-top: 5px;
   margin-bottom: 15px;
-  color: red;
+  font-size: 12px;
+  color: #f56c6c;
 }
 
 .aig-error {
@@ -378,12 +379,10 @@ body.aig {
 
 .aig-dataset-info-container {
   padding: 0px 53px 53px 53px;
-
   .info-content {
     word-wrap: break-word;
     color: $purple;
   }
-
   @media screen and (min-width: 100px) and (max-width: 680px) {
     .aig-dataset-info-container {
       padding: 0px 23px 5px 23px;
@@ -468,8 +467,21 @@ body.aig {
     min-width: 186px !important;
     resize: both;
   }
-
   th .el-form-item textarea {
     color: white;
+  }
+}
+
+.vue-tags-input {
+  max-width: 1000px !important;
+  ul {
+    min-height: 38px;
+  }
+  input {
+    font-size: 14px;
+    color: #b5b5ba;
+  }
+  input:focus {
+    color: #121217;
   }
 }
