@@ -133,7 +133,9 @@
         "emptyModel": "Model table is required",
         "emptyModelInput": "Make sure you have filled all table fields",
         "titleTooLong": "Maximum 64 characters",
-        "invalidTag": "Invalid tag: only letters, numbers and \"-\" symbols are allowed"
+        "invalidTag": "Invalid tag: only letters, numbers and \"-\" symbols are allowed",
+        "invalidTagLength": "Invalid tag: tag is too short",
+        "invalidTagCount ": "Maximum tag limit is 5"
       },
       "model": {
         "models": "Models",

@@ -55,15 +55,7 @@
             <el-form :model="dataUploadForm" :rules="dataUploadFormRules" ref="dataUploadForm">
               <DatasetTitleEdit v-model="dataUploadForm.title" />
               <DatasetDescriptionEdit v-model="dataUploadForm.description" />
-              <el-row>
-                <el-row class="input-section-title">{{$t('data.upload.titles.tags')}}</el-row>
-                <vue-tags-input class="custom-try" :autocomplete-items="autoCompleteTags" v-model="tag" @input="inputChanged" @blur="onLeave"
-                  :tags="dynamicTags" :validation="tagsValidation" @before-adding-tag="checkTag" @tags-changed="newTags => dynamicTags = newTags"
-                />
-                <div v-if="errorOnTag" class="aig-form-error">
-                  {{errorMessage}}
-                </div>
-              </el-row>
+              <DatasetTags @tagsChanged="handleTagsChange" :tags="dynamicTags" />
               <DatasetStructureEdit :structure="dynamicFileStructure" v-model="remoteFileStructure" ref="structureComponent" :isStructured="!invalidFile"
               />
             </el-form>
@@ -90,8 +82,9 @@ import DatasetFileCard from '@/components/data/dataset/DatasetFileCard'
 import DatasetTitleEdit from '@/components/data/dataset/DatasetTitleEdit'
 import DatasetDescriptionEdit from '@/components/data/dataset/DatasetDescriptionEdit'
 import DatasetStructureEdit from '@/components/data/dataset/DatasetStructureEdit'
+import DatasetTags from '@/components/data/dataset/DatasetTags'
 import DatasetFilePreferences from '@/components/data/upload/DatasetFilePreferences'
-import VueTagsInput from '@johmun/vue-tags-input'
+
 import router from '@/router'
 
 export default {
@@ -102,7 +95,7 @@ export default {
     DatasetStructureEdit,
     DatasetFileCard,
     DatasetFilePreferences,
-    VueTagsInput
+    DatasetTags
   },
   data () {
     return {
@@ -117,7 +110,6 @@ export default {
       dynamicFileStructure: [],
       remoteFileStructure: '',
       loading: false,
-      tag: '',
       dynamicTags: [],
       dataUploadForm: {
         title: '',
@@ -154,17 +146,7 @@ export default {
           trigger: 'blur'
         }
         ]
-      },
-      errorMessage: '',
-      tagsValidation: [{
-        type: 'allowed-symbols',
-        rule (text) {
-          return /[^a-zA-Z0-9-]/.test(text)
-        },
-        disableAdd: true
-      }],
-      errorOnTag: false,
-      autoCompleteTags: []
+      }
     }
   },
   methods: {
@@ -337,6 +319,10 @@ export default {
           }
         }, 300)
       }
+    },
+    handleTagsChange (newTags) {
+      this.dynamicTags = newTags
+      console.log(newTags)
     }
   }
 }
