@@ -168,7 +168,9 @@ export default {
 
         this.setComments(this.dataset.commentsCount)
       } else {
-        this.$router.push({ name: 'NotFound' })
+        this.$router.push({
+          name: 'NotFound'
+        })
       }
 
       this.loading = false
@@ -194,6 +196,7 @@ export default {
         link.setAttribute('download', this.$route.params.id + '.csv')
         document.body.appendChild(link)
         link.click()
+        document.body.removeChild(link)
         this.loading = false
       })
     }
@@ -303,4 +306,5 @@ export default {
       margin-bottom: 40px;
     }
   }
+
 </style>
