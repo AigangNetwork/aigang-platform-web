@@ -86,10 +86,10 @@
 </template>
 <script>
 import Card from '@/components/Card'
-import DatasetFileCard from '@/components/data/DatasetFileCard'
-import DatasetTitleEdit from '@/components/data/DatasetTitleEdit'
-import DatasetDescriptionEdit from '@/components/data/DatasetDescriptionEdit'
-import DatasetStructureEdit from '@/components/data/DatasetStructureEdit'
+import DatasetFileCard from '@/components/data/dataset/DatasetFileCard'
+import DatasetTitleEdit from '@/components/data/dataset/DatasetTitleEdit'
+import DatasetDescriptionEdit from '@/components/data/dataset/DatasetDescriptionEdit'
+import DatasetStructureEdit from '@/components/data/dataset/DatasetStructureEdit'
 import DatasetFilePreferences from '@/components/data/upload/DatasetFilePreferences'
 import VueTagsInput from '@johmun/vue-tags-input'
 import router from '@/router'

@@ -36,7 +36,7 @@
 </template>
 
 <script>
-import PreviewTable from '@/components/data/DatasetPreviewTable.vue'
+import PreviewTable from '@/components/data/dataset/DatasetPreviewTable.vue'
 export default {
   components: {
     PreviewTable

@@ -48,9 +48,9 @@
   </div>
 </template>
 <script>
-import DatasetTitleEdit from '@/components/data/DatasetTitleEdit'
-import DatasetDescriptionEdit from '@/components/data/DatasetDescriptionEdit'
-import DatasetPremiumEdit from '@/components/data/DatasetPremiumEdit'
+import DatasetTitleEdit from '@/components/data/dataset/DatasetTitleEdit'
+import DatasetDescriptionEdit from '@/components/data/dataset/DatasetDescriptionEdit'
+import DatasetPremiumEdit from '@/components/data/dataset/DatasetPremiumEdit'
 import FormMixin from '@/components/mixins/FormMixin'
 import DatasetModelEdit from '@/components/data/model/DatasetModelEdit'
 import Dialog from '@/components/common/Dialog'

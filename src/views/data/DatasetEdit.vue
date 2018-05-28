@@ -52,10 +52,10 @@
   </el-container>
 </template>
 <script>
-import DatasetFileCard from '@/components/data/DatasetFileCard'
-import DatasetTitleEdit from '@/components/data/DatasetTitleEdit'
-import DatasetDescriptionEdit from '@/components/data/DatasetDescriptionEdit'
-import DatasetStructureEdit from '@/components/data/DatasetStructureEdit'
+import DatasetFileCard from '@/components/data/dataset/DatasetFileCard'
+import DatasetTitleEdit from '@/components/data/dataset/DatasetTitleEdit'
+import DatasetDescriptionEdit from '@/components/data/dataset/DatasetDescriptionEdit'
+import DatasetStructureEdit from '@/components/data/dataset/DatasetStructureEdit'
 import Dialog from '@/components/common/Dialog'
 
 export default {
@@ -164,7 +164,9 @@ export default {
         this.datasetForm.structure = JSON.stringify(this.datasetStructure)
         this.datasetForm.file = null
       } else {
-        this.$store.dispatch('setCurrentDatasetFile', { file: null })
+        this.$store.dispatch('setCurrentDatasetFile', {
+          file: null
+        })
         this.datasetForm.file = null
         this.datasetForm.structure = this.datasetRemoteStructure
         this.datasetForm.isFileRemote = true
@@ -251,7 +253,9 @@ export default {
       try {
         await this.$store.dispatch('loadCurrentDataset', this.$route.params.id)
         if (this.$store.state.currentDataset.userId !== this.$store.state.user.profile.id) {
-          this.$router.push({ name: 'AccessDenied' })
+          this.$router.push({
+            name: 'AccessDenied'
+          })
           return
         }
       } catch (e) {
@@ -266,9 +270,13 @@ export default {
       this.initializeDatasetForm(this.$store.getters.dataset)
 
       if (this.$store.state.currentDataset.remoteFileAccessPoint) {
-        this.$store.dispatch('setIsFileRemote', { isFileRemote: true })
+        this.$store.dispatch('setIsFileRemote', {
+          isFileRemote: true
+        })
       } else {
-        this.$store.dispatch('setIsFileRemote', { isFileRemote: false })
+        this.$store.dispatch('setIsFileRemote', {
+          isFileRemote: false
+        })
       }
 
       this.isStructured = !this.$store.state.currentDataset.isFileRemote
@@ -390,4 +398,5 @@ export default {
       }
     }
   }
+
 </style>
