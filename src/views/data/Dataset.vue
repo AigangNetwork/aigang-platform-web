@@ -58,6 +58,9 @@ import moment from 'moment'
 import DataNavigation from '@/components/navigation/DataNavigation'
 import Card from '@/components/Card'
 import eventHub from '@/utils/eventHub'
+import {
+  mapGetters
+} from 'vuex'
 
 export default {
   components: {
@@ -77,7 +80,6 @@ export default {
   },
   data () {
     return {
-      dataset: {},
       loading: false,
       isUserOwner: false,
       editRoute: '/data/' + this.$route.params.id + '/edit',
@@ -130,11 +132,25 @@ export default {
     }
   },
   computed: {
+    ...mapGetters(['dataset']),
     updated () {
       return moment(this.dataset.modifiedUtc).format('YYYY-MM-DD')
     },
     uploadingModelActive () {
       return this.$route.path.includes('uploadDataModel')
+    }
+  },
+  watch: {
+    dataset (newCount, oldCount) {
+      const modelsBar = this.navigationBars.find(bar => {
+        return bar.routeLink.name === 'datasetModels'
+      })
+
+      modelsBar.name = this.$t('data.dataset.navigation.models')
+
+      if (modelsBar && this.dataset.modelsCount > 0) {
+        modelsBar.name += ` (${this.dataset.modelsCount})`
+      }
     }
   },
   methods: {
@@ -149,25 +165,15 @@ export default {
         return
       }
 
-      if (this.$store.state.currentDataset) {
-        this.dataset = this.$store.state.currentDataset
-
+      if (this.dataset) {
         if (this.$store.state.user.profile &&
             this.$store.state.user.profile.id === this.dataset.userId) {
           this.isUserOwner = true
         }
 
-        const modelsBar = this.navigationBars.find(bar => {
-          return bar.routeLink.name === 'datasetModels'
-        })
-
-        modelsBar.name = this.$t('data.dataset.navigation.models')
-        if (modelsBar && this.dataset.modelsCount > 0) {
-          modelsBar.name += ` (${this.dataset.modelsCount})`
-        }
-
         this.setComments(this.dataset.commentsCount)
       } else {
+        this.dataset = {}
         this.$router.push({
           name: 'NotFound'
         })
@@ -306,5 +312,4 @@ export default {
       margin-bottom: 40px;
     }
   }
-
 </style>

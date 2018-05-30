@@ -48,11 +48,6 @@ export default {
           max: 1000,
           message: this.$t('data.dataset.comment.validation.commentTooLong'),
           trigger: 'blur'
-        },
-        {
-          min: 5,
-          message: this.$t('data.dataset.comment.validation.commentTooShort'),
-          trigger: 'blur'
         }
         ]
       }
@@ -104,5 +99,4 @@ export default {
     }
 
   }
-
 </style>
