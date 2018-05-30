@@ -3,7 +3,7 @@
     <div class="aig-blue-bck-container">
       <div class="aig-dataset-header">
         <div class="creator-info">
-          <div class="creator">{{$t('data.dataset.createdBy')}} {{dataset.createdBy}}</div>
+          <div class="creator">{{$t('data.dataset.createdBy')}} {{ dataset.createdBy }}</div>
           <div class="uploaded">{{$t('data.dataset.updated')}}: {{ updated }}</div>
         </div>
         <div class="dataset-title">{{dataset.title}}</div>
@@ -58,6 +58,9 @@ import moment from 'moment'
 import DataNavigation from '@/components/navigation/DataNavigation'
 import Card from '@/components/Card'
 import eventHub from '@/utils/eventHub'
+import {
+  mapGetters
+} from 'vuex'
 
 export default {
   components: {
@@ -77,7 +80,6 @@ export default {
   },
   data () {
     return {
-      dataset: {},
       loading: false,
       isUserOwner: false,
       editRoute: '/data/' + this.$route.params.id + '/edit',
@@ -130,11 +132,25 @@ export default {
     }
   },
   computed: {
+    ...mapGetters(['dataset']),
     updated () {
       return moment(this.dataset.modifiedUtc).format('YYYY-MM-DD')
     },
     uploadingModelActive () {
       return this.$route.path.includes('uploadDataModel')
+    }
+  },
+  watch: {
+    dataset (newCount, oldCount) {
+      const modelsBar = this.navigationBars.find(bar => {
+        return bar.routeLink.name === 'datasetModels'
+      })
+
+      modelsBar.name = this.$t('data.dataset.navigation.models')
+
+      if (modelsBar && this.dataset.modelsCount > 0) {
+        modelsBar.name += ` (${this.dataset.modelsCount})`
+      }
     }
   },
   methods: {
@@ -145,25 +161,13 @@ export default {
         await this.$store.dispatch('loadCurrentDataset', this.$route.params.id)
       } catch (error) {
         this.loading = false
-        this.dataset = {}
         return
       }
 
-      if (this.$store.state.currentDataset) {
-        this.dataset = this.$store.state.currentDataset
-
+      if (this.dataset && this.dataset.id) {
         if (this.$store.state.user.profile &&
             this.$store.state.user.profile.id === this.dataset.userId) {
           this.isUserOwner = true
-        }
-
-        const modelsBar = this.navigationBars.find(bar => {
-          return bar.routeLink.name === 'datasetModels'
-        })
-
-        modelsBar.name = this.$t('data.dataset.navigation.models')
-        if (modelsBar && this.dataset.modelsCount > 0) {
-          modelsBar.name += ` (${this.dataset.modelsCount})`
         }
 
         this.setComments(this.dataset.commentsCount)
@@ -306,5 +310,4 @@ export default {
       margin-bottom: 40px;
     }
   }
-
 </style>

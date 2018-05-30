@@ -157,6 +157,7 @@ export default {
           })
 
           this.$store.dispatch('loadCurrentModel', { datasetId: this.$route.params.id, modelId: this.$route.params.modelId })
+          this.$store.dispatch('loadCurrentDataset', this.$route.params.id)
 
           if (this.isUpload) {
             this.$router.push({ name: 'datasetModels' })
