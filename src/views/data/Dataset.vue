@@ -3,7 +3,7 @@
     <div class="aig-blue-bck-container">
       <div class="aig-dataset-header">
         <div class="creator-info">
-          <div class="creator">{{$t('data.dataset.createdBy')}} {{dataset.createdBy}}</div>
+          <div class="creator">{{$t('data.dataset.createdBy')}} {{ dataset.createdBy }}</div>
           <div class="uploaded">{{$t('data.dataset.updated')}}: {{ updated }}</div>
         </div>
         <div class="dataset-title">{{dataset.title}}</div>
@@ -161,11 +161,10 @@ export default {
         await this.$store.dispatch('loadCurrentDataset', this.$route.params.id)
       } catch (error) {
         this.loading = false
-        this.dataset = {}
         return
       }
 
-      if (this.dataset) {
+      if (this.dataset && this.dataset.id) {
         if (this.$store.state.user.profile &&
             this.$store.state.user.profile.id === this.dataset.userId) {
           this.isUserOwner = true
@@ -173,7 +172,6 @@ export default {
 
         this.setComments(this.dataset.commentsCount)
       } else {
-        this.dataset = {}
         this.$router.push({
           name: 'NotFound'
         })

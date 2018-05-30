@@ -68,7 +68,7 @@ const mutations = {
     }
   },
   CLEAR_CURRENT_DATASET (state, payload) {
-    state.currentDataset = null
+    state.currentDataset = {}
   },
   CLEAR_CURRENT_MODEL (state, payload) {
     state.currentModel = {}
