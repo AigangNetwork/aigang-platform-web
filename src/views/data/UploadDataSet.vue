@@ -55,7 +55,7 @@
             <el-form :model="dataUploadForm" :rules="dataUploadFormRules" ref="dataUploadForm">
               <DatasetTitleEdit v-model="dataUploadForm.title" />
               <DatasetDescriptionEdit v-model="dataUploadForm.description" />
-              <DatasetTags @tagsChanged="handleTagsChange" :tags="dynamicTags" />
+              <DatasetTagsInput @tagsChanged="handleTagsChange" :tags="dynamicTags" />
               <DatasetStructureEdit :structure="dynamicFileStructure" v-model="remoteFileStructure" ref="structureComponent" :isStructured="!invalidFile"
               />
             </el-form>
@@ -82,7 +82,7 @@ import DatasetFileCard from '@/components/data/dataset/DatasetFileCard'
 import DatasetTitleEdit from '@/components/data/dataset/DatasetTitleEdit'
 import DatasetDescriptionEdit from '@/components/data/dataset/DatasetDescriptionEdit'
 import DatasetStructureEdit from '@/components/data/dataset/DatasetStructureEdit'
-import DatasetTags from '@/components/data/dataset/DatasetTags'
+import DatasetTagsInput from '@/components/data/dataset/DatasetTagsInput'
 import DatasetFilePreferences from '@/components/data/upload/DatasetFilePreferences'
 
 import router from '@/router'
@@ -95,7 +95,7 @@ export default {
     DatasetStructureEdit,
     DatasetFileCard,
     DatasetFilePreferences,
-    DatasetTags
+    DatasetTagsInput
   },
   data () {
     return {

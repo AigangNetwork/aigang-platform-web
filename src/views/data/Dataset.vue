@@ -2,20 +2,27 @@
   <el-container class="aig-container-dataset" v-loading="loading">
     <div class="aig-blue-bck-container">
       <div class="aig-dataset-header">
-        <div class="creator-info">
-          <div class="creator">{{$t('data.dataset.createdBy')}} {{dataset.createdBy}}</div>
-          <div class="uploaded">{{$t('data.dataset.updated')}}: {{ updated }}</div>
+        <div>
+          <div class="creator-info">
+            <div class="creator">{{$t('data.dataset.createdBy')}} {{dataset.createdBy}}</div>
+            <div class="uploaded">{{$t('data.dataset.updated')}}: {{ updated }}</div>
+          </div>
+          <div class="dataset-title">{{dataset.title}}</div>
+          <div class="dataset-state" v-if="dataset.state === 'created'">Status: {{ $t('data.card.notApproved') }}</div>
+          <div class="dataset-state" v-if="dataset.state === 'closed'">Status: {{ $t('data.card.closed') }}</div>
+          <div class="aig-dataset-header-btn-container">
+            <button v-if="!dataset.remoteFileAccessPoint" @click="downloadDataset" class="aig-dataset-header-btn">
+              <img class="file-img" src="/static/dataset/documents24px.svg" alt=""> {{$t('data.dataset.downloadDataset')}}
+            </button>
+            <router-link v-if="isUserOwner" class="aig-dataset-header-btn fit edit" :to="editRoute" exact>
+              <img class="file-img" src="/static/dataset/edit21px.png" alt=""> {{$t('data.dataset.editDataset')}}
+            </router-link>
+          </div>
         </div>
-        <div class="dataset-title">{{dataset.title}}</div>
-        <div class="dataset-state" v-if="dataset.state === 'created'">Status: {{ $t('data.card.notApproved') }}</div>
-        <div class="dataset-state" v-if="dataset.state === 'closed'">Status: {{ $t('data.card.closed') }}</div>
-        <div class="aig-dataset-header-btn-container">
-          <button v-if="!dataset.remoteFileAccessPoint" @click="downloadDataset" class="aig-dataset-header-btn">
-            <img class="file-img" src="/static/dataset/documents24px.svg" alt=""> {{$t('data.dataset.downloadDataset')}}
-          </button>
-          <router-link v-if="isUserOwner" class="aig-dataset-header-btn fit edit" :to="editRoute" exact>
-            <img class="file-img" src="/static/dataset/edit21px.png" alt=""> {{$t('data.dataset.editDataset')}}
-          </router-link>
+        <div class="dataset-tags-container">
+          <DatasetTag v-for="(tag, index) in dataset.tags" v-bind:key="index">
+            #{{tag}}
+          </DatasetTag>
         </div>
       </div>
       <DataNavigation :show="!uploadingModelActive" :navigationBars="navigationBars">
@@ -58,11 +65,13 @@ import moment from 'moment'
 import DataNavigation from '@/components/navigation/DataNavigation'
 import Card from '@/components/Card'
 import eventHub from '@/utils/eventHub'
+import DatasetTag from '@/components/data/dataset/DatsetTag'
 
 export default {
   components: {
     DataNavigation,
-    Card
+    Card,
+    DatasetTag
   },
   async mounted () {
     window.scroll(0, 0)
@@ -168,7 +177,9 @@ export default {
 
         this.setComments(this.dataset.commentsCount)
       } else {
-        this.$router.push({ name: 'NotFound' })
+        this.$router.push({
+          name: 'NotFound'
+        })
       }
 
       this.loading = false
@@ -219,11 +230,16 @@ export default {
     padding: 0 35px;
     max-width: 932px;
     min-height: 250px;
-    margin: 150px 5px 50px 5px;
+    margin: 150px 5px 10px 5px;
     color: #ffffff;
-
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    .dataset-tags-container {
+      display: flex;
+    }
     .dataset-title {
-      font-size: 24pt;
+      font-size: 27pt;
       font-weight: 700;
       max-width: 100%;
       word-wrap: break-word;
@@ -289,18 +305,26 @@ export default {
   @media screen and (min-width: 280px) and (max-width: 680px) {
     .aig-dataset-header {
       margin-top: 75px;
-      margin-bottom: 75px;
+      margin-bottom: 25px;
     }
 
     .creator-info {
       flex-direction: column;
+    }
+
+    .dataset-tags-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 10px;
     }
   }
 
   @media screen and (min-width: 280px) and (max-width: 320px) {
     .aig-dataset-header {
       margin-top: 30px;
-      margin-bottom: 40px;
+      margin-bottom: 20px;
     }
   }
+
 </style>

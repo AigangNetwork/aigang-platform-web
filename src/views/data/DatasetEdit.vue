@@ -12,6 +12,7 @@
 
           <DatasetDescriptionEdit v-model="datasetForm.description" />
 
+          <DatasetTagsInput @tagsChanged="handleTagsChange" :tags="dynamicTags" />
           <el-row v-if="structureValid">
             <DatasetStructureEdit :structure="datasetStructure" v-model="datasetRemoteStructure" :isStructured="isStructured" ref="structureComponent"
             />
@@ -56,6 +57,7 @@ import DatasetFileCard from '@/components/data/dataset/DatasetFileCard'
 import DatasetTitleEdit from '@/components/data/dataset/DatasetTitleEdit'
 import DatasetDescriptionEdit from '@/components/data/dataset/DatasetDescriptionEdit'
 import DatasetStructureEdit from '@/components/data/dataset/DatasetStructureEdit'
+import DatasetTagsInput from '@/components/data/dataset/DatasetTagsInput'
 import Dialog from '@/components/common/Dialog'
 
 export default {
@@ -64,7 +66,8 @@ export default {
     DatasetTitleEdit,
     DatasetDescriptionEdit,
     DatasetStructureEdit,
-    Dialog
+    Dialog,
+    DatasetTagsInput
   },
   data () {
     return {
@@ -87,6 +90,7 @@ export default {
         remoteFileAccessPoint: '',
         isFileRemote: false
       },
+      dynamicTags: [],
       datasetFormRules: {
         title: [{
           required: true,
@@ -176,6 +180,11 @@ export default {
         form.append(key, this.datasetForm[key])
       }
 
+      if (this.dynamicTags.length > 0) {
+        var arr = this.dynamicTags.map(t => t.text)
+        form.append('tags', JSON.stringify(arr))
+      }
+
       this.axios.post('/data/update', form).then(response => {
         this.$store.dispatch('clearCurrentDataset')
         this.$store.dispatch('loadCurrentDataset', this.$route.params.id)
@@ -201,6 +210,9 @@ export default {
       this.datasetForm.remoteFileAccessPoint = dataset.remoteFileAccessPoint
       this.datasetForm.hasFileChanged = dataset.hasFileChanged
       this.datasetForm.isFileRemote = dataset.isFileRemote
+      this.dynamicTags = dataset.tags.map(tag => ({
+        text: tag
+      }))
 
       try {
         this.datasetStructure = JSON.parse(dataset.structure)
@@ -306,6 +318,9 @@ export default {
     },
     cancel () {
       this.dialogVisible = false
+    },
+    handleTagsChange (newTags) {
+      this.dynamicTags = newTags
     }
   },
   async mounted () {

@@ -23,6 +23,9 @@ const mutations = {
     } else {
       state.currentDataset.isFileRemote = false
     }
+    if (payload.tags) {
+      state.currentDataset.tags = payload.tags
+    }
   },
   SET_REMOTE_FILE_ACCESS_POINT (state, payload) {
     state.currentDataset.remoteFileAccessPoint = payload.remoteFileAccessPoint

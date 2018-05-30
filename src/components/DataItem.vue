@@ -18,11 +18,16 @@
       </div>
       <router-link :to="{ name: 'datasetInfo', params: { id: data.id}}">
         <div class="aig-data-head">
-          <div class="title">{{ data.title | truncate(50) }}</div>
+          <div class="title">{{ data.title | truncate(35) }}</div>
         </div>
         <div class="aig-data-body">
           <div class="desc">
             <p>{{ data.description | truncate(60) }}</p>
+          </div>
+          <div>
+            <span v-if="data.tags.length" class="tags-list">
+              {{formatTags | truncate(30)}}
+            </span>
           </div>
         </div>
       </router-link>
@@ -73,6 +78,13 @@ export default {
       createdUtc: ''
     }
   },
+  computed: {
+    formatTags () {
+      if (this.data.tags.length) {
+        return this.data.tags.map(item => (`#${item}`)).join(' ')
+      }
+    }
+  },
   created () {
     this.createdUtc = this.data.createdUtc
   }
@@ -97,12 +109,18 @@ export default {
 
     .aig-data-body {
       height: 100%;
-      max-height: 80px;
-
+      max-height: 110px;
       p {
         margin: 0;
         max-height: 50px;
         font-size: 14px;
+      }
+      .tags-list {
+        margin: 0px;
+        padding: 0px;
+        font-size: 13px;
+        color: #b2c1d2;
+
       }
     }
     .aig-data-head {
@@ -201,6 +219,7 @@ export default {
   @media screen and (min-width: 100px) and (max-width: 680px) {
     .aig-data {
       height: 245px;
+      padding: 18px;
 
       .aig-data-head {
         .title {
@@ -223,4 +242,5 @@ export default {
       }
     }
   }
+
 </style>
