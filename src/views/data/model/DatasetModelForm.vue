@@ -156,12 +156,11 @@ export default {
               : this.$t('data.dataset.model.notification.successfullyUpdated')
           })
 
-          this.$store.dispatch('loadCurrentModel', { datasetId: this.$route.params.id, modelId: this.$route.params.modelId })
-          this.$store.dispatch('loadCurrentDataset', this.$route.params.id)
-
           if (this.isUpload) {
-            this.$router.push({ name: 'datasetModels' })
+            this.$store.dispatch('loadCurrentDataset', this.$route.params.id)
+            this.$router.push(`/data/${this.$route.params.id}/models`)
           } else {
+            this.$store.dispatch('loadCurrentModel', { datasetId: this.$route.params.id, modelId: this.$route.params.modelId })
             this.$router.push({ name: 'modelInfo' })
           }
 
@@ -226,8 +225,6 @@ export default {
     if (this.$store.state.currentDataset && this.$store.state.currentDataset.state !== 'active') {
       this.$router.push({ name: 'AccessDenied' })
     }
-
-    this.modelForm.dataId = this.$store.state.currentDataset.id
   }
 }
 

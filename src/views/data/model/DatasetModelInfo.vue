@@ -89,18 +89,9 @@ export default {
           modelId
         })
 
-        if (!this.model.id) {
-          this.$router.push({
-            name: 'NotFound'
-          })
-        }
-
         this.printCommentsBar(this.model.commentsCount)
         this.loading = false
       } catch (error) {
-        this.$router.push({
-          name: 'NotFound'
-        })
         this.loading = false
       }
     },
