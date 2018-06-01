@@ -103,8 +103,8 @@ export default {
       isRemoteFile: false,
       invalidFile: false,
       fileAttached: false,
-      firstStepActive: false,
-      secondStepActive: true,
+      firstStepActive: true,
+      secondStepActive: false,
       isValidForm: true,
       isErrorOnFirstStep: false,
       dynamicFileStructure: [],
@@ -296,33 +296,8 @@ export default {
         this.fileAttached = false
       }
     },
-    checkTag (obj) {
-      this.errorOnTag = false
-      if (/[^a-zA-Z0-9-]/.test(obj.tag.text)) {
-        this.errorOnTag = true
-        this.errorMessage = this.$t('data.dataset.validation.invalidTag')
-        return
-      }
-      obj.addTag()
-    },
-    onLeave (value) {
-      this.errorOnTag = false
-    },
-    inputChanged (text) {
-      if (!this.errorOnTag && text.length >= 2) {
-        setTimeout(async () => {
-          var response = await this.axios.get('tags/' + text)
-          if (response.data) {
-            this.autoCompleteTags = response.data.map(tag => ({
-              text: tag
-            }))
-          }
-        }, 300)
-      }
-    },
     handleTagsChange (newTags) {
       this.dynamicTags = newTags
-      console.log(newTags)
     }
   }
 }
