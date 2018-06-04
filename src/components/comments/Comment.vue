@@ -84,11 +84,6 @@ export default {
           max: 1000,
           message: this.$t('data.dataset.comment.validation.commentTooLong'),
           trigger: 'blur'
-        },
-        {
-          min: 5,
-          message: this.$t('data.dataset.comment.validation.commentTooShort'),
-          trigger: 'blur'
         }
         ]
       }
@@ -193,9 +188,11 @@ export default {
         width: 99px;
         padding: 0px;
       }
+
       .replies {
         color: $purple;
         font-weight: bold;
+        margin: 15px 0 0 15px;
       }
     }
   }
@@ -203,5 +200,4 @@ export default {
   .reply-padding {
     padding-left: 40px;
   }
-
 </style>

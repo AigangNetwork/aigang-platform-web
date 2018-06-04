@@ -47,6 +47,12 @@ export default {
         name: 'AccessDenied'
       })
     },
+    handle404 () {
+      this.notificationVisible = false
+      this.$router.push({
+        name: 'NotFound'
+      })
+    },
     notifyRequestError (error) {
       this.notificationVisible = true
       this.title = this.$t('errors.error')
@@ -71,7 +77,7 @@ export default {
             this.handle403()
             break
           case 404:
-            this.notificationVisible = false
+            this.handle404()
             break
           case 408:
             this.messages.push(this.$t('errors.validation.GatewayTimeout'))
@@ -150,5 +156,4 @@ export default {
   .notification-dialog .el-dialog__header {
     text-align: center;
   }
-
 </style>
