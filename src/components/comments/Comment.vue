@@ -1,7 +1,7 @@
 <template>
   <div class="user-comment-container" :class="{ 'reply-padding': isReply}">
     <div class="comment-header" style="display: flex; justify-content: space-between;">
-      <UserInfo :date="comment.createdUtc" :show-username="true" :user-name="comment.username" />
+      <UserInfo :date="comment.createdUtc" :modifiedDate="comment.modifiedUtc" :show-username="true" :user-name="comment.username" />
       <div class="icon-container" v-if="isOwner">
         <el-tooltip :content="$t('data.dataset.comment.editTooltip')">
           <img @click="editComment" class="comment-icon-left" src="/static/dataset/edit_black24px.png" alt="">

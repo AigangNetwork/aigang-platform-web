@@ -9,7 +9,8 @@
           {{userName}}
         </div>
         <div class="date" v-if="date">
-          {{ created }}
+          <div>{{ created }}</div>
+          <div v-if="modified">({{$t('data.dataset.comment.edited')}} {{ modified }})</div>
         </div>
       </div>
     </div>
@@ -17,12 +18,16 @@
 </template>
 <script>
 import CreatedDate from '@/components/mixins/CreatedDate'
+import ModifiedDate from '@/components/mixins/ModifiedDate'
 export default {
-  props: ['date', 'userName', 'showUsername'],
-  mixins: [CreatedDate],
+  props: ['date', 'modifiedDate', 'userName', 'showUsername'],
+  mixins: [CreatedDate, ModifiedDate],
   computed: {
     createdUtc () {
       return this.date
+    },
+    modifiedUtc () {
+      return this.modifiedDate
     }
   }
 }
@@ -60,6 +65,7 @@ export default {
         color: $light-grey;
         font-size: 9pt;
         font-weight: 100;
+        padding-top: 2px;
       }
     }
   }
