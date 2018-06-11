@@ -352,7 +352,8 @@
       "NotFound": "Not found",
       "CommentTooLong": "Comment lenght limit was reached",
       "RemoteAccessPointNotSet": "Remote access point is not set.",
-      "InvalidTags": "Invalid tags"
+      "InvalidTags": "Invalid tags",
+      "EmptyFileError": "File is empty"
     },
     "pagePathNotFound": "The page you are trying to access is not available",
     "validationError": "You have entered an invalid data",
