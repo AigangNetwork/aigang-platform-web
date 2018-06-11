@@ -62,8 +62,7 @@ export default {
     return {
       navigationBars: [{
         name: this.$t('navigation.data'),
-        routeLink: '/data',
-        disabled: false
+        routeLink: '/data'
       },
       {
         name: this.$t('navigation.predictions'),
@@ -77,8 +76,7 @@ export default {
       },
       {
         name: this.$t('navigation.insure'),
-        routeLink: '/insure/',
-        disabled: true
+        routeLink: '/insure/'
       }
       ],
       dropDownMenuActive: false
@@ -246,5 +244,4 @@ export default {
       }
     }
   }
-
 </style>

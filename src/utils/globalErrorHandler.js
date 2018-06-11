@@ -7,6 +7,7 @@ export default function (error, vm, info) {
     userApplicationInfo: navigator.userAgent,
     level: 'error'
   }
+  console.log(errorMessage)
   console.log(`Error message number: ${errorMessage.messageNumber}`)
   axios.post('log', errorMessage)
 }

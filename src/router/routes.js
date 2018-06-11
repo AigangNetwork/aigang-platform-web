@@ -20,6 +20,7 @@ import DatasetComments from '@/views/data/DatasetComments'
 import DatasetData from '@/views/data/DatasetData'
 import DatasetEdit from '@/views/data/DatasetEdit'
 import DataItemsList from '@/views/data/DataItemsList'
+import ProductItemsList from '@/views/insurance/ProductItemsList'
 import DatasetModelForm from '@/views/data/model/DatasetModelForm'
 import DatasetModelInfo from '@/views/data/model/DatasetModelInfo'
 import DatasetModelTables from '@/views/data/model/DatasetModelTables'
@@ -234,8 +235,34 @@ const routes = [
   },
   {
     path: '/insure',
-    name: 'Insure',
-    component: Insure
+    component: Insure,
+    props: true,
+    children: [
+      {
+        name: 'insure',
+        path: '',
+        redirect: '/insure/products'
+      },
+      {
+        name: 'all',
+        path: '/insure/products',
+        component: ProductItemsList,
+        props: route => ({
+          requestPath: '/insure/list?page=',
+          routerPath: '/insure/products?page='
+        })
+      },
+      {
+        name: 'all',
+        path: '/insure/products',
+        component: ProductItemsList,
+        props: route => ({
+          requestPath: '/insure/list?page=',
+          routerPath: '/insure/products?page=',
+          isMyPolicies: true
+        })
+      }
+    ]
   },
   {
     path: '/profile',
