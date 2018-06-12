@@ -1,36 +1,40 @@
 <template>
   <div class="aig-data">
-    <div>
-      <div class="aig-data-head">
-        <div class="desc">{{ $t('data.card.added') }} {{ created }}</div>
-      </div>
-      <router-link :to="{ name: 'productInfo', params: { id: product.id}}">
+    <router-link :to="{ name: 'productDetails', params: { id: product.id}}">
+      <div class="aig-data-body-container">
+        <div class="aig-data-head">
+          <div class="desc">{{ $t('insurance.product.productEnds') }} {{ endDate }}</div>
+        </div>
+
         <div class="aig-data-head">
           <div class="title">{{ product.title | truncate(50) }}</div>
         </div>
         <div class="aig-data-body">
           <div class="desc">
-            <p>{{ product.description | truncate(60) }}</p>
+            <p>{{ product.description | truncate(80) }}</p>
+          </div>
+          <img class="product-img" :src="product.imageUrl">
+          <div class="premium-container">
+            <p>{{ $t('insurance.product.basePremium') }}:</p>
+            <p class="premium-amount">{{ product.basePremium }}</p>
+            <p>{{ $t('general.aix') }}</p>
           </div>
         </div>
-      </router-link>
-    </div>
+      </div>
+    </router-link>
+
   </div>
 </template>
 
 <script>
-import CreatedDate from '@/components/mixins/CreatedDate'
+import EndDate from '@/components/mixins/EndDate'
 
 export default {
-  mixins: [CreatedDate],
+  mixins: [EndDate],
   props: ['product'],
   data () {
     return {
-      createdUtc: ''
     }
-  },
-  created () {
-    this.createdUtc = this.product.createdUtc
   }
 }
 
@@ -42,37 +46,30 @@ export default {
 
   .aig-data {
     @include transition;
-    padding: 20px;
     background: white;
     box-shadow: 0 0 30px 0 #e9f0f6;
     border: 1px solid $light-border-blue;
-    height: 245px;
+    height: 500px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     color: white;
-    background: url('/static/android-phone.jpg');
-    background-size: cover;
-    opacity: 0.9;
+    background: rgba(148, 75, 200, 1);
+    background: linear-gradient(to bottom, rgba(148, 75, 200, 1) 0%, rgba(98, 55, 187, 1) 100%);
+    transition: all 250ms;
 
-    &::after {
-      display: block;
-      position: absolute;
-      content: '';
-      width: calc(33.3% - 21px);
-      height: 244px;
-      margin-left: -20px;
-      margin-top: -20px;
-      background: rgba(148, 75, 200, 1);
-      background: linear-gradient(to bottom, rgba(148, 75, 200, 1) 0%, rgba(98, 55, 187, 1) 100%);
-      z-index: -1;
-      opacity: 0.85;
+    &:hover {
+      margin: -4px 4px 4px -4px;
+      box-shadow: 10px 10px 23px -13px rgba(0, 0, 0, 0.75);
+      border: 1px solid transparent;
+    }
+
+    .aig-data-body-container {
+      padding: 20px;
     }
 
     .aig-data-body {
-      height: 100%;
-      max-height: 80px;
-      color: white;
+      flex-grow: 1;
 
       p {
         margin: 0;
@@ -81,6 +78,7 @@ export default {
         color: white;
       }
     }
+
     .aig-data-head {
       display: flex;
       justify-content: space-between;
@@ -88,9 +86,14 @@ export default {
       width: 100%;
 
       .title {
+        text-align: center;
         color: white;
+        width: 100%;
+        padding: 10px 0;
+        height: 72px;
       }
     }
+
     .aig-data-footer {
       border-top: 1px solid $light-border-blue;
       height: 40px;
@@ -108,10 +111,12 @@ export default {
         display: flex;
         width: 50%;
         height: 100%;
+
         .label {
           font-family: $font-secondary;
           margin-left: 2px;
           display: flex;
+
           span {
             margin-left: 2px;
           }
@@ -138,69 +143,73 @@ export default {
       font-size: 13px;
       word-wrap: break-word;
       max-width: 100%;
-    }
-
-    .status {
-      padding: 10px 0;
-      font-weight: 600;
-    }
-
-    .status-bubble {
-      height: 15px;
-      width: 15px;
-
-      border-radius: 50%;
-
-      &.green {
-        background: #87D37C;
-      }
-
-      &.grey {
-        background: #DADFE1;
-      }
-
-      &.yellow {
-        background: #F4D03F;
-      }
-
-      &.green-border {
-        border: 3px solid #87D37C;
-      }
-
+      color: white
     }
   }
 
-  /* Tablet */
+  .product-img {
+    height: 200px;
+    margin: 20px auto;
+    display: block;
+    margin-top: 1;
+  }
+
+  .premium-container {
+    margin-top: 20px;
+
+    p {
+      width: 100%;
+      text-align: center;
+      margin: 0;
+      line-height: 1;
+    }
+
+    p.premium-amount {
+      font-size: 36px;
+      font-weight: 500;
+    }
+  }
 
   @media screen and (min-width: 680px) and (max-width: 1024px) {
-    .aig-data .aig-data-footer .aig-footer-container-right {
-      padding-left: 0px;
+    .aig-data {
+      height: 480px;
+
+      .aig-data-footer .aig-footer-container-right {
+        padding-left: 0px;
+      }
     }
   }
 
   @media screen and (min-width: 100px) and (max-width: 680px) {
     .aig-data {
-      height: 245px;
+      height: 430px;
 
-      .aig-data-head {
-        .title {
-          width: 100%;
-          word-wrap: break-word;
-        }
-
+      .aig-data-head .title {
+        width: 100%;
+        word-wrap: break-word;
       }
 
-      .aig-data-body {
-        p {
-          font-size: 13px;
-        }
+      .aig-data-body p {
+        font-size: 13px;
       }
+
+      p.premium-amount {
+        font-size: 36px;
+        font-weight: 500;
+      }
+
       .aig-data-footer {
         justify-content: space-between;
+
         .aig-footer-container-right {
           padding-left: 0;
         }
       }
+
+      .product-img {
+        height: 150px;
+      }
+
     }
   }
 </style>

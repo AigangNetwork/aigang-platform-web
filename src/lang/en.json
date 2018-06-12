@@ -310,12 +310,14 @@
     "save": "Save",
     "back": "Back",
     "cancel": "Cancel",
+    "continue": "Continue",
     "markupSupported": "VueMarkdown supported",
     "versionAlpha": "alpha",
     "unableToFindYourDatasets": "Can not find your datasets",
     "unableToFindYourModels": "Can not find any datasets containing your models",
     "upvote": "Upvote",
-    "downvote": "Downvote"
+    "downvote": "Downvote",
+    "aix": "AIX"
   },
   "errors": {
     "error": "Error",
@@ -367,8 +369,26 @@
   },
   "insurance": {
     "menu": {
-      "products" : "Products",
+      "products": "Products",
       "myPolicies": "My Policies"
+    },
+    "product": {
+      "productEnds": "Campaing ends",
+      "basePremium": "Base Premium",
+      "details": "Details",
+      "description": "Description",
+      "termsAndConditions": "Terms and Conditions",
+      "calculatePremium": "Calculate Premium",
+      "contractAddress": "Policy Contract Address",
+      "downloadApp": "Download Aigang App",
+      "instructionsIntro": "In order to download your app you have to",
+      "instructionsDownloadApp": "Download Aigang app on your android device",
+      "instructionsIMEI": "Enter your device's IMEI below (you will see it in the app)",
+      "imeiPlaceholder": "Enter your IMEI",
+      "validation": {
+        "imeiRequired": "IMEI is required",
+        "imeiInvalid": "IMEI format is not correct. Should be 15 digits"
+      }
     }
   }
 }

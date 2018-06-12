@@ -36,12 +36,10 @@ export default {
   },
   methods: {
     loadProductItems () {
-      console.log(this.productList)
       this.loading = true
       this.axios.get(this.requestPath + this.page).then(response => {
         this.loading = false
         this.productList = response.data.items
-        console.log(this.productList)
         this.totalPageCount = response.data.totalPages
       }).catch(e => {
         this.loading = false
