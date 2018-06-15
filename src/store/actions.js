@@ -89,6 +89,46 @@ const loadCurrentModel = async ({ commit, state }, payload) => {
   commit(types.LOAD_CURRENT_MODEL, response.data)
 }
 
+const loadCurrentProduct = async ({ commit, state }, id) => {
+  commit(types.LOADING, { loading: true })
+
+  let response = null
+
+  try {
+    response = await axios.get('insure/products/' + id)
+  } catch (e) {
+    commit(types.LOADING, { loading: false })
+  }
+
+  if (response && response.data.product) {
+    commit(types.LOAD_CURRENT_PRODUCT, response.data)
+    commit(types.LOADING, { loading: false })
+  } else {
+    commit(types.CLEAR_CURRENT_PRODUCT)
+    commit(types.LOADING, { loading: false })
+  }
+}
+
+const createNewPolicy = async ({ commit, state }, imei) => {
+  commit(types.LOADING, { loading: true })
+
+  let response = null
+
+  try {
+    response = await axios.post('insure/policy-draft/' + imei)
+  } catch (e) {
+    commit(types.LOADING, { loading: false })
+  }
+
+  if (response && response.data.policy) {
+    commit(types.LOAD_CURRENT_POLICY, response.data)
+    commit(types.LOADING, { loading: false })
+  } else {
+    commit(types.CLEAR_CURRENT_POLICY)
+    commit(types.LOADING, { loading: false })
+  }
+}
+
 export {
   logIn,
   logOut,
@@ -102,5 +142,7 @@ export {
   clearWeb3Instance,
   loadCurrentModel,
   clearCurrentDataset,
-  clearCurrentModel
+  clearCurrentModel,
+  loadCurrentProduct,
+  createNewPolicy
 }

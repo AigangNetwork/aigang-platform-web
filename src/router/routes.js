@@ -21,6 +21,8 @@ import DatasetData from '@/views/data/DatasetData'
 import DatasetEdit from '@/views/data/DatasetEdit'
 import DataItemsList from '@/views/data/DataItemsList'
 import ProductItemsList from '@/views/insurance/ProductItemsList'
+import PolicyDraft from '@/views/insurance/PolicyDraft'
+import Product from '@/views/insurance/Product'
 import ProductDetails from '@/views/insurance/ProductDetails'
 import DatasetModelForm from '@/views/data/model/DatasetModelForm'
 import DatasetModelInfo from '@/views/data/model/DatasetModelInfo'
@@ -72,7 +74,7 @@ const routes = [
   },
   {
     path: '/resetPassword',
-    name: 'resetpassword',
+    name: 'Resetpassword',
     component: ResetPassword
   },
   {
@@ -248,6 +250,7 @@ const routes = [
           routerPath: '/insure/products?page='
         })
       },
+
       // {
       //   name: 'all',
       //   path: '/insure/products',
@@ -259,9 +262,21 @@ const routes = [
       //   })
       // },
       {
-        name: 'productDetails',
+        name: 'Product',
         path: '/insure/products/:id',
-        component: ProductDetails
+        component: Product,
+        children: [
+          {
+            name: 'ProductDetails',
+            path: '/insure/products/:id/details',
+            component: ProductDetails
+          },
+          {
+            name: 'Policy',
+            path: '/insure/products/:id/policy',
+            component: PolicyDraft
+          }
+        ]
       }
     ]
   },

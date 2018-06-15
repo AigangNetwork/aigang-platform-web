@@ -9,15 +9,16 @@
         <li>{{ $t('insurance.product.instructionsIMEI') }}</li>
       </ol>
 
-      <el-form :rules="imeiFormRules" :model="imeiForm" ref="imeiForm">
+      <el-form @submit.prevent.native="submitForm('imeiForm', handleSubmit)" :rules="imeiFormRules" :model="imeiForm" ref="imeiForm">
         <el-form-item prop="imei">
           <el-input :placeholder="$t('insurance.product.imeiPlaceholder')" v-model="imeiForm.imei"></el-input>
         </el-form-item>
       </el-form>
+      <p>{{ $t('insurance.product.instructionsConditions') }}</p>
     </span>
     <span slot="footer" class="dialog-footer">
       <el-button @click="show=false">{{ $t('general.cancel') }}</el-button>
-      <el-button type="primary" @click="submitForm('imeiForm', handleSubmit)">{{ $t('general.continue') }}</el-button>
+      <el-button type="primary" @click.prevent.native="submitForm('imeiForm', handleSubmit)">{{ $t('general.continue') }}</el-button>
     </span>
   </el-dialog>
 </template>

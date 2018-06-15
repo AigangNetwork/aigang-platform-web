@@ -186,7 +186,6 @@ export default {
       }
 
       this.axios.post('/data/update', form).then(response => {
-        this.$store.dispatch('clearCurrentDataset')
         this.$store.dispatch('loadCurrentDataset', this.$route.params.id)
 
         this.loading = false

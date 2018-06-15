@@ -26,7 +26,10 @@ const store = new Vuex.Store({
       error: null
     },
     currentDataset: {},
-    currentModel: null
+    currentModel: null,
+    currentProduct: {},
+    currentPolicy: {},
+    loading: false
   },
   mutations,
   getters,

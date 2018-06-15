@@ -10,6 +10,15 @@ const getters = {
   },
   model: state => {
     return state.currentModel
+  },
+  product: state => {
+    return state.currentProduct
+  },
+  loading: state => {
+    return state.loading
+  },
+  policy: state => {
+    return state.currentPolicy
   }
 }
 
