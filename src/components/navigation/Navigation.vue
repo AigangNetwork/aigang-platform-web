@@ -189,6 +189,7 @@ export default {
       @include breakpoint(max-width 780px) {
         .aig-hamburger-wrapper {
           display: block;
+          cursor: pointer;
         }
         .aig-navigation-menu ul {
           display: none;

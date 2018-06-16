@@ -1,7 +1,7 @@
 <template>
-  <div class="">
-    <div class="aig-container" style="max-width: 800px">
-      <h1>{{ $t('errors.pagePathNotFound') }} </h1>
+  <div>
+    <div class="aig-container text-center" style="max-width: 800px; padding: 0 10px;">
+      <h1>{{ $t('errors.pagePathNotFound') }}</h1>
     </div>
   </div>
 </template>
