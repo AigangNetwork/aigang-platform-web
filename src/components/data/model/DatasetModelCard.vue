@@ -87,8 +87,6 @@ export default {
 
     .card-section {
       max-width: 65%;
-      padding: 31px 34px;
-
       h3,
       p {
         max-width: 100%;

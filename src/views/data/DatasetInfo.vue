@@ -51,7 +51,6 @@ export default {
 <style lang="scss" scoped>
   @import '~helpers/variables';
   .aig-dataset-info-container {
-    padding: 0px 53px 5px 53px;
     .info-title {
       color: $light-grey;
       margin-top: 40px;
