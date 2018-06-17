@@ -1,6 +1,6 @@
 <template>
   <div class="">
-    <div class="aig-container" style="max-width: 800px">
+    <div class="aig-container text-center" style="max-width: 800px; padding: 0 10px;">
       <h1>{{ $t('errors.validation.Forbidden') }} </h1>
     </div>
   </div>
