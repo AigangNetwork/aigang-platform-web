@@ -1,9 +1,9 @@
 <template>
   <div class="reply-comment" v-loading="loading">
     <UserInfo :show-username="false" :user-name="$store.state.user.profile.userName" />
-    <el-form :rules="replyFormRules" class="reply-form" :model="replyFrom" ref="replyFrom">
+    <el-form @submit.prevent.native="onEnter" :rules="replyFormRules" class="reply-form" :model="replyFrom" ref="replyFrom">
       <el-form-item class="input-form-item" prop="text">
-        <el-input class="input" :placeholder="$t('data.dataset.comment.commentPlaceholder')" v-model="replyFrom.text"></el-input>
+        <el-input class="input" :placeholder="$t('data.dataset.comment.commentPlaceholder')" :disabled="loading" v-model="replyFrom.text"></el-input>
       </el-form-item>
       <el-form-item class="button-container">
         <el-button @click="submitForm('replyFrom', submitReply)" class="button">{{$t('data.dataset.comment.commentButton')}}</el-button>
@@ -47,6 +47,11 @@ export default {
         eventHub.$emit(this.updateEvent, 1)
         this.$emit('refresh-comment')
       })
+    },
+    onEnter () {
+      if (!this.loading && this.replyFrom && this.replyFrom.text) {
+        this.submitReply()
+      }
     }
   },
   data () {
