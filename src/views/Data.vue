@@ -13,7 +13,7 @@
           </transition>
           <ul>
             <li v-for="item in dataMeniu" :key="item.name">
-              <router-link :class="{'aig-link-disabled': item.disabled}" active-class="aig-menu-active" :to="item.routeLink">
+              <router-link :class="{'aig-link-disabled': item.disabled}" @click.native="collapseSideMenu" active-class="aig-menu-active" :to="item.routeLink">
                 {{ item.name }}
               </router-link>
             </li>
@@ -81,6 +81,9 @@ export default {
     },
     openSideMenu () {
       this.isMenuOpen = !this.isMenuOpen
+    },
+    collapseSideMenu () {
+      this.isMenuOpen = false
     }
   }
 }
