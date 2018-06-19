@@ -253,6 +253,7 @@ export default {
       tr td,
       tr th {
         max-width: min-content;
+        max-width: -moz-available;
       }
     }
 
