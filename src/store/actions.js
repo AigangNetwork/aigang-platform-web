@@ -90,6 +90,7 @@ const loadCurrentModel = async ({ commit, state }, payload) => {
 }
 
 const loadCurrentProduct = async ({ commit, state }, id) => {
+  commit(types.CLEAR_CURRENT_PRODUCT)
   commit(types.LOADING, { loading: true })
 
   let response = null
@@ -110,6 +111,7 @@ const loadCurrentProduct = async ({ commit, state }, id) => {
 }
 
 const createNewPolicy = async ({ commit, state }, imei) => {
+  commit(types.CLEAR_CURRENT_POLICY)
   commit(types.LOADING, { loading: true })
 
   let response = null

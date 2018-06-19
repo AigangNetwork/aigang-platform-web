@@ -78,6 +78,7 @@ const mutations = {
   },
   LOAD_CURRENT_PRODUCT (state, payload) {
     state.currentProduct = payload.product
+    state.currentProduct.productDialogConfig = payload.productDialogConfig
   },
   CLEAR_CURRENT_PRODUCT (state, payload) {
     state.currentProduct = {}

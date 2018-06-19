@@ -10,19 +10,19 @@
     <el-row class="input-section-title">{{ $t('insurance.product.termsAndConditions') }}</el-row>
     <p class="terms-and-conditions">{{ product.termsAndConditions }}</p>
 
-    <el-button @click="displayDialog(true)" class="aig-button" type="primary">
+    <el-button @click="displayDialog(true)" class="aig-button" type="primary" v-if="product.state === 'Active'">
       {{ $t('insurance.product.calculatePremium') }}
     </el-button>
-    <DownloadAppDialog :displayDialog="displayDialog" :isVisible="dialogVisible" :calculatePremium="calculatePremium" />
+    <ProductDialog :displayDialog="displayDialog" :isVisible="dialogVisible" :calculatePremium="calculatePremium" />
   </div>
 
 </template>
 <script>
-import DownloadAppDialog from '@/components/insurance/DownloadAppDialog'
+import ProductDialog from '@/components/insurance/ProductDialog'
 import { mapGetters } from 'vuex'
 
 export default {
-  components: { DownloadAppDialog },
+  components: { ProductDialog },
   data () {
     return {
       dialogVisible: false

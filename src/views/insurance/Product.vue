@@ -1,7 +1,7 @@
 <template>
-  <div class="aig-container aig-view model-container" v-loading="loading">
+  <div class="aig-container aig-view model-container">
     <Card class="product-card">
-      <div slot="body">
+      <div slot="body" v-loading="loading">
         <ProductDetailsHeader :product="product" />
         <router-view></router-view>
       </div>

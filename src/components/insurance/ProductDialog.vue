@@ -1,13 +1,8 @@
 <template>
   <el-dialog class="download-app-dialog" :title="$t('insurance.product.downloadApp')" :visible.sync="show" width="100%" center>
     <span>
-      <p>{{ $t('insurance.product.instructionsIntro') }}</p>
-      <ol>
-        <li>
-          <a class="app-link" href="https://play.google.com/store/apps/details?id=com.aigang.aigangapp&hl=en" target="_blank">{{ $t('insurance.product.instructionsDownloadApp') }}</a>
-        </li>
-        <li>{{ $t('insurance.product.instructionsIMEI') }}</li>
-      </ol>
+      <p>{{ productDialogConfig.title }}</p>
+      <p>{{ productDialogConfig.body }}</p>
 
       <el-form @submit.prevent.native="submitForm('imeiForm', handleSubmit)" :rules="imeiFormRules" :model="imeiForm" ref="imeiForm">
         <el-form-item prop="imei">
@@ -24,6 +19,7 @@
 </template>
 <script>
 import FormMixin from '@/components/mixins/FormMixin'
+import { mapGetters } from 'vuex'
 
 export default {
   props: ['displayDialog', 'isVisible', 'calculatePremium'],
@@ -49,6 +45,7 @@ export default {
     }
   },
   computed: {
+    ...mapGetters(['productDialogConfig']),
     show: {
       get () {
         return this.isVisible

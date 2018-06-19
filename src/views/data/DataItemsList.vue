@@ -21,7 +21,7 @@
 
 </template>
 <script>
-import DataItem from '@/components/DataItem'
+import DataItem from '@/components/data/DataItem'
 import Pagination from '@/components/Pagination'
 
 export default {

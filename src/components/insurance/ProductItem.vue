@@ -1,5 +1,5 @@
 <template>
-  <div class="aig-data">
+  <div class="aig-data" :class="{ enabled: product.state === 'active', disabled: product.state != 'active' }">
     <router-link :to="{ name: 'ProductDetails', params: { id: product.id}}">
       <div class="aig-data-body-container">
         <div class="aig-data-head">
@@ -35,6 +35,9 @@ export default {
   data () {
     return {
     }
+  },
+  mounted () {
+    console.log(this.product.state)
   }
 }
 
@@ -58,10 +61,15 @@ export default {
     background: linear-gradient(to bottom, rgba(148, 75, 200, 1) 0%, rgba(98, 55, 187, 1) 100%);
     transition: all 250ms;
 
-    &:hover {
+    &.enabled:hover {
       margin: -4px 4px 4px -4px;
       box-shadow: 10px 10px 23px -13px rgba(0, 0, 0, 0.75);
       border: 1px solid transparent;
+    }
+
+    &.disabled {
+      filter: grayscale(100%);
+      pointer-events: none;
     }
 
     .aig-data-body-container {

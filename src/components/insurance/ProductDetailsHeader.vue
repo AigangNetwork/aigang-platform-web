@@ -5,7 +5,7 @@
         <img :src="product.imageUrl" />
         <h1>{{ product.title }}</h1>
         <p>
-          <span class="no-wrap">{{ $t('insurance.product.productEnds')}} {{ endDate }}</span>
+          <span class="no-wrap">{{ $t('insurance.product.productEnds') }} {{ endDate }} {{ $t('general.utc') }} </span>
         </p>
       </div>
       <div class="header-right-section">
@@ -18,19 +18,23 @@
   </div>
 </template>
 <script>
-import EndDate from '@/components/mixins/EndDate'
 
 export default {
   props: ['product'],
-  mixins: [EndDate],
-  data () {
-    return {
-      loading: false
-    }
-  },
   computed: {
     isPremiumBig () {
       return !(String(this.product.basePremium).length > 7)
+    },
+    endDate () {
+      let date = new Date(this.product.endDateUtc)
+      let year = date.getFullYear()
+      let month = date.getMonth() + 1
+      let day = date.getDay()
+
+      if (day < 10) day = '0' + day
+      if (month < 10) month = '0' + month
+
+      return `${year}-${month}-${day}`
     }
   }
 }
