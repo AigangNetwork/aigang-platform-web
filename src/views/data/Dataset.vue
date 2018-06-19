@@ -12,10 +12,10 @@
           <div class="dataset-state" v-if="dataset.state === 'closed'">Status: {{ $t('data.card.closed') }}</div>
           <div class="aig-dataset-header-btn-container">
             <button v-if="!dataset.remoteFileAccessPoint" @click="downloadDataset" class="aig-dataset-header-btn">
-              <img class="file-img" src="/static/dataset/documents24px.svg" alt=""> {{$t('data.dataset.downloadDataset')}}
+              <i class="el-icon-document button-icon"></i> {{$t('data.dataset.downloadDataset')}}
             </button>
             <router-link v-if="isUserOwner" class="aig-dataset-header-btn fit edit" :to="editRoute" exact>
-              <img class="file-img" src="/static/dataset/edit21px.png" alt=""> {{$t('data.dataset.editDataset')}}
+              <i class="el-icon-edit button-icon"></i> {{$t('data.dataset.editDataset')}}
             </router-link>
           </div>
         </div>

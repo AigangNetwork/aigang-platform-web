@@ -84,7 +84,7 @@ export default {
 
   @media screen and (min-width: 100px) and (max-width: 680px) {
     .aig-dataset-info-container {
-      padding: 0px 5px 0px 5px;
+      padding: 0px 23px 5px 23px;
     }
   }
 

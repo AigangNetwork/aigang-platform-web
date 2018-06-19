@@ -4,10 +4,10 @@
       <UserInfo :date="comment.createdUtc" :modifiedDate="comment.modifiedUtc" :show-username="true" :user-name="comment.username" />
       <div class="icon-container" v-if="isOwner">
         <el-tooltip :content="$t('data.dataset.comment.editTooltip')">
-          <img @click="editComment" class="comment-icon-left" src="/static/dataset/edit_black24px.png" alt="">
+          <i @click="editComment" class="el-icon-edit comment-icon comment-icon-left" alt=""></i>
         </el-tooltip>
         <el-tooltip :content="$t('data.dataset.comment.removeTooltip')">
-          <img @click="dialogVisible = true" class="comment-icon" src="/static/dataset/trash_black24px.png" alt="">
+          <i @click="dialogVisible = true" class="el-icon-delete comment-icon" alt=""></i>
         </el-tooltip>
       </div>
     </div>
@@ -147,11 +147,11 @@ export default {
       .icon-container {
         display: flex;
         .comment-icon {
-          height: 19px;
+          height: 20px;
+          cursor: pointer;
         }
         .comment-icon-left {
-          height: 19px;
-          margin-right: 10px;
+          margin-right: 5px;
         }
       }
     }

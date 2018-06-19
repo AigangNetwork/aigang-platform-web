@@ -2,7 +2,7 @@
   <div class="dataset-model-header-container">
     <el-row class="dataset-title">
       <router-link :to="modelsRoute" class="back-button">
-        <img src="@/../static/left.svg">
+        <i class="back-icon el-icon-arrow-left"></i>
       </router-link>
       <h3>
         {{ dataset.title }}
@@ -18,7 +18,7 @@
         <h1>{{ model.title }}</h1>
         <div class="aig-dataset-header-btn-container" v-if="isDatasetActive">
           <router-link v-if="isUserOwner" :to="{ name: 'edit' }" exact class="aig-dataset-header-btn fit edit">
-            <img class="file-img" src="/static/dataset/edit21px.png" alt=""> {{$t('data.dataset.model.editModel')}}
+            <i class="el-icon-edit button-icon"></i> {{$t('data.dataset.model.editModel')}}
           </router-link>
         </div>
       </div>
@@ -80,8 +80,8 @@ export default {
     width: 26px;
     margin-right: 10px;
 
-    img {
-      height: 22px;
+    i {
+      font-size: 25px;
     }
   }
 
