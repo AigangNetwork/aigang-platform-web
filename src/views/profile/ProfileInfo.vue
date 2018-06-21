@@ -6,9 +6,7 @@
       </div>
     </el-col>
     <el-col v-loading="loading" :element-loading-text="$t('general.loading')" class="name-container form-container">
-
       <transition name="slideUp" mode="out-in">
-
         <el-row class="no-margin" v-if="!isProfileChangeOn">
           <h2 class="name-field">{{ profileForm.firstName }} {{ profileForm.lastName }}</h2>
           <div class="no-margin name-field">
@@ -17,46 +15,38 @@
             <strong>{{ $t('profile.email')}}: </strong>{{ $store.state.user.profile.email }}</div>
           <el-button @click="isProfileChangeOn = !isProfileChangeOn" class="profile-button change-button">{{ $t('general.change') }}</el-button>
         </el-row>
-
         <el-form v-if="isProfileChangeOn" @keyup.enter.native="submitForm('profileForm', saveInfo)" :model="profileForm" :rules="profileFormRules"
           ref="profileForm">
           <el-row class="info-change">
             <el-row>
-
               <div class="col-3">
                 <el-form-item prop="firstName">
                   <el-input class="profile-info-input" type="text" v-model="profileForm.firstName" :placeholder="$t('profile.firstName' )"></el-input>
                 </el-form-item>
               </div>
-
               <div class="col-3">
                 <el-form-item prop="lastName">
                   <el-input class="profile-info-input" type="text" v-model="profileForm.lastName" :placeholder="$t('profile.lastName' )"></el-input>
                 </el-form-item>
               </div>
-
             </el-row>
-            <el-row class="nickname-container">
-
-              <el-form-item prop="userName">
-                <el-input class="profile-info-input" type="text" v-model="profileForm.userName" :placeholder="$t('profile.userName' )"></el-input>
-              </el-form-item>
-
-            </el-row>
-
             <el-row>
-              <div>
+              <div class="nickname-container">
+                <el-form-item prop="userName">
+                  <el-input class="profile-info-input" type="text" v-model="profileForm.userName" :placeholder="$t('profile.userName' )"></el-input>
+                </el-form-item>
+              </div>
+            </el-row>
+            <el-row>
+              <div class="email-container">
                 <strong>{{ $t('profile.email')}}: </strong>{{ $store.state.user.profile.email }}</div>
             </el-row>
             <el-row>
               <el-button @click="submitForm('profileForm', saveInfo)" type="submit" v-show="isProfileChangeOn" class="profile-button no-margin">{{ $t('general.save') }}</el-button>
             </el-row>
-
           </el-row>
         </el-form>
-
       </transition>
-
     </el-col>
   </el-row>
 </template>
@@ -255,13 +245,10 @@ export default {
       }
     }
 
-    .info-change .el-row.nickname-container {
+    .nickname-container {
       height: 40px;
-      margin-bottom: 40px;
-      padding-top: 16px;
-      max-width: 294px;
+      width: 76.20%;
     }
-
   }
 
   .col-3 {
@@ -295,6 +282,7 @@ export default {
 
         .col-3 {
           width: 100%;
+          margin-bottom: 12px;
         }
 
         div {
@@ -306,9 +294,12 @@ export default {
         }
       }
 
-      .info-change .el-row.nickname-container {
-        padding-top: 0;
-        margin-bottom: 10px;
+      .nickname-container {
+        width: 100%;
+      }
+
+      .email-container {
+        margin-top: 20px;
       }
 
       .no-margin {

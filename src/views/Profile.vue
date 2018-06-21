@@ -97,5 +97,9 @@ export default {
       flex-direction: column;
       align-items: center;
     }
+
+    .logout-button.el-button--warning {
+      margin-top: 20px;
+    }
   }
 </style>
