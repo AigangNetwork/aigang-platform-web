@@ -17,11 +17,9 @@
     </div>
 
     <div class="card-section">
-      <div class="card-section-left"></div>
       <div class="card-section-right">
-        <span class="text-small">{{ $t('data.dataset.model.basePremium') }}</span>
-        <span :class="{'text-big': isPremiumBig, 'text-big-medium': !isPremiumBig}">{{ model.premium }}</span>
-        <span class="text-medium">{{ $t('data.dataset.model.aix') }} </span>
+        <span class="bubble-title">{{ $t('data.dataset.model.basePremium') }}</span>
+        <span :class="{'text-big': isPremiumBig, 'text-big-medium': !isPremiumBig}">{{ model.premium }} {{ $t('data.dataset.model.aix') }}</span>
       </div>
     </div>
   </div>
@@ -59,6 +57,9 @@ export default {
 </script>
 <style lang="scss" scoped>
   @import '~helpers/variables';
+
+  $purple-circle-size: 256px;
+
   .model-item-card {
     background: $pastel-gray;
     font-family: $font-secondary;
@@ -92,36 +93,50 @@ export default {
         max-width: 100%;
         word-wrap: break-word;
       }
-    }
-
-    .card-section:last-child {
-      color: white;
-      padding: 0;
-      align-items: center;
-      overflow: hidden;
-      .card-section-right {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        z-index: 2;
-        background: $button-purple;
-        padding: 0 34px 0 64px;
-        height: 258px;
-        width: 258px;
-        margin-top: -30px;
-        margin-bottom: -55px;
-        margin-right: -45px;
-        border-radius: 50%;
-
-        span: {
-          max-width: calc(100% - 55px);
-          word-wrap: break-word;
+      &:last-child {
+        width: $purple-circle-size;
+        color: white;
+        padding: 0;
+        align-items: center;
+        overflow: hidden;
+        .card-section-right {
+          position: relative;
+          &:before {
+            background: $button-purple;
+            width: 100%;
+            height: 140%;
+            content: '';
+            border-radius: 50% 0 0 50%;
+            position: absolute;
+            box-shadow: 0 6px 20px 1px rgba(118, 183, 250, 0.5);
+          }
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          padding: 0 40px 0 34px;
+          height: 100%;
+          width: 100%;
+          > span {
+            z-index: 1;
+            word-wrap: break-word;
+            margin-left: 5px;
+            text-align: right;
+            &.bubble-title {
+              font-family: 'Roboto', sans-serif;
+              font-size: 8px;
+              font-weight: bold;
+              font-style: normal;
+              font-stretch: normal;
+              line-height: normal;
+              letter-spacing: 0.4px;
+              text-transform: uppercase;
+              color: #d3d7e5;
+            }
+            &.text-big-medium {
+              width: auto;
+            }
+          }
         }
-      }
-
-      .text-small {
-        text-align: left;
-        width: 100%;
       }
     }
 
@@ -151,13 +166,28 @@ export default {
 
       .card-section {
         max-width: 100%;
-
         &:last-child {
+          width: 100%;
           .card-section-right {
-            margin: 0 auto -55px auto;
-            padding: 0 30px 0 30px;
-
-            span {
+            position: relative;
+            &:before {
+              background: $button-purple;
+              width: 100%;
+              height: 100%;
+              margin-top: 5px;
+              content: '';
+              border-radius: 50%;
+              position: absolute;
+              box-shadow: 0 6px 20px 1px rgba(118, 183, 250, 0.5);
+            }
+            justify-content: center;
+            margin: 0 auto -60px auto;
+            padding: 0px;
+            width: $purple-circle-size;
+            height: $purple-circle-size;
+            > span {
+              z-index: 1;
+              word-wrap: break-word;
               text-align: center;
             }
           }
