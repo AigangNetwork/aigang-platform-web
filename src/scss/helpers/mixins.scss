@@ -112,6 +112,7 @@
     .header-right-section {
       height: 178px;
       width: 178px;
+      min-width: 178px;
       border-radius: 50%;
       box-shadow: 0 8px 16px 0 rgba(32, 62, 94, 0.5);
       background-color: $light-blue;
@@ -166,6 +167,10 @@
       .author {
         text-decoration: underline;
         margin-right: 18px;
+      }
+
+      .date {
+        word-wrap: break-word;
       }
     }
   }

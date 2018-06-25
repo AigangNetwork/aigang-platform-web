@@ -1,5 +1,5 @@
 <template>
-  <div class="aig-container aig-view model-container">
+  <div class="aig-container aig-view">
     <Card class="product-card">
       <div slot="body" v-loading="loading">
         <ProductDetailsHeader :product="product" />

@@ -394,6 +394,7 @@
       "fees": "Fees",
       "calculatedPremium": "Calculated Premium",
       "deviceId": "Device Id",
+      "notImplemented": "Product is not implemented",
       "validation": {
         "imeiRequired": "IMEI is required",
         "imeiInvalid": "IMEI format is not correct. Should be 15 digits"

@@ -19,7 +19,7 @@
     <el-row class="input-section-title">{{ $t('insurance.product.fees') }}</el-row>
     <p>{{ policy.fees }}</p>
 
-    <el-button class="aig-button" type="primary">
+    <el-button class="aig-button" type="primary" @click.prevent.native="createPolicy">
       {{ $t('insurance.product.insure') }}
     </el-button>
   </div>
@@ -32,6 +32,11 @@ export default {
   components: {
     Card
   },
-  computed: { ...mapGetters(['policy']) }
+  computed: { ...mapGetters(['policy']) },
+  methods: {
+    createPolicy () {
+
+    }
+  }
 }
 </script>

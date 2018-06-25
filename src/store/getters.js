@@ -19,9 +19,6 @@ const getters = {
   },
   policy: state => {
     return state.currentPolicy
-  },
-  productDialogConfig: state => {
-    return state.currentProduct.productDialogConfig
   }
 }
 

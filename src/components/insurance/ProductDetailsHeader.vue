@@ -5,7 +5,7 @@
         <img :src="product.imageUrl" />
         <h1>{{ product.title }}</h1>
         <p>
-          <span class="no-wrap">{{ $t('insurance.product.productEnds') }} {{ endDate }} {{ $t('general.utc') }} </span>
+          <span class="date">{{ $t('insurance.product.productEnds') }} {{ endDate }} {{ $t('general.utc') }} </span>
         </p>
       </div>
       <div class="header-right-section">
