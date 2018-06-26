@@ -75,8 +75,8 @@ export default {
         disabled: true
       },
       {
-        name: this.$t('navigation.insure'),
-        routeLink: '/insure/'
+        name: this.$t('navigation.insurance'),
+        routeLink: '/insurance/'
       }
       ],
       dropDownMenuActive: false

@@ -276,7 +276,7 @@
     "data": "Data",
     "predictions": "Predictions",
     "invest": "Investment",
-    "insure": "Insurance",
+    "insurance": "Insurance",
     "login": "Sign Up/Log In"
   },
   "status": {
@@ -318,7 +318,8 @@
     "upvote": "Upvote",
     "downvote": "Downvote",
     "aix": "AIX",
-    "utc": "UTC"
+    "utc": "UTC",
+    "comingSoon": "Feature is coming soon"
   },
   "errors": {
     "error": "Error",
@@ -391,7 +392,7 @@
       "wearLevel": "Wear level",
       "coefficients": "Coefficients",
       "payout": "Payout",
-      "fees": "Fees",
+      "fee": "Fee",
       "calculatedPremium": "Calculated Premium",
       "deviceId": "Device Id",
       "notImplemented": "Product is not implemented",

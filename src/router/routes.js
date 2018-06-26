@@ -8,7 +8,7 @@ import Data from '@/views/Data'
 
 import Predictions from '@/views/Predictions'
 import Invest from '@/views/Invest'
-import Insure from '@/views/Insure'
+import Insurance from '@/views/Insurance'
 import Profile from '@/views/Profile'
 import UploadDataSet from '@/views/data/UploadDataSet'
 import Dataset from '@/views/data/Dataset'
@@ -237,43 +237,32 @@ const routes = [
     component: Invest
   },
   {
-    path: '/insure',
-    component: Insure,
+    path: '/insurance',
+    component: Insurance,
     props: true,
     children: [
       {
-        name: 'insure',
+        name: 'insurance',
         path: '',
         component: ProductItemsList,
         props: route => ({
-          requestPath: '/insure/list?page=',
-          routerPath: '/insure/products?page='
+          requestPath: '/insurance/list?page=',
+          routerPath: '/insurance/products?page='
         })
       },
-
-      // {
-      //   name: 'all',
-      //   path: '/insure/products',
-      //   component: ProductItemsList,
-      //   props: route => ({
-      //     requestPath: '/insure/list?page=',
-      //     routerPath: '/insure/products?page=',
-      //     isMyPolicies: true
-      //   })
-      // },
       {
         name: 'Product',
-        path: '/insure/products/:id',
+        path: '/insurance/products/:id',
         component: Product,
         children: [
           {
             name: 'ProductDetails',
-            path: '/insure/products/:id/details',
+            path: '/insurance/products/:id/details',
             component: ProductDetails
           },
           {
             name: 'Policy',
-            path: '/insure/products/:id/policy',
+            path: '/insurance/products/:id/policy',
             component: PolicyDraft
           }
         ]

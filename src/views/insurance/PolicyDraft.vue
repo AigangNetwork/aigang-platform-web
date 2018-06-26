@@ -16,8 +16,8 @@
     <el-row class="input-section-title">{{ $t('insurance.product.payout') }}</el-row>
     <p>{{ policy.utcEnd }}</p>
 
-    <el-row class="input-section-title">{{ $t('insurance.product.fees') }}</el-row>
-    <p>{{ policy.fees }}</p>
+    <el-row class="input-section-title">{{ $t('insurance.product.fee') }}</el-row>
+    <p>{{ policy.fee }}</p>
 
     <el-button class="aig-button" type="primary" @click.prevent.native="createPolicy">
       {{ $t('insurance.product.insure') }}

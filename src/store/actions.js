@@ -89,14 +89,14 @@ const loadCurrentModel = async ({ commit, state }, payload) => {
   commit(types.LOAD_CURRENT_MODEL, response.data)
 }
 
-const loadCurrentProduct = async ({ commit, state }, id) => {
+const loadCurrentProduct = async ({ commit }, id) => {
   commit(types.CLEAR_CURRENT_PRODUCT)
   commit(types.LOADING, { loading: true })
 
   let response = null
 
   try {
-    response = await axios.get('insure/products/' + id)
+    response = await axios.get('insurance/products/' + id)
   } catch (e) {
     commit(types.LOADING, { loading: false })
   }
@@ -110,14 +110,14 @@ const loadCurrentProduct = async ({ commit, state }, id) => {
   }
 }
 
-const createNewPolicy = async ({ commit, state }, imei) => {
+const createNewPolicy = async ({ commit }, imei) => {
   commit(types.CLEAR_CURRENT_POLICY)
   commit(types.LOADING, { loading: true })
 
   let response = null
 
   try {
-    response = await axios.post('insure/policy-draft/' + imei)
+    response = await axios.post('insurance/policy-draft/' + imei)
   } catch (e) {
     commit(types.LOADING, { loading: false })
   }
