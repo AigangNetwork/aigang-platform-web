@@ -14,6 +14,12 @@ const mutations = {
     state.user.profile.lastName = payload.data.profile.lastName
     state.user.profile.userName = payload.data.profile.userName
   },
+  LOAD_PROFILE_WALLETS (state, payload) {
+    state.user.profile.wallets = payload
+  },
+  LOAD_PROFILE_TRANSACTIONS (state, payload) {
+    state.user.profile.transactions = payload
+  },
   LOAD_CURRENT_DATASET (state, payload) {
     state.currentDataset = payload.data
     state.currentDataset.commentsCount = payload.commentsCount

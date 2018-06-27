@@ -43,7 +43,7 @@
       </el-row>
     </el-row>
 
-    <Dialog :title="$t('profile.warning')" :body="$t('data.dataset.model.deleteDialogBody')" :on-confirm="deleteModel" :is-visible="dialogVisible"
+    <Dialog :title="$t('profile.profile.warning')" :body="$t('data.dataset.model.deleteDialogBody')" :on-confirm="deleteModel" :is-visible="dialogVisible"
       :on-cancel="cancel" />
   </div>
 </template>

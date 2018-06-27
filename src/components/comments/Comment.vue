@@ -32,7 +32,7 @@
         {{ comment.replies.length }} {{$t('data.dataset.comment.replies')}}
       </span>
     </div>
-    <Dialog :title="$t('profile.warning')" :body="$t('data.dataset.comment.deleteCommentDialogContent')" :on-confirm="deleteComment"
+    <Dialog :title="$t('profile.profile.warning')" :body="$t('data.dataset.comment.deleteCommentDialogContent')" :on-confirm="deleteComment"
       :is-visible="dialogVisible" :on-cancel="cancelDelete" />
   </div>
 </template>

@@ -2,18 +2,18 @@
   <div v-loading="deactivating">
     <el-row class="profile-password-container">
       <el-col>
-        <p class="input-section-title">{{ $t('profile.deactivateAccountTitle') }}</p>
+        <p class="input-section-title">{{ $t('profile.profile.deactivateAccountTitle') }}</p>
       </el-col>
       <el-col>
-        <p class="profile-section-decription">{{ $t('profile.deactivateAccountDescription') }}</p>
+        <p class="profile-section-decription">{{ $t('profile.profile.deactivateAccountDescription') }}</p>
       </el-col>
       <el-row>
         <el-button @click="dialogVisible = true" class="profile-button">
-          {{ $t('profile.deactivateAccount') }}
+          {{ $t('profile.profile.deactivateAccount') }}
         </el-button>
       </el-row>
     </el-row>
-    <Dialog :title="$t('profile.warning')" :body="$t('profile.confirmationText')" :on-confirm="deactivateAccount" :is-visible="dialogVisible"
+    <Dialog :title="$t('profile.profile.warning')" :body="$t('profile.profile.confirmationText')" :on-confirm="deactivateAccount" :is-visible="dialogVisible"
       :on-cancel="cancel" />
   </div>
 </template>
@@ -37,7 +37,7 @@ export default {
         this.deactivating = false
         this.$notify.success({
           title: this.$t('data.upload.notifications.titles.success'),
-          message: this.$t('profile.deactivationSuccessful')
+          message: this.$t('profile.profile.deactivationSuccessful')
         })
         this.$store.dispatch('logOut')
         this.$router.push('/data')
@@ -50,7 +50,6 @@ export default {
     }
   }
 }
-
 </script>
 <style scoped>
   .profile-button {
@@ -61,5 +60,4 @@ export default {
     display: flex;
     justify-content: center;
   }
-
 </style>
