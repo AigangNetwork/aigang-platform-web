@@ -3,7 +3,7 @@
     <Card class="product-card">
       <div slot="body" v-loading="loading">
         <ProductDetailsHeader :product="product" />
-        <router-view></router-view>
+        <ProductDetails />
       </div>
     </Card>
   </div>
@@ -13,10 +13,12 @@
 import Card from '@/components/Card'
 import EndDate from '@/components/mixins/EndDate'
 import ProductDetailsHeader from '@/components/insurance/ProductDetailsHeader'
+import ProductDetails from '@/components/insurance/ProductDetails'
+
 import { mapGetters } from 'vuex'
 
 export default {
-  components: { Card, ProductDetailsHeader },
+  components: { Card, ProductDetailsHeader, ProductDetails },
   mixins: [EndDate],
   computed: { ...mapGetters(['product', 'loading']) },
   async created () {
@@ -30,19 +32,16 @@ export default {
 
   .product-card.aig-card .aig-card-body {
     padding: 0 !important;
+    margin-top: 44px !important;
   }
 
   .product-details-body {
     padding: 0 53px;
 
-    .wrapper.el-button {
+    .aig-button {
       display: block;
       width: 100%;
       margin: 40px 0;
-    }
-
-    .aig-button {
-      margin-top: 0;
     }
   }
 

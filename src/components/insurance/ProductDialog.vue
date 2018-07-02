@@ -1,7 +1,7 @@
 <template>
   <el-dialog class="download-app-dialog" :title="title" :visible.sync="show" width="100%" center>
 
-    <template v-if="product.type === 'AndroidDevice'">
+    <template v-if="product.type === 'androidDevice'">
       <span>
         <p>{{ $t('insurance.product.instructionsIntro') }}</p>
         <ol>
@@ -9,9 +9,10 @@
           <li>{{ $t('insurance.product.instructionsIMEI') }}</li>
         </ol>
 
-        <el-form @submit.prevent.native="submitForm('imeiForm', handleSubmit)" :rules="imeiFormRules" :model="imeiForm" ref="imeiForm">
-          <el-form-item prop="imei">
-            <el-input :placeholder="$t('insurance.product.imeiPlaceholder')" v-model="imeiForm.imei"></el-input>
+        <el-form @submit.prevent.native="submitForm('deviceIdForm', handleSubmit)" :rules="deviceIdFormRules" :model="deviceIdForm"
+          ref="deviceIdForm">
+          <el-form-item prop="id">
+            <el-input :placeholder="$t('insurance.product.deviceIdPlaceholder')" v-model="deviceIdForm.id"></el-input>
           </el-form-item>
         </el-form>
         <p>{{ $t('insurance.product.instructionsConditions') }}</p>
@@ -19,7 +20,7 @@
 
       <span slot="footer" class="dialog-footer">
         <el-button @click="show=false">{{ $t('general.cancel') }}</el-button>
-        <el-button type="primary" @click.prevent.native="submitForm('imeiForm', calculatePremium)">{{ $t('general.continue') }}</el-button>
+        <el-button type="primary" @click.prevent.native="submitForm('deviceIdForm', calculatePremium)">{{ $t('general.continue') }}</el-button>
       </span>
     </template>
 
@@ -38,18 +39,18 @@ export default {
   mixins: [FormMixin],
   data () {
     return {
-      imeiForm: {
-        imei: ''
+      deviceIdForm: {
+        id: ''
       },
-      imeiFormRules: {
-        imei: [{
+      deviceIdFormRules: {
+        id: [{
           required: true,
-          message: this.$t('insurance.product.validation.imeiRequired'),
+          message: this.$t('insurance.product.validation.deviceIdRequired'),
           trigger: 'blur'
         },
         {
-          pattern: /^[0-9]{15}$/,
-          message: this.$t('insurance.product.validation.imeiInvalid'),
+          pattern: /^[0-9]{6}$/,
+          message: this.$t('insurance.product.validation.deviceIdInvalid'),
           trigger: 'blur'
         }
         ]
@@ -67,17 +68,20 @@ export default {
       }
     },
     title () {
-      if (this.product.type === 'AndroidDevice') return this.$t('insurance.product.downloadApp')
+      if (this.product.type === 'androidDevice') return this.$t('insurance.product.downloadApp')
       else return this.$t('insurance.product.notImplemented')
     }
   },
   methods: {
     calculatePremium () {
-      this.$store.dispatch('createNewPolicy', this.imeiForm.imei)
       this.show = false
-      this.$router.push({
-        name: 'Policy'
-      })
+      this.$router.push(
+        {
+          name: 'PolicyDraftLoader',
+          params: {
+            deviceId: this.deviceIdForm.id
+          }
+        })
     }
   }
 }

@@ -82,11 +82,11 @@ const mutations = {
   CLEAR_CURRENT_PRODUCT (state, payload) {
     state.currentProduct = {}
   },
-  LOADING (state, payload) {
-    state.loading = payload.loading
+  SET_LOADING (state, loading) {
+    state.loading = loading
   },
-  LOAD_CURRENT_POLICY (state, payload) {
-    state.currentPolicy = payload.policy
+  SET_CURRENT_POLICY (state, policy) {
+    state.currentPolicy = policy
   },
   CLEAR_CURRENT_POLICY (state, payload) {
     state.currentPolicy = {}
