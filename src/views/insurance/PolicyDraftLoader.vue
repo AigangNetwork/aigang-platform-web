@@ -25,6 +25,13 @@
               <p class="info-text" key="2">{{ $t('insurance.policy.redirecting') }}</p>
             </template>
           </transition-group>
+          <div v-if="!policy.policyId" class="timeline-wrapper">
+            <div class="timeline-item">
+              <div class="animated-background">
+                <div class="background-masker content-top"></div>
+              </div>
+            </div>
+          </div>
         </div>
       </Card>
     </transition>
@@ -59,6 +66,14 @@ export default {
 </script>
 <style lang="scss">
   @import '~helpers/variables';
+
+  .aig-container {
+    align-items: flex-start;
+  }
+
+  .aig-card.product-card .aig-card-body {
+    margin-top: 43px !important;
+  }
 
   .info-text {
     text-align: center;
@@ -153,5 +168,37 @@ export default {
       -ms-transform: rotate(360deg);
       transform: rotate(360deg);
     }
+  }
+
+  .timeline-item {
+    background: #fff;
+    margin: 0 auto;
+    width: 100%;
+    height: 20px;
+  }
+
+  @keyframes placeHolderShimmer {
+    0% {
+      background-position: -468px 0
+    }
+    100% {
+      background-position: 468px 0
+    }
+  }
+
+  .animated-background {
+    border-radius: 3px;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+    animation-iteration-count: infinite;
+    animation-name: placeHolderShimmer;
+    animation-timing-function: linear;
+    background: #f6f7f8;
+    background: linear-gradient(to right, #eeeeee 8%, #dddddd 18%, #eeeeee 33%);
+    background-size: 800px 120px;
+    height: 20px;
+    width: 250px;
+    margin: 0 auto;
+    position: relative;
   }
 </style>
