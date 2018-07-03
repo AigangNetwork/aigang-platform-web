@@ -8,24 +8,24 @@
           </div>
           <p class="loading-text">{{ loadingText }} </p>
           <p class="info-text"> {{ $t('insurance.policy.deviceId') }}:
-            <span class="bold">{{ policy.deviceId }}</span>
+            <span class="bold">{{ policyLoadingInfo.deviceId }}</span>
           </p>
           <p class="info-text"> {{ $t('insurance.policy.startingTask') }}</p>
           <transition-group name="slideUp" mode="out-in">
-            <template v-if="policy.taskId">
+            <template v-if="policyLoadingInfo.taskId">
               <p class="info-text" key="1"> {{ $t('insurance.policy.taskId') }}:
-                <span class="bold">{{ policy.taskId }}</span>
+                <span class="bold">{{ policyLoadingInfo.taskId }}</span>
               </p>
               <p class="info-text" key="2">{{ $t('insurance.policy.readingDeviceData') }}</p>
             </template>
           </transition-group>
           <transition-group name="slideUp" mode="out-in">
-            <template v-if="policy.policyId">
+            <template v-if="policyLoadingInfo.policyId">
               <p class="info-text" key="1">{{ $t('insurance.policy.policyCreated') }}</p>
               <p class="info-text" key="2">{{ $t('insurance.policy.redirecting') }}</p>
             </template>
           </transition-group>
-          <div v-if="!policy.policyId" class="timeline-wrapper">
+          <div v-if="!policyLoadingInfo.policyId" class="timeline-wrapper">
             <div class="timeline-item">
               <div class="animated-background">
                 <div class="background-masker content-top"></div>
@@ -44,7 +44,7 @@ import { mapGetters } from 'vuex'
 export default {
   components: { Card },
   computed: {
-    ...mapGetters(['policy']),
+    ...mapGetters(['policyLoadingInfo']),
     loadingText () {
       return this.$t('general.loading').slice(0, -4)
     }
@@ -56,7 +56,7 @@ export default {
       this.$router.push({
         name: 'Policy',
         params: {
-          policyId: this.policy.policyId
+          policyId: this.policyLoadingInfo.policyId
         }
       })
     }, 1000)

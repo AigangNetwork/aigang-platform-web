@@ -112,22 +112,22 @@ const loadCurrentProduct = async ({ commit }, id) => {
 
 const createNewPolicy = async ({ commit }, deviceId) => {
   commit(types.SET_LOADING, false)
-  commit(types.CLEAR_CURRENT_POLICY)
+  commit(types.CLEAR_POLICY_LOADING_INFO)
 
   const policyLoadingInfo = {
     deviceId: deviceId
   }
 
-  commit(types.SET_CURRENT_POLICY, policyLoadingInfo)
+  commit(types.SET_POLICY_LOADING_INFO, policyLoadingInfo)
 
   let response = null
 
   // STEP 1: getting task ID
   response = await axios.get('insurance/policy/android/pair/' + deviceId)
 
-  commit(types.CLEAR_CURRENT_POLICY)
+  commit(types.CLEAR_POLICY_LOADING_INFO)
   policyLoadingInfo.taskId = response.data.taskId
-  commit(types.SET_CURRENT_POLICY, policyLoadingInfo)
+  commit(types.SET_POLICY_LOADING_INFO, policyLoadingInfo)
 
   // while(response.data)
   // STEP 2: gettings task
@@ -136,9 +136,21 @@ const createNewPolicy = async ({ commit }, deviceId) => {
     await sleep(2500)
   }
 
-  commit(types.CLEAR_CURRENT_POLICY)
+  commit(types.CLEAR_POLICY_LOADING_INFO)
   policyLoadingInfo.policyId = response.data.policyId
-  commit(types.SET_CURRENT_POLICY, policyLoadingInfo)
+  commit(types.SET_POLICY_LOADING_INFO, policyLoadingInfo)
+}
+
+const getPolicy = async ({ commit }, policyId) => {
+  commit(types.SET_LOADING, true)
+  commit(types.CLEAR_CURRENT_POLICY)
+  const response = await axios.get('insurance/policy/android/' + policyId)
+
+  if (response && response.data) {
+    commit(types.SET_CURRENT_POLICY, response.data)
+  }
+
+  commit(types.SET_LOADING, false)
 }
 
 export {
@@ -156,7 +168,8 @@ export {
   clearCurrentDataset,
   clearCurrentModel,
   loadCurrentProduct,
-  createNewPolicy
+  createNewPolicy,
+  getPolicy
 }
 
 function sleep (milliseconds) {

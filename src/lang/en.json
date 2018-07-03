@@ -415,7 +415,22 @@
       "taskId": "Task ID",
       "readingDeviceData": "Reading device data",
       "policyCreated": "Policy created",
-      "redirecting": "Redirecting"
+      "redirecting": "Redirecting",
+      "androidBatteryInsurancePolicy": "Android Battery Insurance Policy",
+      "termsAndConditionsDescription": "In order to confirm your policy, you must agree with",
+      "agreeWithTermsAndConds": "I agree with Terms and Conditions",
+      "mustAgreeWithTermsAndConds": "You must agree with Terms and Conditions",
+      "deviceData": {
+        "deviceData": "Device data",
+        "wearLevel": "Battery wear level",
+        "batteryDesignCapacity": "Battery Design Capacity",
+        "chargeLevel": "Charge level",
+        "ageInMonths": "Age in months",
+        "cpuUsage": "CPU usage",
+        "region": "Region",
+        "brand": "Brand",
+        "fetchDateTime": "Data fetch time"
+      }
     }
   }
 }

@@ -19,6 +19,9 @@ const getters = {
   },
   policy: state => {
     return state.currentPolicy
+  },
+  policyLoadingInfo: state => {
+    return state.policyLoadingInfo
   }
 }
 

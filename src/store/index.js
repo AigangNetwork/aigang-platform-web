@@ -29,6 +29,7 @@ const store = new Vuex.Store({
     currentModel: null,
     currentProduct: {},
     currentPolicy: {},
+    policyLoadingInfo: {},
     loading: false
   },
   mutations,

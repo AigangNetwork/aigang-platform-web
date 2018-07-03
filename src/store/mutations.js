@@ -70,26 +70,33 @@ const mutations = {
       state.currentModel.commentsCount = payload.commentsCount
     }
   },
-  CLEAR_CURRENT_DATASET (state, payload) {
+  CLEAR_CURRENT_DATASET (state) {
     state.currentDataset = {}
   },
-  CLEAR_CURRENT_MODEL (state, payload) {
+  CLEAR_CURRENT_MODEL (state) {
     state.currentModel = {}
   },
   LOAD_CURRENT_PRODUCT (state, payload) {
     state.currentProduct = payload.product
   },
-  CLEAR_CURRENT_PRODUCT (state, payload) {
+  CLEAR_CURRENT_PRODUCT (state) {
     state.currentProduct = {}
   },
   SET_LOADING (state, loading) {
     state.loading = loading
   },
-  SET_CURRENT_POLICY (state, policy) {
-    state.currentPolicy = policy
+  SET_CURRENT_POLICY (state, payload) {
+    state.currentPolicy = payload.policy
+    state.currentPolicy.termsAndConditions = payload.termsAndConditions
   },
   CLEAR_CURRENT_POLICY (state, payload) {
     state.currentPolicy = {}
+  },
+  SET_POLICY_LOADING_INFO (state, policyLoadingInfo) {
+    state.policyLoadingInfo = policyLoadingInfo
+  },
+  CLEAR_POLICY_LOADING_INFO (state) {
+    state.policyLoadingInfo = {}
   }
 }
 
