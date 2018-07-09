@@ -62,39 +62,11 @@ const loadProfileWallets = async ({ commit }, id) => {
   })
 }
 
-const loadProfileTransactions = async ({ commit }, id) => {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      const response = [{
-        date: '2016-05-03T00:00:10Z',
-        transaction: '0xb353feb9c0d3c7da87995b174f491e4e7b0beff2',
-        type: 'ForecastAdded',
-        status: '2'
-      }, {
-        date: '2016-05-03T00:00:20Z',
-        transaction: '0xb353feb9c0d3c7da87995b174f491e4e7b0beff2',
-        type: 'ForecastAdded',
-        status: '1'
-      }, {
-        date: '2016-05-03T00:00:30Z',
-        transaction: '0xb353feb9c0d3c7da87995b174f491e4e7b0beff2',
-        type: 'ForecastAdded',
-        status: '2'
-      }, {
-        date: '2016-05-03T00:00:40Z',
-        transaction: '0xb353feb9c0d3c7da87995b174f491e4e7b0beff2',
-        type: 'ForecastAdded',
-        status: '0'
-      }, {
-        date: '2016-05-03T00:00:50Z',
-        transaction: '0xb353feb9c0d3c7da87995b174f491e4e7b0beff2',
-        type: 'ForecastAdded',
-        status: '0'
-      }]
-      commit(types.LOAD_PROFILE_TRANSACTIONS, response)
-      resolve()
-    }, 1000)
-  })
+const loadProfileTransactions = async ({ commit }, page) => {
+  const response = await axios.get('/transaction/mytransactions?page=' + page)
+  if (response.data) {
+    commit(types.LOAD_PROFILE_TRANSACTIONS, response.data)
+  }
 }
 
 const loadCurrentDataset = async ({ commit, state }, id) => {

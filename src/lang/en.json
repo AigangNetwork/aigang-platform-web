@@ -296,8 +296,9 @@
       "description": "Description about transactions goes here",
       "status": {
         "success": "Success",
-        "rejected": "Rejected",
-        "pending": "Pending"
+        "canceled": "Canceled",
+        "pending": "Pending",
+        "failed": "Failed"
       },
       "table": {
         "emptyText": "No Transactions yet",
