@@ -39,7 +39,7 @@
 
             <div class="device-data-item">
               <label>{{ $t('insurance.policy.deviceData.batteryDesignCapacity') }}:</label>
-              {{ deviceData.BatteryDesignCapacity }} %
+              {{ deviceData.BatteryDesignCapacity }}
             </div>
 
             <div class="device-data-item">

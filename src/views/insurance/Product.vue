@@ -38,10 +38,13 @@ export default {
   .product-details-body {
     padding: 0 53px;
 
-    .aig-button {
+    .wrapper.el-button {
       display: block;
       width: 100%;
       margin: 40px 0;
+    }
+    .aig-button {
+      margin-top: 0;
     }
   }
 

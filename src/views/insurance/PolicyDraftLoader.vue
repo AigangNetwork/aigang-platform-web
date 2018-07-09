@@ -3,14 +3,18 @@
     <transition name="fade" mode="out-in">
       <Card class="product-card">
         <div slot="body" class="loader-container">
-          <div id="preloader">
-            <div id="loader"></div>
-          </div>
-          <p class="loading-text">{{ loadingText }} </p>
-          <p class="info-text"> {{ $t('insurance.policy.deviceId') }}:
-            <span class="bold">{{ policyLoadingInfo.deviceId }}</span>
-          </p>
-          <p class="info-text"> {{ $t('insurance.policy.startingTask') }}</p>
+          <transition-group name="slideUp" appear>
+            <template v-if="!policyLoadingInfo.validationResultCode">
+              <div id="preloader" key="loader">
+                <div id="loader"></div>
+              </div>
+              <p class="loading-text" key="loadingText">{{ loadingText }} </p>
+            </template>
+            <p class="info-text" key="deviceId"> {{ $t('insurance.policy.deviceId') }}:
+              <span class="bold">{{ policyLoadingInfo.deviceId }}</span>
+            </p>
+            <p class="info-text" key="startingTaskText"> {{ $t('insurance.policy.startingTask') }}</p>
+          </transition-group>
           <transition-group name="slideUp" mode="out-in">
             <template v-if="policyLoadingInfo.taskId">
               <p class="info-text" key="1"> {{ $t('insurance.policy.taskId') }}:
@@ -25,7 +29,12 @@
               <p class="info-text" key="2">{{ $t('insurance.policy.redirecting') }}</p>
             </template>
           </transition-group>
-          <div v-if="!policyLoadingInfo.policyId" class="timeline-wrapper">
+          <transition name="slideUp" mode="out-in">
+            <template v-if="policyLoadingInfo.validationResultCode">
+              <p class="info-text aig-error">{{ validationResult }}</p>
+            </template>
+          </transition>
+          <div v-if="!policyLoadingInfo.policyId && !policyLoadingInfo.validationResultCode" class="timeline-wrapper">
             <div class="timeline-item">
               <div class="animated-background">
                 <div class="background-masker content-top"></div>
@@ -47,19 +56,44 @@ export default {
     ...mapGetters(['policyLoadingInfo']),
     loadingText () {
       return this.$t('general.loading').slice(0, -4)
+    },
+    validationResult () {
+      switch (this.policyLoadingInfo.validationResultCode) {
+        case 'DC':
+          return this.$t('insurance.policy.validationResult.BatteryDesignCapacity')
+        case 'CL':
+          return this.$t('insurance.policy.validationResult.BatteryChargeLevel')
+        case 'DA':
+          return this.$t('insurance.policy.validationResult.DeviceAgeInMonths')
+        case 'CU':
+          return this.$t('insurance.policy.validationResult.CpuUsage')
+        case 'R':
+          return this.$t('insurance.policy.validationResult.Region')
+        case 'DB':
+          return this.$t('insurance.policy.validationResult.DeviceBrand')
+        case 'WL':
+          return this.$t('insurance.policy.validationResult.BatteryWearLevel')
+        default:
+          return null
+      }
     }
   },
   async mounted () {
-    await this.$store.dispatch('createNewPolicy', this.$route.params.deviceId)
-    // Give user time to see that everything is ok, redirecting
-    setTimeout(() => {
-      this.$router.push({
-        name: 'Policy',
-        params: {
-          policyId: this.policyLoadingInfo.policyId
-        }
-      })
-    }, 1000)
+    await this.$store.dispatch('createNewPolicy', {
+      deviceId: this.$route.params.deviceId,
+      productId: this.$route.params.id
+    })
+
+    if (this.policyLoadingInfo.policyId) {
+      setTimeout(() => {
+        this.$router.push({
+          name: 'Policy',
+          params: {
+            policyId: this.policyLoadingInfo.policyId
+          }
+        })
+      }, 1000)
+    }
   }
 }
 

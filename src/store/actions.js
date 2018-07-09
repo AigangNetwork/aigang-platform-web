@@ -110,7 +110,8 @@ const loadCurrentProduct = async ({ commit }, id) => {
   }
 }
 
-const createNewPolicy = async ({ commit }, deviceId) => {
+const createNewPolicy = async ({ commit }, payload) => {
+  const { deviceId, productId } = payload
   commit(types.SET_LOADING, false)
   commit(types.CLEAR_POLICY_LOADING_INFO)
 
@@ -131,13 +132,22 @@ const createNewPolicy = async ({ commit }, deviceId) => {
 
   // while(response.data)
   // STEP 2: gettings task
-  while (!response.data.policyId) {
-    response = await axios.post('insurance/policy/android/' + policyLoadingInfo.taskId)
+  while (!response.data.policyId && !response.data.validationResultCode) {
+    response = await axios.post('insurance/policy/android', {
+      TaskId: policyLoadingInfo.taskId,
+      ProductId: productId
+    })
     await sleep(2500)
   }
 
   commit(types.CLEAR_POLICY_LOADING_INFO)
-  policyLoadingInfo.policyId = response.data.policyId
+
+  if (response.data.validationResultCode) {
+    policyLoadingInfo.validationResultCode = response.data.validationResultCode
+  } else {
+    policyLoadingInfo.policyId = response.data.policyId
+  }
+
   commit(types.SET_POLICY_LOADING_INFO, policyLoadingInfo)
 }
 

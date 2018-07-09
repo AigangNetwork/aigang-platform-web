@@ -404,6 +404,7 @@
       "payout": "Payout",
       "calculatedPremium": "Calculated Premium",
       "notImplemented": "Product is not implemented",
+      "logInToCalculatePremium": "You have to log in to calculate premium",
       "validation": {
         "deviceIdRequired": "Device ID is required",
         "deviceIdInvalid": "Device ID format is not correct. Should be 6 digits"
@@ -430,6 +431,15 @@
         "region": "Region",
         "brand": "Brand",
         "fetchDateTime": "Data fetch time"
+      },
+      "validationResult": {
+        "BatteryDesignCapacity": "Battery design capacity is not valid for insurance",
+        "BatteryChargeLevel": "Battery charge level is not valid for insurance",
+        "DeviceAgeInMonths": "Device age in months is not valid for insurance",
+        "CpuUsage": "CPU usage is not valid for insurance",
+        "Region": "Your region is not valid for insurance",
+        "DeviceBrand": "This device brand is not valid for insurance",
+        "BatteryWearLevel": "Battery wear level is not valid for insurance"
       }
     }
   }
