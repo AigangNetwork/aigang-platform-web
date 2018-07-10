@@ -294,6 +294,8 @@
     "transactions": {
       "title": "Transactions",
       "description": "Description about transactions goes here",
+      "txNotFound": "You have not submited any transactions yet.",
+      "walletsNotFound": "No wallets for this user was found.",
       "status": {
         "success": "Success",
         "canceled": "Canceled",
