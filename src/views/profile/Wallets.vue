@@ -1,6 +1,5 @@
 <template>
-  <div>
-    <div v-if="wallets" v-loading="loading" :element-loading-text=" $t('general.loading')">
+    <div v-loading="loading" :element-loading-text=" $t('general.loading')">
       <el-row>
         <el-col>
           <p class="input-section-title">{{ $t('profile.wallets.title') }}</p>
@@ -20,16 +19,6 @@
         </el-row>
       </el-row>
     </div>
-    <div v-else>
-      <el-row>
-        <el-col>
-          <p>
-            {{$t('profile.transactions.walletsNotFound')}}
-          </p>
-        </el-col>
-      </el-row>
-    </div>
-  </div>
 </template>
 <script>
 import {
