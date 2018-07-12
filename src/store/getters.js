@@ -10,6 +10,12 @@ const getters = {
   },
   model: state => {
     return state.currentModel
+  },
+  wallets: state => {
+    return state.user.wallets
+  },
+  transactions: state => {
+    return state.user.transactions
   }
 }
 

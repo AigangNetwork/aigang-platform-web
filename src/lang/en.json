@@ -279,7 +279,7 @@
     },
     "wallets": {
       "title": "Wallets",
-      "description": "Description about wallets goes here",
+      "description": "You wallets list which were used by you on Aigang Platform",
       "table": {
         "emptyText": "No Wallets yet",
         "titles": {
@@ -293,9 +293,7 @@
     },
     "transactions": {
       "title": "Transactions",
-      "description": "Description about transactions goes here",
-      "txNotFound": "You have not submited any transactions yet.",
-      "walletsNotFound": "No wallets for this user was found.",
+      "description": "Transactions list which were submited by you on Aigang Platform",
       "status": {
         "success": "Success",
         "canceled": "Canceled",

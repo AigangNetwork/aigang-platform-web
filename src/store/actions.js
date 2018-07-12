@@ -39,27 +39,11 @@ const changeProfileNames = ({ commit }, response) => {
   commit(types.CHANGE_PROFILE_NAMES, response)
 }
 
-const loadProfileWallets = async ({ commit }, id) => {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      const response = [
-        {
-          date: '2016-05-03T00:00:10Z',
-          wallet: '0xb353feb9c0d3c7da87995b174f491e4e7b0beff2'
-        }, {
-          date: '2016-05-03T00:00:20Z',
-          wallet: '0xb353feb9c0d3c7da87995b174f491e4e7b0beff2'
-        }, {
-          date: '2016-05-03T00:00:30Z',
-          wallet: '0xb353feb9c0d3c7da87995b174f491e4e7b0beff2'
-        }, {
-          date: '2016-05-03T00:00:40Z',
-          wallet: '0xb353feb9c0d3c7da87995b174f491e4e7b0beff2'
-        }]
-      commit(types.LOAD_PROFILE_WALLETS, response)
-      resolve()
-    }, 1000)
-  })
+const loadProfileWallets = async ({ commit }, page) => {
+  const response = await axios.get('/account/mywallets?page=' + page)
+  if (response.data) {
+    commit(types.LOAD_PROFILE_WALLETS, response.data)
+  }
 }
 
 const loadProfileTransactions = async ({ commit }, page) => {

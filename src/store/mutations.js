@@ -15,10 +15,10 @@ const mutations = {
     state.user.profile.userName = payload.data.profile.userName
   },
   LOAD_PROFILE_WALLETS (state, payload) {
-    state.user.profile.wallets = payload
+    state.user.wallets = payload
   },
   LOAD_PROFILE_TRANSACTIONS (state, payload) {
-    state.user.profile.transactions = payload
+    state.user.transactions = payload
   },
   LOAD_CURRENT_DATASET (state, payload) {
     state.currentDataset = payload.data
