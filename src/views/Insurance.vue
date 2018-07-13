@@ -43,7 +43,7 @@ export default {
       {
         name: this.$t('insurance.menu.myPolicies'),
         routeLink: {
-          path: '/data/uploaded'
+          path: '/insurance/policy'
         },
         active: false
       }

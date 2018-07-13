@@ -24,6 +24,7 @@ import ProductItemsList from '@/views/insurance/ProductItemsList'
 import PolicyDraft from '@/views/insurance/PolicyDraft'
 import Product from '@/views/insurance/Product'
 import ProductDetails from '@/views/insurance/ProductDetails'
+import MyPolicyList from '@/views/insurance/MyPolicyList'
 import DatasetModelForm from '@/views/data/model/DatasetModelForm'
 import DatasetModelInfo from '@/views/data/model/DatasetModelInfo'
 import DatasetModelTables from '@/views/data/model/DatasetModelTables'
@@ -266,6 +267,11 @@ const routes = [
             component: PolicyDraft
           }
         ]
+      },
+      {
+        name: 'MyPolicyList',
+        path: '/insurance/policy',
+        component: MyPolicyList
       }
     ]
   },
