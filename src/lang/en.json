@@ -395,7 +395,7 @@
       "instructionsDownloadApp": "Download Aigang app on your android device",
       "instructionsIMEI": "Enter your device ID below (you will see it in the app)",
       "instructionsConditions": "Your device's battery data will be read, press continue if you agree",
-      "deviceIdPlaceholder": "Enter your device ID",
+      "deviceIdPlaceholder": "ASVSF213D",
       "insure": "Insure",
       "currentWearLevel": "Current Wear level",
       "startTime": "Start Time",
@@ -407,7 +407,7 @@
       "logInToCalculatePremium": "You have to log in to calculate premium",
       "validation": {
         "deviceIdRequired": "Device ID is required",
-        "deviceIdInvalid": "Device ID format is not correct. Should be 6 digits"
+        "deviceIdInvalid": "Must be 8 characters"
       }
     },
     "policy": {

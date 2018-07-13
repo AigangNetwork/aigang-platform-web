@@ -10,10 +10,13 @@
         </ol>
 
         <el-form @submit.prevent.native="submitForm('deviceIdForm', handleSubmit)" :rules="deviceIdFormRules" :model="deviceIdForm"
-          ref="deviceIdForm">
+          ref="deviceIdForm" class="device-id-form">
+
           <el-form-item prop="id">
-            <el-input :placeholder="$t('insurance.product.deviceIdPlaceholder')" v-model="deviceIdForm.id"></el-input>
+            <el-input :keyup.enter="submitForm('deviceIdForm', handleSubmit)" class="device-id-input" :placeholder="$t('insurance.product.deviceIdPlaceholder')"
+              :maxlength="8" v-model="deviceIdForm.id"></el-input>
           </el-form-item>
+
         </el-form>
         <p>{{ $t('insurance.product.instructionsConditions') }}</p>
       </span>
@@ -49,11 +52,10 @@ export default {
           trigger: 'blur'
         },
         {
-          pattern: /^[0-9]{6}$/,
+          min: 8,
           message: this.$t('insurance.product.validation.deviceIdInvalid'),
           trigger: 'blur'
-        }
-        ]
+        }]
       }
     }
   },
@@ -79,7 +81,7 @@ export default {
         {
           name: 'PolicyDraftLoader',
           params: {
-            deviceId: this.deviceIdForm.id
+            deviceId: this.deviceIdForm.id.toUpperCase()
           }
         })
     }
@@ -88,7 +90,7 @@ export default {
 
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
   @import '~helpers/variables';
 
   .download-app-dialog li {
@@ -98,6 +100,23 @@ export default {
 
   .app-link {
     color: $light-blue;
+  }
 
+  .device-id-input {
+    width: 115px;
+    display: inline-block;
+
+    input {
+      text-transform: uppercase;
+    }
+  }
+
+  .device-id-form {
+    text-align: center;
+
+    .el-form-item {
+      width: 115px;
+      display: inline-block;
+    }
   }
 </style>

@@ -105,10 +105,6 @@ export default {
     align-items: flex-start;
   }
 
-  .aig-card.product-card .aig-card-body {
-    margin-top: 43px !important;
-  }
-
   .info-text {
     text-align: center;
   }

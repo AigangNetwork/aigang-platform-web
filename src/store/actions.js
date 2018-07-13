@@ -2,6 +2,7 @@ import * as types from './mutation-types'
 import router from '@/router'
 import axios from 'axios'
 import getWeb3 from '@/utils/web3/getWeb3'
+import tokenAbi from './tokenAbi.json'
 
 const logIn = ({ commit }, loginResponse) => {
   // after successful login setup interceptor (save authorization header with token for next requests)
@@ -163,6 +164,34 @@ const getPolicy = async ({ commit }, policyId) => {
   commit(types.SET_LOADING, false)
 }
 
+const sendPolicyPayment = async ({ commit, state }) => {
+  const web3 = state.userWeb3.web3Instance()
+  const productAddress = '0x67477f45c800b456ac2c0073d4f801bf4779d9bc'
+  const tokenAddress = '0xFeEaed9eeb9bbf07E3bBB627CC736172CB04C776'
+
+  const TokenInstance = new web3.eth.Contract(tokenAbi, tokenAddress)
+  const paymentValue = web3.utils.toWei(state.currentPolicy.premium.toString())
+  const policyIdBytes = web3.eth.abi.encodeParameter('string', state.currentPolicy.id)
+
+  console.log(state.currentPolicy.id)
+
+  TokenInstance.methods
+    .approveAndCall(productAddress, paymentValue, policyIdBytes)
+    .send({ from: state.userWeb3.coinbase })
+    .once('transactionHash', txHash => {
+      console.log(txHash)
+    })
+    .once('receipt', receipt => {
+      console.log(receipt)
+    })
+
+  // state.userWeb3.web3Instance().eth.sendTransaction({
+  //   from: state.userWeb3.coinbase,
+  //   to: contractAddress,
+  //   value: state.userWeb3.web3Instance().utils.toWei(state.currentPolicy.premium.toString(), 'ether')
+  // })
+}
+
 export {
   logIn,
   logOut,
@@ -179,9 +208,11 @@ export {
   clearCurrentModel,
   loadCurrentProduct,
   createNewPolicy,
-  getPolicy
+  getPolicy,
+  sendPolicyPayment
 }
 
+// Move to utils
 function sleep (milliseconds) {
   return new Promise(resolve => {
     setTimeout(() => {

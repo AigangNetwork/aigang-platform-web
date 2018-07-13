@@ -32,7 +32,6 @@ export default {
 
   .product-card.aig-card .aig-card-body {
     padding: 0 !important;
-    margin-top: 44px !important;
   }
 
   .product-details-body {

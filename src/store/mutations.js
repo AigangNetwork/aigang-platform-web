@@ -87,7 +87,6 @@ const mutations = {
   },
   SET_CURRENT_POLICY (state, payload) {
     state.currentPolicy = payload.policy
-    state.currentPolicy.termsAndConditions = payload.termsAndConditions
   },
   CLEAR_CURRENT_POLICY (state, payload) {
     state.currentPolicy = {}

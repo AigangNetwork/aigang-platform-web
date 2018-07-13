@@ -85,7 +85,7 @@
               </el-col>
             </el-row>
             <el-form-item class="button-container">
-              <el-button class="aig-button" type="primary" @click.prevent.native="submitForm('policyForm', submitPolicy)">
+              <el-button class="aig-button" type="primary" @click.prevent.native="submitForm('policyForm', sendPolicyPayment)">
                 {{ $t('insurance.product.insure') }}
               </el-button>
             </el-form-item>
@@ -103,7 +103,7 @@
 import Card from '@/components/Card'
 import TermsAndConditionsDialog from '@/components/insurance/TermsAndConditionsDialog'
 import FormMixin from '@/components/mixins/FormMixin'
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   components: { Card, TermsAndConditionsDialog },
@@ -133,19 +133,17 @@ export default {
     }
   },
   methods: {
+    ...mapActions(['getPolicy', 'sendPolicyPayment']),
     displayDialog (value) {
       this.isDialogVisible = value
-    },
-    submitPolicy () {
-      // PUT TO CONFIRM POLICY
     }
   },
   computed: {
     ...mapGetters(['policy'])
   },
   async mounted () {
-    await this.$store.dispatch('getPolicy', this.$route.params.policyId)
-    this.deviceData = JSON.parse(this.policy.deviceData)
+    await this.getPolicy(this.$route.params.policyId)
+    this.deviceData = JSON.parse(this.policy.properties)
   }
 }
 </script>
@@ -154,10 +152,6 @@ export default {
 
   .aig-container {
     align-items: flex-start;
-  }
-
-  .policy-card.aig-card .aig-card-body {
-    margin-top: 44px !important;
   }
 
   .device-data-title {
@@ -218,5 +212,11 @@ export default {
 
   .checkbox-description .bold:hover {
     cursor: pointer;
+  }
+
+  @media screen and (min-width: 100px) and (max-width: 350px) {
+    .el-checkbox__label {
+      font-size: 13px;
+    }
   }
 </style>
