@@ -14,7 +14,8 @@ const store = new Vuex.Store({
     user: {
       authenticated: false,
       token: null,
-      profile: null
+      profile: null,
+      policies: {}
     },
     userWeb3: {
       web3Instance: null,

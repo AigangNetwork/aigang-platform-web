@@ -400,6 +400,13 @@
         "imeiRequired": "IMEI is required",
         "imeiInvalid": "IMEI format is not correct. Should be 15 digits"
       }
+    },
+    "policy": {
+      "policyId": "Policy id:",
+      "startDate": "Start date:",
+      "endDate": "End date:",
+      "deviceId": "Device Id:",
+      "status": "Status"
     }
   }
 }

@@ -19,6 +19,9 @@ const getters = {
   },
   policy: state => {
     return state.currentPolicy
+  },
+  userPolicies: state => {
+    return state.user.policies
   }
 }
 

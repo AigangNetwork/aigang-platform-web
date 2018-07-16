@@ -90,6 +90,9 @@ const mutations = {
   },
   CLEAR_CURRENT_POLICY (state, payload) {
     state.currentPolicy = {}
+  },
+  LOAD_USER_POLICIES (state, payload) {
+    state.user.policies = payload
   }
 }
 

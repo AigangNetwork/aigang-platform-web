@@ -131,6 +131,13 @@ const createNewPolicy = async ({ commit }, imei) => {
   }
 }
 
+const loadUserPolicies = async ({commit}, page) => {
+  const response = await axios.get('/insurance/policy/mypolicies?page=' + page)
+  if (response.data) {
+    commit(types.LOAD_USER_POLICIES, response.data)
+  }
+}
+
 export {
   logIn,
   logOut,
@@ -146,5 +153,6 @@ export {
   clearCurrentDataset,
   clearCurrentModel,
   loadCurrentProduct,
-  createNewPolicy
+  createNewPolicy,
+  loadUserPolicies
 }
