@@ -2,6 +2,7 @@ import * as types from './mutation-types'
 import router from '@/router'
 import axios from 'axios'
 import getWeb3 from '@/utils/web3/getWeb3'
+import tokenAbi from './tokenAbi.json'
 
 const logIn = ({ commit }, loginResponse) => {
   // after successful login setup interceptor (save authorization header with token for next requests)
@@ -91,44 +92,104 @@ const loadCurrentModel = async ({ commit, state }, payload) => {
 
 const loadCurrentProduct = async ({ commit }, id) => {
   commit(types.CLEAR_CURRENT_PRODUCT)
-  commit(types.LOADING, { loading: true })
+  commit(types.SET_LOADING, true)
 
   let response = null
 
   try {
     response = await axios.get('insurance/products/' + id)
   } catch (e) {
-    commit(types.LOADING, { loading: false })
+    commit(types.SET_LOADING, false)
   }
 
   if (response && response.data.product) {
     commit(types.LOAD_CURRENT_PRODUCT, response.data)
-    commit(types.LOADING, { loading: false })
+    commit(types.SET_LOADING, false)
   } else {
     commit(types.CLEAR_CURRENT_PRODUCT)
-    commit(types.LOADING, { loading: false })
+    commit(types.SET_LOADING, false)
   }
 }
 
-const createNewPolicy = async ({ commit }, imei) => {
-  commit(types.CLEAR_CURRENT_POLICY)
-  commit(types.LOADING, { loading: true })
+const createNewPolicy = async ({ commit }, payload) => {
+  const { deviceId, productId } = payload
+  commit(types.SET_LOADING, false)
+  commit(types.CLEAR_POLICY_LOADING_INFO)
+
+  const policyLoadingInfo = {
+    deviceId: deviceId
+  }
+
+  commit(types.SET_POLICY_LOADING_INFO, policyLoadingInfo)
 
   let response = null
 
-  try {
-    response = await axios.post('insurance/policy-draft/' + imei)
-  } catch (e) {
-    commit(types.LOADING, { loading: false })
+  // STEP 1: getting task ID
+  response = await axios.get('insurance/policy/android/pair/' + deviceId)
+
+  commit(types.CLEAR_POLICY_LOADING_INFO)
+  policyLoadingInfo.taskId = response.data.taskId
+  commit(types.SET_POLICY_LOADING_INFO, policyLoadingInfo)
+
+  // while(response.data)
+  // STEP 2: gettings task
+  while (!response.data.policyId && !response.data.validationResultCode) {
+    response = await axios.post('insurance/policy/android', {
+      TaskId: policyLoadingInfo.taskId,
+      ProductId: productId
+    })
+    await sleep(2500)
   }
 
-  if (response && response.data.policy) {
-    commit(types.LOAD_CURRENT_POLICY, response.data)
-    commit(types.LOADING, { loading: false })
+  commit(types.CLEAR_POLICY_LOADING_INFO)
+
+  if (response.data.validationResultCode) {
+    policyLoadingInfo.validationResultCode = response.data.validationResultCode
   } else {
-    commit(types.CLEAR_CURRENT_POLICY)
-    commit(types.LOADING, { loading: false })
+    policyLoadingInfo.policyId = response.data.policyId
   }
+
+  commit(types.SET_POLICY_LOADING_INFO, policyLoadingInfo)
+}
+
+const getPolicy = async ({ commit }, policyId) => {
+  commit(types.SET_LOADING, true)
+  commit(types.CLEAR_CURRENT_POLICY)
+  const response = await axios.get('insurance/policy/android/' + policyId)
+
+  if (response && response.data) {
+    commit(types.SET_CURRENT_POLICY, response.data)
+  }
+
+  commit(types.SET_LOADING, false)
+}
+
+const sendPolicyPayment = async ({ commit, state }) => {
+  const web3 = state.userWeb3.web3Instance()
+  const productAddress = '0x67477f45c800b456ac2c0073d4f801bf4779d9bc'
+  const tokenAddress = '0xFeEaed9eeb9bbf07E3bBB627CC736172CB04C776'
+
+  const TokenInstance = new web3.eth.Contract(tokenAbi, tokenAddress)
+  const paymentValue = web3.utils.toWei(state.currentPolicy.premium.toString())
+  const policyIdBytes = web3.eth.abi.encodeParameter('string', state.currentPolicy.id)
+
+  console.log(state.currentPolicy.id)
+
+  TokenInstance.methods
+    .approveAndCall(productAddress, paymentValue, policyIdBytes)
+    .send({ from: state.userWeb3.coinbase })
+    .once('transactionHash', txHash => {
+      console.log(txHash)
+    })
+    .once('receipt', receipt => {
+      console.log(receipt)
+    })
+
+  // state.userWeb3.web3Instance().eth.sendTransaction({
+  //   from: state.userWeb3.coinbase,
+  //   to: contractAddress,
+  //   value: state.userWeb3.web3Instance().utils.toWei(state.currentPolicy.premium.toString(), 'ether')
+  // })
 }
 
 const loadUserPolicies = async ({commit}, page) => {
@@ -153,6 +214,17 @@ export {
   clearCurrentDataset,
   clearCurrentModel,
   loadCurrentProduct,
+  loadUserPolicies,
   createNewPolicy,
-  loadUserPolicies
+  getPolicy,
+  sendPolicyPayment
+}
+
+// Move to utils
+function sleep (milliseconds) {
+  return new Promise(resolve => {
+    setTimeout(() => {
+      resolve()
+    }, milliseconds)
+  })
 }

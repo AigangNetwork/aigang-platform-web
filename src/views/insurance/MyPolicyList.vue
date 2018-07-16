@@ -1,7 +1,9 @@
 <template>
   <div v-loading="loading">
     <div class="policy-item" v-for="(item, index) in userPolicies.policies" :key="index">
-      <PolicyItem :policy="item" />
+      <router-link :to="{ name: 'Policy', params: { id: item.productId, policyId: item.id } }">
+        <PolicyItem :policy="item" />
+      </router-link>
     </div>
   </div>
 </template>

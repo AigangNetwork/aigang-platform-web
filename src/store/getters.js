@@ -22,6 +22,9 @@ const getters = {
   },
   userPolicies: state => {
     return state.user.policies
+  },
+  policyLoadingInfo: state => {
+    return state.policyLoadingInfo
   }
 }
 

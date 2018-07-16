@@ -43,9 +43,10 @@ export default {
       {
         name: this.$t('insurance.menu.myPolicies'),
         routeLink: {
-          path: '/insurance/policy'
+          path: '/insurance/mypolicies'
         },
-        active: false
+        active: false,
+        disabled: false
       }
       ],
       searchInput: '',
@@ -66,6 +67,7 @@ export default {
     }
   }
 }
+
 </script>
 
 <style lang="scss" scoped>
@@ -232,4 +234,5 @@ export default {
       }
     }
   }
+
 </style>

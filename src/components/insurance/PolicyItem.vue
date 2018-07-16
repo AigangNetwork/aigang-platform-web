@@ -21,7 +21,7 @@
             {{policy.deviceId}}
           </div>
         </div>
-        <div class="policy-info-item">
+        <div class="policy-info-item-date">
           <div class="title">
             <p class="title">{{$t('insurance.policy.startDate')}}</p>
           </div>
@@ -29,7 +29,7 @@
             {{policy.startUtc ? policy.startUtc : 'N/A'}}
           </div>
         </div>
-        <div class="policy-info-item">
+        <div class="policy-info-item-date">
           <div class="title">
             <p class="title">{{$t('insurance.policy.endDate')}}</p>
           </div>
@@ -37,7 +37,7 @@
             {{policy.endUtc ? policy.endUtc : 'N/A'}}
           </div>
         </div>
-        <div class="policy-info-item">
+        <div class="policy-info-item-date">
           <div class="title">
             <p class="title">{{$t('insurance.policy.status')}}</p>
           </div>
@@ -87,7 +87,7 @@ export default {
       width: 100%;
       .policy-item-header {
         display: flex;
-        margin: 12px 0px 5px 10px;
+        margin: 12px 12px 5px 10px;
         color: $purple;
         font-size: 12pt;
         word-wrap: break-word;
@@ -106,7 +106,8 @@ export default {
         width: 100%;
         display: flex;
         justify-content: space-between;
-        .policy-info-item {
+        .policy-info-item,
+        .policy-info-item-date {
           padding: 0px 15px 0px 15px;
           .title {
             color: #9eb1c7;
@@ -122,6 +123,44 @@ export default {
           .content {
             font-family: "Roboto", sans-serif;
             font-weight: 300;
+          }
+        }
+      }
+    }
+  }
+
+  @media screen and (min-width: 100px) and (max-width: 765px) {
+    .aig-policy-item {
+      .policy-list-item-img-container {
+        .product-img {
+          padding: 4px;
+          width: 50px;
+          height: 80px;
+          margin-top: 10px;
+        }
+      }
+      .policy-list-item-content {
+        overflow: hidden;
+        .policy-item-header {
+          font-size: 10pt;
+          display: block;
+        }
+        .policy-item-body {
+          display: flex;
+          .policy-info-item {
+            margin-left: 12px;
+            display: flex;
+            padding: 0px;
+            .title,
+            .content {
+              font-size: 10pt !important;
+            }
+            .content {
+              margin: 2px 0px 0px 5px;
+            }
+          }
+          .policy-info-item-date {
+            display: none;
           }
         }
       }

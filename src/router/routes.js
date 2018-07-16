@@ -21,9 +21,9 @@ import DatasetData from '@/views/data/DatasetData'
 import DatasetEdit from '@/views/data/DatasetEdit'
 import DataItemsList from '@/views/data/DataItemsList'
 import ProductItemsList from '@/views/insurance/ProductItemsList'
-import PolicyDraft from '@/views/insurance/PolicyDraft'
+import PolicyDraftLoader from '@/views/insurance/PolicyDraftLoader'
+import Policy from '@/views/insurance/Policy'
 import Product from '@/views/insurance/Product'
-import ProductDetails from '@/views/insurance/ProductDetails'
 import MyPolicyList from '@/views/insurance/MyPolicyList'
 import DatasetModelForm from '@/views/data/model/DatasetModelForm'
 import DatasetModelInfo from '@/views/data/model/DatasetModelInfo'
@@ -245,6 +245,11 @@ const routes = [
       {
         name: 'insurance',
         path: '',
+        redirect: '/insurance/products'
+      },
+      {
+        name: 'InsuranceProducts',
+        path: '/insurance/products',
         component: ProductItemsList,
         props: route => ({
           requestPath: '/insurance/list?page=',
@@ -252,28 +257,26 @@ const routes = [
         })
       },
       {
-        name: 'Product',
-        path: '/insurance/products/:id',
-        component: Product,
-        children: [
-          {
-            name: 'ProductDetails',
-            path: '/insurance/products/:id/details',
-            component: ProductDetails
-          },
-          {
-            name: 'Policy',
-            path: '/insurance/products/:id/policy',
-            component: PolicyDraft
-          }
-        ]
-      },
-      {
         name: 'MyPolicyList',
-        path: '/insurance/policy',
+        path: '/insurance/mypolicies',
         component: MyPolicyList
       }
     ]
+  },
+  {
+    name: 'Product',
+    path: '/insurance/products/:id',
+    component: Product
+  },
+  {
+    name: 'Policy',
+    path: '/insurance/products/:id/policy/:policyId',
+    component: Policy
+  },
+  {
+    name: 'PolicyDraftLoader',
+    path: '/insurance/products/:id/create-policy/:deviceId',
+    component: PolicyDraftLoader
   },
   {
     path: '/profile',

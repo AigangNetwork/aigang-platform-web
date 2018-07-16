@@ -1,6 +1,6 @@
 <template>
   <div class="aig-data" :class="{ enabled: product.state === 'active', disabled: product.state != 'active' }">
-    <router-link :to="{ name: 'ProductDetails', params: { id: product.id}}">
+    <router-link :to="{ name: 'Product', params: { id: product.id}}">
       <div class="aig-data-body-container">
         <div class="aig-data-head">
           <div class="desc">{{ $t('insurance.product.productEnds') }} {{ endDate }}</div>
@@ -31,11 +31,7 @@ import EndDate from '@/components/mixins/EndDate'
 
 export default {
   mixins: [EndDate],
-  props: ['product'],
-  data () {
-    return {
-    }
-  }
+  props: ['product']
 }
 
 </script>
