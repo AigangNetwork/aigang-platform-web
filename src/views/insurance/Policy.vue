@@ -76,12 +76,12 @@
 
           </el-row>
 
-          <el-form v-if="policy.status.toUpperCase() === 'DRAFT'" :rules="policyFormRules" :model="policyForm" ref="policyForm">
+          <el-form v-if="policy.status && policy.status.toUpperCase() === 'DRAFT'" :rules="policyFormRules" :model="policyForm" ref="policyForm">
             <el-row>
               <el-col>
                 <el-form-item prop="isTermsAndConditionsAgreed">
                   <p class="checkbox-description">{{ $t('insurance.policy.termsAndConditionsDescription') }}
-                    <span @click="isDialogVisible = !isDialogVisible" class="bold">{{ $t('insurance.product.termsAndConditions') }}</span>
+                    <span @click="displayTermsDialog(!isTermsDialogVisible)" class="bold">{{ $t('insurance.product.termsAndConditions') }}</span>
                   </p>
                   <el-checkbox class="aig-checkbox" :label="$t('insurance.policy.agreeWithTermsAndConds' )" v-model="policyForm.isTermsAndConditionsAgreed"></el-checkbox>
                 </el-form-item>
@@ -102,34 +102,23 @@
       </Card>
     </transition>
 
-    <TermsAndConditionsDialog :isVisible="isDialogVisible" :displayDialog="displayDialog" :termsAndConditions="policy.termsAndConditions"
+    <TermsAndConditionsDialog :isVisible="isTermsDialogVisible" :displayDialog="displayTermsDialog" :termsAndConditions="policy.termsAndConditions"
     />
 
-    <el-dialog :title="$t('insurance.policy.paymentInfoTitle')" :visible.sync="showPaymentInfo">
-      <p class="policy-dialog-info">
-        <label>{{ $t('insurance.policy.txHash') }}:</label>
-        <span class="contract-address">{{ this.txHash }}</span>
-      </p>
-      <p class="policy-dialog-info">
-        {{ $t('insurance.policy.paymentInfoBody') }}
-        <strong>
-          <a :href="txLink" target="_blank">{{ $t('general.here') }}</a>
-        </strong>
-      </p>
-    </el-dialog>
+    <PaymentConfirmationDialog :isVisible="isPaymentDialogVisible" :displayDialog="displayPaymentDialog" />
   </div>
 
 </template>
 <script>
 import Card from '@/components/Card'
 import TermsAndConditionsDialog from '@/components/insurance/TermsAndConditionsDialog'
+import PaymentConfirmationDialog from '@/components/insurance/PaymentConfirmationDialog'
 import FormMixin from '@/components/mixins/FormMixin'
 import { mapGetters, mapActions } from 'vuex'
-import EtherscanLink from '@/components/mixins/EtherscanLink'
 
 export default {
-  components: { Card, TermsAndConditionsDialog },
-  mixins: [FormMixin, EtherscanLink],
+  components: { Card, TermsAndConditionsDialog, PaymentConfirmationDialog },
+  mixins: [FormMixin],
   data () {
     const checkTermsAndConditionsAgreed = (rule, value, callback) => {
       if (!value) {
@@ -141,7 +130,8 @@ export default {
 
     return {
       deviceData: '',
-      isDialogVisible: false,
+      isTermsDialogVisible: false,
+      isPaymentDialogVisible: false,
       policyForm: {
         isTermsAndConditionsAgreed: false
       },
@@ -157,27 +147,20 @@ export default {
   },
   methods: {
     ...mapActions(['getPolicy', 'sendPolicyPayment']),
-    displayDialog (value) {
-      this.isDialogVisible = value
+    displayTermsDialog (value) {
+      this.isTermsDialogVisible = value
+    },
+    displayPaymentDialog (value) {
+      this.isPaymentDialogVisible = value
     },
     async makePayment () {
       await this.sendPolicyPayment()
     }
   },
-  watch: {
-    txHash () {
-      if (this.txHash) {
-        this.showPaymentInfo = true
-      }
-    }
-  },
   computed: {
-    ...mapGetters(['policy', 'web3', 'txHash']),
+    ...mapGetters(['policy', 'web3']),
     isMetamaskLoggedIn () {
       return !!this.web3
-    },
-    txLink () {
-      return this.etherscanLink + this.txHash
     }
   },
   async mounted () {
@@ -229,11 +212,6 @@ export default {
 
   .wrapper.el-button {
     width: 100%;
-  }
-
-  .policy-dialog-info {
-    max-width: 100%;
-    word-wrap: break-word;
   }
 
   @media screen and (min-width: 100px) and (max-width: 350px) {

@@ -2,7 +2,7 @@
   <div class="aig-container aig-view">
     <Card class="product-card">
       <div slot="body" v-loading="loading">
-        <ProductDetailsHeader :product="product" />
+        <ProductHeader :product="product" />
         <ProductDetails />
       </div>
     </Card>
@@ -12,13 +12,13 @@
 <script>
 import Card from '@/components/Card'
 import EndDate from '@/components/mixins/EndDate'
-import ProductDetailsHeader from '@/components/insurance/ProductDetailsHeader'
+import ProductHeader from '@/components/insurance/ProductHeader'
 import ProductDetails from '@/components/insurance/ProductDetails'
 
 import { mapGetters } from 'vuex'
 
 export default {
-  components: { Card, ProductDetailsHeader, ProductDetails },
+  components: { Card, ProductHeader, ProductDetails },
   mixins: [EndDate],
   computed: { ...mapGetters(['product', 'loading']) },
   async created () {

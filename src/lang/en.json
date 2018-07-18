@@ -393,7 +393,7 @@
       "instructionsIntro": "In order for us to calculate your premium you have to:",
       "instructionsDownloadApp": "Download Aigang app on your android device",
       "instructionsIMEI": "Enter your device ID below (you will see it in the app)",
-      "instructionsConditions": "Your device's battery data will be read, press continue if you agree",
+      "instructionsConditions": "Your device's data will be read, press continue if you agree",
       "deviceIdPlaceholder": "ASVSF213D",
       "insure": "Insure",
       "currentWearLevel": "Current Wear level",
@@ -403,7 +403,7 @@
       "payout": "Payout",
       "calculatedPremium": "Calculated Premium",
       "notImplemented": "Product is not implemented",
-      "logInToCalculatePremium": "You have to log in to calculate premium",
+      "logInToCalculatePremium": "You have to log in to metamask to calculate premium",
       "validation": {
         "deviceIdRequired": "Device ID is required",
         "deviceIdInvalid": "Must be 8 characters"
@@ -442,7 +442,6 @@
         "BatteryDesignCapacity": "Battery design capacity is not valid for insurance",
         "BatteryChargeLevel": "Battery charge level is not valid for insurance",
         "DeviceAgeInMonths": "Device age in months is not valid for insurance",
-        "CpuUsage": "CPU usage is not valid for insurance",
         "Region": "Your region is not valid for insurance",
         "DeviceBrand": "This device brand is not valid for insurance",
         "BatteryWearLevel": "Battery wear level is not valid for insurance"

@@ -146,7 +146,6 @@ const createNewPolicy = async ({ commit, state }, payload) => {
   policyLoadingInfo.taskId = response.data.taskId
   commit(types.SET_POLICY_LOADING_INFO, policyLoadingInfo)
 
-  // while(response.data)
   // STEP 2: gettings task
   let waitMultiplier = 1
   while (!response.data.policyId && !response.data.validationResultCode && state.policyLoadingInfo.taskId) {
@@ -176,7 +175,6 @@ const getPolicy = async ({ commit }, policyId) => {
   const response = await axios.get('insurance/policy/android/' + policyId)
 
   if (response && response.data) {
-    response.data.policy.status = 'notdraft'
     commit(types.SET_CURRENT_POLICY, response.data)
   }
 

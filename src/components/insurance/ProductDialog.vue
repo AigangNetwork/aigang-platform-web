@@ -70,8 +70,7 @@ export default {
       }
     },
     title () {
-      if (this.product.type === 'androidDevice') return this.$t('insurance.product.downloadApp')
-      else return this.$t('insurance.product.notImplemented')
+      return this.$t('insurance.product.downloadApp')
     }
   },
   methods: {
