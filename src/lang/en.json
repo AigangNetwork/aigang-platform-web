@@ -313,7 +313,6 @@
     "ok": "OK",
     "here": "here",
     "change": "Change",
-
     "save": "Save",
     "back": "Back",
     "cancel": "Cancel",
@@ -412,7 +411,10 @@
     },
     "policy": {
       "deviceId": "Device ID",
+      "policyId": "Policy ID",
       "startingTask": "Starting task",
+      "txHash": "Transaction Hash",
+      "policyStatus": "Policy Status",
       "taskId": "Task ID",
       "readingDeviceData": "Reading device data",
       "policyCreated": "Policy created",
@@ -421,13 +423,17 @@
       "termsAndConditionsDescription": "In order to confirm your policy, you must agree with",
       "agreeWithTermsAndConds": "I agree with Terms and Conditions",
       "mustAgreeWithTermsAndConds": "You must agree with Terms and Conditions",
+      "deviceIdNotFound": "Device with this ID was not found. Check your device for correct ID.",
+      "serverError": "Something went wrong. Please contact support: info@aigang.network",
+      "metamaskNotLoggedIn": "You must be logged in to your metamask wallet",
+      "paymentInfoTitle": "Payment Information",
+      "paymentInfoBody": "Your payment transaction was created succesfully. You can see your transaction status ",
       "deviceData": {
         "deviceData": "Device data",
         "wearLevel": "Battery wear level",
         "batteryDesignCapacity": "Battery Design Capacity",
         "chargeLevel": "Charge level",
         "ageInMonths": "Age in months",
-        "cpuUsage": "CPU usage",
         "region": "Region",
         "brand": "Brand",
         "fetchDateTime": "Data fetch time"

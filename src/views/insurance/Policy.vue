@@ -28,6 +28,13 @@
               <span class="text-medium"> %
               </span>
             </p>
+
+            <p>
+              <label>{{ $t('insurance.policy.policyStatus') }}:</label>
+              {{ policy.status | uppercase }}
+              <span class="text-medium">
+              </span>
+            </p>
           </el-row>
           <el-row class="device-data">
             <p class="device-data-title">{{ $t('insurance.policy.deviceData.deviceData') }}</p>
@@ -53,11 +60,6 @@
             </div>
 
             <div class="device-data-item">
-              <label>{{ $t('insurance.policy.deviceData.cpuUsage') }}:</label>
-              {{ deviceData.CpuUsage }} %
-            </div>
-
-            <div class="device-data-item">
               <label>{{ $t('insurance.policy.deviceData.region') }}:</label>
               {{ deviceData.Region | uppercase}}
             </div>
@@ -73,7 +75,8 @@
             </div>
 
           </el-row>
-          <el-form :rules="policyFormRules" :model="policyForm" ref="policyForm">
+
+          <el-form v-if="policy.status.toUpperCase() === 'DRAFT'" :rules="policyFormRules" :model="policyForm" ref="policyForm">
             <el-row>
               <el-col>
                 <el-form-item prop="isTermsAndConditionsAgreed">
@@ -84,10 +87,15 @@
                 </el-form-item>
               </el-col>
             </el-row>
+
             <el-form-item class="button-container">
-              <el-button class="aig-button" type="primary" @click.prevent.native="submitForm('policyForm', sendPolicyPayment)">
-                {{ $t('insurance.product.insure') }}
-              </el-button>
+              <el-tooltip :disabled="isMetamaskLoggedIn" :content="$t('insurance.product.logInToCalculatePremium')">
+                <span class="wrapper el-button">
+                  <el-button :disabled="!isMetamaskLoggedIn" class="aig-button" type="primary" @click.prevent.native="submitForm('policyForm', makePayment)">
+                    {{ $t('insurance.product.insure') }}
+                  </el-button>
+                </span>
+              </el-tooltip>
             </el-form-item>
           </el-form>
         </div>
@@ -96,6 +104,19 @@
 
     <TermsAndConditionsDialog :isVisible="isDialogVisible" :displayDialog="displayDialog" :termsAndConditions="policy.termsAndConditions"
     />
+
+    <el-dialog :title="$t('insurance.policy.paymentInfoTitle')" :visible.sync="showPaymentInfo">
+      <p class="policy-dialog-info">
+        <label>{{ $t('insurance.policy.txHash') }}:</label>
+        <span class="contract-address">{{ this.txHash }}</span>
+      </p>
+      <p class="policy-dialog-info">
+        {{ $t('insurance.policy.paymentInfoBody') }}
+        <strong>
+          <a :href="txLink" target="_blank">{{ $t('general.here') }}</a>
+        </strong>
+      </p>
+    </el-dialog>
   </div>
 
 </template>
@@ -104,10 +125,11 @@ import Card from '@/components/Card'
 import TermsAndConditionsDialog from '@/components/insurance/TermsAndConditionsDialog'
 import FormMixin from '@/components/mixins/FormMixin'
 import { mapGetters, mapActions } from 'vuex'
+import EtherscanLink from '@/components/mixins/EtherscanLink'
 
 export default {
   components: { Card, TermsAndConditionsDialog },
-  mixins: [FormMixin],
+  mixins: [FormMixin, EtherscanLink],
   data () {
     const checkTermsAndConditionsAgreed = (rule, value, callback) => {
       if (!value) {
@@ -129,17 +151,34 @@ export default {
           required: true,
           validator: checkTermsAndConditionsAgreed
         }]
-      }
+      },
+      showPaymentInfo: false
     }
   },
   methods: {
     ...mapActions(['getPolicy', 'sendPolicyPayment']),
     displayDialog (value) {
       this.isDialogVisible = value
+    },
+    async makePayment () {
+      await this.sendPolicyPayment()
+    }
+  },
+  watch: {
+    txHash () {
+      if (this.txHash) {
+        this.showPaymentInfo = true
+      }
     }
   },
   computed: {
-    ...mapGetters(['policy'])
+    ...mapGetters(['policy', 'web3', 'txHash']),
+    isMetamaskLoggedIn () {
+      return !!this.web3
+    },
+    txLink () {
+      return this.etherscanLink + this.txHash
+    }
   },
   async mounted () {
     await this.getPolicy(this.$route.params.policyId)
@@ -149,6 +188,9 @@ export default {
 </script>
 <style lang="scss">
   @import '~helpers/variables';
+  @import '~helpers/mixins';
+
+  @include policy-data;
 
   .aig-container {
     align-items: flex-start;
@@ -166,10 +208,12 @@ export default {
     padding: 5px;
     display: flex;
     flex-direction: row;
+    text-align: right;
 
     label {
       font-weight: 300;
       flex-grow: 1;
+      text-align: left;
     }
 
   }
@@ -179,39 +223,17 @@ export default {
     margin-bottom: 20px;
   }
 
-  .policy-data {
-    margin-bottom: 20px;
-
-    p {
-      margin-bottom: 0;
-      height: 38px;
-      display: flex;
-      flex-direction: row;
-      font-size: 24px;
-      border-bottom: 1px dotted #c8d1f1;
-      font-weight: 400;
-      line-height: 38px;
-
-      &:first-child {
-        border-top: 1px dotted #c8d1f1;
-      }
-    }
-
-    label {
-      font-weight: 300;
-      flex-grow: 1;
-      font-size: 16px;
-    }
-
-    .text-medium {
-      line-height: 44px;
-      margin-left: 5px;
-      font-weight: 300;
-    }
-  }
-
   .checkbox-description .bold:hover {
     cursor: pointer;
+  }
+
+  .wrapper.el-button {
+    width: 100%;
+  }
+
+  .policy-dialog-info {
+    max-width: 100%;
+    word-wrap: break-word;
   }
 
   @media screen and (min-width: 100px) and (max-width: 350px) {

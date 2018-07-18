@@ -1,7 +1,7 @@
 <template>
   <el-dialog class="download-app-dialog" :title="title" :visible.sync="show" width="100%" center>
 
-    <template v-if="product.type === 'androidDevice'">
+    <template>
       <span>
         <p>{{ $t('insurance.product.instructionsIntro') }}</p>
         <ol>
@@ -13,7 +13,7 @@
           ref="deviceIdForm" class="device-id-form">
 
           <el-form-item prop="id">
-            <el-input :keyup.enter="submitForm('deviceIdForm', handleSubmit)" class="device-id-input" :placeholder="$t('insurance.product.deviceIdPlaceholder')"
+            <el-input v-on:keyup.enter="submitForm('deviceIdForm', handleSubmit)" class="device-id-input" :placeholder="$t('insurance.product.deviceIdPlaceholder')"
               :maxlength="8" v-model="deviceIdForm.id"></el-input>
           </el-form-item>
 
@@ -26,10 +26,10 @@
         <el-button type="primary" @click.prevent.native="submitForm('deviceIdForm', calculatePremium)">{{ $t('general.continue') }}</el-button>
       </span>
     </template>
-
+    <!--
     <template v-else>
       <p>{{ $t('insurance.product.notImplemented') }}</p>
-    </template>
+    </template> -->
 
   </el-dialog>
 </template>

@@ -54,7 +54,7 @@ export default {
     padding: 5px;
   }
 
-  .product-card .contract-address {
+  .contract-address {
     font-size: 18px;
     color: $light-blue;
     font-family: $font-secondary;
