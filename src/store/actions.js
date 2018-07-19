@@ -2,6 +2,7 @@ import * as types from './mutation-types'
 import router from '@/router'
 import axios from 'axios'
 import getWeb3 from '@/utils/web3/getWeb3'
+import { sleep } from '@/utils/methods'
 
 const logIn = ({ commit }, loginResponse) => {
   // after successful login setup interceptor (save authorization header with token for next requests)
@@ -103,6 +104,128 @@ const loadCurrentModel = async ({ commit, state }, payload) => {
   commit(types.LOAD_CURRENT_MODEL, response.data)
 }
 
+const loadCurrentProduct = async ({ commit }, id) => {
+  commit(types.CLEAR_CURRENT_PRODUCT)
+  commit(types.SET_LOADING, true)
+
+  let response = null
+
+  try {
+    response = await axios.get('insurance/products/' + id)
+  } catch (e) {
+    commit(types.SET_LOADING, false)
+  }
+
+  if (response && response.data.product) {
+    commit(types.LOAD_CURRENT_PRODUCT, response.data)
+    commit(types.SET_LOADING, false)
+  } else {
+    commit(types.CLEAR_CURRENT_PRODUCT)
+    commit(types.SET_LOADING, false)
+  }
+}
+
+const createNewPolicy = async ({ commit, state }, payload) => {
+  // We need custom axios instance to handle 404 differently
+  const customAxios = axios.create({ baseUrl: process.env.API_ADDRESS })
+  const { deviceId, productId } = payload
+  commit(types.SET_LOADING, false)
+  commit(types.CLEAR_POLICY_LOADING_INFO)
+
+  const policyLoadingInfo = {
+    deviceId: deviceId
+  }
+
+  commit(types.SET_POLICY_LOADING_INFO, policyLoadingInfo)
+
+  let response = null
+
+  // STEP 1: getting task ID
+  try {
+    response = await customAxios.get('insurance/policy/android/pair/' + deviceId)
+  } catch (error) {
+    var newPolicyLoadingInfo = Object.assign({}, policyLoadingInfo)
+
+    if (error.response.status === 404) {
+      newPolicyLoadingInfo.notFound = true
+    } else if (error.response.status === 503 || error.response.status === 500) {
+      newPolicyLoadingInfo.serverError = true
+    }
+
+    commit(types.SET_POLICY_LOADING_INFO, newPolicyLoadingInfo)
+    return
+  }
+
+  commit(types.CLEAR_POLICY_LOADING_INFO)
+  policyLoadingInfo.taskId = response.data.taskId
+  commit(types.SET_POLICY_LOADING_INFO, policyLoadingInfo)
+
+  // STEP 2: gettings task
+  let waitMultiplier = 1
+  while (!response.data.policyId && !response.data.validationResultCode && state.policyLoadingInfo.taskId) {
+    response = await axios.post('insurance/policy/android', {
+      TaskId: policyLoadingInfo.taskId,
+      ProductId: productId
+    })
+
+    await sleep(waitMultiplier * 250)
+    waitMultiplier++
+  }
+
+  commit(types.CLEAR_POLICY_LOADING_INFO)
+
+  if (response.data.validationResultCode) {
+    policyLoadingInfo.validationResultCode = response.data.validationResultCode
+  } else {
+    policyLoadingInfo.policyId = response.data.policyId
+  }
+
+  commit(types.SET_POLICY_LOADING_INFO, policyLoadingInfo)
+}
+
+const getPolicy = async ({ commit }, policyId) => {
+  commit(types.SET_LOADING, true)
+  commit(types.CLEAR_CURRENT_POLICY)
+  const response = await axios.get('insurance/policy/android/' + policyId)
+
+  if (response && response.data) {
+    commit(types.SET_CURRENT_POLICY, response.data)
+  }
+
+  commit(types.SET_LOADING, false)
+}
+
+const sendPolicyPayment = async ({ commit, state }) => {
+  const web3 = state.userWeb3.web3Instance()
+  const productAddress = state.currentPolicy.contractAddress
+
+  const TokenInstance = new web3.eth.Contract(process.env.CONTRACT_INFO.ABI, process.env.CONTRACT_INFO.ADDRESS)
+  const paymentValue = web3.utils.toWei(state.currentPolicy.premium.toString())
+  const policyIdBytes = web3.utils.fromAscii(state.currentPolicy.id)
+
+  TokenInstance.methods
+    .approveAndCall(productAddress, paymentValue, policyIdBytes)
+    .send({ gas: 169266, from: state.userWeb3.coinbase })
+    .once('transactionHash', async txHash => {
+      const transactionInfo = {
+        txId: txHash,
+        txType: 'PolicyPayment',
+        txMetadata: JSON.stringify({ policyId: state.currentPolicy.id })
+      }
+
+      await axios.post('transaction', transactionInfo)
+
+      commit(types.SET_TX_HASH, txHash)
+    })
+}
+
+const loadUserPolicies = async ({commit}, page) => {
+  const response = await axios.get('/insurance/policy/mypolicies?page=' + page)
+  if (response.data) {
+    commit(types.LOAD_USER_POLICIES, response.data)
+  }
+}
+
 export {
   logIn,
   logOut,
@@ -118,5 +241,10 @@ export {
   clearWeb3Instance,
   loadCurrentModel,
   clearCurrentDataset,
-  clearCurrentModel
+  clearCurrentModel,
+  loadCurrentProduct,
+  loadUserPolicies,
+  createNewPolicy,
+  getPolicy,
+  sendPolicyPayment
 }

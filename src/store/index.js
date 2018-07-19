@@ -16,7 +16,8 @@ const store = new Vuex.Store({
       token: null,
       profile: null,
       wallets: {},
-      transactions: {}
+      transactions: {},
+      policies: {}
     },
     userWeb3: {
       web3Instance: null,
@@ -28,7 +29,12 @@ const store = new Vuex.Store({
       error: null
     },
     currentDataset: {},
-    currentModel: null
+    currentModel: null,
+    currentProduct: {},
+    currentPolicy: {},
+    txHash: null,
+    policyLoadingInfo: {},
+    loading: false
   },
   mutations,
   getters,

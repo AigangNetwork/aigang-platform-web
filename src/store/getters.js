@@ -16,6 +16,27 @@ const getters = {
   },
   transactions: state => {
     return state.user.transactions
+  },
+  product: state => {
+    return state.currentProduct
+  },
+  loading: state => {
+    return state.loading
+  },
+  policy: state => {
+    return state.currentPolicy
+  },
+  userPolicies: state => {
+    return state.user.policies
+  },
+  policyLoadingInfo: state => {
+    return state.policyLoadingInfo
+  },
+  web3: state => {
+    return state.userWeb3.web3Instance ? state.userWeb3.web3Instance() : null
+  },
+  txHash: state => {
+    return state.txHash
   }
 }
 

@@ -52,14 +52,10 @@
 </template>
 
 <script>
-import Status from '@/components/Status'
 import CreatedDate from '@/components/mixins/CreatedDate'
 
 export default {
   name: 'DataItem',
-  components: {
-    Status
-  },
   mixins: [CreatedDate],
   props: {
     data: {

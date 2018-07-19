@@ -156,3 +156,11 @@
 .el-tooltip__popper.is-light[x-placement^='top'] .popper__arrow {
   border-top-color: $light-border-blue;
 }
+
+.download-app-dialog .el-dialog__footer {
+  text-align: center;
+}
+
+.download-app-dialog .el-dialog--center {
+  max-width: 600px;
+}

@@ -316,7 +316,7 @@
     "data": "Data",
     "predictions": "Predictions",
     "invest": "Investment",
-    "insure": "Insurance",
+    "insurance": "Insurance",
     "login": "Sign Up/Log In"
   },
   "status": {
@@ -350,12 +350,16 @@
     "save": "Save",
     "back": "Back",
     "cancel": "Cancel",
+    "continue": "Continue",
     "markupSupported": "VueMarkdown supported",
     "versionAlpha": "alpha",
     "unableToFindYourDatasets": "Can not find your datasets",
     "unableToFindYourModels": "Can not find any datasets containing your models",
     "upvote": "Upvote",
-    "downvote": "Downvote"
+    "downvote": "Downvote",
+    "aix": "AIX",
+    "utc": "UTC",
+    "comingSoon": "Feature is coming soon"
   },
   "errors": {
     "error": "Error",
@@ -404,5 +408,81 @@
     "contactIfError": "If you see this error please contact us via email info@aigang.network",
     "metamaskDetected": "We have detected that you are using metamask extension. In order to see your account AIX balance please switch your network to ",
     "useMetamask": "To use all of our Platform features please Log in to Metamask Extension"
+  },
+  "insurance": {
+    "menu": {
+      "products": "Products",
+      "myPolicies": "My Policies"
+    },
+    "product": {
+      "productEnds": "Campaing ends",
+      "basePremium": "Base Premium",
+      "details": "Details",
+      "description": "Description",
+      "termsAndConditions": "Terms and Conditions",
+      "calculatePremium": "Calculate Premium",
+      "contractAddress": "Policy Contract Address",
+      "downloadApp": "Download Aigang App",
+      "instructionsIntro": "In order for us to calculate your premium you have to:",
+      "instructionsDownloadApp": "Download Aigang app on your android device",
+      "instructionsIMEI": "Enter your device ID below (you will see it in the app)",
+      "instructionsConditions": "Your device's data will be read, press continue if you agree",
+      "deviceIdPlaceholder": "ASVSF213D",
+      "insure": "Insure",
+      "currentWearLevel": "Current Wear level",
+      "startTime": "Start Time",
+      "endTime": "End Time",
+      "fee": "Fee",
+      "payout": "Payout",
+      "calculatedPremium": "Calculated Premium",
+      "notImplemented": "Product is not implemented",
+      "logInToCalculatePremium": "You have to log in to metamask to calculate premium",
+      "validation": {
+        "deviceIdRequired": "Device ID is required",
+        "deviceIdInvalid": "Must be 8 characters"
+      }
+    },
+    "policy": {
+      "deviceId": "Device ID",
+      "policyId": "Policy ID",
+      "startingTask": "Starting task",
+      "txHash": "Transaction Hash",
+      "policyStatus": "Policy Status",
+      "taskId": "Task ID",
+      "readingDeviceData": "Reading device data",
+      "policyCreated": "Policy created",
+      "redirecting": "Redirecting",
+      "androidBatteryInsurancePolicy": "Android Battery Insurance Policy",
+      "termsAndConditionsDescription": "In order to confirm your policy, you must agree with",
+      "agreeWithTermsAndConds": "I agree with Terms and Conditions",
+      "mustAgreeWithTermsAndConds": "You must agree with Terms and Conditions",
+      "policyId": "Policy id:",
+      "startDate": "Start date:",
+      "endDate": "End date:",
+      "status": "Status",
+      "deviceIdNotFound": "Device with this ID was not found. Check your device for correct ID.",
+      "serverError": "Something went wrong. Please contact support: info@aigang.network",
+      "metamaskNotLoggedIn": "You must be logged in to your metamask wallet",
+      "paymentInfoTitle": "Payment Information",
+      "paymentInfoBody": "Your payment transaction was created succesfully. You can see your transaction status ",
+      "deviceData": {
+        "deviceData": "Device data",
+        "wearLevel": "Battery wear level",
+        "batteryDesignCapacity": "Battery Design Capacity",
+        "chargeLevel": "Charge level",
+        "ageInMonths": "Age in months",
+        "region": "Region",
+        "brand": "Brand",
+        "fetchDateTime": "Data fetch time"
+      },
+      "validationResult": {
+        "BatteryDesignCapacity": "Battery design capacity is not valid for insurance",
+        "BatteryChargeLevel": "Battery charge level is not valid for insurance",
+        "DeviceAgeInMonths": "Device age in months is not valid for insurance",
+        "Region": "Your region is not valid for insurance",
+        "DeviceBrand": "This device brand is not valid for insurance",
+        "BatteryWearLevel": "Battery wear level is not valid for insurance"
+      }
+    }
   }
 }
