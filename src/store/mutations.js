@@ -99,6 +99,9 @@ const mutations = {
   },
   CLEAR_POLICY_LOADING_INFO (state) {
     state.policyLoadingInfo = {}
+  },
+  SET_TX_HASH (state, txHash) {
+    state.txHash = txHash
   }
 }
 

@@ -307,7 +307,6 @@
     "ok": "OK",
     "here": "here",
     "change": "Change",
-
     "save": "Save",
     "back": "Back",
     "cancel": "Cancel",
@@ -387,7 +386,7 @@
       "instructionsIntro": "In order for us to calculate your premium you have to:",
       "instructionsDownloadApp": "Download Aigang app on your android device",
       "instructionsIMEI": "Enter your device ID below (you will see it in the app)",
-      "instructionsConditions": "Your device's battery data will be read, press continue if you agree",
+      "instructionsConditions": "Your device's data will be read, press continue if you agree",
       "deviceIdPlaceholder": "ASVSF213D",
       "insure": "Insure",
       "currentWearLevel": "Current Wear level",
@@ -397,7 +396,7 @@
       "payout": "Payout",
       "calculatedPremium": "Calculated Premium",
       "notImplemented": "Product is not implemented",
-      "logInToCalculatePremium": "You have to log in to calculate premium",
+      "logInToCalculatePremium": "You have to log in to metamask to calculate premium",
       "validation": {
         "deviceIdRequired": "Device ID is required",
         "deviceIdInvalid": "Must be 8 characters"
@@ -405,7 +404,10 @@
     },
     "policy": {
       "deviceId": "Device ID",
+      "policyId": "Policy ID",
       "startingTask": "Starting task",
+      "txHash": "Transaction Hash",
+      "policyStatus": "Policy Status",
       "taskId": "Task ID",
       "readingDeviceData": "Reading device data",
       "policyCreated": "Policy created",
@@ -418,13 +420,17 @@
       "startDate": "Start date:",
       "endDate": "End date:",
       "status": "Status",
+      "deviceIdNotFound": "Device with this ID was not found. Check your device for correct ID.",
+      "serverError": "Something went wrong. Please contact support: info@aigang.network",
+      "metamaskNotLoggedIn": "You must be logged in to your metamask wallet",
+      "paymentInfoTitle": "Payment Information",
+      "paymentInfoBody": "Your payment transaction was created succesfully. You can see your transaction status ",
       "deviceData": {
         "deviceData": "Device data",
         "wearLevel": "Battery wear level",
         "batteryDesignCapacity": "Battery Design Capacity",
         "chargeLevel": "Charge level",
         "ageInMonths": "Age in months",
-        "cpuUsage": "CPU usage",
         "region": "Region",
         "brand": "Brand",
         "fetchDateTime": "Data fetch time"
@@ -433,7 +439,6 @@
         "BatteryDesignCapacity": "Battery design capacity is not valid for insurance",
         "BatteryChargeLevel": "Battery charge level is not valid for insurance",
         "DeviceAgeInMonths": "Device age in months is not valid for insurance",
-        "CpuUsage": "CPU usage is not valid for insurance",
         "Region": "Your region is not valid for insurance",
         "DeviceBrand": "This device brand is not valid for insurance",
         "BatteryWearLevel": "Battery wear level is not valid for insurance"

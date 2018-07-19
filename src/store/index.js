@@ -30,6 +30,7 @@ const store = new Vuex.Store({
     currentModel: null,
     currentProduct: {},
     currentPolicy: {},
+    txHash: null,
     policyLoadingInfo: {},
     loading: false
   },

@@ -3,9 +3,7 @@ import Register from '@/views/guest/Register'
 import ForgotPassword from '@/views/guest/ForgotPassword'
 import ActivateEmail from '@/views/guest/ActivateEmail'
 import ResetPassword from '@/views/guest/ResetPassword'
-
 import Data from '@/views/Data'
-
 import Predictions from '@/views/Predictions'
 import Invest from '@/views/Invest'
 import Insurance from '@/views/Insurance'

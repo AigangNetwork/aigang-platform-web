@@ -3,8 +3,9 @@
     <transition name="fade" mode="out-in">
       <Card class="product-card">
         <div slot="body" class="loader-container">
+
           <transition-group name="slideUp" appear>
-            <template v-if="!policyLoadingInfo.validationResultCode">
+            <template v-if="showLoader">
               <div id="preloader" key="loader">
                 <div id="loader"></div>
               </div>
@@ -15,6 +16,7 @@
             </p>
             <p class="info-text" key="startingTaskText"> {{ $t('insurance.policy.startingTask') }}</p>
           </transition-group>
+
           <transition-group name="slideUp" mode="out-in">
             <template v-if="policyLoadingInfo.taskId">
               <p class="info-text" key="1"> {{ $t('insurance.policy.taskId') }}:
@@ -23,18 +25,33 @@
               <p class="info-text" key="2">{{ $t('insurance.policy.readingDeviceData') }}</p>
             </template>
           </transition-group>
+
+          <transition-group name="slideUp" mode="out-in">
+            <template v-if="policyLoadingInfo.notFound">
+              <p class="info-text aig-error" key="1">{{ $t('insurance.policy.deviceIdNotFound') }}</p>
+            </template>
+          </transition-group>
+
+          <transition-group name="slideUp" mode="out-in">
+            <template v-if="policyLoadingInfo.serverError">
+              <p class="info-text aig-error" key="1">{{ $t('insurance.policy.serverError') }}</p>
+            </template>
+          </transition-group>
+
           <transition-group name="slideUp" mode="out-in">
             <template v-if="policyLoadingInfo.policyId">
               <p class="info-text" key="1">{{ $t('insurance.policy.policyCreated') }}</p>
               <p class="info-text" key="2">{{ $t('insurance.policy.redirecting') }}</p>
             </template>
           </transition-group>
+
           <transition name="slideUp" mode="out-in">
             <template v-if="policyLoadingInfo.validationResultCode">
               <p class="info-text aig-error">{{ validationResult }}</p>
             </template>
           </transition>
-          <div v-if="!policyLoadingInfo.policyId && !policyLoadingInfo.validationResultCode" class="timeline-wrapper">
+
+          <div v-if="showLoader" class="timeline-wrapper">
             <div class="timeline-item">
               <div class="animated-background">
                 <div class="background-masker content-top"></div>
@@ -48,7 +65,7 @@
 </template>
 <script>
 import Card from '@/components/Card'
-import { mapGetters } from 'vuex'
+import { mapGetters, mapMutations } from 'vuex'
 
 export default {
   components: { Card },
@@ -65,8 +82,6 @@ export default {
           return this.$t('insurance.policy.validationResult.BatteryChargeLevel')
         case 'DA':
           return this.$t('insurance.policy.validationResult.DeviceAgeInMonths')
-        case 'CU':
-          return this.$t('insurance.policy.validationResult.CpuUsage')
         case 'R':
           return this.$t('insurance.policy.validationResult.Region')
         case 'DB':
@@ -76,7 +91,18 @@ export default {
         default:
           return null
       }
+    },
+    showLoader () {
+      return !this.policyLoadingInfo.policyId && !this.policyLoadingInfo.validationResultCode &&
+          !this.policyLoadingInfo.notFound && !this.policyLoadingInfo.serverError
     }
+  },
+  methods: {
+    ...mapMutations({ clearLoadingInfo: 'CLEAR_POLICY_LOADING_INFO' })
+  },
+  beforeRouteLeave (to, from, next) {
+    this.clearLoadingInfo()
+    next()
   },
   async mounted () {
     await this.$store.dispatch('createNewPolicy', {
@@ -217,6 +243,7 @@ export default {
   }
 
   .animated-background {
+    max-width: 100%;
     border-radius: 3px;
     animation-duration: 1s;
     animation-fill-mode: forwards;

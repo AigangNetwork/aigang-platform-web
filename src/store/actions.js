@@ -2,7 +2,7 @@ import * as types from './mutation-types'
 import router from '@/router'
 import axios from 'axios'
 import getWeb3 from '@/utils/web3/getWeb3'
-import tokenAbi from './tokenAbi.json'
+import { sleep } from '@/utils/methods'
 
 const logIn = ({ commit }, loginResponse) => {
   // after successful login setup interceptor (save authorization header with token for next requests)
@@ -111,7 +111,9 @@ const loadCurrentProduct = async ({ commit }, id) => {
   }
 }
 
-const createNewPolicy = async ({ commit }, payload) => {
+const createNewPolicy = async ({ commit, state }, payload) => {
+  // We need custom axios instance to handle 404 differently
+  const customAxios = axios.create({ baseUrl: process.env.API_ADDRESS })
   const { deviceId, productId } = payload
   commit(types.SET_LOADING, false)
   commit(types.CLEAR_POLICY_LOADING_INFO)
@@ -125,20 +127,35 @@ const createNewPolicy = async ({ commit }, payload) => {
   let response = null
 
   // STEP 1: getting task ID
-  response = await axios.get('insurance/policy/android/pair/' + deviceId)
+  try {
+    response = await customAxios.get('insurance/policy/android/pair/' + deviceId)
+  } catch (error) {
+    var newPolicyLoadingInfo = Object.assign({}, policyLoadingInfo)
+
+    if (error.response.status === 404) {
+      newPolicyLoadingInfo.notFound = true
+    } else if (error.response.status === 503 || error.response.status === 500) {
+      newPolicyLoadingInfo.serverError = true
+    }
+
+    commit(types.SET_POLICY_LOADING_INFO, newPolicyLoadingInfo)
+    return
+  }
 
   commit(types.CLEAR_POLICY_LOADING_INFO)
   policyLoadingInfo.taskId = response.data.taskId
   commit(types.SET_POLICY_LOADING_INFO, policyLoadingInfo)
 
-  // while(response.data)
   // STEP 2: gettings task
-  while (!response.data.policyId && !response.data.validationResultCode) {
+  let waitMultiplier = 1
+  while (!response.data.policyId && !response.data.validationResultCode && state.policyLoadingInfo.taskId) {
     response = await axios.post('insurance/policy/android', {
       TaskId: policyLoadingInfo.taskId,
       ProductId: productId
     })
-    await sleep(2500)
+
+    await sleep(waitMultiplier * 250)
+    waitMultiplier++
   }
 
   commit(types.CLEAR_POLICY_LOADING_INFO)
@@ -166,30 +183,26 @@ const getPolicy = async ({ commit }, policyId) => {
 
 const sendPolicyPayment = async ({ commit, state }) => {
   const web3 = state.userWeb3.web3Instance()
-  const productAddress = '0x67477f45c800b456ac2c0073d4f801bf4779d9bc'
-  const tokenAddress = '0xFeEaed9eeb9bbf07E3bBB627CC736172CB04C776'
+  const productAddress = state.currentPolicy.contractAddress
 
-  const TokenInstance = new web3.eth.Contract(tokenAbi, tokenAddress)
+  const TokenInstance = new web3.eth.Contract(process.env.CONTRACT_INFO.ABI, process.env.CONTRACT_INFO.ADDRESS)
   const paymentValue = web3.utils.toWei(state.currentPolicy.premium.toString())
-  const policyIdBytes = web3.eth.abi.encodeParameter('string', state.currentPolicy.id)
-
-  console.log(state.currentPolicy.id)
+  const policyIdBytes = web3.utils.fromAscii(state.currentPolicy.id)
 
   TokenInstance.methods
     .approveAndCall(productAddress, paymentValue, policyIdBytes)
-    .send({ from: state.userWeb3.coinbase })
-    .once('transactionHash', txHash => {
-      console.log(txHash)
-    })
-    .once('receipt', receipt => {
-      console.log(receipt)
-    })
+    .send({ gas: 169266, from: state.userWeb3.coinbase })
+    .once('transactionHash', async txHash => {
+      const transactionInfo = {
+        txId: txHash,
+        txType: 'PolicyPayment',
+        txMetadata: JSON.stringify({ policyId: state.currentPolicy.id })
+      }
 
-  // state.userWeb3.web3Instance().eth.sendTransaction({
-  //   from: state.userWeb3.coinbase,
-  //   to: contractAddress,
-  //   value: state.userWeb3.web3Instance().utils.toWei(state.currentPolicy.premium.toString(), 'ether')
-  // })
+      await axios.post('transaction', transactionInfo)
+
+      commit(types.SET_TX_HASH, txHash)
+    })
 }
 
 const loadUserPolicies = async ({commit}, page) => {
@@ -218,13 +231,4 @@ export {
   createNewPolicy,
   getPolicy,
   sendPolicyPayment
-}
-
-// Move to utils
-function sleep (milliseconds) {
-  return new Promise(resolve => {
-    setTimeout(() => {
-      resolve()
-    }, milliseconds)
-  })
 }
