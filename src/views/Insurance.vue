@@ -43,9 +43,10 @@ export default {
       {
         name: this.$t('insurance.menu.myPolicies'),
         routeLink: {
-          path: '/insurance/policy'
+          path: '/insurance/mypolicies'
         },
-        active: false
+        active: false,
+        disabled: true
       }
       ],
       searchInput: '',

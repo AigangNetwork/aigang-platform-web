@@ -10,14 +10,14 @@
     <el-row class="input-section-title">{{ $t('insurance.product.termsAndConditions') }}</el-row>
     <p class="terms-and-conditions">{{ product.termsAndConditions }}</p>
 
-    <!-- REMOVE BUTTON DISABLING AFTER PRODUCT IMPLEMENTATION IS FINISHED -->
-    <el-tooltip :content="$t('general.comingSoon')">
+    <el-tooltip :disabled="$store.getters.isAuthenticated" :content="$t('insurance.product.logInToCalculatePremium')">
       <span class="wrapper el-button">
-        <el-button :disabled="true" @click="displayDialog(true)" class="aig-button" type="primary">
+        <el-button :disabled="!$store.getters.isAuthenticated" @click="displayDialog(true)" class="aig-button" type="primary">
           {{ $t('insurance.product.calculatePremium') }}
         </el-button>
       </span>
     </el-tooltip>
+
     <ProductDialog :displayDialog="displayDialog" :isVisible="dialogVisible" />
   </div>
 

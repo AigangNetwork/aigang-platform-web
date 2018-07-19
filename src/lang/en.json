@@ -46,7 +46,8 @@
         },
         "validation": {
           "emptyInputError": "Please make sure you have filled all fields",
-          "fileLimitExceed": "You are able to upload only one .csv file. Please delete old file before uploading new one",
+          "fileLimitExceed":
+            "You are able to upload only one .csv file. Please delete old file before uploading new one",
           "unableAccessFileContent": "File can not be accessed. Please reupload correct file",
           "invalidFile": "Invalid file content type. Please make sure you upload .csv files only!",
           "fileTooLarge": "Please make sure you follow all file preferences. File is too large."
@@ -74,7 +75,8 @@
       "downloadDataset": "Download dataset",
       "deleteDataset": "Delete dataset",
       "deleteDatasetTitle": "Delete your dataset",
-      "deleteDatasetDescription": "This dataset and all files, data, models and comments associated with it will be permanently deleted. You won't be able to recover it later on.",
+      "deleteDatasetDescription":
+        "This dataset and all files, data, models and comments associated with it will be permanently deleted. You won't be able to recover it later on.",
       "editDataset": "Edit dataset",
       "successDelete": "Dataset was successfully deleted",
       "deleteDialogBody": "Are you sure you want to delete this dataset?",
@@ -156,7 +158,8 @@
         "editModel": "Edit model",
         "deleteModel": "Delete model",
         "deleteModelTitle": "Delete your model",
-        "deleteModelDescription": "This model and all data and comments associated with it will be permanently deleted. You won't be able to recover it later on.",
+        "deleteModelDescription":
+          "This model and all data and comments associated with it will be permanently deleted. You won't be able to recover it later on.",
         "modelsNotFound": "This dataset does not contain any models yet",
         "deleteDialogBody": "Are you sure you want to delete this model?",
         "usersVoted": "users upvoted this model",
@@ -210,7 +213,8 @@
   },
   "signUp": {
     "signUp": "Sign Up",
-    "description": "Creating an account in aigang.network you will get access to all products such as Data, Prediction market, Invest and Insure",
+    "description":
+      "Creating an account in aigang.network you will get access to all products such as Data, Prediction market, Invest and Insure",
     "haveAccount": "Have Aigang Network Account?",
     "rePassword": "Repeat password",
     "emailSent": "Email was sent to {0}. Follow instructions provided in the email.",
@@ -248,7 +252,8 @@
     "firstName": "First name",
     "lastName": "Last name",
     "changePassword": "Change password",
-    "passwordDescription": "Minimum password length must be 8 characters and consist of at least 2 alpha characters, 1 number and 1 special character ",
+    "passwordDescription":
+      "Minimum password length must be 8 characters and consist of at least 2 alpha characters, 1 number and 1 special character ",
     "oldPassword": "Old password",
     "newPassword": "New password",
     "update": "Update",
@@ -263,7 +268,8 @@
     "emailNews": "Get news and updates about Aigang's product",
     "passwordUpdated": "Password succesfully updated",
     "deactivateAccountTitle": "Deactivate your account",
-    "deactivateAccountDescription": "If you decide that you no longer want to use Aigang Platform, it's easy to deactivate your account. When you deactivate your account, you're no longer availible to log in or access your private uploaded datasets.",
+    "deactivateAccountDescription":
+      "If you decide that you no longer want to use Aigang Platform, it's easy to deactivate your account. When you deactivate your account, you're no longer availible to log in or access your private uploaded datasets.",
     "deactivateAccount": "Deactivate account",
     "warning": "Warning",
     "confirmationText": "Are you sure you want to deactivate your account?",
@@ -366,7 +372,8 @@
     "serverNotFoundRule1": "Make sure you are connected to the Internet.",
     "serverNotFoundRule2": "This might occur when the browser can not reach the server. Please try again later.",
     "contactIfError": "If you see this error please contact us via email info@aigang.network",
-    "metamaskDetected": "We have detected that you are using metamask extension. In order to see your account AIX balance please switch your network to ",
+    "metamaskDetected":
+      "We have detected that you are using metamask extension. In order to see your account AIX balance please switch your network to ",
     "useMetamask": "To use all of our Platform features please Log in to Metamask Extension"
   },
   "insurance": {
@@ -385,20 +392,59 @@
       "downloadApp": "Download Aigang App",
       "instructionsIntro": "In order for us to calculate your premium you have to:",
       "instructionsDownloadApp": "Download Aigang app on your android device",
-      "instructionsIMEI": "Enter your device's IMEI below (you will see it in the app)",
-      "instructionsConditions": "Your device's battery data will be read, press continue if you agree",
-      "imeiPlaceholder": "Enter your IMEI",
+      "instructionsIMEI": "Enter your device ID below (you will see it in the app)",
+      "instructionsConditions": "Your device's data will be read, press continue if you agree",
+      "deviceIdPlaceholder": "ASVSF213D",
       "insure": "Insure",
-      "wearLevel": "Wear level",
-      "coefficients": "Coefficients",
-      "payout": "Payout",
+      "currentWearLevel": "Current Wear level",
+      "startTime": "Start Time",
+      "endTime": "End Time",
       "fee": "Fee",
+      "payout": "Payout",
       "calculatedPremium": "Calculated Premium",
-      "deviceId": "Device Id",
       "notImplemented": "Product is not implemented",
+      "logInToCalculatePremium": "You have to log in to metamask to calculate premium",
       "validation": {
-        "imeiRequired": "IMEI is required",
-        "imeiInvalid": "IMEI format is not correct. Should be 15 digits"
+        "deviceIdRequired": "Device ID is required",
+        "deviceIdInvalid": "Must be 8 characters"
+      }
+    },
+    "policy": {
+      "deviceId": "Device ID",
+      "policyId": "Policy ID",
+      "startingTask": "Starting task",
+      "txHash": "Transaction Hash",
+      "policyStatus": "Policy Status",
+      "taskId": "Task ID",
+      "readingDeviceData": "Reading device data",
+      "policyCreated": "Policy created",
+      "redirecting": "Redirecting",
+      "androidBatteryInsurancePolicy": "Android Battery Insurance Policy",
+      "termsAndConditionsDescription": "In order to confirm your policy, you must agree with",
+      "agreeWithTermsAndConds": "I agree with Terms and Conditions",
+      "mustAgreeWithTermsAndConds": "You must agree with Terms and Conditions",
+      "deviceIdNotFound": "Device with this ID was not found. Check your device for correct ID.",
+      "serverError": "Something went wrong. Please contact support: info@aigang.network",
+      "metamaskNotLoggedIn": "You must be logged in to your metamask wallet",
+      "paymentInfoTitle": "Payment Information",
+      "paymentInfoBody": "Your payment transaction was created succesfully. You can see your transaction status ",
+      "deviceData": {
+        "deviceData": "Device data",
+        "wearLevel": "Battery wear level",
+        "batteryDesignCapacity": "Battery Design Capacity",
+        "chargeLevel": "Charge level",
+        "ageInMonths": "Age in months",
+        "region": "Region",
+        "brand": "Brand",
+        "fetchDateTime": "Data fetch time"
+      },
+      "validationResult": {
+        "BatteryDesignCapacity": "Battery design capacity is not valid for insurance",
+        "BatteryChargeLevel": "Battery charge level is not valid for insurance",
+        "DeviceAgeInMonths": "Device age in months is not valid for insurance",
+        "Region": "Your region is not valid for insurance",
+        "DeviceBrand": "This device brand is not valid for insurance",
+        "BatteryWearLevel": "Battery wear level is not valid for insurance"
       }
     }
   }

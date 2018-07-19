@@ -175,3 +175,36 @@
     }
   }
 }
+
+@mixin policy-data {
+  .policy-data {
+    margin-bottom: 20px;
+
+    p {
+      margin-bottom: 0;
+      height: 38px;
+      display: flex;
+      flex-direction: row;
+      font-size: 24px;
+      border-bottom: 1px dotted #c8d1f1;
+      font-weight: 400;
+      line-height: 38px;
+
+      &:first-child {
+        border-top: 1px dotted #c8d1f1;
+      }
+    }
+
+    label {
+      font-weight: 300;
+      flex-grow: 1;
+      font-size: 16px;
+    }
+
+    .text-medium {
+      line-height: 44px;
+      margin-left: 5px;
+      font-weight: 300;
+    }
+  }
+}
