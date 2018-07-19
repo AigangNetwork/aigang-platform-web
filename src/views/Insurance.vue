@@ -13,7 +13,8 @@
           </transition>
           <ul>
             <li v-for="item in dataMeniu" :key="item.name">
-              <router-link :class="{'aig-link-disabled': item.disabled}" active-class="aig-menu-active" :to="item.routeLink">
+              <router-link :class="{'aig-link-disabled': item.disabled && !$store.state.user.authenticated}" active-class="aig-menu-active"
+                :to="item.routeLink">
                 {{ item.name }}
               </router-link>
             </li>
@@ -46,7 +47,7 @@ export default {
           path: '/insurance/mypolicies'
         },
         active: false,
-        disabled: false
+        disabled: true
       }
       ],
       searchInput: '',

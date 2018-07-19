@@ -52,11 +52,7 @@
 
 <script>
 export default {
-  props: {
-    policy: {
-      required: true
-    }
-  }
+  props: ['policy']
 }
 
 </script>
@@ -71,11 +67,13 @@ export default {
     box-shadow: 0 0 30px 0 #e9f0f6;
     border: 1px solid #e5f0ff;
     display: flex;
+
     .policy-list-item-img-container {
       background: rgba(148, 75, 200, 1);
       background: linear-gradient(to bottom, rgba(148, 75, 200, 1) 0%, rgba(98, 55, 187, 1) 100%);
       display: inline-block;
       vertical-align: middle;
+
       .product-img {
         padding: 7px;
         width: 80px;
@@ -83,6 +81,7 @@ export default {
         margin-top: 10px;
       }
     }
+
     .policy-list-item-content {
       width: 100%;
       .policy-item-header {
@@ -102,13 +101,16 @@ export default {
           font-weight: 600;
         }
       }
+
       .policy-item-body {
         width: 100%;
         display: flex;
         justify-content: space-between;
+
         .policy-info-item,
         .policy-info-item-date {
           padding: 0px 15px 0px 15px;
+
           .title {
             color: #9eb1c7;
             font-weight: 300;
@@ -120,6 +122,7 @@ export default {
               margin: 0px
             }
           }
+
           .content {
             font-family: "Roboto", sans-serif;
             font-weight: 300;
@@ -130,6 +133,7 @@ export default {
   }
 
   @media screen and (min-width: 100px) and (max-width: 765px) {
+
     .aig-policy-item {
       .policy-list-item-img-container {
         .product-img {
@@ -139,26 +143,32 @@ export default {
           margin-top: 10px;
         }
       }
+
       .policy-list-item-content {
         overflow: hidden;
         .policy-item-header {
           font-size: 10pt;
           display: block;
         }
+
         .policy-item-body {
           display: flex;
+
           .policy-info-item {
             margin-left: 12px;
             display: flex;
             padding: 0px;
+
             .title,
             .content {
               font-size: 10pt !important;
             }
+
             .content {
               margin: 2px 0px 0px 5px;
             }
           }
+
           .policy-info-item-date {
             display: none;
           }
