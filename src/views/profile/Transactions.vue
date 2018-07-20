@@ -9,13 +9,13 @@
       </el-col>
       <el-row>
         <el-table class="transactions" :data="transactions.blockchainTransactions" :empty-text="$t('profile.transactions.table.emptyText')">
-          <el-table-column prop="date" :label="$t('profile.transactions.table.titles.date')" width="180">
+          <el-table-column prop="date" :label="$t('profile.transactions.table.titles.date')" width="150">
             <template slot-scope="scope">
               <Date :dateUtc="scope.row.date" />
             </template>
           </el-table-column>
-          <el-table-column prop="txId" :label="$t('profile.transactions.table.titles.transaction')"></el-table-column>
-          <el-table-column prop="txType" :label="$t('profile.transactions.table.titles.type')" width="180"></el-table-column>
+          <el-table-column prop="txId" :label="$t('profile.transactions.table.titles.transaction')" width="400"></el-table-column>
+          <el-table-column prop="txType" :label="$t('profile.transactions.table.titles.type')"></el-table-column>
           <el-table-column prop="status" :label="$t('profile.transactions.table.titles.status')" width="100">
             <template slot-scope="scope">
               <Label :type="scope.row.status" />
@@ -39,21 +39,17 @@ export default {
     Label
   },
   computed: {
-    ...mapGetters(['transactions'])
+    ...mapGetters(['transactions', 'loading'])
   },
   data () {
     return {
-      page: 1,
-      loading: false
+      page: 1
     }
   },
   async mounted () {
-    this.loading = true
     try {
       await this.$store.dispatch('loadProfileTransactions', this.page)
     } catch (error) {}
-
-    this.loading = false
   }
 }
 

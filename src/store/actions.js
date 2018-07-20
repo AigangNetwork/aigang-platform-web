@@ -41,16 +41,20 @@ const changeProfileNames = ({ commit }, response) => {
 }
 
 const loadProfileWallets = async ({ commit }, page) => {
+  commit(types.SET_LOADING, true)
   const response = await axios.get('/account/mywallets?page=' + page)
   if (response.data) {
     commit(types.LOAD_PROFILE_WALLETS, response.data)
+    commit(types.SET_LOADING, false)
   }
 }
 
 const loadProfileTransactions = async ({ commit }, page) => {
+  commit(types.SET_LOADING, true)
   const response = await axios.get('/transaction/mytransactions?page=' + page)
   if (response.data) {
     commit(types.LOAD_PROFILE_TRANSACTIONS, response.data)
+    commit(types.SET_LOADING, false)
   }
 }
 

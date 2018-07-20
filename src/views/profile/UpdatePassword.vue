@@ -2,17 +2,17 @@
   <div v-loading="loading" :element-loading-text="$t('general.loading')">
     <el-row class="profile-password-container">
       <el-col>
-        <p class="input-section-title">{{ $t('profile.profile.changePassword') }}</p>
+        <p class="input-section-title">{{ $t('profile.general.changePassword') }}</p>
       </el-col>
       <el-col>
-        <p class="profile-section-decription">{{ $t('profile.profile.passwordDescription') }}</p>
+        <p class="profile-section-decription">{{ $t('profile.general.passwordDescription') }}</p>
       </el-col>
 
       <el-form class="form-container" @keyup.enter.native="submitForm('profileForm', edit)" :model="profileForm" :rules="profileFormRules"
         ref="profileForm">
         <el-row>
           <el-col>
-            <span class="label">{{ $t('profile.profile.oldPassword' )}}</span>
+            <span class="label">{{ $t('profile.general.oldPassword' )}}</span>
           </el-col>
         </el-row>
         <el-row>
@@ -25,7 +25,7 @@
 
         <el-row>
           <el-col>
-            <span class="label">{{ $t('profile.profile.newPassword' )}}</span>
+            <span class="label">{{ $t('profile.general.newPassword' )}}</span>
           </el-col>
         </el-row>
         <el-row>
@@ -38,14 +38,14 @@
 
         <el-row v-if="isSuccessfullyUpdate" class="success-message">
           <el-col>
-            {{ $t('profile.profile.passwordUpdated' )}}
+            {{ $t('profile.general.passwordUpdated' )}}
           </el-col>
         </el-row>
 
         <el-row>
           <el-col>
             <el-form-item>
-              <el-button class="profile-button change-button" @click="submitForm('profileForm', edit)">{{ $t('profile.profile.changePassword') }}</el-button>
+              <el-button class="profile-button change-button" @click="submitForm('profileForm', edit)">{{ $t('profile.general.changePassword') }}</el-button>
             </el-form-item>
           </el-col>
         </el-row>

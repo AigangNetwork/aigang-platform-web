@@ -247,7 +247,7 @@
       "wallets": "My Wallets",
       "transactions": "My Transactions"
     },
-    "profile": {
+    "general": {
       "logout": "Logout",
       "userName": "Nickname",
       "email": "Email",

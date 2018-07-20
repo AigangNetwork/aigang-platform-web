@@ -31,22 +31,18 @@ export default {
     Date
   },
   computed: {
-    ...mapGetters(['wallets'])
+    ...mapGetters(['wallets', 'loading'])
   },
   data () {
     return {
       page: 1,
-      loading: false,
       isSuccessfullyUpdate: false
     }
   },
   async mounted () {
-    this.loading = true
     try {
       await this.$store.dispatch('loadProfileWallets', this.page)
     } catch (error) {}
-
-    this.loading = false
   }
 }
 

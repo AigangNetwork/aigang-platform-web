@@ -48,7 +48,7 @@
         </el-row>
       </div>
     </div>
-    <Dialog :title="$t('profile.profile.warning')" :body="$t('data.dataset.deleteDialogBody')" :on-confirm="deleteDataset" :is-visible="dialogVisible"
+    <Dialog :title="$t('profile.general.warning')" :body="$t('data.dataset.deleteDialogBody')" :on-confirm="deleteDataset" :is-visible="dialogVisible"
       :on-cancel="cancel" />
   </el-container>
 </template>

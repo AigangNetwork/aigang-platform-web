@@ -4,7 +4,7 @@
       <div slot="body" v-loading="loading" :element-loading-text="$t('general.loading')">
         <div class="flex-container">
           <ProfileInfo/>
-          <el-button class="logout-button" type="warning" @click="logout()">{{ $t('profile.profile.logout') }}</el-button>
+          <el-button class="logout-button" type="warning" @click="logout()">{{ $t('profile.general.logout') }}</el-button>
         </div>
         <el-tabs type="card" class="profile-tabs">
           <el-tab-pane :label="$t('profile.tabs.profile')">
