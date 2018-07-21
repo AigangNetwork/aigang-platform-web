@@ -6,6 +6,11 @@
           <el-row class="policy-data">
             <h2>{{ $t('insurance.policy.androidBatteryInsurancePolicy') }}</h2>
             <p>
+              <label>{{ $t('insurance.policy.policyId') }}:</label>
+              <span>{{ policy.id }}</span>
+            </p>
+
+            <p>
               <label>{{ $t('insurance.policy.deviceId') }}:</label>
               {{ policy.deviceId }}
             </p>
@@ -92,12 +97,17 @@
               <el-tooltip :disabled="isMetamaskLoggedIn" :content="$t('insurance.product.logInToCalculatePremium')">
                 <span class="wrapper el-button">
                   <el-button :disabled="!isMetamaskLoggedIn" class="aig-button" type="primary" @click.prevent.native="submitForm('policyForm', makePayment)">
-                    {{ $t('insurance.product.insure') }}
+                    {{ $t('insurance.policy.insure') }}
                   </el-button>
                 </span>
               </el-tooltip>
             </el-form-item>
           </el-form>
+
+          <el-button v-if="policy.status && policy.status.toUpperCase() === 'PAID'" class="aig-button" type="primary" @click.prevent.native="verifyClaim">
+            {{ $t('insurance.policy.verifyForClaim') }}
+          </el-button>
+
         </div>
       </Card>
     </transition>
@@ -146,7 +156,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['getPolicy', 'sendPolicyPayment']),
+    ...mapActions(['getPolicy', 'sendPolicyPayment', 'verifyClaim']),
     displayTermsDialog (value) {
       this.isTermsDialogVisible = value
     },
@@ -198,7 +208,6 @@ export default {
       flex-grow: 1;
       text-align: left;
     }
-
   }
 
   .device-data {

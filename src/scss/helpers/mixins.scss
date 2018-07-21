@@ -182,13 +182,18 @@
 
     p {
       margin-bottom: 0;
-      height: 38px;
+      min-height: 38px;
       display: flex;
       flex-direction: row;
       font-size: 24px;
       border-bottom: 1px dotted #c8d1f1;
       font-weight: 400;
       line-height: 38px;
+
+      span {
+        word-wrap: break-word;
+        max-width: 70%;
+      }
 
       &:first-child {
         border-top: 1px dotted #c8d1f1;

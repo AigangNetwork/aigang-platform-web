@@ -50,6 +50,7 @@
         flex-basis: 100%;
         margin-top: 2px;
         color: $gray;
+        font-family: $font-secondary;
       }
     }
   }

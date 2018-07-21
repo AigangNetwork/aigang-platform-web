@@ -9,11 +9,11 @@
           <li>{{ $t('insurance.product.instructionsIMEI') }}</li>
         </ol>
 
-        <el-form @submit.prevent.native="submitForm('deviceIdForm', handleSubmit)" :rules="deviceIdFormRules" :model="deviceIdForm"
+        <el-form @submit.prevent.native="submitForm('deviceIdForm', calculatePremium)" :rules="deviceIdFormRules" :model="deviceIdForm"
           ref="deviceIdForm" class="device-id-form">
 
           <el-form-item prop="id">
-            <el-input v-on:keyup.enter="submitForm('deviceIdForm', handleSubmit)" class="device-id-input" :placeholder="$t('insurance.product.deviceIdPlaceholder')"
+            <el-input v-on:keyup.enter="submitForm('deviceIdForm', calculatePremium)" class="device-id-input" :placeholder="$t('insurance.product.deviceIdPlaceholder')"
               :maxlength="8" v-model="deviceIdForm.id"></el-input>
           </el-form-item>
 
