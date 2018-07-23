@@ -295,9 +295,11 @@
       "title": "Transactions",
       "description": "Transactions list which were submited by you on Aigang Platform",
       "status": {
-        "success": "Success",
+        "blockchainPending": "Blockchain Pending",
+        "blockchainSuccessful": "Blockchain Successful",
+        "blockchainFailed": "Blockchain Failed",
         "canceled": "Canceled",
-        "pending": "Pending",
+        "successful": "Successful",
         "failed": "Failed"
       },
       "table": {
