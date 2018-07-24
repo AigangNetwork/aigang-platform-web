@@ -12,7 +12,7 @@
         class="transactions"
           :data="transactions.blockchainTransactions"
           :empty-text="$t('profile.transactions.table.emptyText')">
-          <el-table-column prop="createdUtc" :label="$t('profile.transactions.table.titles.date')" width="150">
+          <el-table-column prop="createdUtc" :label="$t('profile.transactions.table.titles.date')" width="160">
             <template slot-scope="scope">
               <Date :dateUtc="scope.row.createdUtc" />
             </template>

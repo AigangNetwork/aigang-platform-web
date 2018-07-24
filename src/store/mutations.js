@@ -108,6 +108,26 @@ const mutations = {
   },
   SET_TX_HASH (state, txHash) {
     state.txHash = txHash
+  },
+  SET_EMAIL_OPT_OUT (state, payload) {
+    state.user.groups.map(g => {
+      g.items.map(i => {
+        if (i.id === payload.id) {
+          i.value = payload.value
+        }
+      })
+    })
+  },
+  SET_NOTIFICATION_PERMISSIONS (state, payload) {
+    payload.groups.map(g => {
+      g.items.map(i => {
+        if (payload.response && payload.response.ids && payload.response.ids.includes(i.id)) {
+          i.value = false
+        }
+      })
+    })
+
+    state.user.groups = payload.groups
   }
 }
 

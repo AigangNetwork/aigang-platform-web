@@ -58,6 +58,29 @@ const loadProfileTransactions = async ({ commit }, page) => {
   }
 }
 
+const setNotificationPermission = async ({ commit }, payload) => {
+  commit(types.SET_LOADING, true)
+  const response = await axios.post('/account/updateemailoptout', {
+    emailTypeId: payload.id,
+    value: payload.value
+  })
+
+  if (response.data) {
+    commit(types.SET_EMAIL_OPT_OUT, payload)
+    commit(types.SET_LOADING, false)
+  }
+}
+
+const loadNotificationPermissions = async ({ commit }, groups) => {
+  commit(types.SET_LOADING, true)
+  const response = await axios.get('/account/myemailoptouts')
+
+  if (response.data) {
+    commit(types.SET_NOTIFICATION_PERMISSIONS, { groups, response: response.data })
+    commit(types.SET_LOADING, false)
+  }
+}
+
 const loadCurrentDataset = async ({ commit, state }, id) => {
   const response = await axios.get('/data/' + id)
   if (response.data.data) {
@@ -236,6 +259,8 @@ export {
   changeProfileNames,
   loadProfileWallets,
   loadProfileTransactions,
+  setNotificationPermission,
+  loadNotificationPermissions,
   loadCurrentDataset,
   setRemoteFileAccessPoint,
   setCurrentDatasetFile,
