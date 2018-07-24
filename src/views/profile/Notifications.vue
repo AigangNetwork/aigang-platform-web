@@ -8,7 +8,7 @@
         <p>{{ $t('profile.notifications.description') }}</p>
       </el-col>
     </el-row>
-    <el-row v-for="(group, index) in groups" v-bind:key="index">
+    <el-row v-for="(group, index) in emailPermissionGroups" v-bind:key="index">
       <div class="groups-container">
         <PermissionsGroup :group="group" @changed="onChange"/>
       </div>
@@ -24,7 +24,7 @@ export default {
     PermissionsGroup
   },
   computed: {
-    ...mapGetters(['groups', 'loading'])
+    ...mapGetters(['emailPermissionGroups', 'loading'])
   },
   methods: {
     async onChange (id, value) {
@@ -36,7 +36,7 @@ export default {
 
   async mounted () {
     try {
-      let groups = [{
+      let emailPermissionGroups = [{
         title: this.$t('profile.notifications.permissions.general.title'),
         items: [{
           title: this.$t('profile.notifications.permissions.general.items.failedTransactions.title'),
@@ -54,7 +54,7 @@ export default {
         }]
       }]
 
-      await this.$store.dispatch('loadNotificationPermissions', groups)
+      await this.$store.dispatch('loadNotificationPermissions', emailPermissionGroups)
     } catch (error) {}
   }
 }

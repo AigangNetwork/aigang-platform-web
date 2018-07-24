@@ -110,7 +110,7 @@ const mutations = {
     state.txHash = txHash
   },
   SET_EMAIL_OPT_OUT (state, payload) {
-    state.user.groups.map(g => {
+    state.user.emailPermissionGroups.map(g => {
       g.items.map(i => {
         if (i.id === payload.id) {
           i.value = payload.value
@@ -119,7 +119,7 @@ const mutations = {
     })
   },
   SET_NOTIFICATION_PERMISSIONS (state, payload) {
-    payload.groups.map(g => {
+    payload.emailPermissionGroups.map(g => {
       g.items.map(i => {
         if (payload.response && payload.response.ids && payload.response.ids.includes(i.id)) {
           i.value = false
@@ -127,7 +127,7 @@ const mutations = {
       })
     })
 
-    state.user.groups = payload.groups
+    state.user.emailPermissionGroups = payload.emailPermissionGroups
   }
 }
 

@@ -71,12 +71,12 @@ const setNotificationPermission = async ({ commit }, payload) => {
   }
 }
 
-const loadNotificationPermissions = async ({ commit }, groups) => {
+const loadNotificationPermissions = async ({ commit }, emailPermissionGroups) => {
   commit(types.SET_LOADING, true)
   const response = await axios.get('/account/myemailoptouts')
 
   if (response.data) {
-    commit(types.SET_NOTIFICATION_PERMISSIONS, { groups, response: response.data })
+    commit(types.SET_NOTIFICATION_PERMISSIONS, { emailPermissionGroups, response: response.data })
     commit(types.SET_LOADING, false)
   }
 }
