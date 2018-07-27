@@ -17,6 +17,7 @@ const store = new Vuex.Store({
       profile: null,
       wallets: {},
       transactions: {},
+      emailPermissionGroups: {},
       policies: {}
     },
     userWeb3: {

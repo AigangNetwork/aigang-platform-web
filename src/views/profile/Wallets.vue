@@ -9,7 +9,7 @@
       </el-col>
       <el-row>
         <el-table :data="wallets.userWallets" :empty-text="$t('profile.wallets.table.emptyText')">
-          <el-table-column prop="createdUtc" :label="$t('profile.wallets.table.titles.date')" width="180">
+          <el-table-column prop="createdUtc" :label="$t('profile.wallets.table.titles.date')" width="160">
             <template slot-scope="scope">
               <Date :dateUtc="scope.row.date" />
             </template>

@@ -1,7 +1,7 @@
 <template>
   <div class="aig-container profile-container">
     <Card class="profile-card">
-      <div slot="body" v-loading="loading" :element-loading-text="$t('general.loading')">
+      <div class="profile-content-container" slot="body" v-loading="loading" :element-loading-text="$t('general.loading')">
         <div class="flex-container">
           <ProfileInfo/>
           <el-button class="logout-button" type="warning" @click="logout()">{{ $t('profile.general.logout') }}</el-button>
@@ -18,6 +18,9 @@
           <el-tab-pane :label="$t('profile.tabs.transactions')">
             <Transactions/>
           </el-tab-pane>
+          <el-tab-pane :label="$t('profile.tabs.notifications')">
+            <Notifications/>
+          </el-tab-pane>
         </el-tabs>
       </div>
     </Card>
@@ -29,9 +32,9 @@ import Card from '@/components/Card'
 import ProfileInfo from './profile/ProfileInfo'
 import UpdatePassword from './profile/UpdatePassword'
 import DeactivateAccount from './profile/DeactivateAccount'
-import EmailPreferences from './profile/EmailPreferences'
 import Wallets from './profile/Wallets'
 import Transactions from './profile/Transactions'
+import Notifications from './profile/Notifications'
 
 export default {
   name: 'ProfileView',
@@ -39,20 +42,14 @@ export default {
     Card,
     ProfileInfo,
     UpdatePassword,
-    EmailPreferences,
     DeactivateAccount,
     Wallets,
-    Transactions
+    Transactions,
+    Notifications
   },
   data () {
     return {
-      loading: false,
-      emailPreferences: {
-        isModelCommentsEnabled: false,
-        isDataSetCommentsEnabled: false,
-        isNewDataCommentsEnvabled: false,
-        isNewsEnabled: false
-      }
+      loading: false
     }
   },
   methods: {
@@ -77,6 +74,9 @@ export default {
       .input-section-title {
         margin-top: 20px;
       }
+    }
+    .profile-content-container {
+      padding: 10px;
     }
   }
 

@@ -17,6 +17,9 @@ const getters = {
   transactions: state => {
     return state.user.transactions
   },
+  emailPermissionGroups: state => {
+    return state.user.emailPermissionGroups
+  },
   product: state => {
     return state.currentProduct
   },
