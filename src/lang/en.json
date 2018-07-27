@@ -246,36 +246,92 @@
     "retrievePassword": "Retrieve password"
   },
   "profile": {
-    "logout": "Logout",
-    "userName": "Nickname",
-    "email": "Email",
-    "firstName": "First name",
-    "lastName": "Last name",
-    "changePassword": "Change password",
-    "passwordDescription":
-      "Minimum password length must be 8 characters and consist of at least 2 alpha characters, 1 number and 1 special character ",
-    "oldPassword": "Old password",
-    "newPassword": "New password",
-    "update": "Update",
-    "emailPreferences": "Email preferences",
-    "emailDescription": "Choose newsletter options",
-    "emailModelComments": "Comments in my model",
-    "emailModelCommentsDescription": "Recieve emails when somebody will comment your created model",
-    "emailDataSetsComments": "Comments in my data sets",
-    "emailDataSetsCommentsDescription": "Recieve email notifications when somebody will comment your created data set",
-    "emailNewDataComments": "Uploading of new data sets",
-    "emailNewDataCommentsDescription": "Recieve email notifications of uploading a new data set",
-    "emailNews": "Get news and updates about Aigang's product",
-    "passwordUpdated": "Password succesfully updated",
-    "deactivateAccountTitle": "Deactivate your account",
-    "deactivateAccountDescription":
-      "If you decide that you no longer want to use Aigang Platform, it's easy to deactivate your account. When you deactivate your account, you're no longer availible to log in or access your private uploaded datasets.",
-    "deactivateAccount": "Deactivate account",
-    "warning": "Warning",
-    "confirmationText": "Are you sure you want to deactivate your account?",
-    "confirm": "Confirm",
-    "cancel": "Cancel",
-    "deactivationSuccessful": "Your account was successfuly deactivated"
+    "tabs": {
+      "profile": "Profile",
+      "wallets": "My Wallets",
+      "transactions": "My Transactions",
+      "notifications": "Notifications"
+    },
+    "general": {
+      "logout": "Logout",
+      "userName": "Nickname",
+      "email": "Email",
+      "firstName": "First name",
+      "lastName": "Last name",
+      "changePassword": "Change password",
+      "passwordDescription": "Minimum password length must be 8 characters and consist of at least 2 alpha characters, 1 number and 1 special character ",
+      "oldPassword": "Old password",
+      "newPassword": "New password",
+      "update": "Update",
+      "passwordUpdated": "Password succesfully updated",
+      "deactivateAccountTitle": "Deactivate your account",
+      "deactivateAccountDescription": "If you decide that you no longer want to use Aigang Platform, it's easy to deactivate your account. When you deactivate your account, you're no longer availible to log in or access your private uploaded datasets.",
+      "deactivateAccount": "Deactivate account",
+      "warning": "Warning",
+      "confirmationText": "Are you sure you want to deactivate your account?",
+      "confirm": "Confirm",
+      "cancel": "Cancel",
+      "deactivationSuccessful": "Your account was successfuly deactivated"
+    },
+    "wallets": {
+      "title": "Wallets",
+      "description": "You wallets list which were used by you on Aigang Platform",
+      "table": {
+        "emptyText": "No Wallets yet",
+        "titles": {
+          "date": "Date",
+          "wallet": "Wallet"
+        }
+      },
+      "buttons": {
+        "add": "Add Wallet"
+      }
+    },
+    "transactions": {
+      "title": "Transactions",
+      "description": "Transactions list which were submited by you on Aigang Platform",
+      "status": {
+        "blockchainPending": "Blockchain Pending",
+        "blockchainSuccessful": "Blockchain Successful",
+        "blockchainFailed": "Blockchain Failed",
+        "canceled": "Canceled",
+        "successful": "Successful",
+        "failed": "Failed"
+      },
+      "table": {
+        "emptyText": "No Transactions yet",
+        "titles": {
+          "date": "Date",
+          "transaction": "Transaction",
+          "type": "Type",
+          "status": "Status"
+        }
+      }
+    },
+    "notifications": {
+      "title": "Notifications",
+      "description": "Settings for Aigang platform email notications",
+      "permissions": {
+        "general": {
+          "title": "General",
+          "items": {
+            "failedTransactions": {
+              "title": "Failed transactions",
+              "description": "When this notification type is on you will get notifications about failed transactions."
+            }
+          }
+        },
+        "insurance": {
+          "title": "Insurance",
+          "items": {
+            "all": {
+              "title": "All",
+              "description": "When this notification type is on you will get all notifications related with Insurance."
+            }
+          }
+        }
+      }
+    }
   },
   "navigation": {
     "profile": "Profile",

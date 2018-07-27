@@ -1,24 +1,27 @@
 <template>
   <div class="aig-container profile-container">
     <Card class="profile-card">
-      <div slot="body" v-loading="loading" :element-loading-text="$t('general.loading')">
-
+      <div class="profile-content-container" slot="body" v-loading="loading" :element-loading-text="$t('general.loading')">
         <div class="flex-container">
           <ProfileInfo/>
-          <el-button class="logout-button" type="warning" @click="logout()">{{ $t('profile.logout') }}</el-button>
+          <el-button class="logout-button" type="warning" @click="logout()">{{ $t('profile.general.logout') }}</el-button>
         </div>
-        <div class="horizontal-line"></div>
-
-        <UpdatePassword/>
-
-        <div class="horizontal-line"></div>
-        <DeactivateAccount/>
-        <!--
-        <div class="horizontal-line"></div>
-
-        <EmailPreferences/>
-        -->
-
+        <el-tabs type="card" class="profile-tabs">
+          <el-tab-pane :label="$t('profile.tabs.profile')">
+            <UpdatePassword/>
+            <div class="horizontal-line"></div>
+            <DeactivateAccount/>
+          </el-tab-pane>
+          <el-tab-pane :label="$t('profile.tabs.wallets')">
+            <Wallets/>
+          </el-tab-pane>
+          <el-tab-pane :label="$t('profile.tabs.transactions')">
+            <Transactions/>
+          </el-tab-pane>
+          <el-tab-pane :label="$t('profile.tabs.notifications')">
+            <Notifications/>
+          </el-tab-pane>
+        </el-tabs>
       </div>
     </Card>
   </div>
@@ -28,8 +31,10 @@
 import Card from '@/components/Card'
 import ProfileInfo from './profile/ProfileInfo'
 import UpdatePassword from './profile/UpdatePassword'
-import EmailPreferences from './profile/EmailPreferences'
 import DeactivateAccount from './profile/DeactivateAccount'
+import Wallets from './profile/Wallets'
+import Transactions from './profile/Transactions'
+import Notifications from './profile/Notifications'
 
 export default {
   name: 'ProfileView',
@@ -37,18 +42,14 @@ export default {
     Card,
     ProfileInfo,
     UpdatePassword,
-    EmailPreferences,
-    DeactivateAccount
+    DeactivateAccount,
+    Wallets,
+    Transactions,
+    Notifications
   },
   data () {
     return {
-      loading: false,
-      emailPreferences: {
-        isModelCommentsEnabled: false,
-        isDataSetCommentsEnabled: false,
-        isNewDataCommentsEnvabled: false,
-        isNewsEnabled: false
-      }
+      loading: false
     }
   },
   methods: {
@@ -68,6 +69,15 @@ export default {
 
   .aig-container.profile-container {
     align-items: flex-start;
+    .profile-tabs {
+      margin-top: 20px;
+      .input-section-title {
+        margin-top: 20px;
+      }
+    }
+    .profile-content-container {
+      padding: 10px;
+    }
   }
 
   .profile-card.aig-card {

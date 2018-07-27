@@ -14,6 +14,12 @@ const mutations = {
     state.user.profile.lastName = payload.data.profile.lastName
     state.user.profile.userName = payload.data.profile.userName
   },
+  LOAD_PROFILE_WALLETS (state, payload) {
+    state.user.wallets = payload
+  },
+  LOAD_PROFILE_TRANSACTIONS (state, payload) {
+    state.user.transactions = payload
+  },
   LOAD_CURRENT_DATASET (state, payload) {
     state.currentDataset = payload.data
     state.currentDataset.commentsCount = payload.commentsCount
@@ -102,6 +108,26 @@ const mutations = {
   },
   SET_TX_HASH (state, txHash) {
     state.txHash = txHash
+  },
+  SET_EMAIL_OPT_OUT (state, payload) {
+    state.user.emailPermissionGroups.map(g => {
+      g.items.map(i => {
+        if (i.id === payload.id) {
+          i.value = payload.value
+        }
+      })
+    })
+  },
+  SET_NOTIFICATION_PERMISSIONS (state, payload) {
+    payload.emailPermissionGroups.map(g => {
+      g.items.map(i => {
+        if (payload.response && payload.response.ids && payload.response.ids.includes(i.id)) {
+          i.value = false
+        }
+      })
+    })
+
+    state.user.emailPermissionGroups = payload.emailPermissionGroups
   }
 }
 

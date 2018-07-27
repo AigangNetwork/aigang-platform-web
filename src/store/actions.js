@@ -40,6 +40,47 @@ const changeProfileNames = ({ commit }, response) => {
   commit(types.CHANGE_PROFILE_NAMES, response)
 }
 
+const loadProfileWallets = async ({ commit }, page) => {
+  commit(types.SET_LOADING, true)
+  const response = await axios.get('/account/mywallets?page=' + page)
+  if (response.data) {
+    commit(types.LOAD_PROFILE_WALLETS, response.data)
+    commit(types.SET_LOADING, false)
+  }
+}
+
+const loadProfileTransactions = async ({ commit }, page) => {
+  commit(types.SET_LOADING, true)
+  const response = await axios.get('/transaction/mytransactions?page=' + page)
+  if (response.data) {
+    commit(types.LOAD_PROFILE_TRANSACTIONS, response.data)
+    commit(types.SET_LOADING, false)
+  }
+}
+
+const setNotificationPermission = async ({ commit }, payload) => {
+  commit(types.SET_LOADING, true)
+  const response = await axios.post('/account/updateemailoptout', {
+    emailTypeId: payload.id,
+    value: payload.value
+  })
+
+  if (response.data) {
+    commit(types.SET_EMAIL_OPT_OUT, payload)
+    commit(types.SET_LOADING, false)
+  }
+}
+
+const loadNotificationPermissions = async ({ commit }, emailPermissionGroups) => {
+  commit(types.SET_LOADING, true)
+  const response = await axios.get('/account/myemailoptouts')
+
+  if (response.data) {
+    commit(types.SET_NOTIFICATION_PERMISSIONS, { emailPermissionGroups, response: response.data })
+    commit(types.SET_LOADING, false)
+  }
+}
+
 const loadCurrentDataset = async ({ commit, state }, id) => {
   const response = await axios.get('/data/' + id)
   if (response.data.data) {
@@ -224,6 +265,10 @@ export {
   logIn,
   logOut,
   changeProfileNames,
+  loadProfileWallets,
+  loadProfileTransactions,
+  setNotificationPermission,
+  loadNotificationPermissions,
   loadCurrentDataset,
   setRemoteFileAccessPoint,
   setCurrentDatasetFile,
