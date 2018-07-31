@@ -438,7 +438,9 @@
       "myPolicies": "My Policies"
     },
     "product": {
-      "productEnds": "Campaing ends",
+      "productEnds": "Campaign ends",
+      "productEnded": "Campaign ended",
+      "productComingSoon": "Coming soon",
       "basePremium": "Base Premium",
       "details": "Details",
       "description": "Description",
@@ -458,7 +460,8 @@
       "payout": "Payout",
       "calculatedPremium": "Calculated Premium",
       "notImplemented": "Product is not implemented",
-      "logInToCalculatePremium": "You have to log in to metamask to calculate premium",
+      "logInToCalculatePremium": "You have to log in to calculate premium",
+      "agreeWithTermsAndConditions": "You have to read terms and conditions to calculate premium",
       "validation": {
         "deviceIdRequired": "Device ID is required",
         "deviceIdInvalid": "Must be 8 characters"
@@ -476,18 +479,35 @@
       "policyCreated": "Policy created",
       "redirecting": "Redirecting",
       "androidBatteryInsurancePolicy": "Android Battery Insurance Policy",
-      "termsAndConditionsDescription": "In order to confirm your policy, you must agree with",
-      "agreeWithTermsAndConds": "I agree with Terms and Conditions",
-      "mustAgreeWithTermsAndConds": "You must agree with Terms and Conditions",
+      "termsAndConditions": {
+        "title": "Terms and Conditions",
+        "buttons": {
+          "agree": "Agree",
+          "disagree": "Disagree"
+        }
+      },
       "startDate": "Start date:",
       "endDate": "End date:",
       "status": "Status",
       "deviceIdNotFound": "Device with this ID was not found. Check your device for correct ID.",
       "serverError": "Something went wrong. Please contact support: info@aigang.network",
       "metamaskNotLoggedIn": "You must be logged in to your metamask wallet",
-      "paymentInfoTitle": "Payment Information",
-      "paymentInfoBody": "Your payment transaction was created succesfully. You can see your transaction status ",
+      "paymentInfo": {
+        "title": "Payment Information",
+        "body": "Your payment transaction was created succesfully. When payment will be processed we will inform you via email notification message. You can see your transaction status by clicking on transaction address. ",
+        "buttons": {
+          "goBack": "Go to policy list"
+        }
+      },
       "verifyForClaim": "Verify your device for claim",
+      "claim": "Claim your device",
+      "notLoggedToMetamaskDialog": {
+        "title": "Not logged in to metamask",
+        "content": "You have to log in to metamask to calculate premium. If you logged in already, try to reload this page.",
+        "buttons": {
+          "reload": "Reload"
+        }
+      },
       "deviceData": {
         "deviceData": "Device data",
         "wearLevel": "Battery wear level",

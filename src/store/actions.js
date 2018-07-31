@@ -185,6 +185,7 @@ const createNewPolicy = async ({ commit, state }, { deviceId, productId }) => {
 const getPolicy = async ({ commit }, policyId) => {
   commit(types.SET_LOADING, true)
   commit(types.CLEAR_CURRENT_POLICY)
+
   const response = await axios.get('insurance/policy/' + policyId)
 
   if (response && response.data) {
@@ -194,7 +195,7 @@ const getPolicy = async ({ commit }, policyId) => {
   commit(types.SET_LOADING, false)
 }
 
-const sendPolicyPayment = async ({ commit, state }) => {
+const sendPolicyPayment = async ({ commit, dispatch, state }) => {
   const web3 = state.userWeb3.web3Instance()
   const productAddress = state.currentPolicy.contractAddress
 
@@ -206,15 +207,20 @@ const sendPolicyPayment = async ({ commit, state }) => {
     .approveAndCall(productAddress, paymentValue, policyIdBytes)
     .send({ gas: 190000, from: state.userWeb3.coinbase })
     .once('transactionHash', async txHash => {
-      const transactionInfo = {
+      const policyId = state.currentPolicy.id
+
+      const request = {
+        policyId,
         txId: txHash,
         txType: 'PolicyPayment',
-        txMetadata: JSON.stringify({ policyId: state.currentPolicy.id })
+        txMetadata: JSON.stringify({ policyId })
       }
 
-      await axios.post('transaction', transactionInfo)
+      await axios.post('/insurance/transaction', request)
 
       commit(types.SET_TX_HASH, txHash)
+
+      dispatch('getPolicy', policyId)
     })
 }
 
@@ -225,7 +231,7 @@ const loadUserPolicies = async ({ commit }, page) => {
   }
 }
 
-export const verifyClaim = async ({ commit, state }) => {
+const verifyClaim = async ({ commit, dispatch, state }) => {
   // Getting task id
   try {
     await loadTaskId(commit, state.currentPolicy.deviceId)
@@ -233,8 +239,9 @@ export const verifyClaim = async ({ commit, state }) => {
     return
   }
 
-  console.log(state.policyLoadingInfo.taskId)
   // Creating policy
+  commit(types.SET_LOADING, true)
+
   let response = null
   while (!response || !response.data.isClaimable) {
     response = await axios.put('/insurance/verifypolicyclaim', {
@@ -245,20 +252,18 @@ export const verifyClaim = async ({ commit, state }) => {
     await sleep(1000)
   }
 
-  console.log(response.data.isClaimable)
+  if (response.data.isClaimable) {
+    commit(types.SET_LOADING, false)
+    dispatch('getPolicy', state.currentPolicy.id)
+  }
+}
 
-  // var newPolicyLoadingInfo = Object.assign({}, state.policyLoadingInfo)
+const claim = async ({ commit, state }) => {
+  commit(types.SET_LOADING, true)
 
-  // commit(types.CLEAR_POLICY_LOADING_INFO)
-  // if (response.data.validationResultCode) {
-  //   newPolicyLoadingInfo.validationResultCode = response.data.validationResultCode
-  // } else {
-  //   newPolicyLoadingInfo.policyId = response.data.policyId
-  // }
+  await sleep(3000)
 
-  // commit(types.SET_POLICY_LOADING_INFO, newPolicyLoadingInfo)
-
-  // console.log(response.data)
+  commit(types.SET_LOADING, false)
 }
 
 export {
@@ -283,7 +288,9 @@ export {
   loadUserPolicies,
   createNewPolicy,
   getPolicy,
-  sendPolicyPayment
+  sendPolicyPayment,
+  verifyClaim,
+  claim
 }
 
 const loadTaskId = async (commit, deviceId) => {
