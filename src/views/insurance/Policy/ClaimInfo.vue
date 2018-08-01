@@ -1,8 +1,8 @@
 <template>
-  <el-row class="device-data">
-    <p class="device-data-title">{{ $t('insurance.policy.deviceData.title') }}</p>
+  <el-row v-if="data" class="device-data">
+    <p class="device-data-title">{{ $t('insurance.policy.claimInfo.title') }}</p>
 
-    <div class="device-data-item">
+    <!-- <div class="device-data-item">
       <label>{{ $t('insurance.policy.deviceData.wearLevel') }}:</label>
       {{ data.WearLevel | uppercase }}
     </div>
@@ -35,14 +35,12 @@
     <div class="device-data-item">
       <label>{{ $t('insurance.policy.deviceData.fetchDateTime') }}:</label>
       <Date v-if="data.FetchDateTime" :dateUtc="data.FetchDateTime" />
-    </div>
+    </div> -->
   </el-row>
 </template>
 <script>
-import Date from '@/components/Date'
 
 export default {
-  components: { Date },
   props: ['data']
 }
 </script>

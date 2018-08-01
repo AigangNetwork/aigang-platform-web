@@ -13,6 +13,7 @@
 
           <div class="content">
             <PolicyInfo :data="policy" />
+            <ClaimInfo :data="policy.paymentData" />
             <DeviceInfo :data="deviceData" />
           </div>
 
@@ -50,8 +51,6 @@
     <LogInToMetamaskDialog :isVisible="isDisplayLoginToMetamaskDialogVisible" :displayDialog="displayLoginToMetamaskDialog" />
 
     <PaymentConfirmationDialog :isVisible="isPaymentDialogVisible" :displayDialog="displayPaymentDialog" />
-
-    <ClaimDialog :isVisible="isClaimDialogVisible" :displayDialog="displayClaimDialog" />
   </div>
 
 </template>
@@ -60,9 +59,9 @@ import Card from '@/components/Card'
 import PaymentConfirmationDialog from '@/components/insurance/PaymentConfirmationDialog'
 import TermsAndConditionsDialog from '@/components/insurance/TermsAndConditionsDialog'
 import LogInToMetamaskDialog from '@/components/insurance/LogInToMetamaskDialog'
-import ClaimDialog from '@/components/insurance/ClaimDialog'
 import PolicyInfo from './PolicyInfo'
 import DeviceInfo from './DeviceInfo'
+import ClaimInfo from './ClaimInfo'
 import FormMixin from '@/components/mixins/FormMixin'
 import { mapGetters, mapActions } from 'vuex'
 
@@ -72,9 +71,9 @@ export default {
     PaymentConfirmationDialog,
     TermsAndConditionsDialog,
     LogInToMetamaskDialog,
-    ClaimDialog,
     PolicyInfo,
-    DeviceInfo
+    DeviceInfo,
+    ClaimInfo
   },
   mixins: [FormMixin],
   data () {
@@ -83,7 +82,6 @@ export default {
       isTermsAndConditionsDialogVisible: false,
       isPaymentDialogVisible: false,
       isDisplayLoginToMetamaskDialogVisible: false,
-      isClaimDialogVisible: false,
 
       policyListRoute: '/insurance/mypolicies'
     }
@@ -98,9 +96,6 @@ export default {
     },
     displayTermsAndConditionsDialog (value) {
       this.isTermsAndConditionsDialogVisible = value
-    },
-    displayClaimDialog (value) {
-      this.isClaimDialogVisible = value
     },
     insure () {
       if (this.isMetamaskLoggedIn) {

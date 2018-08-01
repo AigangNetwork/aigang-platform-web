@@ -509,7 +509,7 @@
         }
       },
       "deviceData": {
-        "deviceData": "Device data",
+        "title": "Device data",
         "wearLevel": "Battery wear level",
         "batteryDesignCapacity": "Battery Design Capacity",
         "chargeLevel": "Charge level",
@@ -517,6 +517,9 @@
         "region": "Region",
         "brand": "Brand",
         "fetchDateTime": "Data fetch time"
+      },
+      "claimInfo": {
+        "title": "Claim info"
       },
       "validationResult": {
         "BatteryDesignCapacity": "Battery design capacity is not valid for insurance",

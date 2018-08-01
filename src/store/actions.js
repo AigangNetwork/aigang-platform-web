@@ -258,10 +258,18 @@ const verifyClaim = async ({ commit, dispatch, state }) => {
   }
 }
 
-const claim = async ({ commit, state }) => {
+const claim = async ({ commit, dispatch, state }) => {
   commit(types.SET_LOADING, true)
 
-  await sleep(3000)
+  const policyId = state.currentPolicy.id
+
+  try {
+    const response = await axios.post('/insurance/claim', { policyId })
+
+    if (response && response.data) {
+      dispatch('getPolicy', policyId)
+    }
+  } catch (err) {}
 
   commit(types.SET_LOADING, false)
 }

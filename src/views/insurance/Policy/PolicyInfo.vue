@@ -36,11 +36,22 @@
         </span>
       </p>
 
+      <p v-if="data.currentPolicy">
+        <label>{{ $t('insurance.policy.txHash') }}:</label>
+        <a class="address" :href="txLink" target="_blank"><span class="contract-address">{{ this.data.txHash }}</span></a>
+        <span class="text-medium">
+        </span>
+      </p>
     </el-row>
 </template>
 <script>
 export default {
-  props: ['data']
+  props: ['data'],
+  computed: {
+    txLink () {
+      return process.env.ETHERSCAN_ADDRESS + this.data.txHash
+    }
+  }
 }
 </script>
 <style lang="scss">
