@@ -14,7 +14,7 @@
           <div class="content">
             <PolicyInfo :data="policy" />
             <DeviceInfo :data="deviceData" />
-            <ClaimInfo :data="deviceData" />
+            <ClaimInfo :data="claimProperties" />
           </div>
 
           <div class="footer">
@@ -87,7 +87,6 @@ export default {
   mixins: [FormMixin],
   data () {
     return {
-      deviceData: '',
       isTermsAndConditionsDialogVisible: false,
       isPaymentDialogVisible: false,
       isDisplayLoginToMetamaskDialogVisible: false,
@@ -128,11 +127,16 @@ export default {
     ...mapGetters(['policy', 'web3', 'loading']),
     isMetamaskLoggedIn () {
       return !!this.web3
+    },
+    deviceData () {
+      return JSON.parse(this.policy.properties)
+    },
+    claimProperties () {
+      return this.policy.claimProperties ? JSON.parse(this.policy.claimProperties) : null
     }
   },
   async mounted () {
     await this.getPolicy(this.$route.params.policyId)
-    this.deviceData = JSON.parse(this.policy.properties)
   }
 }
 </script>
