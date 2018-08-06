@@ -51,4 +51,30 @@ export default {
   @import '~helpers/mixins';
 
   @include policy-data;
+
+  .device-data-item {
+    border-bottom: 1px dotted #c8d1f1;
+    padding: 5px;
+    display: flex;
+    flex-direction: row;
+    text-align: right;
+
+    label {
+      font-weight: 300;
+      flex-grow: 1;
+      text-align: left;
+    }
+  }
+
+  .device-data-title {
+    background: #dcdfe6;
+    font-weight: 400;
+    text-align: center;
+    color: black;
+  }
+
+  .device-data {
+    font-family: $font-secondary;
+    margin-bottom: 20px;
+  }
 </style>

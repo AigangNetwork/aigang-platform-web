@@ -241,6 +241,9 @@ const verifyClaim = async ({ commit, dispatch, state }) => {
 
   // Creating policy
   commit(types.SET_LOADING, true)
+  commit(types.SET_FAILED_VERIFY_CLAIM, false)
+
+  let retryCount = process.env.RETRY_COUNT || 10
 
   let response = null
   while (!response || !response.data.isClaimable) {
@@ -248,6 +251,14 @@ const verifyClaim = async ({ commit, dispatch, state }) => {
       TaskId: state.policyLoadingInfo.taskId,
       PolicyId: state.currentPolicy.id
     })
+
+    retryCount--
+
+    if (retryCount === 0) {
+      commit(types.SET_FAILED_VERIFY_CLAIM, true)
+      commit(types.SET_LOADING, false)
+      break
+    }
 
     await sleep(1000)
   }

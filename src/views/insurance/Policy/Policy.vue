@@ -13,8 +13,8 @@
 
           <div class="content">
             <PolicyInfo :data="policy" />
-            <ClaimInfo :data="policy.paymentData" />
             <DeviceInfo :data="deviceData" />
+            <ClaimInfo :data="deviceData" />
           </div>
 
           <div class="footer">
@@ -25,16 +25,25 @@
               @click.prevent.native="insure">{{ $t('insurance.policy.insure') }}</el-button>
 
             <el-button
-              v-if="policy.status && policy.status.toUpperCase() === 'PENDINGPAYMENT'"
+              v-else-if="policy.status && policy.status.toUpperCase() === 'PENDINGPAYMENT'"
               class="aig-button"
               disabled="true"
               type="primary">{{ $t('insurance.policy.verifyForClaim') }}</el-button>
 
-            <el-button
-              v-if="policy.status && policy.status.toUpperCase() === 'PAID'"
-              class="aig-button"
-              type="primary"
-              @click.prevent.native="verifyClaim">{{ $t('insurance.policy.verifyForClaim') }}</el-button>
+            <div v-else-if="policy.status && policy.status.toUpperCase() === 'PAID'">
+              <div v-if="policy.isVerifyForClaimFailed" class="failed-notification">
+                <span>{{ $t('insurance.policy.failedToVerifyDevice.title') }}</span>
+                <ul>
+                  <li>{{ $t('insurance.policy.failedToVerifyDevice.tip1') }}</li>
+                  <li>{{ $t('insurance.policy.failedToVerifyDevice.tip2') }}</li>
+                  <li>{{ $t('insurance.policy.failedToVerifyDevice.tip3') }}</li>
+                </ul>
+              </div>
+              <el-button
+                class="aig-button"
+                type="primary"
+                @click.prevent.native="verifyClaim">{{ policy.isVerifyForClaimFailed ? $t('insurance.policy.verifyForClaimRetry') : $t('insurance.policy.verifyForClaim') }}</el-button>
+            </div>
 
             <el-button
               v-else-if="policy.status && policy.status.toUpperCase() === 'CLAIMABLE'"
@@ -160,30 +169,9 @@ export default {
     }
   }
 
-  .device-data-title {
-    background: #dcdfe6;
-    font-weight: 400;
-    text-align: center;
-    color: black;
-  }
-
-  .device-data-item {
-    border-bottom: 1px dotted #c8d1f1;
-    padding: 5px;
-    display: flex;
-    flex-direction: row;
-    text-align: right;
-
-    label {
-      font-weight: 300;
-      flex-grow: 1;
-      text-align: left;
-    }
-  }
-
-  .device-data {
-    font-family: $font-secondary;
-    margin-bottom: 20px;
+  .failed-notification {
+    padding-top: 10px;
+    padding-bottom: 10px;
   }
 
   .checkbox-description .bold:hover {

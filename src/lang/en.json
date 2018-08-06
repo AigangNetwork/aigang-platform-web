@@ -472,7 +472,6 @@
       "deviceId": "Device id",
       "policyId": "Policy id",
       "startingTask": "Starting task",
-      "txHash": "Transaction Hash",
       "policyStatus": "Policy Status",
       "taskId": "Task ID",
       "readingDeviceData": "Reading device data",
@@ -500,6 +499,13 @@
         }
       },
       "verifyForClaim": "Verify your device for claim",
+      "verifyForClaimRetry": "Retry verification",
+      "failedToVerifyDevice": {
+        "title": "Failed to verify your device:",
+        "tip1": "Check if your device is connected to internet,",
+        "tip2": "Check if your device still paired with our system,",
+        "tip3": "If you still have problems with verification please contact us via info@aigang.network."
+      },
       "claim": "Claim your device",
       "notLoggedToMetamaskDialog": {
         "title": "Not logged in to metamask",
@@ -519,7 +525,14 @@
         "fetchDateTime": "Data fetch time"
       },
       "claimInfo": {
-        "title": "Claim info"
+        "title": "Claim info",
+        "wearLevel": "Battery wear level",
+        "batteryDesignCapacity": "Battery Design Capacity",
+        "chargeLevel": "Charge level",
+        "ageInMonths": "Age in months",
+        "region": "Region",
+        "brand": "Brand",
+        "fetchDateTime": "Data fetch time"
       },
       "validationResult": {
         "BatteryDesignCapacity": "Battery design capacity is not valid for insurance",
