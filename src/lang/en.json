@@ -506,7 +506,7 @@
         "tip2": "Check if your device still paired with our system,",
         "tip3": "If you still have problems with verification please contact us via info@aigang.network."
       },
-      "claim": "Claim your device",
+      "claim": "Claim policy",
       "notLoggedToMetamaskDialog": {
         "title": "Not logged in to metamask",
         "content": "You have to log in to metamask to calculate premium. If you logged in already, try to reload this page.",
