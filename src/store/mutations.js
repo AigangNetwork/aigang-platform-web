@@ -128,6 +128,9 @@ const mutations = {
     })
 
     state.user.emailPermissionGroups = payload.emailPermissionGroups
+  },
+  SET_FAILED_VERIFY_CLAIM (state, value) {
+    state.currentPolicy.isVerifyForClaimFailed = value
   }
 }
 

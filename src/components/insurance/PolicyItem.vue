@@ -6,7 +6,7 @@
     <div class="policy-list-item-content">
       <div class="policy-item-header">
         <div class="text">
-          {{$t('insurance.policy.policyId')}}
+          {{$t('insurance.policy.policyId')}}:
         </div>
         <div class="id">
           {{policy.id}}
@@ -176,5 +176,4 @@ export default {
       }
     }
   }
-
 </style>

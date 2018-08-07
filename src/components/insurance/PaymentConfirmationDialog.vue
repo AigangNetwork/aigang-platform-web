@@ -1,15 +1,14 @@
 <template>
-  <el-dialog :title="$t('insurance.policy.paymentInfoTitle')" :visible.sync="show">
-    <p class="policy-dialog-info">
-      <label>{{ $t('insurance.policy.txHash') }}:</label>
-      <span class="contract-address">{{ this.txHash }}</span>
-    </p>
-    <p class="policy-dialog-info">
-      {{ $t('insurance.policy.paymentInfoBody') }}
-      <strong>
-        <a :href="txLink" target="_blank">{{ $t('general.here') }}</a>
-      </strong>
-    </p>
+  <el-dialog :title="$t('insurance.policy.paymentInfo.title')" :visible.sync="show">
+    <div class="policy-dialog-info">
+      <p>{{ $t('insurance.policy.paymentInfo.body') }}</p>
+      <a class="address" :href="txLink" target="_blank"><span class="contract-address">{{ this.txHash }}</span></a>
+      <div class="buttons">
+        <router-link :to="policyListRoute">
+          <el-button class="button" type="primary">{{ $t('insurance.policy.paymentInfo.buttons.goBack')}}</el-button>
+        </router-link>
+      </div>
+    </div>
   </el-dialog>
 </template>
 <script>
@@ -17,6 +16,11 @@ import { mapGetters } from 'vuex'
 
 export default {
   props: ['isVisible', 'displayDialog'],
+  data () {
+    return {
+      policyListRoute: '/insurance/mypolicies'
+    }
+  },
   watch: {
     txHash () {
       if (this.txHash) {
@@ -45,5 +49,17 @@ export default {
   .policy-dialog-info {
     max-width: 100%;
     word-wrap: break-word;
+
+    .address {
+      margin-top: 10px;
+    }
+
+    .buttons {
+      margin-top: 30px;
+      text-align: center;
+      .button {
+        min-width: 200px;
+      }
+    }
   }
 </style>

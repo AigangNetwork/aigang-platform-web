@@ -20,7 +20,9 @@ import { mapGetters } from 'vuex'
 export default {
   components: { Card, ProductHeader, ProductDetails },
   mixins: [EndDate],
-  computed: { ...mapGetters(['product', 'loading']) },
+  computed: {
+    ...mapGetters(['product', 'loading'])
+  },
   async created () {
     await this.$store.dispatch('loadCurrentProduct', this.$route.params.id)
   }

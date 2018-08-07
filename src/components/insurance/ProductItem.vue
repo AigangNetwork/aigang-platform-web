@@ -1,11 +1,16 @@
 <template>
-  <div class="aig-data" :class="{ enabled: product.state === 'active', disabled: product.state != 'active' }">
+  <div class="aig-data" :class="{ disabled: !isCampaignRunning || product.state != 'active' }">
     <router-link :to="{ name: 'Product', params: { id: product.id}}">
       <div class="aig-data-body-container">
-        <div class="aig-data-head">
-          <div class="desc">{{ $t('insurance.product.productEnds') }} {{ endDate }}</div>
+        <div class="aig-data-head" v-if="isCampaignRunning && product.state == 'active'">
+          <div class="desc">{{ $t('insurance.product.productEnds') }} {{ endDate }} {{ $t('general.utc') }}</div>
         </div>
-
+        <div class="aig-data-head" v-else-if="!isCampaignRunning && product.state == 'active'">
+          <div class="desc">{{ $t('insurance.product.productEnded') }}</div>
+        </div>
+        <div class="aig-data-head" v-else>
+          <div class="desc">{{ $t('insurance.product.productComingSoon') }}</div>
+        </div>
         <div class="aig-data-head">
           <div class="title">{{ product.title | truncate(50) }}</div>
         </div>
@@ -27,11 +32,22 @@
 </template>
 
 <script>
-import EndDate from '@/components/mixins/EndDate'
+import moment from 'moment'
 
 export default {
-  mixins: [EndDate],
-  props: ['product']
+  props: ['product'],
+  computed: {
+    endDate () {
+      const utcDate = moment.utc(this.product.endDateUtc)
+      return utcDate.format('YYYY-MM-DD HH:mm')
+    },
+    isCampaignRunning () {
+      const currentDate = moment.utc()
+      const campaignStartDate = moment.utc(this.product.startDateUtc)
+      const campaignEndDate = moment.utc(this.product.endDateUtc)
+      return currentDate.isAfter(campaignStartDate) && currentDate.isBefore(campaignEndDate)
+    }
+  }
 }
 
 </script>
