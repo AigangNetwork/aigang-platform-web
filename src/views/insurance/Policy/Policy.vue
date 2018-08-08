@@ -4,11 +4,11 @@
       <Card class="policy-card" v-loading="loading" :element-loading-text="$t('general.loading')">
         <div slot="body" class="policy-details-body">
           <el-row class="header">
-              <router-link :to="policyListRoute" class="back-button">
-                <i class="back-icon el-icon-arrow-left"></i>
-              </router-link>
+            <router-link :to="policyListRoute" class="back-button">
+              <i class="back-icon el-icon-arrow-left"></i>
+            </router-link>
 
-              <h2>{{ $t('insurance.policy.androidBatteryInsurancePolicy') }}</h2>
+            <h2>{{ $t('insurance.policy.androidBatteryInsurancePolicy') }}</h2>
           </el-row>
 
           <div class="content">
@@ -18,16 +18,9 @@
           </div>
 
           <div class="footer">
-            <el-button
-              v-if="policy.status && policy.status.toUpperCase() === 'DRAFT'"
-              class="aig-button"
-              type="primary"
-              @click.prevent.native="insure">{{ $t('insurance.policy.insure') }}</el-button>
+            <el-button v-if="policy.status && policy.status.toUpperCase() === 'DRAFT'" class="aig-button" type="primary" @click.prevent.native="insure">{{ $t('insurance.policy.insure') }}</el-button>
 
-            <el-button
-              v-else-if="policy.status && policy.status.toUpperCase() === 'PENDINGPAYMENT'"
-              class="aig-button"
-              disabled="true"
+            <el-button v-else-if="policy.status && policy.status.toUpperCase() === 'PENDINGPAYMENT'" class="aig-button" disabled="true"
               type="primary">{{ $t('insurance.policy.verifyForClaim') }}</el-button>
 
             <div v-else-if="policy.status && policy.status.toUpperCase() === 'PAID'">
@@ -39,29 +32,26 @@
                   <li>{{ $t('insurance.policy.failedToVerifyDevice.tip3') }}</li>
                 </ul>
               </div>
-              <el-button
-                class="aig-button"
-                type="primary"
-                @click.prevent.native="verifyClaim">{{ policy.isVerifyForClaimFailed ? $t('insurance.policy.verifyForClaimRetry') : $t('insurance.policy.verifyForClaim') }}</el-button>
+              <el-button class="aig-button" type="primary" @click.prevent.native="verifyClaim">
+                {{ policy.isVerifyForClaimFailed ? $t('insurance.policy.verifyForClaimRetry') : $t('insurance.policy.verifyForClaim') }}
+              </el-button>
             </div>
 
-            <el-button
-              v-else-if="policy.status && policy.status.toUpperCase() === 'CLAIMABLE'"
-              class="aig-button"
-              type="primary"
-              @click.prevent.native="claim">{{ $t('insurance.policy.claim') }}</el-button>
+            <el-button v-else-if="policy.status && policy.status.toUpperCase() === 'CLAIMABLE'" class="aig-button" type="primary" @click.prevent.native="claim">
+              {{ $t('insurance.policy.claim') }}
+            </el-button>
           </div>
         </div>
       </Card>
     </transition>
 
-    <TermsAndConditionsDialog :termsAndConditions="policy.termsAndConditions" :isVisible="isTermsAndConditionsDialogVisible" :displayDialog="displayTermsAndConditionsDialog" @agreed="makePayment"/>
+    <TermsAndConditionsDialog :termsAndConditions="policy.termsAndConditions" :isVisible="isTermsAndConditionsDialogVisible"
+      :displayDialog="displayTermsAndConditionsDialog" @agreed="makePayment" />
 
     <LogInToMetamaskDialog :isVisible="isDisplayLoginToMetamaskDialogVisible" :displayDialog="displayLoginToMetamaskDialog" />
 
     <PaymentConfirmationDialog :isVisible="isPaymentDialogVisible" :displayDialog="displayPaymentDialog" />
   </div>
-
 </template>
 <script>
 import Card from '@/components/Card'
