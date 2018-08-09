@@ -8,9 +8,25 @@
     <a class="contract-address" target="_blank" :href="contractLink">{{ product.contractAddress }}</a>
 
     <el-row class="input-section-title">{{ $t('insurance.product.termsAndConditions') }}</el-row>
-    <ScrollableMarkupText class="scrollable-text" :text="product.termsAndConditions" @scrolledToBottom="onScrolledToBottom"/>
+    <ScrollableMarkupText class="scrollable-text" :text="product.termsAndConditions" @scrolledToBottom="onScrolledToBottom" />
 
     <el-tooltip v-if="!isAuthenticated" :disabled="isAuthenticated" :content="$t('insurance.product.logInToCalculatePremium')">
+      <span class="wrapper el-button">
+        <el-button :disabled="true" class="aig-button" type="primary">
+          {{ $t('insurance.product.calculatePremium') }}
+        </el-button>
+      </span>
+    </el-tooltip>
+
+    <el-tooltip v-else-if="product.isPoolLimitReached" :content="$t('insurance.product.productPoolLimitReacher')">
+      <span class="wrapper el-button">
+        <el-button :disabled="true" class="aig-button" type="primary">
+          {{ $t('insurance.product.calculatePremium') }}
+        </el-button>
+      </span>
+    </el-tooltip>
+
+    <el-tooltip v-else-if="product.isPoliciesLimitReached" :content="$t('insurance.product.policiesLimitReached')">
       <span class="wrapper el-button">
         <el-button :disabled="true" class="aig-button" type="primary">
           {{ $t('insurance.product.calculatePremium') }}
