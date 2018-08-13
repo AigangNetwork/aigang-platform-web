@@ -246,7 +246,7 @@ const verifyClaim = async ({ commit, dispatch, state }) => {
   let retryCount = process.env.RETRY_COUNT || 10
 
   let response = null
-  while (!response || !response.data.isClaimable) {
+  while (!response || !response.data.isTaskFinished) {
     response = await axios.put('/insurance/verifypolicyclaim', {
       TaskId: state.policyLoadingInfo.taskId,
       PolicyId: state.currentPolicy.id
@@ -263,8 +263,9 @@ const verifyClaim = async ({ commit, dispatch, state }) => {
     await sleep(1000)
   }
 
+  commit(types.SET_LOADING, false)
+
   if (response.data.isClaimable) {
-    commit(types.SET_LOADING, false)
     dispatch('getPolicy', state.currentPolicy.id)
   }
 }
