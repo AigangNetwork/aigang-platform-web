@@ -119,7 +119,7 @@ export default {
       return !!this.web3
     },
     deviceData () {
-      return JSON.parse(this.policy.properties)
+      return this.policy.properties ? JSON.parse(this.policy.properties) : null
     },
     claimProperties () {
       return this.policy.claimProperties ? JSON.parse(this.policy.claimProperties) : null
