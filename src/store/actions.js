@@ -225,7 +225,7 @@ const sendPolicyPayment = async ({ commit, dispatch, state }) => {
 }
 
 const loadUserPolicies = async ({ commit }, page) => {
-  const response = await axios.get('/insurance/mypolicies?page=' + page)
+  const response = await axios.get('/insurance/policy/mypolicies?page=' + page)
   if (response.data) {
     commit(types.LOAD_USER_POLICIES, response.data)
   }
