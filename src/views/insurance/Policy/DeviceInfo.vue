@@ -1,5 +1,5 @@
 <template>
-  <el-row class="device-data">
+  <el-row v-if="data" class="device-data">
     <p class="device-data-title">{{ $t('insurance.policy.deviceData.title') }}</p>
 
     <div class="device-data-item">
