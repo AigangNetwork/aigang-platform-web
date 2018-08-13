@@ -2,8 +2,8 @@
   <div class="aig-container aig-view">
     <Card class="product-card">
       <div slot="body" v-loading="loading">
-        <ProductDetailsHeader :product="product" />
-        <router-view></router-view>
+        <ProductHeader :product="product" />
+        <ProductDetails />
       </div>
     </Card>
   </div>
@@ -12,13 +12,17 @@
 <script>
 import Card from '@/components/Card'
 import EndDate from '@/components/mixins/EndDate'
-import ProductDetailsHeader from '@/components/insurance/ProductDetailsHeader'
+import ProductHeader from '@/components/insurance/ProductHeader'
+import ProductDetails from '@/components/insurance/ProductDetails'
+
 import { mapGetters } from 'vuex'
 
 export default {
-  components: { Card, ProductDetailsHeader },
+  components: { Card, ProductHeader, ProductDetails },
   mixins: [EndDate],
-  computed: { ...mapGetters(['product', 'loading']) },
+  computed: {
+    ...mapGetters(['product', 'loading'])
+  },
   async created () {
     await this.$store.dispatch('loadCurrentProduct', this.$route.params.id)
   }
@@ -40,7 +44,6 @@ export default {
       width: 100%;
       margin: 40px 0;
     }
-
     .aig-button {
       margin-top: 0;
     }
@@ -53,7 +56,7 @@ export default {
     padding: 5px;
   }
 
-  .product-card .contract-address {
+  .contract-address {
     font-size: 18px;
     color: $light-blue;
     font-family: $font-secondary;

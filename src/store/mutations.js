@@ -14,6 +14,12 @@ const mutations = {
     state.user.profile.lastName = payload.data.profile.lastName
     state.user.profile.userName = payload.data.profile.userName
   },
+  LOAD_PROFILE_WALLETS (state, payload) {
+    state.user.wallets = payload
+  },
+  LOAD_PROFILE_TRANSACTIONS (state, payload) {
+    state.user.transactions = payload
+  },
   LOAD_CURRENT_DATASET (state, payload) {
     state.currentDataset = payload.data
     state.currentDataset.commentsCount = payload.commentsCount
@@ -70,26 +76,61 @@ const mutations = {
       state.currentModel.commentsCount = payload.commentsCount
     }
   },
-  CLEAR_CURRENT_DATASET (state, payload) {
+  CLEAR_CURRENT_DATASET (state) {
     state.currentDataset = {}
   },
-  CLEAR_CURRENT_MODEL (state, payload) {
+  CLEAR_CURRENT_MODEL (state) {
     state.currentModel = {}
   },
   LOAD_CURRENT_PRODUCT (state, payload) {
     state.currentProduct = payload.product
   },
-  CLEAR_CURRENT_PRODUCT (state, payload) {
+  CLEAR_CURRENT_PRODUCT (state) {
     state.currentProduct = {}
   },
-  LOADING (state, payload) {
-    state.loading = payload.loading
+  SET_LOADING (state, loading) {
+    state.loading = loading
   },
-  LOAD_CURRENT_POLICY (state, payload) {
+  SET_CURRENT_POLICY (state, payload) {
     state.currentPolicy = payload.policy
   },
   CLEAR_CURRENT_POLICY (state, payload) {
     state.currentPolicy = {}
+  },
+  LOAD_USER_POLICIES (state, payload) {
+    state.user.policies = payload
+  },
+  SET_POLICY_LOADING_INFO (state, policyLoadingInfo) {
+    state.policyLoadingInfo = policyLoadingInfo
+  },
+  CLEAR_POLICY_LOADING_INFO (state) {
+    state.policyLoadingInfo = {}
+  },
+  SET_TX_HASH (state, txHash) {
+    state.txHash = txHash
+  },
+  SET_EMAIL_OPT_OUT (state, payload) {
+    state.user.emailPermissionGroups.map(g => {
+      g.items.map(i => {
+        if (i.id === payload.id) {
+          i.value = payload.value
+        }
+      })
+    })
+  },
+  SET_NOTIFICATION_PERMISSIONS (state, payload) {
+    payload.emailPermissionGroups.map(g => {
+      g.items.map(i => {
+        if (payload.response && payload.response.ids && payload.response.ids.includes(i.id)) {
+          i.value = false
+        }
+      })
+    })
+
+    state.user.emailPermissionGroups = payload.emailPermissionGroups
+  },
+  SET_FAILED_VERIFY_CLAIM (state, value) {
+    state.currentPolicy.isVerifyForClaimFailed = value
   }
 }
 

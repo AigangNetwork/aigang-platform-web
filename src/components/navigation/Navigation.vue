@@ -12,7 +12,7 @@
           <nav class="aig-navigation-menu">
             <ul>
               <li v-for="(bar, index) in navigationBars" :key="index" @click="handleInvest(index)">
-                <router-link active-class="aig-bar-active" :class="{'aig-link-disabled': bar.disabled}" :to="bar.routeLink">
+                <router-link active-class="aig-bar-active" :class="{'disabled': bar.disabled}" :to="bar.routeLink">
                   {{ bar.name }}
                 </router-link>
               </li>
@@ -32,7 +32,7 @@
     <div class="aig-dropdown" v-if="dropDownMenuActive">
       <ul>
         <li v-for="bar in navigationBars" :key="bar.name">
-          <router-link :class="{'aig-link-disabled': bar.disabled}" active-class="aig-bar-active" :to="bar.routeLink" @click.native="dropDownMenuActive = false">
+          <router-link :class="{'disabled': bar.disabled}" active-class="aig-bar-active" :to="bar.routeLink" @click.native="dropDownMenuActive = false">
             {{ bar.name }}
           </router-link>
         </li>
@@ -180,10 +180,6 @@ export default {
         margin-right: 15px;
       }
 
-      .disabled {
-        pointer-events: none;
-      }
-
       @include breakpoint(max-width 780px) {
         .aig-hamburger-wrapper {
           display: block;
@@ -208,6 +204,11 @@ export default {
         opacity: 1;
       }
     }
+  }
+
+  .disabled {
+    pointer-events: none;
+    opacity: 0.25;
   }
 
   .aig-navigation-menu {

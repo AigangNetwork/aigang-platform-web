@@ -14,7 +14,11 @@ const store = new Vuex.Store({
     user: {
       authenticated: false,
       token: null,
-      profile: null
+      profile: null,
+      wallets: {},
+      transactions: {},
+      emailPermissionGroups: {},
+      policies: {}
     },
     userWeb3: {
       web3Instance: null,
@@ -29,6 +33,8 @@ const store = new Vuex.Store({
     currentModel: null,
     currentProduct: {},
     currentPolicy: {},
+    txHash: null,
+    policyLoadingInfo: {},
     loading: false
   },
   mutations,
