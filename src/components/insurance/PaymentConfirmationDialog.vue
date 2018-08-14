@@ -2,7 +2,9 @@
   <el-dialog :title="$t('insurance.policy.paymentInfo.title')" :visible.sync="show">
     <div class="policy-dialog-info">
       <p>{{ $t('insurance.policy.paymentInfo.body') }}</p>
-      <a class="address" :href="txLink" target="_blank"><span class="contract-address">{{ this.txHash }}</span></a>
+      <a class="address" :href="txLink" target="_blank">
+        <span class="contract-address">{{ this.txHash }}</span>
+      </a>
       <div class="buttons">
         <router-link :to="policyListRoute">
           <el-button class="button" type="primary">{{ $t('insurance.policy.paymentInfo.buttons.goBack')}}</el-button>
@@ -12,7 +14,9 @@
   </el-dialog>
 </template>
 <script>
-import { mapGetters } from 'vuex'
+import {
+  mapGetters
+} from 'vuex'
 
 export default {
   props: ['isVisible', 'displayDialog'],
@@ -31,7 +35,7 @@ export default {
   computed: {
     ...mapGetters(['txHash']),
     txLink () {
-      return process.env.ETHERSCAN_ADDRESS + this.txHash
+      return process.env.ETHERSCAN_ADDRESS + process.env.TX_PATH + this.txHash
     },
     show: {
       get () {
@@ -62,4 +66,5 @@ export default {
       }
     }
   }
+
 </style>
