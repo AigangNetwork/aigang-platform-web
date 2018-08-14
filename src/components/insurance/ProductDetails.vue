@@ -8,7 +8,7 @@
     <a class="contract-address" target="_blank" :href="contractLink">{{ product.contractAddress }}</a>
 
     <el-row class="input-section-title">{{ $t('insurance.product.termsAndConditions') }}</el-row>
-    <ScrollableMarkupText class="scrollable-text" :text="product.termsAndConditions" @scrolledToBottom="onScrolledToBottom"/>
+    <ScrollableMarkupText class="scrollable-text" :text="product.termsAndConditions" @scrolledToBottom="onScrolledToBottom" />
 
     <el-tooltip v-if="!isAuthenticated" :disabled="isAuthenticated" :content="$t('insurance.product.logInToCalculatePremium')">
       <span class="wrapper el-button">
@@ -34,7 +34,9 @@
 import ProductDialog from '@/components/insurance/ProductDialog'
 import ScrollableMarkupText from '@/components/insurance/ScrollableMarkupText'
 import VueMarkdown from 'vue-markdown'
-import { mapGetters } from 'vuex'
+import {
+  mapGetters
+} from 'vuex'
 
 export default {
   components: {
@@ -59,10 +61,11 @@ export default {
   computed: {
     ...mapGetters(['product', 'isAuthenticated']),
     contractLink () {
-      return 'https://etherscan.io/address/' + this.product.contractAddress
+      return process.env.ETHERSCAN_ADDRESS + process.env.ADDRESS_PATX + this.product.contractAddress
     }
   }
 }
+
 </script>
 <style lang="scss">
   .product-details-body {
@@ -70,4 +73,5 @@ export default {
       height: 200px;
     }
   }
+
 </style>
