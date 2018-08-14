@@ -18,6 +18,22 @@
       </span>
     </el-tooltip>
 
+    <el-tooltip v-else-if="product.isPoolLimitReached" :content="$t('insurance.product.productPoolLimitReacher')">
+      <span class="wrapper el-button">
+        <el-button :disabled="true" class="aig-button" type="primary">
+          {{ $t('insurance.product.calculatePremium') }}
+        </el-button>
+      </span>
+    </el-tooltip>
+
+    <el-tooltip v-else-if="product.isPoliciesLimitReached" :content="$t('insurance.product.policiesLimitReached')">
+      <span class="wrapper el-button">
+        <el-button :disabled="true" class="aig-button" type="primary">
+          {{ $t('insurance.product.calculatePremium') }}
+        </el-button>
+      </span>
+    </el-tooltip>
+
     <el-tooltip v-else :disabled="!calculateButtonDisabled" :content="$t('insurance.product.agreeWithTermsAndConditions')">
       <span class="wrapper el-button">
         <el-button :disabled="calculateButtonDisabled" @click="displayDialog(true)" class="aig-button" type="primary">

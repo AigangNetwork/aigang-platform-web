@@ -4,37 +4,32 @@
 
     <div class="claim-data-item">
       <label>{{ $t('insurance.policy.claimInfo.wearLevel') }}:</label>
-      {{ data.WearLevel | uppercase }}
+      {{ data.WL | uppercase }}
     </div>
 
     <div class="claim-data-item">
       <label>{{ $t('insurance.policy.claimInfo.batteryDesignCapacity') }}:</label>
-      {{ data.BatteryDesignCapacity }}
+      {{ data.DC }}
     </div>
 
     <div class="claim-data-item">
       <label>{{ $t('insurance.policy.claimInfo.chargeLevel') }}:</label>
-      {{ data.ChargeLevel }} %
+      {{ data.CL }} %
     </div>
 
     <div class="claim-data-item">
       <label>{{ $t('insurance.policy.claimInfo.ageInMonths') }}:</label>
-      {{ data.AgeInMonths }}
+      {{ data.DA }}
     </div>
 
     <div class="claim-data-item">
       <label>{{ $t('insurance.policy.claimInfo.region') }}:</label>
-      {{ data.Region | uppercase}}
+      {{ data.R | uppercase}}
     </div>
 
     <div class="claim-data-item">
       <label>{{ $t('insurance.policy.claimInfo.brand') }}:</label>
-      {{ data.Brand | uppercase }}
-    </div>
-
-    <div class="claim-data-item">
-      <label>{{ $t('insurance.policy.claimInfo.fetchDateTime') }}:</label>
-      <Date v-if="data.FetchDateTime" :dateUtc="data.FetchDateTime" />
+      {{ data.DB | uppercase }}
     </div>
   </el-row>
 </template>
