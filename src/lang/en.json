@@ -46,8 +46,7 @@
         },
         "validation": {
           "emptyInputError": "Please make sure you have filled all fields",
-          "fileLimitExceed":
-            "You are able to upload only one .csv file. Please delete old file before uploading new one",
+          "fileLimitExceed": "You are able to upload only one .csv file. Please delete old file before uploading new one",
           "unableAccessFileContent": "File can not be accessed. Please reupload correct file",
           "invalidFile": "Invalid file content type. Please make sure you upload .csv files only!",
           "fileTooLarge": "Please make sure you follow all file preferences. File is too large."
@@ -75,8 +74,7 @@
       "downloadDataset": "Download dataset",
       "deleteDataset": "Delete dataset",
       "deleteDatasetTitle": "Delete your dataset",
-      "deleteDatasetDescription":
-        "This dataset and all files, data, models and comments associated with it will be permanently deleted. You won't be able to recover it later on.",
+      "deleteDatasetDescription": "This dataset and all files, data, models and comments associated with it will be permanently deleted. You won't be able to recover it later on.",
       "editDataset": "Edit dataset",
       "successDelete": "Dataset was successfully deleted",
       "deleteDialogBody": "Are you sure you want to delete this dataset?",
@@ -158,8 +156,7 @@
         "editModel": "Edit model",
         "deleteModel": "Delete model",
         "deleteModelTitle": "Delete your model",
-        "deleteModelDescription":
-          "This model and all data and comments associated with it will be permanently deleted. You won't be able to recover it later on.",
+        "deleteModelDescription": "This model and all data and comments associated with it will be permanently deleted. You won't be able to recover it later on.",
         "modelsNotFound": "This dataset does not contain any models yet",
         "deleteDialogBody": "Are you sure you want to delete this model?",
         "usersVoted": "users upvoted this model",
@@ -213,8 +210,7 @@
   },
   "signUp": {
     "signUp": "Sign Up",
-    "description":
-      "Creating an account in aigang.network you will get access to all products such as Data, Prediction market, Invest and Insure",
+    "description": "Creating an account in aigang.network you will get access to all products such as Data, Prediction market, Invest and Insure",
     "haveAccount": "Have Aigang Network Account?",
     "rePassword": "Repeat password",
     "emailSent": "Email was sent to {0}. Follow instructions provided in the email.",
@@ -428,8 +424,7 @@
     "serverNotFoundRule1": "Make sure you are connected to the Internet.",
     "serverNotFoundRule2": "This might occur when the browser can not reach the server. Please try again later.",
     "contactIfError": "If you see this error please contact us via email info@aigang.network",
-    "metamaskDetected":
-      "We have detected that you are using metamask extension. In order to see your account AIX balance please switch your network to ",
+    "metamaskDetected": "We have detected that you are using metamask extension. In order to see your account AIX balance please switch your network to ",
     "useMetamask": "To use all of our Platform features please Log in to Metamask Extension"
   },
   "insurance": {
@@ -462,6 +457,8 @@
       "notImplemented": "Product is not implemented",
       "logInToCalculatePremium": "You have to log in to calculate premium",
       "agreeWithTermsAndConditions": "You have to read terms and conditions to calculate premium",
+      "productPoolLimitReacher": "Product premium pool limit has been reached",
+      "policiesLimitReached": "You have reached maximum number of policies for this product",
       "validation": {
         "deviceIdRequired": "Device ID is required",
         "deviceIdInvalid": "Must be 8 characters"
