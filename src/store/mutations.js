@@ -135,6 +135,9 @@ const mutations = {
   },
   SET_IS_CLAIMABLE (state, value) {
     state.currentPolicy.isClaimable = value
+  },
+  SET_FAILED_CREATE_POLICY (state, value) {
+    state.policyLoadingInfo.failed = value
   }
 }
 

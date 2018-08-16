@@ -170,12 +170,21 @@ const createNewPolicy = async ({ commit, state }, { deviceId, productId }) => {
   }
 
   // Creating policy
+  let retryCount = process.env.RETRY_COUNT || 10
   let response = null
   while (!response || (!response.data.policyId && !response.data.validationResultCode)) {
     response = await axios.post('insurance/policy', {
       TaskId: state.policyLoadingInfo.taskId,
       ProductId: productId
     })
+
+    retryCount--
+
+    if (retryCount === 0) {
+      commit(types.SET_FAILED_CREATE_POLICY, true)
+      commit(types.SET_LOADING, false)
+      break
+    }
 
     await sleep(1000)
   }
@@ -252,7 +261,6 @@ const verifyClaim = async ({ commit, dispatch, state }) => {
     return
   }
 
-  // Creating policy
   commit(types.SET_LOADING, true)
   commit(types.SET_FAILED_VERIFY_CLAIM, false)
 
@@ -282,8 +290,8 @@ const verifyClaim = async ({ commit, dispatch, state }) => {
     dispatch('getPolicy', state.currentPolicy.id)
     commit(types.SET_IS_CLAIMABLE, true)
   }
-  
-  if(response.data.isTaskFinished && !response.data.isClaimable) {
+
+  if (response.data.isTaskFinished && !response.data.isClaimable) {
     commit(types.SET_IS_CLAIMABLE, false)
   }
 }
@@ -299,6 +307,18 @@ const claim = async ({ commit, dispatch, state }) => {
     if (response && response.data) {
       dispatch('getPolicy', policyId)
     }
+  } catch (err) {}
+
+  commit(types.SET_LOADING, false)
+}
+
+const deletePolicy = async ({ commit, dispatch, state }) => {
+  commit(types.SET_LOADING, true)
+
+  const policyId = state.currentPolicy.id
+
+  try {
+    await axios.delete(`/insurance/deletepolicy/${policyId}`)
   } catch (err) {}
 
   commit(types.SET_LOADING, false)
@@ -329,7 +349,8 @@ export {
   getPolicy,
   sendPolicyPayment,
   verifyClaim,
-  claim
+  claim,
+  deletePolicy
 }
 
 const loadTaskId = async (commit, deviceId) => {

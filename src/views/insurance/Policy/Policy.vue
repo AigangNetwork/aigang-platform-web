@@ -18,10 +18,11 @@
           </div>
 
           <div class="footer">
-            <el-button v-if="policy.status && policy.status.toUpperCase() === 'DRAFT'" class="aig-button" type="primary" @click.prevent.native="insure">{{ $t('insurance.policy.insure') }}</el-button>
+            <el-button v-if="policy.status && policy.status.toUpperCase() === 'DRAFT'" class="aig-button" type="primary" @click.prevent.native="insure">{{
+              $t('insurance.policy.insure') }}</el-button>
 
-            <el-button v-else-if="policy.status && policy.status.toUpperCase() === 'PENDINGPAYMENT'" class="aig-button" disabled
-              type="primary">{{ $t('insurance.policy.verifyForClaim') }}</el-button>
+            <el-button v-else-if="policy.status && policy.status.toUpperCase() === 'PENDINGPAYMENT'" class="aig-button" disabled type="primary">{{
+              $t('insurance.policy.verifyForClaim') }}</el-button>
 
             <div v-else-if="policy.status && policy.status.toUpperCase() === 'PAID'">
               <div v-if="policy.isVerifyForClaimFailed" class="failed-notification">
@@ -43,6 +44,8 @@
             <el-button v-else-if="policy.status && policy.status.toUpperCase() === 'CLAIMABLE'" class="aig-button" type="primary" @click.prevent.native="claim">
               {{ $t('insurance.policy.claim') }}
             </el-button>
+
+            <PolicyDeleteSection />
           </div>
         </div>
       </Card>
@@ -54,6 +57,7 @@
     <LogInToMetamaskDialog :isVisible="isDisplayLoginToMetamaskDialogVisible" :displayDialog="displayLoginToMetamaskDialog" />
 
     <PaymentConfirmationDialog :isVisible="isPaymentDialogVisible" :displayDialog="displayPaymentDialog" />
+
   </div>
 </template>
 <script>
@@ -61,6 +65,7 @@ import Card from '@/components/Card'
 import PaymentConfirmationDialog from '@/components/insurance/PaymentConfirmationDialog'
 import TermsAndConditionsDialog from '@/components/insurance/TermsAndConditionsDialog'
 import LogInToMetamaskDialog from '@/components/insurance/LogInToMetamaskDialog'
+import PolicyDeleteSection from '@/components/insurance/PolicyDeleteSection'
 import PolicyInfo from './PolicyInfo'
 import DeviceInfo from './DeviceInfo'
 import ClaimInfo from './ClaimInfo'
@@ -75,7 +80,8 @@ export default {
     LogInToMetamaskDialog,
     PolicyInfo,
     DeviceInfo,
-    ClaimInfo
+    ClaimInfo,
+    PolicyDeleteSection
   },
   mixins: [FormMixin],
   data () {
