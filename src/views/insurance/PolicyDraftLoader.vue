@@ -51,6 +51,16 @@
             </template>
           </transition>
 
+          <transition-group name="slideUp" mode="out-in">
+            <template v-if="policyLoadingInfo.failed">
+              <p class="info-text" key="1">{{ $t('insurance.policy.readingDeviceDataTimeout') }}</p>
+              <p class="info-text" key="2">
+                <el-button type="primary" @click.prevent.native="createPolicy">{{ $t('general.retry') }}
+                </el-button>
+              </p>
+            </template>
+          </transition-group>
+
           <div v-if="showLoader" class="timeline-wrapper">
             <div class="timeline-item">
               <div class="animated-background">
@@ -65,7 +75,7 @@
 </template>
 <script>
 import Card from '@/components/Card'
-import { mapGetters, mapMutations } from 'vuex'
+import { mapGetters, mapMutations, mapActions } from 'vuex'
 
 export default {
   components: { Card },
@@ -94,32 +104,36 @@ export default {
     },
     showLoader () {
       return !this.policyLoadingInfo.policyId && !this.policyLoadingInfo.validationResultCode &&
-          !this.policyLoadingInfo.notFound && !this.policyLoadingInfo.serverError
+          !this.policyLoadingInfo.notFound && !this.policyLoadingInfo.serverError && !this.policyLoadingInfo.failed
     }
   },
   methods: {
-    ...mapMutations({ clearLoadingInfo: 'CLEAR_POLICY_LOADING_INFO' })
+    ...mapMutations({ clearLoadingInfo: 'CLEAR_POLICY_LOADING_INFO' }),
+    ...mapActions(['createNewPolicy']),
+    async createPolicy () {
+      await this.createNewPolicy({
+        deviceId: this.$route.params.deviceId,
+        productId: this.$route.params.id
+      })
+
+      if (this.policyLoadingInfo.policyId) {
+        setTimeout(() => {
+          this.$router.push({
+            name: 'Policy',
+            params: {
+              policyId: this.policyLoadingInfo.policyId
+            }
+          })
+        }, 1000)
+      }
+    }
   },
   beforeRouteLeave (to, from, next) {
     this.clearLoadingInfo()
     next()
   },
   async mounted () {
-    await this.$store.dispatch('createNewPolicy', {
-      deviceId: this.$route.params.deviceId,
-      productId: this.$route.params.id
-    })
-
-    if (this.policyLoadingInfo.policyId) {
-      setTimeout(() => {
-        this.$router.push({
-          name: 'Policy',
-          params: {
-            policyId: this.policyLoadingInfo.policyId
-          }
-        })
-      }, 1000)
-    }
+    await this.createPolicy()
   }
 }
 
@@ -158,5 +172,9 @@ export default {
   #preloader {
     width: 100%;
     height: 100%;
+  }
+
+  .el-button {
+    margin: 0 auto;
   }
 </style>

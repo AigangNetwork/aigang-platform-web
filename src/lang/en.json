@@ -377,7 +377,8 @@
     "downvote": "Downvote",
     "aix": "AIX",
     "utc": "UTC",
-    "comingSoon": "Feature is coming soon"
+    "comingSoon": "Feature is coming soon",
+    "retry": "Retry"
   },
   "errors": {
     "error": "Error",
@@ -443,7 +444,7 @@
       "calculatePremium": "Calculate Premium",
       "contractAddress": "Policy Contract Address",
       "downloadApp": "Download Aigang App",
-      "instructionsIntro": "In order for us to calculate your premium you have to:",
+      "instructionsIntro": "In order for us to  calculate your premium you have to:",
       "instructionsDownloadApp": "Download Aigang app on your android device",
       "instructionsIMEI": "Enter your device ID below (you will see it in the app)",
       "instructionsConditions": "Your device's data will be read, press continue if you agree",
@@ -461,7 +462,8 @@
       "policiesLimitReached": "You have reached maximum number of policies for this product",
       "validation": {
         "deviceIdRequired": "Device ID is required",
-        "deviceIdInvalid": "Must be 8 characters"
+        "deviceIdInvalid": "Must be 8 characters",
+        "deviceAlreadyInsured": "This device is already insured"
       }
     },
     "policy": {
@@ -472,9 +474,14 @@
       "policyStatus": "Policy Status",
       "taskId": "Task ID",
       "readingDeviceData": "Reading device data",
+      "readingDeviceDataTimeout": "Reading device data timed out",
       "policyCreated": "Policy created",
       "redirecting": "Redirecting",
       "androidBatteryInsurancePolicy": "Android Battery Insurance Policy",
+      "deletePolicyTitle": "Delete your policy",
+      "deletePolicyBody": "This policy and all data associated with it will be deleted from the plaform. You won't be able to revert this action later on, however you will still be able to view it on the blockchain.",
+      "deletePolicy": "Delete policy",
+      "deletePolicyConfirmation": "Are you sure you want to delete this policy?",
       "termsAndConditions": {
         "title": "Terms and Conditions",
         "buttons": {
@@ -503,6 +510,7 @@
         "tip2": "Check if your device still paired with our system,",
         "tip3": "If you still have problems with verification please contact us via info@aigang.network."
       },
+      "deviceNotClaimable": "By readed data your device is not claimable at this moment",
       "claim": "Claim policy",
       "notLoggedToMetamaskDialog": {
         "title": "Not logged in to metamask",
@@ -538,6 +546,12 @@
         "Region": "Your region is not valid for insurance",
         "DeviceBrand": "This device brand is not valid for insurance",
         "BatteryWearLevel": "Battery wear level is not valid for insurance"
+      },
+      "wearLevel": {
+        "good": "Good",
+        "overheated": "Overheated",
+        "overvoltage": "Overvoltage",
+        "dead": "Dead"
       }
     }
   }

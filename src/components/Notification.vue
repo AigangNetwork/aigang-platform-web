@@ -87,7 +87,7 @@ export default {
             this.messages.push(this.$t('errors.contactIfError'))
             break
           default:
-            this.messages.push(this.$t('errors.unhandled'))
+            this.messages.push(this.$t('errors.unhandled') + ' ' + error.response.data.reason + '. ' + error.response.data.message)
             this.messages.push(this.$t('errors.contactIfError'))
         }
       }

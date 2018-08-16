@@ -18,10 +18,11 @@
           </div>
 
           <div class="footer">
-            <el-button v-if="policy.status && policy.status.toUpperCase() === 'DRAFT'" class="aig-button" type="primary" @click.prevent.native="insure">{{ $t('insurance.policy.insure') }}</el-button>
+            <el-button v-if="policy.status && policy.status.toUpperCase() === 'DRAFT'" class="aig-button" type="primary" @click.prevent.native="insure">{{
+              $t('insurance.policy.insure') }}</el-button>
 
-            <el-button v-else-if="policy.status && policy.status.toUpperCase() === 'PENDINGPAYMENT'" class="aig-button" disabled="true"
-              type="primary">{{ $t('insurance.policy.verifyForClaim') }}</el-button>
+            <el-button v-else-if="policy.status && policy.status.toUpperCase() === 'PENDINGPAYMENT'" class="aig-button" disabled type="primary">{{
+              $t('insurance.policy.verifyForClaim') }}</el-button>
 
             <div v-else-if="policy.status && policy.status.toUpperCase() === 'PAID'">
               <div v-if="policy.isVerifyForClaimFailed" class="failed-notification">
@@ -32,6 +33,9 @@
                   <li>{{ $t('insurance.policy.failedToVerifyDevice.tip3') }}</li>
                 </ul>
               </div>
+              <div v-else-if="!policy.isClaimable" class="failed-notification">
+                <span>{{ $t('insurance.policy.deviceNotClaimable') }}</span>
+              </div>
               <el-button class="aig-button" type="primary" @click.prevent.native="verifyClaim">
                 {{ policy.isVerifyForClaimFailed ? $t('insurance.policy.verifyForClaimRetry') : $t('insurance.policy.verifyForClaim') }}
               </el-button>
@@ -40,6 +44,8 @@
             <el-button v-else-if="policy.status && policy.status.toUpperCase() === 'CLAIMABLE'" class="aig-button" type="primary" @click.prevent.native="claim">
               {{ $t('insurance.policy.claim') }}
             </el-button>
+
+            <PolicyDeleteSection />
           </div>
         </div>
       </Card>
@@ -51,6 +57,7 @@
     <LogInToMetamaskDialog :isVisible="isDisplayLoginToMetamaskDialogVisible" :displayDialog="displayLoginToMetamaskDialog" />
 
     <PaymentConfirmationDialog :isVisible="isPaymentDialogVisible" :displayDialog="displayPaymentDialog" />
+
   </div>
 </template>
 <script>
@@ -58,6 +65,7 @@ import Card from '@/components/Card'
 import PaymentConfirmationDialog from '@/components/insurance/PaymentConfirmationDialog'
 import TermsAndConditionsDialog from '@/components/insurance/TermsAndConditionsDialog'
 import LogInToMetamaskDialog from '@/components/insurance/LogInToMetamaskDialog'
+import PolicyDeleteSection from '@/components/insurance/PolicyDeleteSection'
 import PolicyInfo from './PolicyInfo'
 import DeviceInfo from './DeviceInfo'
 import ClaimInfo from './ClaimInfo'
@@ -72,7 +80,8 @@ export default {
     LogInToMetamaskDialog,
     PolicyInfo,
     DeviceInfo,
-    ClaimInfo
+    ClaimInfo,
+    PolicyDeleteSection
   },
   mixins: [FormMixin],
   data () {
@@ -102,15 +111,15 @@ export default {
         this.displayLoginToMetamaskDialog(true)
       }
     },
+    async makePayment () {
+      this.displayTermsAndConditionsDialog(false)
+      await this.sendPolicyPayment()
+    },
     verifyClaim () {
       this.$store.dispatch('verifyClaim')
     },
     claim () {
       this.$store.dispatch('claim')
-    },
-    async makePayment () {
-      this.displayTermsAndConditionsDialog(false)
-      await this.sendPolicyPayment()
     }
   },
   computed: {

@@ -23,7 +23,9 @@
 
       <span slot="footer" class="dialog-footer">
         <el-button @click="show=false">{{ $t('general.cancel') }}</el-button>
-        <el-button type="primary" @click.prevent.native="submitForm('deviceIdForm', calculatePremium)">{{ $t('general.continue') }}</el-button>
+        <el-button type="primary" @click.prevent.native="submitForm('deviceIdForm', calculatePremium)">{{ $t('general.continue')
+          }}
+        </el-button>
       </span>
     </template>
     <!--
@@ -41,6 +43,14 @@ export default {
   props: ['displayDialog', 'isVisible'],
   mixins: [FormMixin],
   data () {
+    const checkIsDeviceInsured = (rule, value, callback) => {
+      if (this.product.insuredDevices.indexOf(value.toUpperCase()) > -1) {
+        callback(new Error(this.$t('insurance.product.validation.deviceAlreadyInsured')))
+      } else {
+        callback()
+      }
+    }
+
     return {
       deviceIdForm: {
         id: ''
@@ -54,6 +64,10 @@ export default {
         {
           min: 8,
           message: this.$t('insurance.product.validation.deviceIdInvalid'),
+          trigger: 'blur'
+        },
+        {
+          validator: checkIsDeviceInsured,
           trigger: 'blur'
         }]
       }

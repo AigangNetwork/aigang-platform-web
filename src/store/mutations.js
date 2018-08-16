@@ -93,6 +93,7 @@ const mutations = {
   },
   SET_CURRENT_POLICY (state, payload) {
     state.currentPolicy = payload.policy
+    state.currentPolicy.isClaimable = true
   },
   CLEAR_CURRENT_POLICY (state, payload) {
     state.currentPolicy = {}
@@ -131,6 +132,12 @@ const mutations = {
   },
   SET_FAILED_VERIFY_CLAIM (state, value) {
     state.currentPolicy.isVerifyForClaimFailed = value
+  },
+  SET_IS_CLAIMABLE (state, value) {
+    state.currentPolicy.isClaimable = value
+  },
+  SET_FAILED_CREATE_POLICY (state, value) {
+    state.policyLoadingInfo.failed = value
   }
 }
 

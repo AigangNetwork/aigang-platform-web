@@ -17,21 +17,12 @@ export default {
     PolicyItem
   },
   computed: {
-    ...mapGetters(['userPolicies'])
-  },
-  data () {
-    return {
-      loading: false
-    }
+    ...mapGetters(['userPolicies', 'loading'])
   },
   async mounted () {
     try {
-      this.loading = true
       await this.$store.dispatch('loadUserPolicies', 1)
-    } catch (error) {
-      this.loading = false
-    }
-    this.loading = false
+    } catch (error) {}
   }
 }
 
@@ -40,5 +31,4 @@ export default {
   .policy-item {
     margin: 10px 0px 10px 0px;
   }
-
 </style>

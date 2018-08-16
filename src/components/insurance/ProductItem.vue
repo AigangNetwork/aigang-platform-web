@@ -3,7 +3,7 @@
     <router-link :to="{ name: 'Product', params: { id: product.id}}">
       <div class="aig-data-body-container">
         <div class="aig-data-head" v-if="isCampaignRunning && product.state == 'active'">
-          <div class="desc">{{ $t('insurance.product.productEnds') }} {{ endDate }} {{ $t('general.utc') }}</div>
+          <div class="desc">{{ $t('insurance.product.productEnds') }} <Date :dateUtc="product.endDateUtc" /></div>
         </div>
         <div class="aig-data-head" v-else-if="!isCampaignRunning && product.state == 'active'">
           <div class="desc">{{ $t('insurance.product.productEnded') }}</div>
@@ -33,14 +33,14 @@
 
 <script>
 import moment from 'moment'
+import Date from '@/components/Date'
 
 export default {
+  components: {
+    Date
+  },
   props: ['product'],
   computed: {
-    endDate () {
-      const utcDate = moment.utc(this.product.endDateUtc)
-      return utcDate.format('YYYY-MM-DD HH:mm')
-    },
     isCampaignRunning () {
       const currentDate = moment.utc()
       const campaignStartDate = moment.utc(this.product.startDateUtc)
