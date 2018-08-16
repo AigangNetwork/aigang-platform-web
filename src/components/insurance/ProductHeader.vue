@@ -5,7 +5,7 @@
         <img :src="product.imageUrl" />
         <h1>{{ product.title }}</h1>
         <p v-if="product.endDateUtc">
-          <span class="date">{{ $t('insurance.product.productEnds') }} {{ endDate }} {{ $t('general.utc') }} </span>
+          <span class="date">{{ $t('insurance.product.productEnds') }} <Date :dateUtc="product.endDateUtc" /></span>
         </p>
       </div>
       <div class="header-right-section">
@@ -18,17 +18,16 @@
   </div>
 </template>
 <script>
-import moment from 'moment'
+import Date from '@/components/Date'
 
 export default {
+  components: {
+    Date
+  },
   props: ['product'],
   computed: {
     isPremiumBig () {
       return !(String(this.product.basePremium).length > 7)
-    },
-    endDate () {
-      const utcDate = moment.utc(this.product.endDateUtc)
-      return utcDate.format('YYYY-MM-DD HH:mm')
     }
   }
 }

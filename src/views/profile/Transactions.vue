@@ -8,10 +8,7 @@
         <p>{{ $t('profile.transactions.description') }}</p>
       </el-col>
       <el-row>
-        <el-table
-        class="transactions"
-          :data="transactions.blockchainTransactions"
-          :empty-text="$t('profile.transactions.table.emptyText')">
+        <el-table class="transactions" :data="transactions.blockchainTransactions" :empty-text="$t('profile.transactions.table.emptyText')">
           <el-table-column prop="createdUtc" :label="$t('profile.transactions.table.titles.date')" width="160">
             <template slot-scope="scope">
               <Date :dateUtc="scope.row.createdUtc" />
@@ -25,7 +22,7 @@
           <el-table-column prop="txType" :label="$t('profile.transactions.table.titles.type')"></el-table-column>
           <el-table-column prop="status" :label="$t('profile.transactions.table.titles.status')" width="190">
             <template slot-scope="scope">
-              <Label :type="scope.row.status" size="small"/>
+              <Label :type="scope.row.status" size="small" />
             </template>
           </el-table-column>
         </el-table>
@@ -60,7 +57,7 @@ export default {
   },
   methods: {
     formatTxLink (txId) {
-      return process.env.ETHERSCAN_ADDRESS + txId
+      return process.env.ETHERSCAN_ADDRESS + process.env.TX_PATH + txId
     }
   }
 }

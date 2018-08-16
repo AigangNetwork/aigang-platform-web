@@ -4,12 +4,12 @@
 
     <div class="device-data-item">
       <label>{{ $t('insurance.policy.deviceData.wearLevel') }}:</label>
-      {{ data.WL | uppercase }}
+      {{ wearLevel | uppercase }}
     </div>
 
     <div class="device-data-item">
       <label>{{ $t('insurance.policy.deviceData.batteryDesignCapacity') }}:</label>
-      {{ data.DC }}
+      {{ data.DC }} mAh
     </div>
 
     <div class="device-data-item">
@@ -35,9 +35,11 @@
 </template>
 <script>
 import Date from '@/components/Date'
+import WearLevel from '@/components/mixins/WearLevel'
 
 export default {
   components: { Date },
+  mixins: [ WearLevel ],
   props: ['data']
 }
 </script>
