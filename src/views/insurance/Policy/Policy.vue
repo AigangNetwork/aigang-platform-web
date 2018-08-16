@@ -20,7 +20,7 @@
           <div class="footer">
             <el-button v-if="policy.status && policy.status.toUpperCase() === 'DRAFT'" class="aig-button" type="primary" @click.prevent.native="insure">{{ $t('insurance.policy.insure') }}</el-button>
 
-            <el-button v-else-if="policy.status && policy.status.toUpperCase() === 'PENDINGPAYMENT'" class="aig-button" disabled="true"
+            <el-button v-else-if="policy.status && policy.status.toUpperCase() === 'PENDINGPAYMENT'" class="aig-button" disabled
               type="primary">{{ $t('insurance.policy.verifyForClaim') }}</el-button>
 
             <div v-else-if="policy.status && policy.status.toUpperCase() === 'PAID'">
@@ -31,6 +31,9 @@
                   <li>{{ $t('insurance.policy.failedToVerifyDevice.tip2') }}</li>
                   <li>{{ $t('insurance.policy.failedToVerifyDevice.tip3') }}</li>
                 </ul>
+              </div>
+              <div v-else-if="!policy.isClaimable" class="failed-notification">
+                <span>{{ $t('insurance.policy.deviceNotClaimable') }}</span>
               </div>
               <el-button class="aig-button" type="primary" @click.prevent.native="verifyClaim">
                 {{ policy.isVerifyForClaimFailed ? $t('insurance.policy.verifyForClaimRetry') : $t('insurance.policy.verifyForClaim') }}
@@ -102,15 +105,15 @@ export default {
         this.displayLoginToMetamaskDialog(true)
       }
     },
+    async makePayment () {
+      this.displayTermsAndConditionsDialog(false)
+      await this.sendPolicyPayment()
+    },
     verifyClaim () {
       this.$store.dispatch('verifyClaim')
     },
     claim () {
       this.$store.dispatch('claim')
-    },
-    async makePayment () {
-      this.displayTermsAndConditionsDialog(false)
-      await this.sendPolicyPayment()
     }
   },
   computed: {

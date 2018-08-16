@@ -4,7 +4,7 @@ import axios from 'axios'
 import getWeb3 from '@/utils/web3/getWeb3'
 import { sleep } from '@/utils/methods'
 
-const logIn = ({ commit }, loginResponse) => {
+const logIn = ({ commit, dispatch }, loginResponse) => {
   // after successful login setup interceptor (save authorization header with token for next requests)
   // axios.defaults.headers.common['Authorization'] = `Bearer ${loginResponse.headers['set-authorization']}`
   // axios.interceptors.request.use(config => {
@@ -15,12 +15,9 @@ const logIn = ({ commit }, loginResponse) => {
   // })
 
   commit(types.LOGIN, loginResponse.data)
-  getWeb3()
-    .then(result => {
-      commit(types.SET_WEB3_INSTANCE, result)
-    })
-    .catch(e => {})
+  dispatch('refreshWeb3Instance')
   router.push('/')
+
   // get account profile
   // axios.get('/account').then(response => {
   //   // save token and user profile to store
@@ -114,7 +111,20 @@ const setHasFileChanged = ({ commit }, response) => {
   commit(types.SET_HAS_FILE_CHANGED, response)
 }
 
-const registerWeb3Instance = ({ commit }, response) => {
+const registerWeb3Instance = ({ commit, dispatch }, response) => {
+  getWeb3()
+    .then(result => {
+      commit(types.SET_WEB3_INSTANCE, result)
+      if (result) {
+        result.web3().currentProvider.publicConfigStore.on('update', () => {
+          dispatch('refreshWeb3Instance')
+        })
+      }
+    })
+    .catch(e => {})
+}
+
+const refreshWeb3Instance = ({ commit }) => {
   getWeb3()
     .then(result => {
       commit(types.SET_WEB3_INSTANCE, result)
@@ -268,8 +278,13 @@ const verifyClaim = async ({ commit, dispatch, state }) => {
 
   commit(types.SET_LOADING, false)
 
-  if (response.data.isClaimable) {
+  if (response.data.isTaskFinished && response.data.isClaimable) {
     dispatch('getPolicy', state.currentPolicy.id)
+    commit(types.SET_IS_CLAIMABLE, true)
+  }
+  
+  if(response.data.isTaskFinished && !response.data.isClaimable) {
+    commit(types.SET_IS_CLAIMABLE, false)
   }
 }
 
@@ -303,6 +318,7 @@ export {
   setIsFileRemote,
   setHasFileChanged,
   registerWeb3Instance,
+  refreshWeb3Instance,
   clearWeb3Instance,
   loadCurrentModel,
   clearCurrentDataset,

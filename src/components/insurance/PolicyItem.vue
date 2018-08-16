@@ -26,7 +26,7 @@
             <p class="title">{{$t('insurance.policy.startDate')}}</p>
           </div>
           <div class="content">
-            {{policy.startUtc ? policy.startUtc : 'N/A'}}
+            <Date :dateUtc="policy.startUtc" />
           </div>
         </div>
         <div class="policy-info-item-date">
@@ -34,7 +34,7 @@
             <p class="title">{{$t('insurance.policy.endDate')}}</p>
           </div>
           <div class="content">
-            {{policy.endUtc ? policy.endUtc : 'N/A'}}
+            <Date :dateUtc="policy.endUtc" />
           </div>
         </div>
         <div class="policy-info-item-date">
@@ -51,10 +51,14 @@
 </template>
 
 <script>
+import Date from '@/components/Date'
+
 export default {
+  components: {
+    Date
+  },
   props: ['policy']
 }
-
 </script>
 
 <style lang="scss" scoped>

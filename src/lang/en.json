@@ -503,6 +503,7 @@
         "tip2": "Check if your device still paired with our system,",
         "tip3": "If you still have problems with verification please contact us via info@aigang.network."
       },
+      "deviceNotClaimable": "By readed data your device is not claimable at this moment",
       "claim": "Claim policy",
       "notLoggedToMetamaskDialog": {
         "title": "Not logged in to metamask",
@@ -538,6 +539,12 @@
         "Region": "Your region is not valid for insurance",
         "DeviceBrand": "This device brand is not valid for insurance",
         "BatteryWearLevel": "Battery wear level is not valid for insurance"
+      },
+      "wearLevel": {
+        "good": "Good",
+        "overheated": "Overheated",
+        "overvoltage": "Overvoltage",
+        "dead": "Dead"
       }
     }
   }
