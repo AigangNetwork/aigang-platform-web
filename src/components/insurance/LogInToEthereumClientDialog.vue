@@ -3,7 +3,7 @@
     <div class="policy-dialog-info">
       <p>{{ $t('insurance.policy.notLoggedToEthereumClientDialog.content') }}</p>
       <div class="buttons">
-        <el-button class="button" type="primary" @click="reload">{{ $t('insurance.policy.notLoggedToEthereumClientDialog.buttons.reload') }}</el-button>
+        <el-button class="button" type="primary" @click="ok">{{ $t('insurance.policy.notLoggedToEthereumClientDialog.buttons.ok') }}</el-button>
       </div>
     </div>
   </el-dialog>
@@ -22,8 +22,8 @@ export default {
     }
   },
   methods: {
-    reload () {
-      window.location.reload()
+    ok () {
+      this.show = false
     }
   }
 }

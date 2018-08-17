@@ -11,15 +11,15 @@ export default {
   props: ['text'],
   mounted () {
     if (this.text) {
-      this.handleScroll({ srcElement: this.$refs.scrollableMarkupTextContainer })
+      this.handleScroll({ target: this.$refs.scrollableMarkupTextContainer })
     }
   },
   updated () {
-    this.handleScroll({ srcElement: this.$refs.scrollableMarkupTextContainer })
+    this.handleScroll({ target: this.$refs.scrollableMarkupTextContainer })
   },
   methods: {
-    handleScroll ({ srcElement }) {
-      const result = this.isElementScrolledToBottom(srcElement)
+    handleScroll ({ target }) {
+      const result = this.isElementScrolledToBottom(target)
       if (result) {
         this.triggerScrolledToBottomEvent()
       }
@@ -39,7 +39,10 @@ export default {
   .scrollable-markup-text-container {
     overflow-y: scroll;
     border: 1px solid $dark-gray;
-    padding: 10px;
     height: 100px;
+
+    .markup-content{
+      padding: 10px;
+    }
   }
 </style>

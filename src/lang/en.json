@@ -516,7 +516,7 @@
         "title": "Not logged in to Ethereum Client",
         "content": "To insure your device, you need to have Ethereum Client in place. (Metamask, Parity, Ethereum Mist browser or any other client that supports Web3). For the best experience use Metamask.",
         "buttons": {
-          "reload": "Reload"
+          "ok": "OK"
         }
       },
       "deviceData": {
