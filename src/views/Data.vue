@@ -159,11 +159,11 @@ export default {
           position: relative;
           content: "";
           height: 1px;
-          width: 50px;
+          width: 47px;
           background: purple;
           margin-bottom: 8px;
           margin-left: -55px;
-          margin-right: 5px
+          margin-right: 8px
         }
       }
     }
