@@ -1,9 +1,9 @@
 <template>
-  <el-dialog :title="$t('insurance.policy.notLoggedToMetamaskDialog.title')" :visible.sync="show">
+  <el-dialog :title="$t('insurance.policy.notLoggedToEthereumClientDialog.title')" :visible.sync="show">
     <div class="policy-dialog-info">
-      <p>{{ $t('insurance.policy.notLoggedToMetamaskDialog.content') }}</p>
+      <p>{{ $t('insurance.policy.notLoggedToEthereumClientDialog.content') }}</p>
       <div class="buttons">
-        <el-button class="button" type="primary" @click="reload">{{ $t('insurance.policy.notLoggedToMetamaskDialog.buttons.reload') }}</el-button>
+        <el-button class="button" type="primary" @click="reload">{{ $t('insurance.policy.notLoggedToEthereumClientDialog.buttons.reload') }}</el-button>
       </div>
     </div>
   </el-dialog>

@@ -1,5 +1,4 @@
 <template>
-
   <transition-group class="data-items-container" name="slideUp" v-loading.body="loading">
     <el-col :xs="24" :sm="12" :md="12" :lg="8" v-for="productItem in productList" :key="productItem.id">
       <ProductItem :product="productItem" :key="productItem.id" />
@@ -13,7 +12,6 @@
       </h2>
     </el-col>
   </transition-group>
-
 </template>
 <script>
 import ProductItem from '@/components/insurance/ProductItem'

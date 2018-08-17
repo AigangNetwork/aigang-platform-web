@@ -11,20 +11,22 @@
             <h2>{{ $t('insurance.policy.androidBatteryInsurancePolicy') }}</h2>
           </el-row>
 
-          <div class="content">
-            <PolicyInfo :data="policy" />
+          <el-row  class="content">
+            <PolicyInfo :policy="policy" />
             <DeviceInfo :data="deviceData" />
             <ClaimInfo :data="claimProperties" />
-          </div>
+          </el-row>
 
-          <div class="footer">
-            <el-button v-if="policy.status && policy.status.toUpperCase() === 'DRAFT'" class="aig-button" type="primary" @click.prevent.native="insure">{{
-              $t('insurance.policy.insure') }}</el-button>
+          <el-row class="footer">
+            <el-col v-if="policy.status && policy.status.toUpperCase() === 'DRAFT'">
+              <el-button class="aig-button" type="primary" @click.prevent.native="insure">{{ $t('insurance.policy.insure') }}</el-button>
+            </el-col>
 
-            <el-button v-else-if="policy.status && policy.status.toUpperCase() === 'PENDINGPAYMENT'" class="aig-button" disabled type="primary">{{
-              $t('insurance.policy.verifyForClaim') }}</el-button>
+            <el-col v-else-if="policy.status && policy.status.toUpperCase() === 'PENDINGPAYMENT'">
+              <el-button class="aig-button" disabled type="primary">{{ $t('insurance.policy.verifyForClaim') }}</el-button>
+            </el-col>
 
-            <div v-else-if="policy.status && policy.status.toUpperCase() === 'PAID'">
+            <el-col v-else-if="policy.status && policy.status.toUpperCase() === 'PAID'">
               <div v-if="policy.isVerifyForClaimFailed" class="failed-notification">
                 <span>{{ $t('insurance.policy.failedToVerifyDevice.title') }}</span>
                 <ul>
@@ -39,14 +41,16 @@
               <el-button class="aig-button" type="primary" @click.prevent.native="verifyClaim">
                 {{ policy.isVerifyForClaimFailed ? $t('insurance.policy.verifyForClaimRetry') : $t('insurance.policy.verifyForClaim') }}
               </el-button>
-            </div>
+            </el-col>
 
-            <el-button v-else-if="policy.status && policy.status.toUpperCase() === 'CLAIMABLE'" class="aig-button" type="primary" @click.prevent.native="claim">
-              {{ $t('insurance.policy.claim') }}
-            </el-button>
+            <el-col v-else-if="policy.status && policy.status.toUpperCase() === 'CLAIMABLE'">
+              <el-button class="aig-button" type="primary" @click.prevent.native="claim">{{ $t('insurance.policy.claim') }}</el-button>
+            </el-col>
+          </el-row>
 
-            <PolicyDeleteSection />
-          </div>
+          <div class="horizontal-line"></div>
+
+          <PolicyDeleteSection />
         </div>
       </Card>
     </transition>
@@ -54,7 +58,7 @@
     <TermsAndConditionsDialog :termsAndConditions="policy.termsAndConditions" :isVisible="isTermsAndConditionsDialogVisible"
       :displayDialog="displayTermsAndConditionsDialog" @agreed="makePayment" />
 
-    <LogInToMetamaskDialog :isVisible="isDisplayLoginToMetamaskDialogVisible" :displayDialog="displayLoginToMetamaskDialog" />
+    <LogInToEthereumClientDialog :isVisible="isDisplayLogInToEthereumClientDialogVisible" :displayDialog="displayLogInToEthereumClientDialog" />
 
     <PaymentConfirmationDialog :isVisible="isPaymentDialogVisible" :displayDialog="displayPaymentDialog" />
 
@@ -64,7 +68,7 @@
 import Card from '@/components/Card'
 import PaymentConfirmationDialog from '@/components/insurance/PaymentConfirmationDialog'
 import TermsAndConditionsDialog from '@/components/insurance/TermsAndConditionsDialog'
-import LogInToMetamaskDialog from '@/components/insurance/LogInToMetamaskDialog'
+import LogInToEthereumClientDialog from '@/components/insurance/LogInToEthereumClientDialog'
 import PolicyDeleteSection from '@/components/insurance/PolicyDeleteSection'
 import PolicyInfo from './PolicyInfo'
 import DeviceInfo from './DeviceInfo'
@@ -77,7 +81,7 @@ export default {
     Card,
     PaymentConfirmationDialog,
     TermsAndConditionsDialog,
-    LogInToMetamaskDialog,
+    LogInToEthereumClientDialog,
     PolicyInfo,
     DeviceInfo,
     ClaimInfo,
@@ -88,7 +92,7 @@ export default {
     return {
       isTermsAndConditionsDialogVisible: false,
       isPaymentDialogVisible: false,
-      isDisplayLoginToMetamaskDialogVisible: false,
+      isDisplayLogInToEthereumClientDialogVisible: false,
 
       policyListRoute: '/insurance/mypolicies'
     }
@@ -98,8 +102,8 @@ export default {
     displayPaymentDialog (value) {
       this.isPaymentDialogVisible = value
     },
-    displayLoginToMetamaskDialog (value) {
-      this.isDisplayLoginToMetamaskDialogVisible = value
+    displayLogInToEthereumClientDialog (value) {
+      this.isDisplayLogInToEthereumClientDialogVisible = value
     },
     displayTermsAndConditionsDialog (value) {
       this.isTermsAndConditionsDialogVisible = value
@@ -108,7 +112,7 @@ export default {
       if (this.isMetamaskLoggedIn) {
         this.displayTermsAndConditionsDialog(true)
       } else {
-        this.displayLoginToMetamaskDialog(true)
+        this.displayLogInToEthereumClientDialog(true)
       }
     },
     async makePayment () {
@@ -163,6 +167,7 @@ export default {
         }
       }
       .footer {
+        margin-bottom: 32px;
         .error-message {
           margin-top: 30px;
           text-align: center;
@@ -185,9 +190,15 @@ export default {
     width: 100%;
   }
 
-  @media screen and (min-width: 100px) and (max-width: 350px) {
-    .el-checkbox__label {
-      font-size: 13px;
+  @media screen and (max-width: 680px) {
+    .aig-container {
+      .policy-card {
+        .header {
+          .back-icon {
+            margin-top: 20px;
+          }
+        }
+      }
     }
   }
 </style>
