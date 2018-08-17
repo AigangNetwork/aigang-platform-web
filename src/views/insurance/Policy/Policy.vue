@@ -11,7 +11,7 @@
             <h2>{{ $t('insurance.policy.androidBatteryInsurancePolicy') }}</h2>
           </el-row>
 
-          <el-row  class="content">
+          <el-row class="content">
             <PolicyInfo :policy="policy" />
             <DeviceInfo :data="deviceData" />
             <ClaimInfo :data="claimProperties" />
@@ -19,7 +19,9 @@
 
           <el-row class="footer">
             <el-col v-if="policy.status && policy.status.toUpperCase() === 'DRAFT'">
-              <el-button class="aig-button" type="primary" @click.prevent.native="insure">{{ $t('insurance.policy.insure') }}</el-button>
+              <el-button class="aig-button" type="primary" @click.prevent.native="insure">{{ $t('insurance.policy.insure')
+                }}
+              </el-button>
             </el-col>
 
             <el-col v-else-if="policy.status && policy.status.toUpperCase() === 'PENDINGPAYMENT'">
@@ -44,7 +46,9 @@
             </el-col>
 
             <el-col v-else-if="policy.status && policy.status.toUpperCase() === 'CLAIMABLE'">
-              <el-button class="aig-button" type="primary" @click.prevent.native="claim">{{ $t('insurance.policy.claim') }}</el-button>
+              <el-button class="aig-button" type="primary" @click.prevent.native="claim">{{ $t('insurance.policy.claim')
+                }}
+              </el-button>
             </el-col>
           </el-row>
 
@@ -58,7 +62,8 @@
     <TermsAndConditionsDialog :termsAndConditions="policy.termsAndConditions" :isVisible="isTermsAndConditionsDialogVisible"
       :displayDialog="displayTermsAndConditionsDialog" @agreed="makePayment" />
 
-    <LogInToEthereumClientDialog :isVisible="isDisplayLogInToEthereumClientDialogVisible" :displayDialog="displayLogInToEthereumClientDialog" />
+    <LogInToEthereumClientDialog :isVisible="isDisplayLogInToEthereumClientDialogVisible" :displayDialog="displayLogInToEthereumClientDialog"
+    />
 
     <PaymentConfirmationDialog :isVisible="isPaymentDialogVisible" :displayDialog="displayPaymentDialog" />
   </div>
@@ -133,6 +138,13 @@ export default {
     },
     claimProperties () {
       return this.policy.claimProperties ? JSON.parse(this.policy.claimProperties) : null
+    },
+    isPolicyActive () {
+      if (this.policy.status) {
+        const status = this.policy.status.toUpperCase()
+        return status === 'PENDINGPAYMENT' || status === 'PAID' ||
+            status === 'PENDINGPAYOUT' || status === 'CLAIMABLE'
+      }
     }
   },
   async mounted () {

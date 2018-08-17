@@ -138,6 +138,9 @@ const mutations = {
   },
   SET_FAILED_CREATE_POLICY (state, value) {
     state.policyLoadingInfo.failed = value
+  },
+  SET_IS_POLICY_LOADING_VISIBLE (state, value) {
+    state.isPolicyLoadingVisible = value
   }
 }
 

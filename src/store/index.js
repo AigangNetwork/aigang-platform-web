@@ -35,6 +35,7 @@ const store = new Vuex.Store({
     currentPolicy: {},
     txHash: null,
     policyLoadingInfo: {},
+    isPolicyLoadingVisible: false,
     loading: false
   },
   mutations,

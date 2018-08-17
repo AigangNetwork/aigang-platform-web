@@ -2,8 +2,13 @@
   <div class="aig-container aig-view">
     <Card class="product-card">
       <div slot="body" v-loading="loading">
-        <ProductHeader :product="product" />
-        <ProductDetails />
+        <transition-group name="slideUp" mode="out-in">
+
+          <ProductHeader key="1" :product="product" v-if="!isPolicyLoadingVisible" />
+          <ProductDetails key="2" v-if="!isPolicyLoadingVisible" />
+          <PolicyLoadingInfo v-else key="3" />
+
+        </transition-group>
       </div>
     </Card>
   </div>
@@ -14,17 +19,25 @@ import Card from '@/components/Card'
 import EndDate from '@/components/mixins/EndDate'
 import ProductHeader from '@/components/insurance/ProductHeader'
 import ProductDetails from '@/components/insurance/ProductDetails'
+import PolicyLoadingInfo from '@/components/insurance/PolicyLoadingInfo'
 
-import { mapGetters } from 'vuex'
+import { mapGetters, mapMutations } from 'vuex'
 
 export default {
-  components: { Card, ProductHeader, ProductDetails },
+  components: { Card, ProductHeader, ProductDetails, PolicyLoadingInfo },
   mixins: [EndDate],
   computed: {
-    ...mapGetters(['product', 'loading'])
+    ...mapGetters(['product', 'loading', 'isPolicyLoadingVisible'])
+  },
+  methods: {
+    ...mapMutations({ clearLoadingInfo: 'CLEAR_POLICY_LOADING_INFO' })
   },
   async created () {
     await this.$store.dispatch('loadCurrentProduct', this.$route.params.id)
+  },
+  beforeRouteLeave (to, from, next) {
+    this.clearLoadingInfo()
+    next()
   }
 }
 

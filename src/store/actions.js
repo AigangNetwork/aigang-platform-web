@@ -163,6 +163,9 @@ const loadCurrentProduct = async ({ commit }, id) => {
 }
 
 const createNewPolicy = async ({ commit, state }, { deviceId, productId }) => {
+  commit(types.CLEAR_POLICY_LOADING_INFO)
+  commit(types.SET_IS_POLICY_LOADING_VISIBLE, true)
+
   try {
     await loadTaskId(commit, deviceId)
   } catch (e) {
@@ -189,7 +192,7 @@ const createNewPolicy = async ({ commit, state }, { deviceId, productId }) => {
     await sleep(1000)
   }
 
-  var newPolicyLoadingInfo = Object.assign({}, state.policyLoadingInfo)
+  let newPolicyLoadingInfo = Object.assign({}, state.policyLoadingInfo)
 
   commit(types.CLEAR_POLICY_LOADING_INFO)
   if (response.data.validationResultCode) {
@@ -354,7 +357,6 @@ export {
 }
 
 const loadTaskId = async (commit, deviceId) => {
-  commit(types.SET_LOADING, false) // ?
   commit(types.CLEAR_POLICY_LOADING_INFO)
 
   // We need custom axios instance to handle 404 differently
@@ -372,7 +374,7 @@ const loadTaskId = async (commit, deviceId) => {
   try {
     response = await customAxios.get('insurance/policy/android/pair/' + deviceId)
   } catch (error) {
-    var newPolicyLoadingInfo = Object.assign({}, policyLoadingInfo)
+    let newPolicyLoadingInfo = Object.assign({}, policyLoadingInfo)
 
     if (error.response.status === 404) {
       newPolicyLoadingInfo.notFound = true
@@ -381,6 +383,7 @@ const loadTaskId = async (commit, deviceId) => {
     }
 
     commit(types.SET_POLICY_LOADING_INFO, newPolicyLoadingInfo)
+    console.log(newPolicyLoadingInfo)
     throw new Error('Getting task id failed.')
   }
 
