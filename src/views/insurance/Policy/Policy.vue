@@ -54,7 +54,8 @@
 
           <div class="horizontal-line"></div>
 
-          <PolicyDeleteSection />
+          <PolicyDeleteSection v-if="isPolicyDraft" />
+
         </div>
       </Card>
     </transition>
@@ -139,11 +140,10 @@ export default {
     claimProperties () {
       return this.policy.claimProperties ? JSON.parse(this.policy.claimProperties) : null
     },
-    isPolicyActive () {
+    isPolicyDraft () {
       if (this.policy.status) {
         const status = this.policy.status.toUpperCase()
-        return status === 'PENDINGPAYMENT' || status === 'PAID' ||
-            status === 'PENDINGPAYOUT' || status === 'CLAIMABLE'
+        return status === 'DRAFT'
       }
     }
   },
