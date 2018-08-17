@@ -10,10 +10,10 @@
     <el-row class="input-section-title">{{ $t('insurance.product.termsAndConditions') }}</el-row>
     <ScrollableMarkupText class="scrollable-text" :text="product.termsAndConditions" @scrolledToBottom="onScrolledToBottom" />
 
-    <el-tooltip v-if="!isAuthenticated" :disabled="isAuthenticated" :content="$t('insurance.product.logInToCalculatePremium')">
+    <el-tooltip v-if="!isAuthenticated" :disabled="isAuthenticated" :content="$t('insurance.product.logInToCalculateInsurancePrice')">
       <span class="wrapper el-button">
         <el-button :disabled="true" class="aig-button" type="primary">
-          {{ $t('insurance.product.calculatePremium') }}
+          {{ $t('insurance.product.calculateInsurancePrice') }}
         </el-button>
       </span>
     </el-tooltip>
@@ -21,7 +21,7 @@
     <el-tooltip v-else-if="product.isPoolLimitReached" :content="$t('insurance.product.productPoolLimitReacher')">
       <span class="wrapper el-button">
         <el-button :disabled="true" class="aig-button" type="primary">
-          {{ $t('insurance.product.calculatePremium') }}
+          {{ $t('insurance.product.calculateInsurancePrice') }}
         </el-button>
       </span>
     </el-tooltip>
@@ -29,7 +29,7 @@
     <el-tooltip v-else-if="product.isPoliciesLimitReached" :content="$t('insurance.product.policiesLimitReached')">
       <span class="wrapper el-button">
         <el-button :disabled="true" class="aig-button" type="primary">
-          {{ $t('insurance.product.calculatePremium') }}
+          {{ $t('insurance.product.calculateInsurancePrice') }}
         </el-button>
       </span>
     </el-tooltip>
@@ -37,7 +37,7 @@
     <el-tooltip v-else :disabled="!calculateButtonDisabled" :content="$t('insurance.product.agreeWithTermsAndConditions')">
       <span class="wrapper el-button">
         <el-button :disabled="calculateButtonDisabled" @click="displayDialog(true)" class="aig-button" type="primary">
-          {{ $t('insurance.product.calculatePremium') }}
+          {{ $t('insurance.product.calculateInsurancePrice') }}
         </el-button>
       </span>
     </el-tooltip>
@@ -89,5 +89,4 @@ export default {
       height: 200px;
     }
   }
-
 </style>

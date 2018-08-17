@@ -18,7 +18,7 @@
         <p class="info-text" key="1"> {{ $t('insurance.policy.taskId') }}:
           <span class="bold">{{ policyLoadingInfo.taskId }}</span>
         </p>
-        <p class="info-text" key="2">{{ $t('insurance.policy.readingDeviceData') }}</p>
+        <p class="info-text" key="2">{{ $t('insurance.policy.readingDeviceDataAndCalculatingInsurancePrice') }}</p>
       </template>
     </transition-group>
 

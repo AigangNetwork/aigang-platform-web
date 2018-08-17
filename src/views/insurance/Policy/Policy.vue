@@ -18,11 +18,9 @@
           </el-row>
 
           <el-row class="footer">
-            <el-col v-if="policy.status && policy.status.toUpperCase() === 'DRAFT'">
-              <el-button class="aig-button" type="primary" @click.prevent.native="insure">{{ $t('insurance.policy.insure')
-                }}
-              </el-button>
-            </el-col>
+
+            <el-button v-if="policy.status && policy.status.toUpperCase() === 'DRAFT'" class="aig-button" type="primary" @click.prevent.native="insure">{{
+              $t('insurance.policy.pay') }}</el-button>
 
             <el-col v-else-if="policy.status && policy.status.toUpperCase() === 'PENDINGPAYMENT'">
               <el-button class="aig-button" disabled type="primary">{{ $t('insurance.policy.verifyForClaim') }}</el-button>
