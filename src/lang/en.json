@@ -387,7 +387,9 @@
     "aix": "AIX",
     "utc": "UTC",
     "comingSoon": "Feature is coming soon",
-    "retry": "Retry"
+    "retry": "Retry",
+    "days": "days",
+    "day": "day"
   },
   "errors": {
     "error": "Error",
@@ -461,7 +463,6 @@
       "currentWearLevel": "Current Wear level",
       "startTime": "Start Time",
       "endTime": "End Time",
-      "fee": "Fee",
       "payout": "Payout",
       "calculatedPrice": "Calculated Price",
       "notImplemented": "Product is not implemented",
@@ -469,6 +470,7 @@
       "agreeWithTermsAndConditions": "You have to read terms and conditions to calculate insurance price",
       "productPoolLimitReacher": "Product premium pool limit has been reached",
       "policiesLimitReached": "You have reached maximum number of policies for this product",
+      "insuranceTerm": "Insurance term",
       "validation": {
         "deviceIdRequired": "Device ID is required",
         "deviceIdInvalid": "Must be 8 characters",

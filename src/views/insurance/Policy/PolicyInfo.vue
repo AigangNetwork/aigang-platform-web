@@ -23,10 +23,25 @@
     </p>
 
     <p>
-      <label>{{ $t('insurance.product.fee') }}:</label>
-      {{ data.fee }}
-      <span class="text-medium"> %
+      <label>{{$t('insurance.policy.startDate')}}</label>
+      <span class="text-medium">
+        <Date :dateUtc="data.startUtc" />
       </span>
+    </p>
+
+    <p>
+      <label>{{$t('insurance.policy.endDate')}}</label>
+
+      <span class="text-medium">
+        <Date :dateUtc="data.endUtc" />
+      </span>
+    </p>
+
+    <p>
+      <label>{{ $t('insurance.product.insuranceTerm') }}:</label>
+      {{ data.policyTermInDays }}
+      <span class="text-medium" v-if="data.policyTermInDays > 1"> {{ $t('general.days') }} </span>
+      <span class="text-medium" v-else> {{ $t('general.day') }} </span>
     </p>
 
     <p>
@@ -39,10 +54,12 @@
 </template>
 <script>
 import PolicyStatus from '@/components/mixins/PolicyStatus'
+import Date from '@/components/Date'
 
 export default {
-  props: ['policy'],
-  mixins: [PolicyStatus]
+  mixins: [PolicyStatus],
+  components: { Date },
+  props: ['data']
 }
 </script>
 <style lang="scss">
