@@ -13,10 +13,10 @@
           </transition>
           <ul>
             <li v-for="item in dataMeniu" :key="item.name">
-              <router-link :class="{'aig-link-disabled': item.disabled && !$store.state.user.authenticated}" active-class="aig-menu-active"
-                :to="item.routeLink">
-                {{ item.name }}
-              </router-link>
+              <router-link
+                :class="{'aig-link-disabled': item.disabled && !$store.state.user.authenticated}"
+                active-class="aig-menu-active"
+                :to="item.routeLink">{{ item.name }}</router-link>
             </li>
           </ul>
         </span>
@@ -138,11 +138,11 @@ export default {
           position: relative;
           content: "";
           height: 1px;
-          width: 44px;
+          width: 50px;
           background: purple;
           margin-bottom: 8px;
           margin-left: -55px;
-          margin-right: 4px
+          margin-right: 5px
         }
       }
     }
