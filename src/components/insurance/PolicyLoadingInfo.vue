@@ -29,6 +29,14 @@
     </transition-group>
 
     <transition-group name="slideUp" mode="out-in">
+      <template v-if="policyLoadingInfo.validationReasons">
+        <p class="info-text aig-error" :key="index" v-for="(val, index) in policyLoadingInfo.validationReasons">
+          {{ $t(val) }}
+        </p>
+      </template>
+    </transition-group>
+
+    <transition-group name="slideUp" mode="out-in">
       <template v-if="policyLoadingInfo.serverError">
         <p class="info-text aig-error" key="1">{{ $t('insurance.policy.serverError') }}</p>
       </template>
@@ -105,7 +113,8 @@ export default {
     },
     showLoader () {
       return !this.policyLoadingInfo.policyId && !this.policyLoadingInfo.validationResultCode &&
-          !this.policyLoadingInfo.notFound && !this.policyLoadingInfo.serverError && !this.policyLoadingInfo.failed
+          !this.policyLoadingInfo.notFound && !this.policyLoadingInfo.serverError && !this.policyLoadingInfo.failed &&
+          (!this.policyLoadingInfo.validationReasons || this.policyLoadingInfo.validationReasons.length === 0)
     }
   },
   methods: {

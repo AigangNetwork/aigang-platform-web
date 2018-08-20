@@ -30,13 +30,17 @@ export default {
     ...mapGetters(['product', 'loading', 'isPolicyLoadingVisible'])
   },
   methods: {
-    ...mapMutations({ clearLoadingInfo: 'CLEAR_POLICY_LOADING_INFO' })
+    ...mapMutations({
+      clearLoadingInfo: 'CLEAR_POLICY_LOADING_INFO',
+      setIsPolicyLoadingVisible: 'SET_IS_POLICY_LOADING_VISIBLE'
+    })
   },
   async created () {
     await this.$store.dispatch('loadCurrentProduct', this.$route.params.id)
   },
   beforeRouteLeave (to, from, next) {
     this.clearLoadingInfo()
+    this.setIsPolicyLoadingVisible(false)
     next()
   }
 }

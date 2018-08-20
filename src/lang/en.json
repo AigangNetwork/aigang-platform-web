@@ -428,7 +428,8 @@
       "CommentTooLong": "Comment lenght limit was reached",
       "RemoteAccessPointNotSet": "Remote access point is not set.",
       "InvalidTags": "Invalid tags",
-      "EmptyFileError": "File is empty"
+      "EmptyFileError": "File is empty",
+      "DeviceAlreadyInsured": "This device is already insured"
     },
     "pagePathNotFound": "The page you are trying to access is not available",
     "validationError": "You have entered an invalid data",
@@ -520,7 +521,7 @@
         "tip2": "Check if your device still paired with our system,",
         "tip3": "If you still have problems with verification please contact us via info@aigang.network."
       },
-      "deviceNotClaimable": "By readed data your device is not claimable at this moment",
+      "deviceNotClaimable": "By read data your device is not claimable at this moment",
       "claim": "Claim policy",
       "notLoggedToEthereumClientDialog": {
         "title": "Not logged in to Ethereum Client",

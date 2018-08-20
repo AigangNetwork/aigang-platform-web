@@ -39,14 +39,6 @@ export default {
   props: ['displayDialog', 'isVisible', 'deviceId', ''],
   mixins: [FormMixin],
   data () {
-    const checkIsDeviceInsured = (rule, value, callback) => {
-      if (this.product.insuredDevices.indexOf(value.toUpperCase()) > -1) {
-        callback(new Error(this.$t('insurance.product.validation.deviceAlreadyInsured')))
-      } else {
-        callback()
-      }
-    }
-
     return {
       deviceIdForm: {
         id: ''
@@ -60,10 +52,6 @@ export default {
         {
           min: 8,
           message: this.$t('insurance.product.validation.deviceIdInvalid'),
-          trigger: 'blur'
-        },
-        {
-          validator: checkIsDeviceInsured,
           trigger: 'blur'
         }]
       }
