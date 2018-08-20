@@ -227,8 +227,9 @@
     "changeSuccessTitle": "Your password has been successfully updated"
   },
   "activateEmail": {
+    "title": "Email activation",
     "activating": "Activating ...",
-    "activated": "Your account was successfully activated. Now you can Login"
+    "activated": "Thank you for registration. Your account now is successfully activated and you can use all platform features. Please login to continue."
   },
   "notifications": {
     "login_success": "Successfully signed in"
@@ -299,9 +300,16 @@
         "titles": {
           "date": "Date",
           "transaction": "Transaction",
+          "fromSystem": "From System",
           "type": "Type",
           "status": "Status"
         }
+      },
+      "type": {
+        "policypayment": "Policy Payment",
+        "addpolicy": "Add Policy",
+        "addclaim": "Add Claim",
+        "unknown": "Unknown"
       }
     },
     "notifications": {
@@ -373,6 +381,7 @@
     "versionAlpha": "alpha",
     "unableToFindYourDatasets": "Can not find your datasets",
     "unableToFindYourModels": "Can not find any datasets containing your models",
+    "noPolicies": "You do not have any policies yet",
     "upvote": "Upvote",
     "downvote": "Downvote",
     "aix": "AIX",
@@ -489,12 +498,11 @@
           "disagree": "Disagree"
         }
       },
-      "startDate": "Start date:",
-      "endDate": "End date:",
+      "startDate": "Start date",
+      "endDate": "End date",
       "status": "Status",
       "deviceIdNotFound": "Device with this ID was not found. Check your device for correct ID.",
       "serverError": "Something went wrong. Please contact support: info@aigang.network",
-      "metamaskNotLoggedIn": "You must be logged in to your metamask wallet",
       "paymentInfo": {
         "title": "Payment Information",
         "body": "Your payment transaction was created succesfully. When payment will be processed we will inform you via email notification message. You can see your transaction status by clicking on transaction address. ",
@@ -512,11 +520,11 @@
       },
       "deviceNotClaimable": "By readed data your device is not claimable at this moment",
       "claim": "Claim policy",
-      "notLoggedToMetamaskDialog": {
-        "title": "Not logged in to metamask",
-        "content": "You have to log in to metamask to calculate premium. If you logged in already, try to reload this page.",
+      "notLoggedToEthereumClientDialog": {
+        "title": "Not logged in to Ethereum Client",
+        "content": "To insure your device, you need to have Ethereum Client in place. (Metamask, Parity, Ethereum Mist browser or any other client that supports Web3). For the best experience use Metamask.",
         "buttons": {
-          "reload": "Reload"
+          "ok": "OK"
         }
       },
       "deviceData": {
@@ -552,6 +560,17 @@
         "overheated": "Overheated",
         "overvoltage": "Overvoltage",
         "dead": "Dead"
+      },
+      "statuses": {
+        "canceled": "Canceled",
+        "claimable": "Claimable",
+        "draft": "Draft",
+        "finished": "Finished",
+        "notset": "Not set",
+        "paid": "Paid",
+        "paidout": "Paid out",
+        "pendingpayment": "Pending payment",
+        "pendingpayout": "Pending payout"
       }
     }
   }

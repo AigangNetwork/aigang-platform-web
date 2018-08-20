@@ -1,6 +1,6 @@
 <template>
 
-  <transition-group class="data-items-container" name="slideUp" v-loading.body="loading">
+  <transition-group class="data-items-container" name="slideUp" v-loading="loading">
     <el-col :xs="24" :sm="12" :md="12" :lg="8" v-for="dataItem in dataList" :key="dataItem.id">
       <DataItem :data="dataItem" :key="dataItem.id" />
     </el-col>

@@ -1,11 +1,16 @@
 <template>
-  <div v-loading="loading">
-    <div class="policy-item" v-for="(item, index) in userPolicies.policies" :key="index">
-      <router-link :to="{ name: 'Policy', params: { id: item.productId, policyId: item.id } }">
-        <PolicyItem :policy="item" />
-      </router-link>
-    </div>
-  </div>
+  <el-row v-loading="loading">
+    <el-col v-if="!loading">
+      <div class="policy-item" v-for="(item, index) in userPolicies.policies" :key="index">
+        <router-link :to="{ name: 'Policy', params: { id: item.productId, policyId: item.id } }">
+          <PolicyItem :policy="item" />
+        </router-link>
+      </div>
+      <div v-if="userPolicies.policies.length === 0">
+        <h2>{{ $t('general.noPolicies') }}</h2>
+      </div>
+    </el-col>
+  </el-row>
 </template>
 <script>
 import PolicyItem from '@/components/insurance/PolicyItem.vue'

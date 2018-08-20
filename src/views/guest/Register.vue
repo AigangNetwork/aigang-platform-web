@@ -2,7 +2,6 @@
   <div>
     <div class="aig-card-container">
       <Card class="guest-card">
-
         <div class="register-container" slot="body" v-loading="loading" :element-loading-text="$t('general.loading')">
 
           <el-row>
@@ -183,11 +182,17 @@ export default {
     align-items: flex-end;
   }
 
-  @media screen and (min-width: 100px) and (max-width: 680px) {
+  @media screen and (min-width: 100px) and (max-width: 765px) {
+    .register-container {
+      margin: 10px;
+    }
+  }
 
+  @media screen and (min-width: 100px) and (max-width: 680px) {
     .aig-card.guest-card .aig-card-body {
       margin-top: 190px !important;
       .register-container {
+        margin: 10px;
         .el-row {
           display: flex;
           flex-direction: column;
