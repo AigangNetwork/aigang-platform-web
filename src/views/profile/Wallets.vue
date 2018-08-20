@@ -11,7 +11,7 @@
         <el-table :data="wallets.userWallets" :empty-text="$t('profile.wallets.table.emptyText')">
           <el-table-column prop="createdUtc" :label="$t('profile.wallets.table.titles.date')" width="160">
             <template slot-scope="scope">
-              <Date :dateUtc="scope.row.date" />
+              <Date :dateUtc="scope.row.createdUtc" />
             </template>
           </el-table-column>
           <el-table-column prop="address" :label="$t('profile.wallets.table.titles.wallet')"></el-table-column>
