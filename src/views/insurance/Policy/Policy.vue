@@ -1,8 +1,8 @@
 <template>
-  <div class="aig-container aig-view">
-    <transition name="fade" mode="out-in">
-      <Card class="policy-card" v-loading="loading" :element-loading-text="$t('general.loading')">
-        <div slot="body" class="policy-details-body">
+  <div class="aig-container aig-view" v-loading="loading">
+    <transition v-if="!loading" name="fade" mode="out-in">
+      <Card class="policy-card">
+        <div v-if="!loading" slot="body" class="policy-details-body">
           <el-row class="header">
             <router-link :to="policyListRoute" class="back-button">
               <i class="back-icon el-icon-arrow-left"></i>
@@ -11,20 +11,22 @@
             <h2>{{ $t('insurance.policy.androidBatteryInsurancePolicy') }}</h2>
           </el-row>
 
-          <div class="content">
-            <PolicyInfo :data="policy" />
+          <el-row class="content">
+            <PolicyInfo :policy="policy" />
             <DeviceInfo :data="deviceData" />
             <ClaimInfo :data="claimProperties" />
-          </div>
+          </el-row>
 
-          <div class="footer">
+          <el-row class="footer">
+
             <el-button v-if="policy.status && policy.status.toUpperCase() === 'DRAFT'" class="aig-button" type="primary" @click.prevent.native="insure">{{
-              $t('insurance.policy.insure') }}</el-button>
+              $t('insurance.policy.pay') }}</el-button>
 
-            <el-button v-else-if="policy.status && policy.status.toUpperCase() === 'PENDINGPAYMENT'" class="aig-button" disabled type="primary">{{
-              $t('insurance.policy.verifyForClaim') }}</el-button>
+            <el-col v-else-if="policy.status && policy.status.toUpperCase() === 'PENDINGPAYMENT'">
+              <el-button class="aig-button" disabled type="primary">{{ $t('insurance.policy.verifyForClaim') }}</el-button>
+            </el-col>
 
-            <div v-else-if="policy.status && policy.status.toUpperCase() === 'PAID'">
+            <el-col v-else-if="policy.status && policy.status.toUpperCase() === 'PAID'">
               <div v-if="policy.isVerifyForClaimFailed" class="failed-notification">
                 <span>{{ $t('insurance.policy.failedToVerifyDevice.title') }}</span>
                 <ul>
@@ -39,14 +41,17 @@
               <el-button class="aig-button" type="primary" @click.prevent.native="verifyClaim">
                 {{ policy.isVerifyForClaimFailed ? $t('insurance.policy.verifyForClaimRetry') : $t('insurance.policy.verifyForClaim') }}
               </el-button>
-            </div>
+            </el-col>
 
-            <el-button v-else-if="policy.status && policy.status.toUpperCase() === 'CLAIMABLE'" class="aig-button" type="primary" @click.prevent.native="claim">
-              {{ $t('insurance.policy.claim') }}
-            </el-button>
+            <el-col v-else-if="policy.status && policy.status.toUpperCase() === 'CLAIMABLE'">
+              <el-button class="aig-button" type="primary" @click.prevent.native="claim">{{ $t('insurance.policy.claim')
+                }}
+              </el-button>
+            </el-col>
+          </el-row>
 
-            <PolicyDeleteSection />
-          </div>
+          <PolicyDeleteSection v-if="isPolicyDraft" />
+
         </div>
       </Card>
     </transition>
@@ -54,22 +59,21 @@
     <TermsAndConditionsDialog :termsAndConditions="policy.termsAndConditions" :isVisible="isTermsAndConditionsDialogVisible"
       :displayDialog="displayTermsAndConditionsDialog" @agreed="makePayment" />
 
-    <LogInToMetamaskDialog :isVisible="isDisplayLoginToMetamaskDialogVisible" :displayDialog="displayLoginToMetamaskDialog" />
+    <LogInToEthereumClientDialog :isVisible="isDisplayLogInToEthereumClientDialogVisible" :displayDialog="displayLogInToEthereumClientDialog"
+    />
 
     <PaymentConfirmationDialog :isVisible="isPaymentDialogVisible" :displayDialog="displayPaymentDialog" />
-
   </div>
 </template>
 <script>
 import Card from '@/components/Card'
 import PaymentConfirmationDialog from '@/components/insurance/PaymentConfirmationDialog'
 import TermsAndConditionsDialog from '@/components/insurance/TermsAndConditionsDialog'
-import LogInToMetamaskDialog from '@/components/insurance/LogInToMetamaskDialog'
+import LogInToEthereumClientDialog from '@/components/insurance/LogInToEthereumClientDialog'
 import PolicyDeleteSection from '@/components/insurance/PolicyDeleteSection'
 import PolicyInfo from './PolicyInfo'
 import DeviceInfo from './DeviceInfo'
 import ClaimInfo from './ClaimInfo'
-import FormMixin from '@/components/mixins/FormMixin'
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
@@ -77,18 +81,17 @@ export default {
     Card,
     PaymentConfirmationDialog,
     TermsAndConditionsDialog,
-    LogInToMetamaskDialog,
+    LogInToEthereumClientDialog,
     PolicyInfo,
     DeviceInfo,
     ClaimInfo,
     PolicyDeleteSection
   },
-  mixins: [FormMixin],
   data () {
     return {
       isTermsAndConditionsDialogVisible: false,
       isPaymentDialogVisible: false,
-      isDisplayLoginToMetamaskDialogVisible: false,
+      isDisplayLogInToEthereumClientDialogVisible: false,
 
       policyListRoute: '/insurance/mypolicies'
     }
@@ -98,8 +101,8 @@ export default {
     displayPaymentDialog (value) {
       this.isPaymentDialogVisible = value
     },
-    displayLoginToMetamaskDialog (value) {
-      this.isDisplayLoginToMetamaskDialogVisible = value
+    displayLogInToEthereumClientDialog (value) {
+      this.isDisplayLogInToEthereumClientDialogVisible = value
     },
     displayTermsAndConditionsDialog (value) {
       this.isTermsAndConditionsDialogVisible = value
@@ -108,7 +111,7 @@ export default {
       if (this.isMetamaskLoggedIn) {
         this.displayTermsAndConditionsDialog(true)
       } else {
-        this.displayLoginToMetamaskDialog(true)
+        this.displayLogInToEthereumClientDialog(true)
       }
     },
     async makePayment () {
@@ -132,6 +135,12 @@ export default {
     },
     claimProperties () {
       return this.policy.claimProperties ? JSON.parse(this.policy.claimProperties) : null
+    },
+    isPolicyDraft () {
+      if (this.policy.status) {
+        const status = this.policy.status.toUpperCase()
+        return status === 'DRAFT'
+      }
     }
   },
   async mounted () {
@@ -163,6 +172,7 @@ export default {
         }
       }
       .footer {
+        margin-bottom: 32px;
         .error-message {
           margin-top: 30px;
           text-align: center;
@@ -185,9 +195,15 @@ export default {
     width: 100%;
   }
 
-  @media screen and (min-width: 100px) and (max-width: 350px) {
-    .el-checkbox__label {
-      font-size: 13px;
+  @media screen and (max-width: 680px) {
+    .aig-container {
+      .policy-card {
+        .header {
+          .back-icon {
+            margin-top: 20px;
+          }
+        }
+      }
     }
   }
 </style>

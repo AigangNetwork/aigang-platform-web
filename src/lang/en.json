@@ -227,8 +227,9 @@
     "changeSuccessTitle": "Your password has been successfully updated"
   },
   "activateEmail": {
+    "title": "Email activation",
     "activating": "Activating ...",
-    "activated": "Your account was successfully activated. Now you can Login"
+    "activated": "Thank you for registration. Your account now is successfully activated and you can use all platform features. Please login to continue."
   },
   "notifications": {
     "login_success": "Successfully signed in"
@@ -299,9 +300,16 @@
         "titles": {
           "date": "Date",
           "transaction": "Transaction",
+          "fromSystem": "From System",
           "type": "Type",
           "status": "Status"
         }
+      },
+      "type": {
+        "policypayment": "Policy Payment",
+        "addpolicy": "Add Policy",
+        "addclaim": "Add Claim",
+        "unknown": "Unknown"
       }
     },
     "notifications": {
@@ -373,12 +381,15 @@
     "versionAlpha": "alpha",
     "unableToFindYourDatasets": "Can not find your datasets",
     "unableToFindYourModels": "Can not find any datasets containing your models",
+    "noPolicies": "You do not have any policies yet",
     "upvote": "Upvote",
     "downvote": "Downvote",
     "aix": "AIX",
     "utc": "UTC",
     "comingSoon": "Feature is coming soon",
-    "retry": "Retry"
+    "retry": "Retry",
+    "days": "days",
+    "day": "day"
   },
   "errors": {
     "error": "Error",
@@ -417,7 +428,8 @@
       "CommentTooLong": "Comment lenght limit was reached",
       "RemoteAccessPointNotSet": "Remote access point is not set.",
       "InvalidTags": "Invalid tags",
-      "EmptyFileError": "File is empty"
+      "EmptyFileError": "File is empty",
+      "DeviceAlreadyInsured": "This device is already insured"
     },
     "pagePathNotFound": "The page you are trying to access is not available",
     "validationError": "You have entered an invalid data",
@@ -441,10 +453,10 @@
       "details": "Details",
       "description": "Description",
       "termsAndConditions": "Terms and Conditions",
-      "calculatePremium": "Calculate Premium",
+      "calculateInsurancePrice": "Calculate Insurance Price",
       "contractAddress": "Policy Contract Address",
       "downloadApp": "Download Aigang App",
-      "instructionsIntro": "In order for us to  calculate your premium you have to:",
+      "instructionsIntro": "In order to calculate your insurance price you have to:",
       "instructionsDownloadApp": "Download Aigang app on your android device",
       "instructionsIMEI": "Enter your device ID below (you will see it in the app)",
       "instructionsConditions": "Your device's data will be read, press continue if you agree",
@@ -452,14 +464,14 @@
       "currentWearLevel": "Current Wear level",
       "startTime": "Start Time",
       "endTime": "End Time",
-      "fee": "Fee",
       "payout": "Payout",
-      "calculatedPremium": "Calculated Premium",
+      "calculatedPrice": "Calculated Price",
       "notImplemented": "Product is not implemented",
-      "logInToCalculatePremium": "You have to log in to calculate premium",
-      "agreeWithTermsAndConditions": "You have to read terms and conditions to calculate premium",
+      "logInToCalculateInsurancePrice": "You have to log in to calculate insurance price",
+      "agreeWithTermsAndConditions": "You have to read terms and conditions to calculate insurance price",
       "productPoolLimitReacher": "Product premium pool limit has been reached",
       "policiesLimitReached": "You have reached maximum number of policies for this product",
+      "insuranceTerm": "Insurance term",
       "validation": {
         "deviceIdRequired": "Device ID is required",
         "deviceIdInvalid": "Must be 8 characters",
@@ -467,13 +479,13 @@
       }
     },
     "policy": {
-      "insure": "Insure",
+      "pay": "Pay",
       "deviceId": "Device id",
       "policyId": "Policy id",
       "startingTask": "Starting task",
       "policyStatus": "Policy Status",
       "taskId": "Task ID",
-      "readingDeviceData": "Reading device data",
+      "readingDeviceDataAndCalculatingInsurancePrice": "Reading device data and calculating insurance price",
       "readingDeviceDataTimeout": "Reading device data timed out",
       "policyCreated": "Policy created",
       "redirecting": "Redirecting",
@@ -489,12 +501,11 @@
           "disagree": "Disagree"
         }
       },
-      "startDate": "Start date:",
-      "endDate": "End date:",
+      "startDate": "Start date",
+      "endDate": "End date",
       "status": "Status",
       "deviceIdNotFound": "Device with this ID was not found. Check your device for correct ID.",
       "serverError": "Something went wrong. Please contact support: info@aigang.network",
-      "metamaskNotLoggedIn": "You must be logged in to your metamask wallet",
       "paymentInfo": {
         "title": "Payment Information",
         "body": "Your payment transaction was created succesfully. When payment will be processed we will inform you via email notification message. You can see your transaction status by clicking on transaction address. ",
@@ -510,13 +521,13 @@
         "tip2": "Check if your device still paired with our system,",
         "tip3": "If you still have problems with verification please contact us via info@aigang.network."
       },
-      "deviceNotClaimable": "By readed data your device is not claimable at this moment",
+      "deviceNotClaimable": "By read data your device is not claimable at this moment",
       "claim": "Claim policy",
-      "notLoggedToMetamaskDialog": {
-        "title": "Not logged in to metamask",
-        "content": "You have to log in to metamask to calculate premium. If you logged in already, try to reload this page.",
+      "notLoggedToEthereumClientDialog": {
+        "title": "Not logged in to Ethereum Client",
+        "content": "To insure your device, you need to have Ethereum Client in place. (Metamask, Parity, Ethereum Mist browser or any other client that supports Web3). For the best experience use Metamask.",
         "buttons": {
-          "reload": "Reload"
+          "ok": "OK"
         }
       },
       "deviceData": {
@@ -552,6 +563,17 @@
         "overheated": "Overheated",
         "overvoltage": "Overvoltage",
         "dead": "Dead"
+      },
+      "statuses": {
+        "canceled": "Canceled",
+        "claimable": "Claimable",
+        "draft": "Draft",
+        "finished": "Finished",
+        "notset": "Not set",
+        "paid": "Paid",
+        "paidout": "Paid out",
+        "pendingpayment": "Pending payment",
+        "pendingpayout": "Pending payout"
       }
     }
   }

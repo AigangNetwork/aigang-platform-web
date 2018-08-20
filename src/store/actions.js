@@ -163,8 +163,15 @@ const loadCurrentProduct = async ({ commit }, id) => {
 }
 
 const createNewPolicy = async ({ commit, state }, { deviceId, productId }) => {
+  commit(types.CLEAR_POLICY_LOADING_INFO)
+  commit(types.SET_IS_POLICY_LOADING_VISIBLE, true)
+
   try {
-    await loadTaskId(commit, deviceId)
+    await loadTaskId(commit, {
+      DeviceId: deviceId,
+      ProductId: productId,
+      IsCreatePolicy: true
+    })
   } catch (e) {
     return
   }
@@ -174,6 +181,7 @@ const createNewPolicy = async ({ commit, state }, { deviceId, productId }) => {
   let response = null
   while (!response || (!response.data.policyId && !response.data.validationResultCode)) {
     response = await axios.post('insurance/policy', {
+      DeviceId: deviceId,
       TaskId: state.policyLoadingInfo.taskId,
       ProductId: productId
     })
@@ -189,9 +197,8 @@ const createNewPolicy = async ({ commit, state }, { deviceId, productId }) => {
     await sleep(1000)
   }
 
-  var newPolicyLoadingInfo = Object.assign({}, state.policyLoadingInfo)
+  let newPolicyLoadingInfo = Object.assign({}, state.policyLoadingInfo)
 
-  commit(types.CLEAR_POLICY_LOADING_INFO)
   if (response.data.validationResultCode) {
     newPolicyLoadingInfo.validationResultCode = response.data.validationResultCode
   } else {
@@ -254,14 +261,21 @@ const loadUserPolicies = async ({ commit }, page) => {
 }
 
 const verifyClaim = async ({ commit, dispatch, state }) => {
+  commit(types.SET_LOADING, true)
+
   // Getting task id
   try {
-    await loadTaskId(commit, state.currentPolicy.deviceId)
+    await loadTaskId(commit, {
+      DeviceId: state.currentPolicy.deviceId,
+      ProductId: state.currentPolicy.productId,
+      IsCreatePolicy: false
+    })
   } catch (e) {
+    commit(types.SET_LOADING, false)
+    commit(types.SET_FAILED_VERIFY_CLAIM, true)
     return
   }
 
-  commit(types.SET_LOADING, true)
   commit(types.SET_FAILED_VERIFY_CLAIM, false)
 
   let retryCount = process.env.RETRY_COUNT || 10
@@ -284,16 +298,16 @@ const verifyClaim = async ({ commit, dispatch, state }) => {
     await sleep(1000)
   }
 
-  commit(types.SET_LOADING, false)
-
   if (response.data.isTaskFinished && response.data.isClaimable) {
-    dispatch('getPolicy', state.currentPolicy.id)
+    await dispatch('getPolicy', state.currentPolicy.id)
     commit(types.SET_IS_CLAIMABLE, true)
   }
 
   if (response.data.isTaskFinished && !response.data.isClaimable) {
     commit(types.SET_IS_CLAIMABLE, false)
   }
+
+  commit(types.SET_LOADING, false)
 }
 
 const claim = async ({ commit, dispatch, state }) => {
@@ -353,15 +367,12 @@ export {
   deletePolicy
 }
 
-const loadTaskId = async (commit, deviceId) => {
-  commit(types.SET_LOADING, false) // ?
-  commit(types.CLEAR_POLICY_LOADING_INFO)
-
+const loadTaskId = async (commit, request) => {
   // We need custom axios instance to handle 404 differently
   const customAxios = axios.create({ baseUrl: process.env.API_ADDRESS })
 
   const policyLoadingInfo = {
-    deviceId: deviceId
+    deviceId: request.DeviceId
   }
 
   commit(types.SET_POLICY_LOADING_INFO, policyLoadingInfo)
@@ -370,12 +381,18 @@ const loadTaskId = async (commit, deviceId) => {
 
   // STEP 1: getting task ID
   try {
-    response = await customAxios.get('insurance/policy/android/pair/' + deviceId)
+    response = await customAxios.post('insurance/policy/android/pair', request)
   } catch (error) {
-    var newPolicyLoadingInfo = Object.assign({}, policyLoadingInfo)
+    let newPolicyLoadingInfo = Object.assign({}, policyLoadingInfo)
 
     if (error.response.status === 404) {
       newPolicyLoadingInfo.notFound = true
+    } else if (error.response.status === 400) {
+      newPolicyLoadingInfo.validationReasons = []
+
+      error.response.data.params.ValidationFailed.forEach(val =>
+        newPolicyLoadingInfo.validationReasons.push('errors.validation.' + val.reason)
+      )
     } else if (error.response.status === 503 || error.response.status === 500) {
       newPolicyLoadingInfo.serverError = true
     }

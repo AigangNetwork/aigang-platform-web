@@ -1,11 +1,23 @@
 <template>
+  <div>
+    <div class="aig-card-container" v-loading="loading" :element-loading-text="$t('activateEmail.activating')">
+      <Card v-if="!loading" class="guest-card">
+        <div class="register-container" slot="body" v-loading="loading" :element-loading-text="$t('general.loading')">
+            <el-row>
+              <el-col>
+                <div class="aig-logo">
+                  <img src="/static/logo-purple.png" alt="">
+                </div>
+              </el-col>
+            </el-row>
 
-  <div class="aig-card-container" style="max-width: 400px">
-    <Card class="guest-card">
-      <div slot="body" v-loading="loading" :element-loading-text="$t('activateEmail.activating')">
-        <h2>{{ msg }}</h2>
-      </div>
-    </Card>
+            <el-row class="content">
+              <h2>{{ $t('activateEmail.title') }}</h2>
+              <p>{{ msg }}</p>
+            </el-row>
+        </div>
+      </Card>
+    </div>
   </div>
 </template>
 
@@ -41,3 +53,38 @@ export default {
   }
 }
 </script>
+<style lang="scss">
+  @media screen and (min-width: 100px) and (max-width: 765px) {
+    .register-container {
+      margin: 10px;
+    }
+  }
+
+  @media screen and (min-width: 100px) and (max-width: 680px) {
+    .aig-card.guest-card .aig-card-body {
+      margin-top: 190px !important;
+      .register-container {
+        .el-row {
+          display: flex;
+          flex-direction: column;
+          width: 100%;
+          h2 {
+            width: 100%;
+            text-align: center;
+            margin: 20px 0;
+          }
+        }
+        .el-col-12 {
+          width: 100%;
+        }
+        .redirect-to-login {
+          height: 20px;
+          margin-top: 390px;
+          margin-bottom: -410px;
+          text-align: center;
+          z-index: 2;
+        }
+      }
+    }
+  }
+  </style>

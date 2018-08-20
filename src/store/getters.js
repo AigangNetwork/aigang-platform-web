@@ -35,6 +35,9 @@ const getters = {
   policyLoadingInfo: state => {
     return state.policyLoadingInfo
   },
+  isPolicyLoadingVisible: state => {
+    return state.isPolicyLoadingVisible
+  },
   web3: state => {
     return state.userWeb3.web3Instance ? state.userWeb3.web3Instance() : null
   },

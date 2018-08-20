@@ -44,3 +44,8 @@ export default {
   }
 }
 </script>
+<style lang="scss" scoped>
+  .input-section-title {
+    margin-top: 20px;
+  }
+</style>

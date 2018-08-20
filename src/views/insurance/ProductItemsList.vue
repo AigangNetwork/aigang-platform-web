@@ -1,19 +1,17 @@
 <template>
-
-  <transition-group class="data-items-container" name="slideUp" v-loading.body="loading">
-    <el-col :xs="24" :sm="12" :md="12" :lg="8" v-for="productItem in productList" :key="productItem.id">
+  <transition-group class="data-items-container" name="slideUp" v-loading="loading">
+    <el-col v-if="!loading" :xs="24" :sm="12" :md="12" :lg="8" v-for="productItem in productList" :key="productItem.id">
       <ProductItem :product="productItem" :key="productItem.id" />
     </el-col>
-    <el-col :key="totalPageCount">
+    <el-col v-if="!loading" :key="totalPageCount">
       <Pagination v-if="totalPageCount > 0" :callback="loadPage" :total-page-count="totalPageCount" :current-page="page" />
     </el-col>
-    <el-col v-if="errorOccured && isMyPolicies">
+    <el-col v-if="!loading && errorOccured && isMyPolicies">
       <h2>
         {{ $t('general.unableToFindYourDatasets') }}
       </h2>
     </el-col>
   </transition-group>
-
 </template>
 <script>
 import ProductItem from '@/components/insurance/ProductItem'
