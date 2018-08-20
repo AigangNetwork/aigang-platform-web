@@ -2,30 +2,30 @@
   <el-row class="policy-data">
     <p>
       <label>{{ $t('insurance.policy.policyId') }}:</label>
-      <span>{{ data.id }}</span>
+      <span>{{ policy.id }}</span>
     </p>
 
     <p>
       <label>{{ $t('insurance.policy.deviceId') }}:</label>
-      {{ data.deviceId }}
+      {{ policy.deviceId }}
     </p>
 
     <p>
       <label>{{ $t('insurance.product.calculatedPrice') }}:</label>
-      {{ data.premium }}
+      {{ policy.premium }}
       <span class="text-medium"> {{ $t('general.aix') }} </span>
     </p>
 
     <p>
       <label>{{ $t('insurance.product.payout') }}:</label>
-      {{ data.payout }}
+      {{ policy.payout }}
       <span class="text-medium"> {{ $t('general.aix') }} </span>
     </p>
 
     <p>
       <label>{{$t('insurance.policy.startDate')}}</label>
       <span class="text-medium">
-        <Date :dateUtc="data.startUtc" />
+        <Date :dateUtc="policy.startUtc" />
       </span>
     </p>
 
@@ -33,23 +33,24 @@
       <label>{{$t('insurance.policy.endDate')}}</label>
 
       <span class="text-medium">
-        <Date :dateUtc="data.endUtc" />
+        <Date :dateUtc="policy.endUtc" />
       </span>
     </p>
 
     <p>
       <label>{{ $t('insurance.product.insuranceTerm') }}:</label>
-      {{ data.policyTermInDays }}
-      <span class="text-medium" v-if="data.policyTermInDays > 1"> {{ $t('general.days') }} </span>
+      {{ policy.policyTermInDays }}
+      <span class="text-medium" v-if="policy.policyTermInDays > 1"> {{ $t('general.days') }} </span>
       <span class="text-medium" v-else> {{ $t('general.day') }} </span>
     </p>
 
     <p>
       <label>{{ $t('insurance.policy.policyStatus') }}:</label>
-      {{ data.status | uppercase }}
+      {{ status | uppercase }}
       <span class="text-medium">
       </span>
     </p>
+
   </el-row>
 </template>
 <script>
@@ -59,7 +60,7 @@ import Date from '@/components/Date'
 export default {
   mixins: [PolicyStatus],
   components: { Date },
-  props: ['data']
+  props: ['policy']
 }
 </script>
 <style lang="scss">

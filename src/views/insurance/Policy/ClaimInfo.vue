@@ -31,6 +31,7 @@
       <label>{{ $t('insurance.policy.claimInfo.brand') }}:</label>
       {{ data.DB | uppercase }}
     </div>
+
   </el-row>
 </template>
 <script>
@@ -39,7 +40,7 @@ import WearLevel from '@/components/mixins/WearLevel'
 
 export default {
   components: { Date },
-  mixins: [ WearLevel ],
+  mixins: [WearLevel],
   props: ['data']
 }
 </script>

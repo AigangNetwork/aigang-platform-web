@@ -50,8 +50,6 @@
             </el-col>
           </el-row>
 
-          <div class="horizontal-line"></div>
-
           <PolicyDeleteSection v-if="isPolicyDraft" />
 
         </div>
