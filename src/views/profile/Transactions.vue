@@ -19,7 +19,18 @@
               <a :href="formatTxLink(scope.row.txId)" target="_blank">{{ scope.row.txId }}</a>
             </template>
           </el-table-column>
-          <el-table-column prop="txType" :label="$t('profile.transactions.table.titles.type')"></el-table-column>
+          <el-table-column prop="isCreatedByUser" :label="$t('profile.transactions.table.titles.fromSystem')" width="110">
+            <template slot-scope="scope">
+              <div v-if="!scope.row.isCreatedByUser" class="center">
+                <i class="el-icon-check"></i>
+              </div>
+            </template>
+          </el-table-column>
+          <el-table-column prop="txType" :label="$t('profile.transactions.table.titles.type')">
+              <template slot-scope="scope">
+              <span class="type">{{ formatTypeText(scope.row.txType) }}</span>
+            </template>
+          </el-table-column>
           <el-table-column prop="status" :label="$t('profile.transactions.table.titles.status')" width="190">
             <template slot-scope="scope">
               <Label :type="scope.row.status" size="small" />
@@ -58,18 +69,45 @@ export default {
   methods: {
     formatTxLink (txId) {
       return process.env.ETHERSCAN_ADDRESS + process.env.TX_PATH + txId
+    },
+    formatTypeText (type) {
+      switch (type.toUpperCase()) {
+        case 'POLICYPAYMENT':
+          return this.$t('profile.transactions.type.policypayment')
+        case 'ADDPOLICY':
+          return this.$t('profile.transactions.type.addpolicy')
+        case 'ADDCLAIM':
+          return this.$t('profile.transactions.type.addclaim')
+        default:
+          return this.$t('profile.transactions.type.unknown')
+      }
     }
   }
 }
 
 </script>
 <style lang="scss" scoped>
+  @import '~helpers/variables';
+
   table {
     width: 100%;
 
     a {
       color: #548fd4;
       word-wrap: break-word;
+    }
+
+    .center {
+      text-align: center;
+    }
+
+    .el-icon-check {
+      color: $green;
+      font-weight: bold;
+    }
+
+    .type {
+      word-break: break-word;
     }
   }
 

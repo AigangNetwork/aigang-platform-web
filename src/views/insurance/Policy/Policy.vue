@@ -1,8 +1,8 @@
 <template>
-  <div class="aig-container aig-view">
-    <transition name="fade" mode="out-in">
-      <Card class="policy-card" v-loading="loading" :element-loading-text="$t('general.loading')">
-        <div slot="body" class="policy-details-body">
+  <div class="aig-container aig-view" v-loading="loading">
+    <transition v-if="!loading" name="fade" mode="out-in">
+      <Card class="policy-card">
+        <div v-if="!loading" slot="body" class="policy-details-body">
           <el-row class="header">
             <router-link :to="policyListRoute" class="back-button">
               <i class="back-icon el-icon-arrow-left"></i>
@@ -61,7 +61,6 @@
     <LogInToEthereumClientDialog :isVisible="isDisplayLogInToEthereumClientDialogVisible" :displayDialog="displayLogInToEthereumClientDialog" />
 
     <PaymentConfirmationDialog :isVisible="isPaymentDialogVisible" :displayDialog="displayPaymentDialog" />
-
   </div>
 </template>
 <script>

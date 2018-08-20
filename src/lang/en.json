@@ -227,8 +227,9 @@
     "changeSuccessTitle": "Your password has been successfully updated"
   },
   "activateEmail": {
+    "title": "Email activation",
     "activating": "Activating ...",
-    "activated": "Your account was successfully activated. Now you can Login"
+    "activated": "Thank you for registration. Your account now is successfully activated and you can use all platform features. Please login to continue."
   },
   "notifications": {
     "login_success": "Successfully signed in"
@@ -299,9 +300,16 @@
         "titles": {
           "date": "Date",
           "transaction": "Transaction",
+          "fromSystem": "From System",
           "type": "Type",
           "status": "Status"
         }
+      },
+      "type": {
+        "policypayment": "Policy Payment",
+        "addpolicy": "Add Policy",
+        "addclaim": "Add Claim",
+        "unknown": "Unknown"
       }
     },
     "notifications": {
