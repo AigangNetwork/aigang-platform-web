@@ -12,7 +12,10 @@
       </el-button>
     </el-row>
 
-    <Dialog :title="$t('profile.general.warning')" :body="$t('insurance.policy.deletePolicyConfirmation')" :on-confirm="deletePolicyHandler"
+    <Dialog
+      :title="$t('profile.general.warning')"
+      :body="$t('insurance.policy.deletePolicyConfirmation')"
+      :on-confirm="deletePolicyHandler"
       :is-visible="dialogVisible" :on-cancel="cancel" />
 
   </el-row>
@@ -44,3 +47,8 @@ export default {
   }
 }
 </script>
+<style lang="scss">
+  .input-section-title {
+    margin-top: 20px;
+  }
+</style>

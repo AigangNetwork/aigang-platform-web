@@ -2,44 +2,47 @@
     <el-row class="policy-data">
       <p>
         <label>{{ $t('insurance.policy.policyId') }}:</label>
-        <span>{{ data.id }}</span>
+        <span class="align-right">{{ policy.id }}</span>
       </p>
 
       <p>
         <label>{{ $t('insurance.policy.deviceId') }}:</label>
-        {{ data.deviceId }}
+        {{ policy.deviceId }}
       </p>
 
       <p>
         <label>{{ $t('insurance.product.calculatedPremium') }}:</label>
-        {{ data.premium }}
+        {{ policy.premium }}
         <span class="text-medium"> {{ $t('general.aix') }} </span>
       </p>
 
       <p>
         <label>{{ $t('insurance.product.payout') }}:</label>
-        {{ data.payout }}
+        {{ policy.payout }}
         <span class="text-medium"> {{ $t('general.aix') }} </span>
       </p>
 
       <p>
         <label>{{ $t('insurance.product.fee') }}:</label>
-        {{ data.fee }}
+        {{ policy.fee }}
         <span class="text-medium"> %
         </span>
       </p>
 
       <p>
         <label>{{ $t('insurance.policy.policyStatus') }}:</label>
-        {{ data.status | uppercase }}
+        {{ status | uppercase }}
         <span class="text-medium">
         </span>
       </p>
     </el-row>
 </template>
 <script>
+import PolicyStatus from '@/components/mixins/PolicyStatus'
+
 export default {
-  props: ['data']
+  props: ['policy'],
+  mixins: [ PolicyStatus ]
 }
 </script>
 <style lang="scss">
@@ -47,4 +50,10 @@ export default {
   @import '~helpers/mixins';
 
   @include policy-data;
+
+  .policy-data {
+    .align-right {
+      text-align: right;
+    }
+  }
 </style>

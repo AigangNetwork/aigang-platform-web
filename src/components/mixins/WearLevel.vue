@@ -1,5 +1,7 @@
 <script>
 
+const DEFAULT = '-'
+
 export default {
   computed: {
     wearLevel () {
@@ -13,7 +15,7 @@ export default {
         case '10':
           return this.$t('insurance.policy.wearLevel.dead')
         default:
-          return '-'
+          return DEFAULT
       }
     }
   }
