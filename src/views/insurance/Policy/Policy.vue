@@ -73,7 +73,6 @@ import PolicyDeleteSection from '@/components/insurance/PolicyDeleteSection'
 import PolicyInfo from './PolicyInfo'
 import DeviceInfo from './DeviceInfo'
 import ClaimInfo from './ClaimInfo'
-import FormMixin from '@/components/mixins/FormMixin'
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
@@ -87,7 +86,6 @@ export default {
     ClaimInfo,
     PolicyDeleteSection
   },
-  mixins: [FormMixin],
   data () {
     return {
       isTermsAndConditionsDialogVisible: false,

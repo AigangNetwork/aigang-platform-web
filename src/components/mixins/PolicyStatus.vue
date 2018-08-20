@@ -1,10 +1,12 @@
 <script>
 
+const DEFAULT = '-'
+
 export default {
   computed: {
     status () {
       if (!this.policy.status) {
-        return '-'
+        return DEFAULT
       }
 
       switch (this.policy.status.toUpperCase()) {
@@ -27,7 +29,7 @@ export default {
         case 'PENDINGPAYOUT':
           return this.$t('insurance.policy.statuses.pendingpayout')
         default:
-          return '-'
+          return DEFAULT
       }
     }
   }
