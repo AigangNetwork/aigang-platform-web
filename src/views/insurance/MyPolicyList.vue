@@ -36,4 +36,8 @@ export default {
   .policy-item {
     margin: 10px 0px 10px 0px;
   }
+
+  h2 {
+    margin: 20px;
+  }
 </style>

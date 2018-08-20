@@ -448,7 +448,7 @@
     "product": {
       "productEnds": "Campaign ends",
       "productEnded": "Campaign ended",
-      "productComingSoon": "Coming soon",
+      "productClosed": "Product closed",
       "basePremium": "Base Premium",
       "details": "Details",
       "description": "Description",

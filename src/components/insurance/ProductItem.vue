@@ -9,7 +9,7 @@
           <div class="desc">{{ $t('insurance.product.productEnded') }}</div>
         </div>
         <div class="aig-data-head" v-else>
-          <div class="desc">{{ $t('insurance.product.productComingSoon') }}</div>
+          <div class="desc">{{ $t('insurance.product.productClosed') }}</div>
         </div>
         <div class="aig-data-head">
           <div class="title">{{ product.title | truncate(50) }}</div>
@@ -77,6 +77,7 @@ export default {
     }
 
     &.disabled {
+      opacity: 0.4;
       filter: grayscale(100%);
       pointer-events: none;
     }
