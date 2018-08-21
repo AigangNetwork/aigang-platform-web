@@ -6,7 +6,7 @@
           <PolicyItem :policy="item" />
         </router-link>
       </div>
-      <div v-if="userPolicies.policies.length === 0">
+      <div v-if="userPolicies.policies && userPolicies.policies.length === 0">
         <h2>{{ $t('general.noPolicies') }}</h2>
       </div>
     </el-col>
