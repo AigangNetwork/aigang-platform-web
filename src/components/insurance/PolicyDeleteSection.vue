@@ -4,7 +4,7 @@
       <p class="input-section-title">{{ $t('insurance.policy.deletePolicyTitle') }}</p>
     </el-col>
     <el-col>
-      <p class="profile-section-decription">{{ $t('insurance.policy.deletePolicyBody') }}</p>
+      <p>{{ $t('insurance.policy.deletePolicyBody') }}</p>
     </el-col>
     <el-row>
       <el-button @click="dialogVisible = true" class="profile-button">
@@ -13,7 +13,7 @@
     </el-row>
 
     <Dialog :title="$t('profile.general.warning')" :body="$t('insurance.policy.deletePolicyConfirmation')" :on-confirm="deletePolicyHandler"
-      :is-visible="dialogVisible" :on-cancel="cancel" />
+      :is-visible="dialogVisible" :on-cancel="cancel" :displayDialog="displayDialog" />
 
   </el-row>
 </template>
@@ -34,6 +34,9 @@ export default {
     ...mapActions(['deletePolicy']),
     cancel () {
       this.dialogVisible = false
+    },
+    displayDialog (value) {
+      this.dialogVisible = value
     },
     async deletePolicyHandler () {
       this.dialogVisible = false
