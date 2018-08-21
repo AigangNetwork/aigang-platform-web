@@ -6,7 +6,7 @@
           <PolicyItem :policy="item" />
         </router-link>
       </div>
-      <div v-if="userPolicies.policies.length === 0">
+      <div v-if="userPolicies.policies && userPolicies.policies.length === 0">
         <h2>{{ $t('general.noPolicies') }}</h2>
       </div>
     </el-col>
@@ -35,5 +35,9 @@ export default {
 <style lang="scss" scoped>
   .policy-item {
     margin: 10px 0px 10px 0px;
+  }
+
+  h2 {
+    margin: 20px;
   }
 </style>

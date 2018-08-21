@@ -429,7 +429,7 @@
       "RemoteAccessPointNotSet": "Remote access point is not set.",
       "InvalidTags": "Invalid tags",
       "EmptyFileError": "File is empty",
-      "DeviceAlreadyInsured": "This device is already insured"
+      "DeviceAlreadyInsured": "There is already exist policy with the same device id"
     },
     "pagePathNotFound": "The page you are trying to access is not available",
     "validationError": "You have entered an invalid data",
@@ -448,7 +448,7 @@
     "product": {
       "productEnds": "Campaign ends",
       "productEnded": "Campaign ended",
-      "productComingSoon": "Coming soon",
+      "productClosed": "Product closed",
       "basePremium": "Base Premium",
       "details": "Details",
       "description": "Description",

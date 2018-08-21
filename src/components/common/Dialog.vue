@@ -1,5 +1,5 @@
 <template>
-  <el-dialog class="notification-dialog" :title="title" :visible.sync="isVisible" :show-close="false" center>
+  <el-dialog class="notification-dialog" :title="title" :visible.sync="show" :show-close="false" center>
     <div class="confimation-dialog">
       <span>{{ body }}</span>
     </div>
@@ -11,7 +11,17 @@
 </template>
 <script>
 export default {
-  props: ['title', 'body', 'onConfirm', 'isVisible', 'onCancel']
+  props: ['title', 'body', 'onConfirm', 'isVisible', 'onCancel', 'displayDialog'],
+  computed: {
+    show: {
+      get () {
+        return this.isVisible
+      },
+      set (value) {
+        this.displayDialog(value)
+      }
+    }
+  }
 }
 
 </script>
