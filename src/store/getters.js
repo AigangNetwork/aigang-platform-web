@@ -39,7 +39,7 @@ const getters = {
     return state.isPolicyLoadingVisible
   },
   web3: state => {
-    return state.userWeb3.web3Instance ? state.userWeb3.web3Instance() : null
+    return state.userWeb3.web3 ? state.userWeb3.web3() : null
   },
   txHash: state => {
     return state.txHash

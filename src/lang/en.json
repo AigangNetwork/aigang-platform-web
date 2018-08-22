@@ -470,7 +470,7 @@
       "logInToCalculateInsurancePrice": "You have to log in to calculate insurance price",
       "agreeWithTermsAndConditions": "You have to read terms and conditions to calculate insurance price",
       "productPoolLimitReacher": "Product premium pool limit has been reached",
-      "policiesLimitReached": "You have reached maximum number of policies for this product",
+      "policiesLimitReached": "This product has reached maximum number of policies",
       "insuranceTerm": "Insurance term",
       "validation": {
         "deviceIdRequired": "Device ID is required",

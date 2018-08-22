@@ -27,7 +27,7 @@ export default {
   async mounted () {
     try {
       await this.$store.dispatch('loadUserPolicies', 1)
-    } catch (error) {}
+    } catch (error) { }
   }
 }
 

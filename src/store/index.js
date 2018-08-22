@@ -20,15 +20,7 @@ const store = new Vuex.Store({
       emailPermissionGroups: {},
       policies: {}
     },
-    userWeb3: {
-      web3Instance: null,
-      isInjected: false,
-      ethBalance: null,
-      networkId: null,
-      coinbase: null,
-      aixBalance: null,
-      error: null
-    },
+    userWeb3: {},
     currentDataset: {},
     currentModel: null,
     currentProduct: {},

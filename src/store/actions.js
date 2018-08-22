@@ -78,7 +78,7 @@ const loadNotificationPermissions = async ({ commit }, emailPermissionGroups) =>
   }
 }
 
-const loadCurrentDataset = async ({ commit, state }, id) => {
+const loadCurrentDataset = async ({ commit }, id) => {
   const response = await axios.get('/data/' + id)
   if (response.data.data) {
     commit(types.LOAD_CURRENT_DATASET, response.data)
@@ -111,32 +111,27 @@ const setHasFileChanged = ({ commit }, response) => {
   commit(types.SET_HAS_FILE_CHANGED, response)
 }
 
-const registerWeb3Instance = ({ commit, dispatch }, response) => {
-  getWeb3()
-    .then(result => {
-      commit(types.SET_WEB3_INSTANCE, result)
-      if (result) {
-        result.web3().currentProvider.publicConfigStore.on('update', () => {
-          dispatch('refreshWeb3Instance')
-        })
-      }
+const registerWeb3Instance = async ({ commit, dispatch }) => {
+  const userWeb3 = await getWeb3()
+  commit(types.SET_WEB3_INSTANCE, userWeb3)
+
+  if (userWeb3.web3 && userWeb3.web3().currentProvider.publicConfigStore) {
+    userWeb3.web3().currentProvider.publicConfigStore.on('update', () => {
+      dispatch('refreshWeb3Instance')
     })
-    .catch(e => {})
+  }
 }
 
-const refreshWeb3Instance = ({ commit }) => {
-  getWeb3()
-    .then(result => {
-      commit(types.SET_WEB3_INSTANCE, result)
-    })
-    .catch(e => {})
+const refreshWeb3Instance = async ({ commit }) => {
+  const userWeb3 = await getWeb3()
+  commit(types.SET_WEB3_INSTANCE, userWeb3)
 }
 
 const clearWeb3Instance = ({ commit }, response) => {
   commit(types.CLEAR_WEB3_INSTANCE, response)
 }
 
-const loadCurrentModel = async ({ commit, state }, payload) => {
+const loadCurrentModel = async ({ commit }, payload) => {
   const response = await axios.get(`/data/${payload.datasetId}/models/${payload.modelId}`)
   commit(types.LOAD_CURRENT_MODEL, response.data)
 }
@@ -222,7 +217,7 @@ const getPolicy = async ({ commit }, policyId) => {
 }
 
 const sendPolicyPayment = async ({ commit, dispatch, state }) => {
-  const web3 = state.userWeb3.web3Instance()
+  const web3 = state.userWeb3.web3()
   const productAddress = state.currentPolicy.contractAddress
 
   const TokenInstance = new web3.eth.Contract(process.env.CONTRACT_INFO.ABI, process.env.CONTRACT_INFO.ADDRESS)

@@ -34,9 +34,9 @@ export default {
       }
     }
   },
-  mounted () {
+  async mounted () {
     if (this.$store.getters.isAuthenticated) {
-      this.$store.dispatch('clearWeb3Instance')
+      await this.$store.dispatch('clearWeb3Instance')
       this.$store.dispatch('registerWeb3Instance')
     }
   }
