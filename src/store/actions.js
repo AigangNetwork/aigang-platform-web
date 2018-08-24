@@ -115,7 +115,7 @@ const registerWeb3Instance = async ({ commit, dispatch }) => {
   const userWeb3 = await getWeb3()
   commit(types.SET_WEB3_INSTANCE, userWeb3)
 
-  if (userWeb3.web3 && userWeb3.web3().currentProvider.publicConfigStore) {
+  if (userWeb3 && userWeb3.web3 && userWeb3.web3().currentProvider.publicConfigStore) {
     userWeb3.web3().currentProvider.publicConfigStore.on('update', () => {
       dispatch('refreshWeb3Instance')
     })
