@@ -250,7 +250,7 @@ const routes = [{
   },
   {
     name: 'MyPolicyList',
-    path: '/insurance/mypolicies',
+    path: '/insurance/policy/mypolicies',
     component: MyPolicyList,
     meta: {
       authRequired: true
@@ -265,7 +265,8 @@ const routes = [{
 },
 {
   name: 'Policy',
-  path: '/insurance/products/:id/policy/:policyId',
+  // path: '/insurance/products/:id/policy/:policyId',
+  path: '/insurance/policy/:policyId',
   component: Policy
 },
 {

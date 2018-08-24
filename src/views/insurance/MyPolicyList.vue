@@ -2,7 +2,7 @@
   <el-row v-loading="loading">
     <el-col v-if="!loading">
       <div class="policy-item" v-for="(item, index) in userPolicies.policies" :key="index">
-        <router-link :to="{ name: 'Policy', params: { id: item.productId, policyId: item.id } }">
+        <router-link :to="{ name: 'Policy', params: { policyId: item.id } }">
           <PolicyItem :policy="item" />
         </router-link>
       </div>
@@ -27,7 +27,7 @@ export default {
   async mounted () {
     try {
       await this.$store.dispatch('loadUserPolicies', 1)
-    } catch (error) { }
+    } catch (error) {}
   }
 }
 
@@ -40,4 +40,5 @@ export default {
   h2 {
     margin: 20px;
   }
+
 </style>

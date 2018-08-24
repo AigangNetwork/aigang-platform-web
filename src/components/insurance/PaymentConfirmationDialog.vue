@@ -22,7 +22,7 @@ export default {
   props: ['isVisible', 'displayDialog'],
   data () {
     return {
-      policyListRoute: '/insurance/mypolicies'
+      policyListRoute: '/insurance/policy/mypolicies'
     }
   },
   watch: {
