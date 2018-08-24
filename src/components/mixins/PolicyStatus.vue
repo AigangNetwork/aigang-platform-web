@@ -1,5 +1,4 @@
 <script>
-
 const DEFAULT = '-'
 
 export default {
@@ -34,4 +33,5 @@ export default {
     }
   }
 }
+
 </script>

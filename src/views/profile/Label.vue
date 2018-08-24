@@ -6,6 +6,7 @@
     <el-tag v-if="type === 'canceled'" type="warning" :size="size">{{ $t('profile.transactions.status.canceled') }}</el-tag>
     <el-tag v-if="type === 'successful'" type="success" :size="size">{{ $t('profile.transactions.status.successful') }}</el-tag>
     <el-tag v-if="type === 'failed'" type="danger" :size="size">{{ $t('profile.transactions.status.failed') }}</el-tag>
+    <el-tag v-if="type === 'corrupt'" type="danger" :size="size">{{ $t('profile.transactions.status.corrupt') }}</el-tag>
   </span>
 </template>
 <script>
