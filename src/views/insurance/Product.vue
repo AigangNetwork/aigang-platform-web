@@ -75,7 +75,7 @@ export default {
 
   .contract-address {
     font-size: 18px;
-    color: $light-blue;
+    color: $light-blue !important;
     font-family: $font-secondary;
     word-wrap: break-word;
   }
