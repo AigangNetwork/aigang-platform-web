@@ -220,6 +220,11 @@ export default {
       width: 37%;
     }
 
+    .email-container {
+      margin-top: 25px;
+      margin-bottom: 10px;
+    }
+
     .name-container {
       margin-left: 48px;
       margin-bottom: 20px;
@@ -299,7 +304,8 @@ export default {
       }
 
       .email-container {
-        margin-top: 20px;
+        margin-top: 30px;
+        margin-bottom: 10px;
       }
 
       .no-margin {
