@@ -293,7 +293,8 @@
         "blockchainFailed": "Blockchain Failed",
         "canceled": "Canceled",
         "successful": "Successful",
-        "failed": "Failed"
+        "failed": "Failed",
+        "corrupt": "Corrupt"
       },
       "table": {
         "emptyText": "No Transactions yet",
