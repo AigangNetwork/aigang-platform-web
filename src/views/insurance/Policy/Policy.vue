@@ -2,7 +2,7 @@
   <div class="aig-container aig-view" v-loading="loading">
     <transition v-if="!loading" name="fade" mode="out-in">
       <Card class="policy-card">
-        <div v-if="!loading" slot="body" class="policy-details-body">
+        <div v-show="!loading" slot="body" class="policy-details-body">
           <el-row class="header">
             <router-link :to="policyListRoute" class="back-button">
               <i class="back-icon el-icon-arrow-left"></i>
@@ -155,7 +155,6 @@ export default {
   @include policy-data;
 
   .aig-container {
-    align-items: flex-start;
 
     .policy-card {
       .header {
