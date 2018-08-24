@@ -19,8 +19,7 @@
 
           <el-row class="footer">
 
-            <el-button v-if="policy.status && policy.status.toUpperCase() === 'DRAFT'" class="aig-button" type="primary" @click.prevent.native="insure">{{
-              $t('insurance.policy.pay') }}</el-button>
+            <el-button v-if="policy.status && policy.status.toUpperCase() === 'DRAFT'" class="aig-button" type="primary" @click.prevent.native="insure">{{ $t('insurance.policy.pay') }}</el-button>
 
             <el-col v-else-if="policy.status && policy.status.toUpperCase() === 'PENDINGPAYMENT'">
               <el-button class="aig-button" disabled type="primary">{{ $t('insurance.policy.verifyForClaim') }}</el-button>
@@ -44,8 +43,7 @@
             </el-col>
 
             <el-col v-else-if="policy.status && policy.status.toUpperCase() === 'CLAIMABLE'">
-              <el-button class="aig-button" type="primary" @click.prevent.native="claim">{{ $t('insurance.policy.claim')
-                }}
+              <el-button class="aig-button" type="primary" @click.prevent.native="claim">{{ $t('insurance.policy.claim') }}
               </el-button>
             </el-col>
           </el-row>
@@ -74,7 +72,10 @@ import PolicyDeleteSection from '@/components/insurance/PolicyDeleteSection'
 import PolicyInfo from './PolicyInfo'
 import DeviceInfo from './DeviceInfo'
 import ClaimInfo from './ClaimInfo'
-import { mapGetters, mapActions } from 'vuex'
+import {
+  mapGetters,
+  mapActions
+} from 'vuex'
 
 export default {
   components: {
@@ -93,7 +94,7 @@ export default {
       isPaymentDialogVisible: false,
       isDisplayLogInToEthereumClientDialogVisible: false,
 
-      policyListRoute: '/insurance/mypolicies'
+      policyListRoute: '/insurance/policy/mypolicies'
     }
   },
   methods: {
@@ -147,6 +148,7 @@ export default {
     await this.getPolicy(this.$route.params.policyId)
   }
 }
+
 </script>
 <style lang="scss">
   @import '~helpers/variables';
@@ -206,4 +208,5 @@ export default {
       }
     }
   }
+
 </style>
