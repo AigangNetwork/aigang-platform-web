@@ -18,6 +18,14 @@
       </span>
     </el-tooltip>
 
+    <el-tooltip v-else-if="product.state != 'active'" :content="$t('insurance.product.productClosed')">
+      <span class="wrapper el-button">
+        <el-button :disabled="true" class="aig-button" type="primary">
+          {{ $t('insurance.product.productClosed') }}
+        </el-button>
+      </span>
+    </el-tooltip>
+
     <el-tooltip v-else-if="product.isPoolLimitReached" :content="$t('insurance.product.productPoolLimitReacher')">
       <span class="wrapper el-button">
         <el-button :disabled="true" class="aig-button" type="primary">
@@ -89,4 +97,5 @@ export default {
       height: 200px;
     }
   }
+
 </style>
