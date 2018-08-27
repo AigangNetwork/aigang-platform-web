@@ -5,9 +5,13 @@
       <div v-for="(model, tableIndex) in value.data" :key="tableIndex" v-if="value.data.length > 0">
         <el-row>
           <el-row class="input-section-title">{{$t('data.dataset.model.tableTitle')}}</el-row>
-          <el-form-item :prop="'model.titles.' + tableIndex" :rules="{
-            required: true, message: $t('data.dataset.validation.modelTitleEmpty'), trigger: 'blur'
-          }">
+          <el-form-item
+            :prop="'model.titles.' + tableIndex"
+            :rules="{
+              required: true,
+              message: $t('data.dataset.validation.modelTitleEmpty'),
+              trigger: 'blur'
+            }">
             <el-input :placeholder=" $t( 'data.dataset.model.placeholder.modelTitle') " v-model="models.titles[tableIndex]"></el-input>
           </el-form-item>
         </el-row>
@@ -44,7 +48,7 @@
             <img src="/static/delete-button.svg " alt="delete-button " @click="deleteTable(tableIndex) " class="table-action-button ">
             <span class="inner-buttons-container ">
               <img src="/static/add-button.svg " alt="add-column-button " @click="addColumn(tableIndex) " class="table-action-button ">
-              <img src="/static/remove-button.svg " alt="add-row-button " @click="removeColumn(intableIndexdex) " class="table-action-button ">
+              <img src="/static/remove-button.svg " alt="add-row-button " @click="removeColumn(tableIndex) " class="table-action-button ">
             </span>
             <span></span>
           </div>
@@ -55,18 +59,20 @@
       <p>{{$t('data.dataset.model.newTable')}}</p>
       <div>
         <el-tooltip :content="$t('data.dataset.model.tableColumns')">
-          <input v-model="colsLength" @input="event=> validateInput(event)" />
+          <input v-model="colsLength" type="number" />
         </el-tooltip>
         <p>{{$t('data.dataset.model.on')}}</p>
         <el-tooltip :content="$t('data.dataset.model.tableRows')">
-          <input v-model="rowsLength" @input="event => validateInput(event)" />
+          <input v-model="rowsLength" type="number" />
         </el-tooltip>
       </div>
-      <span class="aig-error" v-if="lengthError">{{$t('data.dataset.validation.onlyIntegersAllowed')}}</span>
-      <span class="aig-error" v-else-if="sizeTooBigError">{{$t('data.dataset.validation.tableTooBig')}}</span>
+      <span class="aig-error" v-if="sizeTooBigError">{{$t('data.dataset.validation.tableTooBig')}}</span>
       <span class="aig-error" v-else-if="sizeTooSmallError">{{$t('data.dataset.validation.tableTooSmall')}}</span>
-      <div class="create-button-container">
+      <div v-if="colsLength && rowsLength" class="create-button-container">
         <el-button @click="createTable" class="profile-button">{{ $t('data.dataset.model.create') }}</el-button>
+      </div>
+      <div v-else class="create-button-container">
+        <el-button disabled class="profile-button">{{ $t('data.dataset.model.create') }}</el-button>
       </div>
     </el-row>
   </div>
@@ -77,7 +83,6 @@ export default {
   props: ['value', 'validateField'],
   data () {
     return {
-      lengthError: false,
       sizeTooBigError: false,
       sizeTooSmallError: false,
       colsLength: '',
@@ -93,8 +98,6 @@ export default {
   },
   methods: {
     createTable () {
-      if (this.lengthError) return
-
       this.models = this.value
 
       const cols = parseInt(this.colsLength)
@@ -154,21 +157,6 @@ export default {
         return true
       }
     },
-    validateInput (event) {
-      this.sizeError = false
-
-      if (event.target.value === '') {
-        return
-      }
-
-      const number = parseInt(event.target.value)
-
-      if (!number) {
-        this.lengthError = true
-      } else {
-        this.lengthError = false
-      }
-    },
     deleteTable (index) {
       this.models = this.value
       this.models.data.splice(index, 1)
@@ -185,7 +173,6 @@ export default {
       }
     }
   }
-
 }
 </script>
 <style lang="scss" scoped>
