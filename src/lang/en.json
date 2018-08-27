@@ -522,7 +522,8 @@
         "tip2": "Check if your device still paired with our system,",
         "tip3": "If you still have problems with verification please contact us via info@aigang.network."
       },
-      "deviceNotClaimable": "By read data your device is not claimable at this moment",
+      "deviceClaimable": "We detected that your device is broken. You can claim your policy.",
+      "deviceNotClaimable": "We read your device data and all parameters looks good. At this moment your device is not claimable.",      
       "claim": "Claim policy",
       "notLoggedToEthereumClientDialog": {
         "title": "Not logged in to Ethereum Client",

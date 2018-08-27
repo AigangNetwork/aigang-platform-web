@@ -18,15 +18,10 @@
           </el-row>
 
           <el-row class="footer">
-
             <el-button v-if="policy.status && policy.status.toUpperCase() === 'DRAFT'" class="aig-button" type="primary" @click.prevent.native="insure">{{ $t('insurance.policy.pay') }}</el-button>
 
-            <el-col v-else-if="policy.status && policy.status.toUpperCase() === 'PENDINGPAYMENT'">
-              <el-button class="aig-button" disabled type="primary">{{ $t('insurance.policy.verifyForClaim') }}</el-button>
-            </el-col>
-
             <el-col v-else-if="policy.status && policy.status.toUpperCase() === 'PAID'">
-              <div v-if="policy.isVerifyForClaimFailed" class="failed-notification">
+              <div v-if="policy.isVerifyForClaimFailed" class="step-notification">
                 <span>{{ $t('insurance.policy.failedToVerifyDevice.title') }}</span>
                 <ul>
                   <li>{{ $t('insurance.policy.failedToVerifyDevice.tip1') }}</li>
@@ -34,7 +29,7 @@
                   <li>{{ $t('insurance.policy.failedToVerifyDevice.tip3') }}</li>
                 </ul>
               </div>
-              <div v-else-if="!policy.isClaimable" class="failed-notification">
+              <div v-else-if="!policy.isClaimable" class="step-notification">
                 <span>{{ $t('insurance.policy.deviceNotClaimable') }}</span>
               </div>
               <el-button class="aig-button" type="primary" @click.prevent.native="verifyClaim">
@@ -43,6 +38,9 @@
             </el-col>
 
             <el-col v-else-if="policy.status && policy.status.toUpperCase() === 'CLAIMABLE'">
+              <div class="step-notification">
+                <span>{{ $t('insurance.policy.deviceClaimable') }}</span>
+              </div>
               <el-button class="aig-button" type="primary" @click.prevent.native="claim">{{ $t('insurance.policy.claim') }}
               </el-button>
             </el-col>
@@ -54,13 +52,19 @@
       </Card>
     </transition>
 
-    <TermsAndConditionsDialog :termsAndConditions="policy.termsAndConditions" :isVisible="isTermsAndConditionsDialogVisible"
-      :displayDialog="displayTermsAndConditionsDialog" @agreed="makePayment" />
+    <TermsAndConditionsDialog
+      :termsAndConditions="policy.termsAndConditions"
+      :isVisible="isTermsAndConditionsDialogVisible"
+      :displayDialog="displayTermsAndConditionsDialog"
+      @agreed="makePayment" />
 
-    <LogInToEthereumClientDialog :isVisible="isDisplayLogInToEthereumClientDialogVisible" :displayDialog="displayLogInToEthereumClientDialog"
-    />
+    <LogInToEthereumClientDialog
+      :isVisible="isDisplayLogInToEthereumClientDialogVisible"
+      :displayDialog="displayLogInToEthereumClientDialog" />
 
-    <PaymentConfirmationDialog :isVisible="isPaymentDialogVisible" :displayDialog="displayPaymentDialog" />
+    <PaymentConfirmationDialog
+      :isVisible="isPaymentDialogVisible"
+      :displayDialog="displayPaymentDialog" />
   </div>
 </template>
 <script>
@@ -72,6 +76,7 @@ import PolicyDeleteSection from '@/components/insurance/PolicyDeleteSection'
 import PolicyInfo from './PolicyInfo'
 import DeviceInfo from './DeviceInfo'
 import ClaimInfo from './ClaimInfo'
+
 import {
   mapGetters,
   mapActions
@@ -93,7 +98,6 @@ export default {
       isTermsAndConditionsDialogVisible: false,
       isPaymentDialogVisible: false,
       isDisplayLogInToEthereumClientDialogVisible: false,
-
       policyListRoute: '/insurance/policy/mypolicies'
     }
   },
@@ -183,7 +187,7 @@ export default {
     }
   }
 
-  .failed-notification {
+  .step-notification {
     padding-top: 10px;
     padding-bottom: 10px;
   }
