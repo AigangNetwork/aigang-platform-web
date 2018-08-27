@@ -5,7 +5,7 @@
         {{ $store.state.user.profile.firstName.charAt(0) }}
       </div>
     </el-col>
-    <el-col v-loading="loading" :element-loading-text="$t('general.loading')" class="name-container form-container">
+    <el-col v-loading="loading" :element-loading-text="$t('general.loading')" class="user-info-container form-container">
       <transition name="slideUp" mode="out-in">
         <el-row class="no-margin" v-if="!isProfileChangeOn">
           <h2 class="name-field">{{ profileForm.firstName }} {{ profileForm.lastName }}</h2>
@@ -225,7 +225,7 @@ export default {
       margin-bottom: 10px;
     }
 
-    .name-container {
+    .user-info-container {
       margin-left: 48px;
       margin-bottom: 20px;
       width: calc(100% - 96px);
@@ -276,14 +276,10 @@ export default {
       align-items: center;
       width: 100%;
 
-      form {
-        height: 200px
-      }
-      .name-container {
+      .user-info-container {
         margin-left: 0;
         text-align: center;
         width: 100%;
-        height: 200px;
 
         .col-3 {
           width: 100%;
