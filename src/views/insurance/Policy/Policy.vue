@@ -46,25 +46,19 @@
             </el-col>
           </el-row>
 
-          <PolicyDeleteSection v-if="isPolicyDraft" />
+          <PolicyDeleteSection v-if="isPolicyDraftOrPendingPayment" />
 
         </div>
       </Card>
     </transition>
 
-    <TermsAndConditionsDialog
-      :termsAndConditions="policy.termsAndConditions"
-      :isVisible="isTermsAndConditionsDialogVisible"
-      :displayDialog="displayTermsAndConditionsDialog"
-      @agreed="makePayment" />
+    <TermsAndConditionsDialog :termsAndConditions="policy.termsAndConditions" :isVisible="isTermsAndConditionsDialogVisible"
+      :displayDialog="displayTermsAndConditionsDialog" @agreed="makePayment" />
 
-    <LogInToEthereumClientDialog
-      :isVisible="isDisplayLogInToEthereumClientDialogVisible"
-      :displayDialog="displayLogInToEthereumClientDialog" />
+    <LogInToEthereumClientDialog :isVisible="isDisplayLogInToEthereumClientDialogVisible" :displayDialog="displayLogInToEthereumClientDialog"
+    />
 
-    <PaymentConfirmationDialog
-      :isVisible="isPaymentDialogVisible"
-      :displayDialog="displayPaymentDialog" />
+    <PaymentConfirmationDialog :isVisible="isPaymentDialogVisible" :displayDialog="displayPaymentDialog" />
   </div>
 </template>
 <script>
@@ -141,10 +135,10 @@ export default {
     claimProperties () {
       return this.policy.claimProperties ? JSON.parse(this.policy.claimProperties) : null
     },
-    isPolicyDraft () {
+    isPolicyDraftOrPendingPayment () {
       if (this.policy.status) {
         const status = this.policy.status.toUpperCase()
-        return status === 'DRAFT'
+        return status === 'DRAFT' || status === 'PENDINGPAYMENT'
       }
     }
   },
