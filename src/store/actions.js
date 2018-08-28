@@ -219,17 +219,15 @@ const getPolicy = async ({ commit }, policyId) => {
 const sendPolicyPayment = async ({ commit, dispatch, state }) => {
   const web3 = state.userWeb3.web3()
   const productAddress = state.currentPolicy.contractAddress
-
   const TokenInstance = new web3.eth.Contract(process.env.CONTRACT_INFO.ABI, process.env.CONTRACT_INFO.ADDRESS)
   const paymentValue = web3.utils.toWei(state.currentPolicy.premium.toString())
-  const policyIdBytes = web3.utils.fromAscii(state.currentPolicy.id)
+  const policyId = state.currentPolicy.id
+  const policyIdBytes = web3.utils.fromAscii(policyId)
 
   TokenInstance.methods
     .approveAndCall(productAddress, paymentValue, policyIdBytes)
     .send({ gas: 190000, from: state.userWeb3.coinbase })
     .once('transactionHash', async txHash => {
-      const policyId = state.currentPolicy.id
-
       const request = {
         policyId,
         txId: txHash,
