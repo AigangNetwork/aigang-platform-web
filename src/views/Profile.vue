@@ -1,25 +1,25 @@
 <template>
   <div class="aig-container profile-container">
     <Card class="profile-card">
-      <div class="profile-content-container" slot="body" v-loading="loading" :element-loading-text="$t('general.loading')">
+      <div class="profile-content-container" slot="body">
         <div class="flex-container">
           <ProfileInfo/>
           <el-button class="logout-button" type="warning" @click="logout()">{{ $t('profile.general.logout') }}</el-button>
         </div>
-        <el-tabs type="card" class="profile-tabs">
+        <el-tabs type="card" class="profile-tabs" @tab-click="changeActiveTab">
           <el-tab-pane :label="$t('profile.tabs.profile')">
             <UpdatePassword/>
             <div class="horizontal-line"></div>
             <DeactivateAccount/>
           </el-tab-pane>
-          <el-tab-pane :label="$t('profile.tabs.wallets')">
-            <Wallets/>
+          <el-tab-pane :label="$t('profile.tabs.wallets')" name="wallets">
+            <Wallets :activeTab="activeTab"/>
           </el-tab-pane>
-          <el-tab-pane :label="$t('profile.tabs.transactions')">
-            <Transactions/>
+          <el-tab-pane :label="$t('profile.tabs.transactions')" name="transactions">
+            <Transactions :activeTab="activeTab"/>
           </el-tab-pane>
-          <el-tab-pane :label="$t('profile.tabs.notifications')">
-            <Notifications/>
+          <el-tab-pane :label="$t('profile.tabs.notifications')" name="notifications">
+            <Notifications :activeTab="activeTab"/>
           </el-tab-pane>
         </el-tabs>
       </div>
@@ -49,7 +49,7 @@ export default {
   },
   data () {
     return {
-      loading: false
+      activeTab: ''
     }
   },
   methods: {
@@ -58,6 +58,9 @@ export default {
         this.$store.dispatch('logOut')
         this.$router.push('/data')
       })
+    },
+    changeActiveTab (tab) {
+      this.activeTab = tab.name
     }
   }
 }

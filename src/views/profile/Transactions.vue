@@ -7,7 +7,7 @@
       <el-col>
         <p>{{ $t('profile.transactions.description') }}</p>
       </el-col>
-      <el-row>
+      <el-row v-show="dataLoaded">
         <el-table class="transactions" :data="transactions.items" :empty-text="$t('profile.transactions.table.emptyText')">
           <el-table-column prop="createdUtc" :label="$t('profile.transactions.table.titles.date')" width="160">
             <template slot-scope="scope">
@@ -38,7 +38,7 @@
           </el-table-column>
         </el-table>
       </el-row>
-      <el-row>
+      <el-row v-show="dataLoaded">
         <el-col class="paging">
           <Pagination v-if="transactions.totalPages > 1" :callback="loadPage" :total-page-count="transactions.totalPages" :current-page="page" />
         </el-col>
@@ -60,16 +60,23 @@ export default {
     Label,
     Pagination
   },
+  props: ['activeTab'],
   computed: {
     ...mapGetters(['transactions', 'loading'])
   },
   data () {
     return {
-      page: 1
+      page: 1,
+      dataLoaded: false
     }
   },
-  async mounted () {
-    await this.loadPage(1)
+  watch: {
+    async activeTab () {
+      if (this.activeTab === 'transactions' && !this.dataLoaded) {
+        await this.loadPage(1)
+        this.dataLoaded = true
+      }
+    }
   },
   methods: {
     formatTxLink (txId) {

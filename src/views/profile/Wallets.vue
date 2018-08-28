@@ -7,7 +7,7 @@
       <el-col>
         <p>{{ $t('profile.wallets.description') }}</p>
       </el-col>
-      <el-row>
+      <el-row  v-show="dataLoaded">
         <el-table :data="wallets.items" :empty-text="$t('profile.wallets.table.emptyText')">
           <el-table-column prop="createdUtc" :label="$t('profile.wallets.table.titles.date')" width="160">
             <template slot-scope="scope">
@@ -17,11 +17,11 @@
           <el-table-column prop="address" :label="$t('profile.wallets.table.titles.wallet')"></el-table-column>
         </el-table>
       </el-row>
-    </el-row>
-    <el-row>
-      <el-col class="paging">
-        <Pagination v-if="wallets.totalPages > 1" :callback="loadPage" :total-page-count="wallets.totalPages" :current-page="page" />
-      </el-col>
+      <el-row v-show="dataLoaded">
+        <el-col class="paging">
+          <Pagination v-if="wallets.totalPages > 1" :callback="loadPage" :total-page-count="wallets.totalPages" :current-page="page" />
+        </el-col>
+      </el-row>
     </el-row>
   </div>
 </template>
@@ -37,16 +37,23 @@ export default {
     Date,
     Pagination
   },
+  props: ['activeTab'],
   computed: {
     ...mapGetters(['wallets', 'loading'])
   },
   data () {
     return {
-      page: 1
+      page: 1,
+      dataLoaded: false
     }
   },
-  async mounted () {
-    await this.loadPage(1)
+  watch: {
+    async activeTab () {
+      if (this.activeTab === 'wallets' && !this.dataLoaded) {
+        await this.loadPage(1)
+        this.dataLoaded = true
+      }
+    }
   },
   methods: {
     async loadPage (page) {

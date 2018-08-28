@@ -319,7 +319,7 @@ const claim = async ({ commit, dispatch, state }) => {
   commit(types.SET_LOADING, false)
 }
 
-const deletePolicy = async ({ commit, dispatch, state }) => {
+const deletePolicy = async ({ commit, state }) => {
   commit(types.SET_LOADING, true)
 
   const policyId = state.currentPolicy.id
