@@ -106,7 +106,7 @@ export default {
     font-family: $font-primary;
     position: absolute;
     width: 100%;
-    z-index: 22;
+    z-index: 1002;
     background-color: $purple;
     line-height: 3em;
     ul {
