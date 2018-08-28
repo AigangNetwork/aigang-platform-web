@@ -5,7 +5,7 @@
       <DataItem :data="dataItem" :key="dataItem.id" />
     </el-col>
     <el-col :key="totalPageCount">
-      <Pagination v-if="totalPageCount > 0" :callback="loadPage" :total-page-count="totalPageCount" :current-page="page" />
+      <Pagination v-if="totalPageCount > 1" :callback="loadPage" :total-page-count="totalPageCount" :current-page="page" />
     </el-col>
     <el-col v-if="!dataList && isUpload" key="uploadError">
       <h2>

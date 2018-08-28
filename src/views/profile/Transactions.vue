@@ -8,7 +8,7 @@
         <p>{{ $t('profile.transactions.description') }}</p>
       </el-col>
       <el-row>
-        <el-table class="transactions" :data="transactions.blockchainTransactions" :empty-text="$t('profile.transactions.table.emptyText')">
+        <el-table class="transactions" :data="transactions.items" :empty-text="$t('profile.transactions.table.emptyText')">
           <el-table-column prop="createdUtc" :label="$t('profile.transactions.table.titles.date')" width="160">
             <template slot-scope="scope">
               <Date :dateUtc="scope.row.createdUtc" />
@@ -38,6 +38,11 @@
           </el-table-column>
         </el-table>
       </el-row>
+      <el-row>
+        <el-col class="paging">
+          <Pagination v-if="transactions.totalPages > 1" :callback="loadPage" :total-page-count="transactions.totalPages" :current-page="page" />
+        </el-col>
+      </el-row>
     </el-row>
   </div>
 </template>
@@ -47,11 +52,13 @@ import {
 } from 'vuex'
 import Date from '@/components/Date'
 import Label from './Label'
+import Pagination from '@/components/Pagination'
 
 export default {
   components: {
     Date,
-    Label
+    Label,
+    Pagination
   },
   computed: {
     ...mapGetters(['transactions', 'loading'])
@@ -62,13 +69,18 @@ export default {
     }
   },
   async mounted () {
-    try {
-      await this.$store.dispatch('loadProfileTransactions', this.page)
-    } catch (error) {}
+    await this.loadPage(1)
   },
   methods: {
     formatTxLink (txId) {
       return process.env.ETHERSCAN_ADDRESS + process.env.TX_PATH + txId
+    },
+    async loadPage (page) {
+      this.page = page
+
+      try {
+        await this.$store.dispatch('loadProfileTransactions', this.page)
+      } catch (error) {}
     },
     formatTypeText (type) {
       switch (type.toUpperCase()) {
@@ -109,6 +121,10 @@ export default {
     .type {
       word-break: break-word;
     }
+  }
+
+  .paging {
+    margin-top: 15px;
   }
 
 </style>

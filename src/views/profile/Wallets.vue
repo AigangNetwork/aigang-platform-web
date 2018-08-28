@@ -8,7 +8,7 @@
         <p>{{ $t('profile.wallets.description') }}</p>
       </el-col>
       <el-row>
-        <el-table :data="wallets.userWallets" :empty-text="$t('profile.wallets.table.emptyText')">
+        <el-table :data="wallets.items" :empty-text="$t('profile.wallets.table.emptyText')">
           <el-table-column prop="createdUtc" :label="$t('profile.wallets.table.titles.date')" width="160">
             <template slot-scope="scope">
               <Date :dateUtc="scope.row.createdUtc" />
@@ -18,6 +18,11 @@
         </el-table>
       </el-row>
     </el-row>
+    <el-row>
+      <el-col class="paging">
+        <Pagination v-if="wallets.totalPages > 1" :callback="loadPage" :total-page-count="wallets.totalPages" :current-page="page" />
+      </el-col>
+    </el-row>
   </div>
 </template>
 <script>
@@ -25,24 +30,32 @@ import {
   mapGetters
 } from 'vuex'
 import Date from '@/components/Date'
+import Pagination from '@/components/Pagination'
 
 export default {
   components: {
-    Date
+    Date,
+    Pagination
   },
   computed: {
     ...mapGetters(['wallets', 'loading'])
   },
   data () {
     return {
-      page: 1,
-      isSuccessfullyUpdate: false
+      page: 1
     }
   },
   async mounted () {
-    try {
-      await this.$store.dispatch('loadProfileWallets', this.page)
-    } catch (error) {}
+    await this.loadPage(1)
+  },
+  methods: {
+    async loadPage (page) {
+      this.page = page
+
+      try {
+        await this.$store.dispatch('loadProfileWallets', this.page)
+      } catch (error) {}
+    }
   }
 }
 
@@ -50,6 +63,10 @@ export default {
 <style lang="scss" scoped>
   table {
     width: 100%;
+  }
+
+  .paging {
+    margin-top: 15px;
   }
 
 </style>
