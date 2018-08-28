@@ -12,43 +12,43 @@
               message: $t('data.dataset.validation.modelTitleEmpty'),
               trigger: 'blur'
             }">
-            <el-input :placeholder=" $t( 'data.dataset.model.placeholder.modelTitle') " v-model="models.titles[tableIndex]"></el-input>
+            <el-input :placeholder=" $t( 'data.dataset.model.placeholder.modelTitle')" v-model="models.titles[tableIndex]"></el-input>
           </el-form-item>
         </el-row>
-        <div class="table-container ">
-          <div class="table-wrapper ">
+        <div class="table-container">
+          <div class="table-wrapper">
             <table>
-              <thead class="table-header ">
+              <thead class="table-header">
                 <tr>
-                  <th v-for="(key, index) in model[0] " :key="index ">
+                  <th v-for="(key, index) in model[0]" :key="index">
                     <el-form-item :prop="'model.data.' + tableIndex + '.0.' + index" :rules="{
                         required: true, message: $t('data.dataset.validation.tableCellEmpty'), trigger: 'blur'
                       }">
-                      <el-input type="textarea" v-model="model[0][index] " :placeholder="$t('data.dataset.model.placeholder.title')" maxlength="100 "></el-input>
+                      <el-input type="textarea" v-model="model[0][index]" :placeholder="$t('data.dataset.model.placeholder.title')" maxlength="100"></el-input>
                     </el-form-item>
                   </th>
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="(row, index) in model " v-if="index !==0 " :key="index ">
-                  <td v-for="(colData, i) in row " :key="i ">
+                <tr v-for="(row, index) in model" v-if="index !==0" :key="index">
+                  <td v-for="(colData, i) in row" :key="i">
                     <el-form-item :prop="'model.data.' + tableIndex + '.' + index + '.' + i" :rules="{
                       required: true, message: $t('data.dataset.validation.tableCellEmpty'), trigger: 'blur'
                     }">
-                      <el-input type="textarea" v-model="row[i]" :placeholder="$t('data.dataset.model.placeholder.data')" maxlength="150 "></el-input>
+                      <el-input type="textarea" v-model="row[i]" :placeholder="$t('data.dataset.model.placeholder.data')" maxlength="150"></el-input>
                     </el-form-item>
                   </td>
                 </tr>
               </tbody>
             </table>
-            <img src="/static/add-button.svg " alt="add-row-button " @click="addRow(tableIndex) " class="table-action-button ">
-            <img src="/static/remove-button.svg " alt="add-row-button " @click="removeRow(tableIndex) " class="table-action-button ">
+            <img src="/static/add-button.svg" alt="add-row-button" @click="addRow(tableIndex)" class="table-action-button">
+            <img src="/static/remove-button.svg" alt="add-row-button" @click="removeRow(tableIndex)" class="table-action-button">
           </div>
-          <div class="buttons-container ">
-            <img src="/static/delete-button.svg " alt="delete-button " @click="deleteTable(tableIndex) " class="table-action-button ">
-            <span class="inner-buttons-container ">
-              <img src="/static/add-button.svg " alt="add-column-button " @click="addColumn(tableIndex) " class="table-action-button ">
-              <img src="/static/remove-button.svg " alt="add-row-button " @click="removeColumn(tableIndex) " class="table-action-button ">
+          <div class="buttons-container">
+            <img src="/static/delete-button.svg" alt="delete-button" @click="deleteTable(tableIndex)" class="table-action-button">
+            <span class="inner-buttons-container">
+              <img src="/static/add-button.svg" alt="add-column-button" @click="addColumn(tableIndex)" class="table-action-button">
+              <img src="/static/remove-button.svg" alt="add-row-button" @click="removeColumn(tableIndex)" class="table-action-button">
             </span>
             <span></span>
           </div>
