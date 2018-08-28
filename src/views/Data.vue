@@ -13,10 +13,7 @@
           </transition>
           <ul>
             <li v-for="item in dataMeniu" :key="item.name">
-              <router-link
-                :class="{'aig-link-disabled': item.disabled}"
-                @click.native="collapseSideMenu"
-                active-class="aig-menu-active"
+              <router-link :class="{'aig-link-disabled': item.disabled}" @click.native="collapseSideMenu" active-class="aig-menu-active"
                 :to="item.routeLink">{{ item.name }}</router-link>
             </li>
           </ul>
@@ -30,7 +27,8 @@
           <el-col :span="8" class="data-upload-button-container">
             <el-tooltip :disabled="$store.getters.isAuthenticated" effect="dark" :content="$t('data.toolbar.uploadDisabled')" placement="top">
               <span class="wrapper el-button">
-                <el-button :disabled="!$store.getters.isAuthenticated" type="primary" @click="$router.push({ name: 'Upload' })" class="aig-upload-btn">{{ $t('actions.upload_new_data')}}</el-button>
+                <el-button :disabled="!$store.getters.isAuthenticated" type="primary" @click="$router.push({ name: 'Upload' })" class="aig-upload-btn">{{
+                  $t('actions.upload_new_data')}}</el-button>
               </span>
             </el-tooltip>
           </el-col>
@@ -201,7 +199,7 @@ export default {
 
     .aig-container .aig-data-menu {
       position: absolute;
-      z-index: 1;
+      z-index: 1001;
       left: 0;
       overflow-x: hidden;
       height: 100%;

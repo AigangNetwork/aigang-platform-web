@@ -234,10 +234,9 @@ const sendPolicyPayment = async ({ commit, dispatch, state }) => {
         txType: 'PolicyPayment',
         txMetadata: JSON.stringify({ policyId })
       }
+      commit(types.SET_TX_HASH, txHash)
 
       await axios.post('/insurance/transaction', request)
-
-      commit(types.SET_TX_HASH, txHash)
 
       dispatch('getPolicy', policyId)
     })

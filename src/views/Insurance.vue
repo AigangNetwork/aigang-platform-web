@@ -181,7 +181,7 @@ export default {
 
     .aig-container .aig-data-menu {
       position: absolute;
-      z-index: 1;
+      z-index: 1001;
       left: 0;
       overflow-x: hidden;
       height: 100%;
@@ -236,5 +236,4 @@ export default {
       }
     }
   }
-
 </style>
