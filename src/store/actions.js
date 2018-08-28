@@ -311,7 +311,7 @@ const claim = async ({ commit, dispatch, state }) => {
     const response = await axios.post('/insurance/claim', { policyId })
 
     if (response && response.data) {
-      dispatch('getPolicy', policyId)
+      await dispatch('getPolicy', policyId)
     }
   } catch (err) {}
 

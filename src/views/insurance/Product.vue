@@ -38,6 +38,10 @@ export default {
   async created () {
     await this.$store.dispatch('loadCurrentProduct', this.$route.params.id)
   },
+  async beforeMount () {
+    this.clearLoadingInfo()
+    this.setIsPolicyLoadingVisible(false)
+  },
   beforeRouteLeave (to, from, next) {
     this.clearLoadingInfo()
     this.setIsPolicyLoadingVisible(false)
