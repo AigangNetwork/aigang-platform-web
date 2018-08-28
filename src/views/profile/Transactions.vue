@@ -60,7 +60,6 @@ export default {
     Label,
     Pagination
   },
-  props: ['activeTab'],
   computed: {
     ...mapGetters(['transactions', 'loading'])
   },
@@ -70,14 +69,13 @@ export default {
       dataLoaded: false
     }
   },
-  watch: {
-    async activeTab () {
-      if (this.activeTab === 'transactions' && !this.dataLoaded) {
-        await this.loadPage(1)
-        this.dataLoaded = true
-      }
+  async mounted () {
+    if (!this.dataLoaded) {
+      await this.loadPage(1)
+      this.dataLoaded = true
     }
   },
+
   methods: {
     formatTxLink (txId) {
       return process.env.ETHERSCAN_ADDRESS + process.env.TX_PATH + txId
@@ -103,7 +101,6 @@ export default {
     }
   }
 }
-
 </script>
 <style lang="scss" scoped>
   @import '~helpers/variables';

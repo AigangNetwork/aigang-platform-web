@@ -62,13 +62,10 @@ export default {
       } catch (error) {}
     }
   },
-
-  watch: {
-    async activeTab () {
-      if (this.activeTab === 'notifications' && !this.dataLoaded) {
-        await this.loadNotifications()
-        this.dataLoaded = true
-      }
+  async mounted () {
+    if (!this.dataLoaded) {
+      await this.loadNotifications()
+      this.dataLoaded = true
     }
   }
 }

@@ -8,6 +8,10 @@ import Predictions from '@/views/Predictions'
 import Invest from '@/views/Invest'
 import Insurance from '@/views/Insurance'
 import Profile from '@/views/Profile'
+import General from '@/views/profile/General'
+import Wallets from '@/views/profile/Wallets'
+import Transactions from '@/views/profile/Transactions'
+import Notifications from '@/views/profile/Notifications'
 import UploadDataSet from '@/views/data/UploadDataSet'
 import Dataset from '@/views/data/Dataset'
 import NotFound from '@/views/general/NotFound'
@@ -57,9 +61,6 @@ const routes = [{
   path: '/activateEmail',
   name: 'ActivateEmail',
   component: ActivateEmail
-  // meta: {
-  //   guestRequired: true
-  // }
 },
 {
   path: '/forgotPassword',
@@ -91,7 +92,7 @@ const routes = [{
     name: 'all',
     path: '/data/all',
     component: DataItemsList,
-    props: route => ({
+    props: () => ({
       requestPath: '/data/list?page=',
       routerPath: '/data/all?page='
     })
@@ -100,7 +101,7 @@ const routes = [{
     name: 'mylist',
     path: '/data/uploaded',
     component: DataItemsList,
-    props: route => ({
+    props: () => ({
       requestPath: '/data/mylist?page=',
       routerPath: '/data/uploaded?page=',
       isUpload: true
@@ -110,7 +111,7 @@ const routes = [{
     name: 'mymodelslist',
     path: '/data/models',
     component: DataItemsList,
-    props: route => ({
+    props: () => ({
       requestPath: '/data/mymodelslist?page=',
       routerPath: '/data/models?page=',
       isModels: true
@@ -134,7 +135,7 @@ const routes = [{
     name: 'datasetInfo',
     path: '',
     component: DatasetInfo,
-    props: route => ({
+    props: () => ({
       isDataset: true
     })
   },
@@ -142,7 +143,7 @@ const routes = [{
     name: 'datasetData',
     path: 'data',
     component: DatasetData,
-    props: route => ({
+    props: () => ({
       isDataset: true
     })
   },
@@ -166,7 +167,7 @@ const routes = [{
     name: 'uploadDataModel',
     path: 'uploadDataModel',
     component: DatasetModelForm,
-    props: route => ({
+    props: () => ({
       isUpload: true,
       postPath: '/data/uploadModel',
       getPath: ''
@@ -182,7 +183,7 @@ const routes = [{
     name: 'modelInfo',
     path: '',
     component: DatasetInfo,
-    props: route => ({
+    props: () => ({
       isModel: true
     })
   },
@@ -243,7 +244,7 @@ const routes = [{
     name: 'InsuranceProducts',
     path: '/insurance/products',
     component: ProductItemsList,
-    props: route => ({
+    props: () => ({
       requestPath: '/insurance/list?page=',
       routerPath: '/insurance/products?page='
     })
@@ -264,18 +265,50 @@ const routes = [{
   component: Product
 },
 {
+  path: '/',
+  redirect: '/data'
+},
+{
   name: 'Policy',
-  // path: '/insurance/products/:id/policy/:policyId',
   path: '/insurance/policy/:policyId',
   component: Policy
 },
 {
   path: '/profile',
-  name: 'Profile',
+  redirect: '/profile/general'
+},
+{
+  path: '/profile',
   component: Profile,
-  meta: {
-    authRequired: true
-  }
+  children: [{
+    name: 'ProfileGeneral',
+    path: '/profile/general',
+    component: General,
+    meta: {
+      authRequired: true
+    }
+  },
+  {
+    name: 'ProfileWallets',
+    path: '/profile/wallets',
+    component: Wallets
+  },
+  {
+    name: 'ProfileTransactions',
+    path: '/profile/transactions',
+    component: Transactions,
+    meta: {
+      authRequired: true
+    }
+  },
+  {
+    name: 'ProfileNotifications',
+    path: '/profile/notifications',
+    component: Notifications,
+    meta: {
+      authRequired: true
+    }
+  }]
 }
 ]
 

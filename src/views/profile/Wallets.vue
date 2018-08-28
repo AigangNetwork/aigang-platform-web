@@ -26,9 +26,7 @@
   </div>
 </template>
 <script>
-import {
-  mapGetters
-} from 'vuex'
+import { mapGetters } from 'vuex'
 import Date from '@/components/Date'
 import Pagination from '@/components/Pagination'
 
@@ -37,7 +35,6 @@ export default {
     Date,
     Pagination
   },
-  props: ['activeTab'],
   computed: {
     ...mapGetters(['wallets', 'loading'])
   },
@@ -47,12 +44,10 @@ export default {
       dataLoaded: false
     }
   },
-  watch: {
-    async activeTab () {
-      if (this.activeTab === 'wallets' && !this.dataLoaded) {
-        await this.loadPage(1)
-        this.dataLoaded = true
-      }
+  async beforeMount () {
+    if (!this.dataLoaded) {
+      await this.loadPage(1)
+      this.dataLoaded = true
     }
   },
   methods: {
