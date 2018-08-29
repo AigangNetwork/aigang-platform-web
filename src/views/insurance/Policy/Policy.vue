@@ -1,56 +1,51 @@
 <template>
   <div class="aig-container aig-view" v-loading="loading">
-    <transition v-if="!loading" name="fade" mode="out-in">
-      <Card class="policy-card">
-        <div v-show="!loading" slot="body" class="policy-details-body">
-          <el-row class="header">
-            <router-link :to="policyListRoute" class="back-button">
-              <i class="back-icon el-icon-arrow-left"></i>
-            </router-link>
+    <Card class="policy-card" v-if="!loading">
+      <div v-show="!loading" slot="body">
+        <transition-group name="slideUp" mode="out-in">
 
-            <h2>{{ $t('insurance.policy.androidBatteryInsurancePolicy') }}</h2>
-          </el-row>
+          <div key="1" v-if="!isPolicyLoadingVisible && !policyLoadingInfo.isClaimable && !loading">
+            <el-row class="header">
+              <router-link :to="policyListRoute" class="back-button">
+                <i class="back-icon el-icon-arrow-left"></i>
+              </router-link>
 
-          <el-row class="content">
-            <PolicyInfo :policy="policy" />
-            <DeviceInfo :data="deviceData" />
-            <ClaimInfo :data="claimProperties" />
-          </el-row>
+              <h2>{{ $t('insurance.policy.androidBatteryInsurancePolicy') }}</h2>
+            </el-row>
 
-          <el-row class="footer">
-            <el-button v-if="policy.status && policy.status.toUpperCase() === 'DRAFT'" class="aig-button" type="primary" @click.prevent.native="insure">{{ $t('insurance.policy.pay') }}</el-button>
+            <el-row class="content">
+              <PolicyInfo :policy="policy" />
+              <DeviceInfo :data="deviceData" />
+              <ClaimInfo :data="claimProperties" />
+            </el-row>
 
-            <el-col v-else-if="policy.status && policy.status.toUpperCase() === 'PAID'">
-              <div v-if="policy.isVerifyForClaimFailed" class="step-notification">
-                <span>{{ $t('insurance.policy.failedToVerifyDevice.title') }}</span>
-                <ul>
-                  <li>{{ $t('insurance.policy.failedToVerifyDevice.tip1') }}</li>
-                  <li>{{ $t('insurance.policy.failedToVerifyDevice.tip2') }}</li>
-                  <li>{{ $t('insurance.policy.failedToVerifyDevice.tip3') }}</li>
-                </ul>
-              </div>
-              <div v-else-if="!policy.isClaimable" class="step-notification">
-                <span>{{ $t('insurance.policy.deviceNotClaimable') }}</span>
-              </div>
-              <el-button class="aig-button" type="primary" @click.prevent.native="verifyClaim">
-                {{ policy.isVerifyForClaimFailed ? $t('insurance.policy.verifyForClaimRetry') : $t('insurance.policy.verifyForClaim') }}
-              </el-button>
-            </el-col>
+            <el-row class="footer">
+              <el-button v-if="policy.status && policy.status.toUpperCase() === 'DRAFT'" class="aig-button" type="primary" @click.prevent.native="insure">{{
+                $t('insurance.policy.pay') }}</el-button>
 
-            <el-col v-else-if="policy.status && policy.status.toUpperCase() === 'CLAIMABLE'">
-              <div class="step-notification">
-                <span>{{ $t('insurance.policy.deviceClaimable') }}</span>
-              </div>
-              <el-button class="aig-button" type="primary" @click.prevent.native="claim">{{ $t('insurance.policy.claim') }}
-              </el-button>
-            </el-col>
-          </el-row>
+              <el-col v-else-if="policy.status && policy.status.toUpperCase() === 'PAID'">
+                <el-button class="aig-button" type="primary" @click.prevent.native="verifyClaim">
+                  {{ policy.isVerifyForClaimFailed ? $t('insurance.policy.verifyForClaimRetry') : $t('insurance.policy.verifyForClaim') }}
+                </el-button>
+              </el-col>
 
-          <PolicyDeleteSection v-if="isPolicyDraftOrPendingPayment" />
+              <el-col v-else-if="policy.status && policy.status.toUpperCase() === 'CLAIMABLE'">
+                <el-row>
+                  <span>{{ $t('insurance.policy.deviceClaimable') }}</span>
+                </el-row>
+                <el-button class="aig-button" type="primary" @click.prevent.native="claim">{{ $t('insurance.policy.claim')
+                  }}
+                </el-button>
+              </el-col>
+            </el-row>
 
-        </div>
-      </Card>
-    </transition>
+            <PolicyDeleteSection v-if="isPolicyDraftOrPendingPayment" />
+          </div>
+
+          <VerifyClaimLoadingInfo v-else key="2" />
+        </transition-group>
+      </div>
+    </Card>
 
     <TermsAndConditionsDialog :termsAndConditions="policy.termsAndConditions" :isVisible="isTermsAndConditionsDialogVisible"
       :displayDialog="displayTermsAndConditionsDialog" @agreed="makePayment" />
@@ -70,10 +65,12 @@ import PolicyDeleteSection from '@/components/insurance/PolicyDeleteSection'
 import PolicyInfo from './PolicyInfo'
 import DeviceInfo from './DeviceInfo'
 import ClaimInfo from './ClaimInfo'
+import VerifyClaimLoadingInfo from '@/components/insurance/VerifyClaimLoadingInfo'
 
 import {
   mapGetters,
-  mapActions
+  mapActions,
+  mapMutations
 } from 'vuex'
 
 export default {
@@ -85,7 +82,8 @@ export default {
     PolicyInfo,
     DeviceInfo,
     ClaimInfo,
-    PolicyDeleteSection
+    PolicyDeleteSection,
+    VerifyClaimLoadingInfo
   },
   data () {
     return {
@@ -97,6 +95,10 @@ export default {
   },
   methods: {
     ...mapActions(['getPolicy', 'sendPolicyPayment']),
+    ...mapMutations({
+      clearLoadingInfo: 'CLEAR_POLICY_LOADING_INFO',
+      setIsPolicyLoadingVisible: 'SET_IS_POLICY_LOADING_VISIBLE'
+    }),
     displayPaymentDialog (value) {
       this.isPaymentDialogVisible = value
     },
@@ -117,15 +119,23 @@ export default {
       this.displayTermsAndConditionsDialog(false)
       await this.sendPolicyPayment()
     },
-    verifyClaim () {
-      this.$store.dispatch('verifyClaim')
+    async verifyClaim () {
+      await this.$store.dispatch('verifyClaim')
+
+      if (this.policyLoadingInfo.isClaimable) {
+        setTimeout(() => {
+          this.getPolicy(this.$route.params.policyId)
+          this.setIsPolicyLoadingVisible(false)
+          this.clearLoadingInfo()
+        }, 1000)
+      }
     },
     claim () {
       this.$store.dispatch('claim')
     }
   },
   computed: {
-    ...mapGetters(['policy', 'web3', 'loading']),
+    ...mapGetters(['policy', 'web3', 'loading', 'isPolicyLoadingVisible', 'policyLoadingInfo']),
     isMetamaskLoggedIn () {
       return !!this.web3
     },
@@ -144,6 +154,15 @@ export default {
   },
   async mounted () {
     await this.getPolicy(this.$route.params.policyId)
+  },
+  async beforeMount () {
+    this.clearLoadingInfo()
+    this.setIsPolicyLoadingVisible(false)
+  },
+  beforeRouteLeave (to, from, next) {
+    this.clearLoadingInfo()
+    this.setIsPolicyLoadingVisible(false)
+    next()
   }
 }
 
@@ -157,6 +176,7 @@ export default {
   .aig-container {
 
     .policy-card {
+
       .header {
         display: flex;
         flex-direction: row;
@@ -181,11 +201,6 @@ export default {
     }
   }
 
-  .step-notification {
-    padding-top: 10px;
-    padding-bottom: 10px;
-  }
-
   .checkbox-description .bold:hover {
     cursor: pointer;
   }
@@ -205,5 +220,4 @@ export default {
       }
     }
   }
-
 </style>
