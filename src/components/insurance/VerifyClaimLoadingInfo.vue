@@ -36,7 +36,8 @@
 
     <transition-group name="slideUp" mode="out-in">
       <template v-if="policyLoadingInfo.isClaimable">
-        <p class="info-text" key="1">{{ $t('insurance.policy.policyIsClaimable') }}</p>
+        <p class="info-text bold" key="1">{{ $t('insurance.policy.policyIs') }} <span class="big-green">{{ $t('insurance.policy.statuses.claimable')
+            | uppercase }}</span> </p>
         <p class="info-text" key="2">{{ $t('insurance.policy.redirecting') }}</p>
       </template>
     </transition-group>
@@ -112,7 +113,7 @@ export default {
           this.getPolicy(this.$route.params.policyId)
           this.setIsPolicyLoadingVisible(false)
           this.clearLoadingInfo()
-        }, 1000)
+        }, 3000)
       }
     }
   }

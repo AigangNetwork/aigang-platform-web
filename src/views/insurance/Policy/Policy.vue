@@ -31,7 +31,7 @@
 
               <el-col v-else-if="policy.status && policy.status.toUpperCase() === 'CLAIMABLE'">
                 <el-row>
-                  <span>{{ $t('insurance.policy.deviceClaimable') }}</span>
+                  <span class="claimable-message">{{ $t('insurance.policy.deviceClaimable') }}</span>
                 </el-row>
                 <el-button class="aig-button" type="primary" @click.prevent.native="claim">{{ $t('insurance.policy.claim')
                   }}
@@ -97,7 +97,8 @@ export default {
     ...mapActions(['getPolicy', 'sendPolicyPayment']),
     ...mapMutations({
       clearLoadingInfo: 'CLEAR_POLICY_LOADING_INFO',
-      setIsPolicyLoadingVisible: 'SET_IS_POLICY_LOADING_VISIBLE'
+      setIsPolicyLoadingVisible: 'SET_IS_POLICY_LOADING_VISIBLE',
+      setTxHash: 'SET_TX_HASH'
     }),
     displayPaymentDialog (value) {
       this.isPaymentDialogVisible = value
@@ -117,6 +118,8 @@ export default {
     },
     async makePayment () {
       this.displayTermsAndConditionsDialog(false)
+      this.setTxHash(null)
+      this.displayPaymentDialog(true)
       await this.sendPolicyPayment()
     },
     async verifyClaim () {
@@ -127,7 +130,7 @@ export default {
           this.getPolicy(this.$route.params.policyId)
           this.setIsPolicyLoadingVisible(false)
           this.clearLoadingInfo()
-        }, 1000)
+        }, 3000)
       }
     },
     claim () {
@@ -207,6 +210,12 @@ export default {
 
   .wrapper.el-button {
     width: 100%;
+  }
+
+  .claimable-message {
+    margin-bottom: 20px;
+    display: block;
+    font-weight: 600;
   }
 
   @media screen and (max-width: 680px) {

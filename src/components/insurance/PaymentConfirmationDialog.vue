@@ -1,16 +1,21 @@
 <template>
   <el-dialog :title="$t('insurance.policy.paymentInfo.title')" :visible.sync="show">
-    <div class="policy-dialog-info">
-      <p>{{ $t('insurance.policy.paymentInfo.body') }}</p>
-      <a class="address" :href="txLink" target="_blank">
-        <span class="contract-address">{{ this.txHash }}</span>
-      </a>
-      <div class="buttons">
-        <router-link :to="policyListRoute">
-          <el-button class="button" type="primary">{{ $t('insurance.policy.paymentInfo.buttons.goBack')}}</el-button>
-        </router-link>
+    <transition-group name="slideDown">
+      <div key="1">
+        <p class="bold">{{ $t('insurance.policy.paymentInfo.metamaskAlert') }}</p>
       </div>
-    </div>
+      <div class="policy-dialog-info" v-if="txHash" key="2">
+        <p>{{ $t('insurance.policy.paymentInfo.body') }}</p>
+        <a class="address" :href="txLink" target="_blank">
+          <span class="contract-address">{{ this.txHash }}</span>
+        </a>
+        <div class="buttons">
+          <router-link :to="policyListRoute">
+            <el-button class="button" type="primary">{{ $t('insurance.policy.paymentInfo.buttons.goBack')}}</el-button>
+          </router-link>
+        </div>
+      </div>
+    </transition-group>
   </el-dialog>
 </template>
 <script>
@@ -66,5 +71,4 @@ export default {
       }
     }
   }
-
 </style>
