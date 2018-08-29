@@ -175,11 +175,16 @@ const createNewPolicy = async ({ commit, state }, { deviceId, productId }) => {
   let retryCount = process.env.RETRY_COUNT || 10
   let response = null
   while (!response || (!response.data.policyId && !response.data.validationResultCode)) {
-    response = await axios.post('insurance/policy', {
-      DeviceId: deviceId,
-      TaskId: state.policyLoadingInfo.taskId,
-      ProductId: productId
-    })
+    try {
+      response = await axios.post('insurance/policy', {
+        DeviceId: deviceId,
+        TaskId: state.policyLoadingInfo.taskId,
+        ProductId: productId
+      })
+    } catch (error) {
+      handlePolicyLoadingInfoError(error, state.policyLoadingInfo, commit)
+      return
+    }
 
     retryCount--
 
@@ -375,22 +380,8 @@ const loadTaskId = async (commit, request) => {
   try {
     response = await customAxios.post('insurance/policy/android/pair', request)
   } catch (error) {
-    let newPolicyLoadingInfo = Object.assign({}, policyLoadingInfo)
-
-    if (error.response.status === 404) {
-      newPolicyLoadingInfo.notFound = true
-    } else if (error.response.status === 400) {
-      newPolicyLoadingInfo.validationReasons = []
-
-      error.response.data.params.ValidationFailed.forEach(val =>
-        newPolicyLoadingInfo.validationReasons.push('errors.validation.' + val.reason)
-      )
-    } else if (error.response.status === 503 || error.response.status === 500) {
-      newPolicyLoadingInfo.serverError = true
-    }
-
-    commit(types.SET_POLICY_LOADING_INFO, newPolicyLoadingInfo)
-    throw new Error('Getting task id failed.')
+    handlePolicyLoadingInfoError(error, policyLoadingInfo, commit)
+    return
   }
 
   commit(types.CLEAR_POLICY_LOADING_INFO)
@@ -398,4 +389,22 @@ const loadTaskId = async (commit, request) => {
   commit(types.SET_POLICY_LOADING_INFO, policyLoadingInfo)
 
   return response
+}
+
+const handlePolicyLoadingInfoError = async (error, policyLoadingInfo, commit) => {
+  let newPolicyLoadingInfo = Object.assign({}, policyLoadingInfo)
+
+  if (error.response.status === 404) {
+    newPolicyLoadingInfo.notFound = true
+  } else if (error.response.status === 400) {
+    newPolicyLoadingInfo.validationReasons = []
+
+    error.response.data.params.ValidationFailed.forEach(val =>
+      newPolicyLoadingInfo.validationReasons.push('errors.validation.' + val.reason)
+    )
+  } else if (error.response.status === 503 || error.response.status === 500) {
+    newPolicyLoadingInfo.serverError = true
+  }
+
+  commit(types.SET_POLICY_LOADING_INFO, newPolicyLoadingInfo)
 }
