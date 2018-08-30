@@ -20,32 +20,32 @@ const mutations = {
   LOAD_PROFILE_TRANSACTIONS (state, payload) {
     state.user.transactions = payload
   },
-  LOAD_CURRENT_DATASET (state, payload) {
-    state.currentDataset = payload.data
-    state.currentDataset.commentsCount = payload.commentsCount
-    state.currentDataset.modelsCount = payload.modelsCount
-    if (state.currentDataset.remoteFileAccessPoint) {
-      state.currentDataset.isFileRemote = true
+  LOAD_DATASET (state, payload) {
+    state.dataset = payload.data
+    state.dataset.commentsCount = payload.commentsCount
+    state.dataset.modelsCount = payload.modelsCount
+    if (state.dataset.remoteFileAccessPoint) {
+      state.dataset.isFileRemote = true
     } else {
-      state.currentDataset.isFileRemote = false
+      state.dataset.isFileRemote = false
     }
     if (payload.tags) {
-      state.currentDataset.tags = payload.tags
+      state.dataset.tags = payload.tags
     }
   },
   SET_REMOTE_FILE_ACCESS_POINT (state, payload) {
-    state.currentDataset.remoteFileAccessPoint = payload.remoteFileAccessPoint
+    state.dataset.remoteFileAccessPoint = payload.remoteFileAccessPoint
   },
-  SET_CURRENT_DATASET_FILE (state, payload) {
-    state.currentDataset.file = payload.file
-    state.currentDataset.isFileRemote = false
-    state.currentDataset.hasFileChanged = true
+  SET_DATASET_FILE (state, payload) {
+    state.dataset.file = payload.file
+    state.dataset.isFileRemote = false
+    state.dataset.hasFileChanged = true
   },
   SET_IS_FILE_REMOTE (state, payload) {
-    state.currentDataset.isFileRemote = payload.isFileRemote
+    state.dataset.isFileRemote = payload.isFileRemote
   },
   SET_HAS_FILE_CHANGED (state, payload) {
-    state.currentDataset.hasFileChanged = payload.hasFileChanged
+    state.dataset.hasFileChanged = payload.hasFileChanged
   },
   SET_WEB3_INSTANCE (state, payload) {
     state.userWeb3 = { ...payload
@@ -55,34 +55,34 @@ const mutations = {
   CLEAR_WEB3_INSTANCE (state) {
     state.userWeb3 = {}
   },
-  LOAD_CURRENT_MODEL (state, payload) {
+  LOAD_MODEL (state, payload) {
     if (payload.data) {
-      state.currentModel = payload.data
-      state.currentModel.userName = payload.userName
-      state.currentModel.commentsCount = payload.commentsCount
+      state.model = payload.data
+      state.model.userName = payload.userName
+      state.model.commentsCount = payload.commentsCount
     }
   },
-  CLEAR_CURRENT_DATASET (state) {
-    state.currentDataset = {}
+  CLEAR_DATASET (state) {
+    state.dataset = {}
   },
-  CLEAR_CURRENT_MODEL (state) {
-    state.currentModel = {}
+  CLEAR_MODEL (state) {
+    state.model = {}
   },
   LOAD_CURRENT_PRODUCT (state, payload) {
-    state.currentProduct = payload.product
+    state.product = payload.product
   },
   CLEAR_CURRENT_PRODUCT (state) {
-    state.currentProduct = {}
+    state.product = {}
   },
   SET_LOADING (state, loading) {
     state.loading = loading
   },
-  SET_CURRENT_POLICY (state, payload) {
-    state.currentPolicy = payload.policy
-    state.currentPolicy.isClaimable = true
+  SET_POLICY (state, payload) {
+    state.policy = payload.policy
+    state.policy.isClaimable = true
   },
-  CLEAR_CURRENT_POLICY (state) {
-    state.currentPolicy = {}
+  CLEAR_POLICY (state) {
+    state.policy = {}
   },
   LOAD_USER_POLICIES (state, payload) {
     state.user.policies = payload

@@ -167,7 +167,7 @@ export default {
       this.loading = true
 
       try {
-        await this.$store.dispatch('loadCurrentDataset', this.$route.params.id)
+        await this.$store.dispatch('loaddataset', this.$route.params.id)
       } catch (error) {
         this.loading = false
         return

@@ -81,29 +81,29 @@ const loadNotificationPermissions = async ({ commit }, emailPermissionGroups) =>
   }
 }
 
-const loadCurrentDataset = async ({ commit }, id) => {
+const loaddataset = async ({ commit }, id) => {
   const response = await axios.get('/data/' + id)
   if (response.data.data) {
-    commit(types.LOAD_CURRENT_DATASET, response.data)
+    commit(types.LOAD_DATASET, response.data)
   } else {
-    commit(types.CLEAR_CURRENT_DATASET)
+    commit(types.CLEAR_DATASET)
   }
 }
 
-const clearCurrentDataset = ({ commit }) => {
-  commit(types.CLEAR_CURRENT_DATASET)
+const cleardataset = ({ commit }) => {
+  commit(types.CLEAR_DATASET)
 }
 
-const clearCurrentModel = ({ commit }) => {
-  commit(types.CLEAR_CURRENT_MODEL)
+const clearmodel = ({ commit }) => {
+  commit(types.CLEAR_MODEL)
 }
 
 const setRemoteFileAccessPoint = ({ commit }, response) => {
   commit(types.SET_REMOTE_FILE_ACCESS_POINT, response)
 }
 
-const setCurrentDatasetFile = ({ commit }, response) => {
-  commit(types.SET_CURRENT_DATASET_FILE, response)
+const setdatasetFile = ({ commit }, response) => {
+  commit(types.SET_DATASET_FILE, response)
 }
 
 const setIsFileRemote = ({ commit }, response) => {
@@ -134,12 +134,12 @@ const clearWeb3Instance = ({ commit }, response) => {
   commit(types.CLEAR_WEB3_INSTANCE, response)
 }
 
-const loadCurrentModel = async ({ commit }, payload) => {
+const loadmodel = async ({ commit }, payload) => {
   const response = await axios.get(`/data/${payload.datasetId}/models/${payload.modelId}`)
-  commit(types.LOAD_CURRENT_MODEL, response.data)
+  commit(types.LOAD_MODEL, response.data)
 }
 
-const loadCurrentProduct = async ({ commit }, id) => {
+const loadproduct = async ({ commit }, id) => {
   commit(types.CLEAR_CURRENT_PRODUCT)
   commit(types.SET_LOADING, true)
 
@@ -215,12 +215,12 @@ const createNewPolicy = async ({ commit, state }, { deviceId, productId }) => {
 
 const getPolicy = async ({ commit }, policyId) => {
   commit(types.SET_LOADING, true)
-  commit(types.CLEAR_CURRENT_POLICY)
+  commit(types.CLEAR_POLICY)
 
   const response = await axios.get('insurance/policy/' + policyId)
 
   if (response && response.data) {
-    commit(types.SET_CURRENT_POLICY, response.data)
+    commit(types.SET_POLICY, response.data)
   }
 
   commit(types.SET_LOADING, false)
@@ -228,10 +228,10 @@ const getPolicy = async ({ commit }, policyId) => {
 
 const sendPolicyPayment = async ({ commit, dispatch, state }) => {
   const web3 = state.userWeb3.web3()
-  const productAddress = state.currentPolicy.contractAddress
+  const productAddress = state.policy.contractAddress
   const TokenInstance = new web3.eth.Contract(process.env.CONTRACT_INFO.ABI, process.env.CONTRACT_INFO.ADDRESS)
-  const paymentValue = web3.utils.toWei(state.currentPolicy.premium.toString())
-  const policyId = state.currentPolicy.id
+  const paymentValue = web3.utils.toWei(state.policy.premium.toString())
+  const policyId = state.policy.id
   const policyIdBytes = web3.utils.fromAscii(policyId)
 
   TokenInstance.methods
@@ -274,8 +274,8 @@ const verifyClaim = async ({ commit, state }) => {
   // Getting task id
   try {
     await loadTaskId(commit, {
-      DeviceId: state.currentPolicy.deviceId,
-      ProductId: state.currentPolicy.productId,
+      DeviceId: state.policy.deviceId,
+      ProductId: state.policy.productId,
       IsCreatePolicy: false
     })
   } catch (e) {
@@ -289,7 +289,7 @@ const verifyClaim = async ({ commit, state }) => {
     try {
       response = await axios.put('/insurance/verifypolicyclaim', {
         TaskId: state.policyLoadingInfo.taskId,
-        PolicyId: state.currentPolicy.id
+        PolicyId: state.policy.id
       })
     } catch (error) {
       handlePolicyLoadingInfoError(error, state.policyLoadingInfo, commit)
@@ -315,7 +315,7 @@ const verifyClaim = async ({ commit, state }) => {
 const claim = async ({ commit, dispatch, state }) => {
   commit(types.SET_LOADING, true)
 
-  const policyId = state.currentPolicy.id
+  const policyId = state.policy.id
 
   try {
     const response = await axios.post('/insurance/claim', {
@@ -333,7 +333,7 @@ const claim = async ({ commit, dispatch, state }) => {
 const deletePolicy = async ({ commit, state }) => {
   commit(types.SET_LOADING, true)
 
-  const policyId = state.currentPolicy.id
+  const policyId = state.policy.id
 
   try {
     await axios.delete(`/insurance/deletepolicy/${policyId}`)
@@ -350,18 +350,18 @@ export {
   loadProfileTransactions,
   setNotificationPermission,
   loadNotificationPermissions,
-  loadCurrentDataset,
+  loaddataset,
   setRemoteFileAccessPoint,
-  setCurrentDatasetFile,
+  setdatasetFile,
   setIsFileRemote,
   setHasFileChanged,
   registerWeb3Instance,
   refreshWeb3Instance,
   clearWeb3Instance,
-  loadCurrentModel,
-  clearCurrentDataset,
-  clearCurrentModel,
-  loadCurrentProduct,
+  loadmodel,
+  cleardataset,
+  clearmodel,
+  loadproduct,
   loadUserPolicies,
   createNewPolicy,
   getPolicy,

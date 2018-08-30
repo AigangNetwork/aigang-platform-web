@@ -84,7 +84,7 @@ export default {
       this.loading = true
 
       try {
-        await this.$store.dispatch('loadCurrentModel', {
+        await this.$store.dispatch('loadmodel', {
           datasetId,
           modelId
         })
@@ -106,7 +106,7 @@ export default {
     }
   },
   mounted () {
-    this.$store.dispatch('clearCurrentModel')
+    this.$store.dispatch('clearmodel')
     this.fetchModel(this.$route.params.id, this.$route.params.modelId)
     eventHub.$on(eventHub.eventChangeCommentsCountForDataModel, (commentsToAdd) => {
       this.model.commentsCount += commentsToAdd

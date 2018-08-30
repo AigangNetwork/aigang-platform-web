@@ -36,7 +36,7 @@ export default {
     })
   },
   async created () {
-    await this.$store.dispatch('loadCurrentProduct', this.$route.params.id)
+    await this.$store.dispatch('loadproduct', this.$route.params.id)
   },
   async beforeMount () {
     this.clearLoadingInfo()

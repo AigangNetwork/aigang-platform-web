@@ -66,7 +66,7 @@ export default {
   },
   async created () {
     if (!this.dataset) {
-      await this.$store.dispatch('loadCurrentDataset', this.$route.params.id)
+      await this.$store.dispatch('loaddataset', this.$route.params.id)
     }
   }
 }

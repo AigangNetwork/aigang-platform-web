@@ -63,8 +63,8 @@ export default {
 
       if (this.isDataset) {
         try {
-          await this.$store.dispatch('loadCurrentDataset', this.$route.params.id)
-          this.dataset = this.$store.state.currentDataset
+          await this.$store.dispatch('loaddataset', this.$route.params.id)
+          this.dataset = this.$store.state.dataset
         } catch (e) {
           this.loading = false
         }
@@ -72,8 +72,8 @@ export default {
 
       if (this.isModel) {
         try {
-          await this.$store.dispatch('loadCurrentDataset', this.$route.params.id)
-          this.dataset = this.$store.state.currentDataset
+          await this.$store.dispatch('loaddataset', this.$route.params.id)
+          this.dataset = this.$store.state.dataset
         } catch (e) {
           this.loading = false
         }

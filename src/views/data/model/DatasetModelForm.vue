@@ -157,10 +157,10 @@ export default {
           })
 
           if (this.isUpload) {
-            this.$store.dispatch('loadCurrentDataset', this.$route.params.id)
+            this.$store.dispatch('loaddataset', this.$route.params.id)
             this.$router.push(`/data/${this.$route.params.id}/models`)
           } else {
-            this.$store.dispatch('loadCurrentModel', { datasetId: this.$route.params.id, modelId: this.$route.params.modelId })
+            this.$store.dispatch('loadmodel', { datasetId: this.$route.params.id, modelId: this.$route.params.modelId })
             this.$router.push({ name: 'modelInfo' })
           }
 
@@ -220,9 +220,9 @@ export default {
     }
   },
   async mounted () {
-    await this.$store.dispatch('loadCurrentDataset', this.$route.params.id)
+    await this.$store.dispatch('loaddataset', this.$route.params.id)
 
-    if (this.$store.state.currentDataset && this.$store.state.currentDataset.state !== 'active') {
+    if (this.$store.state.dataset && this.$store.state.dataset.state !== 'active') {
       this.$router.push({ name: 'AccessDenied' })
     }
   }

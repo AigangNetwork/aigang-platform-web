@@ -6,10 +6,10 @@ const getters = {
     return state.user.token
   },
   dataset: state => {
-    return state.currentDataset
+    return state.dataset
   },
   model: state => {
-    return state.currentModel
+    return state.model
   },
   wallets: state => {
     return state.user.wallets
@@ -21,13 +21,13 @@ const getters = {
     return state.user.emailPermissionGroups
   },
   product: state => {
-    return state.currentProduct
+    return state.product
   },
   loading: state => {
     return state.loading
   },
   policy: state => {
-    return state.currentPolicy
+    return state.policy
   },
   userPolicies: state => {
     return state.user.policies

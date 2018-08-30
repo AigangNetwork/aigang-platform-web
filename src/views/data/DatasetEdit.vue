@@ -157,18 +157,18 @@ export default {
     },
     updateDataset () {
       let form = new FormData()
-      this.datasetForm.hasFileChanged = this.$store.state.currentDataset.hasFileChanged
-      this.datasetForm.isFileRemote = this.$store.state.currentDataset.isFileRemote
+      this.datasetForm.hasFileChanged = this.$store.state.dataset.hasFileChanged
+      this.datasetForm.isFileRemote = this.$store.state.dataset.isFileRemote
 
-      if (!this.$store.state.currentDataset.isFileRemote &&
-          this.$store.state.currentDataset.hasFileChanged) {
-        this.datasetForm.file = this.$store.state.currentDataset.file.raw
+      if (!this.$store.state.dataset.isFileRemote &&
+          this.$store.state.dataset.hasFileChanged) {
+        this.datasetForm.file = this.$store.state.dataset.file.raw
         this.datasetForm.structure = JSON.stringify(this.datasetStructure)
-      } else if (!this.$store.state.currentDataset.isFileRemote) {
+      } else if (!this.$store.state.dataset.isFileRemote) {
         this.datasetForm.structure = JSON.stringify(this.datasetStructure)
         this.datasetForm.file = null
       } else {
-        this.$store.dispatch('setCurrentDatasetFile', {
+        this.$store.dispatch('setdatasetFile', {
           file: null
         })
         this.datasetForm.file = null
@@ -186,7 +186,7 @@ export default {
       }
 
       this.axios.post('/data/update', form).then(response => {
-        this.$store.dispatch('loadCurrentDataset', this.$route.params.id)
+        this.$store.dispatch('loaddataset', this.$route.params.id)
 
         this.loading = false
         this.$notify({
@@ -223,11 +223,11 @@ export default {
       this.parseFileStructure()
     },
     parseFileStructure () {
-      if (!this.$store.state.currentDataset.file) {
+      if (!this.$store.state.dataset.file) {
         try {
-          this.datasetStructure = JSON.parse(this.$store.state.currentDataset.structure)
+          this.datasetStructure = JSON.parse(this.$store.state.dataset.structure)
         } catch (e) {
-          this.datasetRemoteStructure = this.$store.state.currentDataset.structure
+          this.datasetRemoteStructure = this.$store.state.dataset.structure
         }
         return
       }
@@ -255,15 +255,15 @@ export default {
         this.structureValid = false
       }
 
-      fileReader.readAsText(this.$store.state.currentDataset.file.raw)
+      fileReader.readAsText(this.$store.state.dataset.file.raw)
       this.datasetStructure = dynamicFileFields
     },
     async onMounted (id) {
       this.loading = true
 
       try {
-        await this.$store.dispatch('loadCurrentDataset', this.$route.params.id)
-        if (this.$store.state.currentDataset.userId !== this.$store.state.user.profile.id) {
+        await this.$store.dispatch('loaddataset', this.$route.params.id)
+        if (this.$store.state.dataset.userId !== this.$store.state.user.profile.id) {
           this.$router.push({
             name: 'AccessDenied'
           })
@@ -273,14 +273,14 @@ export default {
         this.loading = false
       }
 
-      if (!this.$store.state.currentDataset) {
+      if (!this.$store.state.dataset) {
         this.$router.push('/data/' + id)
         return
       }
 
       this.initializeDatasetForm(this.$store.getters.dataset)
 
-      if (this.$store.state.currentDataset.remoteFileAccessPoint) {
+      if (this.$store.state.dataset.remoteFileAccessPoint) {
         this.$store.dispatch('setIsFileRemote', {
           isFileRemote: true
         })
@@ -290,7 +290,7 @@ export default {
         })
       }
 
-      this.isStructured = !this.$store.state.currentDataset.isFileRemote
+      this.isStructured = !this.$store.state.dataset.isFileRemote
 
       this.$root.$on('isFileRemote', (value) => {
         this.isStructured = !value

@@ -55,8 +55,8 @@ export default {
     }
   },
   methods: {
-    setCurrentDatasetIsPublic () {
-      this.$store.dispatch('setCurrentDatasetIsPublic', { isPublic: this.isPublic })
+    setdatasetIsPublic () {
+      this.$store.dispatch('setdatasetIsPublic', { isPublic: this.isPublic })
     },
     handleRemoteFileChange () {
       this.$store.dispatch('setRemoteFileAccessPoint',
@@ -68,14 +68,14 @@ export default {
         fileList.shift()
       }
 
-      this.$store.dispatch('setCurrentDatasetFile', { file })
+      this.$store.dispatch('setdatasetFile', { file })
       this.$store.dispatch('setHasFileChanged', { hasFileChanged: true })
       if (this.validate()) {
         this.onFileChange()
       }
     },
     fileRemoved () {
-      this.$store.dispatch('setCurrentDatasetFile', { file: null })
+      this.$store.dispatch('setdatasetFile', { file: null })
       this.$store.dispatch('setHasFileChanged', { hasFileChanged: false })
       this.onFileChange()
     },
@@ -84,24 +84,24 @@ export default {
       this.$root.$emit('isFileRemote', value)
     },
     validate () {
-      if (!this.$store.state.currentDataset.hasFileChanged &&
-          !this.$store.state.currentDataset.isFileRemote &&
+      if (!this.$store.state.dataset.hasFileChanged &&
+          !this.$store.state.dataset.isFileRemote &&
           !this.isInitiallyRemote) {
         return true
       }
 
-      if (this.$store.state.currentDataset.isFileRemote) {
+      if (this.$store.state.dataset.isFileRemote) {
         return true
       }
 
-      if (!this.$store.state.currentDataset.isFileRemote &&
-          !this.$store.state.currentDataset.file) {
+      if (!this.$store.state.dataset.isFileRemote &&
+          !this.$store.state.dataset.file) {
         this.isValid = false
         this.validationMessage = this.$t('data.dataset.validation.fileEmpty')
         return false
       }
 
-      const fileSize = this.$store.state.currentDataset.file.raw.size / 1024 / 1024
+      const fileSize = this.$store.state.dataset.file.raw.size / 1024 / 1024
       if (fileSize > 10) {
         this.$refs.csvFile.clearFiles()
         this.isValid = false
@@ -114,17 +114,17 @@ export default {
     }
   },
   mounted () {
-    if (!this.$store.state.currentDataset) {
+    if (!this.$store.state.dataset) {
       return
     }
 
-    if (this.$store.state.currentDataset.remoteFileAccessPoint) {
+    if (this.$store.state.dataset.remoteFileAccessPoint) {
       this.isRemoteFile = true
       this.isInitiallyRemote = true
     }
 
     if (this.showUploadOption) {
-      this.remoteFileAccessPoint = this.$store.state.currentDataset.remoteFileAccessPoint
+      this.remoteFileAccessPoint = this.$store.state.dataset.remoteFileAccessPoint
     }
   }
 }

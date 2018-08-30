@@ -28,11 +28,11 @@ export default {
       this.loading = true
 
       try {
-        await this.$store.dispatch('loadCurrentModel', {
+        await this.$store.dispatch('loadmodel', {
           datasetId,
           modelId
         })
-        this.model = JSON.parse(this.$store.state.currentModel.model)
+        this.model = JSON.parse(this.$store.state.model.model)
         this.loading = false
       } catch (e) {
         this.loading = false

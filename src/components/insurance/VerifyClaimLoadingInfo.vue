@@ -36,7 +36,7 @@
 
     <transition-group name="slideUp" mode="out-in">
       <template v-if="policyLoadingInfo.isClaimable">
-        <p class="info-text bold" key="1">{{ $t('insurance.policy.policyIs') }} <span class="big-green">{{ $t('insurance.policy.statuses.claimable')
+        <p class="info-text bold" key="1">{{ $t('insurance.policy.policyIs') }} <span class="big-attention">{{ $t('insurance.policy.statuses.claimable')
             | uppercase }}</span> </p>
         <p class="info-text" key="2">{{ $t('insurance.policy.redirecting') }}</p>
       </template>
