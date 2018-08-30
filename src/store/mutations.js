@@ -52,7 +52,7 @@ const mutations = {
     }
     state.userWeb3.aixBalance = parseInt(state.userWeb3.aixBalance, 10)
   },
-  CLEAR_WEB3_INSTANCE (state, payload) {
+  CLEAR_WEB3_INSTANCE (state) {
     state.userWeb3 = {}
   },
   LOAD_CURRENT_MODEL (state, payload) {
@@ -81,7 +81,7 @@ const mutations = {
     state.currentPolicy = payload.policy
     state.currentPolicy.isClaimable = true
   },
-  CLEAR_CURRENT_POLICY (state, payload) {
+  CLEAR_CURRENT_POLICY (state) {
     state.currentPolicy = {}
   },
   LOAD_USER_POLICIES (state, payload) {
@@ -116,13 +116,7 @@ const mutations = {
 
     state.user.emailPermissionGroups = payload.emailPermissionGroups
   },
-  SET_FAILED_VERIFY_CLAIM (state, value) {
-    state.currentPolicy.isVerifyForClaimFailed = value
-  },
-  SET_IS_CLAIMABLE (state, value) {
-    state.currentPolicy.isClaimable = value
-  },
-  SET_FAILED_CREATE_POLICY (state, value) {
+  SET_POLICY_LOADING_FAILED (state, value) {
     state.policyLoadingInfo.failed = value
   },
   SET_IS_POLICY_LOADING_VISIBLE (state, value) {

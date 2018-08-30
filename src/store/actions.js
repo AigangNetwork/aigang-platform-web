@@ -2,14 +2,9 @@ import * as types from './mutation-types'
 import router from '@/router'
 import axios from 'axios'
 import getWeb3 from '@/utils/web3/getWeb3'
-import {
-  sleep
-} from '@/utils/methods'
+import { sleep } from '@/utils/methods'
 
-const logIn = ({
-  commit,
-  dispatch
-}, loginResponse) => {
+const logIn = ({ commit, dispatch }, loginResponse) => {
   // after successful login setup interceptor (save authorization header with token for next requests)
   // axios.defaults.headers.common['Authorization'] = `Bearer ${loginResponse.headers['set-authorization']}`
   // axios.interceptors.request.use(config => {
@@ -32,23 +27,17 @@ const logIn = ({
   // })
 }
 
-const logOut = ({
-  commit
-}) => {
+const logOut = ({ commit }) => {
   commit(types.LOGOUT)
   commit(types.CLEAR_WEB3_INSTANCE)
   delete axios.defaults.headers.common['Authorization']
 }
 
-const changeProfileNames = ({
-  commit
-}, response) => {
+const changeProfileNames = ({ commit }, response) => {
   commit(types.CHANGE_PROFILE_NAMES, response)
 }
 
-const loadProfileWallets = async ({
-  commit
-}, page) => {
+const loadProfileWallets = async ({ commit }, page) => {
   commit(types.SET_LOADING, true)
   const response = await axios.get('/transaction/mywallets?page=' + page)
   if (response.data) {
@@ -57,9 +46,7 @@ const loadProfileWallets = async ({
   }
 }
 
-const loadProfileTransactions = async ({
-  commit
-}, page) => {
+const loadProfileTransactions = async ({ commit }, page) => {
   commit(types.SET_LOADING, true)
   const response = await axios.get('/transaction/mytransactions?page=' + page)
   if (response.data) {
@@ -68,9 +55,7 @@ const loadProfileTransactions = async ({
   }
 }
 
-const setNotificationPermission = async ({
-  commit
-}, payload) => {
+const setNotificationPermission = async ({ commit }, payload) => {
   commit(types.SET_LOADING, true)
   const response = await axios.post('/account/updateemailoptout', {
     emailTypeId: payload.id,
@@ -83,9 +68,7 @@ const setNotificationPermission = async ({
   }
 }
 
-const loadNotificationPermissions = async ({
-  commit
-}, emailPermissionGroups) => {
+const loadNotificationPermissions = async ({ commit }, emailPermissionGroups) => {
   commit(types.SET_LOADING, true)
   const response = await axios.get('/account/myemailoptouts')
 
@@ -98,9 +81,7 @@ const loadNotificationPermissions = async ({
   }
 }
 
-const loadCurrentDataset = async ({
-  commit
-}, id) => {
+const loadCurrentDataset = async ({ commit }, id) => {
   const response = await axios.get('/data/' + id)
   if (response.data.data) {
     commit(types.LOAD_CURRENT_DATASET, response.data)
@@ -109,46 +90,31 @@ const loadCurrentDataset = async ({
   }
 }
 
-const clearCurrentDataset = ({
-  commit
-}) => {
+const clearCurrentDataset = ({ commit }) => {
   commit(types.CLEAR_CURRENT_DATASET)
 }
 
-const clearCurrentModel = ({
-  commit
-}) => {
+const clearCurrentModel = ({ commit }) => {
   commit(types.CLEAR_CURRENT_MODEL)
 }
 
-const setRemoteFileAccessPoint = ({
-  commit
-}, response) => {
+const setRemoteFileAccessPoint = ({ commit }, response) => {
   commit(types.SET_REMOTE_FILE_ACCESS_POINT, response)
 }
 
-const setCurrentDatasetFile = ({
-  commit
-}, response) => {
+const setCurrentDatasetFile = ({ commit }, response) => {
   commit(types.SET_CURRENT_DATASET_FILE, response)
 }
 
-const setIsFileRemote = ({
-  commit
-}, response) => {
+const setIsFileRemote = ({ commit }, response) => {
   commit(types.SET_IS_FILE_REMOTE, response)
 }
 
-const setHasFileChanged = ({
-  commit
-}, response) => {
+const setHasFileChanged = ({ commit }, response) => {
   commit(types.SET_HAS_FILE_CHANGED, response)
 }
 
-const registerWeb3Instance = async ({
-  commit,
-  dispatch
-}) => {
+const registerWeb3Instance = async ({ commit, dispatch }) => {
   const userWeb3 = await getWeb3()
   commit(types.SET_WEB3_INSTANCE, userWeb3)
 
@@ -159,29 +125,21 @@ const registerWeb3Instance = async ({
   }
 }
 
-const refreshWeb3Instance = async ({
-  commit
-}) => {
+const refreshWeb3Instance = async ({ commit }) => {
   const userWeb3 = await getWeb3()
   commit(types.SET_WEB3_INSTANCE, userWeb3)
 }
 
-const clearWeb3Instance = ({
-  commit
-}, response) => {
+const clearWeb3Instance = ({ commit }, response) => {
   commit(types.CLEAR_WEB3_INSTANCE, response)
 }
 
-const loadCurrentModel = async ({
-  commit
-}, payload) => {
+const loadCurrentModel = async ({ commit }, payload) => {
   const response = await axios.get(`/data/${payload.datasetId}/models/${payload.modelId}`)
   commit(types.LOAD_CURRENT_MODEL, response.data)
 }
 
-const loadCurrentProduct = async ({
-  commit
-}, id) => {
+const loadCurrentProduct = async ({ commit }, id) => {
   commit(types.CLEAR_CURRENT_PRODUCT)
   commit(types.SET_LOADING, true)
 
@@ -202,13 +160,7 @@ const loadCurrentProduct = async ({
   }
 }
 
-const createNewPolicy = async ({
-  commit,
-  state
-}, {
-    deviceId,
-    productId
-  }) => {
+const createNewPolicy = async ({ commit, state }, { deviceId, productId }) => {
   commit(types.CLEAR_POLICY_LOADING_INFO)
   commit(types.SET_IS_POLICY_LOADING_VISIBLE, true)
 
@@ -225,7 +177,10 @@ const createNewPolicy = async ({
   // Creating policy
   let retryCount = process.env.RETRY_COUNT || 10
   let response = null
-  while (!response || (!response.data.policyId && !response.data.validationResultCode)) {
+  while (
+    state.isPolicyLoadingVisible &&
+    (!response || (!response.data.policyId && !response.data.validationResultCode))
+  ) {
     try {
       response = await axios.post('insurance/policy', {
         DeviceId: deviceId,
@@ -240,8 +195,7 @@ const createNewPolicy = async ({
     retryCount--
 
     if (retryCount === 0) {
-      commit(types.SET_FAILED_CREATE_POLICY, true)
-      commit(types.SET_LOADING, false)
+      commit(types.SET_POLICY_LOADING_FAILED, true)
       break
     }
 
@@ -259,9 +213,7 @@ const createNewPolicy = async ({
   commit(types.SET_POLICY_LOADING_INFO, newPolicyLoadingInfo)
 }
 
-const getPolicy = async ({
-  commit
-}, policyId) => {
+const getPolicy = async ({ commit }, policyId) => {
   commit(types.SET_LOADING, true)
   commit(types.CLEAR_CURRENT_POLICY)
 
@@ -274,11 +226,7 @@ const getPolicy = async ({
   commit(types.SET_LOADING, false)
 }
 
-const sendPolicyPayment = async ({
-  commit,
-  dispatch,
-  state
-}) => {
+const sendPolicyPayment = async ({ commit, dispatch, state }) => {
   const web3 = state.userWeb3.web3()
   const productAddress = state.currentPolicy.contractAddress
   const TokenInstance = new web3.eth.Contract(process.env.CONTRACT_INFO.ABI, process.env.CONTRACT_INFO.ADDRESS)
@@ -309,9 +257,7 @@ const sendPolicyPayment = async ({
     })
 }
 
-const loadUserPolicies = async ({
-  commit
-}, page) => {
+const loadUserPolicies = async ({ commit }, page) => {
   commit(types.SET_LOADING, true)
 
   const response = await axios.get('/insurance/policy/mypolicies?page=' + page)
@@ -321,12 +267,9 @@ const loadUserPolicies = async ({
   }
 }
 
-const verifyClaim = async ({
-  commit,
-  dispatch,
-  state
-}) => {
-  commit(types.SET_LOADING, true)
+const verifyClaim = async ({ commit, state }) => {
+  commit(types.CLEAR_POLICY_LOADING_INFO)
+  commit(types.SET_IS_POLICY_LOADING_VISIBLE, true)
 
   // Getting task id
   try {
@@ -336,50 +279,40 @@ const verifyClaim = async ({
       IsCreatePolicy: false
     })
   } catch (e) {
-    commit(types.SET_LOADING, false)
-    commit(types.SET_FAILED_VERIFY_CLAIM, true)
     return
   }
-
-  commit(types.SET_FAILED_VERIFY_CLAIM, false)
 
   let retryCount = process.env.RETRY_COUNT || 10
 
   let response = null
-  while (!response || !response.data.isTaskFinished) {
-    response = await axios.put('/insurance/verifypolicyclaim', {
-      TaskId: state.policyLoadingInfo.taskId,
-      PolicyId: state.currentPolicy.id
-    })
+  while (state.isPolicyLoadingVisible && (!response || !response.data.isTaskFinished)) {
+    try {
+      response = await axios.put('/insurance/verifypolicyclaim', {
+        TaskId: state.policyLoadingInfo.taskId,
+        PolicyId: state.currentPolicy.id
+      })
+    } catch (error) {
+      handlePolicyLoadingInfoError(error, state.policyLoadingInfo, commit)
+      return
+    }
 
     retryCount--
 
     if (retryCount === 0) {
-      commit(types.SET_FAILED_VERIFY_CLAIM, true)
-      commit(types.SET_LOADING, false)
+      commit(types.SET_POLICY_LOADING_FAILED, true)
       break
     }
 
     await sleep(1000)
   }
 
-  if (response.data.isTaskFinished && response.data.isClaimable) {
-    await dispatch('getPolicy', state.currentPolicy.id)
-    commit(types.SET_IS_CLAIMABLE, true)
-  }
-
-  if (response.data.isTaskFinished && !response.data.isClaimable) {
-    commit(types.SET_IS_CLAIMABLE, false)
-  }
-
-  commit(types.SET_LOADING, false)
+  let newPolicyLoadingInfo = Object.assign({}, state.policyLoadingInfo)
+  newPolicyLoadingInfo.isClaimable = response.data.isClaimable
+  newPolicyLoadingInfo.isTaskFinished = response.data.isTaskFinished
+  commit(types.SET_POLICY_LOADING_INFO, newPolicyLoadingInfo)
 }
 
-const claim = async ({
-  commit,
-  dispatch,
-  state
-}) => {
+const claim = async ({ commit, dispatch, state }) => {
   commit(types.SET_LOADING, true)
 
   const policyId = state.currentPolicy.id
@@ -397,10 +330,7 @@ const claim = async ({
   commit(types.SET_LOADING, false)
 }
 
-const deletePolicy = async ({
-  commit,
-  state
-}) => {
+const deletePolicy = async ({ commit, state }) => {
   commit(types.SET_LOADING, true)
 
   const policyId = state.currentPolicy.id

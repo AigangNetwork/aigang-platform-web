@@ -487,8 +487,10 @@
       "policyStatus": "Policy Status",
       "taskId": "Task ID",
       "readingDeviceDataAndCalculatingInsurancePrice": "Reading device data and calculating insurance price",
+      "readingDeviceDataAndVerifyingClaim": "Reading device data and verifying claim",
       "readingDeviceDataTimeout": "Reading device data timed out",
       "policyCreated": "Policy created",
+      "policyIs": "Policy is",
       "redirecting": "Redirecting",
       "androidBatteryInsurancePolicy": "Android Battery Insurance Policy",
       "deletePolicyTitle": "Delete your policy",
@@ -509,6 +511,7 @@
       "serverError": "Something went wrong. Please contact support: info@aigang.network",
       "paymentInfo": {
         "title": "Payment Information",
+        "metamaskAlert": "Atention! Do not leave this page until you confirm your transaction. Otherwise your transaction will be lost and policy won't be activated.",
         "body": "Your payment transaction was created succesfully. When payment will be processed we will inform you via email notification message. You can see your transaction status by clicking on transaction address. ",
         "buttons": {
           "goBack": "Go to policy list"
@@ -523,7 +526,7 @@
         "tip3": "If you still have problems with verification please contact us via info@aigang.network."
       },
       "deviceClaimable": "We detected that your device is broken. You can claim your policy.",
-      "deviceNotClaimable": "We read your device data and all parameters looks good. At this moment your device is not claimable.",      
+      "deviceNotClaimable": "We read your device data and all parameters are good. At this moment your device is not claimable.",
       "claim": "Claim policy",
       "notLoggedToEthereumClientDialog": {
         "title": "Not logged in to Ethereum Client",
