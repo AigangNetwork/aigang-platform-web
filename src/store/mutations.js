@@ -1,7 +1,7 @@
 const mutations = {
   LOGIN (state, payload) {
     state.user.authenticated = true
-    state.user.token = payload.token
+    // state.user.token = payload.token
     state.user.profile = payload.profile
   },
   LOGOUT (state) {
@@ -48,7 +48,8 @@ const mutations = {
     state.currentDataset.hasFileChanged = payload.hasFileChanged
   },
   SET_WEB3_INSTANCE (state, payload) {
-    state.userWeb3 = { ...payload }
+    state.userWeb3 = { ...payload
+    }
     state.userWeb3.aixBalance = parseInt(state.userWeb3.aixBalance, 10)
   },
   CLEAR_WEB3_INSTANCE (state, payload) {
@@ -126,6 +127,9 @@ const mutations = {
   },
   SET_IS_POLICY_LOADING_VISIBLE (state, value) {
     state.isPolicyLoadingVisible = value
+  },
+  SET_AUTH_TOKEN (state, value) {
+    state.user.token = value
   }
 }
 
