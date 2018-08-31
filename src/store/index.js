@@ -13,7 +13,10 @@ export const initialState = () => {
     user: {
       authenticated: false,
       token: null,
-      profile: null,
+      profile: {
+        firstName: '',
+        userName: ''
+      },
       wallets: {},
       transactions: {},
       emailPermissionGroups: {},

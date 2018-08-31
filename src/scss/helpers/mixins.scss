@@ -219,13 +219,13 @@
     margin: 0 0 0 -75px;
     border-radius: 50%;
     border: 3px solid transparent;
-    border-top-color: #9370DB;
+    border-top-color: #9370db;
     -webkit-animation: spin 2s linear infinite;
     animation: spin 2s linear infinite;
   }
 
   #loader:before {
-    content: "";
+    content: '';
     position: absolute;
     top: 5px;
     left: 5px;
@@ -233,13 +233,13 @@
     bottom: 5px;
     border-radius: 50%;
     border: 3px solid transparent;
-    border-top-color: #BA55D3;
+    border-top-color: #ba55d3;
     -webkit-animation: spin 3s linear infinite;
     animation: spin 3s linear infinite;
   }
 
   #loader:after {
-    content: "";
+    content: '';
     position: absolute;
     top: 15px;
     left: 15px;
@@ -247,7 +247,7 @@
     bottom: 15px;
     border-radius: 50%;
     border: 3px solid transparent;
-    border-top-color: #FF00FF;
+    border-top-color: #ff00ff;
     -webkit-animation: spin 1.5s linear infinite;
     animation: spin 1.5s linear infinite;
   }
@@ -287,10 +287,10 @@
 
   @keyframes placeHolderShimmer {
     0% {
-      background-position: -468px 0
+      background-position: -468px 0;
     }
     100% {
-      background-position: 468px 0
+      background-position: 468px 0;
     }
   }
 
@@ -309,5 +309,61 @@
     width: 250px;
     margin: 0 auto;
     position: relative;
+  }
+}
+
+@mixin loader-container {
+  .aig-container {
+    align-items: flex-start;
+  }
+
+  .info-text {
+    text-align: center;
+  }
+
+  .loader-container {
+    width: 100%;
+    height: 100%;
+    padding: 53px;
+  }
+
+  .loading-dots {
+    position: fixed;
+  }
+
+  .loading-text {
+    text-align: center;
+    color: #9370db;
+    font-weight: 600;
+    font-family: $font-primary;
+  }
+
+  #preloader {
+    width: 100%;
+    height: 100%;
+  }
+
+  .el-button {
+    margin: 0 auto;
+  }
+
+  .step-notification {
+    padding-top: 10px;
+    padding-bottom: 10px;
+
+    ul {
+      padding-left: 0;
+    }
+
+    li {
+      list-style: none;
+      padding: 5px 0 5px 0;
+    }
+  }
+
+  @media screen and (min-width: 100px) and (max-width: 400px) {
+    .loader-container {
+      padding: 10px;
+    }
   }
 }

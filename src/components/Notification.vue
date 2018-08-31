@@ -50,7 +50,8 @@ export default {
     handle404 () {
       this.notificationVisible = false
       this.$router.push({
-        name: 'NotFound'
+        name: 'NotFound',
+        params: { '0': 'notfound' }
       })
     },
     notifyRequestError (error) {

@@ -182,7 +182,8 @@ export default {
         this.setComments(this.dataset.commentsCount)
       } else {
         this.$router.push({
-          name: 'NotFound'
+          name: 'NotFound',
+          params: { '0': 'notfound' }
         })
       }
 

@@ -125,49 +125,5 @@ export default {
   @import '~helpers/mixins';
 
   @include loader;
-
-  .aig-container {
-    align-items: flex-start;
-  }
-
-  .info-text {
-    text-align: center;
-  }
-
-  .loader-container {
-    width: 100%;
-    height: 100%;
-    padding: 53px;
-  }
-
-  .loading-dots {
-    position: fixed;
-  }
-
-  .loading-text {
-    text-align: center;
-    color: #9370DB;
-    font-weight: 600;
-    font-family: $font-primary;
-  }
-
-  #preloader {
-    width: 100%;
-    height: 100%;
-  }
-
-  .el-button {
-    margin: 0 auto;
-  }
-
-  .step-notification {
-    padding-top: 10px;
-    padding-bottom: 10px;
-
-    li {
-      list-style: none;
-      padding: 5px 0 5px 0;
-    }
-
-  }
+  @include loader-container;
 </style>
