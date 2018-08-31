@@ -5,32 +5,16 @@ import getWeb3 from '@/utils/web3/getWeb3'
 import { sleep } from '@/utils/methods'
 
 const logIn = ({ commit, dispatch }, loginResponse) => {
-  // after successful login setup interceptor (save authorization header with token for next requests)
-  // axios.defaults.headers.common['Authorization'] = `Bearer ${loginResponse.headers['set-authorization']}`
-  // axios.interceptors.request.use(config => {
-  //   config.headers['Authorization'] = `Bearer ${loginResponse.headers['set-authorization']}`
-  //   return config
-  // }, error => {
-  //   return Promise.reject(error)
-  // })
-
   commit(types.LOGIN, loginResponse.data)
   dispatch('refreshWeb3Instance')
   router.push('/')
-
-  // get account profile
-  // axios.get('/account').then(response => {
-  //   // save token and user profile to store
-  //   commit(types.LOGIN, loginResponse.data)
-  //   // push to / route
-  //   router.push('/')
-  // })
 }
 
-const logOut = ({ commit }) => {
-  commit(types.LOGOUT)
-  commit(types.CLEAR_WEB3_INSTANCE)
+const logOut = async ({ commit }) => {
+  await axios.post('/account/logout')
   delete axios.defaults.headers.common['Authorization']
+  await commit(types.LOGOUT)
+  router.push('/data')
 }
 
 const changeProfileNames = ({ commit }, response) => {
@@ -81,7 +65,7 @@ const loadNotificationPermissions = async ({ commit }, emailPermissionGroups) =>
   }
 }
 
-const loaddataset = async ({ commit }, id) => {
+const loadDataset = async ({ commit }, id) => {
   const response = await axios.get('/data/' + id)
   if (response.data.data) {
     commit(types.LOAD_DATASET, response.data)
@@ -90,11 +74,11 @@ const loaddataset = async ({ commit }, id) => {
   }
 }
 
-const cleardataset = ({ commit }) => {
+const clearDataset = ({ commit }) => {
   commit(types.CLEAR_DATASET)
 }
 
-const clearmodel = ({ commit }) => {
+const clearModel = ({ commit }) => {
   commit(types.CLEAR_MODEL)
 }
 
@@ -134,12 +118,12 @@ const clearWeb3Instance = ({ commit }, response) => {
   commit(types.CLEAR_WEB3_INSTANCE, response)
 }
 
-const loadmodel = async ({ commit }, payload) => {
+const loadModel = async ({ commit }, payload) => {
   const response = await axios.get(`/data/${payload.datasetId}/models/${payload.modelId}`)
   commit(types.LOAD_MODEL, response.data)
 }
 
-const loadproduct = async ({ commit }, id) => {
+const loadProduct = async ({ commit }, id) => {
   commit(types.CLEAR_CURRENT_PRODUCT)
   commit(types.SET_LOADING, true)
 
@@ -350,7 +334,7 @@ export {
   loadProfileTransactions,
   setNotificationPermission,
   loadNotificationPermissions,
-  loaddataset,
+  loadDataset,
   setRemoteFileAccessPoint,
   setdatasetFile,
   setIsFileRemote,
@@ -358,10 +342,10 @@ export {
   registerWeb3Instance,
   refreshWeb3Instance,
   clearWeb3Instance,
-  loadmodel,
-  cleardataset,
-  clearmodel,
-  loadproduct,
+  loadModel,
+  clearDataset,
+  clearModel,
+  loadProduct,
   loadUserPolicies,
   createNewPolicy,
   getPolicy,

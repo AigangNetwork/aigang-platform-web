@@ -1,3 +1,5 @@
+import { initialState } from './index'
+
 const mutations = {
   LOGIN (state, payload) {
     state.user.authenticated = true
@@ -5,9 +7,7 @@ const mutations = {
     state.user.profile = payload.profile
   },
   LOGOUT (state) {
-    state.user.authenticated = false
-    state.user.token = null
-    state.user.profile = null
+    Object.assign(state, initialState())
   },
   CHANGE_PROFILE_NAMES (state, payload) {
     state.user.profile.firstName = payload.data.profile.firstName
@@ -48,7 +48,8 @@ const mutations = {
     state.dataset.hasFileChanged = payload.hasFileChanged
   },
   SET_WEB3_INSTANCE (state, payload) {
-    state.userWeb3 = { ...payload
+    state.userWeb3 = {
+      ...payload
     }
     state.userWeb3.aixBalance = parseInt(state.userWeb3.aixBalance, 10)
   },

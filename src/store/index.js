@@ -8,9 +8,8 @@ import * as actions from './actions'
 
 Vue.use(Vuex)
 
-const store = new Vuex.Store({
-  strict: process.env.NODE_ENV !== 'production' || process.env.NODE_ENV !== 'qa',
-  state: {
+export const initialState = () => {
+  return {
     user: {
       authenticated: false,
       token: null,
@@ -29,7 +28,12 @@ const store = new Vuex.Store({
     policyLoadingInfo: {},
     isPolicyLoadingVisible: false,
     loading: false
-  },
+  }
+}
+
+const store = new Vuex.Store({
+  strict: process.env.NODE_ENV !== 'production' || process.env.NODE_ENV !== 'qa',
+  state: initialState(),
   mutations,
   getters,
   actions,

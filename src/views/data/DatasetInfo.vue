@@ -25,11 +25,11 @@ export default {
       this.loading = true
       try {
         if (this.isDataset) {
-          await this.$store.dispatch('loaddataset', datasetId)
+          await this.$store.dispatch('loadDataset', datasetId)
           this.data = this.$store.state.dataset
           this.loading = false
         } else if (this.isModel) {
-          await this.$store.dispatch('loadmodel', { datasetId, modelId })
+          await this.$store.dispatch('loadModel', { datasetId, modelId })
           this.data = this.$store.state.model
           this.loading = false
         }

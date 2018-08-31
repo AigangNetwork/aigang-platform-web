@@ -28,7 +28,7 @@ export default {
       this.loading = true
 
       try {
-        await this.$store.dispatch('loadmodel', {
+        await this.$store.dispatch('loadModel', {
           datasetId,
           modelId
         })

@@ -35,7 +35,7 @@
           <li class="stick-to-right" key="upload-button">
             <el-tooltip v-if="!uploadingModelActive" :disabled="$store.getters.isAuthenticated" :content="$t('data.dataset.uploadModelDisabled')">
               <span class="wrapper el-button">
-                <el-button :disabled="!$store.getters.isAuthenticated" class="upload-model-button" @click="$router.push({name: 'uploadDataModel'})"
+                <el-button :disabled="!$store.getters.isAuthenticated" class="upload-model-button" @click="$router.push({name: 'UploadDataModel'})"
                   type="warning">{{ $t('data.dataset.model.uploadModel') }}</el-button>
               </span>
             </el-tooltip>
@@ -96,7 +96,7 @@ export default {
       navigationBars: [{
         name: this.$t('data.dataset.navigation.info'),
         routeLink: {
-          name: 'datasetInfo',
+          name: 'DatasetInfo',
           params: {
             id: this.$route.params.id
           }
@@ -107,7 +107,7 @@ export default {
       {
         name: this.$t('data.dataset.navigation.data'),
         routeLink: {
-          name: 'datasetData',
+          name: 'DatasetData',
           params: {
             id: this.$route.params.id
           }
@@ -118,7 +118,7 @@ export default {
       {
         name: this.$t('data.dataset.navigation.models'),
         routeLink: {
-          name: 'datasetModels',
+          name: 'DatasetModels',
           params: {
             id: this.$route.params.id
           }
@@ -129,7 +129,7 @@ export default {
       {
         name: this.$t('data.dataset.navigation.comment'),
         routeLink: {
-          name: 'datasetcomment',
+          name: 'DatasetComment',
           params: {
             id: this.$route.params.id
           }
@@ -152,7 +152,7 @@ export default {
   watch: {
     dataset (newCount, oldCount) {
       const modelsBar = this.navigationBars.find(bar => {
-        return bar.routeLink.name === 'datasetModels'
+        return bar.routeLink.name === 'DatasetModels'
       })
 
       modelsBar.name = this.$t('data.dataset.navigation.models')
@@ -167,7 +167,7 @@ export default {
       this.loading = true
 
       try {
-        await this.$store.dispatch('loaddataset', this.$route.params.id)
+        await this.$store.dispatch('loadDataset', this.$route.params.id)
       } catch (error) {
         this.loading = false
         return
@@ -190,7 +190,7 @@ export default {
     },
     setComments (commentsCount) {
       const commentBar = this.navigationBars.find(bar => {
-        return bar.routeLink.name === 'datasetcomment'
+        return bar.routeLink.name === 'DatasetComment'
       })
 
       commentBar.name = this.$t('data.dataset.navigation.comment')
@@ -331,5 +331,4 @@ export default {
       margin-bottom: 20px;
     }
   }
-
 </style>

@@ -186,7 +186,7 @@ export default {
       }
 
       this.axios.post('/data/update', form).then(response => {
-        this.$store.dispatch('loaddataset', this.$route.params.id)
+        this.$store.dispatch('loadDataset', this.$route.params.id)
 
         this.loading = false
         this.$notify({
@@ -262,7 +262,7 @@ export default {
       this.loading = true
 
       try {
-        await this.$store.dispatch('loaddataset', this.$route.params.id)
+        await this.$store.dispatch('loadDataset', this.$route.params.id)
         if (this.$store.state.dataset.userId !== this.$store.state.user.profile.id) {
           this.$router.push({
             name: 'AccessDenied'

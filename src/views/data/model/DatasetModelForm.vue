@@ -43,8 +43,8 @@
       </el-row>
     </el-row>
 
-    <Dialog :title="$t('profile.general.warning')" :body="$t('data.dataset.model.deleteDialogBody')" :on-confirm="deleteModel" :is-visible="dialogVisible"
-      :on-cancel="cancel" />
+    <Dialog :title="$t('profile.general.warning')" :body="$t('data.dataset.model.deleteDialogBody')" :on-confirm="deleteModel"
+      :is-visible="dialogVisible" :on-cancel="cancel" />
   </div>
 </template>
 <script>
@@ -157,11 +157,11 @@ export default {
           })
 
           if (this.isUpload) {
-            this.$store.dispatch('loaddataset', this.$route.params.id)
+            this.$store.dispatch('loadDataset', this.$route.params.id)
             this.$router.push(`/data/${this.$route.params.id}/models`)
           } else {
-            this.$store.dispatch('loadmodel', { datasetId: this.$route.params.id, modelId: this.$route.params.modelId })
-            this.$router.push({ name: 'modelInfo' })
+            this.$store.dispatch('loadModel', { datasetId: this.$route.params.id, modelId: this.$route.params.modelId })
+            this.$router.push({ name: 'ModelInfo' })
           }
 
           this.loading = false
@@ -220,7 +220,7 @@ export default {
     }
   },
   async mounted () {
-    await this.$store.dispatch('loaddataset', this.$route.params.id)
+    await this.$store.dispatch('loadDataset', this.$route.params.id)
 
     if (this.$store.state.dataset && this.$store.state.dataset.state !== 'active') {
       this.$router.push({ name: 'AccessDenied' })

@@ -40,7 +40,7 @@ export default {
       navigationBars: [{
         name: this.$t('data.dataset.navigation.model'),
         routeLink: {
-          name: 'modelInfo',
+          name: 'ModelInfo',
           params: {
             id: this.$route.params.id,
             modelId: this.$route.params.modelId
@@ -52,7 +52,7 @@ export default {
       {
         name: this.$t('data.dataset.navigation.coefficients'),
         routeLink: {
-          name: 'modelTables',
+          name: 'ModelTables',
           params: {
             id: this.$route.params.id,
             modelId: this.$route.params.modelId
@@ -64,7 +64,7 @@ export default {
       {
         name: this.$t('data.dataset.navigation.comment'),
         routeLink: {
-          name: 'modelcomment',
+          name: 'ModelComment',
           params: {
             id: this.$route.params.id,
             modelId: this.$route.params.modelId
@@ -84,7 +84,7 @@ export default {
       this.loading = true
 
       try {
-        await this.$store.dispatch('loadmodel', {
+        await this.$store.dispatch('loadModel', {
           datasetId,
           modelId
         })
@@ -97,7 +97,7 @@ export default {
     },
     printCommentsBar (commentsCount) {
       const commentBar = this.navigationBars.find(bar => {
-        return bar.routeLink.name === 'modelcomment'
+        return bar.routeLink.name === 'ModelComment'
       })
       commentBar.name = this.$t('data.dataset.navigation.comment')
       if (commentBar && commentsCount > 0) {
@@ -106,7 +106,7 @@ export default {
     }
   },
   mounted () {
-    this.$store.dispatch('clearmodel')
+    this.$store.dispatch('clearModel')
     this.fetchModel(this.$route.params.id, this.$route.params.modelId)
     eventHub.$on(eventHub.eventChangeCommentsCountForDataModel, (commentsToAdd) => {
       this.model.commentsCount += commentsToAdd

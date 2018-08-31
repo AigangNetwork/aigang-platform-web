@@ -4,7 +4,7 @@
       <div class="profile-content-container" slot="body">
         <div class="flex-container">
           <ProfileInfo/>
-          <el-button class="logout-button" type="warning" @click="logout()">{{ $t('profile.general.logout') }}</el-button>
+          <el-button class="logout-button" type="warning" @click="logOut">{{ $t('profile.general.logout') }}</el-button>
         </div>
         <el-tabs type="card" v-model="activeTab" class="profile-tabs" @tab-click="changeActiveTab">
           <el-tab-pane :label="$t('profile.tabs.profile')" name="ProfileGeneral" />
@@ -21,6 +21,7 @@
 <script>
 import Card from '@/components/Card'
 import ProfileInfo from './profile/ProfileInfo'
+import { mapActions } from 'vuex'
 
 export default {
   components: {
@@ -33,12 +34,7 @@ export default {
     }
   },
   methods: {
-    logout () {
-      this.axios.post('/account/logout').then(response => {
-        this.$store.dispatch('logOut')
-        this.$router.push('/data')
-      })
-    },
+    ...mapActions(['logOut']),
     changeActiveTab (tab) {
       switch (tab.name) {
         case 'ProfileWallets':
