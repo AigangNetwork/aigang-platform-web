@@ -13,8 +13,14 @@ const logIn = ({ commit, dispatch }, loginResponse) => {
 const logOut = async ({ commit }) => {
   await axios.post('/account/logout')
   delete axios.defaults.headers.common['Authorization']
-  await commit(types.LOGOUT)
+  commit(types.LOGOUT)
   router.push('/data')
+}
+
+const handleNotLoggedIn = ({ commit }) => {
+  delete axios.defaults.headers.common['Authorization']
+  commit(types.LOGOUT)
+  router.push({ name: 'Login' })
 }
 
 const changeProfileNames = ({ commit }, response) => {
@@ -266,6 +272,10 @@ const verifyClaim = async ({ commit, state }) => {
     return
   }
 
+  if (!state.policyLoadingInfo.taskId) {
+    return
+  }
+
   let retryCount = process.env.RETRY_COUNT || 10
 
   let response = null
@@ -352,7 +362,8 @@ export {
   sendPolicyPayment,
   verifyClaim,
   claim,
-  deletePolicy
+  deletePolicy,
+  handleNotLoggedIn
 }
 
 const loadTaskId = async (commit, request) => {
