@@ -24,8 +24,10 @@ import Card from '@/components/Card'
 import DatasetModelHeader from '@/components/data/model/DatasetModelHeader'
 import DataNavigation from '@/components/navigation/DataNavigation'
 import DatasetModelVote from '@/components/data/model/DatasetModelVote'
-import { mapGetters } from 'vuex'
 import eventHub from '@/utils/eventHub'
+import { createNamespacedHelpers } from 'vuex'
+
+const { mapGetters } = createNamespacedHelpers('data')
 
 export default {
   components: {
@@ -84,7 +86,7 @@ export default {
       this.loading = true
 
       try {
-        await this.$store.dispatch('loadModel', {
+        await this.$store.dispatch('data/loadModel', {
           datasetId,
           modelId
         })
@@ -106,7 +108,7 @@ export default {
     }
   },
   mounted () {
-    this.$store.dispatch('clearModel')
+    this.$store.dispatch('data/clearModel')
     this.fetchModel(this.$route.params.id, this.$route.params.modelId)
     eventHub.$on(eventHub.eventChangeCommentsCountForDataModel, (commentsToAdd) => {
       this.model.commentsCount += commentsToAdd

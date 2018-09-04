@@ -55,11 +55,8 @@ export default {
     }
   },
   methods: {
-    setdatasetIsPublic () {
-      this.$store.dispatch('setdatasetIsPublic', { isPublic: this.isPublic })
-    },
     handleRemoteFileChange () {
-      this.$store.dispatch('setRemoteFileAccessPoint',
+      this.$store.dispatch('data/setRemoteFileAccessPoint',
         { remoteFileAccessPoint: this.remoteFileAccessPoint })
       this.$root.$emit('remoteFileAccessPoint', this.remoteFileAccessPoint)
     },
@@ -68,40 +65,40 @@ export default {
         fileList.shift()
       }
 
-      this.$store.dispatch('setdatasetFile', { file })
-      this.$store.dispatch('setHasFileChanged', { hasFileChanged: true })
+      this.$store.dispatch('data/setdatasetFile', { file })
+      this.$store.dispatch('data/setHasFileChanged', { hasFileChanged: true })
       if (this.validate()) {
         this.onFileChange()
       }
     },
     fileRemoved () {
-      this.$store.dispatch('setdatasetFile', { file: null })
-      this.$store.dispatch('setHasFileChanged', { hasFileChanged: false })
+      this.$store.dispatch('data/setdatasetFile', { file: null })
+      this.$store.dispatch('data/setHasFileChanged', { hasFileChanged: false })
       this.onFileChange()
     },
     setIsFileRemote (value) {
-      this.$store.dispatch('setIsFileRemote', { isFileRemote: value })
+      this.$store.dispatch('data/setIsFileRemote', { isFileRemote: value })
       this.$root.$emit('isFileRemote', value)
     },
     validate () {
-      if (!this.$store.state.dataset.hasFileChanged &&
-          !this.$store.state.dataset.isFileRemote &&
+      if (!this.$store.state.data.dataset.hasFileChanged &&
+          !this.$store.state.data.dataset.isFileRemote &&
           !this.isInitiallyRemote) {
         return true
       }
 
-      if (this.$store.state.dataset.isFileRemote) {
+      if (this.$store.state.data.dataset.isFileRemote) {
         return true
       }
 
-      if (!this.$store.state.dataset.isFileRemote &&
-          !this.$store.state.dataset.file) {
+      if (!this.$store.state.data.dataset.isFileRemote &&
+          !this.$store.state.data.dataset.file) {
         this.isValid = false
         this.validationMessage = this.$t('data.dataset.validation.fileEmpty')
         return false
       }
 
-      const fileSize = this.$store.state.dataset.file.raw.size / 1024 / 1024
+      const fileSize = this.$store.state.data.dataset.file.raw.size / 1024 / 1024
       if (fileSize > 10) {
         this.$refs.csvFile.clearFiles()
         this.isValid = false
@@ -114,17 +111,17 @@ export default {
     }
   },
   mounted () {
-    if (!this.$store.state.dataset) {
+    if (!this.$store.state.data.dataset) {
       return
     }
 
-    if (this.$store.state.dataset.remoteFileAccessPoint) {
+    if (this.$store.state.data.dataset.remoteFileAccessPoint) {
       this.isRemoteFile = true
       this.isInitiallyRemote = true
     }
 
     if (this.showUploadOption) {
-      this.remoteFileAccessPoint = this.$store.state.dataset.remoteFileAccessPoint
+      this.remoteFileAccessPoint = this.$store.state.data.dataset.remoteFileAccessPoint
     }
   }
 }

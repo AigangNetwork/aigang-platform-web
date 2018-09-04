@@ -32,9 +32,9 @@
 </template>
 <script>
 import CreatedDate from '@/components/mixins/CreatedDate'
-import {
-  mapGetters, mapMutations
-} from 'vuex'
+import { createNamespacedHelpers } from 'vuex'
+
+const { mapGetters } = createNamespacedHelpers('data')
 
 export default {
   props: ['model'],
@@ -64,14 +64,10 @@ export default {
       return this.dataset.state === 'active'
     }
   },
-  methods: {
-    ...mapMutations({ clearDataset: 'CLEAR_DATASET' })
-  },
   async mounted () {
     if (!this.dataset || this.dataset.id !== this.$route.params.id) {
-      console.log('hello')
-      this.clearDataset()
-      await this.$store.dispatch('loadDataset', this.$route.params.id)
+      await this.$store.dispatch('data/clearDataset')
+      await this.$store.dispatch('data/loadDataset', this.$route.params.id)
     }
   }
 }

@@ -2,44 +2,6 @@ import * as types from './mutation-types'
 import axios from 'axios'
 import { sleep } from '@/utils/methods'
 
-const loadDataset = async ({ commit }, id) => {
-  const response = await axios.get('/data/' + id)
-  if (response.data.data) {
-    commit(types.LOAD_DATASET, response.data)
-  } else {
-    commit(types.CLEAR_DATASET)
-  }
-}
-
-const clearDataset = ({ commit }) => {
-  commit(types.CLEAR_DATASET)
-}
-
-const clearModel = ({ commit }) => {
-  commit(types.CLEAR_MODEL)
-}
-
-const setRemoteFileAccessPoint = ({ commit }, response) => {
-  commit(types.SET_REMOTE_FILE_ACCESS_POINT, response)
-}
-
-const setdatasetFile = ({ commit }, response) => {
-  commit(types.SET_DATASET_FILE, response)
-}
-
-const setIsFileRemote = ({ commit }, response) => {
-  commit(types.SET_IS_FILE_REMOTE, response)
-}
-
-const setHasFileChanged = ({ commit }, response) => {
-  commit(types.SET_HAS_FILE_CHANGED, response)
-}
-
-const loadModel = async ({ commit }, payload) => {
-  const response = await axios.get(`/data/${payload.datasetId}/models/${payload.modelId}`)
-  commit(types.LOAD_MODEL, response.data)
-}
-
 const loadProduct = async ({ commit }, id) => {
   commit(types.CLEAR_CURRENT_PRODUCT)
   commit(types.SET_LOADING, true)
@@ -248,14 +210,6 @@ const deletePolicy = async ({ commit, state }) => {
 }
 
 export {
-  loadDataset,
-  setRemoteFileAccessPoint,
-  setdatasetFile,
-  setIsFileRemote,
-  setHasFileChanged,
-  loadModel,
-  clearDataset,
-  clearModel,
   loadProduct,
   loadUserPolicies,
   createNewPolicy,

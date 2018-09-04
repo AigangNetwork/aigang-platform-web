@@ -168,9 +168,7 @@ export default {
         this.datasetForm.structure = JSON.stringify(this.datasetStructure)
         this.datasetForm.file = null
       } else {
-        this.$store.dispatch('setdatasetFile', {
-          file: null
-        })
+        this.$store.dispatch('data/setdatasetFile', { file: null })
         this.datasetForm.file = null
         this.datasetForm.structure = this.datasetRemoteStructure
         this.datasetForm.isFileRemote = true
@@ -186,7 +184,7 @@ export default {
       }
 
       this.axios.post('/data/update', form).then(response => {
-        this.$store.dispatch('loadDataset', this.$route.params.id)
+        this.$store.dispatch('data/loadDataset', this.$route.params.id)
 
         this.loading = false
         this.$notify({
@@ -262,7 +260,7 @@ export default {
       this.loading = true
 
       try {
-        await this.$store.dispatch('loadDataset', this.$route.params.id)
+        await this.$store.dispatch('data/loadDataset', this.$route.params.id)
         if (this.$store.state.dataset.userId !== this.$store.state.user.profile.id) {
           this.$router.push({
             name: 'AccessDenied'
@@ -278,14 +276,14 @@ export default {
         return
       }
 
-      this.initializeDatasetForm(this.$store.getters.dataset)
+      this.initializeDatasetForm(this.$store.getters['data/dataset'])
 
       if (this.$store.state.dataset.remoteFileAccessPoint) {
-        this.$store.dispatch('setIsFileRemote', {
+        this.$store.dispatch('data/setIsFileRemote', {
           isFileRemote: true
         })
       } else {
-        this.$store.dispatch('setIsFileRemote', {
+        this.$store.dispatch('data/setIsFileRemote', {
           isFileRemote: false
         })
       }

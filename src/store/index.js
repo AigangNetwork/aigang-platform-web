@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import createPersistedState from 'vuex-persistedstate'
-// import { Investment } from './investment/index'
+import data from './data/index'
 import user from './user/index'
 
 import getters from './getters'
@@ -10,10 +10,8 @@ import * as actions from './actions'
 
 Vue.use(Vuex)
 
-export const initialState = () => {
+const initialState = () => {
   return {
-    dataset: {},
-    model: null,
     product: {},
     policy: {},
     userPolicies: {},
@@ -24,7 +22,7 @@ export const initialState = () => {
   }
 }
 
-const store = new Vuex.Store({
+export default new Vuex.Store({
   strict: process.env.NODE_ENV !== 'production' || process.env.NODE_ENV !== 'qa',
   state: initialState(),
   mutations,
@@ -32,8 +30,7 @@ const store = new Vuex.Store({
   actions,
   plugins: [createPersistedState()], // save to local storage
   modules: {
-    user
+    user,
+    data
   }
 })
-
-export default store

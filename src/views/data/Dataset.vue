@@ -66,9 +66,9 @@ import DataNavigation from '@/components/navigation/DataNavigation'
 import Card from '@/components/Card'
 import eventHub from '@/utils/eventHub'
 import DatasetTag from '@/components/data/dataset/DatsetTag'
-import {
-  mapGetters
-} from 'vuex'
+import { createNamespacedHelpers } from 'vuex'
+
+const { mapGetters } = createNamespacedHelpers('data')
 
 export default {
   components: {
@@ -167,7 +167,7 @@ export default {
       this.loading = true
 
       try {
-        await this.$store.dispatch('loadDataset', this.$route.params.id)
+        await this.$store.dispatch('data/loadDataset', this.$route.params.id)
       } catch (error) {
         this.loading = false
         return

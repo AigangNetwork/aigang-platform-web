@@ -93,8 +93,8 @@ export default {
   },
   computed: {
     canVote () {
-      return this.$store.getters.dataset &&
-          this.$store.getters.dataset.state === 'active' &&
+      return this.$store.getters['data/dataset'] &&
+          this.$store.getters['data/dataset'].state === 'active' &&
           this.$store.getters['user/isAuthenticated']
     }
   },

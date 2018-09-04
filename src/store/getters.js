@@ -1,15 +1,9 @@
 const getters = {
-  dataset: state => {
-    return state.dataset
-  },
-  model: state => {
-    return state.model
+  loading: state => {
+    return state.loading
   },
   product: state => {
     return state.product
-  },
-  loading: state => {
-    return state.loading
   },
   policy: state => {
     return state.policy
