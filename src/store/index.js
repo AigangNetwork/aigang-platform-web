@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import createPersistedState from 'vuex-persistedstate'
+// import { Investment } from './investment/index'
+import user from './user/index'
 
 import getters from './getters'
 import mutations from './mutations'
@@ -10,23 +12,11 @@ Vue.use(Vuex)
 
 export const initialState = () => {
   return {
-    user: {
-      authenticated: false,
-      token: null,
-      profile: {
-        firstName: '',
-        userName: ''
-      },
-      wallets: {},
-      transactions: {},
-      emailPermissionGroups: {},
-      policies: {}
-    },
-    userWeb3: {},
     dataset: {},
     model: null,
     product: {},
     policy: {},
+    userPolicies: {},
     txHash: null,
     policyLoadingInfo: {},
     isPolicyLoadingVisible: false,
@@ -40,7 +30,10 @@ const store = new Vuex.Store({
   mutations,
   getters,
   actions,
-  plugins: [createPersistedState()] // save to local storage
+  plugins: [createPersistedState()], // save to local storage
+  modules: {
+    user
+  }
 })
 
 export default store

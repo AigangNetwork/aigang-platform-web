@@ -21,7 +21,8 @@
 <script>
 import Card from '@/components/Card'
 import ProfileInfo from './profile/ProfileInfo'
-import { mapActions } from 'vuex'
+import { createNamespacedHelpers } from 'vuex'
+const { mapActions } = createNamespacedHelpers('user')
 
 export default {
   components: {

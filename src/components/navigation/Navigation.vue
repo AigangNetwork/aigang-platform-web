@@ -19,7 +19,7 @@
             </ul>
           </nav>
 
-          <div class="aig-profile-wrapper" v-if="$store.state.user.authenticated">
+          <div class="aig-profile-wrapper" v-if="$store.getters['user/isAuthenticated']">
             <UserTab />
           </div>
           <el-button type="primary" class="aig--login" @click="selectLogin" v-else>{{ $t('navigation.login')}}</el-button>
@@ -36,7 +36,7 @@
             {{ bar.name }}
           </router-link>
         </li>
-        <li v-if="$store.state.user.authenticated">
+        <li v-if="$store.getters['user/isAuthenticated']">
           <router-link :to="'/profile'" active-class="aig-bar-active" @click.native="dropDownMenuActive = false">
             {{ $t('navigation.profile') }}
           </router-link>

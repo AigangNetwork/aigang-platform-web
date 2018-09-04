@@ -15,7 +15,7 @@ router.beforeEach((to, from, next) => {
   var guestRequired = to.matched.some(record => record.meta.guestRequired)
 
   if (authRequired) {
-    if (!store.getters.isAuthenticated) {
+    if (!store.getters['user/isAuthenticated']) {
       next({ path: '/login' })
     } else {
       next()
@@ -23,7 +23,7 @@ router.beforeEach((to, from, next) => {
   }
 
   if (guestRequired) {
-    if (store.getters.isAuthenticated) {
+    if (store.getters['user/isAuthenticated']) {
       next({ path: '/' })
     } else {
       next()

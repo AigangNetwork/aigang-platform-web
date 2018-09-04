@@ -1,5 +1,5 @@
 <template>
-  <div v-loading="loading" :element-loading-text="$t('general.loading')">
+  <div v-loading="$store.getters.loading" :element-loading-text="$t('general.loading')">
     <el-row>
       <el-col>
         <p class="input-section-title">{{ $t('profile.transactions.title') }}</p>
@@ -27,7 +27,7 @@
             </template>
           </el-table-column>
           <el-table-column prop="txType" :label="$t('profile.transactions.table.titles.type')">
-              <template slot-scope="scope">
+            <template slot-scope="scope">
               <span class="type">{{ formatTypeText(scope.row.txType) }}</span>
             </template>
           </el-table-column>
@@ -40,19 +40,19 @@
       </el-row>
       <el-row v-show="dataLoaded">
         <el-col class="paging">
-          <Pagination v-if="transactions.totalPages > 1" :callback="loadPage" :total-page-count="transactions.totalPages" :current-page="page" />
+          <Pagination v-if="transactions.totalPages > 1" :callback="loadPage" :total-page-count="transactions.totalPages" :current-page="page"
+          />
         </el-col>
       </el-row>
     </el-row>
   </div>
 </template>
 <script>
-import {
-  mapGetters
-} from 'vuex'
+import { createNamespacedHelpers } from 'vuex'
 import Date from '@/components/Date'
 import Label from './Label'
 import Pagination from '@/components/Pagination'
+const { mapGetters } = createNamespacedHelpers('user')
 
 export default {
   components: {
@@ -61,7 +61,7 @@ export default {
     Pagination
   },
   computed: {
-    ...mapGetters(['transactions', 'loading'])
+    ...mapGetters(['transactions'])
   },
   data () {
     return {
@@ -84,8 +84,8 @@ export default {
       this.page = page
 
       try {
-        await this.$store.dispatch('loadProfileTransactions', this.page)
-      } catch (error) {}
+        await this.$store.dispatch('user/loadProfileTransactions', this.page)
+      } catch (error) { }
     },
     formatTypeText (type) {
       switch (type.toUpperCase()) {
@@ -130,5 +130,4 @@ export default {
   .paging {
     margin-top: 15px;
   }
-
 </style>

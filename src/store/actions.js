@@ -1,75 +1,6 @@
 import * as types from './mutation-types'
-import router from '@/router'
 import axios from 'axios'
-import getWeb3 from '@/utils/web3/getWeb3'
 import { sleep } from '@/utils/methods'
-
-const logIn = ({ commit, dispatch }, loginResponse) => {
-  commit(types.LOGIN, loginResponse.data)
-  dispatch('refreshWeb3Instance')
-  router.push('/')
-}
-
-const logOut = async ({ commit }) => {
-  await axios.post('/account/logout')
-  delete axios.defaults.headers.common['Authorization']
-  commit(types.LOGOUT)
-  router.push('/data')
-}
-
-const handleNotLoggedIn = ({ commit }) => {
-  delete axios.defaults.headers.common['Authorization']
-  commit(types.LOGOUT)
-  router.push({ name: 'Login' })
-}
-
-const changeProfileNames = ({ commit }, response) => {
-  commit(types.CHANGE_PROFILE_NAMES, response)
-}
-
-const loadProfileWallets = async ({ commit }, page) => {
-  commit(types.SET_LOADING, true)
-  const response = await axios.get('/transaction/mywallets?page=' + page)
-  if (response.data) {
-    commit(types.LOAD_PROFILE_WALLETS, response.data)
-    commit(types.SET_LOADING, false)
-  }
-}
-
-const loadProfileTransactions = async ({ commit }, page) => {
-  commit(types.SET_LOADING, true)
-  const response = await axios.get('/transaction/mytransactions?page=' + page)
-  if (response.data) {
-    commit(types.LOAD_PROFILE_TRANSACTIONS, response.data)
-    commit(types.SET_LOADING, false)
-  }
-}
-
-const setNotificationPermission = async ({ commit }, payload) => {
-  commit(types.SET_LOADING, true)
-  const response = await axios.post('/account/updateemailoptout', {
-    emailTypeId: payload.id,
-    value: payload.value
-  })
-
-  if (response.data) {
-    commit(types.SET_EMAIL_OPT_OUT, payload)
-    commit(types.SET_LOADING, false)
-  }
-}
-
-const loadNotificationPermissions = async ({ commit }, emailPermissionGroups) => {
-  commit(types.SET_LOADING, true)
-  const response = await axios.get('/account/myemailoptouts')
-
-  if (response.data) {
-    commit(types.SET_NOTIFICATION_PERMISSIONS, {
-      emailPermissionGroups,
-      response: response.data
-    })
-    commit(types.SET_LOADING, false)
-  }
-}
 
 const loadDataset = async ({ commit }, id) => {
   const response = await axios.get('/data/' + id)
@@ -102,26 +33,6 @@ const setIsFileRemote = ({ commit }, response) => {
 
 const setHasFileChanged = ({ commit }, response) => {
   commit(types.SET_HAS_FILE_CHANGED, response)
-}
-
-const registerWeb3Instance = async ({ commit, dispatch }) => {
-  const userWeb3 = await getWeb3()
-  commit(types.SET_WEB3_INSTANCE, userWeb3)
-
-  if (userWeb3 && userWeb3.web3 && userWeb3.web3().currentProvider.publicConfigStore) {
-    userWeb3.web3().currentProvider.publicConfigStore.on('update', () => {
-      dispatch('refreshWeb3Instance')
-    })
-  }
-}
-
-const refreshWeb3Instance = async ({ commit }) => {
-  const userWeb3 = await getWeb3()
-  commit(types.SET_WEB3_INSTANCE, userWeb3)
-}
-
-const clearWeb3Instance = ({ commit }, response) => {
-  commit(types.CLEAR_WEB3_INSTANCE, response)
 }
 
 const loadModel = async ({ commit }, payload) => {
@@ -217,7 +128,7 @@ const getPolicy = async ({ commit }, policyId) => {
 }
 
 const sendPolicyPayment = async ({ commit, dispatch, state }) => {
-  const web3 = state.userWeb3.web3()
+  const web3 = state.user.userWeb3.web3()
   const productAddress = state.policy.contractAddress
   const TokenInstance = new web3.eth.Contract(process.env.CONTRACT_INFO.ABI, process.env.CONTRACT_INFO.ADDRESS)
   const paymentValue = web3.utils.toWei(state.policy.premium.toString())
@@ -228,7 +139,7 @@ const sendPolicyPayment = async ({ commit, dispatch, state }) => {
     .approveAndCall(productAddress, paymentValue, policyIdBytes)
     .send({
       gas: 190000,
-      from: state.userWeb3.coinbase
+      from: state.user.userWeb3.coinbase
     })
     .once('transactionHash', async txHash => {
       const request = {
@@ -252,7 +163,7 @@ const loadUserPolicies = async ({ commit }, page) => {
 
   const response = await axios.get('/insurance/policy/mypolicies?page=' + page)
   if (response.data) {
-    commit(types.LOAD_USER_POLICIES, response.data)
+    commit(types.LOAD_USER_POLICIES, response.data.policies)
     commit(types.SET_LOADING, false)
   }
 }
@@ -337,21 +248,11 @@ const deletePolicy = async ({ commit, state }) => {
 }
 
 export {
-  logIn,
-  logOut,
-  changeProfileNames,
-  loadProfileWallets,
-  loadProfileTransactions,
-  setNotificationPermission,
-  loadNotificationPermissions,
   loadDataset,
   setRemoteFileAccessPoint,
   setdatasetFile,
   setIsFileRemote,
   setHasFileChanged,
-  registerWeb3Instance,
-  refreshWeb3Instance,
-  clearWeb3Instance,
   loadModel,
   clearDataset,
   clearModel,
@@ -362,8 +263,7 @@ export {
   sendPolicyPayment,
   verifyClaim,
   claim,
-  deletePolicy,
-  handleNotLoggedIn
+  deletePolicy
 }
 
 const loadTaskId = async (commit, request) => {

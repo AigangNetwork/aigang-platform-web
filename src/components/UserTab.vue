@@ -5,7 +5,7 @@
     </div>
     <div class="information">
       {{ $store.state.user.profile.firstName }}
-      <div v-if="$store.state.userWeb3 && $store.state.userWeb3.coinbase" class="balance">{{$store.state.userWeb3.aixBalance}}
+      <div v-if="$store.state.user.userWeb3 && $store.state.user.userWeb3.coinbase" class="balance">{{$store.state.user.userWeb3.aixBalance}}
         AIX
       </div>
     </div>

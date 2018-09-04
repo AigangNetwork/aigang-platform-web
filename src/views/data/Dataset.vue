@@ -33,13 +33,13 @@
           </li>
 
           <li class="stick-to-right" key="upload-button">
-            <el-tooltip v-if="!uploadingModelActive" :disabled="$store.getters.isAuthenticated" :content="$t('data.dataset.uploadModelDisabled')">
+            <el-tooltip v-if="!uploadingModelActive" :disabled="$store.getters['user/isAuthenticated']" :content="$t('data.dataset.uploadModelDisabled')">
               <span class="wrapper el-button">
-                <el-button :disabled="!$store.getters.isAuthenticated" class="upload-model-button" @click="$router.push({name: 'UploadDataModel'})"
+                <el-button :disabled="!$store.getters['user/isAuthenticated']" class="upload-model-button" @click="$router.push({name: 'UploadDataModel'})"
                   type="warning">{{ $t('data.dataset.model.uploadModel') }}</el-button>
               </span>
             </el-tooltip>
-            <el-button :disabled="!$store.getters.isAuthenticated" v-if="uploadingModelActive" class="upload-model-button" @click="$router.push('/data/' + $route.params.id)"
+            <el-button :disabled="!$store.getters['user/isAuthenticated']" v-if="uploadingModelActive" class="upload-model-button" @click="$router.push('/data/' + $route.params.id)"
               type="warning">{{ $t('general.cancel') }}</el-button>
           </li>
         </template>

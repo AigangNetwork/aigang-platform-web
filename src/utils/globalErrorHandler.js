@@ -9,7 +9,7 @@ export default function (error, vm, info) {
   }
 
   if (process.env.NODE_ENV !== 'production' || process.env.NODE_ENV !== 'qa') {
-    console.error(errorMessage)
+    console.error(errorMessage.message)
   } else {
     console.log(`Error message number: ${errorMessage.messageNumber}`)
     axios.post('log', errorMessage)

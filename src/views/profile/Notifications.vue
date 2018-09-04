@@ -1,5 +1,5 @@
 <template>
-  <div v-loading="loading" :element-loading-text="$t('general.loading')">
+  <div v-loading="$store.getters.loading" :element-loading-text="$t('general.loading')">
     <el-row v-show="dataLoaded">
       <el-col>
         <p class="input-section-title">{{ $t('profile.notifications.title') }}</p>
@@ -10,14 +10,15 @@
     </el-row>
     <el-row v-show="dataLoaded" v-for="(group, index) in emailPermissionGroups" v-bind:key="index">
       <div class="groups-container">
-        <PermissionsGroup :group="group" @changed="onChange"/>
+        <PermissionsGroup :group="group" @changed="onChange" />
       </div>
     </el-row>
   </div>
 </template>
 <script>
-import { mapGetters } from 'vuex'
+import { createNamespacedHelpers } from 'vuex'
 import PermissionsGroup from './PermissionsGroup'
+const { mapGetters } = createNamespacedHelpers('user')
 
 export default {
   components: {
@@ -30,13 +31,13 @@ export default {
   },
   props: ['activeTab'],
   computed: {
-    ...mapGetters(['emailPermissionGroups', 'loading'])
+    ...mapGetters(['emailPermissionGroups'])
   },
   methods: {
     async onChange (id, value) {
       try {
-        await this.$store.dispatch('setNotificationPermission', { id, value })
-      } catch (error) {}
+        await this.$store.dispatch('user/setNotificationPermission', { id, value })
+      } catch (error) { }
     },
     async loadNotifications () {
       try {
@@ -58,8 +59,8 @@ export default {
           }]
         }]
 
-        await this.$store.dispatch('loadNotificationPermissions', emailPermissionGroups)
-      } catch (error) {}
+        await this.$store.dispatch('user/loadNotificationPermissions', emailPermissionGroups)
+      } catch (error) { }
     }
   },
   async mounted () {
