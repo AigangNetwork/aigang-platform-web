@@ -58,7 +58,8 @@
 import ProductDialog from '@/components/insurance/ProductDialog'
 import ScrollableMarkupText from '@/components/insurance/ScrollableMarkupText'
 import VueMarkdown from 'vue-markdown'
-import { mapGetters } from 'vuex'
+import { createNamespacedHelpers } from 'vuex'
+const { mapGetters } = createNamespacedHelpers('insurance')
 
 export default {
   components: {

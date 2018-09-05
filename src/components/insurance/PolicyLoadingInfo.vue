@@ -84,7 +84,8 @@
 </template>
 <script>
 import Card from '@/components/Card'
-import { mapGetters, mapMutations, mapActions } from 'vuex'
+import { createNamespacedHelpers } from 'vuex'
+const { mapGetters, mapMutations, mapActions } = createNamespacedHelpers('insurance')
 
 export default {
   components: { Card },

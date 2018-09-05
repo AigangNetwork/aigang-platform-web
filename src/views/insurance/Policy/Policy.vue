@@ -1,10 +1,10 @@
 <template>
-  <div class="aig-container aig-view" v-loading="loading">
-    <Card class="policy-card" v-if="!loading">
-      <div v-show="!loading" slot="body">
+  <div class="aig-container aig-view" v-loading="$store.getters.loading">
+    <Card class="policy-card" v-if="!$store.getters.loading">
+      <div v-show="!$store.getters.loading" slot="body">
         <transition-group name="slideUp" mode="out-in">
 
-          <div key="1" v-if="!isPolicyLoadingVisible && !policyLoadingInfo.isClaimable && !loading">
+          <div key="1" v-if="!isPolicyLoadingVisible && !policyLoadingInfo.isClaimable && !$store.getters.loading">
             <el-row class="header">
               <router-link :to="policyListRoute" class="back-button">
                 <i class="back-icon el-icon-arrow-left"></i>
@@ -67,11 +67,8 @@ import DeviceInfo from './DeviceInfo'
 import ClaimInfo from './ClaimInfo'
 import VerifyClaimLoadingInfo from '@/components/insurance/VerifyClaimLoadingInfo'
 
-import {
-  mapGetters,
-  mapActions,
-  mapMutations
-} from 'vuex'
+import { createNamespacedHelpers } from 'vuex'
+const { mapGetters, mapActions, mapMutations } = createNamespacedHelpers('insurance')
 
 export default {
   components: {
@@ -123,7 +120,7 @@ export default {
       await this.sendPolicyPayment()
     },
     async verifyClaim () {
-      await this.$store.dispatch('verifyClaim')
+      await this.$store.dispatch('insurance/verifyClaim')
 
       if (this.policyLoadingInfo.isClaimable) {
         setTimeout(() => {
@@ -134,11 +131,11 @@ export default {
       }
     },
     claim () {
-      this.$store.dispatch('claim')
+      this.$store.dispatch('insurance/claim')
     }
   },
   computed: {
-    ...mapGetters(['policy', 'web3', 'loading', 'isPolicyLoadingVisible', 'policyLoadingInfo']),
+    ...mapGetters(['policy', 'web3', 'isPolicyLoadingVisible', 'policyLoadingInfo']),
     isMetamaskLoggedIn () {
       return !!this.web3
     },

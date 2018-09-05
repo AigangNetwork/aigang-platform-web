@@ -19,9 +19,8 @@
   </el-dialog>
 </template>
 <script>
-import {
-  mapGetters
-} from 'vuex'
+import { createNamespacedHelpers } from 'vuex'
+const { mapGetters } = createNamespacedHelpers('insurance')
 
 export default {
   props: ['isVisible', 'displayDialog'],
