@@ -3,37 +3,25 @@ import eventHub from '@/utils/eventHub'
 import store from '@/store'
 
 export default function () {
+  if (store.getters['user/isAuthenticated']) {
+    axios.defaults.headers.common['Authorization'] = `Bearer ${store.getters['user/token']}`
+  }
+
   axios.interceptors.response.use(
     response => {
       if (response.headers['set-authorization']) {
-        axios.defaults.headers.common['Authorization'] = `Bearer ${
-          response.headers['set-authorization']
-        }`
+        store.commit('user/SET_AUTH_TOKEN', response.headers['set-authorization'])
+        axios.defaults.headers.common['Authorization'] = `Bearer ${store.getters['user/token']}`
+      } else if (store.getters['user/isAuthenticated']) {
+        axios.defaults.headers.common['Authorization'] = ``
+        store.commit('user/LOGOUT')
       }
+
       return response
     },
-    function (error) {
-      return Promise.reject(error)
+    err => {
+      eventHub.$emit(eventHub.eventCommunicationError, err)
+      return Promise.reject(err)
     }
   )
-
-  axios.interceptors.response.use(response => {
-    if (response.headers['set-authorization']) {
-      axios.defaults.headers.common['Authorization'] = `Bearer ${
-        response.headers['set-authorization']
-      }`
-    }
-    return response
-  }, undefined)
-
-  if (store.getters.isAuthenticated) {
-    axios.defaults.headers.common['Authorization'] = `Bearer ${
-      store.getters.token
-    }`
-  }
-
-  axios.interceptors.response.use(undefined, err => {
-    eventHub.$emit(eventHub.eventCommunicationError, err)
-    return Promise.reject(err)
-  })
 }

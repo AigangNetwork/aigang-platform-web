@@ -1,12 +1,12 @@
 <template>
-  <el-row v-loading="loading">
-    <el-col v-if="!loading">
-      <div class="policy-item" v-for="(item, index) in userPolicies.policies" :key="index">
+  <el-row v-loading="$store.getters.loading">
+    <el-col v-if="!$store.getters.loading">
+      <div class="policy-item" v-for="(item, index) in userPolicies" :key="index">
         <router-link :to="{ name: 'Policy', params: { policyId: item.id } }">
           <PolicyItem :policy="item" />
         </router-link>
       </div>
-      <div v-if="userPolicies.policies && userPolicies.policies.length === 0">
+      <div v-if="userPolicies && userPolicies.length === 0">
         <h2>{{ $t('general.noPolicies') }}</h2>
       </div>
     </el-col>
@@ -14,20 +14,23 @@
 </template>
 <script>
 import PolicyItem from '@/components/insurance/PolicyItem.vue'
-import {
-  mapGetters
-} from 'vuex'
+import { createNamespacedHelpers } from 'vuex'
+const { mapGetters, mapActions } = createNamespacedHelpers('insurance')
+
 export default {
   components: {
     PolicyItem
   },
   computed: {
-    ...mapGetters(['userPolicies', 'loading'])
+    ...mapGetters(['userPolicies'])
+  },
+  methods: {
+    ...mapActions(['loadUserPolicies'])
   },
   async mounted () {
     try {
-      await this.$store.dispatch('loadUserPolicies', 1)
-    } catch (error) {}
+      await this.loadUserPolicies(1)
+    } catch (error) { }
   }
 }
 
@@ -40,5 +43,4 @@ export default {
   h2 {
     margin: 20px;
   }
-
 </style>

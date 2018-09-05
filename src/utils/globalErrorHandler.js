@@ -7,6 +7,11 @@ export default function (error, vm, info) {
     userApplicationInfo: navigator.userAgent,
     level: 'error'
   }
-  console.log(`Error message number: ${errorMessage.messageNumber}`)
-  axios.post('log', errorMessage)
+
+  if (process.env.NODE_ENV !== 'production' || process.env.NODE_ENV !== 'qa') {
+    console.error(errorMessage.message)
+  } else {
+    console.log(`Error message number: ${errorMessage.messageNumber}`)
+    axios.post('log', errorMessage)
+  }
 }

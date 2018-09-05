@@ -29,15 +29,15 @@ export default {
   computed: {
     appClass () {
       return {
-        'aig--authed': this.$store.getters.isAuthenticated,
-        'aig--notAuthed': !this.$store.getters.isAuthenticated
+        'aig--authed': this.$store.getters['user/isAuthenticated'],
+        'aig--notAuthed': !this.$store.getters['user/isAuthenticated']
       }
     }
   },
   async mounted () {
-    if (this.$store.getters.isAuthenticated) {
-      await this.$store.dispatch('clearWeb3Instance')
-      this.$store.dispatch('registerWeb3Instance')
+    if (this.$store.getters['user/isAuthenticated']) {
+      await this.$store.dispatch('user/clearWeb3Instance')
+      this.$store.dispatch('user/registerWeb3Instance')
     }
   }
 }

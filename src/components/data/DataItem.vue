@@ -16,7 +16,7 @@
           <div class="status-bubble green-border"> </div>
         </el-tooltip>
       </div>
-      <router-link :to="{ name: 'datasetInfo', params: { id: data.id}}">
+      <router-link :to="{ name: 'DatasetInfo', params: { id: data.id}}">
         <div class="aig-data-head">
           <div class="title">{{ data.title | truncate(35) }}</div>
         </div>
@@ -35,14 +35,14 @@
     <div class="aig-data-footer">
       <div class="aig-footer-container">
         <img src="/static/models24px.svg" alt="models">
-        <router-link class="label" :to="{ name: 'datasetModels', params: { id: data.id}}">
+        <router-link class="label" :to="{ name: 'DatasetModels', params: { id: data.id}}">
           {{ $t('data.card.models' )}}
           <span v-if="data.modelsCount > 0"> ({{ data.modelsCount }})</span>
         </router-link>
       </div>
       <div class="aig-footer-container-right">
         <img src="/static/threads24px.svg" alt="comment">
-        <router-link class="label" :to="{ name: 'datasetcomment', params: { id: data.id}}">
+        <router-link class="label" :to="{ name: 'DatasetComment', params: { id: data.id}}">
           {{ $t('data.card.comment' )}}
           <span v-if="data.commentsCount > 0">({{ data.commentsCount }})</span>
         </router-link>
@@ -238,5 +238,4 @@ export default {
       }
     }
   }
-
 </style>

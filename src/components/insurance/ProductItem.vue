@@ -3,7 +3,9 @@
     <router-link :to="{ name: 'Product', params: { id: product.id}}">
       <div class="aig-data-body-container">
         <div class="aig-data-head" v-if="isCampaignRunning && product.state == 'active'">
-          <div class="desc">{{ $t('insurance.product.productEnds') }} <Date :dateUtc="product.endDateUtc" /></div>
+          <div class="desc">{{ $t('insurance.product.productEnds') }}
+            <Date :dateUtc="product.endDateUtc" />
+          </div>
         </div>
         <div class="aig-data-head" v-else-if="!isCampaignRunning && product.state == 'active'">
           <div class="desc">{{ $t('insurance.product.productEnded') }}</div>
@@ -77,7 +79,7 @@ export default {
     }
 
     &.disabled {
-      opacity: 0.4;
+      opacity: 0.6;
       filter: grayscale(100%);
       pointer-events: none;
     }

@@ -84,7 +84,8 @@
 </template>
 <script>
 import Card from '@/components/Card'
-import { mapGetters, mapMutations, mapActions } from 'vuex'
+import { createNamespacedHelpers } from 'vuex'
+const { mapGetters, mapMutations, mapActions } = createNamespacedHelpers('insurance')
 
 export default {
   components: { Card },
@@ -151,38 +152,5 @@ export default {
   @import '~helpers/mixins';
 
   @include loader;
-
-  .aig-container {
-    align-items: flex-start;
-  }
-
-  .info-text {
-    text-align: center;
-  }
-
-  .loader-container {
-    width: 100%;
-    height: 100%;
-    padding: 53px;
-  }
-
-  .loading-dots {
-    position: fixed;
-  }
-
-  .loading-text {
-    text-align: center;
-    color: #9370DB;
-    font-weight: 600;
-    font-family: $font-primary;
-  }
-
-  #preloader {
-    width: 100%;
-    height: 100%;
-  }
-
-  .el-button {
-    margin: 0 auto;
-  }
+  @include loader-container;
 </style>

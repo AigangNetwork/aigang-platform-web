@@ -33,7 +33,8 @@
 </template>
 <script>
 import FormMixin from '@/components/mixins/FormMixin'
-import { mapGetters, mapActions, mapMutations } from 'vuex'
+import { createNamespacedHelpers } from 'vuex'
+const { mapGetters, mapActions, mapMutations } = createNamespacedHelpers('insurance')
 
 export default {
   props: ['displayDialog', 'isVisible', 'deviceId', ''],

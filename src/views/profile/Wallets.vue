@@ -1,5 +1,5 @@
 <template>
-  <div v-loading="loading" :element-loading-text=" $t('general.loading')">
+  <div v-loading="$store.getters.loading" :element-loading-text=" $t('general.loading')">
     <el-row>
       <el-col>
         <p class="input-section-title">{{ $t('profile.wallets.title') }}</p>
@@ -7,7 +7,7 @@
       <el-col>
         <p>{{ $t('profile.wallets.description') }}</p>
       </el-col>
-      <el-row  v-show="dataLoaded">
+      <el-row v-show="dataLoaded">
         <el-table :data="wallets.items" :empty-text="$t('profile.wallets.table.emptyText')">
           <el-table-column prop="createdUtc" :label="$t('profile.wallets.table.titles.date')" width="160">
             <template slot-scope="scope">
@@ -19,16 +19,18 @@
       </el-row>
       <el-row v-show="dataLoaded">
         <el-col class="paging">
-          <Pagination v-if="wallets.totalPages > 1" :callback="loadPage" :total-page-count="wallets.totalPages" :current-page="page" />
+          <Pagination v-if="wallets.totalPages > 1" :callback="loadPage" :total-page-count="wallets.totalPages" :current-page="page"
+          />
         </el-col>
       </el-row>
     </el-row>
   </div>
 </template>
 <script>
-import { mapGetters } from 'vuex'
+import { createNamespacedHelpers } from 'vuex'
 import Date from '@/components/Date'
 import Pagination from '@/components/Pagination'
+const { mapGetters } = createNamespacedHelpers('user')
 
 export default {
   components: {
@@ -36,7 +38,7 @@ export default {
     Pagination
   },
   computed: {
-    ...mapGetters(['wallets', 'loading'])
+    ...mapGetters(['wallets'])
   },
   data () {
     return {
@@ -55,8 +57,8 @@ export default {
       this.page = page
 
       try {
-        await this.$store.dispatch('loadProfileWallets', this.page)
-      } catch (error) {}
+        await this.$store.dispatch('user/loadProfileWallets', this.page)
+      } catch (error) { }
     }
   }
 }
@@ -70,5 +72,4 @@ export default {
   .paging {
     margin-top: 15px;
   }
-
 </style>

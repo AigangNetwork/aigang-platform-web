@@ -38,7 +38,7 @@ export default {
     },
     handle401 () {
       this.notificationVisible = false
-      this.$store.dispatch('logOut')
+      this.$store.dispatch('user/handleNotLoggedIn')
       router.push('/login')
     },
     handle403 () {
@@ -50,7 +50,8 @@ export default {
     handle404 () {
       this.notificationVisible = false
       this.$router.push({
-        name: 'NotFound'
+        name: 'NotFound',
+        params: { '0': 'notfound' }
       })
     },
     notifyRequestError (error) {

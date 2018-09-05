@@ -516,3 +516,13 @@ body.aig {
   font-family: $font-secondary;
   word-wrap: break-word;
 }
+
+.big-attention {
+  font-weight: 400;
+  color: $orange;
+  font-size: 24px;
+}
+
+.data-items-container .el-loading-spinner {
+  top: 0 !important;
+}

@@ -17,7 +17,7 @@
         </p>
         <h1>{{ model.title }}</h1>
         <div class="aig-dataset-header-btn-container" v-if="isDatasetActive">
-          <router-link v-if="isUserOwner && $route.name !== 'edit'" :to="{ name: 'edit' }" exact class="aig-dataset-header-btn fit edit">
+          <router-link v-if="isUserOwner && $route.name !== 'edit'" :to="{ name: 'Edit' }" exact class="aig-dataset-header-btn fit edit">
             <i class="el-icon-edit button-icon"></i> {{$t('data.dataset.model.editModel')}}
           </router-link>
         </div>
@@ -32,9 +32,9 @@
 </template>
 <script>
 import CreatedDate from '@/components/mixins/CreatedDate'
-import {
-  mapGetters
-} from 'vuex'
+import { createNamespacedHelpers } from 'vuex'
+
+const { mapGetters } = createNamespacedHelpers('data')
 
 export default {
   props: ['model'],
@@ -64,9 +64,10 @@ export default {
       return this.dataset.state === 'active'
     }
   },
-  async created () {
-    if (!this.dataset) {
-      await this.$store.dispatch('loadCurrentDataset', this.$route.params.id)
+  async mounted () {
+    if (!this.dataset || this.dataset.id !== this.$route.params.id) {
+      await this.$store.dispatch('data/clearDataset')
+      await this.$store.dispatch('data/loadDataset', this.$route.params.id)
     }
   }
 }

@@ -1,7 +1,7 @@
 <template>
   <div class="aig-container">
     <el-container class="aig-container">
-      <el-aside v-if="$store.state.user.authenticated" width="20%" class="aig-data-menu" :class="{ 'is-menu-open': isMenuOpen }">
+      <el-aside v-if="$store.getters['user/isAuthenticated']" width="20%" class="aig-data-menu" :class="{ 'is-menu-open': isMenuOpen }">
         <span>
           <transition name="fade">
             <span class="side-menu-button" v-if="!isMenuOpen" @click="openSideMenu">
@@ -19,16 +19,18 @@
           </ul>
         </span>
       </el-aside>
-      <el-main class="aig-data-container" :class="{ 'is-authenticated': $store.state.user.authenticated}">
+      <el-main class="aig-data-container" :class="{ 'is-authenticated': $store.getters['user/isAuthenticated']}">
         <el-row :gutter="26">
           <el-col class="data-search" :span="16">
             <el-input :disabled="true" placeholder="Search by name or keywords" v-model="searchInput"></el-input>
           </el-col>
           <el-col :span="8" class="data-upload-button-container">
-            <el-tooltip :disabled="$store.getters.isAuthenticated" effect="dark" :content="$t('data.toolbar.uploadDisabled')" placement="top">
+            <el-tooltip :disabled="$store.getters['user/isAuthenticated']" effect="dark" :content="$t('data.toolbar.uploadDisabled')"
+              placement="top">
               <span class="wrapper el-button">
-                <el-button :disabled="!$store.getters.isAuthenticated" type="primary" @click="$router.push({ name: 'Upload' })" class="aig-upload-btn">{{
-                  $t('actions.upload_new_data')}}</el-button>
+                <el-button :disabled="!$store.getters['user/isAuthenticated']" type="primary" @click="$router.push({ name: 'Upload' })" class="aig-upload-btn">{{
+                  $t('actions.upload_new_data')}}
+                </el-button>
               </span>
             </el-tooltip>
           </el-col>

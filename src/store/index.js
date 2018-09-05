@@ -2,38 +2,24 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import createPersistedState from 'vuex-persistedstate'
 
+import data from './data/index'
+import user from './user/index'
+import insurance from './insurance/index'
+
 import getters from './getters'
 import mutations from './mutations'
-import * as actions from './actions'
 
 Vue.use(Vuex)
 
-const store = new Vuex.Store({
+export default new Vuex.Store({
   strict: process.env.NODE_ENV !== 'production' || process.env.NODE_ENV !== 'qa',
-  state: {
-    user: {
-      authenticated: false,
-      token: null,
-      profile: null,
-      wallets: {},
-      transactions: {},
-      emailPermissionGroups: {},
-      policies: {}
-    },
-    userWeb3: {},
-    currentDataset: {},
-    currentModel: null,
-    currentProduct: {},
-    currentPolicy: {},
-    txHash: null,
-    policyLoadingInfo: {},
-    isPolicyLoadingVisible: false,
-    loading: false
-  },
+  state: { loading: false },
   mutations,
   getters,
-  actions,
-  plugins: [createPersistedState()] // save to local storage
+  plugins: [createPersistedState()], // save to local storage
+  modules: {
+    user,
+    data,
+    insurance
+  }
 })
-
-export default store

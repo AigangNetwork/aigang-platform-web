@@ -10,7 +10,7 @@
     <el-row class="input-section-title">{{ $t('insurance.product.termsAndConditions') }}</el-row>
     <ScrollableMarkupText class="scrollable-text" :text="product.termsAndConditions" @scrolledToBottom="onScrolledToBottom" />
 
-    <el-tooltip v-if="!isAuthenticated" :disabled="isAuthenticated" :content="$t('insurance.product.logInToCalculateInsurancePrice')">
+    <el-tooltip v-if="!$store.getters['user/isAuthenticated']" :disabled="$store.getters['user/isAuthenticated']" :content="$t('insurance.product.logInToCalculateInsurancePrice')">
       <span class="wrapper el-button">
         <el-button :disabled="true" class="aig-button" type="primary">
           {{ $t('insurance.product.calculateInsurancePrice') }}
@@ -58,9 +58,8 @@
 import ProductDialog from '@/components/insurance/ProductDialog'
 import ScrollableMarkupText from '@/components/insurance/ScrollableMarkupText'
 import VueMarkdown from 'vue-markdown'
-import {
-  mapGetters
-} from 'vuex'
+import { createNamespacedHelpers } from 'vuex'
+const { mapGetters } = createNamespacedHelpers('insurance')
 
 export default {
   components: {
@@ -83,7 +82,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['product', 'isAuthenticated']),
+    ...mapGetters(['product']),
     contractLink () {
       return process.env.ETHERSCAN_ADDRESS + process.env.ADDRESS_PATX + this.product.contractAddress
     }
@@ -97,5 +96,4 @@ export default {
       height: 200px;
     }
   }
-
 </style>

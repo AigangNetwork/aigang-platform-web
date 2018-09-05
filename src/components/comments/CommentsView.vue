@@ -3,7 +3,7 @@
     <h4 class="info-title">{{$t('data.dataset.comment.comment')}}</h4>
     <div>
       <el-row>
-        <el-col class="comment-column" v-if="$store.state.user.authenticated">
+        <el-col class="comment-column" v-if="$store.getters['user/isAuthenticated']">
           <NewComment :update-event="updateCommentsCountEvent" :entity-id="entityId" @refresh-comment="fetchComments()" />
         </el-col>
         <el-col v-else>
@@ -17,7 +17,7 @@
             />
           </div>
           <ReplyComment :update-event="updateCommentsCountEvent" :entity-id="entityId" :parent-id="comment.id" @refresh-comment="fetchComments()"
-            v-if="$store.state.user.authenticated" />
+            v-if="$store.getters['user/isAuthenticated']" />
         </el-col>
       </el-row>
     </div>
@@ -87,5 +87,4 @@ export default {
       padding: 0px 23px 5px 23px;
     }
   }
-
 </style>

@@ -13,7 +13,8 @@
             <strong>{{ $t('profile.general.userName')}}: </strong>{{ profileForm.userName }}</div>
           <div class="no-margin name-field">
             <strong>{{ $t('profile.general.email')}}: </strong>{{ $store.state.user.profile.email }}</div>
-          <el-button @click="isProfileChangeOn = !isProfileChangeOn" class="profile-button change-button">{{ $t('general.change') }}</el-button>
+          <el-button @click="isProfileChangeOn = !isProfileChangeOn" class="profile-button change-button">{{ $t('general.change')
+            }}</el-button>
         </el-row>
         <el-form v-if="isProfileChangeOn" @keyup.enter.native="submitForm('profileForm', saveInfo)" :model="profileForm" :rules="profileFormRules"
           ref="profileForm">
@@ -42,7 +43,8 @@
                 <strong>{{ $t('profile.general.email')}}: </strong>{{ $store.state.user.profile.email }}</div>
             </el-row>
             <el-row>
-              <el-button @click="submitForm('profileForm', saveInfo)" type="submit" v-show="isProfileChangeOn" class="profile-button no-margin">{{ $t('general.save') }}</el-button>
+              <el-button @click="submitForm('profileForm', saveInfo)" type="submit" v-show="isProfileChangeOn" class="profile-button no-margin">{{
+                $t('general.save') }}</el-button>
             </el-row>
           </el-row>
         </el-form>
@@ -145,7 +147,7 @@ export default {
           this.loading = false
           this.isVerificationVisisble = true
           this.isProfileChangeOn = false
-          this.$store.dispatch('changeProfileNames', response)
+          this.$store.dispatch('user/changeProfileNames', response)
           this.updateInfo()
         })
         .catch(e => {
