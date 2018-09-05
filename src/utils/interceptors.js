@@ -12,9 +12,6 @@ export default function () {
       if (response.headers['set-authorization']) {
         store.commit('user/SET_AUTH_TOKEN', response.headers['set-authorization'])
         axios.defaults.headers.common['Authorization'] = `Bearer ${store.getters['user/token']}`
-      } else if (store.getters['user/isAuthenticated']) {
-        axios.defaults.headers.common['Authorization'] = ``
-        store.commit('user/LOGOUT')
       }
 
       return response
