@@ -39,7 +39,7 @@
                     <span class="label">{{ $t('login.password' )}}</span>
                   </el-col>
                   <el-col :span="12" style="text-align: right;">
-                    <router-link class="a-passive " to="/forgotPassword">{{ $t('login.forgotPassword') }}</router-link>
+                    <router-link class="a-passive" tabindex="-1" to="/forgotPassword">{{ $t('login.forgotPassword') }}</router-link>
                   </el-col>
                 </el-row>
 

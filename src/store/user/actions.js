@@ -10,6 +10,7 @@ export default {
   },
 
   async logOut ({ commit }) {
+    commit('SET_LOADING', true, { root: true })
     await axios.post('/account/logout')
     delete axios.defaults.headers.common['Authorization']
     commit('LOGOUT')

@@ -25,6 +25,10 @@
     <transition-group name="slideUp" mode="out-in">
       <template v-if="policyLoadingInfo.notFound">
         <p class="info-text aig-error" key="1">{{ $t('insurance.policy.deviceIdNotFound') }}</p>
+        <p class="info-text" key="2">
+          <el-button type="primary" @click.prevent.native="setIsPolicyLoadingVisible(false)">{{ $t('general.back') }}
+          </el-button>
+        </p>
       </template>
     </transition-group>
 
@@ -33,12 +37,20 @@
         <p class="info-text aig-error" :key="index" v-for="(val, index) in policyLoadingInfo.validationReasons">
           {{ $t(val) }}
         </p>
+        <p class="info-text" key="200">
+          <el-button type="primary" @click.prevent.native="setIsPolicyLoadingVisible(false)">{{ $t('general.back') }}
+          </el-button>
+        </p>
       </template>
     </transition-group>
 
     <transition-group name="slideUp" mode="out-in">
       <template v-if="policyLoadingInfo.serverError">
         <p class="info-text aig-error" key="1">{{ $t('insurance.policy.serverError') }}</p>
+        <p class="info-text" key="2">
+          <el-button type="primary" @click.prevent.native="setIsPolicyLoadingVisible(false)">{{ $t('general.back') }}
+          </el-button>
+        </p>
       </template>
     </transition-group>
 
