@@ -244,8 +244,6 @@ const handlePolicyLoadingInfoError = async (error, policyLoadingInfo, commit) =>
     } else if (error.response.data.reason) {
       newPolicyLoadingInfo.validationReasons.push('errors.validation.' + error.response.data.reason)
     }
-
-    commit('SET_IS_POLICY_LOADING_VISIBLE', false)
   } else if (error.response.status === 503 || error.response.status === 500) {
     newPolicyLoadingInfo.serverError = true
   }
