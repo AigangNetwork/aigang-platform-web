@@ -33,24 +33,19 @@ export default {
   data () {
     return {
       dataMeniu: [{
-        name: this.$t('insurance.menu.products'),
-        routeLink: {
-          path: '/insurance/products'
-        },
+        name: this.$t('investment.portfolio'),
+        routeLink: { name: 'Portfolio' },
         active: true
       },
       {
-        name: this.$t('insurance.menu.myPolicies'),
+        name: this.$t('investment.products'),
         routeLink: {
           path: '/insurance/policy/mypolicies'
         },
         active: false,
         disabled: true
-      }
-      ],
-      searchInput: '',
+      }],
       showDialog: false,
-      msg: 'Data view',
       isMenuOpen: false
     }
   },
@@ -69,7 +64,6 @@ export default {
     }
   }
 }
-
 </script>
 
 <style lang="scss" scoped>

@@ -4,7 +4,7 @@ import Policy from '@/views/insurance/policy/Policy'
 import Product from '@/views/insurance/Product'
 import MyPolicyList from '@/views/insurance/MyPolicyList'
 
-const insuranceRoutes = [
+export default [
   {
     path: '/insurance',
     component: Insurance,
@@ -45,5 +45,3 @@ const insuranceRoutes = [
     component: Policy
   }
 ]
-
-export default insuranceRoutes
