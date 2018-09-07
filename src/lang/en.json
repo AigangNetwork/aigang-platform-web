@@ -581,5 +581,9 @@
         "pendingpayout": "Pending payout"
       }
     }
+  },
+  "investment": {
+    "portfolio": "Portfolio",
+    "products": "Products"
   }
 }

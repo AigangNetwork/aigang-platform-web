@@ -12,7 +12,7 @@ import DatasetModelInfo from '@/views/data/model/DatasetModelInfo'
 import DatasetModelTables from '@/views/data/model/DatasetModelTables'
 import DatasetModelComments from '@/views/data/model/DatasetModelComments'
 
-const dataRoutes = [
+export default [
   {
     path: '/',
     redirect: '/data'
@@ -163,5 +163,3 @@ const dataRoutes = [
     }
   }
 ]
-
-export default dataRoutes

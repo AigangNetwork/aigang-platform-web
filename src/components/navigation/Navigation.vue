@@ -11,7 +11,7 @@
           </router-link>
           <nav class="aig-navigation-menu">
             <ul>
-              <li v-for="(bar, index) in navigationBars" :key="index" @click="handleInvest(index)">
+              <li v-for="(bar, index) in navigationBars" :key="index">
                 <router-link active-class="aig-bar-active" :class="{'disabled': bar.disabled}" :to="bar.routeLink">
                   {{ bar.name }}
                 </router-link>
@@ -71,8 +71,7 @@ export default {
       },
       {
         name: this.$t('navigation.invest'),
-        routeLink: '/invest',
-        disabled: true
+        routeLink: '/investment'
       },
       {
         name: this.$t('navigation.insurance'),
@@ -87,11 +86,6 @@ export default {
       this.$router.push({
         name: 'Login'
       })
-    },
-    handleInvest (index) {
-      if (this.navigationBars[index].name === 'Investment') {
-        window.open('https://investment.aigang.network/insurer.html', '_blank')
-      }
     }
   }
 }

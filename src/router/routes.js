@@ -1,16 +1,17 @@
 import Predictions from '@/views/Predictions'
-import Invest from '@/views/Invest'
 import NotFound from '@/views/general/NotFound'
 import AccessDenied from '@/views/general/AccessDenied'
 
 import DataRoutes from './data-routes'
 import InsuranceRoutes from './insurance-routes'
 import UserRoutes from './user-routes'
+import InvestmentRoutes from './investment-routes'
 
 const routes = [
   ...DataRoutes,
   ...InsuranceRoutes,
   ...UserRoutes,
+  ...InvestmentRoutes,
 
   {
     path: '*',
@@ -26,11 +27,6 @@ const routes = [
     path: '/predictions',
     name: 'Predictions',
     component: Predictions
-  },
-  {
-    path: '/invest',
-    name: 'Invest',
-    component: Invest
   }
 ]
 

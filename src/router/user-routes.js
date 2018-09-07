@@ -9,7 +9,7 @@ import Wallets from '@/views/profile/Wallets'
 import Transactions from '@/views/profile/Transactions'
 import Notifications from '@/views/profile/Notifications'
 
-const userRoutes = [
+export default [
   {
     path: '/login',
     name: 'Login',
@@ -85,5 +85,3 @@ const userRoutes = [
     ]
   }
 ]
-
-export default userRoutes
