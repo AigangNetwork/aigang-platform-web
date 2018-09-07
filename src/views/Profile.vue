@@ -1,7 +1,7 @@
 <template>
   <div class="aig-container profile-container">
     <Card class="profile-card">
-      <div class="profile-content-container" slot="body">
+      <div class="profile-content-container" slot="body" v-loading="$store.getters.loading">
         <div class="flex-container">
           <ProfileInfo/>
           <el-button class="logout-button" type="warning" @click="logOut">{{ $t('profile.general.logout') }}</el-button>

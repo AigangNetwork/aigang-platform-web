@@ -33,7 +33,8 @@ export default {
         ProductId: productId,
         IsCreatePolicy: true
       })
-    } catch (e) {
+    } catch (error) {
+      handlePolicyLoadingInfoError(error, state.policyLoadingInfo, commit)
       return
     }
 
@@ -89,8 +90,8 @@ export default {
     commit('SET_LOADING', false, { root: true })
   },
 
-  async sendPolicyPayment ({ commit, dispatch, state }) {
-    const web3 = state.user.userWeb3.web3()
+  async sendPolicyPayment ({ commit, dispatch, state, rootState }) {
+    const web3 = rootState.user.userWeb3.web3()
     const productAddress = state.policy.contractAddress
     const TokenInstance = new web3.eth.Contract(process.env.CONTRACT_INFO.ABI, process.env.CONTRACT_INFO.ADDRESS)
     const paymentValue = web3.utils.toWei(state.policy.premium.toString())
@@ -101,7 +102,7 @@ export default {
       .approveAndCall(productAddress, paymentValue, policyIdBytes)
       .send({
         gas: 190000,
-        from: state.user.userWeb3.coinbase
+        from: rootState.user.userWeb3.coinbase
       })
       .once('transactionHash', async txHash => {
         const request = {
@@ -141,11 +142,8 @@ export default {
         ProductId: state.policy.productId,
         IsCreatePolicy: false
       })
-    } catch (e) {
-      return
-    }
-
-    if (!state.policyLoadingInfo.taskId) {
+    } catch (error) {
+      handlePolicyLoadingInfoError(error, state.policyLoadingInfo, commit)
       return
     }
 
@@ -222,15 +220,7 @@ const loadTaskId = async (commit, request) => {
 
   commit('SET_POLICY_LOADING_INFO', policyLoadingInfo)
 
-  let response = null
-
-  // STEP 1: getting task ID
-  try {
-    response = await customAxios.post('insurance/policy/android/pair', request)
-  } catch (error) {
-    handlePolicyLoadingInfoError(error, policyLoadingInfo, commit)
-    return
-  }
+  const response = await customAxios.post('insurance/policy/android/pair', request)
 
   commit('CLEAR_POLICY_LOADING_INFO')
   policyLoadingInfo.taskId = response.data.taskId
@@ -247,9 +237,15 @@ const handlePolicyLoadingInfoError = async (error, policyLoadingInfo, commit) =>
   } else if (error.response.status === 400) {
     newPolicyLoadingInfo.validationReasons = []
 
-    error.response.data.params.ValidationFailed.forEach(val =>
-      newPolicyLoadingInfo.validationReasons.push('errors.validation.' + val.reason)
-    )
+    if (error.response.data.params) {
+      error.response.data.params.ValidationFailed.forEach(val =>
+        newPolicyLoadingInfo.validationReasons.push('errors.validation.' + val.reason)
+      )
+    } else if (error.response.data.reason) {
+      newPolicyLoadingInfo.validationReasons.push('errors.validation.' + error.response.data.reason)
+    }
+
+    commit('SET_IS_POLICY_LOADING_VISIBLE', false)
   } else if (error.response.status === 503 || error.response.status === 500) {
     newPolicyLoadingInfo.serverError = true
   }
