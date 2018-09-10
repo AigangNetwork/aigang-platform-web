@@ -1,19 +1,18 @@
 <template>
-  <div class="aig-card-container" v-loading="loading">
-    <Card class="guest-card portfolio-card" v-if="!loading">
-      <div slot="body" v-loading="loading" :element-loading-text="$t('general.loading')">
+  <div class="aig-card-container portfolio" v-loading="loading">
 
-        <PortfolioSideSection/>
-      </div>
-    </Card>
+    <PortfolioSideSection />
+
+    <InvestmentsList />
+
   </div>
 </template>
 <script>
-import Card from '@/components/Card'
 import PortfolioSideSection from '@/components/investment/PortfolioSideSection'
+import InvestmentsList from '@/components/investment/InvestmentsList'
 
 export default {
-  components: { Card, PortfolioSideSection },
+  components: { PortfolioSideSection, InvestmentsList },
   data () {
     return {
       loading: false
@@ -23,7 +22,34 @@ export default {
 
 </script>
 <style lang="scss">
-  .portfolio-card .aig-card-body {
-    padding: 0 !important;
+  @import '~helpers/variables';
+
+  .portfolio {
+    flex-direction: column;
+    display: block;
+
+    .aig-card-body {
+      padding: 0 !important;
+      font-family: $font-secondary;
+    }
+
+  }
+
+  .aig-card.portfolio-card {
+    &:last-child {
+      margin-top: 0;
+
+      .aig-card-body {
+        margin-top: 0 !important;
+      }
+    }
+
+    &:first-child {
+      margin-top: 20px;
+
+      .aig-card-body {
+        margin-top: 0 !important;
+      }
+    }
   }
 </style>

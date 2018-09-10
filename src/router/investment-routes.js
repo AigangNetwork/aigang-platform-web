@@ -1,5 +1,6 @@
 import Investment from '@/views/Investment'
 import Portfolio from '@/views/investment/Portfolio'
+import InvestmentProducts from '@/views/investment/InvestmentProducts'
 
 export default [
   {
@@ -15,14 +16,12 @@ export default [
         name: 'Portfolio',
         path: '/investment/portfolio',
         component: Portfolio
+      },
+      {
+        name: 'InvestmentProducts',
+        path: '/investment/products',
+        component: InvestmentProducts
       }
-      // {
-      //   name: 'MyPolicyList',
-      //   path: '/insurance/policy/mypolicies',
-      //   component: MyPolicyList,
-      //   meta: {
-      //     authRequired: true
-      //   }
     ]
   }
 ]

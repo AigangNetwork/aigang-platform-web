@@ -13,8 +13,8 @@
           </transition>
           <ul>
             <li v-for="item in dataMeniu" :key="item.name">
-              <router-link :class="{'aig-link-disabled': item.disabled && !$store.getters['user/isAuthenticated']}" @click.native="collapseSideMenu"
-                active-class="aig-menu-active" :to="item.routeLink">{{ item.name }}</router-link>
+              <router-link :class="{'aig-link-disabled': item.disabled && !$store.getters['user/isAuthenticated']}"
+                @click.native="collapseSideMenu" active-class="aig-menu-active" :to="item.routeLink">{{ item.name }}</router-link>
             </li>
           </ul>
         </span>
@@ -40,7 +40,7 @@ export default {
       {
         name: this.$t('investment.products'),
         routeLink: {
-          path: '/insurance/policy/mypolicies'
+          name: 'InvestmentProducts'
         },
         active: false,
         disabled: true
