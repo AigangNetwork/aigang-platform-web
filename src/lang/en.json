@@ -390,7 +390,8 @@
     "comingSoon": "Feature is coming soon",
     "retry": "Retry",
     "days": "days",
-    "day": "day"
+    "day": "day",
+    "id": "ID"
   },
   "errors": {
     "error": "Error",
@@ -584,6 +585,21 @@
   },
   "investment": {
     "portfolio": "Portfolio",
-    "products": "Products"
+    "products": "Products",
+    "portfolioInfo": {
+      "yourAddress": "Your address",
+      "yourBalance": "Your balance",
+      "invested": "Invested",
+      "claimedProfit": "Claimed profit",
+      "insuranceType": "Insurance type",
+      "investors": "Investors",
+      "policies": "Policies",
+      "investedAmount": "Invested Amount",
+      "amountPaid": "Amount paid for the insurance",
+      "profit": "Profit",
+      "predictedProfit": "Predicted Profit",
+      "currentPoolSize": "Current Pool Size",
+      "poolSizeGoal": "Pool Size Goal"
+    }
   }
 }
