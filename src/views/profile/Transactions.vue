@@ -7,7 +7,7 @@
       <el-col>
         <p>{{ $t('profile.transactions.description') }}</p>
       </el-col>
-      <el-row v-show="dataLoaded">
+      <el-row v-show="isDataLoaded">
         <el-table class="transactions" :data="transactions.items" :empty-text="$t('profile.transactions.table.emptyText')">
           <el-table-column prop="createdUtc" :label="$t('profile.transactions.table.titles.date')" width="160">
             <template slot-scope="scope">
@@ -38,7 +38,7 @@
           </el-table-column>
         </el-table>
       </el-row>
-      <el-row v-show="dataLoaded">
+      <el-row v-show="isDataLoaded">
         <el-col class="paging">
           <Pagination v-if="transactions.totalPages > 1" :callback="loadPage" :total-page-count="transactions.totalPages" :current-page="page"
           />
@@ -66,13 +66,13 @@ export default {
   data () {
     return {
       page: 1,
-      dataLoaded: false
+      isDataLoaded: false
     }
   },
-  async mounted () {
-    if (!this.dataLoaded) {
+  async beforeMount () {
+    if (!this.isDataLoaded) {
       await this.loadPage(1)
-      this.dataLoaded = true
+      this.isDataLoaded = true
     }
   },
 
