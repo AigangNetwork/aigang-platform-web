@@ -5,6 +5,7 @@ export default function (error, vm, info) {
     messageNumber: new Date().getTime().toString(),
     url: window.location.href,
     message: JSON.stringify(error, Object.getOwnPropertyNames(error)),
+    url: window.location.href,
     userApplicationInfo: navigator.userAgent,
     level: 'error'
   }
