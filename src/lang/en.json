@@ -382,7 +382,10 @@
     "versionAlpha": "alpha",
     "unableToFindYourDatasets": "Can not find your datasets",
     "unableToFindYourModels": "Can not find any datasets containing your models",
+    "unableToFindAnyProducts": "Can not find any product",
     "noPolicies": "You do not have any policies yet",
+    "noPredictions": "Can not find any predictions",
+    "noMyPredictions": "You do not have any predictions yet",
     "upvote": "Upvote",
     "downvote": "Downvote",
     "aix": "AIX",
@@ -440,6 +443,35 @@
     "contactIfError": "If you see this error please contact us via email info@aigang.network",
     "metamaskDetected": "We have detected that you are using metamask extension. In order to see your account AIX balance please switch your network to ",
     "useMetamask": "To use all of our Platform features please Log in to Metamask Extension"
+  },
+  "predictions": {
+    "menu": {
+      "predictions": "All Predictions",
+      "myForecasts": "My Forecasts"
+    },
+    "confirmationDialog": {
+      "title": "Confirm your forecast",
+      "buttons": {
+        "forecast": "Forecast"
+      },
+      "prediction": "Prediction",
+      "forecast": "Your Forecast",
+      "amount": "Amount",
+      "validation": {
+        "required": "Can not be empty",
+        "shouldBeNumber": "Should be number",
+        "shouldBeBiggerThanZero": "Should be greater than zero"
+      }
+    },
+    "predictions": {
+      "forecastTill": "Forecast till",
+      "poolSize": "Prize pool"
+    },
+    "forecasts": {
+      "forecast": "Forecast",
+      "amount": "Amount",
+      "created": "Created"
+    }
   },
   "insurance": {
     "menu": {

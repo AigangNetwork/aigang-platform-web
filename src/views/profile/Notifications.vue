@@ -1,6 +1,6 @@
 <template>
   <div v-loading="$store.getters.loading" :element-loading-text="$t('general.loading')">
-    <el-row v-show="dataLoaded">
+    <el-row v-show="isDataLoaded">
       <el-col>
         <p class="input-section-title">{{ $t('profile.notifications.title') }}</p>
       </el-col>
@@ -8,7 +8,7 @@
         <p>{{ $t('profile.notifications.description') }}</p>
       </el-col>
     </el-row>
-    <el-row v-show="dataLoaded" v-for="(group, index) in emailPermissionGroups" v-bind:key="index">
+    <el-row v-show="isDataLoaded" v-for="(group, index) in emailPermissionGroups" v-bind:key="index">
       <div class="groups-container">
         <PermissionsGroup :group="group" @changed="onChange" />
       </div>
@@ -26,7 +26,7 @@ export default {
   },
   data () {
     return {
-      dataLoaded: false
+      isDataLoaded: false
     }
   },
   props: ['activeTab'],
@@ -63,10 +63,10 @@ export default {
       } catch (error) { }
     }
   },
-  async mounted () {
-    if (!this.dataLoaded) {
+  async beforeMount () {
+    if (!this.isDataLoaded) {
       await this.loadNotifications()
-      this.dataLoaded = true
+      this.isDataLoaded = true
     }
   }
 }

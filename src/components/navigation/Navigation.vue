@@ -66,8 +66,7 @@ export default {
       },
       {
         name: this.$t('navigation.predictions'),
-        routeLink: '/predictions/',
-        disabled: true
+        routeLink: '/predictions/'
       },
       {
         name: this.$t('navigation.invest'),

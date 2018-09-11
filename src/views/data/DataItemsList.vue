@@ -1,5 +1,4 @@
 <template>
-
   <transition-group class="data-items-container" name="slideUp" v-loading="loading">
     <el-col :xs="24" :sm="12" :md="12" :lg="8" v-for="dataItem in dataList" :key="dataItem.id">
       <DataItem :data="dataItem" :key="dataItem.id" />
@@ -18,7 +17,6 @@
       </h2>
     </el-col>
   </transition-group>
-
 </template>
 <script>
 import DataItem from '@/components/data/DataItem'
@@ -77,5 +75,4 @@ export default {
     width: 100%;
     min-height: 250px;
   }
-
 </style>

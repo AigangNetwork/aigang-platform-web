@@ -46,21 +46,13 @@ export default {
         },
         active: false,
         disabled: true
-      }
-      ],
+      }],
       searchInput: '',
       showDialog: false,
-      msg: 'Data view',
       isMenuOpen: false
     }
   },
   methods: {
-    selectMenu (index) {
-      this.dataMeniu.forEach(function (val, key) {
-        val.active = false
-      })
-      this.dataMeniu[index].active = true
-    },
     openSideMenu () {
       this.isMenuOpen = !this.isMenuOpen
     },
