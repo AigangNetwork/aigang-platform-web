@@ -586,6 +586,7 @@
   "investment": {
     "portfolio": "Portfolio",
     "products": "Products",
+    "invest": "Invest",
     "portfolioInfo": {
       "yourAddress": "Your address",
       "yourBalance": "Your balance",
@@ -599,7 +600,14 @@
       "profit": "Profit",
       "predictedProfit": "Predicted Profit",
       "currentPoolSize": "Current Pool Size",
-      "poolSizeGoal": "Pool Size Goal"
+      "poolSizeGoal": "Pool Size Goal",
+      "totalInsuranceProducts": "Total insurance products",
+      "totalPolicies": "Total policies",
+      "totalInvestedAmount": "Total invested amount",
+      "totalAmountInReserves": "Total amount in reserves",
+      "totalPaidForClaims": "Total paid for the claims",
+      "totalInvestors": "Total investors",
+      "amountPaidForInsurance": "Amount paid for the insurance"
     }
   }
 }

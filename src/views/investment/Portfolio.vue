@@ -1,18 +1,18 @@
 <template>
   <div class="aig-card-container portfolio" v-loading="loading">
 
-    <PortfolioSideSection />
+    <PortfolioSummarySection />
 
     <InvestmentsList />
 
   </div>
 </template>
 <script>
-import PortfolioSideSection from '@/components/investment/PortfolioSideSection'
+import PortfolioSummarySection from '@/components/investment/PortfolioSummarySection'
 import InvestmentsList from '@/components/investment/InvestmentsList'
 
 export default {
-  components: { PortfolioSideSection, InvestmentsList },
+  components: { PortfolioSummarySection, InvestmentsList },
   data () {
     return {
       loading: false
@@ -32,7 +32,6 @@ export default {
       padding: 0 !important;
       font-family: $font-secondary;
     }
-
   }
 
   .aig-card.portfolio-card {

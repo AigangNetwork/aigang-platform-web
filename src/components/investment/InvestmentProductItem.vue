@@ -1,5 +1,5 @@
 <template>
-  <div class="investment-product-item">
+  <router-link :to="{ name: 'InvestmentProduct', params: { id: '123'}}" class="investment-product-item">
     <div class="left-section">
       <span class="title">{{ product.title }}</span>
     </div>
@@ -21,7 +21,7 @@
         {{ product.poolSize }}
       </div>
     </div>
-  </div>
+  </router-link>
 </template>
 <script>
 export default {
@@ -46,16 +46,30 @@ export default {
     flex-direction: row;
     justify-content: space-between;
 
+    &:hover {
+      /* .right-section {
+        border-bottom: 5px solid $yellow;
+        padding: 15px;
+        padding-right: 30px;
+      } */
+
+      .left-section {
+        border-left: 5px solid $yellow;
+        padding-left: 30px;
+      }
+    }
+
     .left-section,
     .right-section {
       padding: 20px;
+      transition: 200ms all;
     }
 
     .left-section {
       display: flex;
       justify-content: center;
       flex-direction: column;
-      max-width: 50%;
+      width: 50%;
     }
 
     .right-section {
@@ -75,6 +89,7 @@ export default {
         display: flex;
         flex-direction: column;
         justify-content: center;
+        text-align: center;
       }
     }
 
