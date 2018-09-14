@@ -32,7 +32,8 @@
     <div class="aig-dropdown" v-if="dropDownMenuActive">
       <ul>
         <li v-for="bar in navigationBars" :key="bar.name">
-          <router-link :class="{'disabled': bar.disabled}" active-class="aig-bar-active" :to="bar.routeLink" @click.native="dropDownMenuActive = false">
+          <router-link :class="{'disabled': bar.disabled}" active-class="aig-bar-active" :to="bar.routeLink"
+            @click.native="dropDownMenuActive = false">
             {{ bar.name }}
           </router-link>
         </li>
@@ -42,7 +43,8 @@
           </router-link>
         </li>
         <li v-else>
-          <router-link active-class="aig-bar-active" to="/login" @click.native="dropDownMenuActive = false" exact>{{ $t('navigation.login')}}</router-link>
+          <router-link active-class="aig-bar-active" to="/login" @click.native="dropDownMenuActive = false" exact>{{
+            $t('navigation.login')}}</router-link>
         </li>
       </ul>
     </div>
@@ -70,11 +72,12 @@ export default {
         disabled: true
       },
       {
-        name: this.$t('navigation.invest'),
-        routeLink: '/invest',
+        name: this.$t('navigation.pools'),
+        routeLink: '/pools',
         disabled: true
       },
       {
+
         name: this.$t('navigation.insurance'),
         routeLink: '/insurance/'
       }
@@ -109,11 +112,14 @@ export default {
     z-index: 1002;
     background-color: $purple;
     line-height: 3em;
+
     ul {
       list-style-type: none;
       padding-left: 0;
+
       li {
         width: 100%;
+
         a {
           color: $white;
           padding: 10px;
@@ -122,6 +128,7 @@ export default {
         }
       }
     }
+
     @include breakpoint(min-width 780px) {
       display: none;
     }
@@ -149,10 +156,12 @@ export default {
     padding: 10px;
     margin-left: 15px;
     margin-top: 5px;
+
     img {
       vertical-align: middle;
       height: 30px;
     }
+
     .alpha-container {
       color: white;
       font-size: 9px;
@@ -167,6 +176,7 @@ export default {
     width: 100%;
     background: $purple;
     width: 100%;
+
     .aig-navigation-body {
       margin: 0 auto;
       max-width: 1440px;
@@ -174,6 +184,7 @@ export default {
       background: $purple;
       height: 70px;
       display: flex;
+
       .aig--login {
         height: 40px;
         margin-top: 13px;
@@ -185,21 +196,26 @@ export default {
           display: block;
           cursor: pointer;
         }
+
         .aig-navigation-menu ul {
           display: none;
         }
+
         .aig-profile-wrapper {
           display: none;
         }
+
         .aig--login {
           display: none;
         }
       }
     }
+
     .aig-logo {
       &:hover {
         opacity: 0.65;
       }
+
       &:active {
         opacity: 1;
       }
@@ -213,15 +229,19 @@ export default {
 
   .aig-navigation-menu {
     width: 100%;
+
     ul {
       display: flex;
       height: 100%;
       justify-content: center;
+
       li {
         list-style: none;
+
         &+li {
           margin-left: 25px;
         }
+
         a {
           padding: 15px;
           @include transition(all, 100ms, ease-in-out);
@@ -233,12 +253,14 @@ export default {
           font-size: 12px;
           font-weight: 500;
           letter-spacing: 2px;
+
           &:hover {
             color: rgba($white, .65);
           }
         }
       }
     }
+
     @include breakpoint(max-width 780px) {
       ul {
         background: white;
