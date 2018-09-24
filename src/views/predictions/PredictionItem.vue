@@ -1,15 +1,17 @@
 <template>
   <router-link :to="{ name: 'PredictionInfo', params: { id: item.id}}">
     <div class="aig-data">
-        <div class="aig-data-body">
-          <div class="title">
-            <h3>{{ item.title | truncate(50) }}</h3>
-          </div>
-          <div class="info">
-            <p>{{ $t('predictions.predictions.forecastTill') }}: <Date :dateUtc="item.endDateUtc" /></p>
-            <p>{{ $t('predictions.predictions.poolSize') }}: {{item.poolSize }} {{ $t('general.aix') }}</p>
-          </div>
+      <div class="aig-data-body">
+        <div class="title">
+          <h3>{{ item.title | truncate(50) }}</h3>
         </div>
+        <div class="info">
+          <p>{{ $t('predictions.predictions.forecastTill') }}:
+            <Date :dateUtc="item.forecastEndUtc" />
+          </p>
+          <p>{{ $t('predictions.predictions.poolSize') }}: {{item.poolSize }} {{ $t('general.aix') }}</p>
+        </div>
+      </div>
     </div>
   </router-link>
 </template>
@@ -52,6 +54,7 @@ export default {
 
       .title {
         flex-grow: 1;
+
         h3 {
           margin: 0;
         }
@@ -68,5 +71,4 @@ export default {
       }
     }
   }
-
 </style>

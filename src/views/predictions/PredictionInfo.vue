@@ -15,30 +15,29 @@
           <div class="content">
             <div class="prediction-info">
               <p>{{ prediction.description }}</p>
-              <p>{{`${$t('predictions.predictions.forecastTill')}: ${prediction.endDateUtc}`}}</p>
+              <p>{{`${$t('predictions.predictions.forecastTill')}: `}}
+                <Date :dateUtc="prediction.forecastEndUtc" />
+              </p>
               <p>{{`${$t('predictions.predictions.poolSize')}: ${prediction.poolSize}`}} {{ $t('general.aix') }}</p>
+              <p>{{$t('predictions.predictions.totalForecastMade')}}: {{ prediction.forecastsCount }}</p>
             </div>
-            <Outcomes
-              :selectedOutcomeId="selectedOutcomeId"
-              :items="prediction.outcomes"
-              @selected="onOutcomeSelected" />
+            <OutcomesPercentage :outcomes="prediction.outcomes" />
+            <Outcomes :selectedOutcomeId="selectedOutcomeId" :items="prediction.outcomes" @selected="onOutcomeSelected" />
           </div>
         </div>
       </div>
     </Card>
 
-    <ConfirmForecastDialog
-      :prediction="prediction.title"
-      :selectedOutcome="selectedOutcome"
-      :isVisible="isPredictionConfirmDialogVisible"
-      :displayDialog="dispalyPredictionConfirmDialog"
-      @createForecast="onCreateForecast"/>
+    <ConfirmForecastDialog :prediction="prediction.title" :selectedOutcome="selectedOutcome" :isVisible="isPredictionConfirmDialogVisible"
+      :displayDialog="dispalyPredictionConfirmDialog" @createForecast="onCreateForecast" />
   </div>
 </template>
 
 <script>
 import Card from '@/components/Card'
+import Date from '@/components/Date'
 import Outcomes from '@/components/predictions/Outcomes'
+import OutcomesPercentage from '@/components/predictions/OutcomesPercentage'
 import ConfirmForecastDialog from '@/components/predictions/ConfirmForecastDialog'
 import { createNamespacedHelpers } from 'vuex'
 const { mapGetters } = createNamespacedHelpers('predictions')
@@ -47,7 +46,9 @@ export default {
   components: {
     Card,
     Outcomes,
-    ConfirmForecastDialog
+    ConfirmForecastDialog,
+    Date,
+    OutcomesPercentage
   },
   computed: {
     ...mapGetters(['prediction'])
@@ -94,7 +95,7 @@ export default {
 
       await this.$store.dispatch('predictions/makeForecast', payload)
 
-      this.$router.push({ name: 'MyForecastsList' })
+      // this.$router.push({ name: 'MyForecastsList' })
     }
   }
 }
@@ -122,5 +123,4 @@ export default {
       }
     }
   }
-
 </style>

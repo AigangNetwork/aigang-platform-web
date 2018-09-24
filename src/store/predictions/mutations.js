@@ -8,11 +8,11 @@ const mutations = {
   setUserForecasts (state, payload) {
     state.userForecasts = payload
   },
-  setCurrentPrediction (state, payload) {
-    state.currentPrediction = payload.item
+  setPrediction (state, payload) {
+    state.prediction = payload.item
   },
-  setCurrentUserForecast (state, payload) {
-    state.currentUserForecast = payload.item
+  setUserForecast (state, payload) {
+    state.userForecast = payload.item
   }
 }
 

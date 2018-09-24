@@ -462,11 +462,13 @@
         "required": "Can not be empty",
         "shouldBeNumber": "Should be number",
         "shouldBeBiggerThanZero": "Should be greater than zero"
-      }
+      },
+      "userNotLoggedIn": "User must be logged in and connected to web3 provider (Metamask, Mist, etc.)"
     },
     "predictions": {
       "forecastTill": "Forecast till",
-      "poolSize": "Prize pool"
+      "poolSize": "Prize pool",
+      "totalForecastMade": "Total forecasts made"
     },
     "forecasts": {
       "forecast": "Forecast",

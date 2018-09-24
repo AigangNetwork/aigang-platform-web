@@ -7,8 +7,8 @@ export default {
   state: {
     predictions: [],
     userForecasts: [],
-    currentPrediction: {},
-    currentUserForecast: {}
+    prediction: {},
+    userForecast: {}
   },
   mutations,
   actions,

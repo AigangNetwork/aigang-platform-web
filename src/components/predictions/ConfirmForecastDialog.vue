@@ -13,9 +13,11 @@
 
         <div>
           <h4>{{ $t('predictions.confirmationDialog.amount') }}:</h4>
-          <el-form @submit.prevent.native="submitForm('createForecastForm', createForecast)" :rules="formRules" :model="createForecastForm" class="create-forecast-form" ref="createForecastForm">
+          <el-form @submit.prevent.native="submitForm('createForecastForm', createForecast)" :rules="formRules" :model="createForecastForm"
+            class="create-forecast-form" ref="createForecastForm">
             <el-form-item prop="amount">
-              <el-input v-model.number="createForecastForm.amount" v-on:keyup.enter="submitForm('createForecastForm', createForecast)" maxlength="10" class="amount-input">
+              <el-input v-model.number="createForecastForm.amount" v-on:keyup.enter="submitForm('createForecastForm', createForecast)"
+                maxlength="10" class="amount-input">
                 <template slot="append">{{ $t('general.aix')}}</template>
               </el-input>
             </el-form-item>
@@ -24,7 +26,15 @@
 
         <div slot="footer" class="dialog-footer">
           <el-button @click="onCancel">{{ $t('general.cancel') }}</el-button>
-          <el-button class="button" type="primary" @click.prevent.native="submitForm('createForecastForm', createForecast)">{{ $t('predictions.confirmationDialog.buttons.forecast')}}</el-button>
+          <el-tooltip :disabled="forecastButtonEnabled" effect="dark" :content="$t('predictions.confirmationDialog.userNotLoggedIn')"
+            placement="top">
+            <span class="wrapper el-button">
+              <el-button class="button" :disabled="!forecastButtonEnabled" type="primary" @click.prevent.native="submitForm('createForecastForm', createForecast)">
+                {{ $t('predictions.confirmationDialog.buttons.forecast')}}
+              </el-button>
+            </span>
+          </el-tooltip>
+
         </div>
       </div>
     </template>
@@ -75,6 +85,9 @@ export default {
       set (value) {
         this.displayDialog(value)
       }
+    },
+    forecastButtonEnabled () {
+      return !!((this.$store.getters['user/isAuthenticated'] && this.$store.getters['user/web3']))
     }
   },
   methods: {
@@ -109,5 +122,4 @@ export default {
       text-align: center;
     }
   }
-
 </style>
