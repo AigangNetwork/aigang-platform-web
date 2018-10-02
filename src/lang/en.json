@@ -62,6 +62,7 @@
       "models": "Models"
     },
     "card": {
+      "status": "Status",
       "models": "Models",
       "comment": "Comments",
       "added": "Added",
@@ -394,7 +395,8 @@
     "retry": "Retry",
     "days": "days",
     "day": "day",
-    "id": "ID"
+    "id": "ID",
+    "backToList": "Back to list"
   },
   "errors": {
     "error": "Error",
@@ -450,6 +452,17 @@
       "predictions": "All Predictions",
       "myForecasts": "My Forecasts"
     },
+    "prediction": {
+      "forecastEnd": "Forecast end",
+      "results": "Results will be announced",
+      "total": "Predictions",
+      "volume": "Volume",
+      "description": "Description",
+      "outcomes": "Outcomes",
+      "noDescription": "There is no description for this prediction",
+      "forecastDetails": "Forecast details",
+      "marketContractAddress": "Market contract address"
+    },
     "confirmationDialog": {
       "title": "Confirm your forecast",
       "buttons": {
@@ -470,10 +483,25 @@
       "poolSize": "Prize pool",
       "totalForecastMade": "Total forecasts made"
     },
-    "forecasts": {
-      "forecast": "Forecast",
+    "forecast": {
       "amount": "Amount",
-      "created": "Created"
+      "created": "Created",
+      "results": "Results",
+      "status": "Status",
+      "statuses": {
+        "pendingPayment": "Pending payment",
+        "paid": "Paid",
+        "canceled": "Canceled",
+        "won": "Won",
+        "lost": "Lost",
+        "wonPaidout": "Won Paidout"
+      }
+    },
+    "statistics": {
+      "legend": {
+        "yourPrediction": "Your prediction",
+        "otherPredictions": "Other predictions"
+      }
     }
   },
   "insurance": {

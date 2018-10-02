@@ -512,7 +512,8 @@ body.aig {
 
 .contract-address {
   font-size: 18px;
-  color: $light-blue;
+  font-weight: 400;
+  color: $light-blue !important;
   font-family: $font-secondary;
   word-wrap: break-word;
 }
@@ -529,4 +530,80 @@ body.aig {
 
 .investment-product-card.aig-card .aig-card-body {
   padding: 0 !important;
+}
+
+.aig-info {
+  overflow: hidden;
+  max-width: 1440px;
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
+  display: block;
+
+  .aig-info-header {
+    background: url('/static/background/background_pattern.svg');
+    background-size: 190px;
+    background-clip: content-box;
+    background-repeat: repeat;
+    width: 100%;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+
+    .back-button-container {
+      width: 100%;
+      margin-top: 20px;
+      margin-left: 30px;
+
+      .back-button {
+        color: #fff;
+        padding: 5px 10px 5px 10px;
+        border: #fff 1px solid;
+        opacity: 0.6;
+      }
+      .back-button:hover {
+        opacity: 1;
+      }
+    }
+
+    .aig-info-header-content {
+      width: 100%;
+      padding: 0 35px;
+      max-width: 932px;
+      min-height: 180px;
+      margin: 50px 5px 40px 5px;
+      color: #ffffff;
+      display: flex;
+      flex-direction: column;
+    }
+  }
+  
+  .aig-info-header::after {
+    display: block;
+    position: absolute;
+    background: linear-gradient(to bottom, rgba(50, 98, 176, 1) 0%, rgba(140, 177, 230, 0.5) 100%);
+    content: '';
+    width: 100%;
+    height: 100%;
+    max-width: 1440px;
+    max-height: 550px;
+    z-index: -1;
+  }
+
+  .aig-info-content-container {
+    display: block;
+    height: 100%;
+    width: 100%;
+    background-color: $dark-grey-bck-grnd;
+    justify-content: center;
+    .aig-info-content {
+      width: 100%;
+      max-width: 932px;
+      margin: 0 auto;
+      margin-bottom: 40px;
+      background-color: white;
+      border: 1px solid $light-grey-border;
+      padding: 40px;
+    }
+  }
 }

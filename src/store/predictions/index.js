@@ -8,7 +8,8 @@ export default {
     predictions: [],
     userForecasts: [],
     prediction: {},
-    userForecast: {}
+    userForecast: {},
+    predictionStatistics: {}
   },
   mutations,
   actions,

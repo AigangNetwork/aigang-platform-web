@@ -84,13 +84,37 @@ export default {
     }
   },
 
-  async getUserForecast ({ commit }, id) {
+  async getUserForecast ({ commit, dispatch }, id) {
     commit('SET_LOADING', true, { root: true })
 
     try {
       const response = await axios.get('/predictions/forecast/' + id)
       if (response.data) {
         commit('setUserForecast', response.data)
+
+        if (response.data.item && response.data.item.predictionId) {
+          dispatch('getPredictionStatistics', response.data.item.predictionId)
+        } else {
+          commit('SET_LOADING', false, { root: true })
+        }
+      }
+    } catch (ex) {
+      commit('SET_LOADING', false, { root: true })
+    }
+  },
+
+  async getPredictionStatistics ({ commit }, predictionId) {
+    commit('SET_LOADING', true, { root: true })
+
+    const payload = {
+      predictionId
+    }
+
+    try {
+      const response = await axios.post('/predictions/prediction/getStatistics', payload)
+
+      if (response.data) {
+        commit('setPredictionStatistics', response.data)
       }
 
       commit('SET_LOADING', false, { root: true })

@@ -6,7 +6,10 @@ export default {
     userLocaleDate () {
       if (this.dateUtc) {
         const offset = moment().utcOffset()
-        return moment.utc(this.dateUtc).utcOffset(offset).format('YYYY-MM-DD HH:mm:ss')
+
+        var format = this.format || 'YYYY-MM-DD HH:mm:ss'
+
+        return moment.utc(this.dateUtc).utcOffset(offset).format(format)
       } else {
         return 'N/A'
       }

@@ -1,49 +1,42 @@
 <template>
-  <div class="aig-container aig-view" v-loading="$store.getters.loading">
-    <Card class="prediction-card" v-show="isDataLoaded">
-      <div slot="body">
-        <div class="dataset-model-header-container">
-          <el-row class="header">
-            <router-link :to="{ name: 'PredictionsList' }" class="back-button">
-              <i class="back-icon el-icon-arrow-left"></i>
-            </router-link>
-            <h3>{{ prediction.title }}</h3>
-          </el-row>
-        </div>
-
-        <div class="dataset-content-container">
-          <div class="content">
-            <div class="prediction-info">
-              <p>{{ prediction.description }}</p>
-              <p>{{`${$t('predictions.predictions.forecastTill')}: `}}
-                <Date :dateUtc="prediction.forecastEndUtc" />
-              </p>
-              <p>{{`${$t('predictions.predictions.poolSize')}: ${prediction.poolSize}`}} {{ $t('general.aix') }}</p>
-              <p>{{$t('predictions.predictions.totalForecastMade')}}: {{ prediction.forecastsCount }}</p>
-            </div>
-            <OutcomesPercentage :outcomes="prediction.outcomes" />
-            <Outcomes :selectedOutcomeId="selectedOutcomeId" :items="prediction.outcomes" @selected="onOutcomeSelected" />
-          </div>
-        </div>
+  <div class="aig-container aig-view aig-info" v-loading="$store.getters.loading">
+    <div class="aig-info-header" v-if="isDataLoaded">
+      <div class="back-button-container">
+        <router-link :to="{ name: 'PredictionsList' }" class="back-button">{{ $t('general.backToList')}}</router-link>
       </div>
-    </Card>
-
+      <div class="aig-info-header-content">
+        <PredictionInfoHeader :prediction="prediction" />
+      </div>
+    </div>
+    <div class="aig-info-content-container" v-if="isDataLoaded">
+      <div class="aig-info-content">
+        <h4 class="info-title">{{ $t('predictions.prediction.description') }}</h4>
+        <p>{{ prediction.description || $t('predictions.prediction.noDescription') }}</p>
+        <h4 class="info-title">{{ $t('predictions.prediction.marketContractAddress') }}</h4>
+        <p><a class="contract-address" target="_blank" :href="contractLink">{{ prediction.marketAddress }}</a></p>
+        <h4 class="info-title">{{ $t('predictions.prediction.outcomes') }}</h4>
+        <Outcomes :selectedOutcomeId="selectedOutcomeId" :items="prediction.outcomes" @selected="onOutcomeSelected" />
+      </div>
+    </div>
     <ConfirmForecastDialog :prediction="prediction.title" :selectedOutcome="selectedOutcome" :isVisible="isPredictionConfirmDialogVisible"
       :displayDialog="dispalyPredictionConfirmDialog" @createForecast="onCreateForecast" />
   </div>
 </template>
 
 <script>
+import PredictionInfoHeader from './PredictionInfoHeader'
 import Card from '@/components/Card'
 import Date from '@/components/Date'
 import Outcomes from '@/components/predictions/Outcomes'
 import OutcomesPercentage from '@/components/predictions/OutcomesPercentage'
 import ConfirmForecastDialog from '@/components/predictions/ConfirmForecastDialog'
+
 import { createNamespacedHelpers } from 'vuex'
 const { mapGetters } = createNamespacedHelpers('predictions')
 
 export default {
   components: {
+    PredictionInfoHeader,
     Card,
     Outcomes,
     ConfirmForecastDialog,
@@ -51,7 +44,10 @@ export default {
     OutcomesPercentage
   },
   computed: {
-    ...mapGetters(['prediction'])
+    ...mapGetters(['prediction']),
+    contractLink () {
+      return process.env.ETHERSCAN_ADDRESS + process.env.ADDRESS_PATX + this.prediction.marketAddress
+    }
   },
   data () {
     return {
@@ -104,23 +100,16 @@ export default {
 <style lang="scss" scoped>
   @import '~helpers/variables';
 
-  .aig-container {
-    .prediction-card {
-      .header {
-        display: flex;
-        flex-direction: row;
-
-        .back-icon {
-          margin-top: 24px;
-          margin-right: 10px;
-        }
+  .aig-info {
+    .aig-info-content{
+      p.description {
+        margin-bottom: 40px;
       }
 
-      .content {
-        .prediction-info {
-          margin-bottom: 30px;
-        }
+      .info-title {
+        margin-top: 0px;
       }
     }
   }
+
 </style>

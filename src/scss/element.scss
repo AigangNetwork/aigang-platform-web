@@ -164,3 +164,10 @@
 .download-app-dialog .el-dialog--center {
   max-width: 600px;
 }
+
+// Progress
+.el-progress.selected {
+  .el-progress-bar__inner {
+    background-color: $purple;
+  }
+}
