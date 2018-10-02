@@ -1,8 +1,12 @@
 import axios from 'axios'
 
 export default {
-  async getPredictionsList ({ commit }, page) {
-    commit('SET_LOADING', true, { root: true })
+  async getPredictionsList ({
+    commit
+  }, page) {
+    commit('SET_LOADING', true, {
+      root: true
+    })
 
     try {
       const response = await axios.get('/predictions/list?page=' + page)
@@ -10,14 +14,22 @@ export default {
         commit('setPredictions', response.data)
       }
 
-      commit('SET_LOADING', false, { root: true })
+      commit('SET_LOADING', false, {
+        root: true
+      })
     } catch (ex) {
-      commit('SET_LOADING', false, { root: true })
+      commit('SET_LOADING', false, {
+        root: true
+      })
     }
   },
 
-  async getPrediction ({ commit }, id) {
-    commit('SET_LOADING', true, { root: true })
+  async getPrediction ({
+    commit
+  }, id) {
+    commit('SET_LOADING', true, {
+      root: true
+    })
 
     try {
       const response = await axios.get('/predictions/prediction/' + id)
@@ -25,51 +37,62 @@ export default {
         commit('setPrediction', response.data)
       }
 
-      commit('SET_LOADING', false, { root: true })
+      commit('SET_LOADING', false, {
+        root: true
+      })
     } catch (ex) {
-      commit('SET_LOADING', false, { root: true })
+      commit('SET_LOADING', false, {
+        root: true
+      })
     }
   },
 
-  async makeForecast ({ commit, rootState, dispatch, state }, payload) {
-    commit('SET_LOADING', true, { root: true })
-
-    const abiResponse = await axios.get('contracts/' + state.prediction.marketAddress)
-
-    const marketAbi = JSON.parse(abiResponse.data.abi)
+  async makeForecast ({
+    commit,
+    rootState,
+    dispatch,
+    state
+  }, payload) {
+    commit('SET_LOADING', true, {
+      root: true
+    })
 
     const web3 = rootState.user.userWeb3.web3()
     const TokenInstance = new web3.eth.Contract(process.env.CONTRACT_INFO.ABI, process.env.CONTRACT_INFO.ADDRESS)
     const paymentValue = web3.utils.toWei(payload.amount.toString())
-    const MarketInstance = new web3.eth.Contract(marketAbi, state.prediction.marketAddress)
-    const predictionIdBytes = web3.utils.fromAscii(payload.predictionId)
+    const predictionIdHex = web3.utils.fromAscii(payload.predictionId)
+
+    let outcomeHex = Number(payload.outcomeId).toString(16)
+    if (outcomeHex.length === 1) {
+      outcomeHex = '0' + outcomeHex
+    }
 
     TokenInstance.methods
-      .approveAndCall(state.prediction.marketAddress, paymentValue, predictionIdBytes)
+      .approveAndCall(state.prediction.marketAddress, paymentValue, predictionIdHex + outcomeHex)
       .send({
-        gas: 190000,
+        gas: 300000,
         from: rootState.user.userWeb3.coinbase
       })
       .once('transactionHash', async txHash => {
-        MarketInstance.methods
-          .addForecast(predictionIdBytes, paymentValue, Number(payload.outcomeId))
-          .send({
-            gas: 190000,
-            from: rootState.user.userWeb3.coinbase
+        try {
+          await axios.post('/predictions/prediction/forecast', payload)
+          commit('SET_LOADING', false, {
+            root: true
           })
-          .once('transactionHash', async txHash => {
-            try {
-              await axios.post('/predictions/prediction/forecast', payload)
-              commit('SET_LOADING', false, { root: true })
-            } catch (ex) {
-              commit('SET_LOADING', false, { root: true })
-            }
+        } catch (ex) {
+          commit('SET_LOADING', false, {
+            root: true
           })
+        }
       })
   },
 
-  async getUserForecasts ({ commit }, page) {
-    commit('SET_LOADING', true, { root: true })
+  async getUserForecasts ({
+    commit
+  }, page) {
+    commit('SET_LOADING', true, {
+      root: true
+    })
 
     try {
       const response = await axios.get('/predictions/myforecasts?page=' + page)
@@ -78,14 +101,22 @@ export default {
         commit('setUserForecasts', response.data)
       }
 
-      commit('SET_LOADING', false, { root: true })
+      commit('SET_LOADING', false, {
+        root: true
+      })
     } catch (ex) {
-      commit('SET_LOADING', false, { root: true })
+      commit('SET_LOADING', false, {
+        root: true
+      })
     }
   },
 
-  async getUserForecast ({ commit }, id) {
-    commit('SET_LOADING', true, { root: true })
+  async getUserForecast ({
+    commit
+  }, id) {
+    commit('SET_LOADING', true, {
+      root: true
+    })
 
     try {
       const response = await axios.get('/predictions/forecast/' + id)
@@ -93,9 +124,13 @@ export default {
         commit('setUserForecast', response.data)
       }
 
-      commit('SET_LOADING', false, { root: true })
+      commit('SET_LOADING', false, {
+        root: true
+      })
     } catch (ex) {
-      commit('SET_LOADING', false, { root: true })
+      commit('SET_LOADING', false, {
+        root: true
+      })
     }
   }
 }
