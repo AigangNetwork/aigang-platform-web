@@ -1,9 +1,7 @@
 import axios from 'axios'
 
 export default {
-  async getPredictionsList ({
-    commit
-  }, page) {
+  async getPredictionsList ({ commit }, page) {
     commit('SET_LOADING', true, {
       root: true
     })
@@ -24,9 +22,7 @@ export default {
     }
   },
 
-  async getPrediction ({
-    commit
-  }, id) {
+  async getPrediction ({ commit }, id) {
     commit('SET_LOADING', true, {
       root: true
     })
@@ -47,49 +43,45 @@ export default {
     }
   },
 
-  async makeForecast ({
-    commit,
-    rootState,
-    dispatch,
-    state
-  }, payload) {
-    commit('SET_LOADING', true, {
-      root: true
-    })
+  async makeForecast ({ commit, rootState, state }, payload) {
+    commit('SET_LOADING', true, { root: true })
 
     const web3 = rootState.user.userWeb3.web3()
     const TokenInstance = new web3.eth.Contract(process.env.CONTRACT_INFO.ABI, process.env.CONTRACT_INFO.ADDRESS)
     const paymentValue = web3.utils.toWei(payload.amount.toString())
-    const predictionIdHex = web3.utils.fromAscii(payload.predictionId)
 
-    let outcomeHex = Number(payload.outcomeId).toString(16)
+    const predictionIdBytes = web3.utils.fromAscii(payload.predictionId)
+    let outcomeHex = payload.outcome.toString(16)
     if (outcomeHex.length === 1) {
       outcomeHex = '0' + outcomeHex
     }
 
+    const predictionBytes = predictionIdBytes + outcomeHex
+
+    debugger
     TokenInstance.methods
-      .approveAndCall(state.prediction.marketAddress, paymentValue, predictionIdHex + outcomeHex)
+      .approveAndCall(state.prediction.marketAddress, paymentValue, predictionBytes)
       .send({
-        gas: 300000,
+        gas: 400000,
         from: rootState.user.userWeb3.coinbase
       })
       .once('transactionHash', async txHash => {
         try {
-          await axios.post('/predictions/prediction/forecast', payload)
-          commit('SET_LOADING', false, {
-            root: true
-          })
+          const request = {
+            predictionId: payload.predictionId,
+            outcomeId: payload.outcomeId,
+            amount: payload.amount
+          }
+
+          await axios.post('/predictions/prediction/forecast', request)
+          commit('SET_LOADING', false, { root: true })
         } catch (ex) {
-          commit('SET_LOADING', false, {
-            root: true
-          })
+          commit('SET_LOADING', false, { root: true })
         }
       })
   },
 
-  async getUserForecasts ({
-    commit
-  }, page) {
+  async getUserForecasts ({ commit }, page) {
     commit('SET_LOADING', true, {
       root: true
     })
@@ -111,10 +103,7 @@ export default {
     }
   },
 
-  async getUserForecast ({
-    commit,
-    dispatch
-  }, id) {
+  async getUserForecast ({ commit, dispatch }, id) {
     commit('SET_LOADING', true, {
       root: true
     })
@@ -139,9 +128,7 @@ export default {
     }
   },
 
-  async getPredictionStatistics ({
-    commit
-  }, predictionId) {
+  async getPredictionStatistics ({ commit }, predictionId) {
     commit('SET_LOADING', true, {
       root: true
     })

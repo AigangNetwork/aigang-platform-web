@@ -94,6 +94,7 @@ export default {
     createForecast () {
       this.$emit('createForecast', {
         amount: parseInt(this.createForecastForm.amount),
+        selectedOutcomeIndex: this.selectedOutcome.index,
         selectedOutcomeId: this.selectedOutcome.id
       })
     },

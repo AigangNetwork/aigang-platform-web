@@ -15,11 +15,11 @@
         <h4 class="info-title">{{ $t('predictions.prediction.marketContractAddress') }}</h4>
         <p><a class="contract-address" target="_blank" :href="contractLink">{{ prediction.marketAddress }}</a></p>
         <h4 class="info-title">{{ $t('predictions.prediction.outcomes') }}</h4>
-        <Outcomes :selectedOutcomeId="selectedOutcomeId" :items="prediction.outcomes" @selected="onOutcomeSelected" />
+        <Outcomes :selectedOutcomeIndex="selectedOutcomeIndex" :items="prediction.outcomes" @selected="onOutcomeSelected" />
       </div>
     </div>
     <ConfirmForecastDialog :prediction="prediction.title" :selectedOutcome="selectedOutcome" :isVisible="isPredictionConfirmDialogVisible"
-      :displayDialog="dispalyPredictionConfirmDialog" @createForecast="onCreateForecast" />
+      :displayDialog="displayPredictionConfirmDialog" @createForecast="onCreateForecast" />
   </div>
 </template>
 
@@ -54,7 +54,7 @@ export default {
       isDataLoaded: false,
       isPredictionConfirmDialogVisible: false,
       selectedOutcome: {},
-      selectedOutcomeId: 0
+      selectedOutcomeIndex: 0
     }
   },
   async created () {
@@ -62,32 +62,35 @@ export default {
     this.isDataLoaded = true
   },
   methods: {
-    onOutcomeSelected (id) {
+    onOutcomeSelected (index) {
       this.prediction.outcomes.map(o => {
-        if (o.id === id) {
+        if (o.index === index) {
           this.selectedOutcome = o
         }
       })
 
-      this.selectedOutcomeId = id
+      this.selectedOutcomeIndex = index
 
-      this.dispalyPredictionConfirmDialog(true)
+      this.displayPredictionConfirmDialog(true)
     },
-    dispalyPredictionConfirmDialog (value) {
+    displayPredictionConfirmDialog (value) {
       if (!value) {
-        this.selectedOutcomeId = 0
+        this.selectedOutcomeIndex = 0
       }
 
       this.isPredictionConfirmDialogVisible = value
     },
     async onCreateForecast (data) {
-      this.dispalyPredictionConfirmDialog(false)
+      this.displayPredictionConfirmDialog(false)
 
       const payload = {
         predictionId: this.prediction.id,
         outcomeId: data.selectedOutcomeId,
+        outcome: data.selectedOutcomeIndex,
         amount: data.amount
       }
+
+      console.table(payload)
 
       await this.$store.dispatch('predictions/makeForecast', payload)
 
@@ -101,7 +104,7 @@ export default {
   @import '~helpers/variables';
 
   .aig-info {
-    .aig-info-content{
+    .aig-info-content {
       p.description {
         margin-bottom: 40px;
       }
@@ -111,5 +114,4 @@ export default {
       }
     }
   }
-
 </style>
