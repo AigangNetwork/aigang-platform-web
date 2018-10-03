@@ -90,11 +90,7 @@ export default {
         amount: data.amount
       }
 
-      console.table(payload)
-
       await this.$store.dispatch('predictions/makeForecast', payload)
-
-      // this.$router.push({ name: 'MyForecastsList' })
     }
   }
 }

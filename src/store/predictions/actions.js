@@ -58,7 +58,6 @@ export default {
 
     const predictionBytes = predictionIdBytes + outcomeHex
 
-    debugger
     TokenInstance.methods
       .approveAndCall(state.prediction.marketAddress, paymentValue, predictionBytes)
       .send({
@@ -68,12 +67,13 @@ export default {
       .once('transactionHash', async txHash => {
         try {
           const request = {
+            txId: txHash,
             predictionId: payload.predictionId,
             outcomeId: payload.outcomeId,
             amount: payload.amount
           }
 
-          await axios.post('/predictions/prediction/forecast', request)
+          await axios.post('/predictions/forecast', request)
           commit('SET_LOADING', false, { root: true })
         } catch (ex) {
           commit('SET_LOADING', false, { root: true })
