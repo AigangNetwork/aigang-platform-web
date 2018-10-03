@@ -16,6 +16,9 @@ const mutations = {
   },
   setPredictionStatistics (state, payload) {
     state.predictionStatistics = payload.statistics
+  },
+  setTransactionHash (state, transactionHash) {
+    state.transactionHash = transactionHash
   }
 }
 

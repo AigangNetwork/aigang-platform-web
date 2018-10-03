@@ -461,7 +461,15 @@
       "outcomes": "Outcomes",
       "noDescription": "There is no description for this prediction",
       "forecastDetails": "Forecast details",
-      "marketContractAddress": "Market contract address"
+      "marketContractAddress": "Market contract address",
+      "paymentInfo": {
+        "title": "Payment Information",
+        "metamaskAlert": "Atention! Do not leave this page until you confirm your transaction. Otherwise your transaction will be lost and forecast won't be counted.",
+        "body": "Your payment transaction was created succesfully. When payment will be processed we will inform you via email notification message. You can see your transaction status by clicking on transaction address.",
+        "buttons": {
+          "goBack": "Go to my forecasts list"
+        }
+      }
     },
     "confirmationDialog": {
       "title": "Confirm your forecast",
@@ -494,7 +502,10 @@
         "canceled": "Canceled",
         "won": "Won",
         "lost": "Lost",
-        "wonPaidout": "Won Paidout"
+        "wonPaidout": "Won Paidout",
+        "availableRefund": "Available Refund",
+        "pendingRefund": "Pending Refund",
+        "refundPaidout": "Refund Paidout"
       }
     },
     "statistics": {

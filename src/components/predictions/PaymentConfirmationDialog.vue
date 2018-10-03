@@ -1,17 +1,17 @@
 <template>
-  <el-dialog :title="$t('insurance.policy.paymentInfo.title')" :visible.sync="show">
+  <el-dialog :title="$t('predictions.prediction.paymentInfo.title')" :visible.sync="show">
     <transition-group name="slideDown">
-      <div key="1" v-if="!txHash">
-        <p class="bold">{{ $t('insurance.policy.paymentInfo.metamaskAlert') }}</p>
+      <div key="1" v-if="!transactionHash">
+        <p class="bold">{{ $t('predictions.prediction.paymentInfo.metamaskAlert') }}</p>
       </div>
-      <div class="policy-dialog-info" v-if="txHash" key="2">
-        <p>{{ $t('insurance.policy.paymentInfo.body') }}</p>
+      <div class="policy-dialog-info" v-if="transactionHash" key="2">
+        <p>{{ $t('predictions.prediction.paymentInfo.body') }}</p>
         <a class="address" :href="txLink" target="_blank">
-          <span class="contract-address">{{ this.txHash }}</span>
+          <span class="contract-address">{{ transactionHash }}</span>
         </a>
         <div class="buttons">
-          <router-link :to="policyListRoute">
-            <el-button class="button" type="primary">{{ $t('insurance.policy.paymentInfo.buttons.goBack')}}</el-button>
+          <router-link :to="userForecastListRoute">
+            <el-button class="button" type="primary">{{ $t('predictions.prediction.paymentInfo.buttons.goBack')}}</el-button>
           </router-link>
         </div>
       </div>
@@ -20,13 +20,13 @@
 </template>
 <script>
 import { createNamespacedHelpers } from 'vuex'
-const { mapGetters } = createNamespacedHelpers('insurance')
+const { mapGetters } = createNamespacedHelpers('predictions')
 
 export default {
   props: ['isVisible', 'displayDialog'],
   data () {
     return {
-      policyListRoute: '/insurance/policy/mypolicies'
+      userForecastListRoute: '/predictions/myforecasts'
     }
   },
   watch: {
@@ -37,7 +37,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['txHash']),
+    ...mapGetters(['transactionHash']),
     txLink () {
       return process.env.ETHERSCAN_ADDRESS + process.env.TX_PATH + this.txHash
     },

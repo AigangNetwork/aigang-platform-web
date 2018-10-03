@@ -20,6 +20,8 @@
     </div>
     <ConfirmForecastDialog :prediction="prediction.title" :selectedOutcome="selectedOutcome" :isVisible="isPredictionConfirmDialogVisible"
       :displayDialog="dispalyPredictionConfirmDialog" @createForecast="onCreateForecast" />
+
+    <PaymentConfirmationDialog :isVisible="isPaymentDialogVisible" :displayDialog="displayPaymentDialog" />
   </div>
 </template>
 
@@ -30,6 +32,7 @@ import Date from '@/components/Date'
 import Outcomes from '@/components/predictions/Outcomes'
 import OutcomesPercentage from '@/components/predictions/OutcomesPercentage'
 import ConfirmForecastDialog from '@/components/predictions/ConfirmForecastDialog'
+import PaymentConfirmationDialog from '@/components/predictions/PaymentConfirmationDialog'
 
 import { createNamespacedHelpers } from 'vuex'
 const { mapGetters } = createNamespacedHelpers('predictions')
@@ -40,6 +43,7 @@ export default {
     Card,
     Outcomes,
     ConfirmForecastDialog,
+    PaymentConfirmationDialog,
     Date,
     OutcomesPercentage
   },
@@ -53,6 +57,7 @@ export default {
     return {
       isDataLoaded: false,
       isPredictionConfirmDialogVisible: false,
+      isPaymentDialogVisible: false,
       selectedOutcome: {},
       selectedOutcomeId: 0
     }
@@ -80,6 +85,9 @@ export default {
 
       this.isPredictionConfirmDialogVisible = value
     },
+    displayPaymentDialog (value) {
+      this.isPaymentDialogVisible = value
+    },
     async onCreateForecast (data) {
       this.dispalyPredictionConfirmDialog(false)
 
@@ -89,9 +97,9 @@ export default {
         amount: data.amount
       }
 
-      await this.$store.dispatch('predictions/makeForecast', payload)
+      await this.$store.dispatch('predictions/addForecast', payload)
 
-      // this.$router.push({ name: 'MyForecastsList' })
+      this.displayPaymentDialog(true)
     }
   }
 }

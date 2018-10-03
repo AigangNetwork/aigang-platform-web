@@ -3,16 +3,16 @@
     <template>
       <div class="dialog-body">
         <div>
-          <h4>{{ $t('predictions.confirmationDialog.prediction') }}:</h4>
+          <h4 class="info-title">{{ $t('predictions.confirmationDialog.prediction') }}:</h4>
           <p>{{ prediction }}</p>
         </div>
         <div>
-          <h4>{{ $t('predictions.confirmationDialog.forecast') }}:</h4>
+          <h4 class="info-title">{{ $t('predictions.confirmationDialog.forecast') }}:</h4>
           <p>{{ selectedOutcome.name }}</p>
         </div>
 
         <div>
-          <h4>{{ $t('predictions.confirmationDialog.amount') }}:</h4>
+          <h4 class="info-title">{{ $t('predictions.confirmationDialog.amount') }}:</h4>
           <el-form @submit.prevent.native="submitForm('createForecastForm', createForecast)" :rules="formRules" :model="createForecastForm"
             class="create-forecast-form" ref="createForecastForm">
             <el-form-item prop="amount">
@@ -93,7 +93,7 @@ export default {
   methods: {
     createForecast () {
       this.$emit('createForecast', {
-        amount: parseInt(this.createForecastForm.amount),
+        amount: this.createForecastForm.amount,
         selectedOutcomeId: this.selectedOutcome.id
       })
     },
@@ -110,8 +110,8 @@ export default {
 </script>
 <style lang="scss" scoped>
   .dialog-body {
-    h4 {
-      margin-bottom: 0px;
+    .info-title {
+      margin-top: 0px;
     }
 
     .create-forecast-form {

@@ -5,7 +5,7 @@
         <div class="outcomes-percentage-title" v-for="(item, index) in statistics" :key="index">{{ item.name }}</div>
       </div>
       <div class="outcomes-percentage-progress">
-        <el-progress v-for="(item, index) in statistics" :key="index" :class="{ 'selected': isSelectedOutcome(item.id)}" :text-inside="true" :stroke-width="20" :percentage="item.outcomePercentage | round" />
+        <el-progress v-for="(item, index) in statistics" :key="index" :class="{ 'selected': isSelectedOutcome(item.outcomeId)}" :text-inside="true" :stroke-width="20" :percentage="item.outcomePercentage | round" />
       </div>
     </div>
     <div class="outcomes-percentage-legend-container" v-if="statistics.length > 0">
@@ -18,8 +18,8 @@
 export default {
   props: ['statistics', 'selectedOutcomeId'],
   methods: {
-    isSelectedOutcome (id) {
-      return id === this.selectedOutcomeId
+    isSelectedOutcome (outcomeId) {
+      return outcomeId === this.selectedOutcomeId
     }
   },
   filters: {

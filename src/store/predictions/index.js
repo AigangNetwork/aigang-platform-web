@@ -9,7 +9,8 @@ export default {
     userForecasts: [],
     prediction: {},
     userForecast: {},
-    predictionStatistics: {}
+    predictionStatistics: {},
+    transactionHash: ''
   },
   mutations,
   actions,
