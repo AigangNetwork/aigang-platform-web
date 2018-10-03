@@ -34,7 +34,6 @@
               </el-button>
             </span>
           </el-tooltip>
-
         </div>
       </div>
     </template>
@@ -94,6 +93,7 @@ export default {
     createForecast () {
       this.$emit('createForecast', {
         amount: this.createForecastForm.amount,
+        selectedOutcomeIndex: this.selectedOutcome.index,
         selectedOutcomeId: this.selectedOutcome.id
       })
     },

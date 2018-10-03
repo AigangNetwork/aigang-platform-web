@@ -107,7 +107,7 @@ export default {
     const paymentValue = web3.utils.toWei(payload.amount.toString())
     const predictionIdHex = web3.utils.fromAscii(payload.predictionId)
 
-    let outcomeHex = Number(payload.outcomeId).toString(16)
+    let outcomeHex = Number(payload.outcome).toString(16)
     if (outcomeHex.length === 1) {
       outcomeHex = '0' + outcomeHex
     }
@@ -115,7 +115,7 @@ export default {
     TokenInstance.methods
       .approveAndCall(state.prediction.marketAddress, paymentValue, predictionIdHex + outcomeHex)
       .send({
-        gas: 300000,
+        gas: 400000,
         from: rootState.user.userWeb3.coinbase
       })
       .once('transactionHash', async txId => {
