@@ -107,7 +107,7 @@ export default {
         const forecastIdHex = web3.utils.fromAscii(response.data.forecast.id)
 
         TokenInstance.methods
-          .approveAndCall(state.prediction.marketAddress, paymentValue, predictionIdHex + outcomeHex)// + forecastIdHex)
+          .approveAndCall(state.prediction.marketAddress, paymentValue, predictionIdHex + forecastIdHex + outcomeHex)
           .send({
             gas: 400000,
             from: rootState.user.userWeb3.coinbase
