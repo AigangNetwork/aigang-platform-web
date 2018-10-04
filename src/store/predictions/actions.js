@@ -1,9 +1,7 @@
 import axios from 'axios'
 
 export default {
-  async getPredictionsList ({
-    commit
-  }, page) {
+  async getPredictionsList ({ commit }, page) {
     commit('SET_LOADING', true, {
       root: true
     })
@@ -24,9 +22,7 @@ export default {
     }
   },
 
-  async getPrediction ({
-    commit
-  }, id) {
+  async getPrediction ({ commit }, id) {
     commit('SET_LOADING', true, {
       root: true
     })
@@ -47,15 +43,13 @@ export default {
     }
   },
 
-  async getPredictionStatistics ({
-    commit
-  }, predictionId) {
+  async getPredictionStatistics ({ commit }, forecastId) {
     commit('SET_LOADING', true, {
       root: true
     })
 
     try {
-      const response = await axios.get('/predictions/prediction/stats/' + predictionId)
+      const response = await axios.get('/predictions/stats/' + forecastId)
 
       if (response.data) {
         commit('setPredictionStatistics', response.data)
@@ -71,9 +65,7 @@ export default {
     }
   },
 
-  async getUserForecasts ({
-    commit
-  }, page) {
+  async getUserForecasts ({ commit }, page) {
     commit('SET_LOADING', true, {
       root: true
     })
@@ -95,11 +87,7 @@ export default {
     }
   },
 
-  async addForecast ({
-    commit,
-    rootState,
-    state
-  }, payload) {
+  async addForecast ({ commit, rootState, state }, payload) {
     commit('setTransactionHash', '')
 
     try {
@@ -140,21 +128,23 @@ export default {
     } catch (ex) {}
   },
 
-  async getUserForecast ({
-    commit,
-    dispatch
-  }, forecastId) {
-    commit('SET_LOADING', true, {
-      root: true
-    })
+  async getUserForecast ({ commit, dispatch }, forecastId) {
+    commit('SET_LOADING', true, { root: true })
 
     try {
       const response = await axios.get('/predictions/forecast/' + forecastId)
       if (response.data) {
         commit('setUserForecast', response.data)
-
-        if (response.data.item && response.data.item.predictionId) {
-          dispatch('getPredictionStatistics', response.data.item.predictionId)
+        const forecast = response.data.item
+        debugger
+        if (
+          forecast &&
+          forecast.predictionId &&
+          forecast.status.toUpperCase() !== 'NOTSET' &&
+          forecast.status.toUpperCase() !== 'DRAFT' &&
+          forecast.status.toUpperCase() !== 'PENDINGPAYMENT'
+        ) {
+          dispatch('getPredictionStatistics', forecastId)
         } else {
           commit('SET_LOADING', false, {
             root: true

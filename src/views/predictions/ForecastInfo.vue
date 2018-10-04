@@ -19,7 +19,9 @@
           <div>Your forecast: {{ userForecast.outcomeTitle }}</div>
           <div>Your amount: {{ userForecast.amount }} {{ $t('general.aix') }}</div>
         </div>
-        <OutcomesPercentage :statistics="predictionStatistics" :selectedOutcomeId="userForecast.outcomeId"/>
+
+        <OutcomesPercentage v-if="isPercentageVisible" :statistics="predictionStatistics" :selectedOutcomeId="userForecast.outcomeId"/>
+
       </div>
     </div>
   </div>
@@ -45,6 +47,10 @@ export default {
   },
   computed: {
     ...mapGetters(['userForecast', 'predictionStatistics']),
+    isPercentageVisible () {
+      const status = this.userForecast.status.toUpperCase()
+      return status !== 'DRAFT' && status !== 'NOTSET' && status !== 'PENDINGPAYMENT'
+    },
     contractLink () {
       return process.env.ETHERSCAN_ADDRESS + process.env.ADDRESS_PATX + this.userForecast.marketAddress
     }
