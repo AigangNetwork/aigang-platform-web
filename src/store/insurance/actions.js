@@ -107,11 +107,7 @@ export default {
       .once('transactionHash', async txHash => {
         const request = {
           policyId,
-          txId: txHash,
-          txType: 'PolicyPayment',
-          txMetadata: JSON.stringify({
-            policyId
-          })
+          txId: txHash
         }
         commit('SET_TX_HASH', txHash)
 

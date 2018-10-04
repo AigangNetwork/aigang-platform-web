@@ -102,32 +102,42 @@ export default {
   }, payload) {
     commit('setTransactionHash', '')
 
-    const web3 = rootState.user.userWeb3.web3()
-    const TokenInstance = new web3.eth.Contract(process.env.CONTRACT_INFO.ABI, process.env.CONTRACT_INFO.ADDRESS)
-    const paymentValue = web3.utils.toWei(payload.amount.toString())
-    const predictionIdHex = web3.utils.fromAscii(payload.predictionId)
+    try {
+      const response = await axios.post('/predictions/forecast', payload)
 
-    let outcomeHex = Number(payload.outcome).toString(16)
-    if (outcomeHex.length === 1) {
-      outcomeHex = '0' + outcomeHex
-    }
+      if (response.data) {
+        const web3 = rootState.user.userWeb3.web3()
+        const TokenInstance = new web3.eth.Contract(process.env.CONTRACT_INFO.ABI, process.env.CONTRACT_INFO.ADDRESS)
+        const paymentValue = web3.utils.toWei(payload.amount.toString())
+        const predictionIdHex = web3.utils.fromAscii(payload.predictionId)
 
-    TokenInstance.methods
-      .approveAndCall(state.prediction.marketAddress, paymentValue, predictionIdHex + outcomeHex)
-      .send({
-        gas: 400000,
-        from: rootState.user.userWeb3.coinbase
-      })
-      .once('transactionHash', async txId => {
-        try {
-          payload.txId = txId
-
-          await axios.post('/predictions/forecast', payload)
-
-          commit('setTransactionHash', txId)
-        } catch (ex) {
+        let outcomeHex = Number(payload.outcome).toString(16)
+        if (outcomeHex.length === 1) {
+          outcomeHex = '0' + outcomeHex
         }
-      })
+
+        const forecastIdHex = web3.utils.fromAscii(response.data.forecast.id)
+
+        TokenInstance.methods
+          .approveAndCall(state.prediction.marketAddress, paymentValue, predictionIdHex + outcomeHex)// + forecastIdHex)
+          .send({
+            gas: 400000,
+            from: rootState.user.userWeb3.coinbase
+          })
+          .once('transactionHash', async txId => {
+            try {
+              const payload = {
+                forecastId: response.data.forecast.id,
+                txId
+              }
+
+              await axios.post('/predictions/transaction', payload)
+
+              commit('setTransactionHash', txId)
+            } catch (ex) {}
+          })
+      }
+    } catch (ex) {}
   },
 
   async getUserForecast ({
