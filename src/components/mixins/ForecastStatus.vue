@@ -9,6 +9,8 @@ export default {
       }
 
       switch (this.item.status.toUpperCase()) {
+        case 'DRAFT':
+          return this.$t('predictions.forecast.statuses.draft')
         case 'PENDINGPAYMENT':
           return this.$t('predictions.forecast.statuses.pendingPayment')
         case 'PAID':

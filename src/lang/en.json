@@ -386,7 +386,7 @@
     "unableToFindAnyProducts": "Can not find any product",
     "noPolicies": "You do not have any policies yet",
     "noPredictions": "Can not find any predictions",
-    "noMyPredictions": "You do not have any predictions yet",
+    "noMyPredictions": "You do not have any predictions for selected filter type",
     "upvote": "Upvote",
     "downvote": "Downvote",
     "aix": "AIX",
@@ -449,6 +449,7 @@
   },
   "predictions": {
     "menu": {
+
       "predictions": "All Predictions",
       "myForecasts": "My Forecasts"
     },
@@ -497,6 +498,8 @@
       "results": "Results",
       "status": "Status",
       "statuses": {
+        "all": "All",
+        "draft": "Draft",
         "pendingPayment": "Pending payment",
         "paid": "Paid",
         "canceled": "Canceled",

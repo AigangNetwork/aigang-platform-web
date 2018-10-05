@@ -1,6 +1,12 @@
 <template>
   <transition-group class="items-container" name="slideUp" v-loading="$store.getters.loading">
     <el-row class="aig-items" key="predictions-list" v-show="isDataLoaded">
+      <div class="filter-bar">
+        <div class="filter-item">
+          <div class="filter-label">Show:</div>
+          <Dropdown :items="items" @itemSelected="onFilterItemSelected" />
+        </div>
+      </div>
       <div class="forecast-item" v-for="forecast in userForecasts.items" :key="forecast.id">
         <ForecastItem :item="forecast" />
       </div>
@@ -16,6 +22,7 @@
 
 <script>
 import Pagination from '@/components/Pagination'
+import Dropdown from '@/components/common/Dropdown'
 import ForecastItem from './ForecastItem'
 import { createNamespacedHelpers } from 'vuex'
 const { mapGetters } = createNamespacedHelpers('predictions')
@@ -23,6 +30,7 @@ const { mapGetters } = createNamespacedHelpers('predictions')
 export default {
   components: {
     Pagination,
+    Dropdown,
     ForecastItem
   },
   computed: {
@@ -31,7 +39,42 @@ export default {
   data () {
     return {
       page: 1,
-      isDataLoaded: false
+      filter: '',
+      isDataLoaded: false,
+      items: [{
+        name: this.$t('predictions.forecast.statuses.all'),
+        value: ''
+      }, {
+        name: this.$t('predictions.forecast.statuses.draft'),
+        value: '1'
+      }, {
+        name: this.$t('predictions.forecast.statuses.pendingPayment'),
+        value: '2'
+      }, {
+        name: this.$t('predictions.forecast.statuses.paid'),
+        value: '3'
+      }, {
+        name: this.$t('predictions.forecast.statuses.canceled'),
+        value: '4'
+      }, {
+        name: this.$t('predictions.forecast.statuses.won'),
+        value: '5'
+      }, {
+        name: this.$t('predictions.forecast.statuses.lost'),
+        value: '6'
+      }, {
+        name: this.$t('predictions.forecast.statuses.wonPaidout'),
+        value: '7'
+      }, {
+        name: this.$t('predictions.forecast.statuses.availableRefund'),
+        value: '8'
+      }, {
+        name: this.$t('predictions.forecast.statuses.pendingRefund'),
+        value: '9'
+      }, {
+        name: this.$t('predictions.forecast.statuses.refundPaidout'),
+        value: '10'
+      }]
     }
   },
   async beforeMount () {
@@ -41,20 +84,42 @@ export default {
     }
   },
   methods: {
+    async onFilterItemSelected (value) {
+      this.page = 1
+      this.filter = value
+      await this.loadPage(this.page)
+    },
     async loadPage (page) {
       this.page = page
-      await this.$store.dispatch('predictions/getUserForecasts', this.page)
+      await this.$store.dispatch('predictions/getUserForecasts', { page: this.page, filter: this.filter })
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
+  @import '~helpers/variables';
+
   .items-container {
     height: 100%;
     display: inline-block;
     width: 100%;
     min-height: auto;
+
+    .filter-bar {
+      margin-left: 25px;
+      margin-right: 25px;
+      padding-bottom: 15px;
+      .filter-item {
+        display: flex;
+        .filter-label {
+          color: $light-grey;
+          margin-top: 5px;
+          font-size: 12pt;
+          margin-right: 10px;
+        }
+      }
+    }
 
     .forecast-item {
       margin: 10px 0px 10px 0px;

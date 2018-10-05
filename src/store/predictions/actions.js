@@ -65,13 +65,13 @@ export default {
     }
   },
 
-  async getUserForecasts ({ commit }, page) {
+  async getUserForecasts ({ commit }, payload) {
     commit('SET_LOADING', true, {
       root: true
     })
 
     try {
-      const response = await axios.get('/predictions/myforecasts?page=' + page)
+      const response = await axios.get(`/predictions/myforecasts?page=${payload.page}&filter=${payload.filter}`)
 
       if (response.data) {
         commit('setUserForecasts', response.data)
@@ -136,7 +136,7 @@ export default {
       if (response.data) {
         commit('setUserForecast', response.data)
         const forecast = response.data.item
-        debugger
+
         if (
           forecast &&
           forecast.predictionId &&
