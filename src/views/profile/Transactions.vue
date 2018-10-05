@@ -95,6 +95,10 @@ export default {
           return this.$t('profile.transactions.type.addpolicy')
         case 'ADDCLAIM':
           return this.$t('profile.transactions.type.addclaim')
+        case 'ADDFORECAST':
+          return this.$t('profile.transactions.type.addForecast')
+        case 'FORECASTPAYOUT':
+          return this.$t('profile.transactions.type.forecastPayout')
         default:
           return this.$t('profile.transactions.type.unknown')
       }

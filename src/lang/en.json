@@ -311,6 +311,8 @@
         "policypayment": "Policy Payment",
         "addpolicy": "Add Policy",
         "addclaim": "Add Claim",
+        "addForecast": "Add Forecast",
+        "forecastPayout": "Forecast Payout",
         "unknown": "Unknown"
       }
     },
