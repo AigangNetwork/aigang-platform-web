@@ -471,7 +471,7 @@
     "prediction": {
       "forecastEnd": "Forecast end",
       "results": "Results will be announced",
-      "total": "Predictions",
+      "forecastsCount": "Forecasts",
       "volume": "Volume",
       "description": "Description",
       "outcomes": "Outcomes",

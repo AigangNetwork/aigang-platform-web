@@ -12,7 +12,7 @@
       </div>
       <div class="icon-container">
         <img src="/static/icons/user-white.svg" class="header-icon"/>
-        <span>{{ $t('predictions.prediction.total')}}: {{ prediction.forecastsCount }}</span>
+        <span>{{ $t('predictions.prediction.forecastsCount')}}: {{ prediction.forecastsCount }}</span>
       </div>
       <div class="icon-container">
         <img src="/static/icons/volume-white.svg" class="header-icon"/>
