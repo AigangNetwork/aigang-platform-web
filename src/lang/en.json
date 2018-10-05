@@ -522,7 +522,7 @@
         "lost": "Lost",
         "wonPaidout": "Won Paidout",
         "availableRefund": "Available Refund",
-        "pendingRefund": "Pending Refund",
+        "pendingPayout": "Pending Payout",
         "refundPaidout": "Refund Paidout"
       }
     },

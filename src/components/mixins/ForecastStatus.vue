@@ -25,8 +25,8 @@ export default {
           return this.$t('predictions.forecast.statuses.wonPaidout')
         case 'AVAILABLEREFUND':
           return this.$t('predictions.forecast.statuses.availableRefund')
-        case 'PENDINGREFUND':
-          return this.$t('predictions.forecast.statuses.pendingRefund')
+        case 'PENDINGPAYOUT':
+          return this.$t('predictions.forecast.statuses.pendingPayout')
         case 'REFUNDPAIDOUT':
           return this.$t('predictions.forecast.statuses.refundPaidout')
         default:

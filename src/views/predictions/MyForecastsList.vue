@@ -69,7 +69,7 @@ export default {
         name: this.$t('predictions.forecast.statuses.availableRefund'),
         value: '8'
       }, {
-        name: this.$t('predictions.forecast.statuses.pendingRefund'),
+        name: this.$t('predictions.forecast.statuses.pendingPayout'),
         value: '9'
       }, {
         name: this.$t('predictions.forecast.statuses.refundPaidout'),
