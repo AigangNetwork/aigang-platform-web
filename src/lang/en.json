@@ -335,6 +335,19 @@
               "description": "When this notification type is on you will get all notifications related with Insurance."
             }
           }
+        },
+        "predictions": {
+          "title": "Predictions",
+          "items": {
+            "forecastPaymentReceived": {
+              "title": "Forecast payment received",
+              "description": "When this notification type is on you will get notifications after forecast payment information will be received in our system."
+            },
+            "forecastWon": {
+              "title": "Forecast won",
+              "description": "When this notification type is on you will get notifications after your forecast win."
+            }
+          }
         }
       }
     }

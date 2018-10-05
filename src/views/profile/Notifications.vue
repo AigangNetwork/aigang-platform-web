@@ -50,6 +50,19 @@ export default {
             description: this.$t('profile.notifications.permissions.general.items.failedTransactions.description')
           }]
         }, {
+          title: this.$t('profile.notifications.permissions.predictions.title'),
+          items: [{
+            title: this.$t('profile.notifications.permissions.predictions.items.forecastPaymentReceived.title'),
+            id: 3,
+            value: true,
+            description: this.$t('profile.notifications.permissions.predictions.items.forecastPaymentReceived.description')
+          }, {
+            title: this.$t('profile.notifications.permissions.predictions.items.forecastWon.title'),
+            id: 4,
+            value: true,
+            description: this.$t('profile.notifications.permissions.predictions.items.forecastWon.description')
+          }]
+        }, {
           title: this.$t('profile.notifications.permissions.insurance.title'),
           items: [{
             title: this.$t('profile.notifications.permissions.insurance.items.all.title'),
