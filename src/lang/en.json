@@ -473,6 +473,7 @@
     "noDescription": "There is no description for this prediction",
     "forecastDetails": "Forecast details",
     "marketContractAddress": "Market contract address",
+    "resultsAnnounced": "Results announced",
 
     "menu": {
       "predictions": "All Predictions",
@@ -495,7 +496,6 @@
           "goBack": "Go to my forecasts list"
         }
       },
-      "resultsAnnounced": "Results announced",
       "confirmationDialog": {
         "title": "Confirm your forecast",
         "buttons": {
