@@ -19,7 +19,19 @@
           <div>{{ $t('predictions.forecast.yourForecast') }}: {{ userForecast.outcomeTitle }}</div>
           <div>{{ $t('predictions.forecast.yourAmount') }}: {{ userForecast.amount }} {{ $t('general.aix') }}</div>
         </div>
-        <OutcomesPercentage v-if="isPercentageVisible" :statistics="predictionStatistics" :selectedOutcomeId="userForecast.outcomeId"/>
+
+        <OutcomesPercentage v-if="isPercentageVisible" :statistics="predictionStatistics" :selectedOutcomeId="userForecast.outcomeId" />
+
+        <el-tooltip v-if="isForecastsWon" :disabled="!!$store.getters['user/web3']" :content="$t('predictions.forecast.logInToWeb3')">
+          <span class="wrapper el-button">
+            <el-button :disabled="!$store.getters['user/web3']" class="aig-button" type="primary" @click="payout">
+              {{ $t('predictions.forecast.payout') }}
+            </el-button>
+          </span>
+        </el-tooltip>
+
+        <PaymentConfirmationDialog :isVisible="isPaymentDialogVisible" :displayDialog="displayPaymentDialog" :content="$t('predictions.forecast.metamaskAlert')" />
+
       </div>
     </div>
   </div>
@@ -29,6 +41,7 @@
 import ForecastInfoHeader from './ForecastInfoHeader'
 import OutcomesPercentage from '@/components/predictions/OutcomesPercentage'
 import Card from '@/components/Card'
+import PaymentConfirmationDialog from '@/components/predictions/PaymentConfirmationDialog'
 import { createNamespacedHelpers } from 'vuex'
 const { mapGetters } = createNamespacedHelpers('predictions')
 
@@ -36,11 +49,26 @@ export default {
   components: {
     ForecastInfoHeader,
     OutcomesPercentage,
-    Card
+    Card,
+    PaymentConfirmationDialog
   },
   data () {
     return {
-      isDataLoaded: false
+      isDataLoaded: false,
+      isPaymentDialogVisible: false
+    }
+  },
+  methods: {
+    payout () {
+      this.$store.dispatch('predictions/payout', {
+        id: this.userForecast.id,
+        predictionId: this.userForecast.predictionId,
+        marketAddress: this.userForecast.marketAddress
+      })
+      this.displayPaymentDialog(true)
+    },
+    displayPaymentDialog (value) {
+      this.isPaymentDialogVisible = value
     }
   },
   computed: {
@@ -49,6 +77,9 @@ export default {
       const status = this.userForecast.status.toUpperCase()
       const predictionStatus = this.userForecast.predictionStatus.toUpperCase()
       return (status !== 'DRAFT' && status !== 'NOTSET' && status !== 'PENDINGPAYMENT') || predictionStatus === 'RESOLVED'
+    },
+    isForecastsWon () {
+      return this.userForecast.status.toUpperCase() === 'WON'
     },
     contractLink () {
       return process.env.ETHERSCAN_ADDRESS + process.env.ADDRESS_PATX + this.userForecast.marketAddress
@@ -65,7 +96,7 @@ export default {
   @import '~helpers/variables';
 
   .aig-info {
-    .aig-info-content{
+    .aig-info-content {
       p.description {
         margin-bottom: 40px;
       }
@@ -76,6 +107,7 @@ export default {
 
       .details {
         margin-bottom: 40px;
+
         div {
           margin-bottom: 10px;
         }
@@ -83,4 +115,8 @@ export default {
     }
   }
 
+  .wrapper {
+    margin-top: 48px;
+    width: 100%;
+  }
 </style>

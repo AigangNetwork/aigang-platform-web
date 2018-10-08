@@ -15,13 +15,14 @@
         <h4 class="info-title">{{ $t('predictions.marketContractAddress') }}</h4>
         <p><a class="contract-address" target="_blank" :href="contractLink">{{ prediction.marketAddress }}</a></p>
         <h4 class="info-title" v-if="prediction.status !== 'resolved'">{{ $t('predictions.outcomes') }}</h4>
-        <Outcomes v-if="prediction.status !== 'resolved'" :selectedOutcomeIndex="selectedOutcomeIndex" :items="prediction.outcomes" @selected="onOutcomeSelected" />
+        <Outcomes v-if="prediction.status !== 'resolved'" :selectedOutcomeIndex="selectedOutcomeIndex" :items="prediction.outcomes"
+          @selected="onOutcomeSelected" />
       </div>
     </div>
     <ConfirmForecastDialog :prediction="prediction.title" :selectedOutcome="selectedOutcome" :isVisible="isPredictionConfirmDialogVisible"
       :displayDialog="displayPredictionConfirmDialog" @createForecast="onCreateForecast" />
 
-    <PaymentConfirmationDialog :isVisible="isPaymentDialogVisible" :displayDialog="displayPaymentDialog" />
+    <PaymentConfirmationDialog :isVisible="isPaymentDialogVisible" :displayDialog="displayPaymentDialog" :content="$t('predictions.prediction.paymentInfo.metamaskAlert')" />
   </div>
 </template>
 
