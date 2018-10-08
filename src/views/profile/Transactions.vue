@@ -99,6 +99,8 @@ export default {
           return this.$t('profile.transactions.type.addForecast')
         case 'FORECASTPAYOUT':
           return this.$t('profile.transactions.type.forecastPayout')
+        case 'FORECASTREFUND':
+          return this.$t('profile.transactions.type.forecastRefund')
         default:
           return this.$t('profile.transactions.type.unknown')
       }
