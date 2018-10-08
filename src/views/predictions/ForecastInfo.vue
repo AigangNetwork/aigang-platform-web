@@ -16,12 +16,10 @@
         <p><a class="contract-address" target="_blank" :href="contractLink">{{ userForecast.marketAddress }}</a></p>
         <h4 class="info-title">{{ $t('predictions.forecastDetails') }}</h4>
         <div class="details">
-          <div>Your forecast: {{ userForecast.outcomeTitle }}</div>
-          <div>Your amount: {{ userForecast.amount }} {{ $t('general.aix') }}</div>
+          <div>{{ $t('predictions.forecast.yourForecast') }}: {{ userForecast.outcomeTitle }}</div>
+          <div>{{ $t('predictions.forecast.yourAmount') }}: {{ userForecast.amount }} {{ $t('general.aix') }}</div>
         </div>
-
         <OutcomesPercentage v-if="isPercentageVisible" :statistics="predictionStatistics" :selectedOutcomeId="userForecast.outcomeId"/>
-
       </div>
     </div>
   </div>
@@ -49,7 +47,8 @@ export default {
     ...mapGetters(['userForecast', 'predictionStatistics']),
     isPercentageVisible () {
       const status = this.userForecast.status.toUpperCase()
-      return status !== 'DRAFT' && status !== 'NOTSET' && status !== 'PENDINGPAYMENT'
+      const predictionStatus = this.userForecast.predictionStatus.toUpperCase()
+      return (status !== 'DRAFT' && status !== 'NOTSET' && status !== 'PENDINGPAYMENT') || predictionStatus === 'RESOLVED'
     },
     contractLink () {
       return process.env.ETHERSCAN_ADDRESS + process.env.ADDRESS_PATX + this.userForecast.marketAddress

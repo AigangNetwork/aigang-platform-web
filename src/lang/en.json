@@ -518,6 +518,8 @@
       "results": "Results",
       "status": "Status",
       "announced": "Announced",
+      "yourForecast": "Your forecast",
+      "yourAmount": "Your amount",
       "statuses": {
         "all": "All",
         "draft": "Draft",
