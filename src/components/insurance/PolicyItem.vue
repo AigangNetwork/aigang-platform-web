@@ -125,6 +125,7 @@ export default {
           .content {
             font-family: "Roboto", sans-serif;
             font-weight: 300;
+            color: $purple;
           }
         }
       }

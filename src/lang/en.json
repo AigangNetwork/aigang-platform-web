@@ -468,6 +468,12 @@
       "predictions": "All Predictions",
       "myForecasts": "My Forecasts"
     },
+    "predictionItem": {
+      "votingTill": "Voting till",
+      "paused": "Paused",
+      "canceled": "Canceled",
+      "ended": "Ended"
+    },
     "prediction": {
       "forecastEnd": "Forecast end",
       "results": "Results will be announced",
@@ -486,10 +492,7 @@
           "goBack": "Go to my forecasts list"
         }
       },
-      "votingTill": "Voting till",
-      "paused": "Paused",
-      "canceled": "Canceled",
-      "ended": "Ended"
+      "resultsAnnounced": "Results announced"
     },
     "confirmationDialog": {
       "title": "Confirm your forecast",
@@ -516,6 +519,7 @@
       "created": "Created",
       "results": "Results",
       "status": "Status",
+      "announced": "Announced",
       "statuses": {
         "all": "All",
         "draft": "Draft",

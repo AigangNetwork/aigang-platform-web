@@ -2,13 +2,17 @@
   <div class="header-content">
     <div class="prediction-title">{{ prediction.title | truncate(128) }}</div>
     <div class="info">
-      <div class="icon-container">
+      <div class="icon-container" v-if="prediction.status === 'published'">
         <img src="/static/icons/clock-white.svg" class="header-icon"/>
         <span>{{ $t('predictions.prediction.forecastEnd')}}: <Date :dateUtc="prediction.forecastEndUtc" /></span>
       </div>
-      <div class="icon-container">
+      <div class="icon-container" v-if="prediction.status === 'published'">
         <img src="/static/icons/finish-white.svg" class="header-icon"/>
         <span>{{ $t('predictions.prediction.results')}}: <Date :dateUtc="prediction.resultDateUtc" /></span>
+      </div>
+      <div class="icon-container" v-if="prediction.status === 'resolved'">
+        <img src="/static/icons/finish-white.svg" class="header-icon"/>
+        <span>{{ $t('predictions.prediction.resultsAnnounced')}}</span>
       </div>
       <div class="icon-container">
         <img src="/static/icons/user-white.svg" class="header-icon"/>
