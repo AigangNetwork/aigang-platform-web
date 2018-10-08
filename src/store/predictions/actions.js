@@ -119,7 +119,7 @@ export default {
                 txId
               }
 
-              await axios.post('/predictions/transaction', payload)
+              await axios.post('/transaction/addForecast', payload)
 
               commit('setTransactionHash', txId)
             } catch (ex) {}
