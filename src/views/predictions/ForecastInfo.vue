@@ -10,11 +10,11 @@
     </div>
     <div class="aig-info-content-container" v-if="isDataLoaded">
       <div class="aig-info-content">
-        <h4 class="info-title">{{ $t('predictions.prediction.description') }}</h4>
-        <p>{{ userForecast.description || $t('predictions.prediction.noDescription') }}</p>
-        <h4 class="info-title">{{ $t('predictions.prediction.marketContractAddress') }}</h4>
+        <h4 class="info-title">{{ $t('predictions.description') }}</h4>
+        <p>{{ userForecast.predictionDescription || $t('predictions.noDescription') }}</p>
+        <h4 class="info-title">{{ $t('predictions.marketContractAddress') }}</h4>
         <p><a class="contract-address" target="_blank" :href="contractLink">{{ userForecast.marketAddress }}</a></p>
-        <h4 class="info-title">{{ $t('predictions.prediction.forecastDetails') }}</h4>
+        <h4 class="info-title">{{ $t('predictions.forecastDetails') }}</h4>
         <div class="details">
           <div>Your forecast: {{ userForecast.outcomeTitle }}</div>
           <div>Your amount: {{ userForecast.amount }} {{ $t('general.aix') }}</div>

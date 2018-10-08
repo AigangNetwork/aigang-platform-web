@@ -1,18 +1,18 @@
 <template>
-  <el-dialog :title="$t('predictions.confirmationDialog.title')" :visible.sync="show" width="100%" center>
+  <el-dialog :title="$t('predictions.prediction.confirmationDialog.title')" :visible.sync="show" width="100%" center>
     <template>
       <div class="dialog-body">
         <div>
-          <h4 class="info-title">{{ $t('predictions.confirmationDialog.prediction') }}:</h4>
+          <h4 class="info-title">{{ $t('predictions.prediction.confirmationDialog.prediction') }}:</h4>
           <p>{{ prediction }}</p>
         </div>
         <div>
-          <h4 class="info-title">{{ $t('predictions.confirmationDialog.forecast') }}:</h4>
+          <h4 class="info-title">{{ $t('predictions.prediction.confirmationDialog.forecast') }}:</h4>
           <p>{{ selectedOutcome.name }}</p>
         </div>
 
         <div>
-          <h4 class="info-title">{{ $t('predictions.confirmationDialog.amount') }}:</h4>
+          <h4 class="info-title">{{ $t('predictions.prediction.confirmationDialog.amount') }}:</h4>
           <el-form @submit.prevent.native="submitForm('createForecastForm', createForecast)" :rules="formRules" :model="createForecastForm"
             class="create-forecast-form" ref="createForecastForm">
             <el-form-item prop="amount">
@@ -26,11 +26,11 @@
 
         <div slot="footer" class="dialog-footer">
           <el-button @click="onCancel">{{ $t('general.cancel') }}</el-button>
-          <el-tooltip :disabled="forecastButtonEnabled" effect="dark" :content="$t('predictions.confirmationDialog.userNotLoggedIn')"
+          <el-tooltip :disabled="forecastButtonEnabled" effect="dark" :content="$t('predictions.prediction.confirmationDialog.userNotLoggedIn')"
             placement="top">
             <span class="wrapper el-button">
               <el-button class="button" :disabled="!forecastButtonEnabled" type="primary" @click.prevent.native="submitForm('createForecastForm', createForecast)">
-                {{ $t('predictions.confirmationDialog.buttons.forecast')}}
+                {{ $t('predictions.prediction.confirmationDialog.buttons.forecast')}}
               </el-button>
             </span>
           </el-tooltip>
@@ -61,12 +61,12 @@ export default {
       formRules: {
         amount: [{
           required: true,
-          message: this.$t('predictions.confirmationDialog.validation.required'),
+          message: this.$t('predictions.prediction.confirmationDialog.validation.required'),
           trigger: 'blur'
         },
         {
           type: 'number',
-          message: this.$t('predictions.confirmationDialog.validation.shouldBeNumber'),
+          message: this.$t('predictions.prediction.confirmationDialog.validation.shouldBeNumber'),
           trigger: 'blur'
         },
         {

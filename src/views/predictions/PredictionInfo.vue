@@ -10,11 +10,11 @@
     </div>
     <div class="aig-info-content-container" v-if="isDataLoaded">
       <div class="aig-info-content">
-        <h4 class="info-title">{{ $t('predictions.prediction.description') }}</h4>
-        <p>{{ prediction.description || $t('predictions.prediction.noDescription') }}</p>
-        <h4 class="info-title">{{ $t('predictions.prediction.marketContractAddress') }}</h4>
+        <h4 class="info-title">{{ $t('predictions.description') }}</h4>
+        <p>{{ prediction.description || $t('predictions.noDescription') }}</p>
+        <h4 class="info-title">{{ $t('predictions.marketContractAddress') }}</h4>
         <p><a class="contract-address" target="_blank" :href="contractLink">{{ prediction.marketAddress }}</a></p>
-        <h4 class="info-title">{{ $t('predictions.prediction.outcomes') }}</h4>
+        <h4 class="info-title">{{ $t('predictions.outcomes') }}</h4>
         <Outcomes :selectedOutcomeIndex="selectedOutcomeIndex" :items="prediction.outcomes" @selected="onOutcomeSelected" />
       </div>
     </div>

@@ -464,26 +464,29 @@
     "useMetamask": "To use all of our Platform features please Log in to Metamask Extension"
   },
   "predictions": {
+    "forecastsEnd": "Forecasts end",
+    "results": "Results will be announced",
+    "forecastsCount": "Forecasts",
+    "volume": "Volume",
+    "description": "Description",
+    "outcomes": "Outcomes",
+    "noDescription": "There is no description for this prediction",
+    "forecastDetails": "Forecast details",
+    "marketContractAddress": "Market contract address",
+
     "menu": {
       "predictions": "All Predictions",
       "myForecasts": "My Forecasts"
     },
-    "predictionItem": {
-      "votingTill": "Voting till",
-      "paused": "Paused",
-      "canceled": "Canceled",
-      "ended": "Ended"
+    "predictionsList": {
+      "prediction": {
+        "votingTill": "Voting till",
+        "paused": "Paused",
+        "canceled": "Canceled",
+        "ended": "Ended"
+      }
     },
     "prediction": {
-      "forecastEnd": "Forecast end",
-      "results": "Results will be announced",
-      "forecastsCount": "Forecasts",
-      "volume": "Volume",
-      "description": "Description",
-      "outcomes": "Outcomes",
-      "noDescription": "There is no description for this prediction",
-      "forecastDetails": "Forecast details",
-      "marketContractAddress": "Market contract address",
       "paymentInfo": {
         "title": "Payment Information",
         "metamaskAlert": "Atention! Do not leave this page until you confirm your transaction. Otherwise your transaction will be lost and forecast won't be counted.",
@@ -492,27 +495,22 @@
           "goBack": "Go to my forecasts list"
         }
       },
-      "resultsAnnounced": "Results announced"
-    },
-    "confirmationDialog": {
-      "title": "Confirm your forecast",
-      "buttons": {
-        "forecast": "Forecast"
-      },
-      "prediction": "Prediction",
-      "forecast": "Your Forecast",
-      "amount": "Amount",
-      "validation": {
-        "required": "Can not be empty",
-        "shouldBeNumber": "Should be number",
-        "shouldBeBiggerThanZero": "Should be greater than zero"
-      },
-      "userNotLoggedIn": "User must be logged in and connected to web3 provider (Metamask, Mist, etc.)"
-    },
-    "predictions": {
-      "forecastTill": "Forecast till",
-      "poolSize": "Prize pool",
-      "totalForecastMade": "Total forecasts made"
+      "resultsAnnounced": "Results announced",
+      "confirmationDialog": {
+        "title": "Confirm your forecast",
+        "buttons": {
+          "forecast": "Forecast"
+        },
+        "prediction": "Prediction",
+        "forecast": "Your Forecast",
+        "amount": "Amount",
+        "validation": {
+          "required": "Can not be empty",
+          "shouldBeNumber": "Should be number",
+          "shouldBeBiggerThanZero": "Should be greater than zero"
+        },
+        "userNotLoggedIn": "User must be logged in and connected to web3 provider (Metamask, Mist, etc.)"
+      }
     },
     "forecast": {
       "amount": "Amount",

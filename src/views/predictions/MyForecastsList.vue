@@ -3,8 +3,8 @@
     <el-row class="aig-items" key="predictions-list" v-show="isDataLoaded">
       <div class="filter-bar">
         <div class="filter-item">
-          <div class="filter-label">Show:</div>
-          <Dropdown :items="items" @itemSelected="onFilterItemSelected" />
+          <div class="filter-label">{{ $t('predictions.forecast.status') }}:</div>
+          <Dropdown :items="items" @itemSelected="onFilterByStatusDropdownItemSelected" />
         </div>
       </div>
       <div class="forecast-item" v-for="forecast in userForecasts.items" :key="forecast.id">
@@ -39,7 +39,7 @@ export default {
   data () {
     return {
       page: 1,
-      filter: '',
+      filter: {},
       isDataLoaded: false,
       items: [{
         name: this.$t('predictions.forecast.statuses.all'),
@@ -84,9 +84,12 @@ export default {
     }
   },
   methods: {
-    async onFilterItemSelected (value) {
+    async onFilterByStatusDropdownItemSelected (value) {
       this.page = 1
-      this.filter = value
+      this.filter = {
+        status: value
+      }
+
       await this.loadPage(this.page)
     },
     async loadPage (page) {

@@ -4,23 +4,23 @@
     <div class="info">
       <div class="icon-container" v-if="forecast.predictionStatus === 'published'">
         <img src="/static/icons/clock-white.svg" class="header-icon"/>
-        <span>{{ $t('predictions.prediction.forecastEnd')}}: <Date :dateUtc="forecast.forecastEndUtc" /></span>
+        <span>{{ $t('predictions.forecastsEnd')}}: <Date :dateUtc="forecast.forecastEndUtc" /></span>
       </div>
       <div class="icon-container" v-if="forecast.predictionStatus === 'published'">
         <img src="/static/icons/finish-white.svg" class="header-icon"/>
-        <span>{{ $t('predictions.prediction.results')}}: <Date :dateUtc="forecast.resultDateUtc" /></span>
+        <span>{{ $t('predictions.results')}}: <Date :dateUtc="forecast.resultDateUtc" /></span>
       </div>
       <div class="icon-container" v-if="forecast.predictionStatus === 'resolved'">
         <img src="/static/icons/finish-white.svg" class="header-icon"/>
-        <span>{{ $t('predictions.prediction.resultsAnnounced')}}</span>
+        <span>{{ $t('predictions.resultsAnnounced')}}</span>
       </div>
       <div class="icon-container">
         <img src="/static/icons/user-white.svg" class="header-icon"/>
-        <span>{{ $t('predictions.prediction.forecastsCount')}}: {{ forecast.forecastsCount }}</span>
+        <span>{{ $t('predictions.forecastsCount')}}: {{ forecast.forecastsCount }}</span>
       </div>
       <div class="icon-container">
         <img src="/static/icons/volume-white.svg" class="header-icon"/>
-        <span>{{ $t('predictions.prediction.volume')}}: {{ forecast.poolSize }} {{ $t('general.aix')}}</span>
+        <span>{{ $t('predictions.volume')}}: {{ forecast.poolSize }} {{ $t('general.aix')}}</span>
       </div>
     </div>
   </div>
