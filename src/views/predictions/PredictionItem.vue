@@ -2,6 +2,10 @@
   <router-link :to="{ name: 'PredictionInfo', params: { id: item.id}}">
     <div class="aig-data">
         <div class="aig-data-head">
+          <div class="status" v-if="item.predictionStatusId === 'published'">{{ $t('predictions.prediction.votingTill') }}: <Date :dateUtc="item.forecastEndUtc" /></div>
+          <div class="status" v-if="item.predictionStatusId === 'paused'">{{ $t('predictions.prediction.paused') }}</div>
+          <div class="status" v-if="item.predictionStatusId === 'canceled'">{{ $t('predictions.prediction.canceled') }}</div>
+          <div class="status" v-if="item.predictionStatusId === 'resolved'">{{ $t('predictions.prediction.ended') }}</div>
           <div class="title">{{  item.title | truncate(35) }}</div>
         </div>
         <div class="aig-data-body">
@@ -61,7 +65,6 @@ export default {
       }
     }
     .aig-data-head {
-      display: flex;
       justify-content: space-between;
       margin-top: 0;
       width: 100%;
@@ -95,6 +98,12 @@ export default {
         justify-content: right;
         @extend .aig-footer-container;
       }
+    }
+
+    .status {
+      color: $light-grey;
+      font-size: 10pt;
+      margin-bottom: 5px;
     }
 
     .title {

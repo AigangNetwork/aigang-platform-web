@@ -464,7 +464,6 @@
   },
   "predictions": {
     "menu": {
-
       "predictions": "All Predictions",
       "myForecasts": "My Forecasts"
     },
@@ -485,7 +484,11 @@
         "buttons": {
           "goBack": "Go to my forecasts list"
         }
-      }
+      },
+      "votingTill": "Voting till",
+      "paused": "Paused",
+      "canceled": "Canceled",
+      "ended": "Ended"
     },
     "confirmationDialog": {
       "title": "Confirm your forecast",
