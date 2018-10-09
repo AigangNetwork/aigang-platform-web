@@ -119,7 +119,7 @@ export default {
         TokenInstance.methods
           .approveAndCall(state.prediction.marketAddress, paymentValue, '0x' + bytes)
           .send({
-            gas: 400000,
+            gas: process.env.GAS.ADD_FORECAST,
             from: rootState.user.userWeb3.coinbase
           })
           .once('transactionHash', async txId => {
@@ -181,7 +181,7 @@ export default {
       MarketInstance.methods
         .payout(predictionIdHex, forecastIdHex)
         .send({
-          gas: 400000,
+          gas: process.env.GAS.FORECAST_PAYOUT,
           from: rootState.user.userWeb3.coinbase
         })
         .once('transactionHash', async txId => {
