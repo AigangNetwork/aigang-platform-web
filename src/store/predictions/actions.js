@@ -166,5 +166,37 @@ export default {
         root: true
       })
     }
+  },
+
+  async payout ({ commit, dispatch, rootState }, payload) {
+    const response = await axios.get(`/contracts/${payload.marketAddress}`)
+    commit('setTransactionHash', '')
+
+    if (response.data) {
+      const web3 = rootState.user.userWeb3.web3()
+      const MarketInstance = new web3.eth.Contract(JSON.parse(response.data.abi), payload.marketAddress)
+      const predictionIdHex = web3.utils.fromAscii(payload.predictionId)
+      const forecastIdHex = web3.utils.fromAscii(payload.id)
+
+      MarketInstance.methods
+        .payout(predictionIdHex, forecastIdHex)
+        .send({
+          gas: 400000,
+          from: rootState.user.userWeb3.coinbase
+        })
+        .once('transactionHash', async txId => {
+          try {
+            const request = {
+              forecastId: payload.id,
+              predictionId: payload.predictionId,
+              txId
+            }
+
+            await axios.post('/predictions/transaction/forecastpayout', request)
+
+            commit('setTransactionHash', txId)
+          } catch (ex) {}
+        })
+    }
   }
 }

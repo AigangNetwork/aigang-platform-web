@@ -2,7 +2,7 @@
   <el-dialog :title="$t('predictions.prediction.paymentInfo.title')" :visible.sync="show">
     <transition-group name="slideDown">
       <div key="1" v-if="!transactionHash">
-        <p class="bold">{{ $t('predictions.prediction.paymentInfo.metamaskAlert') }}</p>
+        <p class="bold">{{ content }}</p>
       </div>
       <div class="policy-dialog-info" v-if="transactionHash" key="2">
         <p>{{ $t('predictions.prediction.paymentInfo.body') }}</p>
@@ -23,7 +23,7 @@ import { createNamespacedHelpers } from 'vuex'
 const { mapGetters } = createNamespacedHelpers('predictions')
 
 export default {
-  props: ['isVisible', 'displayDialog'],
+  props: ['isVisible', 'displayDialog', 'content'],
   data () {
     return {
       userForecastListRoute: '/predictions/myforecasts'
@@ -31,7 +31,7 @@ export default {
   },
   watch: {
     txHash () {
-      if (this.txHash) {
+      if (this.transactionHash) {
         this.show = true
       }
     }
@@ -39,7 +39,7 @@ export default {
   computed: {
     ...mapGetters(['transactionHash']),
     txLink () {
-      return process.env.ETHERSCAN_ADDRESS + process.env.TX_PATH + this.txHash
+      return process.env.ETHERSCAN_ADDRESS + process.env.TX_PATH + this.transactionHash
     },
     show: {
       get () {
@@ -65,6 +65,7 @@ export default {
     .buttons {
       margin-top: 30px;
       text-align: center;
+
       .button {
         min-width: 200px;
       }
