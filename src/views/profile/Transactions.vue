@@ -11,7 +11,7 @@
         <el-table class="transactions" :data="transactions.items" :empty-text="$t('profile.transactions.table.emptyText')">
           <el-table-column prop="createdUtc" :label="$t('profile.transactions.table.titles.date')" width="160">
             <template slot-scope="scope">
-              <Date :dateUtc="scope.row.createdUtc" />
+              <Date :dateUtc="scope.row.createdUtc" format="YYYY-MM-DD HH:mm:ss (UTC Z)"/>
             </template>
           </el-table-column>
           <el-table-column prop="txId" :label="$t('profile.transactions.table.titles.transaction')" min-width="250">
@@ -40,8 +40,7 @@
       </el-row>
       <el-row v-show="isDataLoaded">
         <el-col class="paging">
-          <Pagination v-if="transactions.totalPages > 1" :callback="loadPage" :total-page-count="transactions.totalPages" :current-page="page"
-          />
+          <Pagination v-if="transactions.totalPages > 1" :callback="loadPage" :total-page-count="transactions.totalPages" :current-page="page" />
         </el-col>
       </el-row>
     </el-row>

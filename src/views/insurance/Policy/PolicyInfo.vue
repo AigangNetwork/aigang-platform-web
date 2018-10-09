@@ -25,7 +25,7 @@
     <p>
       <label>{{$t('insurance.policy.startDate')}}</label>
       <span class="text-medium">
-        <Date :dateUtc="policy.startUtc" />
+        <Date :dateUtc="policy.startUtc" format="YYYY-MM-DD HH:mm:ss (UTC Z)"/>
       </span>
     </p>
 
@@ -33,7 +33,7 @@
       <label>{{$t('insurance.policy.endDate')}}</label>
 
       <span class="text-medium">
-        <Date :dateUtc="policy.endUtc" />
+        <Date :dateUtc="policy.endUtc" format="YYYY-MM-DD HH:mm:ss (UTC Z)"/>
       </span>
     </p>
 

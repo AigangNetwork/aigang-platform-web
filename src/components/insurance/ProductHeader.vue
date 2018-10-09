@@ -4,9 +4,7 @@
       <div class="header-left-section">
         <img :src="product.imageUrl" />
         <h1>{{ product.title }}</h1>
-        <p v-if="product.endDateUtc">
-          <span class="date">{{ $t('insurance.product.productEnds') }} <Date :dateUtc="product.endDateUtc" /></span>
-        </p>
+        <span v-if="product.endDateUtc">{{ $t('insurance.product.productEnds') }} <Date :dateUtc="product.endDateUtc" /></span>
       </div>
       <div class="header-right-section">
         <span class="text-small">{{ $t('insurance.product.basePremium') }}</span>
