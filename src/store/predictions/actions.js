@@ -90,6 +90,10 @@ export default {
   async addForecast ({ commit, rootState, state }, payload) {
     commit('setTransactionHash', '')
 
+    commit('SET_LOADING', true, {
+      root: true
+    })
+
     try {
       const response = await axios.post('/predictions/forecast', payload)
 
@@ -106,8 +110,14 @@ export default {
 
         const forecastIdHex = web3.utils.fromAscii(response.data.forecast.id)
 
+        commit('SET_LOADING', false, {
+          root: true
+        })
+
+        const bytes = (predictionIdHex + forecastIdHex + outcomeHex).replace(/0x/g, '')
+
         TokenInstance.methods
-          .approveAndCall(state.prediction.marketAddress, paymentValue, predictionIdHex + forecastIdHex + outcomeHex)
+          .approveAndCall(state.prediction.marketAddress, paymentValue, '0x' + bytes)
           .send({
             gas: 400000,
             from: rootState.user.userWeb3.coinbase
@@ -119,7 +129,7 @@ export default {
                 txId
               }
 
-              await axios.post('/transaction/addForecast', payload)
+              await axios.post('/predictions/transaction/addForecast', payload)
 
               commit('setTransactionHash', txId)
             } catch (ex) {}
