@@ -61,7 +61,7 @@ export default {
       return process.env.ETHERSCAN_ADDRESS + process.env.ADDRESS_PATX + this.prediction.marketAddress
     },
     isPercentageVisible () {
-      return this.prediction.status.toUpperCase() === "RESOLVED"
+      return this.prediction.status.toUpperCase() === 'RESOLVED'
     }
   },
   data () {
