@@ -9,9 +9,9 @@
       </el-col>
       <el-row  v-show="isDataLoaded">
         <el-table :data="wallets.items" :empty-text="$t('profile.wallets.table.emptyText')">
-          <el-table-column prop="createdUtc" :label="$t('profile.wallets.table.titles.date')" width="240">
+          <el-table-column prop="createdUtc" :label="$t('profile.wallets.table.titles.date')" width="220">
             <template slot-scope="scope">
-              <Date :dateUtc="scope.row.createdUtc" format="YYYY-MM-DD HH:mm:ss (UTC Z)"/>
+              <Date :dateUtc="scope.row.createdUtc" format="YYYY-MM-DD HH:mm (UTC Z)"/>
             </template>
           </el-table-column>
           <el-table-column prop="address" :label="$t('profile.wallets.table.titles.wallet')"></el-table-column>

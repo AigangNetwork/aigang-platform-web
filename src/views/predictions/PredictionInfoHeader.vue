@@ -4,11 +4,11 @@
     <div class="info">
       <div class="icon-container" v-if="info.status === 'published'">
         <img src="/static/icons/clock-white.svg" class="header-icon"/>
-        <span>{{ $t('predictions.votingTill')}}: <Date :dateUtc="info.forecastEndUtc" format="YYYY-MM-DD HH:mm:ss (UTC Z)"/></span>
+        <span>{{ $t('predictions.votingTill')}}: <Date :dateUtc="info.forecastEndUtc" format="YYYY-MM-DD HH:mm (UTC Z)"/></span>
       </div>
       <div class="icon-container" v-if="info.status === 'published'">
         <img src="/static/icons/finish-white.svg" class="header-icon"/>
-        <span>{{ $t('predictions.results')}}: <Date :dateUtc="info.resultDateUtc" format="YYYY-MM-DD HH:mm:ss (UTC Z)"/></span>
+        <span>{{ $t('predictions.results')}}: <Date :dateUtc="info.resultDateUtc" format="YYYY-MM-DD HH:mm (UTC Z)"/></span>
       </div>
       <div class="icon-container" v-if="info.status === 'resolved'">
         <img src="/static/icons/finish-white.svg" class="header-icon"/>
