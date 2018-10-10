@@ -10,9 +10,11 @@ const mutations = {
   },
   setPrediction (state, payload) {
     state.prediction = payload.item
+    state.predictionStatistics = {}
   },
   setUserForecast (state, payload) {
     state.userForecast = payload.item
+    state.predictionStatistics = {}
   },
   setPredictionStatistics (state, payload) {
     state.predictionStatistics = payload.statistics

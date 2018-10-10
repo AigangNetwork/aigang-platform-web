@@ -22,7 +22,7 @@ export default {
     }
   },
 
-  async getPrediction ({ commit }, id) {
+  async getPrediction ({ commit, dispatch }, id) {
     commit('SET_LOADING', true, {
       root: true
     })
@@ -31,6 +31,11 @@ export default {
       const response = await axios.get('/predictions/prediction/' + id)
       if (response.data) {
         commit('setPrediction', response.data)
+        const prediction = response.data.item
+
+        if (prediction && prediction.status.toUpperCase() === 'RESOLVED') {
+          dispatch('getPredictionStatistics', id)
+        }
       }
 
       commit('SET_LOADING', false, {
@@ -43,13 +48,35 @@ export default {
     }
   },
 
-  async getPredictionStatistics ({ commit }, forecastId) {
+  async getPredictionStatistics ({ commit }, predictionId) {
     commit('SET_LOADING', true, {
       root: true
     })
 
     try {
-      const response = await axios.get('/predictions/stats/' + forecastId)
+      const response = await axios.get('/predictions/stats/' + predictionId)
+
+      if (response.data) {
+        commit('setPredictionStatistics', response.data)
+      }
+
+      commit('SET_LOADING', false, {
+        root: true
+      })
+    } catch (ex) {
+      commit('SET_LOADING', false, {
+        root: true
+      })
+    }
+  },
+
+  async getPredictionStatisticsForForecast ({ commit }, forecastId) {
+    commit('SET_LOADING', true, {
+      root: true
+    })
+
+    try {
+      const response = await axios.get('/predictions/forecast/stats/' + forecastId)
 
       if (response.data) {
         commit('setPredictionStatistics', response.data)
@@ -154,7 +181,7 @@ export default {
           forecast.status.toUpperCase() !== 'DRAFT' &&
           forecast.status.toUpperCase() !== 'PENDINGPAYMENT'
         ) {
-          dispatch('getPredictionStatistics', forecastId)
+          dispatch('getPredictionStatisticsForForecast', forecastId)
         } else {
           commit('SET_LOADING', false, {
             root: true

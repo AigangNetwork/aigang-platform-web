@@ -5,22 +5,26 @@
         <router-link :to="{ name: 'MyForecastsList' }" class="back-button">{{ $t('general.backToList')}}</router-link>
       </div>
       <div class="aig-info-header-content">
-        <ForecastInfoHeader :forecast="userForecast" />
+        <PredictionInfoHeader :info="headerInfo" />
       </div>
     </div>
     <div class="aig-info-content-container" v-if="isDataLoaded">
       <div class="aig-info-content">
         <h4 class="info-title">{{ $t('predictions.description') }}</h4>
-        <p>{{ userForecast.predictionDescription || $t('predictions.noDescription') }}</p>
+        <vue-markdown class="markup-content" :html="false" :source="userForecast.predictionDescription || $t('predictions.noDescription')"></vue-markdown>
         <h4 class="info-title">{{ $t('predictions.marketContractAddress') }}</h4>
         <p><a class="contract-address" target="_blank" :href="contractLink">{{ userForecast.marketAddress }}</a></p>
         <h4 class="info-title">{{ $t('predictions.forecastDetails') }}</h4>
         <div class="details">
-          <div>{{ $t('predictions.forecast.yourForecast') }}: {{ userForecast.outcomeTitle }}</div>
-          <div>{{ $t('predictions.forecast.yourAmount') }}: {{ userForecast.amount }} {{ $t('general.aix') }}</div>
+          <p>{{ $t('predictions.forecast.status') }}: <span class="value"><ForecastStatus :status="userForecast.status"/></span></p>
+          <p>{{ $t('predictions.forecast.yourForecast') }}: <span class="value">{{ userForecast.outcomeTitle }}</span></p>
+          <p>{{ $t('predictions.forecast.yourAmount') }}: <span class="value">{{ userForecast.amount }} {{ $t('general.aix') }}</span></p>
         </div>
 
-        <OutcomesPercentage v-if="isPercentageVisible" :statistics="predictionStatistics" :selectedOutcomeId="userForecast.outcomeId" />
+        <div v-if="isPercentageVisible">
+          <h4 class="info-title">{{ $t('predictions.predictionStatistics') }}</h4>
+          <OutcomesPercentage :statistics="predictionStatistics" :selectedOutcomeId="userForecast.outcomeId" />
+        </div>
 
         <el-tooltip v-if="isForecastsWon" :disabled="!!$store.getters['user/web3']" :content="$t('predictions.forecast.logInToWeb3')">
           <span class="wrapper el-button">
@@ -31,31 +35,35 @@
         </el-tooltip>
 
         <PaymentConfirmationDialog :isVisible="isPaymentDialogVisible" :displayDialog="displayPaymentDialog" :content="$t('predictions.forecast.metamaskAlert')" />
-
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import ForecastInfoHeader from './ForecastInfoHeader'
+import PredictionInfoHeader from './PredictionInfoHeader'
+import ForecastStatus from '@/components/predictions/ForecastStatus'
 import OutcomesPercentage from '@/components/predictions/OutcomesPercentage'
 import Card from '@/components/Card'
+import VueMarkdown from 'vue-markdown'
 import PaymentConfirmationDialog from '@/components/predictions/PaymentConfirmationDialog'
 import { createNamespacedHelpers } from 'vuex'
 const { mapGetters } = createNamespacedHelpers('predictions')
 
 export default {
   components: {
-    ForecastInfoHeader,
+    PredictionInfoHeader,
     OutcomesPercentage,
+    ForecastStatus,
     Card,
-    PaymentConfirmationDialog
+    PaymentConfirmationDialog,
+    VueMarkdown
   },
   data () {
     return {
       isDataLoaded: false,
-      isPaymentDialogVisible: false
+      isPaymentDialogVisible: false,
+      headerInfo: {}
     }
   },
   methods: {
@@ -88,6 +96,14 @@ export default {
   async mounted () {
     await this.$store.dispatch('predictions/getUserForecast', this.$route.params.id)
     this.isDataLoaded = true
+    this.headerInfo = {
+      title: this.userForecast.predictionTitle,
+      status: this.userForecast.predictionStatus,
+      forecastEndUtc: this.userForecast.forecastEndUtc,
+      resultDateUtc: this.userForecast.resultDateUtc,
+      forecastsCount: this.userForecast.forecastsCount,
+      poolSize: this.userForecast.poolSize
+    }
   }
 }
 </script>
@@ -106,11 +122,19 @@ export default {
       }
 
       .details {
-        margin-bottom: 40px;
+        margin-bottom: 20px;
 
-        div {
-          margin-bottom: 10px;
+        p {
+          margin: 0px;
         }
+
+        .value {
+          font-weight: 400;
+        }
+      }
+
+      .markup-content {
+        margin-bottom: 20px;
       }
     }
   }

@@ -464,8 +464,6 @@
     "useMetamask": "To use all of our Platform features please Log in to Metamask Extension"
   },
   "predictions": {
-    "forecastsEnd": "Forecasts end",
-    "results": "Results will be announced",
     "forecastsCount": "Forecasts",
     "volume": "Volume",
     "description": "Description",
@@ -473,19 +471,17 @@
     "noDescription": "There is no description for this prediction",
     "forecastDetails": "Forecast details",
     "marketContractAddress": "Market contract address",
-    "resultsAnnounced": "Results announced",
+
+    "predictionStatistics": "Statistics",
+    "votingTill": "Voting till",
+    "results": "Results will be announced",
+    "paused": "Paused",
+    "canceled": "Canceled",
+    "ended": "Ended",
 
     "menu": {
       "predictions": "All Predictions",
       "myForecasts": "My Forecasts"
-    },
-    "predictionsList": {
-      "prediction": {
-        "votingTill": "Voting till",
-        "paused": "Paused",
-        "canceled": "Canceled",
-        "ended": "Ended"
-      }
     },
     "prediction": {
       "paymentInfo": {
@@ -539,8 +535,8 @@
     },
     "statistics": {
       "legend": {
-        "yourPrediction": "Your prediction",
-        "otherPredictions": "Other predictions"
+        "yourForecast": "Your forecast",
+        "otherForecasts": "Other forecasts"
       }
     }
   },

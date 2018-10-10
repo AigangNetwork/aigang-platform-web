@@ -5,12 +5,12 @@
         <div class="outcomes-percentage-title" v-for="(item, index) in statistics" :key="index">{{ item.name }}</div>
       </div>
       <div class="outcomes-percentage-progress">
-        <el-progress v-for="(item, index) in statistics" :key="index" :class="{ 'selected': isSelectedOutcome(item.outcomeId)}" :text-inside="true" :stroke-width="20" :percentage="item.outcomePercentage | round" />
+        <el-progress v-for="(item, index) in statistics" :key="index" :class="{ 'selected': selectedOutcomeId && isSelectedOutcome(item.outcomeId)}" :text-inside="true" :stroke-width="20" :percentage="item.outcomePercentage | round" />
       </div>
     </div>
-    <div class="outcomes-percentage-legend-container" v-if="statistics.length > 0">
-      <div><div class="dot dot-purple"></div>{{ $t('predictions.statistics.legend.yourPrediction') }}</div>
-      <div><div class="dot dot-yellow"></div>{{ $t('predictions.statistics.legend.otherPredictions') }}</div>
+    <div class="outcomes-percentage-legend-container" v-if="statistics.length > 0 && selectedOutcomeId">
+      <div><div class="dot dot-purple"></div>{{ $t('predictions.statistics.legend.yourForecast') }}</div>
+      <div><div class="dot dot-yellow"></div>{{ $t('predictions.statistics.legend.otherForecasts') }}</div>
     </div>
   </div>
 </template>

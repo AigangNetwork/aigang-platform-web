@@ -28,7 +28,7 @@
           <div class="title">
             <p class="title">{{$t('predictions.forecast.status')}}:</p>
           </div>
-          <div class="content">{{ status | uppercase }}</div>
+          <div class="content"><ForecastStatus :status="item.status"/></div>
         </div>
       </div>
     </div>
@@ -37,12 +37,12 @@
 
 <script>
 import Date from '@/components/Date'
-import ForecastStatus from '@/components/mixins/ForecastStatus'
+import ForecastStatus from '@/components/predictions/ForecastStatus'
 
 export default {
-  mixins: [ForecastStatus],
   components: {
-    Date
+    Date,
+    ForecastStatus
   },
   props: ['item']
 }

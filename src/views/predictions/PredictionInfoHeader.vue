@@ -1,26 +1,34 @@
 <template>
   <div class="header-content">
-    <div class="prediction-title">{{ prediction.title | truncate(128) }}</div>
+    <div class="prediction-title">{{ info.title | truncate(128) }}</div>
     <div class="info">
-      <div class="icon-container" v-if="prediction.status === 'published'">
+      <div class="icon-container" v-if="info.status === 'published'">
         <img src="/static/icons/clock-white.svg" class="header-icon"/>
-        <span>{{ $t('predictions.forecastsEnd')}}: <Date :dateUtc="prediction.forecastEndUtc" format="YYYY-MM-DD HH:mm:ss (UTC Z)"/></span>
+        <span>{{ $t('predictions.votingTill')}}: <Date :dateUtc="info.forecastEndUtc" format="YYYY-MM-DD HH:mm:ss (UTC Z)"/></span>
       </div>
-      <div class="icon-container" v-if="prediction.status === 'published'">
+      <div class="icon-container" v-if="info.status === 'published'">
         <img src="/static/icons/finish-white.svg" class="header-icon"/>
-        <span>{{ $t('predictions.results')}}: <Date :dateUtc="prediction.resultDateUtc" format="YYYY-MM-DD HH:mm:ss (UTC Z)"/></span>
+        <span>{{ $t('predictions.results')}}: <Date :dateUtc="info.resultDateUtc" format="YYYY-MM-DD HH:mm:ss (UTC Z)"/></span>
       </div>
-      <div class="icon-container" v-if="prediction.status === 'resolved'">
+      <div class="icon-container" v-if="info.status === 'resolved'">
         <img src="/static/icons/finish-white.svg" class="header-icon"/>
-        <span>{{ $t('predictions.resultsAnnounced')}}</span>
+        <span>{{ $t('predictions.ended')}}</span>
+      </div>
+      <div class="icon-container" v-if="info.status === 'paused'">
+        <img src="/static/icons/finish-white.svg" class="header-icon"/>
+        <span>{{ $t('predictions.paused')}}</span>
+      </div>
+      <div class="icon-container" v-if="info.status === 'canceled'">
+        <img src="/static/icons/finish-white.svg" class="header-icon"/>
+        <span>{{ $t('predictions.canceled')}}</span>
       </div>
       <div class="icon-container">
         <img src="/static/icons/user-white.svg" class="header-icon"/>
-        <span>{{ $t('predictions.forecastsCount')}}: {{ prediction.forecastsCount }}</span>
+        <span>{{ $t('predictions.forecastsCount')}}: {{ info.forecastsCount }}</span>
       </div>
       <div class="icon-container">
         <img src="/static/icons/volume-white.svg" class="header-icon"/>
-        <span>{{ $t('predictions.volume')}}: {{ prediction.poolSize}} {{ $t('general.aix')}}</span>
+        <span>{{ $t('predictions.volume')}}: {{ info.poolSize}} {{ $t('general.aix')}}</span>
       </div>
     </div>
   </div>
@@ -33,7 +41,7 @@ export default {
   components: {
     Date
   },
-  props: ['prediction']
+  props: ['info']
 }
 </script>
 

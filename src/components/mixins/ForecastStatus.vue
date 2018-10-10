@@ -3,12 +3,12 @@ const DEFAULT = '-'
 
 export default {
   computed: {
-    status () {
-      if (!this.item.status) {
+    getStatusString () {
+      if (!this.status) {
         return DEFAULT
       }
 
-      switch (this.item.status.toUpperCase()) {
+      switch (this.status.toUpperCase()) {
         case 'DRAFT':
           return this.$t('predictions.forecast.statuses.draft')
         case 'PENDINGPAYMENT':

@@ -2,7 +2,7 @@
   <transition-group class="items-container" name="slideUp" v-loading="$store.getters.loading">
     <el-row class="aig-items" key="predictions-list" v-show="isDataLoaded">
       <el-col :xs="24" :sm="12" :md="12" :lg="8" v-for="prediction in predictions.items" :key="prediction.id">
-        <PredictionItem :item="prediction" />
+        <PredictionListItem :item="prediction" />
       </el-col>
       <el-col>
         <Pagination v-if="predictions.totalPages > 1" :callback="loadPage" :total-page-count="predictions.totalPages" :current-page="page" />
@@ -16,14 +16,14 @@
 
 <script>
 import Pagination from '@/components/Pagination'
-import PredictionItem from './PredictionItem'
+import PredictionListItem from './PredictionListItem'
 import { createNamespacedHelpers } from 'vuex'
 const { mapGetters } = createNamespacedHelpers('predictions')
 
 export default {
   components: {
     Pagination,
-    PredictionItem
+    PredictionListItem
   },
   computed: {
     ...mapGetters(['predictions'])

@@ -5,18 +5,23 @@
         <router-link :to="{ name: 'PredictionsList' }" class="back-button">{{ $t('general.backToList')}}</router-link>
       </div>
       <div class="aig-info-header-content">
-        <PredictionInfoHeader :prediction="prediction" />
+        <PredictionInfoHeader :info="headerInfo" />
       </div>
     </div>
     <div class="aig-info-content-container" v-if="isDataLoaded">
       <div class="aig-info-content">
         <h4 class="info-title">{{ $t('predictions.description') }}</h4>
-        <p>{{ prediction.description || $t('predictions.noDescription') }}</p>
+        <vue-markdown class="markup-content" :html="false" :source="prediction.description || $t('predictions.noDescription')"></vue-markdown>
         <h4 class="info-title">{{ $t('predictions.marketContractAddress') }}</h4>
         <p><a class="contract-address" target="_blank" :href="contractLink">{{ prediction.marketAddress }}</a></p>
-        <h4 class="info-title" v-if="prediction.status !== 'resolved'">{{ $t('predictions.outcomes') }}</h4>
-        <Outcomes v-if="prediction.status !== 'resolved'" :selectedOutcomeIndex="selectedOutcomeIndex" :items="prediction.outcomes"
-          @selected="onOutcomeSelected" />
+        <div v-if="prediction.status === 'published'">
+          <h4 class="info-title">{{ $t('predictions.outcomes') }}</h4>
+          <Outcomes :selectedOutcomeIndex="selectedOutcomeIndex" :items="prediction.outcomes" @selected="onOutcomeSelected" />
+        </div>
+        <div v-if="isPercentageVisible">
+          <h4 class="info-title">{{ $t('predictions.predictionStatistics') }}</h4>
+          <OutcomesPercentage :statistics="predictionStatistics" />
+        </div>
       </div>
     </div>
     <ConfirmForecastDialog :prediction="prediction.title" :selectedOutcome="selectedOutcome" :isVisible="isPredictionConfirmDialogVisible"
@@ -34,6 +39,7 @@ import Outcomes from '@/components/predictions/Outcomes'
 import OutcomesPercentage from '@/components/predictions/OutcomesPercentage'
 import ConfirmForecastDialog from '@/components/predictions/ConfirmForecastDialog'
 import PaymentConfirmationDialog from '@/components/predictions/PaymentConfirmationDialog'
+import VueMarkdown from 'vue-markdown'
 
 import { createNamespacedHelpers } from 'vuex'
 const { mapGetters } = createNamespacedHelpers('predictions')
@@ -46,12 +52,16 @@ export default {
     ConfirmForecastDialog,
     PaymentConfirmationDialog,
     Date,
-    OutcomesPercentage
+    OutcomesPercentage,
+    VueMarkdown
   },
   computed: {
-    ...mapGetters(['prediction']),
+    ...mapGetters(['prediction', 'predictionStatistics']),
     contractLink () {
       return process.env.ETHERSCAN_ADDRESS + process.env.ADDRESS_PATX + this.prediction.marketAddress
+    },
+    isPercentageVisible () {
+      return this.prediction.status.toUpperCase() === "RESOLVED"
     }
   },
   data () {
@@ -60,12 +70,21 @@ export default {
       isPredictionConfirmDialogVisible: false,
       isPaymentDialogVisible: false,
       selectedOutcome: {},
-      selectedOutcomeIndex: 0
+      selectedOutcomeIndex: 0,
+      headerInfo: {}
     }
   },
-  async created () {
+  async mounted () {
     await this.$store.dispatch('predictions/getPrediction', this.$route.params.id)
     this.isDataLoaded = true
+    this.headerInfo = {
+      title: this.prediction.title,
+      status: this.prediction.status,
+      forecastEndUtc: this.prediction.forecastEndUtc,
+      resultDateUtc: this.prediction.resultDateUtc,
+      forecastsCount: this.prediction.forecastsCount,
+      poolSize: this.prediction.poolSize
+    }
   },
   methods: {
     onOutcomeSelected (index) {
@@ -119,6 +138,10 @@ export default {
       .info-title {
         margin-top: 0px;
       }
+    }
+
+    .markup-content {
+      margin-bottom: 20px;
     }
   }
 </style>
