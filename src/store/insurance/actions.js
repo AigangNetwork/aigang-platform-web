@@ -101,17 +101,13 @@ export default {
     TokenInstance.methods
       .approveAndCall(productAddress, paymentValue, policyIdBytes)
       .send({
-        gas: 190000,
+        gas: process.env.GAS.POLICY_PAYMENT,
         from: rootState.user.userWeb3.coinbase
       })
       .once('transactionHash', async txHash => {
         const request = {
           policyId,
-          txId: txHash,
-          txType: 'PolicyPayment',
-          txMetadata: JSON.stringify({
-            policyId
-          })
+          txId: txHash
         }
         commit('SET_TX_HASH', txHash)
 

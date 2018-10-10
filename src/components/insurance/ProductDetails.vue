@@ -1,13 +1,13 @@
 <template>
 
   <div class="product-details-body">
-    <el-row class="input-section-title">{{ $t('insurance.product.description') }}</el-row>
+    <h4 class="info-title">{{ $t('insurance.product.description') }}</h4>
     <vue-markdown class="markup-content" :html="false" :source="product.description"></vue-markdown>
 
-    <el-row class="input-section-title">{{ $t('insurance.product.contractAddress') }}</el-row>
+    <h4 class="info-title">{{ $t('insurance.product.contractAddress') }}</h4>
     <a class="contract-address" target="_blank" :href="contractLink">{{ product.contractAddress }}</a>
 
-    <el-row class="input-section-title">{{ $t('insurance.product.termsAndConditions') }}</el-row>
+    <h4 class="info-title">{{ $t('insurance.product.termsAndConditions') }}</h4>
     <ScrollableMarkupText class="scrollable-text" :text="product.termsAndConditions" @scrolledToBottom="onScrolledToBottom" />
 
     <el-tooltip v-if="!$store.getters['user/isAuthenticated']" :disabled="$store.getters['user/isAuthenticated']" :content="$t('insurance.product.logInToCalculateInsurancePrice')">

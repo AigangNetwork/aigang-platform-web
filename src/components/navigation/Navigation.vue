@@ -18,7 +18,6 @@
               </li>
             </ul>
           </nav>
-
           <div class="aig-profile-wrapper" v-if="$store.getters['user/isAuthenticated']">
             <UserTab />
           </div>
@@ -68,8 +67,7 @@ export default {
       },
       {
         name: this.$t('navigation.predictions'),
-        routeLink: '/predictions/',
-        disabled: true
+        routeLink: '/predictions/'
       },
       {
         name: this.$t('navigation.invest'),

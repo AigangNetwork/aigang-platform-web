@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-loading="$store.getters.loading">
     <UpdatePassword/>
     <div class="horizontal-line"></div>
     <DeactivateAccount/>

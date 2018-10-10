@@ -5,8 +5,7 @@
       <div class="dataset-body-container">
         <el-form :model="datasetForm" :rules="datasetFormRules" ref="datasetForm">
 
-          <DatasetFileCard v-model="datasetForm.isPublic" :showUploadOption="true" :onFileChange="parseFileStructure" ref="fileCardComponent"
-          />
+          <DatasetFileCard v-model="datasetForm.isPublic" :showUploadOption="true" :onFileChange="parseFileStructure" ref="fileCardComponent" />
 
           <DatasetTitleEdit v-model="datasetForm.title" />
 

@@ -7,11 +7,11 @@
       <el-col>
         <p>{{ $t('profile.transactions.description') }}</p>
       </el-col>
-      <el-row v-show="dataLoaded">
+      <el-row v-show="isDataLoaded">
         <el-table class="transactions" :data="transactions.items" :empty-text="$t('profile.transactions.table.emptyText')">
-          <el-table-column prop="createdUtc" :label="$t('profile.transactions.table.titles.date')" width="160">
+          <el-table-column prop="createdUtc" :label="$t('profile.transactions.table.titles.date')" width="220">
             <template slot-scope="scope">
-              <Date :dateUtc="scope.row.createdUtc" />
+              <Date :dateUtc="scope.row.createdUtc" format="YYYY-MM-DD HH:mm (UTC Z)"/>
             </template>
           </el-table-column>
           <el-table-column prop="txId" :label="$t('profile.transactions.table.titles.transaction')" min-width="250">
@@ -38,10 +38,9 @@
           </el-table-column>
         </el-table>
       </el-row>
-      <el-row v-show="dataLoaded">
+      <el-row v-show="isDataLoaded">
         <el-col class="paging">
-          <Pagination v-if="transactions.totalPages > 1" :callback="loadPage" :total-page-count="transactions.totalPages" :current-page="page"
-          />
+          <Pagination v-if="transactions.totalPages > 1" :callback="loadPage" :total-page-count="transactions.totalPages" :current-page="page" />
         </el-col>
       </el-row>
     </el-row>
@@ -66,13 +65,13 @@ export default {
   data () {
     return {
       page: 1,
-      dataLoaded: false
+      isDataLoaded: false
     }
   },
-  async mounted () {
-    if (!this.dataLoaded) {
+  async beforeMount () {
+    if (!this.isDataLoaded) {
       await this.loadPage(1)
-      this.dataLoaded = true
+      this.isDataLoaded = true
     }
   },
 
@@ -95,6 +94,12 @@ export default {
           return this.$t('profile.transactions.type.addpolicy')
         case 'ADDCLAIM':
           return this.$t('profile.transactions.type.addclaim')
+        case 'ADDFORECAST':
+          return this.$t('profile.transactions.type.addForecast')
+        case 'FORECASTPAYOUT':
+          return this.$t('profile.transactions.type.forecastPayout')
+        case 'FORECASTREFUND':
+          return this.$t('profile.transactions.type.forecastRefund')
         default:
           return this.$t('profile.transactions.type.unknown')
       }

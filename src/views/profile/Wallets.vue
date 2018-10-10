@@ -7,20 +7,19 @@
       <el-col>
         <p>{{ $t('profile.wallets.description') }}</p>
       </el-col>
-      <el-row v-show="dataLoaded">
+      <el-row  v-show="isDataLoaded">
         <el-table :data="wallets.items" :empty-text="$t('profile.wallets.table.emptyText')">
-          <el-table-column prop="createdUtc" :label="$t('profile.wallets.table.titles.date')" width="160">
+          <el-table-column prop="createdUtc" :label="$t('profile.wallets.table.titles.date')" width="220">
             <template slot-scope="scope">
-              <Date :dateUtc="scope.row.createdUtc" />
+              <Date :dateUtc="scope.row.createdUtc" format="YYYY-MM-DD HH:mm (UTC Z)"/>
             </template>
           </el-table-column>
           <el-table-column prop="address" :label="$t('profile.wallets.table.titles.wallet')"></el-table-column>
         </el-table>
       </el-row>
-      <el-row v-show="dataLoaded">
+      <el-row v-show="isDataLoaded">
         <el-col class="paging">
-          <Pagination v-if="wallets.totalPages > 1" :callback="loadPage" :total-page-count="wallets.totalPages" :current-page="page"
-          />
+          <Pagination v-if="wallets.totalPages > 1" :callback="loadPage" :total-page-count="wallets.totalPages" :current-page="page" />
         </el-col>
       </el-row>
     </el-row>
@@ -43,13 +42,13 @@ export default {
   data () {
     return {
       page: 1,
-      dataLoaded: false
+      isDataLoaded: false
     }
   },
   async beforeMount () {
-    if (!this.dataLoaded) {
+    if (!this.isDataLoaded) {
       await this.loadPage(1)
-      this.dataLoaded = true
+      this.isDataLoaded = true
     }
   },
   methods: {

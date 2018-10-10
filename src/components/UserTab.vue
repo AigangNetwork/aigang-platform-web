@@ -28,6 +28,7 @@
     text-align: right;
     align-items: center;
     width: 100%;
+
     .photo {
       // pointer-events: none;
       flex-shrink: 0;
@@ -42,6 +43,7 @@
       text-align: center;
       margin-right: 17px;
     }
+
     .information {
       color: $white;
       margin-right: 10px;

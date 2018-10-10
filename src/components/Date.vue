@@ -6,7 +6,7 @@ import UserLocaleDate from '@/components/mixins/UserLocaleDate'
 export default {
   name: 'Date',
   mixins: [UserLocaleDate],
-  props: ['dateUtc'],
+  props: ['dateUtc', 'format'],
   computed: {
     date () {
       return this.userLocaleDate

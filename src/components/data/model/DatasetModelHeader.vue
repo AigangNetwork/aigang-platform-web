@@ -17,7 +17,7 @@
         </p>
         <h1>{{ model.title }}</h1>
         <div class="aig-dataset-header-btn-container" v-if="isDatasetActive">
-          <router-link v-if="isUserOwner && $route.name !== 'edit'" :to="{ name: 'Edit' }" exact class="aig-dataset-header-btn fit edit">
+          <router-link v-if="isUserOwner && $route.name.toLowerCase() !== 'edit'" :to="{ name: 'Edit' }" exact class="aig-dataset-header-btn fit edit">
             <i class="el-icon-edit button-icon"></i> {{$t('data.dataset.model.editModel')}}
           </router-link>
         </div>
