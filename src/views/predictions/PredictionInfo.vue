@@ -14,16 +14,18 @@
         <vue-markdown class="markup-content" :html="false" :source="prediction.description || $t('predictions.noDescription')"></vue-markdown>
         <h4 class="info-title">{{ $t('predictions.marketContractAddress') }}</h4>
         <p><a class="contract-address" target="_blank" :href="contractLink">{{ prediction.marketAddress }}</a></p>
-        <div v-if="prediction.status === 'published'">
+        <div v-if="prediction.status === 'published' && forecastStartUtc <= utcNow">
           <h4 class="info-title">{{ $t('predictions.outcomes') }}</h4>
           <Outcomes :selectedOutcomeIndex="selectedOutcomeIndex" :items="prediction.outcomes" @selected="onOutcomeSelected" />
         </div>
         <div v-if="isPercentageVisible">
           <h4 class="info-title">{{ $t('predictions.predictionStatistics') }}</h4>
+          {{ forecastStartUtc }}
           <OutcomesPercentage :statistics="predictionStatistics" />
         </div>
       </div>
     </div>
+
     <ConfirmForecastDialog :prediction="prediction.title" :selectedOutcome="selectedOutcome" :isVisible="isPredictionConfirmDialogVisible"
       :displayDialog="displayPredictionConfirmDialog" @createForecast="onCreateForecast" />
 
@@ -34,7 +36,6 @@
 <script>
 import PredictionInfoHeader from './PredictionInfoHeader'
 import Card from '@/components/Card'
-import Date from '@/components/Date'
 import Outcomes from '@/components/predictions/Outcomes'
 import OutcomesPercentage from '@/components/predictions/OutcomesPercentage'
 import ConfirmForecastDialog from '@/components/predictions/ConfirmForecastDialog'
@@ -51,7 +52,6 @@ export default {
     Outcomes,
     ConfirmForecastDialog,
     PaymentConfirmationDialog,
-    Date,
     OutcomesPercentage,
     VueMarkdown
   },
@@ -62,6 +62,9 @@ export default {
     },
     isPercentageVisible () {
       return this.prediction.status.toUpperCase() === 'RESOLVED'
+    },
+    forecastStartUtc () {
+      return new Date(this.prediction.forecastStartUtc)
     }
   },
   data () {
@@ -71,7 +74,8 @@ export default {
       isPaymentDialogVisible: false,
       selectedOutcome: {},
       selectedOutcomeIndex: 0,
-      headerInfo: {}
+      headerInfo: {},
+      utcNow: new Date().getTime()
     }
   },
   async mounted () {
