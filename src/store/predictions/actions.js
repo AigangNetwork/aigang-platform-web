@@ -175,11 +175,14 @@ export default {
         const forecast = response.data.item
 
         if (
-          forecast &&
-          forecast.predictionId &&
-          forecast.status.toUpperCase() !== 'NOTSET' &&
-          forecast.status.toUpperCase() !== 'DRAFT' &&
-          forecast.status.toUpperCase() !== 'PENDINGPAYMENT'
+          forecast && (
+            (
+              forecast.predictionId &&
+              forecast.status.toUpperCase() !== 'NOTSET' &&
+              forecast.status.toUpperCase() !== 'DRAFT' &&
+              forecast.status.toUpperCase() !== 'PENDINGPAYMENT'
+            ) || forecast.predictionStatus.toUpperCase() === 'RESOLVED'
+          )
         ) {
           dispatch('getPredictionStatisticsForForecast', forecastId)
         } else {

@@ -166,9 +166,15 @@
 }
 
 // Progress
-.el-progress.selected {
+.el-progress.purple {
   .el-progress-bar__inner {
     background-color: $purple;
+  }
+}
+
+.el-progress.green {
+  .el-progress-bar__inner {
+    background-color: $green;
   }
 }
 
