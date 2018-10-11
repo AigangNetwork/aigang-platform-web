@@ -43,12 +43,16 @@
 import FormMixin from '@/components/mixins/FormMixin'
 
 export default {
-  props: ['prediction', 'selectedOutcome', 'isVisible', 'displayDialog'],
+  props: ['prediction', 'selectedOutcome', 'isVisible', 'displayDialog', 'fee'],
   mixins: [FormMixin],
   data () {
     let checkAmount = (rule, value, callback) => {
-      if (value === 0) {
-        return callback(new Error(this.$t('predictions.confirmationDialog.validation.shouldBeBiggerThanZero')))
+      if (value <= 0) {
+        return callback(new Error(this.$t('predictions.prediction.confirmationDialog.validation.shouldBeBiggerThanZero')))
+      }
+
+      if (value <= this.fee) {
+        return callback(new Error(this.$t('predictions.prediction.confirmationDialog.validation.shouldBeBiggerThanFee')))
       }
 
       callback()

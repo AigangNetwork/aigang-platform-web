@@ -470,6 +470,7 @@
     "outcomes": "Outcomes",
     "noDescription": "There is no description for this prediction",
     "forecastDetails": "Forecast details",
+    "predictionDetails": "Prediction details",
     "marketContractAddress": "Market contract address",
     "predictionStatistics": "Statistics",
     "votingTill": "Voting till",
@@ -479,6 +480,7 @@
     "paused": "Paused",
     "canceled": "Canceled",
     "ended": "Ended",
+    "fee": "Fee",
 
     "menu": {
       "predictions": "All Predictions",
@@ -504,7 +506,8 @@
         "validation": {
           "required": "Can not be empty",
           "shouldBeNumber": "Should be number",
-          "shouldBeBiggerThanZero": "Should be greater than zero"
+          "shouldBeBiggerThanZero": "Should be greater than zero",
+          "shouldBeBiggerThanFee": "Should be greater than fee"
         },
         "userNotLoggedIn": "User must be logged in and connected to web3 provider (Metamask, Mist, etc.)"
       }
