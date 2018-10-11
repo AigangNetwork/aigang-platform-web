@@ -6,9 +6,7 @@
           <div class="status" v-if="item.status === 'paused'">{{ $t('predictions.paused') }}</div>
           <div class="status" v-if="item.status === 'canceled'">{{ $t('predictions.canceled') }}</div>
           <div class="status" v-if="item.status === 'resolved'">{{ $t('predictions.ended') }}</div>
-          <div class="title">{{  item.title | truncate(35) }}</div>
-        </div>
-        <div class="aig-data-body">
+          <div class="title">{{  item.title | truncate(85) }}</div>
           <div class="desc">
             <p>{{ item.description | truncate(60) }}</p>
           </div>
@@ -50,25 +48,29 @@ export default {
     margin-right: 10px;
     box-shadow: 0 0 30px 0 #e9f0f6;
     border: 1px solid $light-border-blue;
-    height: 245px;
+    height: 270px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
 
-    .aig-data-body {
-      height: 100%;
-      max-height: 110px;
-      p {
-        margin: 0;
-        max-height: 50px;
-        font-size: 14px;
-      }
-    }
     .aig-data-head {
-      justify-content: space-between;
       margin-top: 0;
       width: 100%;
+
+      .desc {
+        padding-top: 15px;
+        line-height: 1.3;
+        font-size: 13px;
+        word-wrap: break-word;
+        max-width: 100%;
+        p {
+          margin: 0;
+          max-height: 50px;
+          font-size: 14px;
+        }
+      }
     }
+
     .aig-data-footer {
       border-top: 1px solid $light-border-blue;
       height: 40px;
@@ -114,18 +116,9 @@ export default {
       word-wrap: break-word;
       max-width: 100%;
     }
-
-    .desc {
-      min-height: 20px;
-      line-height: 1.3;
-      font-size: 13px;
-      word-wrap: break-word;
-      max-width: 100%;
-    }
   }
 
   /* Tablet */
-
   @media screen and (min-width: 680px) and (max-width: 1024px) {
     .aig-data .aig-data-footer .aig-footer-container-right {
       padding-left: 0px;
