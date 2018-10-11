@@ -1,6 +1,7 @@
 import Predictions from '@/views/Predictions'
 import NotFound from '@/views/general/NotFound'
 import AccessDenied from '@/views/general/AccessDenied'
+import CookiesPolicy from '@/views/general/CookiesPolicy'
 
 import DataRoutes from './data-routes'
 import InsuranceRoutes from './insurance-routes'
@@ -28,6 +29,12 @@ const routes = [
     path: '/predictions',
     name: 'Predictions',
     component: Predictions
+  },
+
+  {
+    path: '/cookies-policy',
+    name: 'CookiesPolicy',
+    component: CookiesPolicy
   }
 ]
 
