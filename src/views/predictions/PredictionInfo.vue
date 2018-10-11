@@ -20,7 +20,7 @@
         </div>
         <div v-if="isPercentageVisible">
           <h4 class="info-title">{{ $t('predictions.predictionStatistics') }}</h4>
-          <OutcomesPercentage :statistics="predictionStatistics" />
+          <OutcomesPercentage :statistics="predictionStatistics" :resultOutcomeId="prediction.resultOutcomeId"/>
         </div>
       </div>
     </div>

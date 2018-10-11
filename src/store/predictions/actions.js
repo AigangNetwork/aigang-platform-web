@@ -228,5 +228,15 @@ export default {
           } catch (ex) {}
         })
     }
+  },
+
+  async deleteForecast ({ commit }, id) {
+    commit('SET_LOADING', true, { root: true })
+
+    try {
+      await axios.delete(`/predictions/forecast/${id}`)
+    } catch (err) {}
+
+    commit('SET_LOADING', false, { root: true })
   }
 }

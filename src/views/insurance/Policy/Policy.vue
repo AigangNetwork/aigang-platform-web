@@ -39,7 +39,7 @@
               </el-col>
             </el-row>
 
-            <PolicyDeleteSection v-if="isPolicyDraftOrPendingPayment" />
+            <PolicyDeleteSection v-if="isPolicyDraft" />
           </div>
 
           <VerifyClaimLoadingInfo v-else key="2" />
@@ -145,10 +145,10 @@ export default {
     claimProperties () {
       return this.policy.claimProperties ? JSON.parse(this.policy.claimProperties) : null
     },
-    isPolicyDraftOrPendingPayment () {
+    isPolicyDraft () {
       if (this.policy.status) {
         const status = this.policy.status.toUpperCase()
-        return status === 'DRAFT' || status === 'PENDINGPAYMENT'
+        return status === 'DRAFT'
       }
     }
   },

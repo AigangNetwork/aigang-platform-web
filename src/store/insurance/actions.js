@@ -191,16 +191,14 @@ export default {
     commit('SET_LOADING', false, { root: true })
   },
 
-  async deletePolicy ({ commit, state }) {
+  async deletePolicy ({ commit }, id) {
     commit('SET_LOADING', true, { root: true })
 
-    const policyId = state.policy.id
-
     try {
-      await axios.delete(`/insurance/deletepolicy/${policyId}`)
+      await axios.delete(`/insurance/deletepolicy/${id}`)
     } catch (err) {}
 
-    commit('SET_LOADING', false)
+    commit('SET_LOADING', false, { root: true })
   }
 }
 

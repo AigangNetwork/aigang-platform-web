@@ -1,18 +1,18 @@
 <template>
   <el-row class="profile-password-container">
     <el-col>
-      <p class="input-section-title">{{ $t('insurance.policy.deletePolicyTitle') }}</p>
+      <h4 class="info-title">{{ $t('predictions.forecast.deleteForecastTitle') }}</h4>
     </el-col>
     <el-col>
-      <p>{{ $t('insurance.policy.deletePolicyBody') }}</p>
+      <p>{{ $t('predictions.forecast.deleteForecastBody') }}</p>
     </el-col>
     <el-row>
       <el-button @click="dialogVisible = true" class="profile-button">
-        {{$t('insurance.policy.deletePolicy')}}
+        {{$t('predictions.forecast.deleteForecast')}}
       </el-button>
     </el-row>
 
-    <Dialog :title="$t('profile.general.warning')" :body="$t('insurance.policy.deletePolicyConfirmation')" :on-confirm="deleteHandler"
+    <Dialog :title="$t('profile.general.warning')" :body="$t('predictions.forecast.deleteForecastConfirmation')" :on-confirm="deleteHandler"
       :is-visible="dialogVisible" :on-cancel="cancel" :displayDialog="displayDialog" />
 
   </el-row>
@@ -38,9 +38,9 @@ export default {
     },
     async deleteHandler () {
       this.dialogVisible = false
-      await this.$store.dispatch('insurance/deletePolicy', this.$route.params.policyId)
+      await this.$store.dispatch('predictions/deleteForecast', this.$route.params.id)
 
-      this.$router.push({ name: 'MyPolicyList' })
+      this.$router.push({ name: 'MyForecastsList' })
     }
   }
 }

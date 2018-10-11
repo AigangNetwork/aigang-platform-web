@@ -5,23 +5,20 @@
         <div class="outcomes-percentage-title" v-for="(item, index) in statistics" :key="index">{{ item.name }}</div>
       </div>
       <div class="outcomes-percentage-progress">
-        <el-progress v-for="(item, index) in statistics" :key="index" :class="{ 'purple': selectedOutcomeId && isSelectedOutcome(item.outcomeId) }" :text-inside="true" :stroke-width="20" :percentage="item.outcomePercentage | round" />
+        <el-progress v-for="(item, index) in statistics" :key="index" :class="{ 'purple': resultOutcomeId && isResultOutcome(item.outcomeId) }" :text-inside="true" :stroke-width="20" :percentage="item.outcomePercentage | round" />
       </div>
     </div>
-    <div class="outcomes-percentage-legend-container" v-if="statistics.length > 0 && selectedOutcomeId">
-      <div><div class="dot dot-purple"></div>{{ $t('predictions.statistics.legend.yourForecast') }}</div>
+    <div class="outcomes-percentage-legend-container" v-if="statistics.length > 0 && resultOutcomeId">
+      <div><div class="dot dot-purple"></div>{{ $t('predictions.statistics.legend.wonForecast') }}</div>
       <div><div class="dot dot-yellow"></div>{{ $t('predictions.statistics.legend.otherForecasts') }}</div>
     </div>
   </div>
 </template>
 <script>
 export default {
-  props: ['statistics', 'selectedOutcomeId'],
+  props: ['statistics', 'resultOutcomeId'],
   methods: {
-    isSelectedOutcome (outcomeId) {
-      return outcomeId === this.selectedOutcomeId
-    },
-    isWonOutcome (outcomeId) {
+    isResultOutcome (outcomeId) {
       return outcomeId === this.resultOutcomeId
     }
   },

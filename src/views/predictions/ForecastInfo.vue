@@ -23,7 +23,7 @@
 
         <div v-if="isPercentageVisible">
           <h4 class="info-title">{{ $t('predictions.predictionStatistics') }}</h4>
-          <OutcomesPercentage :statistics="predictionStatistics" :selectedOutcomeId="userForecast.outcomeId" />
+          <OutcomesPercentage :statistics="predictionStatistics" :resultOutcomeId="userForecast.resultOutcomeId" />
         </div>
 
         <el-tooltip v-if="isForecastsWon" :disabled="!!$store.getters['user/web3']" :content="$t('predictions.forecast.logInToWeb3')">
@@ -33,6 +33,8 @@
             </el-button>
           </span>
         </el-tooltip>
+
+        <ForecastDeleteSection v-if="isforecastDraft" />
 
         <PaymentConfirmationDialog :isVisible="isPaymentDialogVisible" :displayDialog="displayPaymentDialog" :content="$t('predictions.forecast.metamaskAlert')" />
       </div>
@@ -44,6 +46,7 @@
 import PredictionInfoHeader from './PredictionInfoHeader'
 import ForecastStatus from '@/components/predictions/ForecastStatus'
 import OutcomesPercentage from '@/components/predictions/OutcomesPercentage'
+import ForecastDeleteSection from '@/components/predictions/ForecastDeleteSection'
 import Card from '@/components/Card'
 import VueMarkdown from 'vue-markdown'
 import PaymentConfirmationDialog from '@/components/predictions/PaymentConfirmationDialog'
@@ -57,6 +60,7 @@ export default {
     ForecastStatus,
     Card,
     PaymentConfirmationDialog,
+    ForecastDeleteSection,
     VueMarkdown
   },
   data () {
@@ -91,6 +95,12 @@ export default {
     },
     contractLink () {
       return process.env.ETHERSCAN_ADDRESS + process.env.ADDRESS_PATX + this.userForecast.marketAddress
+    },
+    isforecastDraft () {
+      if (this.userForecast.status) {
+        const status = this.userForecast.status.toUpperCase()
+        return status === 'DRAFT'
+      }
     }
   },
   async mounted () {
