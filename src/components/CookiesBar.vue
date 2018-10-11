@@ -70,7 +70,7 @@ export default {
     width: 100%;
     height: 100px;
     box-shadow: 0 0 30px 0 #e9f0f6;
-    background: white;
+    background-color: rgba(255, 255, 255, 0.9);
     align-items: center;
     justify-content: center;
 

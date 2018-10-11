@@ -1,14 +1,10 @@
 <template>
   <div class="aig-app" :class="appClass" v-loading="loading">
-
     <Navigation />
-
     <transition name="slideUp">
       <router-view class="aig-view"></router-view>
     </transition>
-
     <CookiesBar />
-
     <notification></notification>
   </div>
 </template>
