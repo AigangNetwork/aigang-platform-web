@@ -12,9 +12,15 @@
       <div class="aig-info-content">
         <h4 class="info-title">{{ $t('predictions.description') }}</h4>
         <vue-markdown class="markup-content" :html="false" :source="prediction.description || $t('predictions.noDescription')"></vue-markdown>
-        <h4 class="info-title">{{ $t('predictions.marketContractAddress') }}</h4>
-        <p><a class="contract-address" target="_blank" :href="contractLink">{{ prediction.marketAddress }}</a></p>
-        <div v-if="prediction.status === 'published' && forecastStartUtc < utcNow && forecastEndUtc > utcNow">
+        <h4 class="info-title">{{ $t('predictions.predictionDetails') }}</h4>
+        <p class="no-margin-bottom"><span>{{ $t('predictions.marketContractAddress') }}: </span><a class="contract-address"
+            target="_blank" :href="contractLink">{{
+            prediction.marketAddress }}</a></p>
+        <p class="no-margin-top"><span>{{ $t('predictions.fee') }}: </span> <span class="medium-weight">{{
+            prediction.fee }} {{
+            $t('general.aix') }}</span></p>
+        <div v-if=" prediction.status==='published' && forecastStartUtc
+          < utcNow && forecastEndUtc> utcNow">
           <h4 class="info-title">{{ $t('predictions.outcomes') }}</h4>
           <Outcomes :selectedOutcomeIndex="selectedOutcomeIndex" :items="prediction.outcomes" @selected="onOutcomeSelected" />
         </div>
@@ -26,9 +32,11 @@
     </div>
 
     <ConfirmForecastDialog :prediction="prediction.title" :selectedOutcome="selectedOutcome" :isVisible="isPredictionConfirmDialogVisible"
-      :displayDialog="displayPredictionConfirmDialog" @createForecast="onCreateForecast" />
+      :displayDialog="displayPredictionConfirmDialog" @createForecast="onCreateForecast" :fee="prediction.fee" />
 
-    <PaymentConfirmationDialog :isVisible="isPaymentDialogVisible" :displayDialog="displayPaymentDialog" :content="$t('predictions.prediction.paymentInfo.metamaskAlert')" />
+    <PaymentConfirmationDialog :isVisible="
+      isPaymentDialogVisible" :displayDialog="displayPaymentDialog"
+      :content="$t('predictions.prediction.paymentInfo.metamaskAlert')" />
   </div>
 </template>
 
@@ -142,7 +150,7 @@ export default {
         margin-bottom: 40px;
       }
 
-      .info-title {
+      9 .info-title {
         margin-top: 0px;
       }
     }
@@ -150,5 +158,13 @@ export default {
     .markup-content {
       margin-bottom: 20px;
     }
+  }
+
+  .no-margin-bottom {
+    margin-bottom: 0;
+  }
+
+  .no-margin-top {
+    margin-top: 0;
   }
 </style>

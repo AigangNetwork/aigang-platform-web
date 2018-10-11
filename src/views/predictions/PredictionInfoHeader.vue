@@ -70,6 +70,8 @@ export default {
 </script>
 
 <style lang="scss">
+  @import '~helpers/variables';
+
   .header-content {
     .prediction-title {
       padding-bottom: 20px;
@@ -81,6 +83,7 @@ export default {
 
     .info {
       margin-left: 20px;
+      font-family: $font-secondary;
 
       .icon-container {
         display: flex;

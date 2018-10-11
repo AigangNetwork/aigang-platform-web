@@ -577,7 +577,7 @@ body.aig {
       flex-direction: column;
     }
   }
-  
+
   .aig-info-header::after {
     display: block;
     position: absolute;
@@ -606,4 +606,8 @@ body.aig {
       padding: 40px;
     }
   }
+}
+
+.medium-weight {
+  font-weight: 500;
 }
