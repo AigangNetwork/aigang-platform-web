@@ -14,13 +14,12 @@
         <vue-markdown class="markup-content" :html="false" :source="prediction.description || $t('predictions.noDescription')"></vue-markdown>
         <h4 class="info-title">{{ $t('predictions.marketContractAddress') }}</h4>
         <p><a class="contract-address" target="_blank" :href="contractLink">{{ prediction.marketAddress }}</a></p>
-        <div v-if="prediction.status === 'published' && forecastStartUtc <= utcNow">
+        <div v-if="prediction.status === 'published' && forecastStartUtc < utcNow && forecastEndUtc > utcNow">
           <h4 class="info-title">{{ $t('predictions.outcomes') }}</h4>
           <Outcomes :selectedOutcomeIndex="selectedOutcomeIndex" :items="prediction.outcomes" @selected="onOutcomeSelected" />
         </div>
         <div v-if="isPercentageVisible">
           <h4 class="info-title">{{ $t('predictions.predictionStatistics') }}</h4>
-          {{ forecastStartUtc }}
           <OutcomesPercentage :statistics="predictionStatistics" />
         </div>
       </div>
@@ -65,6 +64,9 @@ export default {
     },
     forecastStartUtc () {
       return new Date(this.prediction.forecastStartUtc)
+    },
+    forecastEndUtc () {
+      return new Date(this.prediction.forecastEndUtc)
     }
   },
   data () {
@@ -84,6 +86,7 @@ export default {
     this.headerInfo = {
       title: this.prediction.title,
       status: this.prediction.status,
+      forecastStartUtc: this.prediction.forecastStartUtc,
       forecastEndUtc: this.prediction.forecastEndUtc,
       resultDateUtc: this.prediction.resultDateUtc,
       forecastsCount: this.prediction.forecastsCount,

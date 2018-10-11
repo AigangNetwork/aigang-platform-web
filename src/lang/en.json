@@ -471,9 +471,10 @@
     "noDescription": "There is no description for this prediction",
     "forecastDetails": "Forecast details",
     "marketContractAddress": "Market contract address",
-
     "predictionStatistics": "Statistics",
     "votingTill": "Voting till",
+    "votingStarts": "Voting starts",
+    "votingEnded": "Voting has ended",
     "results": "Results will be announced",
     "paused": "Paused",
     "canceled": "Canceled",
