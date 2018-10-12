@@ -529,7 +529,7 @@
       "metamaskAlert": "Atention! Do not leave this page until you confirm your transaction. Otherwise your transaction will be lost and forecast won't be paid out.",
       "payout": "Get Payout",
       "deleteForecastTitle": "Delete your forecast",
-      "deleteForecastBody": "This forecast and all data associated with it will be deleted from the plaform. You won't be able to revert this action later on, however you will still be able to view it on the blockchain.",
+      "deleteForecastBody": "This forecast and all data associated with it will be deleted from the plaform. You won't be able to revert this action later on.",
       "deleteForecast": "Delete forecast",
       "deleteForecastConfirmation": "Are you sure you want to delete this forecast?",
       "statuses": {
@@ -606,7 +606,7 @@
       "redirecting": "Redirecting",
       "androidBatteryInsurancePolicy": "Android Battery Insurance Policy",
       "deletePolicyTitle": "Delete your policy",
-      "deletePolicyBody": "This policy and all data associated with it will be deleted from the plaform. You won't be able to revert this action later on, however you will still be able to view it on the blockchain.",
+      "deletePolicyBody": "This policy and all data associated with it will be deleted from the plaform. You won't be able to revert this action later on.",
       "deletePolicy": "Delete policy",
       "deletePolicyConfirmation": "Are you sure you want to delete this policy?",
       "termsAndConditions": {
