@@ -74,7 +74,6 @@
           third party cookies you might encounter through this site.</p>
 
         <ul>
-
           <li>
             <p>This site uses Google Analytics which is one of the most widespread and trusted analytics solution on the
               web
@@ -92,8 +91,7 @@
           methods:</p>
 
         <ul>
-          <li>Email: aigang.development@gmail.com</li>
-
+          <li>Email: info<span>&#x00040;</span>aigang.network</li>
         </ul>
       </div>
     </Card>

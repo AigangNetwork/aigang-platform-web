@@ -1,8 +1,11 @@
 <template>
   <div class="outcomes">
     <a v-for="item in items" :key="item.id" @click="changeSelectedOutcome(item.index)">
-      <el-card class="box-card" :class="{ 'outcome': !disabled, 'outcome-disabled': disabled, 'selected': isOutcomeSelected(item.index) }">
-        <div class="text item">{{ item.name }}</div>
+      <el-card class="box-card outcome" :class="{ 'active': !disabled, 'disabled': disabled, 'selected': isOutcomeSelected(item.index) }">
+        <div class="content">
+          <div class="name">{{ item.name }}</div>
+          <div class="index">{{ item.index }}</div>
+        </div>
       </el-card>
     </a>
   </div>
@@ -30,22 +33,33 @@ export default {
   .outcomes {
     .outcome {
       margin-bottom: 10px;
+
+      .content {
+        display: flex;
+        .name {
+          flex-grow: 1;
+        }
+
+        .index {
+          flex-grow: 0;
+          color: $gray;
+        }
+      }
     }
 
-    .outcome:hover {
+    .active:hover {
       color: $white;
       background: $yellow;
       cursor: pointer;
     }
 
-    .outcome.selected {
+    .active.selected {
       color: $white;
       background: $purple;
       cursor: auto;
     }
 
-    .outcome-disabled {
-      margin-bottom: 10px;
+    .disabled {
       opacity: 0.6;
       cursor: not-allowed;
     }
