@@ -1,7 +1,7 @@
 <template>
   <div class="outcomes">
     <a v-for="item in items" :key="item.id" @click="changeSelectedOutcome(item.index)">
-      <el-card class="box-card outcome" :class="{ 'selected': isOutcomeSelected(item.index) }">
+      <el-card class="box-card" :class="{ 'outcome': !disabled, 'outcome-disabled': disabled, 'selected': isOutcomeSelected(item.index) }">
         <div class="text item">{{ item.name }}</div>
       </el-card>
     </a>
@@ -10,13 +10,15 @@
 
 <script>
 export default {
-  props: ['items', 'selectedOutcomeIndex'],
+  props: ['items', 'selectedOutcomeIndex', 'disabled'],
   methods: {
     isOutcomeSelected (id) {
       return this.selectedOutcomeIndex === id
     },
     changeSelectedOutcome (id) {
-      this.$emit('selected', id)
+      if (!this.disabled) {
+        this.$emit('selected', id)
+      }
     }
   }
 }
@@ -40,6 +42,12 @@ export default {
       color: $white;
       background: $purple;
       cursor: auto;
+    }
+
+    .outcome-disabled {
+      margin-bottom: 10px;
+      opacity: 0.6;
+      cursor: not-allowed;
     }
   }
 </style>

@@ -10,24 +10,31 @@
     </div>
     <div class="aig-info-content-container" v-if="isDataLoaded">
       <div class="aig-info-content">
+
         <h4 class="info-title">{{ $t('predictions.description') }}</h4>
         <vue-markdown class="markup-content" :html="false" :source="prediction.description || $t('predictions.noDescription')"></vue-markdown>
+
         <h4 class="info-title">{{ $t('predictions.predictionDetails') }}</h4>
-        <p class="no-margin-bottom"><span>{{ $t('predictions.marketContractAddress') }}: </span><a class="contract-address"
-            target="_blank" :href="contractLink">{{
-            prediction.marketAddress }}</a></p>
-        <p class="no-margin-top"><span>{{ $t('predictions.fee') }}: </span> <span class="medium-weight">{{
-            prediction.fee }} {{
-            $t('general.aix') }}</span></p>
-        <div v-if=" prediction.status==='published' && forecastStartUtc
-          < utcNow && forecastEndUtc> utcNow">
+        <p class="no-margin-bottom">
+          <span>{{ $t('predictions.marketContractAddress') }}: </span>
+          <a class="contract-address" target="_blank" :href="contractLink">{{ prediction.marketAddress }}</a>
+        </p>
+
+        <p class="no-margin-top">
+          <span>{{ $t('predictions.fee') }}: </span>
+          <span class="medium-weight">{{ prediction.fee }} {{ $t('general.aix') }}</span>
+        </p>
+
+        <div v-if="prediction.status !== 'resolved'">
           <h4 class="info-title">{{ $t('predictions.outcomes') }}</h4>
-          <Outcomes :selectedOutcomeIndex="selectedOutcomeIndex" :items="prediction.outcomes" @selected="onOutcomeSelected" />
+          <Outcomes :selectedOutcomeIndex="selectedOutcomeIndex" :items="prediction.outcomes" :disabled="prediction.status !== 'published'" @selected="onOutcomeSelected" />
         </div>
+
         <div v-if="isPercentageVisible">
           <h4 class="info-title">{{ $t('predictions.predictionStatistics') }}</h4>
           <OutcomesPercentage :statistics="predictionStatistics" :resultOutcomeId="prediction.resultOutcomeId"/>
         </div>
+
       </div>
     </div>
 
@@ -68,7 +75,7 @@ export default {
       return process.env.ETHERSCAN_ADDRESS + process.env.ADDRESS_PATX + this.prediction.marketAddress
     },
     isPercentageVisible () {
-      return this.prediction.status.toUpperCase() === 'RESOLVED'
+      return this.predictionStatistics && this.prediction.status.toUpperCase() === 'RESOLVED'
     },
     forecastStartUtc () {
       return new Date(this.prediction.forecastStartUtc)
@@ -150,7 +157,7 @@ export default {
         margin-bottom: 40px;
       }
 
-      9 .info-title {
+      .info-title {
         margin-top: 0px;
       }
     }
