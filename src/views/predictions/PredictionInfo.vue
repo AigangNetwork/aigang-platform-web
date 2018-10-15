@@ -10,7 +10,6 @@
     </div>
     <div class="aig-info-content-container" v-if="isDataLoaded">
       <div class="aig-info-content">
-
         <h4 class="info-title">{{ $t('predictions.description') }}</h4>
         <vue-markdown class="markup-content" :html="false" :source="prediction.description || $t('predictions.noDescription')"></vue-markdown>
 
@@ -23,7 +22,7 @@
 
         <div v-if="prediction.status !== 'resolved'">
           <h4 class="info-title">{{ $t('predictions.outcomes') }}</h4>
-          <Outcomes :selectedOutcomeIndex="selectedOutcomeIndex" :items="prediction.outcomes" :disabled="prediction.status !== 'published'" @selected="onOutcomeSelected" />
+          <Outcomes :selectedOutcomeIndex="selectedOutcomeIndex" :items="prediction.outcomes" :disabled="isOutcomesDisabled" @selected="onOutcomeSelected" />
         </div>
 
         <div v-if="isPercentageVisible">
@@ -73,11 +72,13 @@ export default {
     isPercentageVisible () {
       return this.predictionStatistics && this.prediction.status.toUpperCase() === 'RESOLVED'
     },
-    forecastStartUtc () {
-      return new Date(this.prediction.forecastStartUtc)
-    },
-    forecastEndUtc () {
-      return new Date(this.prediction.forecastEndUtc)
+    isOutcomesDisabled () {
+      return (
+        this.prediction.status === 'paused' ||
+        this.prediction.status === 'canceled' ||
+        this.prediction.status === 'pendingPublished' ||
+        this.prediction.status === 'pendingPublish'
+      )
     }
   },
   data () {
@@ -87,8 +88,7 @@ export default {
       isPaymentDialogVisible: false,
       selectedOutcome: {},
       selectedOutcomeIndex: 0,
-      headerInfo: {},
-      utcNow: new Date().getTime()
+      headerInfo: {}
     }
   },
   async mounted () {

@@ -111,6 +111,7 @@ export default {
     this.headerInfo = {
       title: this.userForecast.predictionTitle,
       status: this.userForecast.predictionStatus,
+      forecastStartUtc: this.userForecast.forecastStartUtc,
       forecastEndUtc: this.userForecast.forecastEndUtc,
       resultDateUtc: this.userForecast.resultDateUtc,
       forecastsCount: this.userForecast.forecastsCount,

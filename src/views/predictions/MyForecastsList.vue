@@ -8,7 +8,7 @@
         </div>
       </div>
       <div class="forecast-item" v-for="forecast in userForecasts.items" :key="forecast.id">
-        <ForecastItem :item="forecast" />
+        <ForecastListItem :item="forecast" />
       </div>
       <el-col>
         <Pagination v-if="userForecasts.totalPages > 1" :callback="loadPage" :total-page-count="userForecasts.totalPages" :current-page="page" />
@@ -23,7 +23,7 @@
 <script>
 import Pagination from '@/components/Pagination'
 import Dropdown from '@/components/common/Dropdown'
-import ForecastItem from './ForecastItem'
+import ForecastListItem from './ForecastListItem'
 import { createNamespacedHelpers } from 'vuex'
 const { mapGetters } = createNamespacedHelpers('predictions')
 
@@ -31,7 +31,7 @@ export default {
   components: {
     Pagination,
     Dropdown,
-    ForecastItem
+    ForecastListItem
   },
   computed: {
     ...mapGetters(['userForecasts'])

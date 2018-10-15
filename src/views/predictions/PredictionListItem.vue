@@ -2,10 +2,12 @@
   <router-link :to="{ name: 'PredictionInfo', params: { id: item.id}}">
     <div class="aig-data">
         <div class="aig-data-head">
-          <div class="status" v-if="item.status === 'published'">{{ $t('predictions.votingTill') }}: <Date :dateUtc="item.forecastEndUtc" /></div>
           <div class="status" v-if="item.status === 'paused'">{{ $t('predictions.paused') }}</div>
-          <div class="status" v-if="item.status === 'canceled'">{{ $t('predictions.canceled') }}</div>
+          <div class="status" v-if="item.status === 'pendingPublish'">{{ $t('predictions.votingStarts') }}: <Date :dateUtc="item.forecastStartUtc" /></div>
+          <div class="status" v-if="item.status === 'published'">{{ $t('predictions.votingTill') }}: <Date :dateUtc="item.forecastEndUtc" /></div>
+          <div class="status" v-if="item.status === 'pendingResolve'">{{ $t('predictions.votingEnded') }}</div>
           <div class="status" v-if="item.status === 'resolved'">{{ $t('predictions.ended') }}</div>
+          <div class="status" v-if="item.status === 'canceled'">{{ $t('predictions.canceled') }}</div>
           <div class="title">{{  item.title | truncate(85) }}</div>
           <div class="desc">
             <p>{{ item.description | truncate(60) }}</p>
