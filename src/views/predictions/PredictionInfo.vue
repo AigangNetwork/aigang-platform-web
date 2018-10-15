@@ -15,15 +15,11 @@
         <vue-markdown class="markup-content" :html="false" :source="prediction.description || $t('predictions.noDescription')"></vue-markdown>
 
         <h4 class="info-title">{{ $t('predictions.predictionDetails') }}</h4>
-        <p class="no-margin-bottom">
-          <span>{{ $t('predictions.marketContractAddress') }}: </span>
-          <a class="contract-address" target="_blank" :href="contractLink">{{ prediction.marketAddress }}</a>
-        </p>
-
-        <p class="no-margin-top">
-          <span>{{ $t('predictions.fee') }}: </span>
-          <span class="medium-weight">{{ prediction.fee }} {{ $t('general.aix') }}</span>
-        </p>
+        <div class="details">
+          <p class="no-margin-bottom">{{ $t('predictions.marketContractAddress') }}: <a class="contract-address" target="_blank" :href="contractLink">{{ prediction.marketAddress }}</a></p>
+          <p>{{ $t('predictions.fee') }}: <span class="value">{{ prediction.fee }} {{ $t('general.aix') }}</span></p>
+          <p v-if="this.prediction.status === 'resolved'">{{ $t('predictions.wonOutcome') }}: <span class="value">{{ prediction.resultOutcomeName }} ({{ $t('predictions.index') }}: {{ prediction.resultOutcomeIndex }})</span></p>
+        </div>
 
         <div v-if="prediction.status !== 'resolved'">
           <h4 class="info-title">{{ $t('predictions.outcomes') }}</h4>
@@ -159,6 +155,18 @@ export default {
 
       .info-title {
         margin-top: 0px;
+      }
+    }
+
+    .details {
+      margin-bottom: 20px;
+
+      p {
+        margin: 0px;
+      }
+
+      .value {
+        font-weight: 400;
       }
     }
 

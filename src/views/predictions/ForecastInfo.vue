@@ -20,8 +20,7 @@
           <p>{{ $t('predictions.forecast.yourForecast') }}: <span class="value">{{ userForecast.outcomeTitle }}</span></p>
           <p>{{ $t('predictions.forecast.yourForecastIndex') }}: <span class="value">{{ userForecast.outcomeIndex }}</span></p>
           <p>{{ $t('predictions.forecast.yourAmount') }}: <span class="value">{{ userForecast.amount }} {{ $t('general.aix') }}</span></p>
-          <p v-if="this.userForecast.predictionStatus === 'resolved'">{{ $t('predictions.forecast.wonOutcome') }}: <span class="value">{{ userForecast.resultOutcomeName }} ({{ $t('predictions.forecast.index') }}: {{ userForecast.resultOutcomeIndex }})</span></p>
-
+          <p v-if="this.userForecast.predictionStatus === 'resolved'">{{ $t('predictions.wonOutcome') }}: <span class="value">{{ userForecast.resultOutcomeName }} ({{ $t('predictions.index') }}: {{ userForecast.resultOutcomeIndex }})</span></p>
         </div>
 
         <div v-if="isPercentageVisible">
