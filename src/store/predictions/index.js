@@ -9,6 +9,7 @@ export default {
     userForecasts: [],
     prediction: {},
     userForecast: {},
+    statisticsLoading: false,
     predictionStatistics: {},
     transactionHash: ''
   },
