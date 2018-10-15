@@ -26,7 +26,7 @@
 
         <div v-if="isPercentageVisible">
           <h4 class="info-title">{{ $t('predictions.predictionStatistics') }}</h4>
-          <OutcomesPercentage :statistics="predictionStatistics" :resultOutcomeId="userForecast.resultOutcomeId" />
+          <OutcomesPercentage v-loading="statisticsLoading" :statistics="predictionStatistics" :resultOutcomeId="userForecast.resultOutcomeId" />
         </div>
 
         <el-tooltip v-if="isForecastsWon" :disabled="!!$store.getters['user/web3']" :content="$t('predictions.forecast.logInToWeb3')">
@@ -87,7 +87,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['userForecast', 'predictionStatistics']),
+    ...mapGetters(['userForecast', 'predictionStatistics', 'statisticsLoading']),
     isPercentageVisible () {
       const status = this.userForecast.status.toUpperCase()
       const predictionStatus = this.userForecast.predictionStatus.toUpperCase()

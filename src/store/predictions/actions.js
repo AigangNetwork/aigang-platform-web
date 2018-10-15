@@ -49,9 +49,7 @@ export default {
   },
 
   async getPredictionStatistics ({ commit }, predictionId) {
-    commit('SET_LOADING', true, {
-      root: true
-    })
+    commit('statisticsLoading', true)
 
     try {
       const response = await axios.get('/predictions/stats/' + predictionId)
@@ -60,20 +58,14 @@ export default {
         commit('setPredictionStatistics', response.data)
       }
 
-      commit('SET_LOADING', false, {
-        root: true
-      })
+      commit('statisticsLoading', false)
     } catch (ex) {
-      commit('SET_LOADING', false, {
-        root: true
-      })
+      commit('statisticsLoading', false)
     }
   },
 
   async getPredictionStatisticsForForecast ({ commit }, forecastId) {
-    commit('SET_LOADING', true, {
-      root: true
-    })
+    commit('statisticsLoading', true)
 
     try {
       const response = await axios.get('/predictions/forecast/stats/' + forecastId)
@@ -82,13 +74,9 @@ export default {
         commit('setPredictionStatistics', response.data)
       }
 
-      commit('SET_LOADING', false, {
-        root: true
-      })
+      commit('statisticsLoading', false)
     } catch (ex) {
-      commit('SET_LOADING', false, {
-        root: true
-      })
+      commit('statisticsLoading', false)
     }
   },
 
@@ -185,11 +173,11 @@ export default {
           )
         ) {
           dispatch('getPredictionStatisticsForForecast', forecastId)
-        } else {
-          commit('SET_LOADING', false, {
-            root: true
-          })
         }
+
+        commit('SET_LOADING', false, {
+          root: true
+        })
       }
     } catch (ex) {
       commit('SET_LOADING', false, {

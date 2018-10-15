@@ -1,7 +1,4 @@
 const mutations = {
-  setLoader (state, value) {
-    state.loading = value
-  },
   setPredictions (state, payload) {
     state.predictions = payload
   },
@@ -21,6 +18,9 @@ const mutations = {
   },
   setTransactionHash (state, transactionHash) {
     state.transactionHash = transactionHash
+  },
+  statisticsLoading (state, loading) {
+    state.statisticsLoading = loading
   }
 }
 

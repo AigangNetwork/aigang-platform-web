@@ -32,7 +32,7 @@
 
         <div v-if="isPercentageVisible">
           <h4 class="info-title">{{ $t('predictions.predictionStatistics') }}</h4>
-          <OutcomesPercentage :statistics="predictionStatistics" :resultOutcomeId="prediction.resultOutcomeId"/>
+          <OutcomesPercentage v-loading="statisticsLoading" :statistics="predictionStatistics" :resultOutcomeId="prediction.resultOutcomeId"/>
         </div>
 
       </div>
@@ -70,7 +70,7 @@ export default {
     VueMarkdown
   },
   computed: {
-    ...mapGetters(['prediction', 'predictionStatistics']),
+    ...mapGetters(['prediction', 'predictionStatistics', 'statisticsLoading']),
     contractLink () {
       return process.env.ETHERSCAN_ADDRESS + process.env.ADDRESS_PATX + this.prediction.marketAddress
     },
