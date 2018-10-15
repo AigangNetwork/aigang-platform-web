@@ -33,14 +33,14 @@ export default {
   data () {
     return {
       dataMeniu: [{
-        name: this.$t('investment.portfolio'),
+        name: this.$t('pools.portfolio'),
         routeLink: { name: 'Portfolio' },
         active: true
       },
       {
-        name: this.$t('investment.products'),
+        name: this.$t('pools.products'),
         routeLink: {
-          name: 'InvestmentProducts'
+          name: 'PoolsProducts'
         },
         active: false,
         disabled: true

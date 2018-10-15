@@ -1,13 +1,13 @@
 <template>
   <div>
-    <InvestmentProductItem v-for="investmentProduct in products" :key="investmentProduct.id" :product="investmentProduct" />
+    <PoolsProductItem v-for="investmentProduct in products" :key="investmentProduct.id" :product="investmentProduct" />
   </div>
 </template>
 <script>
-import InvestmentProductItem from '@/components/investment/InvestmentProductItem'
+import PoolsProductItem from '@/components/pools/PoolsProductItem'
 
 export default {
-  components: { InvestmentProductItem },
+  components: { PoolsProductItem },
   data () {
     return {
       loading: false,

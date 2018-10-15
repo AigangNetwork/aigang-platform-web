@@ -3,16 +3,16 @@
 
     <PortfolioSummarySection />
 
-    <InvestmentsList />
+    <PoolsList />
 
   </div>
 </template>
 <script>
-import PortfolioSummarySection from '@/components/investment/PortfolioSummarySection'
-import InvestmentsList from '@/components/investment/InvestmentsList'
+import PortfolioSummarySection from '@/components/pools/PortfolioSummarySection'
+import PoolsList from '@/components/pools/PoolsList'
 
 export default {
-  components: { PortfolioSummarySection, InvestmentsList },
+  components: { PortfolioSummarySection, PoolsList },
   data () {
     return {
       loading: false

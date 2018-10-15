@@ -3,7 +3,7 @@
     <div slot="body" v-loading="loading" class="investment-product-container">
       <div class="flex-container">
         <el-row class="title-section">
-          <router-link :to="{name: 'InvestmentProducts'}" class="back-button">
+          <router-link :to="{name: 'PoolsProducts'}" class="back-button">
             <i class="back-icon el-icon-arrow-left"></i>
           </router-link>
 
@@ -12,34 +12,34 @@
         </el-row>
         <el-row class="info-section">
           <div>
-            <span class="investment-item-label">{{ $t('investment.portfolioInfo.totalPolicies') }}</span>
+            <span class="investment-item-label">{{ $t('pools.portfolioInfo.totalPolicies') }}</span>
             {{ product.policies }}
           </div>
           <div>
-            <span class="investment-item-label">{{ $t('investment.portfolioInfo.investedAmount') }}</span>
+            <span class="investment-item-label">{{ $t('pools.portfolioInfo.investedAmount') }}</span>
             {{ product.currentPoolSize }}
           </div>
           <div>
-            <span class="investment-item-label">{{ $t('investment.portfolioInfo.insuranceType') }}</span>
+            <span class="investment-item-label">{{ $t('pools.portfolioInfo.insuranceType') }}</span>
             {{ product.type }}
           </div>
           <div>
-            <span class="investment-item-label">{{ $t('investment.portfolioInfo.investors') }}</span>
+            <span class="investment-item-label">{{ $t('pools.portfolioInfo.investors') }}</span>
             {{ product.investors }}
           </div>
           <div>
-            <span class="investment-item-label">{{ $t('investment.portfolioInfo.amountPaidForInsurance') }}</span>
+            <span class="investment-item-label">{{ $t('pools.portfolioInfo.amountPaidForInsurance') }}</span>
             {{ product.paid }}
           </div>
           <div>
-            <span class="investment-item-label">{{ $t('investment.portfolioInfo.predictedProfit') }}</span>
+            <span class="investment-item-label">{{ $t('pools.portfolioInfo.predictedProfit') }}</span>
             {{ product.predictedProfit }}
           </div>
 
         </el-row>
       </div>
       <el-row>
-        <el-button class="aig-button" type="primary" @click.prevent.native="insure">{{ $t('investment.invest') }}</el-button>
+        <el-button class="aig-button" type="primary" @click.prevent.native="insure">{{ $t('pools.invest') }}</el-button>
       </el-row>
     </div>
   </Card>

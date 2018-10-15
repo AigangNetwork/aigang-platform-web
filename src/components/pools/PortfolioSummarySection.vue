@@ -10,21 +10,21 @@
           </div>
           <div class="sub-section">
             <el-row class="address">
-              {{ $t('investment.portfolioInfo.yourAddress') }}:
+              {{ $t('pools.portfolioInfo.yourAddress') }}:
             </el-row>
             {{ $store.state.user.userWeb3.coinbase }}
           </div>
           <div class="sub-section aligned">
-            <span>{{ $t('investment.portfolioInfo.yourBalance') }}</span>
+            <span>{{ $t('pools.portfolioInfo.yourBalance') }}</span>
             <span class="text-big">{{$store.state.user.userWeb3.aixBalance}}</span>
           </div>
           <div class="sub-section">
             <div class="aligned">
-              <span>{{ $t('investment.portfolioInfo.invested') }}</span>
+              <span>{{ $t('pools.portfolioInfo.invested') }}</span>
               <span class="text-big-medium">{{ invested }}</span>
             </div>
             <div class="aligned">
-              <span>{{ $t('investment.portfolioInfo.claimedProfit') }}</span>
+              <span>{{ $t('pools.portfolioInfo.claimedProfit') }}</span>
               <span class="text-big-medium">{{ claimedProfit }}</span>
             </div>
           </div>
@@ -32,27 +32,27 @@
         </div>
         <div class="right-section">
           <div>
-            <span class="investment-item-label">{{ $t('investment.portfolioInfo.totalInsuranceProducts') }}</span>
+            <span class="investment-item-label">{{ $t('pools.portfolioInfo.totalInsuranceProducts') }}</span>
             {{ products }}
           </div>
           <div>
-            <span class="investment-item-label">{{ $t('investment.portfolioInfo.totalPolicies') }}</span>
+            <span class="investment-item-label">{{ $t('pools.portfolioInfo.totalPolicies') }}</span>
             {{ policies }}
           </div>
           <div>
-            <span class="investment-item-label">{{ $t('investment.portfolioInfo.totalInvestedAmount') }}</span>
+            <span class="investment-item-label">{{ $t('pools.portfolioInfo.totalInvestedAmount') }}</span>
             {{ totalInvested }}
           </div>
           <div>
-            <span class="investment-item-label">{{ $t('investment.portfolioInfo.totalAmountInReserves') }}</span>
+            <span class="investment-item-label">{{ $t('pools.portfolioInfo.totalAmountInReserves') }}</span>
             {{ reserves }}
           </div>
           <div>
-            <span class="investment-item-label">{{ $t('investment.portfolioInfo.totalPaidForClaims') }}</span>
+            <span class="investment-item-label">{{ $t('pools.portfolioInfo.totalPaidForClaims') }}</span>
             {{ paid }}
           </div>
           <div>
-            <span class="investment-item-label">{{ $t('investment.portfolioInfo.totalInvestors') }}</span>
+            <span class="investment-item-label">{{ $t('pools.portfolioInfo.totalInvestors') }}</span>
             {{ totalInvestors }}
           </div>
         </div>

@@ -70,8 +70,8 @@ export default {
         routeLink: '/predictions/'
       },
       {
-        name: this.$t('navigation.invest'),
-        routeLink: '/investment',
+        name: this.$t('navigation.pools'),
+        routeLink: '/pools',
         disabled: true
       },
       {

@@ -6,12 +6,12 @@
         <thead class="investments-table-header">
           <tr>
             <th>{{ $t('general.id') }}</th>
-            <th>{{ $t('investment.portfolioInfo.insuranceType') }}</th>
-            <th>{{ $t('investment.portfolioInfo.investors') }}</th>
-            <th>{{ $t('investment.portfolioInfo.policies') }}</th>
-            <th>{{ $t('investment.portfolioInfo.investedAmount') }}</th>
-            <th>{{ $t('investment.portfolioInfo.amountPaid') }}</th>
-            <th>{{ $t('investment.portfolioInfo.profit') }}</th>
+            <th>{{ $t('pools.portfolioInfo.insuranceType') }}</th>
+            <th>{{ $t('pools.portfolioInfo.investors') }}</th>
+            <th>{{ $t('pools.portfolioInfo.policies') }}</th>
+            <th>{{ $t('pools.portfolioInfo.investedAmount') }}</th>
+            <th>{{ $t('pools.portfolioInfo.amountPaid') }}</th>
+            <th>{{ $t('pools.portfolioInfo.profit') }}</th>
             <th></th>
           </tr>
         </thead>
@@ -27,8 +27,9 @@
             <td>
               <!-- <el-button @click="alert('hello')" class="button">{{$t('data.dataset.comment.commentButton')}}</el-button> -->
               <span class="investment-list-item-status" :class="{ 'active': investment.status.toUpperCase() === 'ACTIVE',
-                        'closed': investment.status.toUpperCase() === 'CLOSED'}">{{
-                investment.status}}</span>
+                        'closed': investment.status.toUpperCase() === 'CLOSED'}">
+                        {{ investment.status}}
+              </span>
             </td>
 
           </tr>

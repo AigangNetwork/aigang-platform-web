@@ -1,23 +1,23 @@
 <template>
-  <router-link :to="{ name: 'InvestmentProduct', params: { id: '123'}}" class="investment-product-item">
+  <router-link :to="{ name: 'PoolsProduct', params: { id: '123'}}" class="investment-product-item">
     <div class="left-section">
       <span class="title">{{ product.title }}</span>
     </div>
     <div class="right-section">
       <div>
-        <span class="investment-item-label">{{ $t('investment.portfolioInfo.predictedProfit') }}</span>
+        <span class="investment-item-label">{{ $t('pools.portfolioInfo.predictedProfit') }}</span>
         {{ product.predictedProfit }}
       </div>
       <div>
-        <span class="investment-item-label">{{ $t('investment.portfolioInfo.invested') }}</span>
+        <span class="investment-item-label">{{ $t('pools.portfolioInfo.invested') }}</span>
         {{ product.investedCount }}
       </div>
       <div>
-        <span class="investment-item-label">{{ $t('investment.portfolioInfo.currentPoolSize') }}</span>
+        <span class="investment-item-label">{{ $t('pools.portfolioInfo.currentPoolSize') }}</span>
         {{ product.currentPoolSize }}
       </div>
       <div>
-        <span class="investment-item-label">{{ $t('investment.portfolioInfo.poolSizeGoal') }}</span>
+        <span class="investment-item-label">{{ $t('pools.portfolioInfo.poolSizeGoal') }}</span>
         {{ product.poolSize }}
       </div>
     </div>

@@ -6,14 +6,14 @@ import CookiesPolicy from '@/views/general/CookiesPolicy'
 import DataRoutes from './data-routes'
 import InsuranceRoutes from './insurance-routes'
 import UserRoutes from './user-routes'
-import InvestmentRoutes from './investment-routes'
+import PoolsRoutes from './pools-routes'
 import PredictionsRoutes from './predictions-routes'
 
 const routes = [
   ...DataRoutes,
   ...InsuranceRoutes,
   ...UserRoutes,
-  ...InvestmentRoutes,
+  ...PoolsRoutes,
   ...PredictionsRoutes,
   {
     path: '*',

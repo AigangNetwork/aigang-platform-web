@@ -359,7 +359,7 @@
     "profile": "Profile",
     "data": "Data",
     "predictions": "Predictions",
-    "invest": "Investment",
+    "pools": "Pools",
     "insurance": "Insurance",
     "login": "Sign Up/Log In"
   },
@@ -697,7 +697,7 @@
       }
     }
   },
-  "investment": {
+  "pools": {
     "portfolio": "Portfolio",
     "products": "Products",
     "invest": "Invest",
