@@ -2,7 +2,7 @@ import axios from 'axios'
 
 export default {
   async getPredictionsList ({ commit }, page) {
-    commit('SET_LOADING', true, {
+    commit('setLoading', true, {
       root: true
     })
 
@@ -12,18 +12,18 @@ export default {
         commit('setPredictions', response.data)
       }
 
-      commit('SET_LOADING', false, {
+      commit('setLoading', false, {
         root: true
       })
     } catch (ex) {
-      commit('SET_LOADING', false, {
+      commit('setLoading', false, {
         root: true
       })
     }
   },
 
   async getPrediction ({ commit, dispatch }, id) {
-    commit('SET_LOADING', true, {
+    commit('setLoading', true, {
       root: true
     })
 
@@ -38,11 +38,11 @@ export default {
         }
       }
 
-      commit('SET_LOADING', false, {
+      commit('setLoading', false, {
         root: true
       })
     } catch (ex) {
-      commit('SET_LOADING', false, {
+      commit('setLoading', false, {
         root: true
       })
     }
@@ -81,7 +81,7 @@ export default {
   },
 
   async getUserForecasts ({ commit }, payload) {
-    commit('SET_LOADING', true, {
+    commit('setLoading', true, {
       root: true
     })
 
@@ -92,11 +92,11 @@ export default {
         commit('setUserForecasts', response.data)
       }
 
-      commit('SET_LOADING', false, {
+      commit('setLoading', false, {
         root: true
       })
     } catch (ex) {
-      commit('SET_LOADING', false, {
+      commit('setLoading', false, {
         root: true
       })
     }
@@ -106,7 +106,7 @@ export default {
     commit('setTransactionHash', '')
     commit('setTransactionError', false)
 
-    commit('SET_LOADING', true, {
+    commit('setLoading', true, {
       root: true
     })
 
@@ -126,7 +126,7 @@ export default {
 
         const forecastIdHex = web3.utils.fromAscii(response.data.forecast.id)
 
-        commit('SET_LOADING', false, {
+        commit('setLoading', false, {
           root: true
         })
 
@@ -158,7 +158,7 @@ export default {
   },
 
   async getUserForecast ({ commit, dispatch }, forecastId) {
-    commit('SET_LOADING', true, { root: true })
+    commit('setLoading', true, { root: true })
 
     try {
       const response = await axios.get('/predictions/forecast/' + forecastId)
@@ -179,12 +179,12 @@ export default {
           dispatch('getPredictionStatisticsForForecast', forecastId)
         }
 
-        commit('SET_LOADING', false, {
+        commit('setLoading', false, {
           root: true
         })
       }
     } catch (ex) {
-      commit('SET_LOADING', false, {
+      commit('setLoading', false, {
         root: true
       })
     }
@@ -227,12 +227,12 @@ export default {
   },
 
   async deleteForecast ({ commit }, id) {
-    commit('SET_LOADING', true, { root: true })
+    commit('setLoading', true, { root: true })
 
     try {
       await axios.delete(`/predictions/forecast/${id}`)
     } catch (err) {}
 
-    commit('SET_LOADING', false, { root: true })
+    commit('setLoading', false, { root: true })
   }
 }

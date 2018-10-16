@@ -4,38 +4,38 @@ export default {
   async loadDataset ({ commit }, id) {
     const response = await axios.get('/data/' + id)
     if (response.data.data) {
-      commit('LOAD_DATASET', response.data)
+      commit('loadDataset', response.data)
     } else {
-      commit('CLEAR_DATASET')
+      commit('clearDataSet')
     }
   },
 
   clearDataset ({ commit }) {
-    commit('CLEAR_DATASET')
+    commit('clearDataSet')
   },
 
   clearModel ({ commit }) {
-    commit('CLEAR_MODEL')
+    commit('clearModel')
   },
 
   setRemoteFileAccessPoint ({ commit }, response) {
-    commit('SET_REMOTE_FILE_ACCESS_POINT', response)
+    commit('setRemoteFileAccessPoint', response)
   },
 
   setdatasetFile ({ commit }, response) {
-    commit('SET_DATASET_FILE', response)
+    commit('setDatasetFile', response)
   },
 
   setIsFileRemote ({ commit }, response) {
-    commit('SET_IS_FILE_REMOTE', response)
+    commit('setIsFileRemote', response)
   },
 
   setHasFileChanged ({ commit }, response) {
-    commit('SET_HAS_FILE_CHANGED', response)
+    commit('setHasFileChanged', response)
   },
 
   async loadModel ({ commit }, payload) {
     const response = await axios.get(`/data/${payload.datasetId}/models/${payload.modelId}`)
-    commit('LOAD_MODEL', response.data)
+    commit('loadModel', response.data)
   }
 }

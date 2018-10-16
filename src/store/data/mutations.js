@@ -1,5 +1,5 @@
 export default {
-  LOAD_DATASET (state, payload) {
+  loadDataset (state, payload) {
     state.dataset = payload.data
     state.dataset.commentsCount = payload.commentsCount
     state.dataset.modelsCount = payload.modelsCount
@@ -13,25 +13,25 @@ export default {
     }
   },
 
-  SET_REMOTE_FILE_ACCESS_POINT (state, payload) {
+  setRemoteFileAccessPoint (state, payload) {
     state.dataset.remoteFileAccessPoint = payload.remoteFileAccessPoint
   },
 
-  SET_DATASET_FILE (state, payload) {
+  setDatasetFile (state, payload) {
     state.dataset.file = payload.file
     state.dataset.isFileRemote = false
     state.dataset.hasFileChanged = true
   },
 
-  SET_IS_FILE_REMOTE (state, payload) {
+  setIsFileRemote (state, payload) {
     state.dataset.isFileRemote = payload.isFileRemote
   },
 
-  SET_HAS_FILE_CHANGED (state, payload) {
+  setHasFileChanged (state, payload) {
     state.dataset.hasFileChanged = payload.hasFileChanged
   },
 
-  LOAD_MODEL (state, payload) {
+  loadModel (state, payload) {
     if (payload.data) {
       state.model = payload.data
       state.model.userName = payload.userName
@@ -39,11 +39,11 @@ export default {
     }
   },
 
-  CLEAR_DATASET (state) {
+  clearDataSet (state) {
     state.dataset = {}
   },
 
-  CLEAR_MODEL (state) {
+  clearModel (state) {
     state.model = {}
   }
 }

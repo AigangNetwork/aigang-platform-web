@@ -97,9 +97,9 @@ export default {
   methods: {
     ...mapActions(['getPolicy', 'sendPolicyPayment']),
     ...mapMutations({
-      clearLoadingInfo: 'CLEAR_POLICY_LOADING_INFO',
-      setIsPolicyLoadingVisible: 'SET_IS_POLICY_LOADING_VISIBLE',
-      setTxHash: 'SET_TX_HASH'
+      clearLoadingInfo: 'clearPolicyLoadingInfo',
+      setIsPolicyLoadingVisible: 'setIsPolicyLoadingVisible',
+      setTxHash: 'setTxHash'
     }),
     displayPaymentDialog (value) {
       this.isPaymentDialogVisible = value

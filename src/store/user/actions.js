@@ -4,76 +4,76 @@ import axios from 'axios'
 
 export default {
   logIn ({ commit, dispatch }, loginResponse) {
-    commit('LOGIN', loginResponse.data)
+    commit('login', loginResponse.data)
     dispatch('refreshWeb3Instance')
     router.push('/')
   },
 
   async logOut ({ commit }) {
-    commit('SET_LOADING', true, { root: true })
+    commit('setLoading', true, { root: true })
     await axios.post('/account/logout')
     delete axios.defaults.headers.common['Authorization']
-    commit('LOGOUT')
+    commit('logout')
     router.push('/data')
   },
 
   handleNotLoggedIn ({ commit }) {
     delete axios.defaults.headers.common['Authorization']
-    commit('LOGOUT')
+    commit('logout')
     router.push({ name: 'Login' })
   },
 
   changeProfileNames ({ commit }, response) {
-    commit('CHANGE_PROFILE_NAMES', response)
+    commit('changeProfileNames', response)
   },
 
   async loadProfileWallets ({ commit }, page) {
-    commit('SET_LOADING', true, { root: true })
+    commit('setLoading', true, { root: true })
     const response = await axios.get('/transaction/mywallets?page=' + page)
     if (response.data) {
-      commit('LOAD_PROFILE_WALLETS', response.data)
-      commit('SET_LOADING', false, { root: true })
+      commit('loadProfileWallets', response.data)
+      commit('setLoading', false, { root: true })
     }
   },
 
   async loadProfileTransactions ({ commit }, page) {
-    commit('SET_LOADING', true, { root: true })
+    commit('setLoading', true, { root: true })
     const response = await axios.get('/transaction/mytransactions?page=' + page)
     if (response.data) {
-      commit('LOAD_PROFILE_TRANSACTIONS', response.data)
-      commit('SET_LOADING', false, { root: true })
+      commit('loadProfileTransactions', response.data)
+      commit('setLoading', false, { root: true })
     }
   },
 
   async setNotificationPermission ({ commit }, payload) {
-    commit('SET_LOADING', true, { root: true })
+    commit('setLoading', true, { root: true })
     const response = await axios.post('/account/updateemailoptout', {
       emailTypeId: payload.id,
       value: payload.value
     })
 
     if (response.data) {
-      commit('SET_EMAIL_OPT_OUT', payload)
-      commit('SET_LOADING', false, { root: true })
+      commit('setEmailOptOut', payload)
+      commit('setLoading', false, { root: true })
     }
   },
 
   async loadNotificationPermissions ({ commit }, emailPermissionGroups) {
-    commit('SET_LOADING', true, { root: true })
+    commit('setLoading', true, { root: true })
     const response = await axios.get('/account/myemailoptouts')
 
     if (response.data) {
-      commit('SET_NOTIFICATION_PERMISSIONS', {
+      commit('setNotifciationPermissions', {
         emailPermissionGroups,
         response: response.data
       })
-      commit('SET_LOADING', false, { root: true })
+      commit('setLoading', false, { root: true })
     }
   },
 
   async registerWeb3Instance ({ commit, dispatch }) {
     const userWeb3 = await getWeb3()
-    commit('SET_WEB3_INSTANCE', userWeb3)
+    commit('setWeb3Instance', userWeb3)
 
     if (userWeb3 && userWeb3.web3 && userWeb3.web3().currentProvider.publicConfigStore) {
       userWeb3.web3().currentProvider.publicConfigStore.on('update', () => {
@@ -84,10 +84,10 @@ export default {
 
   async refreshWeb3Instance ({ commit }) {
     const userWeb3 = await getWeb3()
-    commit('SET_WEB3_INSTANCE', userWeb3)
+    commit('setWeb3Instance', userWeb3)
   },
 
   clearWeb3Instance ({ commit }, response) {
-    commit('CLEAR_WEB3_INSTANCE', response)
+    commit('clearWeb3Instance', response)
   }
 }

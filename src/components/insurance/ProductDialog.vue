@@ -75,8 +75,8 @@ export default {
   methods: {
     ...mapActions(['createNewPolicy']),
     ...mapMutations({
-      clearLoadingInfo: 'CLEAR_POLICY_LOADING_INFO',
-      setIsPolicyLoadingVisible: 'SET_IS_POLICY_LOADING_VISIBLE'
+      clearLoadingInfo: 'clearPolicyLoadingInfo',
+      setIsPolicyLoadingVisible: 'setIsPolicyLoadingVisible'
     }),
     async createPolicy () {
       this.show = false

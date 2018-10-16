@@ -3,29 +3,29 @@ import { sleep } from '@/utils/methods'
 
 export default {
   async loadProduct ({ commit }, id) {
-    commit('CLEAR_CURRENT_PRODUCT')
-    commit('SET_LOADING', true, { root: true })
+    commit('clearCurrentProduct')
+    commit('setLoading', true, { root: true })
 
     let response = null
 
     try {
       response = await axios.get('insurance/products/' + id)
     } catch (e) {
-      commit('SET_LOADING', false, { root: true })
+      commit('setLoading', false, { root: true })
     }
 
     if (response && response.data.product) {
-      commit('LOAD_CURRENT_PRODUCT', response.data)
-      commit('SET_LOADING', false, { root: true })
+      commit('loadCurrentProduct', response.data)
+      commit('setLoading', false, { root: true })
     } else {
-      commit('CLEAR_CURRENT_PRODUCT')
-      commit('SET_LOADING', false, { root: true })
+      commit('clearCurrentProduct')
+      commit('setLoading', false, { root: true })
     }
   },
 
   async createNewPolicy ({ commit, state }, { deviceId, productId }) {
-    commit('CLEAR_POLICY_LOADING_INFO')
-    commit('SET_IS_POLICY_LOADING_VISIBLE', true)
+    commit('clearPolicyLoadingInfo')
+    commit('setIsPolicyLoadingVisible', true)
 
     try {
       await loadTaskId(commit, {
@@ -59,7 +59,7 @@ export default {
       retryCount--
 
       if (retryCount === 0) {
-        commit('SET_POLICY_LOADING_FAILED', true)
+        commit('setPolicyLoadingFailed', true)
         break
       }
 
@@ -74,20 +74,20 @@ export default {
       newPolicyLoadingInfo.policyId = response.data.policyId
     }
 
-    commit('SET_POLICY_LOADING_INFO', newPolicyLoadingInfo)
+    commit('setPolicyLoadingInfo', newPolicyLoadingInfo)
   },
 
   async getPolicy ({ commit }, policyId) {
-    commit('SET_LOADING', true, { root: true })
-    commit('CLEAR_POLICY')
+    commit('setLoading', true, { root: true })
+    commit('clearPolicy')
 
     const response = await axios.get('insurance/policy/' + policyId)
 
     if (response && response.data) {
-      commit('SET_POLICY', response.data)
+      commit('setPolicy', response.data)
     }
 
-    commit('SET_LOADING', false, { root: true })
+    commit('setLoading', false, { root: true })
   },
 
   async sendPolicyPayment ({ commit, dispatch, state, rootState }) {
@@ -114,7 +114,7 @@ export default {
           policyId,
           txId: txHash
         }
-        commit('SET_TX_HASH', txHash)
+        commit('setTxHash', txHash)
 
         await axios.post('/insurance/transaction', request)
 
@@ -123,18 +123,18 @@ export default {
   },
 
   async loadUserPolicies ({ commit }, page) {
-    commit('SET_LOADING', true, { root: true })
+    commit('setLoading', true, { root: true })
 
     const response = await axios.get('/insurance/policy/mypolicies?page=' + page)
     if (response.data) {
-      commit('LOAD_USER_POLICIES', response.data.policies)
-      commit('SET_LOADING', false, { root: true })
+      commit('loadUserPolicies', response.data.policies)
+      commit('setLoading', false, { root: true })
     }
   },
 
   async verifyClaim ({ commit, state }) {
-    commit('CLEAR_POLICY_LOADING_INFO')
-    commit('SET_IS_POLICY_LOADING_VISIBLE', true)
+    commit('clearPolicyLoadingInfo')
+    commit('setIsPolicyLoadingVisible', true)
 
     // Getting task id
     try {
@@ -165,7 +165,7 @@ export default {
       retryCount--
 
       if (retryCount === 0) {
-        commit('SET_POLICY_LOADING_FAILED', true)
+        commit('setPolicyLoadingFailed', true)
         break
       }
 
@@ -175,11 +175,11 @@ export default {
     let newPolicyLoadingInfo = Object.assign({}, state.policyLoadingInfo)
     newPolicyLoadingInfo.isClaimable = response.data.isClaimable
     newPolicyLoadingInfo.isTaskFinished = response.data.isTaskFinished
-    commit('SET_POLICY_LOADING_INFO', newPolicyLoadingInfo)
+    commit('setPolicyLoadingInfo', newPolicyLoadingInfo)
   },
 
   async claim ({ commit, dispatch, state }) {
-    commit('SET_LOADING', true, { root: true })
+    commit('setLoading', true, { root: true })
 
     const policyId = state.policy.id
 
@@ -193,17 +193,17 @@ export default {
       }
     } catch (err) {}
 
-    commit('SET_LOADING', false, { root: true })
+    commit('setLoading', false, { root: true })
   },
 
   async deletePolicy ({ commit }, id) {
-    commit('SET_LOADING', true, { root: true })
+    commit('setLoading', true, { root: true })
 
     try {
       await axios.delete(`/insurance/deletepolicy/${id}`)
     } catch (err) {}
 
-    commit('SET_LOADING', false, { root: true })
+    commit('setLoading', false, { root: true })
   }
 }
 
@@ -217,13 +217,13 @@ const loadTaskId = async (commit, request) => {
     deviceId: request.DeviceId
   }
 
-  commit('SET_POLICY_LOADING_INFO', policyLoadingInfo)
+  commit('setPolicyLoadingInfo', policyLoadingInfo)
 
   const response = await customAxios.post('insurance/policy/android/pair', request)
 
-  commit('CLEAR_POLICY_LOADING_INFO')
+  commit('clearPolicyLoadingInfo')
   policyLoadingInfo.taskId = response.data.taskId
-  commit('SET_POLICY_LOADING_INFO', policyLoadingInfo)
+  commit('setPolicyLoadingInfo', policyLoadingInfo)
 
   return response
 }
@@ -247,5 +247,5 @@ const handlePolicyLoadingInfoError = async (error, policyLoadingInfo, commit) =>
     newPolicyLoadingInfo.serverError = true
   }
 
-  commit('SET_POLICY_LOADING_INFO', newPolicyLoadingInfo)
+  commit('setPolicyLoadingInfo', newPolicyLoadingInfo)
 }
