@@ -26,7 +26,10 @@
 
         <div slot="footer" class="dialog-footer">
           <el-button @click="onCancel">{{ $t('general.cancel') }}</el-button>
-          <el-tooltip :disabled="forecastButtonEnabled" effect="dark" :content="$t('predictions.prediction.confirmationDialog.userNotLoggedIn')"
+          <el-tooltip
+            :disabled="forecastButtonEnabled"
+            effect="dark"
+            :content="$t('predictions.prediction.confirmationDialog.userNotLoggedIn')"
             placement="top">
             <span class="wrapper el-button">
               <el-button class="button" :disabled="!forecastButtonEnabled" type="primary" @click.prevent.native="submitForm('createForecastForm', createForecast)">
@@ -124,6 +127,10 @@ export default {
 
     .dialog-footer {
       text-align: center;
+    }
+
+    .el-button {
+      width: 150px;
     }
   }
 </style>

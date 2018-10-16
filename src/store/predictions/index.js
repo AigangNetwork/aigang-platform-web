@@ -11,7 +11,8 @@ export default {
     userForecast: {},
     statisticsLoading: false,
     predictionStatistics: {},
-    transactionHash: ''
+    transactionHash: '',
+    transactionError: false
   },
   mutations,
   actions,

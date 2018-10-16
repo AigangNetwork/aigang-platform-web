@@ -33,11 +33,17 @@
       </div>
     </div>
 
-    <ConfirmForecastDialog :prediction="prediction.title" :selectedOutcome="selectedOutcome" :isVisible="isPredictionConfirmDialogVisible"
-      :displayDialog="displayPredictionConfirmDialog" @createForecast="onCreateForecast" :fee="prediction.fee" />
+    <ConfirmForecastDialog
+      :prediction="prediction.title"
+      :selectedOutcome="selectedOutcome"
+      :isVisible="isPredictionConfirmDialogVisible"
+      :displayDialog="displayPredictionConfirmDialog"
+      :fee="prediction.fee"
+      @createForecast="onCreateForecast"/>
 
-    <PaymentConfirmationDialog :isVisible="
-      isPaymentDialogVisible" :displayDialog="displayPaymentDialog"
+    <PaymentConfirmationDialog
+      :isVisible="isPaymentDialogVisible && !transactionError"
+      :displayDialog="displayPaymentDialog"
       :content="$t('predictions.prediction.paymentInfo.metamaskAlert')" />
   </div>
 </template>
@@ -65,7 +71,7 @@ export default {
     VueMarkdown
   },
   computed: {
-    ...mapGetters(['prediction', 'predictionStatistics', 'statisticsLoading']),
+    ...mapGetters(['prediction', 'predictionStatistics', 'statisticsLoading', 'transactionError']),
     contractLink () {
       return process.env.ETHERSCAN_ADDRESS + process.env.ADDRESS_PATX + this.prediction.marketAddress
     },

@@ -104,6 +104,7 @@ export default {
 
   async addForecast ({ commit, rootState, state }, payload) {
     commit('setTransactionHash', '')
+    commit('setTransactionError', false)
 
     commit('SET_LOADING', true, {
       root: true
@@ -136,6 +137,9 @@ export default {
           .send({
             gas: process.env.GAS.ADD_FORECAST,
             from: rootState.user.userWeb3.coinbase
+          })
+          .on('error', () => {
+            commit('setTransactionError', true)
           })
           .once('transactionHash', async txId => {
             try {
@@ -189,6 +193,7 @@ export default {
   async payout ({ commit, dispatch, rootState }, payload) {
     const response = await axios.get(`/contracts/${payload.marketAddress}`)
     commit('setTransactionHash', '')
+    commit('setTransactionError', false)
 
     if (response.data) {
       const web3 = rootState.user.userWeb3.web3()
@@ -201,6 +206,9 @@ export default {
         .send({
           gas: process.env.GAS.FORECAST_PAYOUT,
           from: rootState.user.userWeb3.coinbase
+        })
+        .on('error', () => {
+          commit('setTransactionError', true)
         })
         .once('transactionHash', async txId => {
           try {

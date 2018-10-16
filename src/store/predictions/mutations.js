@@ -21,6 +21,9 @@ const mutations = {
   },
   statisticsLoading (state, loading) {
     state.statisticsLoading = loading
+  },
+  setTransactionError (state, value) {
+    state.transactionError = value
   }
 }
 

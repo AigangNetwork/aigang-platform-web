@@ -38,5 +38,9 @@ export default {
 
   LOAD_USER_POLICIES (state, policies) {
     state.userPolicies = policies
+  },
+
+  setTransactionError (state, value) {
+    state.transactionError = value
   }
 }

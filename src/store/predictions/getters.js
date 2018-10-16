@@ -5,7 +5,8 @@ const getters = {
   userForecast: state => state.userForecast,
   statisticsLoading: state => state.statisticsLoading,
   predictionStatistics: state => state.predictionStatistics,
-  transactionHash: state => state.transactionHash
+  transactionHash: state => state.transactionHash,
+  transactionError: state => state.transactionError
 }
 
 export default getters

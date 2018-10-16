@@ -38,7 +38,7 @@
 
         <ForecastDeleteSection v-if="isforecastDraft" />
 
-        <PaymentConfirmationDialog :isVisible="isPaymentDialogVisible" :displayDialog="displayPaymentDialog" :content="$t('predictions.forecast.metamaskAlert')" />
+        <PaymentConfirmationDialog :isVisible="isPaymentDialogVisible && !transactionError" :displayDialog="displayPaymentDialog" :content="$t('predictions.forecast.metamaskAlert')" />
       </div>
     </div>
   </div>
@@ -86,7 +86,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['userForecast', 'predictionStatistics', 'statisticsLoading']),
+    ...mapGetters(['userForecast', 'predictionStatistics', 'statisticsLoading', 'transactionError']),
     isPercentageVisible () {
       const status = this.userForecast.status.toUpperCase()
       const predictionStatus = this.userForecast.predictionStatus.toUpperCase()

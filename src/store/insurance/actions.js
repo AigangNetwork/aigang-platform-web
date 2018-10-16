@@ -98,11 +98,16 @@ export default {
     const policyId = state.policy.id
     const policyIdBytes = web3.utils.fromAscii(policyId)
 
+    commit('setTransactionError', false)
+
     TokenInstance.methods
       .approveAndCall(productAddress, paymentValue, policyIdBytes)
       .send({
         gas: process.env.GAS.POLICY_PAYMENT,
         from: rootState.user.userWeb3.coinbase
+      })
+      .on('error', () => {
+        commit('setTransactionError', true)
       })
       .once('transactionHash', async txHash => {
         const request = {

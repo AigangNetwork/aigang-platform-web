@@ -47,13 +47,17 @@
       </div>
     </Card>
 
-    <TermsAndConditionsDialog :termsAndConditions="policy.termsAndConditions" :isVisible="isTermsAndConditionsDialogVisible"
-      :displayDialog="displayTermsAndConditionsDialog" @agreed="makePayment" />
+    <TermsAndConditionsDialog
+      :termsAndConditions="policy.termsAndConditions"
+      :isVisible="isTermsAndConditionsDialogVisible"
+      :displayDialog="displayTermsAndConditionsDialog"
+      @agreed="makePayment" />
 
-    <LogInToEthereumClientDialog :isVisible="isDisplayLogInToEthereumClientDialogVisible" :displayDialog="displayLogInToEthereumClientDialog"
-    />
+    <LogInToEthereumClientDialog
+      :isVisible="isDisplayLogInToEthereumClientDialogVisible"
+      :displayDialog="displayLogInToEthereumClientDialog" />
 
-    <PaymentConfirmationDialog :isVisible="isPaymentDialogVisible" :displayDialog="displayPaymentDialog" />
+    <PaymentConfirmationDialog :isVisible="isPaymentDialogVisible && !transactionError" :displayDialog="displayPaymentDialog" />
   </div>
 </template>
 <script>
@@ -135,7 +139,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['policy', 'isPolicyLoadingVisible', 'policyLoadingInfo']),
+    ...mapGetters(['policy', 'isPolicyLoadingVisible', 'policyLoadingInfo', 'transactionError']),
     isMetamaskLoggedIn () {
       return !!this.$store.getters['user/web3']
     },

@@ -10,7 +10,8 @@ export default {
     userPolicies: {},
     txHash: null,
     policyLoadingInfo: {},
-    isPolicyLoadingVisible: false
+    isPolicyLoadingVisible: false,
+    transactionError: false
   },
   actions,
   mutations,
