@@ -1,5 +1,5 @@
 export default {
-  SET_LOADING (state, loading) {
+  setLoading (state, loading) {
     state.loading = loading
   }
 }

@@ -1,42 +1,46 @@
 export default {
-  LOAD_CURRENT_PRODUCT (state, payload) {
+  loadCurrentProduct (state, payload) {
     state.product = payload.product
   },
 
-  CLEAR_CURRENT_PRODUCT (state) {
+  clearCurrentProduct (state) {
     state.product = {}
   },
 
-  SET_POLICY (state, payload) {
+  setPolicy (state, payload) {
     state.policy = payload.policy
     state.policy.isClaimable = true
   },
 
-  CLEAR_POLICY (state) {
+  clearPolicy (state) {
     state.policy = {}
   },
 
-  SET_POLICY_LOADING_INFO (state, policyLoadingInfo) {
+  setPolicyLoadingInfo (state, policyLoadingInfo) {
     state.policyLoadingInfo = policyLoadingInfo
   },
 
-  CLEAR_POLICY_LOADING_INFO (state) {
+  clearPolicyLoadingInfo (state) {
     state.policyLoadingInfo = {}
   },
 
-  SET_TX_HASH (state, txHash) {
+  setTxHash (state, txHash) {
     state.txHash = txHash
   },
 
-  SET_POLICY_LOADING_FAILED (state, value) {
+  setPolicyLoadingFailed (state, value) {
     state.policyLoadingInfo.failed = value
   },
 
-  SET_IS_POLICY_LOADING_VISIBLE (state, value) {
+  setIsPolicyLoadingVisible (state, value) {
     state.isPolicyLoadingVisible = value
   },
 
-  LOAD_USER_POLICIES (state, policies) {
+  loadUserPolicies (state, policies) {
     state.userPolicies = policies
+  },
+
+  setTransactionError (state, value) {
+    state.transactionError = value
   }
 }

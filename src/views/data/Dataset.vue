@@ -8,8 +8,8 @@
             <div class="uploaded">{{$t('data.dataset.updated')}}: {{ updated }}</div>
           </div>
           <div class="dataset-title">{{dataset.title}}</div>
-          <div class="dataset-state" v-if="dataset.state === 'created'">Status: {{ $t('data.card.notApproved') }}</div>
-          <div class="dataset-state" v-if="dataset.state === 'closed'">Status: {{ $t('data.card.closed') }}</div>
+          <div class="dataset-state" v-if="dataset.state === 'created'">{{ $t('data.card.status') }}: {{ $t('data.card.notApproved') }}</div>
+          <div class="dataset-state" v-if="dataset.state === 'closed'">{{ $t('data.card.status') }}: {{ $t('data.card.closed') }}</div>
           <div class="aig-dataset-header-btn-container">
             <button v-if="!dataset.remoteFileAccessPoint" @click="downloadDataset" class="aig-dataset-header-btn">
               <i class="el-icon-document button-icon"></i> {{$t('data.dataset.downloadDataset')}}

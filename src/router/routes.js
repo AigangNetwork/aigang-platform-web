@@ -1,17 +1,20 @@
 import Predictions from '@/views/Predictions'
-import Invest from '@/views/Invest'
 import NotFound from '@/views/general/NotFound'
 import AccessDenied from '@/views/general/AccessDenied'
+import CookiesPolicy from '@/views/general/CookiesPolicy'
 
 import DataRoutes from './data-routes'
 import InsuranceRoutes from './insurance-routes'
 import UserRoutes from './user-routes'
+import PoolsRoutes from './pools-routes'
+import PredictionsRoutes from './predictions-routes'
 
 const routes = [
   ...DataRoutes,
   ...InsuranceRoutes,
   ...UserRoutes,
-
+  ...PoolsRoutes,
+  ...PredictionsRoutes,
   {
     path: '*',
     name: 'NotFound',
@@ -27,10 +30,11 @@ const routes = [
     name: 'Predictions',
     component: Predictions
   },
+
   {
-    path: '/invest',
-    name: 'Invest',
-    component: Invest
+    path: '/cookies-policy',
+    name: 'CookiesPolicy',
+    component: CookiesPolicy
   }
 ]
 

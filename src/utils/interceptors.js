@@ -10,7 +10,7 @@ export default function () {
   axios.interceptors.response.use(
     response => {
       if (response.headers['set-authorization']) {
-        store.commit('user/SET_AUTH_TOKEN', response.headers['set-authorization'])
+        store.commit('user/setAuthToken', response.headers['set-authorization'])
         axios.defaults.headers.common['Authorization'] = `Bearer ${store.getters['user/token']}`
       }
 

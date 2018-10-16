@@ -1,12 +1,10 @@
 <template>
   <div class="aig-app" :class="appClass" v-loading="loading">
-
-    <Navigation/>
-
+    <Navigation />
     <transition name="slideUp">
       <router-view class="aig-view"></router-view>
     </transition>
-
+    <CookiesBar />
     <notification></notification>
   </div>
 </template>
@@ -14,6 +12,7 @@
 <script>
 import Navigation from '@/components/navigation/Navigation'
 import Notification from '@/components/Notification'
+import CookiesBar from '@/components/CookiesBar'
 
 export default {
   name: 'App',
@@ -24,7 +23,8 @@ export default {
   },
   components: {
     Navigation,
-    Notification
+    Notification,
+    CookiesBar
   },
   computed: {
     appClass () {

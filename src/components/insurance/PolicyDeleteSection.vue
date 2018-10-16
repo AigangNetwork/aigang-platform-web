@@ -12,14 +12,13 @@
       </el-button>
     </el-row>
 
-    <Dialog :title="$t('profile.general.warning')" :body="$t('insurance.policy.deletePolicyConfirmation')" :on-confirm="deletePolicyHandler"
+    <Dialog :title="$t('profile.general.warning')" :body="$t('insurance.policy.deletePolicyConfirmation')" :on-confirm="deleteHandler"
       :is-visible="dialogVisible" :on-cancel="cancel" :displayDialog="displayDialog" />
 
   </el-row>
 </template>
 <script>
 import Dialog from '@/components/common/Dialog'
-import { mapActions } from 'vuex'
 
 export default {
   components: {
@@ -31,16 +30,15 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['deletePolicy']),
     cancel () {
       this.dialogVisible = false
     },
     displayDialog (value) {
       this.dialogVisible = value
     },
-    async deletePolicyHandler () {
+    async deleteHandler () {
       this.dialogVisible = false
-      await this.deletePolicy(this.$route.params.policyId)
+      await this.$store.dispatch('insurance/deletePolicy', this.$route.params.policyId)
 
       this.$router.push({ name: 'MyPolicyList' })
     }

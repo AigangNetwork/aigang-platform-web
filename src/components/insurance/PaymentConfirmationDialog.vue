@@ -1,7 +1,7 @@
 <template>
   <el-dialog :title="$t('insurance.policy.paymentInfo.title')" :visible.sync="show">
     <transition-group name="slideDown">
-      <div key="1">
+      <div key="1" v-if="!txHash">
         <p class="bold">{{ $t('insurance.policy.paymentInfo.metamaskAlert') }}</p>
       </div>
       <div class="policy-dialog-info" v-if="txHash" key="2">

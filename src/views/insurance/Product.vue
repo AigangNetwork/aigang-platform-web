@@ -31,8 +31,8 @@ export default {
   },
   methods: {
     ...mapMutations({
-      clearLoadingInfo: 'CLEAR_POLICY_LOADING_INFO',
-      setIsPolicyLoadingVisible: 'SET_IS_POLICY_LOADING_VISIBLE'
+      clearLoadingInfo: 'clearPolicyLoadingInfo',
+      setIsPolicyLoadingVisible: 'setIsPolicyLoadingVisible'
     })
   },
   async created () {
@@ -75,13 +75,6 @@ export default {
     max-height: 180px;
     border: 1px solid $light-blue;
     padding: 5px;
-  }
-
-  .contract-address {
-    font-size: 18px;
-    color: $light-blue !important;
-    font-family: $font-secondary;
-    word-wrap: break-word;
   }
 
   @media screen and (min-width: 100px) and (max-width: 710px) {

@@ -11,14 +11,13 @@
           </router-link>
           <nav class="aig-navigation-menu">
             <ul>
-              <li v-for="(bar, index) in navigationBars" :key="index" @click="handleInvest(index)">
+              <li v-for="(bar, index) in navigationBars" :key="index">
                 <router-link active-class="aig-bar-active" :class="{'disabled': bar.disabled}" :to="bar.routeLink">
                   {{ bar.name }}
                 </router-link>
               </li>
             </ul>
           </nav>
-
           <div class="aig-profile-wrapper" v-if="$store.getters['user/isAuthenticated']">
             <UserTab />
           </div>
@@ -68,8 +67,7 @@ export default {
       },
       {
         name: this.$t('navigation.predictions'),
-        routeLink: '/predictions/',
-        disabled: true
+        routeLink: '/predictions/'
       },
       {
         name: this.$t('navigation.pools'),
@@ -90,11 +88,6 @@ export default {
       this.$router.push({
         name: 'Login'
       })
-    },
-    handleInvest (index) {
-      if (this.navigationBars[index].name === 'Investment') {
-        window.open('https://investment.aigang.network/insurer.html', '_blank')
-      }
     }
   }
 }

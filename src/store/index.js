@@ -5,6 +5,8 @@ import createPersistedState from 'vuex-persistedstate'
 import data from './data/index'
 import user from './user/index'
 import insurance from './insurance/index'
+import investment from './investment/index'
+import predictions from './predictions'
 
 import getters from './getters'
 import mutations from './mutations'
@@ -20,6 +22,8 @@ export default new Vuex.Store({
   modules: {
     user,
     data,
-    insurance
+    insurance,
+    investment,
+    predictions
   }
 })

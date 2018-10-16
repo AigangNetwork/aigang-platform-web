@@ -62,6 +62,7 @@
       "models": "Models"
     },
     "card": {
+      "status": "Status",
       "models": "Models",
       "comment": "Comments",
       "added": "Added",
@@ -310,6 +311,9 @@
         "policypayment": "Policy Payment",
         "addpolicy": "Add Policy",
         "addclaim": "Add Claim",
+        "addForecast": "Add Forecast",
+        "forecastPayout": "Forecast Payout",
+        "forecastRefund": "Forecast Refund",
         "unknown": "Unknown"
       }
     },
@@ -332,6 +336,19 @@
             "all": {
               "title": "All",
               "description": "When this notification type is on you will get all notifications related with Insurance."
+            }
+          }
+        },
+        "predictions": {
+          "title": "Predictions",
+          "items": {
+            "forecastPaymentReceived": {
+              "title": "Forecast payment received",
+              "description": "When this notification type is on you will get notifications after forecast payment information will be received in our system."
+            },
+            "forecastWon": {
+              "title": "Forecast won",
+              "description": "When this notification type is on you will get notifications after your forecast win."
             }
           }
         }
@@ -382,7 +399,10 @@
     "versionAlpha": "alpha",
     "unableToFindYourDatasets": "Can not find your datasets",
     "unableToFindYourModels": "Can not find any datasets containing your models",
+    "unableToFindAnyProducts": "Can not find any product",
     "noPolicies": "You do not have any policies yet",
+    "noPredictions": "Can not find any predictions",
+    "noMyPredictions": "You do not have any predictions for selected filter type",
     "upvote": "Upvote",
     "downvote": "Downvote",
     "aix": "AIX",
@@ -390,7 +410,14 @@
     "comingSoon": "Feature is coming soon",
     "retry": "Retry",
     "days": "days",
-    "day": "day"
+    "day": "day",
+    "id": "ID",
+    "backToList": "Back to list",
+    "accept": "Accept",
+    "decline": "Decline",
+    "cookiesMessage": "This website uses cookies to ensure the best user experience on. If you want to continue using cookies, press accept.",
+    "cookiesTitle": "Cookie Policy for Aigang Platform",
+    "readMoreCookies": "Read more."
   },
   "errors": {
     "error": "Error",
@@ -440,6 +467,94 @@
     "contactIfError": "If you see this error please contact us via email info@aigang.network",
     "metamaskDetected": "We have detected that you are using metamask extension. In order to see your account AIX balance please switch your network to ",
     "useMetamask": "To use all of our Platform features please Log in to Metamask Extension"
+  },
+  "predictions": {
+    "forecastsCount": "Forecasts",
+    "volume": "Volume",
+    "description": "Description",
+    "outcomes": "Outcomes",
+    "noDescription": "There is no description for this prediction",
+    "forecastDetails": "Forecast details",
+    "predictionDetails": "Prediction details",
+    "marketContractAddress": "Market contract address",
+    "predictionStatistics": "Statistics",
+    "votingTill": "Voting till",
+    "votingStarts": "Voting starts",
+    "votingEnded": "Voting has ended",
+    "results": "Results will be announced",
+    "wonOutcome": "Won outcome",
+    "index": "Index",
+    "paused": "Paused",
+    "canceled": "Canceled",
+    "ended": "Ended",
+    "fee": "Fee",
+
+    "menu": {
+      "predictions": "All Predictions",
+      "myForecasts": "My Forecasts"
+    },
+    "prediction": {
+      "paymentInfo": {
+        "title": "Payment Information",
+        "metamaskAlert": "Atention! Do not leave this page until you confirm your transaction. Otherwise your transaction will be lost and forecast won't be counted.",
+        "body": "Your payment transaction was created succesfully. When payment will be processed we will inform you via email notification message. You can see your transaction status by clicking on transaction address.",
+        "buttons": {
+          "goBack": "Go to my forecasts list"
+        }
+      },
+      "confirmationDialog": {
+        "title": "Confirm your forecast",
+        "buttons": {
+          "forecast": "Forecast"
+        },
+        "prediction": "Prediction",
+        "forecast": "Your Forecast",
+        "amount": "Amount",
+        "validation": {
+          "required": "Can not be empty",
+          "shouldBeNumber": "Should be number",
+          "shouldBeBiggerThanZero": "Should be greater than zero",
+          "shouldBeBiggerThanFee": "Should be greater than fee"
+        },
+        "userNotLoggedIn": "User must be logged in and connected to web3 provider (Metamask, Mist, etc.)"
+      }
+    },
+    "forecast": {
+      "amount": "Amount",
+      "created": "Created",
+      "results": "Results",
+      "status": "Status",
+      "announced": "Announced",
+      "yourForecast": "Your forecast",
+      "yourForecastIndex": "Your forecast index",
+      "yourAmount": "Your amount",
+      "logInToWeb3": "User must be connected to web3 provider (Metamask, Mist, etc.)",
+      "metamaskAlert": "Atention! Do not leave this page until you confirm your transaction. Otherwise your transaction will be lost and forecast won't be paid out.",
+      "payout": "Get Payout",
+      "deleteForecastTitle": "Delete your forecast",
+      "deleteForecastBody": "This forecast and all data associated with it will be deleted from the plaform. You won't be able to revert this action later on.",
+      "deleteForecast": "Delete forecast",
+      "deleteForecastConfirmation": "Are you sure you want to delete this forecast?",
+      "statuses": {
+        "all": "All",
+        "draft": "Draft",
+        "pendingPayment": "Pending payment",
+        "paid": "Paid",
+        "canceled": "Canceled",
+        "won": "Won",
+        "lost": "Lost",
+        "wonPaidout": "Won Paidout",
+        "availableRefund": "Available Refund",
+        "pendingPayout": "Pending Payout",
+        "refundPaidout": "Refund Paidout"
+      }
+    },
+    "statistics": {
+      "legend": {
+        "wonForecast": "Won forecast",
+        "otherForecasts": "Other forecasts"
+      }
+    }
   },
   "insurance": {
     "menu": {
@@ -494,7 +609,7 @@
       "redirecting": "Redirecting",
       "androidBatteryInsurancePolicy": "Android Battery Insurance Policy",
       "deletePolicyTitle": "Delete your policy",
-      "deletePolicyBody": "This policy and all data associated with it will be deleted from the plaform. You won't be able to revert this action later on, however you will still be able to view it on the blockchain.",
+      "deletePolicyBody": "This policy and all data associated with it will be deleted from the plaform. You won't be able to revert this action later on.",
       "deletePolicy": "Delete policy",
       "deletePolicyConfirmation": "Are you sure you want to delete this policy?",
       "termsAndConditions": {
@@ -580,6 +695,33 @@
         "pendingpayment": "Pending payment",
         "pendingpayout": "Pending payout"
       }
+    }
+  },
+  "pools": {
+    "portfolio": "Portfolio",
+    "products": "Products",
+    "invest": "Invest",
+    "portfolioInfo": {
+      "yourAddress": "Your address",
+      "yourBalance": "Your balance",
+      "invested": "Invested",
+      "claimedProfit": "Claimed profit",
+      "insuranceType": "Insurance type",
+      "investors": "Investors",
+      "policies": "Policies",
+      "investedAmount": "Invested Amount",
+      "amountPaid": "Amount paid for the insurance",
+      "profit": "Profit",
+      "predictedProfit": "Predicted Profit",
+      "currentPoolSize": "Current Pool Size",
+      "poolSizeGoal": "Pool Size Goal",
+      "totalInsuranceProducts": "Total insurance products",
+      "totalPolicies": "Total policies",
+      "totalInvestedAmount": "Total invested amount",
+      "totalAmountInReserves": "Total amount in reserves",
+      "totalPaidForClaims": "Total paid for the claims",
+      "totalInvestors": "Total investors",
+      "amountPaidForInsurance": "Amount paid for the insurance"
     }
   }
 }

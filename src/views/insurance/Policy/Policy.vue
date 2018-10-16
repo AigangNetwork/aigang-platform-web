@@ -39,7 +39,7 @@
               </el-col>
             </el-row>
 
-            <PolicyDeleteSection v-if="isPolicyDraftOrPendingPayment" />
+            <PolicyDeleteSection v-if="isPolicyDraft" />
           </div>
 
           <VerifyClaimLoadingInfo v-else key="2" />
@@ -47,13 +47,17 @@
       </div>
     </Card>
 
-    <TermsAndConditionsDialog :termsAndConditions="policy.termsAndConditions" :isVisible="isTermsAndConditionsDialogVisible"
-      :displayDialog="displayTermsAndConditionsDialog" @agreed="makePayment" />
+    <TermsAndConditionsDialog
+      :termsAndConditions="policy.termsAndConditions"
+      :isVisible="isTermsAndConditionsDialogVisible"
+      :displayDialog="displayTermsAndConditionsDialog"
+      @agreed="makePayment" />
 
-    <LogInToEthereumClientDialog :isVisible="isDisplayLogInToEthereumClientDialogVisible" :displayDialog="displayLogInToEthereumClientDialog"
-    />
+    <LogInToEthereumClientDialog
+      :isVisible="isDisplayLogInToEthereumClientDialogVisible"
+      :displayDialog="displayLogInToEthereumClientDialog" />
 
-    <PaymentConfirmationDialog :isVisible="isPaymentDialogVisible" :displayDialog="displayPaymentDialog" />
+    <PaymentConfirmationDialog :isVisible="isPaymentDialogVisible && !transactionError" :displayDialog="displayPaymentDialog" />
   </div>
 </template>
 <script>
@@ -93,9 +97,9 @@ export default {
   methods: {
     ...mapActions(['getPolicy', 'sendPolicyPayment']),
     ...mapMutations({
-      clearLoadingInfo: 'CLEAR_POLICY_LOADING_INFO',
-      setIsPolicyLoadingVisible: 'SET_IS_POLICY_LOADING_VISIBLE',
-      setTxHash: 'SET_TX_HASH'
+      clearLoadingInfo: 'clearPolicyLoadingInfo',
+      setIsPolicyLoadingVisible: 'setIsPolicyLoadingVisible',
+      setTxHash: 'setTxHash'
     }),
     displayPaymentDialog (value) {
       this.isPaymentDialogVisible = value
@@ -135,7 +139,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['policy', 'isPolicyLoadingVisible', 'policyLoadingInfo']),
+    ...mapGetters(['policy', 'isPolicyLoadingVisible', 'policyLoadingInfo', 'transactionError']),
     isMetamaskLoggedIn () {
       return !!this.$store.getters['user/web3']
     },
@@ -145,10 +149,10 @@ export default {
     claimProperties () {
       return this.policy.claimProperties ? JSON.parse(this.policy.claimProperties) : null
     },
-    isPolicyDraftOrPendingPayment () {
+    isPolicyDraft () {
       if (this.policy.status) {
         const status = this.policy.status.toUpperCase()
-        return status === 'DRAFT' || status === 'PENDINGPAYMENT'
+        return status === 'DRAFT'
       }
     }
   },
