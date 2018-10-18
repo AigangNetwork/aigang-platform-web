@@ -514,7 +514,8 @@
           "required": "Can not be empty",
           "shouldBeNumber": "Should be number",
           "shouldBeBiggerThanZero": "Should be greater than zero",
-          "shouldBeBiggerThanFee": "Should be greater than fee"
+          "shouldBeBiggerThanFee": "Should be greater than fee",
+          "amountInvalid": "Invalid amount. Value e.g. 000000.000000"
         },
         "userNotLoggedIn": "User must be logged in and connected to web3 provider (Metamask, Mist, etc.)"
       }

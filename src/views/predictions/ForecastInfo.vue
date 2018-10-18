@@ -19,8 +19,8 @@
           <p>{{ $t('predictions.forecast.status') }}: <span class="value"><ForecastStatus :status="userForecast.status"/></span></p>
           <p>{{ $t('predictions.forecast.yourForecast') }}: <span class="value">{{ userForecast.outcomeTitle }}</span></p>
           <p>{{ $t('predictions.forecast.yourForecastIndex') }}: <span class="value">{{ userForecast.outcomeIndex }}</span></p>
-          <p>{{ $t('predictions.forecast.yourAmount') }}: <span class="value">{{ userForecast.amount }} {{ $t('general.aix') }}</span></p>
-          <p v-if="this.userForecast.predictionStatus === 'resolved'">{{ $t('predictions.wonOutcome') }}: <span class="value">{{ userForecast.resultOutcomeName }} ({{ $t('predictions.index') }}: {{ userForecast.resultOutcomeIndex }})</span></p>
+          <p>{{ $t('predictions.forecast.yourAmount') }}: <span class="value">{{ getForecastAmount }} {{ $t('general.aix') }} <span class="details">({{ $t('predictions.fee')}}: {{ userForecast.fee }} {{ $t('general.aix') }})</span></span></p>
+          <p v-if="this.userForecast.predictionStatus === 'resolved'">{{ $t('predictions.wonOutcome') }}: <span class="value">{{ userForecast.resultOutcomeName }} <span class="details">({{ $t('predictions.index') }}: {{ userForecast.resultOutcomeIndex }})</span></span></p>
         </div>
 
         <div v-if="isPercentageVisible">
@@ -103,6 +103,9 @@ export default {
         const status = this.userForecast.status.toUpperCase()
         return status === 'DRAFT'
       }
+    },
+    getForecastAmount () {
+      return Math.round((this.userForecast.amount - this.userForecast.fee) * 10000000) / 10000000
     }
   },
   async mounted () {
@@ -143,6 +146,11 @@ export default {
 
         .value {
           font-weight: 400;
+
+          .details {
+            font-weight: 200;
+            color: $dark-gray;
+          }
         }
       }
 
