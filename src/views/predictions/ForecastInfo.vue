@@ -105,7 +105,8 @@ export default {
       }
     },
     getForecastAmount () {
-      return Math.round((this.userForecast.amount - this.userForecast.fee) * 10000000) / 10000000
+      const numbersAfterPointer = 6
+      return Math.round((this.userForecast.amount - this.userForecast.fee) * Math.pow(10, numbersAfterPointer)) / Math.pow(10, numbersAfterPointer)
     }
   },
   async mounted () {
