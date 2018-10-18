@@ -82,8 +82,8 @@ export default {
       return (
         this.prediction.status === 'paused' ||
         this.prediction.status === 'canceled' ||
-        this.prediction.status === 'pendingPublished' ||
-        this.prediction.status === 'pendingPublish'
+        this.prediction.status === 'pendingPublish' ||
+        this.prediction.status === 'pendingResolve'
       )
     }
   },

@@ -35,7 +35,15 @@
           </span>
         </el-tooltip>
 
-        <ForecastDeleteSection v-if="isforecastDraft" />
+        <el-tooltip v-if="payButtonVisible" :disabled="!!$store.getters['user/web3']" :content="$t('predictions.forecast.logInToWeb3')">
+          <span class="wrapper el-button">
+            <el-button :disabled="!$store.getters['user/web3']" class="aig-button" type="primary" @click="pay">
+              {{ $t('predictions.forecast.payForecast') }}
+            </el-button>
+          </span>
+        </el-tooltip>
+
+        <ForecastDeleteSection v-if="isForecastDraft" />
 
         <PaymentConfirmationDialog :isVisible="isPaymentDialogVisible && !transactionError" :displayDialog="displayPaymentDialog" :content="$t('predictions.forecast.metamaskAlert')" />
       </div>
@@ -80,6 +88,19 @@ export default {
       })
       this.displayPaymentDialog(true)
     },
+    async pay () {
+      const payload = {
+        forecastId: this.userForecast.id,
+        predictionId: this.userForecast.predictionId,
+        outcomeId: this.userForecast.outcomeId,
+        outcome: this.userForecast.outcomeIndex,
+        amount: this.userForecast.amount
+      }
+
+      await this.$store.dispatch('predictions/payForecast', payload)
+
+      this.displayPaymentDialog(true)
+    },
     displayPaymentDialog (value) {
       this.isPaymentDialogVisible = value
     }
@@ -91,21 +112,21 @@ export default {
       const predictionStatus = this.userForecast.predictionStatus.toUpperCase()
       return (status !== 'DRAFT' && status !== 'NOTSET' && status !== 'PENDINGPAYMENT') || predictionStatus === 'RESOLVED'
     },
-    isForecastsWon () {
-      return this.userForecast.status.toUpperCase() === 'WON'
-    },
     contractLink () {
       return process.env.ETHERSCAN_ADDRESS + process.env.ADDRESS_PATX + this.userForecast.marketAddress
     },
-    isforecastDraft () {
-      if (this.userForecast.status) {
-        const status = this.userForecast.status.toUpperCase()
-        return status === 'DRAFT'
-      }
+    isForecastDraft () {
+      return this.userForecast.status.toUpperCase() === 'DRAFT'
+    },
+    isForecastsWon () {
+      return this.userForecast.status.toUpperCase() === 'WON'
     },
     getForecastAmount () {
       const numbersAfterPointer = 6
       return Math.round((this.userForecast.amount - this.userForecast.fee) * Math.pow(10, numbersAfterPointer)) / Math.pow(10, numbersAfterPointer)
+    },
+    payButtonVisible () {
+      return this.isForecastDraft && this.userForecast.predictionStatus === 'published'
     }
   },
   async mounted () {
@@ -156,6 +177,10 @@ export default {
 
       .markup-content {
         margin-bottom: 20px;
+      }
+
+      .wrapper {
+        margin-bottom: 48px;
       }
     }
   }
