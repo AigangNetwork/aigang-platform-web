@@ -191,9 +191,9 @@ export default {
   },
 
   async payout ({ commit, dispatch, rootState }, payload) {
-    const response = await axios.get(`/contracts/${payload.marketAddress}`)
     commit('setTransactionHash', '')
     commit('setTransactionError', false)
+    const response = await axios.get(`/contracts/${payload.marketAddress}`)
 
     if (response.data) {
       const web3 = rootState.user.userWeb3.web3()
