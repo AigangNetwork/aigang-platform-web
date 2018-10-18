@@ -1,21 +1,19 @@
 <template>
-  <el-row class="profile-password-container">
-    <el-col>
+  <div>
       <p class="input-section-title">{{ $t('insurance.policy.deletePolicyTitle') }}</p>
-    </el-col>
-    <el-col>
       <p>{{ $t('insurance.policy.deletePolicyBody') }}</p>
-    </el-col>
-    <el-row>
       <el-button @click="dialogVisible = true" class="profile-button">
         {{$t('insurance.policy.deletePolicy')}}
       </el-button>
-    </el-row>
+      <Dialog
+        :title="$t('profile.general.warning')"
+        :body="$t('insurance.policy.deletePolicyConfirmation')"
+        :on-confirm="deleteHandler"
+        :is-visible="dialogVisible"
+        :on-cancel="cancel"
+        :displayDialog="displayDialog" />
 
-    <Dialog :title="$t('profile.general.warning')" :body="$t('insurance.policy.deletePolicyConfirmation')" :on-confirm="deleteHandler"
-      :is-visible="dialogVisible" :on-cancel="cancel" :displayDialog="displayDialog" />
-
-  </el-row>
+  </div>
 </template>
 <script>
 import Dialog from '@/components/common/Dialog'

@@ -19,7 +19,7 @@
         <img src="/static/icons/finish-white.svg" class="header-icon" />
         <span>{{ $t('predictions.paused')}}</span>
       </div>
-      <div class="icon-container" v-else-if="info.status === 'published'">
+      <div class="icon-container" v-else-if="info.status === 'published' || info.status === 'pendingResolve'">
         <img src="/static/icons/finish-white.svg" class="header-icon" />
         <span>{{ $t('predictions.results')}}: <Date :dateUtc="info.resultDateUtc" format="YYYY-MM-DD HH:mm (UTC Z)" /></span>
       </div>
