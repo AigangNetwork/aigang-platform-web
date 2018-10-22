@@ -267,6 +267,7 @@ export default {
             await axios.post('/predictions/transaction/forecastpayout', request)
 
             commit('setTransactionHash', txId)
+            dispatch('getUserForecast', payload.id)
           } catch (ex) {}
         })
     }
