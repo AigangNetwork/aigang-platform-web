@@ -534,6 +534,7 @@
       "metamaskAlert": "Atention! Do not leave this page until you confirm your transaction. Otherwise your transaction will be lost and forecast won't be paid out.",
       "payout": "Get Payout",
       "payForecast": "Pay forecast",
+      "getRefund": "Get Refund",
       "deleteForecastTitle": "Delete your forecast",
       "deleteForecastBody": "This forecast and all data associated with it will be deleted from the plaform. You won't be able to revert this action later on.",
       "deleteForecast": "Delete forecast",

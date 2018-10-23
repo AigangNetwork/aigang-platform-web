@@ -19,8 +19,8 @@
           <p>{{ $t('predictions.forecast.status') }}: <span class="value"><ForecastStatus :status="userForecast.status"/></span></p>
           <p>{{ $t('predictions.forecast.yourForecast') }}: <span class="value">{{ userForecast.outcomeTitle }} <span class="details">({{ $t('predictions.index') }}: {{ userForecast.outcomeIndex }})</span></span></p>
           <p>{{ $t('predictions.forecast.yourAmount') }}: <span class="value">{{ userForecast.amount }} {{ $t('general.aix') }} <span class="details">({{ $t('predictions.forecast.forecastAmount') }}: {{ getForecastAmount }} {{ $t('general.aix') }}, {{ $t('predictions.fee')}}: {{ userForecast.fee }} {{ $t('general.aix') }})</span></span></p>
-          <p v-if="this.userForecast.predictionStatus === 'resolved'">{{ $t('predictions.wonOutcome') }}: <span class="value">{{ userForecast.resultOutcomeName }} <span class="details">({{ $t('predictions.index') }}: {{ userForecast.resultOutcomeIndex }})</span></span></p>
-          <p v-if="this.userForecast.predictionStatus === 'resolved'">{{ $t('predictions.wonAmount') }}: <span class="value">{{ userForecast.wonAmount }} {{ $t('general.aix') }}</span></p>
+          <p v-if="isPredictionResolved">{{ $t('predictions.wonOutcome') }}: <span class="value">{{ userForecast.resultOutcomeName }} <span class="details">({{ $t('predictions.index') }}: {{ userForecast.resultOutcomeIndex }})</span></span></p>
+          <p v-if="isPredictionResolved">{{ $t('predictions.wonAmount') }}: <span class="value">{{ userForecast.wonAmount }} {{ $t('general.aix') }}</span></p>
         </div>
 
         <div v-if="isPercentageVisible">
@@ -30,7 +30,7 @@
 
         <el-tooltip v-if="isForecastsWon" :disabled="!!$store.getters['user/web3']" :content="$t('predictions.forecast.logInToWeb3')">
           <span class="wrapper el-button">
-            <el-button :disabled="!$store.getters['user/web3']" class="aig-button" type="primary" @click="payout">
+            <el-button :disabled="!$store.getters['user/web3']" class="aig-button" type="primary" @click="payoutWon">
               {{ $t('predictions.forecast.payout') }}
             </el-button>
           </span>
@@ -38,8 +38,16 @@
 
         <el-tooltip v-if="payButtonVisible" :disabled="!!$store.getters['user/web3']" :content="$t('predictions.forecast.logInToWeb3')">
           <span class="wrapper el-button">
-            <el-button :disabled="!$store.getters['user/web3']" class="aig-button" type="primary" @click="pay">
+            <el-button :disabled="!$store.getters['user/web3']" class="aig-button" type="primary" @click="payDraft">
               {{ $t('predictions.forecast.payForecast') }}
+            </el-button>
+          </span>
+        </el-tooltip>
+
+        <el-tooltip v-if="isAvailableRefund" :disabled="!!$store.getters['user/web3']" :content="$t('predictions.forecast.logInToWeb3')">
+          <span class="wrapper el-button">
+            <el-button :disabled="!$store.getters['user/web3']" class="aig-button" type="primary" @click="payoutRefund">
+              {{ $t('predictions.forecast.getRefund') }}
             </el-button>
           </span>
         </el-tooltip>
@@ -81,15 +89,7 @@ export default {
     }
   },
   methods: {
-    payout () {
-      this.$store.dispatch('predictions/payout', {
-        id: this.userForecast.id,
-        predictionId: this.userForecast.predictionId,
-        marketAddress: this.userForecast.marketAddress
-      })
-      this.displayPaymentDialog(true)
-    },
-    async pay () {
+    async payDraft () {
       const payload = {
         forecastId: this.userForecast.id,
         predictionId: this.userForecast.predictionId,
@@ -99,6 +99,28 @@ export default {
       }
 
       await this.$store.dispatch('predictions/payForecast', payload)
+
+      this.displayPaymentDialog(true)
+    },
+    async payoutWon () {
+      const payload = {
+        id: this.userForecast.id,
+        predictionId: this.userForecast.predictionId,
+        marketAddress: this.userForecast.marketAddress
+      }
+
+      await this.$store.dispatch('predictions/payoutWon', payload)
+
+      this.displayPaymentDialog(true)
+    },
+    async payoutRefund () {
+      const payload = {
+        id: this.userForecast.id,
+        predictionId: this.userForecast.predictionId,
+        marketAddress: this.userForecast.marketAddress
+      }
+
+      await this.$store.dispatch('predictions/payoutRefund', payload)
 
       this.displayPaymentDialog(true)
     },
@@ -116,11 +138,17 @@ export default {
     contractLink () {
       return process.env.ETHERSCAN_ADDRESS + process.env.ADDRESS_PATX + this.userForecast.marketAddress
     },
+    isPredictionResolved () {
+      return this.userForecast.predictionStatus.toUpperCase() === 'RESOLVED'
+    },
     isForecastDraft () {
       return this.userForecast.status.toUpperCase() === 'DRAFT'
     },
     isForecastsWon () {
       return this.userForecast.status.toUpperCase() === 'WON'
+    },
+    isAvailableRefund () {
+      return this.userForecast.status.toUpperCase() === 'AVAILABLEREFUND'
     },
     getForecastAmount () {
       const numbersAfterPointer = 6

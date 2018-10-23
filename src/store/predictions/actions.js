@@ -236,7 +236,7 @@ export default {
     }
   },
 
-  async payout ({ commit, dispatch, rootState }, payload) {
+  async payoutWon ({ commit, dispatch, rootState }, payload) {
     commit('setTransactionHash', '')
     commit('setTransactionError', false)
     const response = await axios.get(`/contracts/${payload.marketAddress}`)
@@ -265,6 +265,43 @@ export default {
             }
 
             await axios.post('/predictions/transaction/forecastpayout', request)
+
+            commit('setTransactionHash', txId)
+            dispatch('getUserForecast', payload.id)
+          } catch (ex) {}
+        })
+    }
+  },
+
+  async payoutRefund ({ commit, dispatch, rootState }, payload) {
+    commit('setTransactionHash', '')
+    commit('setTransactionError', false)
+    const response = await axios.get(`/contracts/${payload.marketAddress}`)
+
+    if (response.data) {
+      const web3 = rootState.user.userWeb3.web3()
+      const MarketInstance = new web3.eth.Contract(JSON.parse(response.data.abi), payload.marketAddress)
+      const predictionIdHex = web3.utils.fromAscii(payload.predictionId)
+      const forecastIdHex = web3.utils.fromAscii(payload.id)
+
+      MarketInstance.methods
+        .refund(predictionIdHex, forecastIdHex)
+        .send({
+          gas: process.env.GAS.FORECAST_PAYOUT,
+          from: rootState.user.userWeb3.coinbase
+        })
+        .on('error', () => {
+          commit('setTransactionError', true)
+        })
+        .once('transactionHash', async txId => {
+          try {
+            const request = {
+              forecastId: payload.id,
+              predictionId: payload.predictionId,
+              txId
+            }
+
+            await axios.post('/predictions/transaction/forecastRefund', request)
 
             commit('setTransactionHash', txId)
             dispatch('getUserForecast', payload.id)
