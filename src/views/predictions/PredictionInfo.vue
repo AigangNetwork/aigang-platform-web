@@ -86,8 +86,8 @@ export default {
     },
     isPercentageVisible () {
       return (
-        this.countPerOutcomeStatistics !== {} &&
-        this.amountPerOutcomeStatistics !== {} &&
+        this.countPerOutcomeStatistics.rows &&
+        this.amountPerOutcomeStatistics.rows &&
         this.prediction.status.toUpperCase() === 'RESOLVED'
       )
     },

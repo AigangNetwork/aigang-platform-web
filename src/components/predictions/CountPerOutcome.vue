@@ -18,7 +18,7 @@
         <p class="outcomes-percentage-value" v-for="(row, index) in statistics.rows" :key="index">{{ row[2] }}</p>
       </div>
     </div>
-    <div class="outcomes-percentage-legend-container" v-if="resultOutcomeId">
+    <div class="outcomes-percentage-legend-container" v-if="statistics.rows && resultOutcomeId">
       <div><div class="dot dot-purple"></div>{{ $t('predictions.statistics.legend.wonForecast') }}</div>
       <div><div class="dot dot-yellow"></div>{{ $t('predictions.statistics.legend.otherForecasts') }}</div>
     </div>
