@@ -8,6 +8,7 @@
         <PredictionInfoHeader :info="headerInfo" />
       </div>
     </div>
+
     <div class="aig-info-content-container" v-if="isDataLoaded">
       <div class="aig-info-content">
         <h4 class="info-title">{{ $t('predictions.description') }}</h4>
@@ -25,7 +26,8 @@
 
         <div v-if="isPercentageVisible">
           <h4 class="info-title">{{ $t('predictions.predictionStatistics') }}</h4>
-          <OutcomesPercentage v-loading="statisticsLoading" :statistics="predictionStatistics" :resultOutcomeId="userForecast.resultOutcomeId" />
+          <CountPerOutcome v-loading="countPerOutcomeStatisticsLoading" :statistics="countPerOutcomeStatistics" :resultOutcomeId="userForecast.resultOutcomeId" />
+          <AmountPerOutcome v-loading="amountPerOutcomeStatisticsLoading" :statistics="amountPerOutcomeStatistics" :resultOutcomeId="userForecast.resultOutcomeId"/>
         </div>
 
         <el-tooltip v-if="isForecastsWon" :disabled="!!$store.getters['user/web3']" :content="$t('predictions.forecast.logInToWeb3')">
@@ -63,7 +65,8 @@
 <script>
 import PredictionInfoHeader from './PredictionInfoHeader'
 import ForecastStatus from '@/components/predictions/ForecastStatus'
-import OutcomesPercentage from '@/components/predictions/OutcomesPercentage'
+import CountPerOutcome from '@/components/predictions/CountPerOutcome'
+import AmountPerOutcome from '@/components/predictions/AmountPerOutcome'
 import ForecastDeleteSection from '@/components/predictions/ForecastDeleteSection'
 import Card from '@/components/Card'
 import VueMarkdown from 'vue-markdown'
@@ -74,7 +77,8 @@ const { mapGetters } = createNamespacedHelpers('predictions')
 export default {
   components: {
     PredictionInfoHeader,
-    OutcomesPercentage,
+    CountPerOutcome,
+    AmountPerOutcome,
     ForecastStatus,
     Card,
     PaymentConfirmationDialog,
@@ -129,11 +133,26 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['userForecast', 'predictionStatistics', 'statisticsLoading', 'transactionError']),
+    ...mapGetters([
+      'userForecast',
+      'countPerOutcomeStatisticsLoading',
+      'amountPerOutcomeStatisticsLoading',
+      'countPerOutcomeStatistics',
+      'amountPerOutcomeStatistics',
+      'transactionError'
+    ]),
     isPercentageVisible () {
       const status = this.userForecast.status.toUpperCase()
       const predictionStatus = this.userForecast.predictionStatus.toUpperCase()
-      return (status !== 'DRAFT' && status !== 'NOTSET' && status !== 'PENDINGPAYMENT') || predictionStatus === 'RESOLVED'
+
+      return (
+        this.countPerOutcomeStatistics !== {} &&
+        this.amountPerOutcomeStatistics !== {} &&
+        (
+          (status !== 'DRAFT' && status !== 'NOTSET' && status !== 'PENDINGPAYMENT') ||
+          predictionStatus === 'RESOLVED'
+        )
+      )
     },
     contractLink () {
       return process.env.ETHERSCAN_ADDRESS + process.env.ADDRESS_PATX + this.userForecast.marketAddress

@@ -48,35 +48,81 @@ export default {
     }
   },
 
-  async getPredictionStatistics ({ commit }, predictionId) {
-    commit('statisticsLoading', true)
+  async getPredictionStatistics ({ commit, dispatch }, predictionId) {
+    dispatch('getCountPerOutcomePredictionStatistics', predictionId)
+    dispatch('getAmountPerOutcomePredictionStatistics', predictionId)
+  },
+
+  async getCountPerOutcomePredictionStatistics ({ commit }, predictionId) {
+    commit('setCountPerOutcomeStatistics', {})
+    commit('setCountPerOutcomeStatisticsLoading', true)
 
     try {
-      const response = await axios.get('/predictions/stats/' + predictionId)
+      const response = await axios.get(`/predictions/stats/prediction/${predictionId}/CountPerOutcome`)
 
       if (response.data) {
-        commit('setPredictionStatistics', response.data)
+        commit('setCountPerOutcomeStatistics', response.data)
       }
 
-      commit('statisticsLoading', false)
+      commit('setCountPerOutcomeStatisticsLoading', false)
     } catch (ex) {
-      commit('statisticsLoading', false)
+      commit('setCountPerOutcomeStatisticsLoading', false)
     }
   },
 
-  async getPredictionStatisticsForForecast ({ commit }, forecastId) {
-    commit('statisticsLoading', true)
+  async getAmountPerOutcomePredictionStatistics ({ commit }, predictionId) {
+    commit('setAmountPerOutcomeStatistics', {})
+    commit('setAmountPerOutcomeStatisticsLoading', true)
 
     try {
-      const response = await axios.get('/predictions/forecast/stats/' + forecastId)
+      const response = await axios.get(`/predictions/stats/prediction/${predictionId}/AmountPerOutcome`)
 
       if (response.data) {
-        commit('setPredictionStatistics', response.data)
+        commit('setAmountPerOutcomeStatistics', response.data)
       }
 
-      commit('statisticsLoading', false)
+      commit('setAmountPerOutcomeStatisticsLoading', false)
     } catch (ex) {
-      commit('statisticsLoading', false)
+      commit('setAmountPerOutcomeStatisticsLoading', false)
+    }
+  },
+
+  async getPredictionStatisticsForForecast ({ commit, dispatch }, forecastId) {
+    dispatch('getCountPerOutcomeForecastStatistics', forecastId)
+    dispatch('getAmountPerOutcomeForecastStatistics', forecastId)
+  },
+
+  async getCountPerOutcomeForecastStatistics ({ commit }, forecastId) {
+    commit('setCountPerOutcomeStatistics', {})
+    commit('setCountPerOutcomeStatisticsLoading', true)
+
+    try {
+      const response = await axios.get(`/predictions/stats/forecast/${forecastId}/CountPerOutcome`)
+
+      if (response.data) {
+        commit('setCountPerOutcomeStatistics', response.data)
+      }
+
+      commit('setCountPerOutcomeStatisticsLoading', false)
+    } catch (ex) {
+      commit('setCountPerOutcomeStatisticsLoading', false)
+    }
+  },
+
+  async getAmountPerOutcomeForecastStatistics ({ commit }, forecastId) {
+    commit('setAmountPerOutcomeStatistics', {})
+    commit('setAmountPerOutcomeStatisticsLoading', true)
+
+    try {
+      const response = await axios.get(`/predictions/stats/forecast/${forecastId}/AmountPerOutcome`)
+
+      if (response.data) {
+        commit('setAmountPerOutcomeStatistics', response.data)
+      }
+
+      commit('setAmountPerOutcomeStatisticsLoading', false)
+    } catch (ex) {
+      commit('setAmountPerOutcomeStatisticsLoading', false)
     }
   },
 

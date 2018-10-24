@@ -13,14 +13,20 @@ const mutations = {
     state.userForecast = payload.item
     state.predictionStatistics = {}
   },
-  setPredictionStatistics (state, payload) {
-    state.predictionStatistics = payload.statistics
+  setCountPerOutcomeStatisticsLoading (state, loading) {
+    state.countPerOutcomeStatisticsLoading = loading
+  },
+  setAmountPerOutcomeStatisticsLoading (state, loading) {
+    state.amountPerOutcomeStatisticsLoading = loading
+  },
+  setCountPerOutcomeStatistics (state, payload) {
+    state.countPerOutcomeStatistics = payload
+  },
+  setAmountPerOutcomeStatistics (state, payload) {
+    state.amountPerOutcomeStatistics = payload
   },
   setTransactionHash (state, transactionHash) {
     state.transactionHash = transactionHash
-  },
-  statisticsLoading (state, loading) {
-    state.statisticsLoading = loading
   },
   setTransactionError (state, value) {
     state.transactionError = value

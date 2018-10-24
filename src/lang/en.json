@@ -489,6 +489,8 @@
     "canceled": "Canceled",
     "ended": "Ended",
     "fee": "Fee",
+    "votesPerOutcome": "Votes per outcome",
+    "amountPerOutcome": "Amount per outcome",
 
     "menu": {
       "predictions": "All Predictions",
