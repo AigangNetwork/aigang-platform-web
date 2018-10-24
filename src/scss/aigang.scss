@@ -609,7 +609,9 @@ body.aig {
 }
 
 .outcomes-percentage {
-  clear: both;
+  .clear {
+    clear: both;
+  }
 
   .outcomes-percentage-chart-container {
     display: flex;
@@ -654,8 +656,7 @@ body.aig {
   .outcomes-percentage-legend-container {
     float: right;
     font-size: 10pt;
-    margin-top: 10px;
-    margin-bottom: 20px;
+    margin: 10px 0px 10px 0;
 
     .dot {
       float: left;

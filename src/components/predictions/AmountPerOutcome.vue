@@ -22,6 +22,7 @@
       <div><div class="dot dot-purple"></div>{{ $t('predictions.statistics.legend.wonForecast') }}</div>
       <div><div class="dot dot-yellow"></div>{{ $t('predictions.statistics.legend.otherForecasts') }}</div>
     </div>
+    <div class="clear"></div>
   </div>
 </template>
 <script>
