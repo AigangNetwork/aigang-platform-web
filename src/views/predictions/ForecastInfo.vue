@@ -146,12 +146,8 @@ export default {
       const predictionStatus = this.userForecast.predictionStatus.toUpperCase()
 
       return (
-        this.countPerOutcomeStatistics.rows &&
-        this.amountPerOutcomeStatistics.rows &&
-        (
-          (status !== 'DRAFT' && status !== 'NOTSET' && status !== 'PENDINGPAYMENT') ||
-          predictionStatus === 'RESOLVED'
-        )
+        (status !== 'DRAFT' && status !== 'NOTSET' && status !== 'PENDINGPAYMENT') ||
+        predictionStatus === 'RESOLVED'
       )
     },
     contractLink () {
