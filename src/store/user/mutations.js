@@ -20,7 +20,11 @@ export default {
     state.userWeb3 = {
       ...payload
     }
-    state.userWeb3.aixBalance = parseInt(state.userWeb3.aixBalance, 10)
+
+    const balance = parseInt(state.userWeb3.aixBalance, 10)
+
+    state.userWeb3.aixBalance = balance
+    state.insufficientBalance = balance === 0
   },
 
   clearWeb3Instance (state) {

@@ -48,7 +48,7 @@ export default {
   props: ['prediction', 'selectedOutcome', 'isVisible', 'displayDialog', 'fee'],
   mixins: [FormMixin],
   data () {
-    let checkAmount = (rule, value, callback) => {
+    const checkAmount = (rule, value, callback) => {
       if (value <= 0) {
         return callback(new Error(this.$t('predictions.prediction.confirmationDialog.validation.shouldBeBiggerThanZero')))
       }

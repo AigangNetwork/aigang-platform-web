@@ -13,7 +13,8 @@ export const initialUserState = () => {
     wallets: {},
     transactions: {},
     emailPermissionGroups: {},
-    userWeb3: {}
+    userWeb3: {},
+    insufficientBalance: false
   }
 }
 

@@ -9,15 +9,20 @@ import investment from './investment/index'
 import predictions from './predictions'
 
 import getters from './getters'
+import actions from './actions'
 import mutations from './mutations'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   strict: process.env.NODE_ENV !== 'production' || process.env.NODE_ENV !== 'qa',
-  state: { loading: false },
+  state: {
+    loading: false,
+    insufficientBalanceDialogVisible: false
+  },
   mutations,
   getters,
+  actions,
   plugins: [createPersistedState()], // save to local storage
   modules: {
     user,

@@ -111,6 +111,13 @@ export default {
       this.isTermsAndConditionsDialogVisible = value
     },
     insure () {
+      const insufficientBalance = this.$store.getters['user/insufficientBalance']
+
+      if (insufficientBalance) {
+        this.$store.dispatch('showInsufficientBalanceDialog', true)
+        return
+      }
+
       if (this.isMetamaskLoggedIn) {
         this.displayTermsAndConditionsDialog(true)
       } else {
