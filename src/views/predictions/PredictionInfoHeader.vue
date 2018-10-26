@@ -38,10 +38,10 @@
       </div>
       <div class="icon-container" v-if="info.status !== 'canceled'">
         <img src="/static/icons/volume-white.svg" class="header-icon" />
-        <span>{{ $t('predictions.volume')}}: {{ info.poolSize}} {{ $t('general.aix')}} 
+        <span>{{ $t('predictions.volume')}}: <span>{{ info.poolSize}} {{ $t('general.aix')}} </span>
           <el-tooltip class="item" effect="dark" :content="$t('predictions.volumeInfoTooltip')" placement="top">
             <i class="el-icon-info"></i>
-          </el-tooltip>  
+          </el-tooltip>
         </span>
       </div>
     </div>
