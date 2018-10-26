@@ -260,6 +260,7 @@ export default {
 
         if (forecast !== null) {
           const forecastStatus = forecast.status.toUpperCase()
+          const predictionStatus = forecast.predictionStatus.toUpperCase()
 
           if (
             (
@@ -267,9 +268,11 @@ export default {
               forecastStatus !== 'NOTSET' &&
               forecastStatus !== 'DRAFT' &&
               forecastStatus !== 'PENDINGPAYMENT' &&
-              forecastStatus !== 'AVAILABLEREFUND'
-            ) || forecast.predictionStatus.toUpperCase() === 'RESOLVED'
+              forecastStatus !== 'AVAILABLEREFUND' &&
+              predictionStatus !== 'CANCELED'
+            ) || predictionStatus === 'RESOLVED'
           ) {
+            debugger
             dispatch('getPredictionStatisticsForForecast', forecastId)
           }
         }

@@ -146,7 +146,7 @@ export default {
       const predictionStatus = this.userForecast.predictionStatus.toUpperCase()
 
       return (
-        (status !== 'DRAFT' && status !== 'NOTSET' && status !== 'PENDINGPAYMENT' && status !== 'AVAILABLEREFUND') ||
+        (status !== 'DRAFT' && status !== 'NOTSET' && status !== 'PENDINGPAYMENT' && status !== 'AVAILABLEREFUND' && predictionStatus !== 'CANCELED') ||
         predictionStatus === 'RESOLVED'
       )
     },
