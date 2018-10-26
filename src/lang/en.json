@@ -478,6 +478,7 @@
   "predictions": {
     "forecastsCount": "Forecasts",
     "volume": "Volume",
+    "volumeInfoTooltip": "Prediction forecast amounts + Initial pool size",
     "description": "Description",
     "outcomes": "Outcomes",
     "noDescription": "There is no description for this prediction",

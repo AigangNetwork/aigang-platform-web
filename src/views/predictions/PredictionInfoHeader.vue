@@ -32,13 +32,17 @@
         <span>{{ $t('predictions.canceled')}}</span>
       </div>
 
-      <div class="icon-container">
+      <div class="icon-container" v-if="info.status !== 'canceled'">
         <img src="/static/icons/user-white.svg" class="header-icon" />
         <span>{{ $t('predictions.forecastsCount')}}: {{ info.forecastsCount }}</span>
       </div>
-      <div class="icon-container">
+      <div class="icon-container" v-if="info.status !== 'canceled'">
         <img src="/static/icons/volume-white.svg" class="header-icon" />
-        <span>{{ $t('predictions.volume')}}: {{ info.poolSize}} {{ $t('general.aix')}}</span>
+        <span>{{ $t('predictions.volume')}}: {{ info.poolSize}} {{ $t('general.aix')}} 
+          <el-tooltip class="item" effect="dark" :content="$t('predictions.volumeInfoTooltip')" placement="top">
+            <i class="el-icon-info"></i>
+          </el-tooltip>  
+        </span>
       </div>
     </div>
   </div>

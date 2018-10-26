@@ -258,17 +258,20 @@ export default {
         commit('setUserForecast', response.data)
         const forecast = response.data.item
 
-        if (
-          forecast && (
+        if (forecast !== null) {
+          const forecastStatus = forecast.status.toUpperCase()
+
+          if (
             (
               forecast.predictionId &&
-              forecast.status.toUpperCase() !== 'NOTSET' &&
-              forecast.status.toUpperCase() !== 'DRAFT' &&
-              forecast.status.toUpperCase() !== 'PENDINGPAYMENT'
+              forecastStatus !== 'NOTSET' &&
+              forecastStatus !== 'DRAFT' &&
+              forecastStatus !== 'PENDINGPAYMENT' &&
+              forecastStatus !== 'AVAILABLEREFUND'
             ) || forecast.predictionStatus.toUpperCase() === 'RESOLVED'
-          )
-        ) {
-          dispatch('getPredictionStatisticsForForecast', forecastId)
+          ) {
+            dispatch('getPredictionStatisticsForForecast', forecastId)
+          }
         }
 
         commit('setLoading', false, {
