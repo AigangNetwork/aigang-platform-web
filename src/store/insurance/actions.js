@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { sleep } from '@/utils/methods'
+import router from '@/router/index'
 
 export default {
   async loadProduct ({ commit }, id) {
@@ -23,7 +24,7 @@ export default {
     }
   },
 
-  async createNewPolicy ({ commit, state }, { deviceId, productId }) {
+  async createNewPolicy ({ commit, state, dispatch }, { deviceId, productId }) {
     commit('clearPolicyLoadingInfo')
     commit('setIsPolicyLoadingVisible', true)
 
@@ -34,7 +35,7 @@ export default {
         IsCreatePolicy: true
       })
     } catch (error) {
-      handlePolicyLoadingInfoError(error, state.policyLoadingInfo, commit)
+      handlePolicyLoadingInfoError(error, state.policyLoadingInfo, commit, dispatch)
       return
     }
 
@@ -52,7 +53,7 @@ export default {
           ProductId: productId
         })
       } catch (error) {
-        handlePolicyLoadingInfoError(error, state.policyLoadingInfo, commit)
+        handlePolicyLoadingInfoError(error, state.policyLoadingInfo, commit, dispatch)
         return
       }
 
@@ -228,7 +229,7 @@ const loadTaskId = async (commit, request) => {
   return response
 }
 
-const handlePolicyLoadingInfoError = async (error, policyLoadingInfo, commit) => {
+const handlePolicyLoadingInfoError = async (error, policyLoadingInfo, commit, dispatch) => {
   let newPolicyLoadingInfo = Object.assign({}, policyLoadingInfo)
 
   if (error.response.status === 404) {
@@ -245,6 +246,9 @@ const handlePolicyLoadingInfoError = async (error, policyLoadingInfo, commit) =>
     }
   } else if (error.response.status === 503 || error.response.status === 500) {
     newPolicyLoadingInfo.serverError = true
+  } else if (error.response.status === 401) {
+    dispatch('user/handleNotLoggedIn', null, { root: true })
+    router.push({ name: 'Login' })
   }
 
   commit('setPolicyLoadingInfo', newPolicyLoadingInfo)
