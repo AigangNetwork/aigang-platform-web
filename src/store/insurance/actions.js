@@ -92,7 +92,7 @@ export default {
   },
 
   async sendPolicyPayment ({ commit, dispatch, state, rootState }) {
-    const web3 = rootState.user.userWeb3.web3()
+    const web3 = window.web3
     const productAddress = state.policy.contractAddress
     const TokenInstance = new web3.eth.Contract(process.env.CONTRACT_INFO.ABI, process.env.CONTRACT_INFO.ADDRESS)
     const paymentValue = web3.utils.toWei(state.policy.premium.toString())

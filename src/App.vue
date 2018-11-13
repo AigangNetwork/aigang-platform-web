@@ -49,7 +49,7 @@ export default {
   async mounted () {
     if (this.$store.getters['user/isAuthenticated']) {
       await this.$store.dispatch('user/clearWeb3Instance')
-      this.$store.dispatch('user/registerWeb3Instance')
+      await this.$store.dispatch('user/registerWeb3')
     }
   }
 }

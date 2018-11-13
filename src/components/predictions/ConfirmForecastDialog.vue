@@ -97,7 +97,7 @@ export default {
       }
     },
     forecastButtonEnabled () {
-      return !!((this.$store.getters['user/isAuthenticated'] && this.$store.getters['user/web3']))
+      return !!(this.$store.getters['user/isAuthenticated'] && window.web3)
     }
   },
   methods: {

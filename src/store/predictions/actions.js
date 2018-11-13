@@ -160,7 +160,7 @@ export default {
       const response = await axios.post('/predictions/forecast', payload)
 
       if (response.data) {
-        const web3 = rootState.user.userWeb3.web3()
+        const web3 = window.web3
         const TokenInstance = new web3.eth.Contract(process.env.CONTRACT_INFO.ABI, process.env.CONTRACT_INFO.ADDRESS)
         const paymentValue = web3.utils.toWei(payload.amount.toString())
         const predictionIdHex = web3.utils.fromAscii(payload.predictionId)
@@ -212,7 +212,7 @@ export default {
     })
 
     try {
-      const web3 = rootState.user.userWeb3.web3()
+      const web3 = window.web3
       const TokenInstance = new web3.eth.Contract(process.env.CONTRACT_INFO.ABI, process.env.CONTRACT_INFO.ADDRESS)
       const paymentValue = web3.utils.toWei(payload.amount.toString())
       const predictionIdHex = web3.utils.fromAscii(payload.predictionId)
@@ -294,7 +294,7 @@ export default {
     const response = await axios.get(`/contracts/${payload.marketAddress}`)
 
     if (response.data) {
-      const web3 = rootState.user.userWeb3.web3()
+      const web3 = window.web3
       const MarketInstance = new web3.eth.Contract(JSON.parse(response.data.abi), payload.marketAddress)
       const predictionIdHex = web3.utils.fromAscii(payload.predictionId)
       const forecastIdHex = web3.utils.fromAscii(payload.id)
@@ -331,7 +331,7 @@ export default {
     const response = await axios.get(`/contracts/${payload.marketAddress}`)
 
     if (response.data) {
-      const web3 = rootState.user.userWeb3.web3()
+      const web3 = window.web3
       const MarketInstance = new web3.eth.Contract(JSON.parse(response.data.abi), payload.marketAddress)
       const predictionIdHex = web3.utils.fromAscii(payload.predictionId)
       const forecastIdHex = web3.utils.fromAscii(payload.id)

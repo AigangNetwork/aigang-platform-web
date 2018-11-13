@@ -1,11 +1,15 @@
-import getWeb3 from '@/utils/web3/getWeb3'
 import router from '@/router'
 import axios from 'axios'
+import aixContractInfo from '@/utils/contract/aixContractInfo'
+import networkResolver from '@/utils/web3/networkResolver'
+import eventHub from '@/utils/eventHub'
+import loadWeb3Instance from '@/utils/web3/loadWeb3'
 
 export default {
-  logIn ({ commit, dispatch }, loginResponse) {
+  async logIn ({ commit, dispatch }, loginResponse) {
     commit('login', loginResponse.data)
-    dispatch('refreshWeb3Instance')
+    await dispatch('clearWeb3Instance')
+    await dispatch('registerWeb3')
     router.push('/')
   },
 
@@ -71,20 +75,50 @@ export default {
     }
   },
 
-  async registerWeb3Instance ({ commit, dispatch }) {
-    const userWeb3 = await getWeb3()
-    commit('setWeb3Instance', userWeb3)
+  async registerWeb3 ({ dispatch }) {
+    await loadWeb3Instance()
+    await dispatch('updateWeb3Info')
 
-    if (userWeb3 && userWeb3.web3 && userWeb3.web3().currentProvider.publicConfigStore) {
-      userWeb3.web3().currentProvider.publicConfigStore.on('update', () => {
-        dispatch('refreshWeb3Instance')
+    if (window.web3 && window.web3.currentProvider.publicConfigStore) {
+      window.web3.currentProvider.publicConfigStore.on('update', async () => {
+        await dispatch('updateWeb3Info')
       })
     }
   },
 
-  async refreshWeb3Instance ({ commit }) {
-    const userWeb3 = await getWeb3()
-    commit('setWeb3Instance', userWeb3)
+  async updateWeb3Info ({ commit }) {
+    const web3Instance = window.web3
+    const networkId = await web3Instance.eth.net.getId()
+
+    const requiredNetwork = networkResolver(process.env.NODE_ENV)
+
+    if (requiredNetwork.networkId !== networkId) {
+      eventHub.$emit(eventHub.eventMetamaskNetworkError, requiredNetwork.networkName)
+      return
+    }
+
+    const accounts = await web3Instance.eth.getAccounts()
+    const coinbase = accounts[0]
+
+    if (!coinbase) {
+      eventHub.$emit(eventHub.eventMetamaskAccountWasNotFound)
+      return
+    }
+
+    const ethBalanceInWei = await web3Instance.eth.getBalance(coinbase)
+    const ethBalance = web3Instance.utils.fromWei(ethBalanceInWei)
+
+    const aixContract = new web3Instance.eth.Contract(aixContractInfo.ABI, aixContractInfo.ADDRESS)
+
+    const aixBalanceInWei = await aixContract.methods.balanceOf(coinbase).call()
+    const aixBalance = web3Instance.utils.fromWei(aixBalanceInWei)
+
+    commit('setWeb3Info', {
+      networkId,
+      coinbase,
+      ethBalance,
+      aixBalance
+    })
   },
 
   clearWeb3Instance ({ commit }, response) {

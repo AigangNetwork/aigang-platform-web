@@ -148,7 +148,7 @@ export default {
   computed: {
     ...mapGetters(['policy', 'isPolicyLoadingVisible', 'policyLoadingInfo', 'transactionError']),
     isMetamaskLoggedIn () {
-      return !!this.$store.getters['user/web3']
+      return !!window.web3
     },
     deviceData () {
       return this.policy.properties ? JSON.parse(this.policy.properties) : null
