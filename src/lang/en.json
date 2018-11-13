@@ -403,6 +403,7 @@
     "noPolicies": "You do not have any policies yet",
     "noPredictions": "Can not find any predictions",
     "noMyPredictions": "You do not have any predictions for selected filter type",
+    "noPools": "Can not find any pools",
     "upvote": "Upvote",
     "downvote": "Downvote",
     "aix": "AIX",
@@ -726,7 +727,6 @@
       "investedAmount": "Invested Amount",
       "amountPaid": "Amount paid for the insurance",
       "profit": "Profit",
-      "predictedProfit": "Predicted Profit",
       "currentPoolSize": "Current Pool Size",
       "poolSizeGoal": "Pool Size Goal",
       "totalInsuranceProducts": "Total insurance products",
@@ -736,6 +736,22 @@
       "totalPaidForClaims": "Total paid for the claims",
       "totalInvestors": "Total investors",
       "amountPaidForInsurance": "Amount paid for the insurance"
+    },
+    "confirmationDialog": {
+      "title": "Add contribution amount",
+      "maxAllowedAmount": "Max allowed amount",
+      "amount": "Amount",
+      "userNotLoggedIn": "User must be logged in and connected to web3 provider (Metamask, Mist, etc.)",
+      "buttons": {
+        "contribute": "Contribute"
+      },
+      "validation": {
+        "required": "Can not be empty",
+        "shouldBeNumber": "Should be number",
+        "amountInvalid": "Invalid amount. Value e.g. 000000.000000",
+        "shouldBeBiggerThanZero": "Should be greater than zero",
+        "shouldBeLowerOrEqualMaxAllowedAmount": "Exceeds pool amount goal"
+      }
     }
   }
 }

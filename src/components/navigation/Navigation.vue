@@ -71,8 +71,7 @@ export default {
       },
       {
         name: this.$t('navigation.pools'),
-        routeLink: '/pools',
-        disabled: true
+        routeLink: '/pools'
       },
       {
         name: this.$t('navigation.insurance'),

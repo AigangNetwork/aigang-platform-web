@@ -16,19 +16,18 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(investment, index) in investments" :key="index">
-            <td> {{ investment.id | truncate(5)}} </td>
-            <td> {{ investment.insuranceType }} </td>
-            <td> {{ investment.investors }} </td>
-            <td> {{ investment.policies }} </td>
-            <td> {{ investment.invested }} {{ $t('general.aix') }}</td>
-            <td> {{ investment.pool }} {{ $t('general.aix') }}</td>
-            <td> {{ investment.profit }} {{ $t('general.aix') }}</td>
+          <tr v-for="(contribution, index) in contributions.items" :key="index">
+            <td> {{ contribution.id | truncate(5)}} </td>
+            <td> {{ contribution.insuranceType }} </td>
+            <td> {{ contribution.investors }} </td>
+            <td> {{ contribution.policies }} </td>
+            <td> {{ contribution.invested }} {{ $t('general.aix') }}</td>
+            <td> {{ contribution.pool }} {{ $t('general.aix') }}</td>
+            <td> {{ contribution.profit }} {{ $t('general.aix') }}</td>
             <td>
-              <!-- <el-button @click="alert('hello')" class="button">{{$t('data.dataset.comment.commentButton')}}</el-button> -->
-              <span class="investment-list-item-status" :class="{ 'active': investment.status.toUpperCase() === 'ACTIVE',
-                        'closed': investment.status.toUpperCase() === 'CLOSED'}">
-                        {{ investment.status}}
+              <span class="investment-list-item-status" :class="{ 'active': contribution.status.toUpperCase() === 'ACTIVE',
+                        'closed': contribution.status.toUpperCase() === 'CLOSED'}">
+                        {{ contribution.status}}
               </span>
             </td>
 
@@ -44,68 +43,7 @@ import Card from '@/components/Card'
 
 export default {
   components: { Card },
-  data () {
-    return {
-      loading: false,
-      investments: [
-        {
-          id: 'fasdasdfaafdsfasdf',
-          insuranceType: 'Android Device',
-          investors: Math.floor((Math.random() * 1000)),
-          policies: Math.floor((Math.random() * 100)),
-          invested: 25,
-          pool: Math.floor((Math.random() * 10000)),
-          profit: Math.floor((Math.random() * 50)),
-          status: 'Active',
-          rate: 5.43
-        },
-        {
-          id: 'fasdasdfaafdsfasdf',
-          insuranceType: 'Android Device',
-          investors: Math.floor((Math.random() * 1000)),
-          policies: Math.floor((Math.random() * 100)),
-          invested: 25,
-          pool: Math.floor((Math.random() * 10000)),
-          profit: Math.floor((Math.random() * 50)),
-          status: 'Closed',
-          rate: 5.43
-        },
-        {
-          id: 'fasdasdfaafdsfasdf',
-          insuranceType: 'Drones',
-          investors: Math.floor((Math.random() * 1000)),
-          policies: Math.floor((Math.random() * 100)),
-          invested: 25,
-          pool: Math.floor((Math.random() * 10000)),
-          profit: Math.floor((Math.random() * 50)),
-          status: 'Active',
-          rate: 5.43
-        },
-        {
-          id: 'fasdasdfaafdsfasdf',
-          insuranceType: 'Other',
-          investors: Math.floor((Math.random() * 1000)),
-          policies: Math.floor((Math.random() * 100)),
-          invested: 25,
-          pool: Math.floor((Math.random() * 10000)),
-          profit: Math.floor((Math.random() * 50)),
-          status: 'Closed',
-          rate: 5.43
-        },
-        {
-          id: 'fasdasdfaafdsfasdf',
-          insuranceType: 'Other',
-          investors: Math.floor((Math.random() * 1000)),
-          policies: Math.floor((Math.random() * 100)),
-          invested: 25,
-          pool: Math.floor((Math.random() * 10000)),
-          profit: Math.floor((Math.random() * 50)),
-          status: 'Active',
-          rate: 5.43
-        }
-      ]
-    }
-  }
+  props: ['contributions']
 }
 </script>
 <style lang="scss" scoped>

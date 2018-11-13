@@ -1,24 +1,20 @@
 <template>
-  <router-link :to="{ name: 'PoolsProduct', params: { id: '123'}}" class="investment-product-item">
+  <router-link :to="{ name: 'PoolsProduct', params: { id: product.id }}" class="investment-product-item">
     <div class="left-section">
       <span class="title">{{ product.title }}</span>
     </div>
     <div class="right-section">
       <div>
-        <span class="investment-item-label">{{ $t('pools.portfolioInfo.predictedProfit') }}</span>
-        {{ product.predictedProfit }}
-      </div>
-      <div>
         <span class="investment-item-label">{{ $t('pools.portfolioInfo.invested') }}</span>
-        {{ product.investedCount }}
+        {{ product.contributions }}
       </div>
       <div>
         <span class="investment-item-label">{{ $t('pools.portfolioInfo.currentPoolSize') }}</span>
-        {{ product.currentPoolSize }}
+        {{ product.currentPoolSize }} {{ $t('general.aix') }}
       </div>
       <div>
         <span class="investment-item-label">{{ $t('pools.portfolioInfo.poolSizeGoal') }}</span>
-        {{ product.poolSize }}
+        {{ product.goalPoolSize }} {{ $t('general.aix') }}
       </div>
     </div>
   </router-link>
@@ -32,7 +28,6 @@ export default {
   @import '~helpers/variables';
 
   .investment-product-item {
-    width: 85%;
     background: white;
     margin: 0px 25px 0px 25px;
     box-shadow: 0 0 30px 0 #e9f0f6;
@@ -47,12 +42,6 @@ export default {
     justify-content: space-between;
 
     &:hover {
-      /* .right-section {
-        border-bottom: 5px solid $yellow;
-        padding: 15px;
-        padding-right: 30px;
-      } */
-
       .left-section {
         border-left: 5px solid $yellow;
         padding-left: 30px;
@@ -83,7 +72,7 @@ export default {
       flex-wrap: wrap;
 
       div {
-        width: 50%;
+        width: 33%;
         font-size: 16pt;
         font-weight: 600;
         display: flex;

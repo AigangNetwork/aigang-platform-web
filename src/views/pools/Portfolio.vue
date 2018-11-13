@@ -1,26 +1,49 @@
 <template>
-  <div class="aig-card-container portfolio" v-loading="loading">
-
+  <div class="aig-card-container portfolio" v-loading="$store.getters.loading">
     <PortfolioSummarySection />
-
-    <PoolsList />
-
+    <PoolsList :contributions="userContributions"/>
   </div>
 </template>
+
 <script>
 import PortfolioSummarySection from '@/components/pools/PortfolioSummarySection'
 import PoolsList from '@/components/pools/PoolsList'
 
+import { createNamespacedHelpers } from 'vuex'
+const { mapGetters } = createNamespacedHelpers('pools')
+
 export default {
-  components: { PortfolioSummarySection, PoolsList },
+  components: {
+    PortfolioSummarySection,
+    PoolsList
+  },
+  computed: {
+    ...mapGetters(['userContributions'])
+  },
   data () {
     return {
-      loading: false
+      isDataLoaded: false
+    }
+  },
+  async beforeMount () {
+    if (!this.$store.getters['user/isAuthenticated']) {
+      this.$router.push({ name: 'PoolsProducts' })
+    }
+
+    if (!this.isDataLoaded) {
+      await this.loadPage(1)
+      this.isDataLoaded = true
+    }
+  },
+  methods: {
+    async loadPage (page) {
+      this.page = page
+      await this.$store.dispatch('pools/getUserContributions', this.page)
     }
   }
 }
-
 </script>
+
 <style lang="scss">
   @import '~helpers/variables';
 

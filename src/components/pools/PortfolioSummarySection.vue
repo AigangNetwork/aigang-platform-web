@@ -16,16 +16,16 @@
           </div>
           <div class="sub-section aligned">
             <span>{{ $t('pools.portfolioInfo.yourBalance') }}</span>
-            <span class="text-big">{{$store.state.user.userWeb3.aixBalance}}</span>
+            <span class="text-big">{{$store.state.user.userWeb3.aixBalance}} {{ $t('general.aix') }}</span>
           </div>
           <div class="sub-section">
             <div class="aligned">
               <span>{{ $t('pools.portfolioInfo.invested') }}</span>
-              <span class="text-big-medium">{{ invested }}</span>
+              <span class="text-big-medium">{{ invested }} {{ $t('general.aix') }}</span>
             </div>
             <div class="aligned">
               <span>{{ $t('pools.portfolioInfo.claimedProfit') }}</span>
-              <span class="text-big-medium">{{ claimedProfit }}</span>
+              <span class="text-big-medium">{{ claimedProfit }} {{ $t('general.aix') }}</span>
             </div>
           </div>
 
@@ -41,15 +41,15 @@
           </div>
           <div>
             <span class="investment-item-label">{{ $t('pools.portfolioInfo.totalInvestedAmount') }}</span>
-            {{ totalInvested }}
+            {{ totalInvested }} {{ $t('general.aix') }}
           </div>
           <div>
             <span class="investment-item-label">{{ $t('pools.portfolioInfo.totalAmountInReserves') }}</span>
-            {{ reserves }}
+            {{ reserves }} {{ $t('general.aix') }}
           </div>
           <div>
             <span class="investment-item-label">{{ $t('pools.portfolioInfo.totalPaidForClaims') }}</span>
-            {{ paid }}
+            {{ paid }} {{ $t('general.aix') }}
           </div>
           <div>
             <span class="investment-item-label">{{ $t('pools.portfolioInfo.totalInvestors') }}</span>
