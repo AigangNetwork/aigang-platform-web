@@ -9,8 +9,10 @@ export default {
     userForecasts: [],
     prediction: {},
     userForecast: {},
-    statisticsLoading: false,
-    predictionStatistics: {},
+    countPerOutcomeStatisticsLoading: false,
+    amountPerOutcomeStatisticsLoading: false,
+    countPerOutcomeStatistics: {},
+    amountPerOutcomeStatistics: {},
     transactionHash: '',
     transactionError: false
   },

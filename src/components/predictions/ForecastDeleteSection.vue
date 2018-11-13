@@ -1,21 +1,18 @@
 <template>
-  <el-row class="profile-password-container">
-    <el-col>
+  <div>
       <h4 class="info-title">{{ $t('predictions.forecast.deleteForecastTitle') }}</h4>
-    </el-col>
-    <el-col>
       <p>{{ $t('predictions.forecast.deleteForecastBody') }}</p>
-    </el-col>
-    <el-row>
       <el-button @click="dialogVisible = true" class="profile-button">
         {{$t('predictions.forecast.deleteForecast')}}
       </el-button>
-    </el-row>
-
-    <Dialog :title="$t('profile.general.warning')" :body="$t('predictions.forecast.deleteForecastConfirmation')" :on-confirm="deleteHandler"
-      :is-visible="dialogVisible" :on-cancel="cancel" :displayDialog="displayDialog" />
-
-  </el-row>
+      <Dialog
+        :title="$t('profile.general.warning')"
+        :body="$t('predictions.forecast.deleteForecastConfirmation')"
+        :on-confirm="deleteHandler"
+        :is-visible="dialogVisible"
+        :on-cancel="cancel"
+        :displayDialog="displayDialog" />
+  </div>
 </template>
 <script>
 import Dialog from '@/components/common/Dialog'

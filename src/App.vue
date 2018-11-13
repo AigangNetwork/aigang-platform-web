@@ -6,6 +6,8 @@
     </transition>
     <CookiesBar />
     <notification></notification>
+
+    <InsufficientBalanceDialog :showDialog="isInsufficientBalanceDialogVisible" @onButtonClick="onDialogClose"/>
   </div>
 </template>
 
@@ -13,6 +15,7 @@
 import Navigation from '@/components/navigation/Navigation'
 import Notification from '@/components/Notification'
 import CookiesBar from '@/components/CookiesBar'
+import InsufficientBalanceDialog from '@/components/InsufficientBalanceDialog'
 
 export default {
   name: 'App',
@@ -24,9 +27,18 @@ export default {
   components: {
     Navigation,
     Notification,
-    CookiesBar
+    CookiesBar,
+    InsufficientBalanceDialog
+  },
+  methods: {
+    onDialogClose () {
+      this.$store.dispatch('showInsufficientBalanceDialog', false)
+    }
   },
   computed: {
+    isInsufficientBalanceDialogVisible () {
+      return this.$store.getters['insufficientBalanceDialogVisible']
+    },
     appClass () {
       return {
         'aig--authed': this.$store.getters['user/isAuthenticated'],
@@ -37,7 +49,7 @@ export default {
   async mounted () {
     if (this.$store.getters['user/isAuthenticated']) {
       await this.$store.dispatch('user/clearWeb3Instance')
-      this.$store.dispatch('user/registerWeb3Instance')
+      await this.$store.dispatch('user/registerWeb3')
     }
   }
 }

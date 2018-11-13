@@ -2,11 +2,11 @@
   <router-link to="/profile" active-class="aig-bar-active" class="aig-profile" exact>
     <div class="photo">
       {{ $store.state.user.profile.firstName.charAt(0) }}
-    </div>
+  </div>
     <div class="information">
       {{ $store.state.user.profile.firstName }}
-      <div v-if="$store.state.user.userWeb3 && $store.state.user.userWeb3.coinbase" class="balance">{{$store.state.user.userWeb3.aixBalance}}
-        AIX
+      <div class="balance">
+        {{ $store.getters['user/aixBalance'] }} AIX
       </div>
     </div>
   </router-link>

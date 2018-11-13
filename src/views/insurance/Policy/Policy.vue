@@ -111,6 +111,13 @@ export default {
       this.isTermsAndConditionsDialogVisible = value
     },
     insure () {
+      const insufficientBalance = this.$store.getters['user/insufficientBalance']
+
+      if (insufficientBalance) {
+        this.$store.dispatch('showInsufficientBalanceDialog', true)
+        return
+      }
+
       if (this.isMetamaskLoggedIn) {
         this.displayTermsAndConditionsDialog(true)
       } else {
@@ -141,7 +148,7 @@ export default {
   computed: {
     ...mapGetters(['policy', 'isPolicyLoadingVisible', 'policyLoadingInfo', 'transactionError']),
     isMetamaskLoggedIn () {
-      return !!this.$store.getters['user/web3']
+      return !!window.web3
     },
     deviceData () {
       return this.policy.properties ? JSON.parse(this.policy.properties) : null

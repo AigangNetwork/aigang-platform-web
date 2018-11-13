@@ -27,9 +27,9 @@
 
         <div v-if="isPercentageVisible">
           <h4 class="info-title">{{ $t('predictions.predictionStatistics') }}</h4>
-          <OutcomesPercentage v-loading="statisticsLoading" :statistics="predictionStatistics" :resultOutcomeId="prediction.resultOutcomeId"/>
+          <CountPerOutcome v-loading="countPerOutcomeStatisticsLoading" :statistics="countPerOutcomeStatistics" :resultOutcomeId="prediction.resultOutcomeId"/>
+          <AmountPerOutcome v-loading="amountPerOutcomeStatisticsLoading" :statistics="amountPerOutcomeStatistics" :resultOutcomeId="prediction.resultOutcomeId"/>
         </div>
-
       </div>
     </div>
 
@@ -52,7 +52,8 @@
 import PredictionInfoHeader from './PredictionInfoHeader'
 import Card from '@/components/Card'
 import Outcomes from '@/components/predictions/Outcomes'
-import OutcomesPercentage from '@/components/predictions/OutcomesPercentage'
+import CountPerOutcome from '@/components/predictions/CountPerOutcome'
+import AmountPerOutcome from '@/components/predictions/AmountPerOutcome'
 import ConfirmForecastDialog from '@/components/predictions/ConfirmForecastDialog'
 import PaymentConfirmationDialog from '@/components/predictions/PaymentConfirmationDialog'
 import VueMarkdown from 'vue-markdown'
@@ -67,23 +68,33 @@ export default {
     Outcomes,
     ConfirmForecastDialog,
     PaymentConfirmationDialog,
-    OutcomesPercentage,
+    CountPerOutcome,
+    AmountPerOutcome,
     VueMarkdown
   },
   computed: {
-    ...mapGetters(['prediction', 'predictionStatistics', 'statisticsLoading', 'transactionError']),
+    ...mapGetters([
+      'prediction',
+      'countPerOutcomeStatisticsLoading',
+      'amountPerOutcomeStatisticsLoading',
+      'countPerOutcomeStatistics',
+      'amountPerOutcomeStatistics',
+      'transactionError'
+    ]),
     contractLink () {
       return process.env.ETHERSCAN_ADDRESS + process.env.ADDRESS_PATX + this.prediction.marketAddress
     },
     isPercentageVisible () {
-      return this.predictionStatistics && this.prediction.status.toUpperCase() === 'RESOLVED'
+      return (
+        this.prediction.status.toUpperCase() === 'RESOLVED'
+      )
     },
     isOutcomesDisabled () {
       return (
         this.prediction.status === 'paused' ||
         this.prediction.status === 'canceled' ||
-        this.prediction.status === 'pendingPublished' ||
-        this.prediction.status === 'pendingPublish'
+        this.prediction.status === 'pendingPublish' ||
+        this.prediction.status === 'pendingResolve'
       )
     }
   },
@@ -112,6 +123,13 @@ export default {
   },
   methods: {
     onOutcomeSelected (index) {
+      const insufficientBalance = this.$store.getters['user/insufficientBalance']
+
+      if (insufficientBalance) {
+        this.$store.dispatch('showInsufficientBalanceDialog', true)
+        return
+      }
+
       this.prediction.outcomes.map(o => {
         if (o.index === index) {
           this.selectedOutcome = o

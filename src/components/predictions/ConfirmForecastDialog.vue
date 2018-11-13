@@ -16,8 +16,7 @@
           <el-form @submit.prevent.native="submitForm('createForecastForm', createForecast)" :rules="formRules" :model="createForecastForm"
             class="create-forecast-form" ref="createForecastForm">
             <el-form-item prop="amount">
-              <el-input v-model.number="createForecastForm.amount" v-on:keyup.enter="submitForm('createForecastForm', createForecast)"
-                maxlength="10" class="amount-input">
+              <el-input v-model.number="createForecastForm.amount" v-on:keyup.enter="submitForm('createForecastForm', createForecast)" class="amount-input">
                 <template slot="append">{{ $t('general.aix')}}</template>
               </el-input>
             </el-form-item>
@@ -49,7 +48,7 @@ export default {
   props: ['prediction', 'selectedOutcome', 'isVisible', 'displayDialog', 'fee'],
   mixins: [FormMixin],
   data () {
-    let checkAmount = (rule, value, callback) => {
+    const checkAmount = (rule, value, callback) => {
       if (value <= 0) {
         return callback(new Error(this.$t('predictions.prediction.confirmationDialog.validation.shouldBeBiggerThanZero')))
       }
@@ -79,6 +78,11 @@ export default {
         {
           validator: checkAmount,
           trigger: 'blur'
+        },
+        {
+          pattern: /^(?:\d{1,6}\.\d{1,6}|[0-9]\d{0,5})$/,
+          message: this.$t('predictions.prediction.confirmationDialog.validation.amountInvalid'),
+          trigger: 'blur'
         }]
       }
     }
@@ -93,7 +97,7 @@ export default {
       }
     },
     forecastButtonEnabled () {
-      return !!((this.$store.getters['user/isAuthenticated'] && this.$store.getters['user/web3']))
+      return !!(this.$store.getters['user/isAuthenticated'] && window.web3)
     }
   },
   methods: {
