@@ -1,11 +1,12 @@
 <template>
   <router-link to="/profile" active-class="aig-bar-active" class="aig-profile" exact>
     <div class="photo">
+
       {{ $store.state.user.profile.firstName.charAt(0) }}
   </div>
     <div class="information">
       {{ $store.state.user.profile.firstName }}
-      <div class="balance">
+      <div v-if="$store.getters['user/isWeb3Enabled']" class="balance">
         {{ $store.getters['user/aixBalance'] }} AIX
       </div>
     </div>

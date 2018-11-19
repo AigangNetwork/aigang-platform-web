@@ -86,7 +86,7 @@ export default {
     }
   },
 
-  async updateWeb3Info ({ commit }) {
+  async updateWeb3Info ({ commit, state }) {
     const web3Instance = window.web3
     const networkId = await web3Instance.eth.net.getId()
 
@@ -101,7 +101,11 @@ export default {
     const coinbase = accounts[0]
 
     if (!coinbase) {
-      eventHub.$emit(eventHub.eventMetamaskAccountWasNotFound)
+      if (state.isWeb3Enabled) {
+        eventHub.$emit(eventHub.eventMetamaskAccountWasNotFound)
+        commit('clearWeb3Instance')
+      }
+
       return
     }
 

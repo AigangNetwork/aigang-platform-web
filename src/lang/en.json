@@ -418,6 +418,8 @@
     "cookiesMessage": "This website uses cookies to ensure the best user experience on. If you want to continue using cookies, press accept.",
     "cookiesTitle": "Cookie Policy for Aigang Platform",
     "readMoreCookies": "Read more.",
+    "insufficientBalance": "Insufficient balance",
+    "userNotLoggedIn": "User must be logged in and connected to web3 provider (Metamask, Mist, etc.)",
     "insufficientBalanceDialog": {
       "title": "Insufficient balance",
       "qaBody": "Your wallet balance is insufficient. Please generate test AIX tokens if you want to use this website functionality. You can generate them by using following link bellow:",
@@ -527,8 +529,7 @@
           "shouldBeBiggerThanZero": "Should be greater than zero",
           "shouldBeBiggerThanFee": "Should be greater than fee",
           "amountInvalid": "Invalid amount. Value e.g. 000000.000000"
-        },
-        "userNotLoggedIn": "User must be logged in and connected to web3 provider (Metamask, Mist, etc.)"
+        }
       }
     },
     "forecast": {
