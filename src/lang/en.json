@@ -361,6 +361,7 @@
     "predictions": "Predictions",
     "pools": "Pools",
     "insurance": "Insurance",
+    "bugbounty": "Bug Bounty",
     "login": "Sign Up/Log In"
   },
   "status": {
@@ -426,6 +427,11 @@
       "qaFaucetLink": "https://aigangnetwork.github.io/testaix/",
       "productionBody": "Your wallet balance is insufficient. Please buy AIX tokens and try again.",
       "button": "Got It"
+    },
+    "bugBountyDialog": {
+      "header": "Bug bounty program started!",
+      "text": "Do not miss a chance and get AIX tokens for your bug reports.",
+      "button": "Get started"
     }
   },
   "errors": {

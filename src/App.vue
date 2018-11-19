@@ -7,13 +7,16 @@
     <CookiesBar />
     <notification></notification>
 
-    <InsufficientBalanceDialog :showDialog="isInsufficientBalanceDialogVisible" @onButtonClick="onDialogClose"/>
+    <InsufficientBalanceDialog :showDialog="isInsufficientBalanceDialogVisible" @onButtonClick="onInsufficientBalanceDialogClose"/>
+
+    <BugBountyPopup :showDialog="isBugBountyDialogVisible" @onButtonClick="onBugBountyDialogClose"/>
   </div>
 </template>
 
 <script>
 import Navigation from '@/components/navigation/Navigation'
 import Notification from '@/components/Notification'
+import BugBountyPopup from '@/components/BugBountyPopup'
 import CookiesBar from '@/components/CookiesBar'
 import InsufficientBalanceDialog from '@/components/InsufficientBalanceDialog'
 
@@ -27,17 +30,24 @@ export default {
   components: {
     Navigation,
     Notification,
+    BugBountyPopup,
     CookiesBar,
     InsufficientBalanceDialog
   },
   methods: {
-    onDialogClose () {
+    onInsufficientBalanceDialogClose () {
       this.$store.dispatch('showInsufficientBalanceDialog', false)
+    },
+    onBugBountyDialogClose () {
+      this.$store.dispatch('showBugBountyDialog', false)
     }
   },
   computed: {
     isInsufficientBalanceDialogVisible () {
       return this.$store.getters['insufficientBalanceDialogVisible']
+    },
+    isBugBountyDialogVisible () {
+      return this.$store.getters['bugBountyDialogVisible']
     },
     appClass () {
       return {

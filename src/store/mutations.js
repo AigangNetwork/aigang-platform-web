@@ -4,5 +4,8 @@ export default {
   },
   showInsufficientBalanceDialog (state, visible) {
     state.insufficientBalanceDialogVisible = visible
+  },
+  showBugBountyDialog (state, visible) {
+    state.bugBountyDialogVisible = visible
   }
 }
