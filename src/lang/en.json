@@ -724,7 +724,23 @@
       "allPools": "All Pools",
       "portfolio": "Portfolio"
     },
-    "statuses": {
+    "product": {
+      "termsAndConditions": "Terms and Conditions",
+      "agreeWithTermsAndConditions": "You have to read terms and conditions to invest",
+      "description": "Description",
+      "noDescription": "There is no description for this pool"
+    },
+    "contribution": {
+      "description": "Description",
+      "noDescription": "There is no description for this pool",
+      "delete": "Delete contribution",
+      "deleteMessage": "This contribution and all data associated with it will be deleted from the plaform. You won't be able to revert this action later on.",
+      "deleteButtonText": "Delete",
+      "deleteContributionDialog": {
+        "body": "Are you sure you want to delete this contribution?"
+      }
+    },
+    "poolStatuses": {
       "active": "Active",
       "distributing": "Distributing",
       "funded": "Funded",
@@ -732,6 +748,18 @@
       "canceled": "Canceled",
       "closed": "Closed"
     },
+    "poolContributionStatuses": {
+      "draft":"Draft",
+      "pendingPayment": "Pending payment",
+      "paid": "Paid",
+      "canceled": "Canceled",
+      "availablePayout": "Available Payout",
+      "pendingPayout": "Pending Payout",
+      "rewardPaidout": "Reward Paidout",
+      "availableRefund": "Available Refund",
+      "refundPaidout": "Refund Paidout"
+    },
+
     "products": {
       "invested": "Invested",
       "start": "Starting",
@@ -740,23 +768,14 @@
       "poolSizeGoal": "Pool Size Goal",
       "status": "Status"
     },
-    "noDescription": "There is no description for this pool",
-    "description": "Description",
     "invest": "Invest",
-    "contribution": {
-      "deleteForecastTitle": "Delete your contribution",
-      "deleteForecastBody": "This contribution and all data associated with it will be deleted from the plaform. You won't be able to revert this action later on.",
-      "deleteContribution": "Delete",
-      "deleteContributionDialog": {
-        "body": "Are you sure you want to delete this contribution?"
-      }
-    },
     "portfolioInfo": {
       "yourAddress": "Your address",
       "yourBalance": "Your balance",
       "claimedProfit": "Claimed profit",
       "insuranceType": "Insurance type",
       "investors": "Investors",
+      "myInvestment": "My investment",
       "investedAmount": "Invested Amount",
       "goalAmount": "Goal",
       "status": "Status"

@@ -1,9 +1,9 @@
 <template>
   <div>
-      <h4 class="info-title">{{ $t('pools.contribution.deleteForecastTitle') }}</h4>
-      <p>{{ $t('pools.contribution.deleteForecastBody') }}</p>
+      <h4 class="info-title">{{ $t('pools.contribution.delete') }}</h4>
+      <p>{{ $t('pools.contribution.deleteMessage') }}</p>
       <el-button @click="dialogVisible = true" class="profile-button">
-        {{$t('pools.contribution.deleteContribution')}}
+        {{$t('pools.contribution.deleteButtonText')}}
       </el-button>
       <Dialog
         :title="$t('profile.general.warning')"

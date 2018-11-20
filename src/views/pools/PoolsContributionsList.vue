@@ -8,23 +8,14 @@
               <tr>
                 <th>{{ $t('pools.portfolioInfo.insuranceType') }}</th>
                 <th>{{ $t('pools.portfolioInfo.investors') }}</th>
+                <th>{{ $t('pools.portfolioInfo.myInvestment') }}</th>
                 <th>{{ $t('pools.portfolioInfo.investedAmount') }}</th>
                 <th>{{ $t('pools.portfolioInfo.goalAmount') }}</th>
                 <th>{{ $t('pools.portfolioInfo.status') }}</th>
               </tr>
             </thead>
             <tbody>
-              <tr v-for="(contribution, index) in userContributions.items" :key="index" @click="navigateToContribution(contribution.id)">
-                <td class="title">{{ contribution.poolName }}</td>
-                <td>{{ contribution.investors }}</td>
-                <td>{{ contribution.investedAmount }} {{ $t('general.aix') }}</td>
-                <td>{{ contribution.goalAmount }} {{ $t('general.aix') }}</td>
-                <td>
-                  <span class="investment-list-item-status" :class="{'active': contribution.status.toUpperCase() === 'ACTIVE', 'closed': contribution.status.toUpperCase() === 'CLOSED'}">
-                    {{ contribution.status}}
-                  </span>
-                </td>
-              </tr>
+              <PoolsContributionsListItem v-for="(contribution, index) in userContributions.items" :key="index" :contribution="contribution" />
             </tbody>
           </table>
         </div>
@@ -39,6 +30,7 @@
 <script>
 import Card from '@/components/Card'
 import Pagination from '@/components/Pagination'
+import PoolsContributionsListItem from './PoolsContributionsListItem'
 
 import { createNamespacedHelpers } from 'vuex'
 const { mapGetters } = createNamespacedHelpers('pools')
@@ -46,7 +38,8 @@ const { mapGetters } = createNamespacedHelpers('pools')
 export default {
   components: {
     Card,
-    Pagination
+    Pagination,
+    PoolsContributionsListItem
   },
   computed: {
     ...mapGetters(['userContributions'])
@@ -67,9 +60,6 @@ export default {
     async loadPage (page) {
       this.page = page
       await this.$store.dispatch('pools/getUserContributions', this.page)
-    },
-    navigateToContribution (id) {
-      this.$router.push({ name: 'PoolContribution', params: { id }})
     }
   }
 }
@@ -125,54 +115,6 @@ export default {
           border-bottom: 1px solid $gray;
         }
       }
-    }
-
-    tbody {
-      tr {
-        border-top: 1px solid $gray;
-        cursor: pointer; 
-
-        &:hover {
-          background: $transparent-light-yellow;
-        }
-
-        td {
-          padding: 10px 5px 10px 0;
-          text-align: center;
-          min-width: 100px;
-          height: 40px;
-
-          &.title {
-            text-align: left;
-            font-weight: 500;
-          }
-
-          .button {
-            margin-top: 0px;
-          }
-
-          &:first-child {
-            padding-left: 15px;
-          }
-        }
-      }
-    }
-  }
-
-  .investment-list-item-status {
-    border: 1px dashed $button-purple;
-    padding: 5px 10px;
-    min-width: 80px;
-    display: inline-block;
-    text-transform: uppercase;
-
-    &.active {
-      color: $button-purple;
-    }
-
-    &.closed {
-      border: 1px dashed $gray;
-      color: $gray;
     }
   }
 </style>

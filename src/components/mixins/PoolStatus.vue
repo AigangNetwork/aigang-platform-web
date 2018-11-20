@@ -10,17 +10,17 @@ export default {
 
       switch (this.product.status.toUpperCase()) {
         case 'ACTIVE':
-          return this.$t('pools.statuses.active')
+          return this.$t('pools.poolStatuses.active')
         case 'DISTRIBUTING':
-          return this.$t('pools.statuses.distributing')
+          return this.$t('pools.poolStatuses.distributing')
         case 'FUNDED':
-          return this.$t('pools.statuses.funded')
+          return this.$t('pools.poolStatuses.funded')
         case 'PAUSED':
-          return this.$t('pools.statuses.paused')
+          return this.$t('pools.poolStatuses.paused')
         case 'CANCELED':
-          return this.$t('pools.statuses.canceled')
+          return this.$t('pools.poolStatuses.canceled')
         case 'CLOSED':
-          return this.$t('pools.statuses.closed')
+          return this.$t('pools.poolStatuses.closed')
         default:
           return DEFAULT
       }

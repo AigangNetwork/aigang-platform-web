@@ -11,10 +11,19 @@
 
     <div class="aig-info-content-container" v-if="isDataLoaded">
       <div class="aig-info-content">
-        <h4 class="info-title">{{ $t('pools.description') }}</h4>
-        <vue-markdown class="markup-content" :html="false" :source="currentPool.description || $t('pools.noDescription')"></vue-markdown>
+        <h4 class="info-title">{{ $t('pools.product.description') }}</h4>
+        <vue-markdown class="markup-content" :html="false" :source="currentPool.description || $t('pools.product.noDescription')"></vue-markdown>
 
-        <el-button class="aig-button" type="primary" @click.prevent.native="contribute">{{ $t('pools.invest') }}</el-button>
+        <h4 class="info-title">{{ $t('pools.product.termsAndConditions') }}</h4>
+        <ScrollableMarkupText class="scrollable-text" :text="currentPool.termsAndConditions" @scrolledToBottom="onScrolledToBottom" />
+
+        <el-tooltip :disabled="!investButtonDisabled" :content="$t('pools.product.agreeWithTermsAndConditions')">
+          <span class="wrapper el-button">
+            <el-button :disabled="investButtonDisabled" @click="contribute" class="aig-button" type="primary">
+              {{ $t('pools.invest') }}
+            </el-button>
+          </span>
+        </el-tooltip>
 
         <ConfirmContributionDialog
           :isVisible="isConfirmContributionDialogVisible"
@@ -31,6 +40,7 @@
 import ConfirmContributionDialog from '@/components/pools/ConfirmContributionDialog'
 import VueMarkdown from 'vue-markdown'
 import PoolProductHeader from './PoolProductHeader'
+import ScrollableMarkupText from '@/components/insurance/ScrollableMarkupText'
 
 import { createNamespacedHelpers } from 'vuex'
 const { mapGetters } = createNamespacedHelpers('pools')
@@ -39,13 +49,15 @@ export default {
   components: {
     ConfirmContributionDialog,
     VueMarkdown,
-    PoolProductHeader
+    PoolProductHeader,
+    ScrollableMarkupText
   },
   data () {
     return {
       isDataLoaded: false,
       isConfirmContributionDialogVisible: false,
-      headerInfo: {}
+      headerInfo: {},
+      investButtonDisabled: true
     }
   },
   computed: {
@@ -79,6 +91,9 @@ export default {
       })
 
       this.$router.push({ name: 'Portfolio' })
+    },
+    onScrolledToBottom () {
+      this.investButtonDisabled = false
     }
   }
 }
@@ -138,4 +153,16 @@ export default {
     font-size: 11pt;
     font-weight: 300;
   }
+
+  .aig-info-content-container {
+    .scrollable-text {
+      height: 200px;
+    }
+
+    .wrapper {
+      width: 100%;
+      margin-top: 10px;
+    }
+  }
+
 </style>

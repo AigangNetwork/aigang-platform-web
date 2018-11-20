@@ -11,8 +11,8 @@
 
     <div class="aig-info-content-container" v-if="isDataLoaded">
       <div class="aig-info-content">
-        <h4 class="info-title">{{ $t('pools.description') }}</h4>
-        <vue-markdown class="markup-content" :html="false" :source="currentContribution.poolDescription || $t('pools.noDescription')"></vue-markdown>
+        <h4 class="info-title">{{ $t('pools.contribution.description') }}</h4>
+        <vue-markdown class="markup-content" :html="false" :source="currentContribution.poolDescription || $t('pools.contribution.noDescription')"></vue-markdown>
 
         <ContributionDeleteSection v-if="isContributionDraft" />
       </div>

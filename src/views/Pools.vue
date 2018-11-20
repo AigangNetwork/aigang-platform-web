@@ -32,8 +32,7 @@
 export default {
   data () {
     return {
-      dataMenu: [
-      {
+      dataMenu: [{
         name: this.$t('pools.menu.allPools'),
         routeLink: {
           name: 'PoolsProductsList'
