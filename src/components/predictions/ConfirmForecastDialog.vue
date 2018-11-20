@@ -13,11 +13,20 @@
 
         <div>
           <h4 class="info-title">{{ $t('predictions.prediction.confirmationDialog.amount') }}:</h4>
-          <el-form @submit.prevent.native="submitForm('createForecastForm', createForecast)" :rules="formRules" :model="createForecastForm"
-            class="create-forecast-form" ref="createForecastForm">
+          <el-form
+            @submit.prevent.native="submitForm('createForecastForm', createForecast)"
+            :rules="formRules"
+            :model="createForecastForm"
+            class="create-forecast-form"
+            ref="createForecastForm"
+          >
             <el-form-item prop="amount">
-              <el-input v-model.number="createForecastForm.amount" v-on:keyup.enter="submitForm('createForecastForm', createForecast)" class="amount-input">
-                <template slot="append">{{ $t('general.aix')}}</template>
+              <el-input
+                v-model.number="createForecastForm.amount"
+                v-on:keyup.enter="submitForm('createForecastForm', createForecast)"
+                class="amount-input"
+              >
+                <template slot="append">{{ $t('general.aix') }}</template>
               </el-input>
             </el-form-item>
           </el-form>
@@ -28,13 +37,26 @@
           <el-tooltip
             :disabled="forecastButtonEnabled"
             effect="dark"
-            :content="$t('predictions.prediction.confirmationDialog.userNotLoggedIn')"
-            placement="top">
-            <span class="wrapper el-button">
-              <el-button class="button" :disabled="!forecastButtonEnabled" type="primary" @click.prevent.native="submitForm('createForecastForm', createForecast)">
-                {{ $t('predictions.prediction.confirmationDialog.buttons.forecast')}}
-              </el-button>
-            </span>
+            :content="$t('general.userNotLoggedIn')"
+            placement="top"
+          >
+            <el-tooltip
+              :disabled="isBalanceEnough"
+              effect="dark"
+              :content="$t('general.insufficientBalance')"
+              placement="top"
+            >
+              <span class="wrapper el-button">
+                <el-button
+                  class="button"
+                  :disabled="!forecastButtonEnabled || !isBalanceEnough"
+                  type="primary"
+                  @click.prevent.native="submitForm('createForecastForm', createForecast)"
+                >
+                  {{ $t('predictions.prediction.confirmationDialog.buttons.forecast') }}
+                </el-button>
+              </span>
+            </el-tooltip>
           </el-tooltip>
         </div>
       </div>
@@ -50,11 +72,15 @@ export default {
   data () {
     const checkAmount = (rule, value, callback) => {
       if (value <= 0) {
-        return callback(new Error(this.$t('predictions.prediction.confirmationDialog.validation.shouldBeBiggerThanZero')))
+        return callback(
+          new Error(this.$t('predictions.prediction.confirmationDialog.validation.shouldBeBiggerThanZero'))
+        )
       }
 
       if (value <= this.fee) {
-        return callback(new Error(this.$t('predictions.prediction.confirmationDialog.validation.shouldBeBiggerThanFee')))
+        return callback(
+          new Error(this.$t('predictions.prediction.confirmationDialog.validation.shouldBeBiggerThanFee'))
+        )
       }
 
       callback()
@@ -65,25 +91,27 @@ export default {
         amount: ''
       },
       formRules: {
-        amount: [{
-          required: true,
-          message: this.$t('predictions.prediction.confirmationDialog.validation.required'),
-          trigger: 'blur'
-        },
-        {
-          type: 'number',
-          message: this.$t('predictions.prediction.confirmationDialog.validation.shouldBeNumber'),
-          trigger: 'blur'
-        },
-        {
-          validator: checkAmount,
-          trigger: 'blur'
-        },
-        {
-          pattern: /^(?:\d{1,6}\.\d{1,6}|[0-9]\d{0,5})$/,
-          message: this.$t('predictions.prediction.confirmationDialog.validation.amountInvalid'),
-          trigger: 'blur'
-        }]
+        amount: [
+          {
+            required: true,
+            message: this.$t('predictions.prediction.confirmationDialog.validation.required'),
+            trigger: 'blur'
+          },
+          {
+            type: 'number',
+            message: this.$t('predictions.prediction.confirmationDialog.validation.shouldBeNumber'),
+            trigger: 'blur'
+          },
+          {
+            validator: checkAmount,
+            trigger: 'blur'
+          },
+          {
+            pattern: /^(?:\d{1,6}\.\d{1,6}|[0-9]\d{0,5})$/,
+            message: this.$t('predictions.prediction.confirmationDialog.validation.amountInvalid'),
+            trigger: 'blur'
+          }
+        ]
       }
     }
   },
@@ -97,7 +125,10 @@ export default {
       }
     },
     forecastButtonEnabled () {
-      return !!((this.$store.getters['user/isAuthenticated'] && this.$store.getters['user/web3']))
+      return !!(this.$store.getters['user/isAuthenticated'] && this.$store.getters['user/isWeb3Enabled'])
+    },
+    isBalanceEnough () {
+      return this.$store.getters['user/aixBalance'] >= this.createForecastForm.amount
     }
   },
   methods: {
@@ -117,7 +148,6 @@ export default {
     }
   }
 }
-
 </script>
 <style lang="scss" scoped>
   .dialog-body {

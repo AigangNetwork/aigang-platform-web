@@ -20,8 +20,17 @@
             </el-row>
 
             <el-row class="footer">
-              <el-button v-if="policy.status && policy.status.toUpperCase() === 'DRAFT'" class="aig-button" type="primary" @click.prevent.native="insure">{{
-                $t('insurance.policy.pay') }}</el-button>
+
+              <el-tooltip v-if="policy.status && policy.status.toUpperCase() === 'DRAFT'" :disabled="$store.getters['user/isWeb3Enabled']" effect="dark"
+                :content="$t('general.userNotLoggedIn')" placement="top">
+              <el-tooltip :disabled="isBalanceEnough" effect="dark" :content="$t('general.insufficientBalance')" placement="top">
+                <span class="wrapper el-button">
+                  <el-button :disabled="!$store.getters['user/isWeb3Enabled'] || !isBalanceEnough" class="aig-button" type="primary" @click.prevent.native="insure">
+                    {{ $t('insurance.policy.pay') }}
+                  </el-button>
+                </span>
+              </el-tooltip>
+              </el-tooltip>
 
               <el-col v-else-if="policy.status && policy.status.toUpperCase() === 'PAID'">
                 <el-button class="aig-button" type="primary" @click.prevent.native="verifyClaim">
@@ -111,13 +120,6 @@ export default {
       this.isTermsAndConditionsDialogVisible = value
     },
     insure () {
-      const insufficientBalance = this.$store.getters['user/insufficientBalance']
-
-      if (insufficientBalance) {
-        this.$store.dispatch('showInsufficientBalanceDialog', true)
-        return
-      }
-
       if (this.isMetamaskLoggedIn) {
         this.displayTermsAndConditionsDialog(true)
       } else {
@@ -148,7 +150,7 @@ export default {
   computed: {
     ...mapGetters(['policy', 'isPolicyLoadingVisible', 'policyLoadingInfo', 'transactionError']),
     isMetamaskLoggedIn () {
-      return !!this.$store.getters['user/web3']
+      return !!window.web3
     },
     deviceData () {
       return this.policy.properties ? JSON.parse(this.policy.properties) : null
@@ -161,6 +163,9 @@ export default {
         const status = this.policy.status.toUpperCase()
         return status === 'DRAFT'
       }
+    },
+    isBalanceEnough () {
+      return this.policy.premium <= this.$store.getters['user/aixBalance']
     }
   },
   async mounted () {

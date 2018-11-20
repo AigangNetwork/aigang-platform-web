@@ -14,6 +14,7 @@ export const initialUserState = () => {
     transactions: {},
     emailPermissionGroups: {},
     userWeb3: {},
+    isWeb3Enabled: false,
     insufficientBalance: false
   }
 }

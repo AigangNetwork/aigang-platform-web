@@ -19,7 +19,8 @@ export default new Vuex.Store({
   strict: process.env.NODE_ENV !== 'production' || process.env.NODE_ENV !== 'qa',
   state: {
     loading: false,
-    insufficientBalanceDialogVisible: false
+    insufficientBalanceDialogVisible: false,
+    bugBountyDialogVisible: true
   },
   mutations,
   getters,

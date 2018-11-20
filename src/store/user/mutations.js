@@ -16,19 +16,17 @@ export default {
     state.profile.userName = payload.data.profile.userName
   },
 
-  setWeb3Instance (state, payload) {
-    state.userWeb3 = {
-      ...payload
-    }
+  setWeb3Info (state, payload) {
+    state.userWeb3 = payload
 
-    const balance = parseInt(state.userWeb3.aixBalance, 10)
-
-    state.userWeb3.aixBalance = balance
-    state.insufficientBalance = balance === 0
+    state.userWeb3.aixBalance = parseInt(state.userWeb3.aixBalance, 10)
+    state.insufficientBalance = state.userWeb3.aixBalance === 0
+    state.isWeb3Enabled = !!state.userWeb3
   },
 
   clearWeb3Instance (state) {
     state.userWeb3 = {}
+    state.isWeb3Enabled = false
   },
 
   setEmailOptOut (state, payload) {

@@ -4,6 +4,7 @@ export default {
   wallets: state => state.wallets,
   transactions: state => state.transactions,
   emailPermissionGroups: state => state.emailPermissionGroups,
-  web3: state => (state.userWeb3.web3 ? state.userWeb3.web3() : null),
-  insufficientBalance: state => state.insufficientBalance
+  insufficientBalance: state => state.insufficientBalance,
+  aixBalance: state => (state.userWeb3.aixBalance ? state.userWeb3.aixBalance : 0),
+  isWeb3Enabled: state => state.isWeb3Enabled
 }
