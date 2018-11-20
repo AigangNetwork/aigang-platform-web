@@ -16,6 +16,7 @@ router.beforeEach((to, from, next) => {
 
   if (authRequired) {
     if (!store.getters['user/isAuthenticated']) {
+      store.dispatch('resetRootState')
       next({ path: '/login' })
     } else {
       next()
