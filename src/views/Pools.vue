@@ -12,7 +12,7 @@
             </span>
           </transition>
           <ul>
-            <li v-for="item in dataMeniu" :key="item.name">
+            <li v-for="item in dataMenu" :key="item.name">
               <router-link :class="{'aig-link-disabled': item.disabled && !$store.getters['user/isAuthenticated']}"
                 @click.native="collapseSideMenu" active-class="aig-menu-active" :to="item.routeLink">{{ item.name }}</router-link>
             </li>
@@ -32,18 +32,18 @@
 export default {
   data () {
     return {
-      dataMeniu: [{
-        name: this.$t('pools.portfolio'),
-        routeLink: { name: 'Portfolio' },
-        active: true
-      },
+      dataMenu: [
       {
-        name: this.$t('pools.products'),
+        name: this.$t('pools.menu.allPools'),
         routeLink: {
-          name: 'PoolsProducts'
+          name: 'PoolsProductsList'
         },
         active: false,
         disabled: true
+      }, {
+        name: this.$t('pools.menu.portfolio'),
+        routeLink: { name: 'Portfolio' },
+        active: true
       }],
       showDialog: false,
       isMenuOpen: false
@@ -51,10 +51,10 @@ export default {
   },
   methods: {
     selectMenu (index) {
-      this.dataMeniu.forEach(function (val, key) {
+      this.dataMenu.forEach(function (val, key) {
         val.active = false
       })
-      this.dataMeniu[index].active = true
+      this.dataMenu[index].active = true
     },
     openSideMenu () {
       this.isMenuOpen = !this.isMenuOpen

@@ -1,7 +1,8 @@
 import Pools from '@/views/Pools'
 import Portfolio from '@/views/pools/Portfolio'
-import PoolsProducts from '@/views/pools/PoolsProducts'
+import PoolsProductsList from '@/views/pools/PoolsProductsList'
 import PoolsProduct from '@/views/pools/PoolsProduct'
+import PoolContribution from '@/views/pools/PoolContribution'
 
 export default [
   {
@@ -11,7 +12,7 @@ export default [
       {
         name: 'Pools',
         path: '',
-        redirect: '/pools/portfolio'
+        redirect: '/pools/all'
       },
       {
         name: 'Portfolio',
@@ -22,9 +23,9 @@ export default [
         }
       },
       {
-        name: 'PoolsProducts',
-        path: '/pools/products',
-        component: PoolsProducts
+        name: 'PoolsProductsList',
+        path: '/pools/all',
+        component: PoolsProductsList
       }
     ]
   },
@@ -32,5 +33,10 @@ export default [
     path: '/pools/products/:id',
     component: PoolsProduct,
     name: 'PoolsProduct'
+  },
+  {
+    path: '/pools/contributions/:id',
+    component: PoolContribution,
+    name: 'PoolContribution'
   }
 ]

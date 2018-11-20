@@ -720,29 +720,46 @@
     }
   },
   "pools": {
-    "portfolio": "Portfolio",
-    "products": "Products",
+    "menu": {
+      "allPools": "All Pools",
+      "portfolio": "Portfolio"
+    },
+    "statuses": {
+      "active": "Active",
+      "distributing": "Distributing",
+      "funded": "Funded",
+      "paused": "Paused",
+      "canceled": "Canceled",
+      "closed": "Closed"
+    },
+    "products": {
+      "invested": "Invested",
+      "start": "Starting",
+      "end": "Ending",
+      "currentPoolSize": "Current Pool Size",
+      "poolSizeGoal": "Pool Size Goal",
+      "status": "Status"
+    },
+    "noDescription": "There is no description for this pool",
+    "description": "Description",
     "invest": "Invest",
+    "contribution": {
+      "deleteForecastTitle": "Delete your contribution",
+      "deleteForecastBody": "This contribution and all data associated with it will be deleted from the plaform. You won't be able to revert this action later on.",
+      "deleteContribution": "Delete",
+      "deleteContributionDialog": {
+        "body": "Are you sure you want to delete this contribution?"
+      }
+    },
     "portfolioInfo": {
       "yourAddress": "Your address",
       "yourBalance": "Your balance",
-      "invested": "Invested",
       "claimedProfit": "Claimed profit",
       "insuranceType": "Insurance type",
       "investors": "Investors",
-      "policies": "Policies",
       "investedAmount": "Invested Amount",
-      "amountPaid": "Amount paid for the insurance",
-      "profit": "Profit",
-      "currentPoolSize": "Current Pool Size",
-      "poolSizeGoal": "Pool Size Goal",
-      "totalInsuranceProducts": "Total insurance products",
-      "totalPolicies": "Total policies",
-      "totalInvestedAmount": "Total invested amount",
-      "totalAmountInReserves": "Total amount in reserves",
-      "totalPaidForClaims": "Total paid for the claims",
-      "totalInvestors": "Total investors",
-      "amountPaidForInsurance": "Amount paid for the insurance"
+      "goalAmount": "Goal",
+      "status": "Status"
     },
     "confirmationDialog": {
       "title": "Add contribution amount",

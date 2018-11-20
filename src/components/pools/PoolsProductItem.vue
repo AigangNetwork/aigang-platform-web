@@ -1,98 +1,58 @@
 <template>
-  <router-link :to="{ name: 'PoolsProduct', params: { id: product.id }}" class="investment-product-item">
-    <div class="left-section">
-      <span class="title">{{ product.title }}</span>
-    </div>
-    <div class="right-section">
-      <div>
-        <span class="investment-item-label">{{ $t('pools.portfolioInfo.invested') }}</span>
-        {{ product.contributions }}
+  <router-link :to="{ name: 'PoolsProduct', params: { id: product.id }}">
+      <div class="aig-list-item">
+        <div class="title">{{ product.title }}</div>
+        <div class="aig-list-item-body">
+          <div class="aig-list-info-item">
+            <div class="title">
+              <p class="title">{{ $t('pools.products.invested') }}:</p>
+            </div>
+            <div class="content">{{ product.contributions }}</div>
+          </div>
+
+          <div class="aig-list-info-item">
+            <div class="title">
+              <p class="title">{{ $t('pools.products.currentPoolSize') }}:</p>
+            </div>
+            <div class="content">{{ product.currentPoolSize }} {{ $t('general.aix') }}</div>
+          </div>
+
+          <div class="aig-list-info-item-date" v-if="product.status.toUpperCase() === 'PAUSED'">
+            <div class="title">
+              <p class="title">{{ $t('pools.products.start') }}:</p>
+            </div>
+            <div class="content"><Date :dateUtc="product.startDateUtc" /></div>
+          </div>
+
+          <div class="aig-list-info-item-date" v-else-if="product.status.toUpperCase() === 'ACTIVE'">
+            <div class="title">
+              <p class="title">{{ $t('pools.products.end') }}:</p>
+            </div>
+            <div class="content"><Date :dateUtc="product.endDateUtc" /></div>
+          </div>
+
+          <div class="aig-list-info-item-status">
+            <div class="title">
+              <p class="title">{{ $t('pools.products.status') }}:</p>
+            </div>
+            <div class="content">{{ status | uppercase }}</div>
+          </div>
+        </div>
       </div>
-      <div>
-        <span class="investment-item-label">{{ $t('pools.portfolioInfo.currentPoolSize') }}</span>
-        {{ product.currentPoolSize }} {{ $t('general.aix') }}
-      </div>
-      <div>
-        <span class="investment-item-label">{{ $t('pools.portfolioInfo.poolSizeGoal') }}</span>
-        {{ product.goalPoolSize }} {{ $t('general.aix') }}
-      </div>
-    </div>
   </router-link>
 </template>
 <script>
+import Date from '@/components/Date'
+import PoolStatus from '@/components/mixins/PoolStatus'
+
 export default {
-  props: ['product']
+  props: ['product'],
+  mixins: [PoolStatus],
+  components: {
+    Date
+  }
 }
 </script>
 <style lang="scss" scoped>
   @import '~helpers/variables';
-
-  .investment-product-item {
-    background: white;
-    margin: 0px 25px 0px 25px;
-    box-shadow: 0 0 30px 0 #e9f0f6;
-    border: 1px solid #e5f0ff;
-    display: flex;
-    font-family: $font-primary;
-    color: $purple;
-
-    height: 150px;
-    margin-bottom: 20px;
-    flex-direction: row;
-    justify-content: space-between;
-
-    &:hover {
-      .left-section {
-        border-left: 5px solid $yellow;
-        padding-left: 30px;
-      }
-    }
-
-    .left-section,
-    .right-section {
-      padding: 20px;
-      transition: 200ms all;
-    }
-
-    .left-section {
-      display: flex;
-      justify-content: center;
-      flex-direction: column;
-      width: 50%;
-    }
-
-    .right-section {
-      width: 50%;
-      font-family: $font-secondary;
-      background: $button-purple;
-      background: $purple-gradient-top-down;
-      color: white;
-      display: flex;
-      flex-direction: row;
-      flex-wrap: wrap;
-
-      div {
-        width: 33%;
-        font-size: 16pt;
-        font-weight: 600;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        text-align: center;
-      }
-    }
-
-    .title {
-      font-weight: 600;
-      font-size: 16pt;
-      display: inline-block;
-    }
-  }
-
-  .investment-item-label {
-    display: block;
-    text-transform: uppercase;
-    font-size: 8pt;
-    font-weight: 300;
-  }
 </style>

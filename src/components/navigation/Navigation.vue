@@ -80,7 +80,6 @@ export default {
       {
         name: this.$t('navigation.pools'),
         routeLink: '/pools',
-        disabled: true,
         type: 'link'
       },
       {

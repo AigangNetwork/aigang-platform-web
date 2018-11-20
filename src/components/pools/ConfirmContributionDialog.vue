@@ -92,7 +92,7 @@ export default {
       }
     },
     contributeButtonEnabled () {
-      return !!((this.$store.getters['user/isAuthenticated'] && this.$store.getters['user/web3']))
+      return !!((this.$store.getters['user/isAuthenticated'] && this.$store.getters['user/isWeb3Enabled']))
     }
   },
   methods: {

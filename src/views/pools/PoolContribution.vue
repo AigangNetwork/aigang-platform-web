@@ -2,7 +2,7 @@
   <div class="aig-container aig-view aig-info" v-loading="$store.getters.loading">
     <div class="aig-info-header" v-if="isDataLoaded">
       <div class="back-button-container">
-        <router-link :to="{ name: 'PoolsProductsList' }" class="back-button">{{ $t('general.backToList')}}</router-link>
+        <router-link :to="{ name: 'Portfolio' }" class="back-button">{{ $t('general.backToList')}}</router-link>
       </div>
       <div class="aig-info-header-content">
         <PoolProductHeader :info="headerInfo" />
@@ -12,16 +12,9 @@
     <div class="aig-info-content-container" v-if="isDataLoaded">
       <div class="aig-info-content">
         <h4 class="info-title">{{ $t('pools.description') }}</h4>
-        <vue-markdown class="markup-content" :html="false" :source="currentPool.description || $t('pools.noDescription')"></vue-markdown>
+        <vue-markdown class="markup-content" :html="false" :source="currentContribution.poolDescription || $t('pools.noDescription')"></vue-markdown>
 
-        <el-button class="aig-button" type="primary" @click.prevent.native="contribute">{{ $t('pools.invest') }}</el-button>
-
-        <ConfirmContributionDialog
-          :isVisible="isConfirmContributionDialogVisible"
-          :displayDialog="displayConfirmContributionDialog"
-          :maxAllowedAmount="maxAllowedAmount"
-          @addContribution="onAddContribution"/>
-
+        <ContributionDeleteSection v-if="isContributionDraft" />
       </div>
     </div>
   </div>
@@ -31,6 +24,7 @@
 import ConfirmContributionDialog from '@/components/pools/ConfirmContributionDialog'
 import VueMarkdown from 'vue-markdown'
 import PoolProductHeader from './PoolProductHeader'
+import ContributionDeleteSection from '@/components/pools/ContributionDeleteSection'
 
 import { createNamespacedHelpers } from 'vuex'
 const { mapGetters } = createNamespacedHelpers('pools')
@@ -39,46 +33,27 @@ export default {
   components: {
     ConfirmContributionDialog,
     VueMarkdown,
-    PoolProductHeader
+    PoolProductHeader,
+    ContributionDeleteSection
   },
   data () {
     return {
       isDataLoaded: false,
-      isConfirmContributionDialogVisible: false,
       headerInfo: {}
     }
   },
   computed: {
-    ...mapGetters(['currentPool']),
-    maxAllowedAmount () {
-      const numbersAfterPointer = 6
-      return Math.round((this.currentPool.goalPoolSize - this.currentPool.currentPoolSize) * Math.pow(10, numbersAfterPointer)) / Math.pow(10, numbersAfterPointer)
+    ...mapGetters(['currentContribution']),
+    isContributionDraft () {
+      return this.currentContribution.status.toUpperCase() === 'DRAFT'
     }
   },
   async mounted () {
-    await this.$store.dispatch('pools/getPool', this.$route.params.id)
+    await this.$store.dispatch('pools/getContribution', this.$route.params.id)
     this.isDataLoaded = true
 
     this.headerInfo = {
-      title: this.currentPool.title
-    }
-  },
-  methods: {
-    contribute () {
-      this.displayConfirmContributionDialog(true)
-    },
-    displayConfirmContributionDialog (value) {
-      this.isConfirmContributionDialogVisible = value
-    },
-    async onAddContribution (amount) {
-      this.displayConfirmContributionDialog(false)
-
-      await this.$store.dispatch('pools/contribute', {
-        amount,
-        poolId: this.$route.params.id
-      })
-
-      this.$router.push({ name: 'Portfolio' })
+      title: this.currentContribution.poolName
     }
   }
 }

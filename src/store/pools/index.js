@@ -7,6 +7,7 @@ export default {
   state: {
     pools: [],
     currentPool: {},
+    currentContribution: {},
     userContributions: []
   },
   mutations,

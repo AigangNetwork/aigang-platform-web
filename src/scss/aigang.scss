@@ -2,6 +2,10 @@
 @import '~helpers/mixins';
 @import '~helpers/variables';
 @import '~helpers/transitions';
+
+// Controls
+@import './controls/list';
+
 body.aig {
   display: flex;
   font-family: $font-primary;

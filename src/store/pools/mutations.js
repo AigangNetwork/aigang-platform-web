@@ -7,6 +7,10 @@ const mutations = {
     state.currentPool = payload
   },
 
+  setContribution (state, payload) {
+    state.currentContribution = payload
+  },
+
   setUserContributions (state, payload) {
     state.userContributions = payload
   }
