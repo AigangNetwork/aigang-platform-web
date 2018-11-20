@@ -34,10 +34,13 @@
     <div class="aig-dropdown" v-if="dropDownMenuActive">
       <ul>
         <li v-for="bar in navigationBars" :key="bar.name">
-          <router-link :class="{'disabled': bar.disabled}" active-class="aig-bar-active" :to="bar.routeLink"
+          <router-link v-if="bar.type === 'link'" :class="{'disabled': bar.disabled}" active-class="aig-bar-active" :to="bar.routeLink"
             @click.native="dropDownMenuActive = false">
             {{ bar.name }}
           </router-link>
+          <a href="#" v-if="bar.type === 'action'" active-class="aig-bar-active" @click="bar.action" :class="{'disabled': bar.disabled}">
+            {{ bar.name }}
+          </a>
         </li>
         <li v-if="$store.getters['user/isAuthenticated']">
           <router-link :to="'/profile'" active-class="aig-bar-active" @click.native="dropDownMenuActive = false">
@@ -125,6 +128,11 @@ export default {
 
       li {
         width: 100%;
+
+        .disabled {
+          pointer-events: none;
+          opacity: 0.25;
+        }
 
         a {
           color: $white;
