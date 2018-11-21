@@ -53,6 +53,13 @@ export default {
         params: { '0': 'notfound' }
       })
     },
+    handle406 () {
+      this.notificationVisible = false
+      this.$store.dispatch('resetRootState')
+      this.$router.push({
+        name: 'ServiceUnavailable'
+      })
+    },
     notifyRequestError (error) {
       this.notificationVisible = true
       this.title = this.$t('errors.error')
@@ -78,6 +85,9 @@ export default {
             break
           case 404:
             this.handle404()
+            break
+          case 406:
+            this.handle406()
             break
           case 408:
             this.messages.push(this.$t('errors.validation.GatewayTimeout'))
