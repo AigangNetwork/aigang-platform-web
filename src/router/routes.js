@@ -1,6 +1,7 @@
 import Predictions from '@/views/Predictions'
 import NotFound from '@/views/general/NotFound'
 import AccessDenied from '@/views/general/AccessDenied'
+import ServiceUnavailable from '@/views/general/ServiceUnavailable'
 import CookiesPolicy from '@/views/general/CookiesPolicy'
 
 import DataRoutes from './data-routes'
@@ -24,6 +25,11 @@ const routes = [
     path: '/access-denied',
     name: 'AccessDenied',
     component: AccessDenied
+  },
+  {
+    path: '/service-unavailabe',
+    name: 'ServiceUnavailable',
+    component: ServiceUnavailable
   },
   {
     path: '/predictions',

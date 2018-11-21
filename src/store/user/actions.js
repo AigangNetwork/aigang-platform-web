@@ -4,8 +4,13 @@ import aixContractInfo from '@/utils/contract/aixContractInfo'
 import networkResolver from '@/utils/web3/networkResolver'
 import eventHub from '@/utils/eventHub'
 import loadWeb3Instance from '@/utils/web3/loadWeb3'
+import { initialUserState } from './index'
 
 export default {
+  async resetState ({ commit }) {
+    commit('resetState', initialUserState())
+  },
+
   async logIn ({ commit, dispatch }, loginResponse) {
     commit('login', loginResponse.data)
     await dispatch('clearWeb3Instance')
@@ -13,17 +18,19 @@ export default {
     router.push('/')
   },
 
-  async logOut ({ commit }) {
+  async logOut ({ commit, dispatch }) {
     commit('setLoading', true, { root: true })
+    await dispatch('resetRootState', undefined, { root: true })
     await axios.post('/account/logout')
     delete axios.defaults.headers.common['Authorization']
-    commit('logout')
+    dispatch('resetRootState', undefined, { root: true })
     router.push('/data')
+    commit('setLoading', false, { root: true })
   },
 
-  handleNotLoggedIn ({ commit }) {
+  handleNotLoggedIn ({ dispatch }) {
     delete axios.defaults.headers.common['Authorization']
-    commit('logout')
+    dispatch('resetRootState', undefined, { root: true })
     router.push({ name: 'Login' })
   },
 

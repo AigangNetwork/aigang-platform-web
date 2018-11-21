@@ -12,9 +12,12 @@
           <nav class="aig-navigation-menu">
             <ul>
               <li v-for="(bar, index) in navigationBars" :key="index">
-                <router-link active-class="aig-bar-active" :class="{'disabled': bar.disabled}" :to="bar.routeLink">
+                <router-link v-if="bar.type === 'link'" active-class="aig-bar-active" :class="{'disabled': bar.disabled}" :to="bar.routeLink">
                   {{ bar.name }}
                 </router-link>
+                <a href="#" v-if="bar.type === 'action'" active-class="aig-bar-active" @click="bar.action" :class="{'disabled': bar.disabled}">
+                  {{ bar.name }}
+                </a>
               </li>
             </ul>
           </nav>
@@ -31,10 +34,13 @@
     <div class="aig-dropdown" v-if="dropDownMenuActive">
       <ul>
         <li v-for="bar in navigationBars" :key="bar.name">
-          <router-link :class="{'disabled': bar.disabled}" active-class="aig-bar-active" :to="bar.routeLink"
+          <router-link v-if="bar.type === 'link'" :class="{'disabled': bar.disabled}" active-class="aig-bar-active" :to="bar.routeLink"
             @click.native="dropDownMenuActive = false">
             {{ bar.name }}
           </router-link>
+          <a href="#" v-if="bar.type === 'action'" active-class="aig-bar-active" @click="bar.action" :class="{'disabled': bar.disabled}">
+            {{ bar.name }}
+          </a>
         </li>
         <li v-if="$store.getters['user/isAuthenticated']">
           <router-link :to="'/profile'" active-class="aig-bar-active" @click.native="dropDownMenuActive = false">
@@ -63,21 +69,32 @@ export default {
     return {
       navigationBars: [{
         name: this.$t('navigation.data'),
-        routeLink: '/data'
+        routeLink: '/data',
+        type: 'link'
       },
       {
         name: this.$t('navigation.predictions'),
-        routeLink: '/predictions/'
+        routeLink: '/predictions/',
+        type: 'link'
       },
       {
         name: this.$t('navigation.pools'),
         routeLink: '/pools',
-        disabled: true
+        disabled: true,
+        type: 'link'
       },
       {
 
         name: this.$t('navigation.insurance'),
-        routeLink: '/insurance/'
+        routeLink: '/insurance/',
+        type: 'link'
+      },
+      {
+        name: this.$t('navigation.bugbounty'),
+        type: 'action',
+        action: () => {
+          this.$store.dispatch('showBugBountyDialog', true)
+        }
       }
       ],
       dropDownMenuActive: false
@@ -112,6 +129,11 @@ export default {
 
       li {
         width: 100%;
+
+        .disabled {
+          pointer-events: none;
+          opacity: 0.25;
+        }
 
         a {
           color: $white;
