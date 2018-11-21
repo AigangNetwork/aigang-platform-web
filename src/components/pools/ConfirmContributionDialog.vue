@@ -23,7 +23,7 @@
           <el-tooltip
             :disabled="contributeButtonEnabled"
             effect="dark"
-            :content="$t('pools.confirmationDialog.userNotLoggedIn')"
+            :content="$t('pools.userNotLoggedIn')"
             placement="top">
             <span class="wrapper el-button">
               <el-button class="button" :disabled="!contributeButtonEnabled" type="primary" @click.prevent.native="submitForm('addContributionForm', addContribution)">

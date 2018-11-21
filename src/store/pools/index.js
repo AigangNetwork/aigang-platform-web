@@ -8,7 +8,9 @@ export default {
     pools: [],
     currentPool: {},
     currentContribution: {},
-    userContributions: []
+    userContributions: [],
+    transactionHash: '',
+    transactionError: false
   },
   mutations,
   actions,

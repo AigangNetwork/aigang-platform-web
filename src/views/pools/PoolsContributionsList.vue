@@ -3,7 +3,7 @@
     <el-col v-if="isDataLoaded">
       <Card>
         <div slot="body">
-          <table style="width: 100%">
+          <table>
             <thead class="investments-table-header">
               <tr>
                 <th>{{ $t('pools.portfolioInfo.insuranceType') }}</th>
@@ -18,6 +18,7 @@
               <PoolsContributionsListItem v-for="(contribution, index) in userContributions.items" :key="index" :contribution="contribution" />
             </tbody>
           </table>
+          <div class="no-data-message" v-if="!userContributions.items">{{ $t('pools.contributions.noData')}}</div>
         </div>
       </Card>
     </el-col>
@@ -105,6 +106,7 @@ export default {
   }
 
   table {
+    width: 100%;
     font-size: 14px;
     border-collapse: collapse;
 
@@ -116,5 +118,10 @@ export default {
         }
       }
     }
+  }
+
+  .no-data-message {
+    padding-top: 20px;
+    text-align: center;
   }
 </style>

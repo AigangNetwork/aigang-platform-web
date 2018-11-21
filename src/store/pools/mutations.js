@@ -13,6 +13,14 @@ const mutations = {
 
   setUserContributions (state, payload) {
     state.userContributions = payload
+  },
+
+  setTransactionHash (state, transactionHash) {
+    state.transactionHash = transactionHash
+  },
+
+  setTransactionError (state, value) {
+    state.transactionError = value
   }
 }
 

@@ -724,11 +724,29 @@
       "allPools": "All Pools",
       "portfolio": "Portfolio"
     },
-    "product": {
+    "products": {
+      "invested": "Invested",
+      "start": "Starting",
+      "end": "Ending",
+      "currentPoolSize": "Current Pool Size",
+      "poolSizeGoal": "Pool Size Goal",
+      "status": "Status"
+    },
+    "pool": {
       "termsAndConditions": "Terms and Conditions",
       "agreeWithTermsAndConditions": "You have to read terms and conditions to invest",
       "description": "Description",
-      "noDescription": "There is no description for this pool"
+      "noDescription": "There is no description for this pool",
+      "marketAddress": "Market contract adress",
+      "invest": "Invest",
+      "paymentInfo": {
+        "title": "Payment Information",
+        "metamaskAlert": "Atention! Do not leave this page until you confirm your transaction. Otherwise your transaction will be lost and contribution won't be counted.",
+        "body": "Your payment transaction was created succesfully. When payment will be processed we will inform you via email notification message. You can see your transaction status by clicking on transaction address.",
+        "buttons": {
+          "goBack": "Go to Portfolio"
+        }
+      }
     },
     "contribution": {
       "description": "Description",
@@ -738,7 +756,11 @@
       "deleteButtonText": "Delete",
       "deleteContributionDialog": {
         "body": "Are you sure you want to delete this contribution?"
-      }
+      },
+      "payContribution": "Pay contribution",
+      "payContributionDescription": "This contribution is not payed yet. Pay and participate in pool.",
+      "amount": "Contribution amount",
+      "pay": "Pay"
     },
     "poolStatuses": {
       "active": "Active",
@@ -759,16 +781,10 @@
       "availableRefund": "Available Refund",
       "refundPaidout": "Refund Paidout"
     },
-
-    "products": {
-      "invested": "Invested",
-      "start": "Starting",
-      "end": "Ending",
-      "currentPoolSize": "Current Pool Size",
-      "poolSizeGoal": "Pool Size Goal",
-      "status": "Status"
+    "userNotLoggedIn": "User must be logged in and connected to web3 provider (Metamask, Mist, etc.)",
+    "contributions": {
+      "noData": "There is no contributions yet"
     },
-    "invest": "Invest",
     "portfolioInfo": {
       "yourAddress": "Your address",
       "yourBalance": "Your balance",
@@ -784,7 +800,6 @@
       "title": "Add contribution amount",
       "maxAllowedAmount": "Max allowed amount",
       "amount": "Amount",
-      "userNotLoggedIn": "User must be logged in and connected to web3 provider (Metamask, Mist, etc.)",
       "buttons": {
         "contribute": "Contribute"
       },

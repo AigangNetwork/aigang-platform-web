@@ -11,16 +11,19 @@
 
     <div class="aig-info-content-container" v-if="isDataLoaded">
       <div class="aig-info-content">
-        <h4 class="info-title">{{ $t('pools.product.description') }}</h4>
-        <vue-markdown class="markup-content" :html="false" :source="currentPool.description || $t('pools.product.noDescription')"></vue-markdown>
+        <h4 class="info-title">{{ $t('pools.pool.description') }}</h4>
+        <vue-markdown class="markup-content" :html="false" :source="currentPool.description || $t('pools.pool.noDescription')"></vue-markdown>
 
-        <h4 class="info-title">{{ $t('pools.product.termsAndConditions') }}</h4>
+        <h4 class="info-title">{{ $t('pools.pool.marketAddress') }}</h4>
+        <p><a class="contract-address" target="_blank" :href="contractLink">{{ currentPool.poolContractAddress }}</a></p>
+
+        <h4 class="info-title">{{ $t('pools.pool.termsAndConditions') }}</h4>
         <ScrollableMarkupText class="scrollable-text" :text="currentPool.termsAndConditions" @scrolledToBottom="onScrolledToBottom" />
 
-        <el-tooltip :disabled="!investButtonDisabled" :content="$t('pools.product.agreeWithTermsAndConditions')">
+        <el-tooltip :disabled="!investButtonDisabled" :content="$t('pools.pool.agreeWithTermsAndConditions')">
           <span class="wrapper el-button">
             <el-button :disabled="investButtonDisabled" @click="contribute" class="aig-button" type="primary">
-              {{ $t('pools.invest') }}
+              {{ $t('pools.pool.invest') }}
             </el-button>
           </span>
         </el-tooltip>
@@ -31,6 +34,10 @@
           :maxAllowedAmount="maxAllowedAmount"
           @addContribution="onAddContribution"/>
 
+        <PaymentConfirmationDialog
+          :isVisible="isPaymentDialogVisible && !transactionError"
+          :displayDialog="displayPaymentDialog"
+          :content="$t('pools.pool.paymentInfo.metamaskAlert')" />
       </div>
     </div>
   </div>
@@ -41,6 +48,7 @@ import ConfirmContributionDialog from '@/components/pools/ConfirmContributionDia
 import VueMarkdown from 'vue-markdown'
 import PoolProductHeader from './PoolProductHeader'
 import ScrollableMarkupText from '@/components/insurance/ScrollableMarkupText'
+import PaymentConfirmationDialog from '@/components/pools/PaymentConfirmationDialog'
 
 import { createNamespacedHelpers } from 'vuex'
 const { mapGetters } = createNamespacedHelpers('pools')
@@ -50,21 +58,29 @@ export default {
     ConfirmContributionDialog,
     VueMarkdown,
     PoolProductHeader,
-    ScrollableMarkupText
+    ScrollableMarkupText,
+    PaymentConfirmationDialog
   },
   data () {
     return {
       isDataLoaded: false,
       isConfirmContributionDialogVisible: false,
       headerInfo: {},
-      investButtonDisabled: true
+      investButtonDisabled: true,
+      isPaymentDialogVisible: false
     }
   },
   computed: {
-    ...mapGetters(['currentPool']),
+    ...mapGetters([
+      'currentPool',
+      'transactionError'
+    ]),
     maxAllowedAmount () {
       const numbersAfterPointer = 6
       return Math.round((this.currentPool.goalPoolSize - this.currentPool.currentPoolSize) * Math.pow(10, numbersAfterPointer)) / Math.pow(10, numbersAfterPointer)
+    },
+    contractLink () {
+      return process.env.ETHERSCAN_ADDRESS + process.env.ADDRESS_PATX + this.currentPool.poolContractAddress
     }
   },
   async mounted () {
@@ -85,15 +101,18 @@ export default {
     async onAddContribution (amount) {
       this.displayConfirmContributionDialog(false)
 
-      await this.$store.dispatch('pools/contribute', {
+      await this.$store.dispatch('pools/addContribution', {
         amount,
         poolId: this.$route.params.id
       })
 
-      this.$router.push({ name: 'Portfolio' })
+      this.displayPaymentDialog(true)
     },
     onScrolledToBottom () {
       this.investButtonDisabled = false
+    },
+    displayPaymentDialog (value) {
+      this.isPaymentDialogVisible = value
     }
   }
 }

@@ -30,25 +30,25 @@
           <AmountPerOutcome v-loading="amountPerOutcomeStatisticsLoading" :statistics="amountPerOutcomeStatistics" :resultOutcomeId="userForecast.resultOutcomeId"/>
         </div>
 
-        <el-tooltip v-if="isForecastsWon" :disabled="!!window.web3" :content="$t('predictions.forecast.logInToWeb3')">
+        <el-tooltip v-if="isForecastsWon" :disabled="$store.getters['user/isWeb3Enabled']" :content="$t('predictions.forecast.logInToWeb3')">
           <span class="wrapper el-button">
-            <el-button :disabled="!window.web3" class="aig-button" type="primary" @click="payoutWon">
+            <el-button :disabled="!$store.getters['user/isWeb3Enabled']" class="aig-button" type="primary" @click="payoutWon">
               {{ $t('predictions.forecast.payout') }}
             </el-button>
           </span>
         </el-tooltip>
 
-        <el-tooltip v-if="payButtonVisible" :disabled="!!window.web3" :content="$t('predictions.forecast.logInToWeb3')">
+        <el-tooltip v-if="payButtonVisible" :disabled="$store.getters['user/isWeb3Enabled']" :content="$t('predictions.forecast.logInToWeb3')">
           <span class="wrapper el-button">
-            <el-button :disabled="!window.web3" class="aig-button" type="primary" @click="payDraft">
+            <el-button :disabled="!$store.getters['user/isWeb3Enabled']" class="aig-button" type="primary" @click="payDraft">
               {{ $t('predictions.forecast.payForecast') }}
             </el-button>
           </span>
         </el-tooltip>
 
-        <el-tooltip v-if="isAvailableRefund" :disabled="!!window.web3" :content="$t('predictions.forecast.logInToWeb3')">
+        <el-tooltip v-if="isAvailableRefund" :disabled="$store.getters['user/isWeb3Enabled']" :content="$t('predictions.forecast.logInToWeb3')">
           <span class="wrapper el-button">
-            <el-button :disabled="!window.web3" class="aig-button" type="primary" @click="payoutRefund">
+            <el-button :disabled="!$store.getters['user/isWeb3Enabled']" class="aig-button" type="primary" @click="payoutRefund">
               {{ $t('predictions.forecast.getRefund') }}
             </el-button>
           </span>

@@ -1,17 +1,17 @@
 <template>
-  <el-dialog :title="$t('insurance.policy.paymentInfo.title')" :visible.sync="show">
+  <el-dialog :title="$t('pools.pool.paymentInfo.title')" :visible.sync="show">
     <transition-group name="slideDown">
-      <div key="1" v-if="!txHash">
-        <p class="bold">{{ $t('insurance.policy.paymentInfo.metamaskAlert') }}</p>
+      <div key="1" v-if="!transactionHash">
+        <p class="bold">{{ content }}</p>
       </div>
-      <div class="payment-dialog-info" v-if="txHash" key="2">
-        <p>{{ $t('insurance.policy.paymentInfo.body') }}</p>
+      <div class="payment-dialog-info" v-if="transactionHash" key="2">
+        <p>{{ $t('pools.pool.paymentInfo.body') }}</p>
         <a class="address" :href="txLink" target="_blank">
-          <span class="contract-address">{{ this.txHash }}</span>
+          <span class="contract-address">{{ transactionHash }}</span>
         </a>
         <div class="buttons">
-          <router-link :to="policyListRoute">
-            <el-button class="button" type="primary">{{ $t('insurance.policy.paymentInfo.buttons.goBack')}}</el-button>
+          <router-link :to="portfolioRoute">
+            <el-button class="button" type="primary">{{ $t('pools.pool.paymentInfo.buttons.goBack')}}</el-button>
           </router-link>
         </div>
       </div>
@@ -20,26 +20,26 @@
 </template>
 <script>
 import { createNamespacedHelpers } from 'vuex'
-const { mapGetters } = createNamespacedHelpers('insurance')
+const { mapGetters } = createNamespacedHelpers('pools')
 
 export default {
-  props: ['isVisible', 'displayDialog'],
+  props: ['isVisible', 'displayDialog', 'content'],
   data () {
     return {
-      policyListRoute: '/insurance/policy/mypolicies'
+      portfolioRoute: '/pools/portfolio'
     }
   },
   watch: {
     txHash () {
-      if (this.txHash) {
+      if (this.transactionHash) {
         this.show = true
       }
     }
   },
   computed: {
-    ...mapGetters(['txHash']),
+    ...mapGetters(['transactionHash']),
     txLink () {
-      return process.env.ETHERSCAN_ADDRESS + process.env.TX_PATH + this.txHash
+      return process.env.ETHERSCAN_ADDRESS + process.env.TX_PATH + this.transactionHash
     },
     show: {
       get () {
@@ -65,6 +65,7 @@ export default {
     .buttons {
       margin-top: 30px;
       text-align: center;
+
       .button {
         min-width: 200px;
       }
