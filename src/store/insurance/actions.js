@@ -1,8 +1,13 @@
+import { initialInsuranceState } from './index'
 import axios from 'axios'
 import { sleep } from '@/utils/methods'
 import router from '@/router/index'
 
 export default {
+  async resetState ({ commit }) {
+    commit('resetState', initialInsuranceState())
+  },
+
   async loadProduct ({ commit }, id) {
     commit('clearCurrentProduct')
     commit('setLoading', true, { root: true })

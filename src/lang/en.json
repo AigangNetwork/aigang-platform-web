@@ -468,6 +468,7 @@
       "TitleTooLong": "Title can not be longer than 200 characters.",
       "TitleOrDescriptionTooShort": "Title or description can not be shorter than 6 characters.",
       "Forbidden": "You are trying to access forbidden resources",
+      "ServiceUnavailable": "Service is unavailable in your country",
       "NotFound": "Not found",
       "CommentTooLong": "Comment lenght limit was reached",
       "RemoteAccessPointNotSet": "Remote access point is not set.",
