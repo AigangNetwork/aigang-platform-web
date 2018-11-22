@@ -1,17 +1,14 @@
 <template>
-  <div>
-    <!-- <PortfolioSummarySection /> -->
+  <div class="portfolio-container">
     <PoolsContributionsList/>
   </div>
 </template>
 
 <script>
-import PortfolioSummarySection from '@/components/pools/PortfolioSummarySection'
 import PoolsContributionsList from './PoolsContributionsList'
 
 export default {
   components: {
-    PortfolioSummarySection,
     PoolsContributionsList
   }
 }
@@ -19,4 +16,8 @@ export default {
 
 <style lang="scss">
   @import '~helpers/variables';
+
+  .portfolio-container {
+    margin: 20px;
+  }
 </style>
