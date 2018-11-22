@@ -1,7 +1,7 @@
 <template>
   <div class="aig-container aig-view model-container">
     <Card class="model-card">
-      <div slot="body" v-loading="loading" :element-loading-text="$t('general.loading')">
+      <div slot="body" v-loading="loading">
         <DatasetModelHeader :model="model || {}" />
         <DataNavigation :show="true" :navigationBars="navigationBars">
           <li class="stick-to-right" key="DatasetModelVote">

@@ -1,5 +1,5 @@
 <template>
-  <div v-loading="$store.getters.loading" :element-loading-text=" $t('general.loading')">
+  <div v-loading="$store.getters.loading">
     <el-row>
       <el-col>
         <p class="input-section-title">{{ $t('profile.wallets.title') }}</p>

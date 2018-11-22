@@ -1,6 +1,6 @@
 <template>
   <Card class="guest-card portfolio-card">
-    <div slot="body" v-loading="loading" :element-loading-text="$t('general.loading')">
+    <div slot="body" v-loading="loading">
       <div class="section-container">
         <div class="left-section">
           <div class="text-medium sub-section">
