@@ -70,23 +70,26 @@ export default {
       navigationBars: [{
         name: this.$t('navigation.data'),
         routeLink: '/data',
-        type: 'link'
+        type: 'link',
+        disabled: !process.env.FEATURE_TOGGLE.DATA
       },
       {
         name: this.$t('navigation.predictions'),
         routeLink: '/predictions/',
-        type: 'link'
+        type: 'link',
+        disabled: !process.env.FEATURE_TOGGLE.PREDICTIONS
       },
       {
         name: this.$t('navigation.pools'),
         routeLink: '/pools',
-        disabled: true,
-        type: 'link'
+        type: 'link',
+        disabled: !process.env.FEATURE_TOGGLE.POOLS
       },
       {
         name: this.$t('navigation.insurance'),
         routeLink: '/insurance/',
-        type: 'link'
+        type: 'link',
+        disabled: !process.env.FEATURE_TOGGLE.INSURANCE
       },
       {
         name: this.$t('navigation.bugbounty'),
