@@ -123,13 +123,6 @@ export default {
   },
   methods: {
     onOutcomeSelected (index) {
-      const insufficientBalance = this.$store.getters['user/insufficientBalance']
-
-      if (insufficientBalance) {
-        this.$store.dispatch('showInsufficientBalanceDialog', true)
-        return
-      }
-
       this.prediction.outcomes.map(o => {
         if (o.index === index) {
           this.selectedOutcome = o

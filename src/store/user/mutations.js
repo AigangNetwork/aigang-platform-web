@@ -1,13 +1,11 @@
-import { initialUserState } from './index'
-
 export default {
   login (state, payload) {
     state.authenticated = true
     state.profile = payload.profile
   },
 
-  logout (state) {
-    Object.assign(state, initialUserState())
+  resetState (state, newState) {
+    Object.assign(state, newState)
   },
 
   changeProfileNames (state, payload) {

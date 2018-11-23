@@ -27,6 +27,33 @@
           </el-tooltip>
         </div>
 
+        <div v-if="isContributionAvailableRefund">
+          <h4 class="info-title">{{ $t('pools.contribution.refundContribution') }}</h4>
+          <p>{{ $t('pools.contribution.refundContributionDescription')}}</p>
+          <p>{{ $t('pools.contribution.refundAmount')}}: <span class="value">{{ currentContribution.amount }} {{ $t('general.aix') }}</span></p>
+          <el-tooltip :disabled="investButtonEnabled" :content="$t('pools.userNotLoggedIn')">
+            <span class="wrapper el-button">
+              <el-button :disabled="!investButtonEnabled" @click="refund" class="aig-button" type="primary">
+                {{ $t('pools.contribution.refund') }}
+              </el-button>
+            </span>
+          </el-tooltip>
+        </div>
+
+        <div v-if="isContributionAvailablePayout">
+          <h4 class="info-title">{{ $t('pools.contribution.payoutContribution') }}</h4>
+          <p>{{ $t('pools.contribution.payoutContributionDescription')}}</p>
+          <p>{{ $t('pools.contribution.payoutAmount')}}: <span class="value">{{ currentContribution.payout }} {{
+              $t('general.aix') }}</span></p>
+          <el-tooltip :disabled="investButtonEnabled" :content="$t('pools.userNotLoggedIn')">
+            <span class="wrapper el-button">
+              <el-button :disabled="!investButtonEnabled" @click="payout" class="aig-button" type="primary">
+                {{ $t('pools.contribution.payout') }}
+              </el-button>
+            </span>
+          </el-tooltip>
+        </div>
+
         <ContributionDeleteSection v-if="isContributionDraft" />
       </div>
     </div>
@@ -72,6 +99,12 @@ export default {
     isContributionDraft () {
       return this.currentContribution.status.toUpperCase() === 'DRAFT'
     },
+    isContributionAvailablePayout () {
+      return this.currentContribution.status.toUpperCase() === 'AVAILABLEPAYOUT'
+    },
+    isContributionAvailableRefund () {
+      return this.currentContribution.status.toUpperCase() === 'AVAILABLEREFUND'
+    },
     investButtonEnabled () {
       return !!((this.$store.getters['user/isAuthenticated'] && this.$store.getters['user/isWeb3Enabled']))
     }
@@ -85,7 +118,7 @@ export default {
     }
   },
   methods: {
-    isplayPaymentDialog (value) {
+    displayPaymentDialog (value) {
       this.isPaymentDialogVisible = value
     },
     async pay () {
@@ -95,6 +128,24 @@ export default {
         contributionId: this.currentContribution.id,
         amount: this.currentContribution.amount,
         poolId: this.currentContribution.poolId
+      })
+    },
+    async payout () {
+      this.isPaymentDialogVisible = true
+
+      await this.$store.dispatch('pools/payoutContribution', {
+        contributionId: this.currentContribution.id,
+        poolId: this.currentContribution.poolId,
+        poolContractAddress: this.currentContribution.poolContractAddress
+      })
+    },
+    async refund () {
+      this.isPaymentDialogVisible = true
+
+      await this.$store.dispatch('pools/refundContribution', {
+        contributionId: this.currentContribution.id,
+        poolId: this.currentContribution.poolId,
+        poolContractAddress: this.currentContribution.poolContractAddress
       })
     }
   }

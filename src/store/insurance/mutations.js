@@ -1,4 +1,8 @@
 export default {
+  resetState (state, newState) {
+    Object.assign(state, newState)
+  },
+
   loadCurrentProduct (state, payload) {
     state.product = payload.product
   },

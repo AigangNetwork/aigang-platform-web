@@ -1,6 +1,6 @@
-import Predictions from '@/views/Predictions'
 import NotFound from '@/views/general/NotFound'
 import AccessDenied from '@/views/general/AccessDenied'
+import ServiceUnavailable from '@/views/general/ServiceUnavailable'
 import CookiesPolicy from '@/views/general/CookiesPolicy'
 
 import DataRoutes from './data-routes'
@@ -9,12 +9,8 @@ import UserRoutes from './user-routes'
 import PoolsRoutes from './pools-routes'
 import PredictionsRoutes from './predictions-routes'
 
-const routes = [
-  ...DataRoutes,
-  ...InsuranceRoutes,
+let routes = [
   ...UserRoutes,
-  ...PoolsRoutes,
-  ...PredictionsRoutes,
   {
     path: '*',
     name: 'NotFound',
@@ -26,16 +22,31 @@ const routes = [
     component: AccessDenied
   },
   {
-    path: '/predictions',
-    name: 'Predictions',
-    component: Predictions
+    path: '/service-unavailabe',
+    name: 'ServiceUnavailable',
+    component: ServiceUnavailable
   },
-
   {
     path: '/cookies-policy',
     name: 'CookiesPolicy',
     component: CookiesPolicy
   }
 ]
+
+if (process.env.FEATURE_TOGGLE.DATA) {
+  routes = [...routes, ...DataRoutes]
+}
+
+if (process.env.FEATURE_TOGGLE.INSURANCE) {
+  routes = [...routes, ...InsuranceRoutes]
+}
+
+if (process.env.FEATURE_TOGGLE.POOLS) {
+  routes = [...routes, ...PoolsRoutes]
+}
+
+if (process.env.FEATURE_TOGGLE.PREDICTIONS) {
+  routes = [...routes, ...PredictionsRoutes]
+}
 
 export default routes

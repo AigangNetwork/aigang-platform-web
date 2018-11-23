@@ -1,6 +1,11 @@
+import { initialPredictionsState } from './index'
 import axios from 'axios'
 
 export default {
+  async resetState ({ commit }) {
+    commit('resetState', initialPredictionsState())
+  },
+
   async getPredictionsList ({ commit }, page) {
     commit('setLoading', true, {
       root: true
@@ -263,14 +268,13 @@ export default {
           const predictionStatus = forecast.predictionStatus.toUpperCase()
 
           if (
-            (
-              forecast.predictionId &&
+            (forecast.predictionId &&
               forecastStatus !== 'NOTSET' &&
               forecastStatus !== 'DRAFT' &&
               forecastStatus !== 'PENDINGPAYMENT' &&
               forecastStatus !== 'AVAILABLEREFUND' &&
-              predictionStatus !== 'CANCELED'
-            ) || predictionStatus === 'RESOLVED'
+              predictionStatus !== 'CANCELED') ||
+            predictionStatus === 'RESOLVED'
           ) {
             dispatch('getPredictionStatisticsForForecast', forecastId)
           }

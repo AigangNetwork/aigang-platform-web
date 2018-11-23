@@ -40,23 +40,16 @@
             :content="$t('general.userNotLoggedIn')"
             placement="top"
           >
-            <el-tooltip
-              :disabled="isBalanceEnough"
-              effect="dark"
-              :content="$t('general.insufficientBalance')"
-              placement="top"
-            >
-              <span class="wrapper el-button">
-                <el-button
-                  class="button"
-                  :disabled="!forecastButtonEnabled || !isBalanceEnough"
-                  type="primary"
-                  @click.prevent.native="submitForm('createForecastForm', createForecast)"
-                >
-                  {{ $t('predictions.prediction.confirmationDialog.buttons.forecast') }}
-                </el-button>
-              </span>
-            </el-tooltip>
+            <span class="wrapper el-button">
+              <el-button
+                class="button"
+                :disabled="!forecastButtonEnabled"
+                type="primary"
+                @click.prevent.native="submitForm('createForecastForm', createForecast)"
+              >
+                {{ $t('predictions.prediction.confirmationDialog.buttons.forecast') }}
+              </el-button>
+            </span>
           </el-tooltip>
         </div>
       </div>
@@ -126,13 +119,15 @@ export default {
     },
     forecastButtonEnabled () {
       return !!(this.$store.getters['user/isAuthenticated'] && this.$store.getters['user/isWeb3Enabled'])
-    },
-    isBalanceEnough () {
-      return this.$store.getters['user/aixBalance'] >= this.createForecastForm.amount
     }
   },
   methods: {
     createForecast () {
+      if (this.$store.getters['user/aixBalance'] <= this.createForecastForm.amount) {
+        this.$store.dispatch('showInsufficientBalanceDialog', true)
+        return
+      }
+
       this.$emit('createForecast', {
         amount: this.createForecastForm.amount,
         selectedOutcomeIndex: this.selectedOutcome.index,

@@ -6,14 +6,15 @@
       </ul>
     </div>
     <span slot="footer" class="dialog-footer">
-      <el-button class="aig-button" type="primary" @click="notificationVisible = false">{{ $t('general.ok') }}</el-button>
+      <el-button class="aig-button" type="primary" @click="notificationVisible = false">{{
+        $t('general.ok')
+      }}</el-button>
     </span>
   </el-dialog>
 </template>
 
 <script>
 import eventHub from '../utils/eventHub'
-import router from '@/router'
 
 export default {
   name: 'Notification',
@@ -26,8 +27,7 @@ export default {
   },
   methods: {
     handle400 (data) {
-      if (data.params &&
-          data.params.ValidationFailed) {
+      if (data.params && data.params.ValidationFailed) {
         var val
         for (val of data.params.ValidationFailed) {
           this.messages.push(this.$t('errors.validation.' + val.reason))
@@ -39,7 +39,6 @@ export default {
     handle401 () {
       this.notificationVisible = false
       this.$store.dispatch('user/handleNotLoggedIn')
-      router.push('/login')
     },
     handle403 () {
       this.notificationVisible = false
@@ -52,6 +51,13 @@ export default {
       this.$router.push({
         name: 'NotFound',
         params: { '0': 'notfound' }
+      })
+    },
+    handle406 () {
+      this.notificationVisible = false
+      this.$store.dispatch('resetRootState')
+      this.$router.push({
+        name: 'ServiceUnavailable'
       })
     },
     notifyRequestError (error) {
@@ -80,6 +86,9 @@ export default {
           case 404:
             this.handle404()
             break
+          case 406:
+            this.handle406()
+            break
           case 408:
             this.messages.push(this.$t('errors.validation.GatewayTimeout'))
             break
@@ -88,7 +97,9 @@ export default {
             this.messages.push(this.$t('errors.contactIfError'))
             break
           default:
-            this.messages.push(this.$t('errors.unhandled') + ' ' + error.response.data.reason + '. ' + error.response.data.message)
+            this.messages.push(
+              this.$t('errors.unhandled') + ' ' + error.response.data.reason + '. ' + error.response.data.message
+            )
             this.messages.push(this.$t('errors.contactIfError'))
         }
       }
@@ -115,7 +126,6 @@ export default {
     })
   }
 }
-
 </script>
 <style>
   .notification-dialog li {
@@ -140,7 +150,7 @@ export default {
   }
 
   .notification-dialog .el-dialog__title {
-    font-family: "Raleway", sans-serif;
+    font-family: 'Raleway', sans-serif;
     font-size: 24px;
     font-weight: normal;
     line-height: 1.33;

@@ -468,6 +468,7 @@
       "TitleTooLong": "Title can not be longer than 200 characters.",
       "TitleOrDescriptionTooShort": "Title or description can not be shorter than 6 characters.",
       "Forbidden": "You are trying to access forbidden resources",
+      "ServiceUnavailable": "Service is unavailable in your country",
       "NotFound": "Not found",
       "CommentTooLong": "Comment lenght limit was reached",
       "RemoteAccessPointNotSet": "Remote access point is not set.",
@@ -758,9 +759,17 @@
         "body": "Are you sure you want to delete this contribution?"
       },
       "payContribution": "Pay contribution",
+      "payoutContribution": "Get payout",
       "payContributionDescription": "This contribution is not payed yet. Pay and participate in pool.",
+      "payoutContributionDescription": "Payout for your contribution is available.",
+      "payoutAmount": "Payout amount",
       "amount": "Contribution amount",
-      "pay": "Pay"
+      "pay": "Pay",
+      "payout": "Get Payout",
+      "refundContribution": "Get refund",
+      "refundContributionDescription": "Payout for your contribution is available.",
+      "refundAmount": "Refund amount",
+      "refund": "Refund"
     },
     "poolStatuses": {
       "active": "Active",
@@ -771,7 +780,7 @@
       "closed": "Closed"
     },
     "poolContributionStatuses": {
-      "draft":"Draft",
+      "draft": "Draft",
       "pendingPayment": "Pending payment",
       "paid": "Paid",
       "canceled": "Canceled",

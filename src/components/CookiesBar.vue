@@ -1,22 +1,20 @@
 <template>
   <div v-if="show" class="cookies-bar">
-
     <div class="cookies-bar-container">
       <span class="cookies-message">
         {{ $t('general.cookiesMessage') }}
-        <router-link class="bold" :to="{ name: 'CookiesPolicy' }">
-          {{ $t('general.readMoreCookies') }}
-        </router-link>
+        <router-link class="bold" :to="{ name: 'CookiesPolicy' }"> {{ $t('general.readMoreCookies') }} </router-link>
       </span>
       <div class="cookies-bar-buttons">
-        <el-button class="button" @click="removeTracking">{{$t('general.decline')}}</el-button>
-        <el-button type="primary" @click="addTracking" class="button">{{$t('general.accept')}}</el-button>
+        <el-button class="button" @click="removeTracking">{{ $t('general.decline') }}</el-button>
+        <el-button type="primary" @click="addTracking" class="button">{{ $t('general.accept') }}</el-button>
       </div>
     </div>
   </div>
-
 </template>
 <script>
+import { mapMutations } from 'vuex'
+
 export default {
   data () {
     return {
@@ -25,22 +23,20 @@ export default {
     }
   },
   methods: {
+    ...mapMutations({
+      setIsCookiesEnabled: 'setIsCookiesEnabled'
+    }),
     removeTracking () {
-      localStorage.setItem('acceptCookies', false)
+      this.setIsCookiesEnabled(false)
       this.show = false
     },
     addTracking () {
-      localStorage.setItem('acceptCookies', true)
+      this.setIsCookiesEnabled(true)
+      this.loadGoogleAnalytics()
       this.show = false
-    }
-  },
-  mounted () {
-    const acceptCookies = localStorage.getItem('acceptCookies')
-
-    if (acceptCookies === null || acceptCookies === 'null') {
-      this.show = true
-    } else if (acceptCookies === true || acceptCookies === 'true') {
-      (function (w, d, s, l, i) {
+    },
+    loadGoogleAnalytics () {
+      ;(function (w, d, s, l, i) {
         w[l] = w[l] || []
         w[l].push({
           'gtm.start': new Date().getTime(),
@@ -50,10 +46,16 @@ export default {
         let j = d.createElement(s)
         let dl = l !== 'dataLayer' ? '&l=' + l : ''
         j.async = true
-        j.src =
-            'https://www.googletagmanager.com/gtm.js?id=' + i + dl
+        j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl
         f.parentNode.insertBefore(j, f)
       })(window, document, 'script', 'dataLayer', 'GTM-KGKXNP7')
+    }
+  },
+  mounted () {
+    if (this.$store.state.isCookiesEnabled === null) {
+      this.show = true
+    } else if (this.$store.state.isCookiesEnabled === true) {
+      this.loadGoogleAnalytics()
       this.show = false
     } else {
       this.show = false
@@ -106,6 +108,5 @@ export default {
         margin-top: 15px;
       }
     }
-
   }
 </style>
