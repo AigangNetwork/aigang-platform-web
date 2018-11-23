@@ -725,6 +725,10 @@
       "allPools": "All Pools",
       "portfolio": "Portfolio"
     },
+    "header": {
+      "contributions": "Contributions",
+      "currentPoolAmount": "Current amount"
+    },
     "products": {
       "invested": "Invested",
       "start": "Starting",
@@ -802,7 +806,7 @@
       "investors": "Investors",
       "myInvestment": "My investment",
       "investedAmount": "Invested Amount",
-      "goalAmount": "Goal",
+      "goalAmount": "Pool goal",
       "status": "Status"
     },
     "confirmationDialog": {

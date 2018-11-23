@@ -4,7 +4,7 @@
     <td>{{ contribution.investors }}</td>
     <td>{{ contribution.amount}} {{ $t('general.aix') }}</td>
     <td>{{ contribution.investedAmount }} {{ $t('general.aix') }}</td>
-    <td>{{ contribution.goalAmount }} {{ $t('general.aix') }}</td>
+    <td>{{ contribution.poolGoalAmount }} {{ $t('general.aix') }}</td>
     <td>
       <span class="investment-list-item-status active">
         {{ status | uppercase }}

@@ -2,6 +2,15 @@
   <div class="header-content">
     <div class="prediction-title">{{ info.title | truncate(128) }}</div>
     <div class="info">
+      <div class="icon-container">
+        <img src="/static/icons/user-white.svg" class="header-icon" />
+        <span>{{ $t('pools.header.contributions')}}: {{ info.contributions }}</span>
+      </div>
+
+      <div class="icon-container">
+        <img src="/static/icons/volume-white.svg" class="header-icon" />
+        <span>{{ $t('pools.header.currentPoolAmount')}}: {{ info.currentPoolSize }} / {{ info.poolGoalSize }} {{ $t('general.aix') }}</span>
+      </div>
     </div>
   </div>
 </template>
