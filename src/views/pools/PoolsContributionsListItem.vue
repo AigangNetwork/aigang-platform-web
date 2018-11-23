@@ -78,4 +78,14 @@ export default {
       color: $gray;
     }
   }
+
+  @media screen and (max-width: 680px) and (min-width: 100px) {
+    tr {
+      td {
+        &.title, h2 {
+          font-size: 10pt !important;
+        }
+      }
+    }
+  }
 </style>

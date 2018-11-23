@@ -2,7 +2,7 @@
   <el-row v-loading="$store.getters.loading">
     <el-col v-if="isDataLoaded">
       <Card>
-        <div slot="body">
+        <div slot="body" class="scrollable">
           <table>
             <thead class="investments-table-header">
               <tr>
@@ -68,6 +68,14 @@ export default {
 
 <style lang="scss" scoped>
   @import '~helpers/variables';
+
+  .aig-card {
+    width: 100%;
+  }
+
+  .scrollable {
+    overflow: scroll;
+  }
 
   .investment-list-item {
     border-top: 1px solid $button-purple;
