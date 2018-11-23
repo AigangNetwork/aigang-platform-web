@@ -103,7 +103,8 @@ export default {
 
       await this.$store.dispatch('pools/addContribution', {
         amount,
-        poolId: this.$route.params.id
+        poolId: this.$route.params.id,
+        poolContractAddress: this.currentPool.poolContractAddress
       })
 
       this.displayPaymentDialog(true)

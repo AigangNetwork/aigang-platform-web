@@ -31,7 +31,7 @@ export default {
     }
   },
 
-  async addContribution ({ commit, rootState, state }, payload) {
+  async addContribution ({ commit, rootState }, payload) {
     commit('setTransactionHash', '')
     commit('setTransactionError', false)
 
@@ -54,7 +54,7 @@ export default {
         const bytes = (poolIdHex + contributionIdHex).replace(/0x/g, '')
 
         TokenInstance.methods
-          .approveAndCall(state.currentPool.poolContractAddress, paymentValue, '0x' + bytes)
+          .approveAndCall(payload.poolContractAddress, paymentValue, '0x' + bytes)
           .send({
             gas: process.env.GAS.ADD_CONTRIBUTION,
             from: rootState.user.userWeb3.coinbase
@@ -76,88 +76,6 @@ export default {
           })
       }
     } catch (ex) {}
-  },
-
-  async payContribution ({ commit, rootState, state }, payload) {
-    commit('setTransactionHash', '')
-    commit('setTransactionError', false)
-
-    commit('setLoading', true, { root: true })
-
-    const web3 = window.web3
-    const TokenInstance = new web3.eth.Contract(process.env.CONTRACT_INFO.ABI, process.env.CONTRACT_INFO.ADDRESS)
-
-    const paymentValue = web3.utils.toWei(payload.amount.toString())
-    const poolIdHex = web3.utils.fromAscii(payload.poolId)
-
-    const contributionIdHex = web3.utils.fromAscii(payload.contributionId)
-
-    commit('setLoading', false, { root: true })
-
-    const bytes = (poolIdHex + contributionIdHex).replace(/0x/g, '')
-
-    TokenInstance.methods
-      .approveAndCall(state.currentPool.poolContractAddress, paymentValue, '0x' + bytes)
-      .send({
-        gas: process.env.GAS.ADD_CONTRIBUTION,
-        from: rootState.user.userWeb3.coinbase
-      })
-      .on('error', () => {
-        commit('setTransactionError', true)
-      })
-      .once('transactionHash', async txId => {
-        try {
-          const transactionPayload = {
-            contributionId: payload.contributionId,
-            txId
-          }
-
-          await axios.post('/pools/transaction/addContribution', transactionPayload)
-
-          commit('setTransactionHash', txId)
-        } catch (ex) {}
-      })
-  },
-
-  async payContribution ({ commit, rootState, state }, payload) {
-    commit('setTransactionHash', '')
-    commit('setTransactionError', false)
-
-    commit('setLoading', true, { root: true })
-
-    const web3 = window.web3
-    const TokenInstance = new web3.eth.Contract(process.env.CONTRACT_INFO.ABI, process.env.CONTRACT_INFO.ADDRESS)
-
-    const paymentValue = web3.utils.toWei(payload.amount.toString())
-    const poolIdHex = web3.utils.fromAscii(payload.poolId)
-
-    const contributionIdHex = web3.utils.fromAscii(payload.contributionId)
-
-    commit('setLoading', false, { root: true })
-
-    const bytes = (poolIdHex + contributionIdHex).replace(/0x/g, '')
-
-    TokenInstance.methods
-      .approveAndCall(state.currentPool.poolContractAddress, paymentValue, '0x' + bytes)
-      .send({
-        gas: process.env.GAS.ADD_CONTRIBUTION,
-        from: rootState.user.userWeb3.coinbase
-      })
-      .on('error', () => {
-        commit('setTransactionError', true)
-      })
-      .once('transactionHash', async txId => {
-        try {
-          const transactionPayload = {
-            contributionId: payload.contributionId,
-            txId
-          }
-
-          await axios.post('/pools/transaction/addContribution', transactionPayload)
-
-          commit('setTransactionHash', txId)
-        } catch (ex) {}
-      })
   },
 
   async deleteContribution ({ commit }, id) {
@@ -225,7 +143,7 @@ export default {
     PoolsInstance.methods
       .payout(poolIdHex, contributionIdHex)
       .send({
-        gas: process.env.GAS.ADD_CONTRIBUTION,
+        gas: process.env.GAS.PAYOUT_CONTRIBUTION,
         from: rootState.user.userWeb3.coinbase
       })
       .on('error', () => {
@@ -269,7 +187,7 @@ export default {
     PoolsInstance.methods
       .refund(poolIdHex, contributionIdHex)
       .send({
-        gas: process.env.GAS.ADD_CONTRIBUTION,
+        gas: process.env.GAS.REFUND_CONTRIBUTION,
         from: rootState.user.userWeb3.coinbase
       })
       .on('error', () => {

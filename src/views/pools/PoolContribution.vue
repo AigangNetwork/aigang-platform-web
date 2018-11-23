@@ -127,7 +127,8 @@ export default {
       await this.$store.dispatch('pools/addContribution', {
         contributionId: this.currentContribution.id,
         amount: this.currentContribution.amount,
-        poolId: this.currentContribution.poolId
+        poolId: this.currentContribution.poolId,
+        poolContractAddress: this.currentContribution.poolContractAddress
       })
     },
     async payout () {
