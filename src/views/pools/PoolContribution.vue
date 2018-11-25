@@ -14,19 +14,6 @@
         <h4 class="info-title">{{ $t('pools.contribution.description') }}</h4>
         <vue-markdown class="markup-content" :html="false" :source="currentContribution.poolDescription || $t('pools.contribution.noDescription')"></vue-markdown>
 
-        <div v-if="isContributionDraft">
-          <h4 class="info-title">{{ $t('pools.contribution.payContribution') }}</h4>
-          <p>{{ $t('pools.contribution.payContributionDescription')}}</p>
-          <p>{{ $t('pools.contribution.amount')}}: <span class="value">{{ currentContribution.amount }} {{ $t('general.aix') }}</span></p>
-          <el-tooltip :disabled="investButtonEnabled" :content="$t('pools.userNotLoggedIn')">
-            <span class="wrapper el-button">
-              <el-button :disabled="!investButtonEnabled" @click="pay" class="aig-button" type="primary">
-                {{ $t('pools.contribution.pay') }}
-              </el-button>
-            </span>
-          </el-tooltip>
-        </div>
-
         <div v-if="isContributionAvailableRefund">
           <h4 class="info-title">{{ $t('pools.contribution.refundContribution') }}</h4>
           <p>{{ $t('pools.contribution.refundContributionDescription')}}</p>
@@ -53,8 +40,6 @@
             </span>
           </el-tooltip>
         </div>
-
-        <ContributionDeleteSection v-if="isContributionDraft" />
       </div>
     </div>
 
@@ -70,7 +55,6 @@
 import ConfirmContributionDialog from '@/components/pools/ConfirmContributionDialog'
 import VueMarkdown from 'vue-markdown'
 import PoolProductHeader from './PoolProductHeader'
-import ContributionDeleteSection from '@/components/pools/ContributionDeleteSection'
 import PaymentConfirmationDialog from '@/components/pools/PaymentConfirmationDialog'
 
 import { createNamespacedHelpers } from 'vuex'
@@ -81,7 +65,6 @@ export default {
     ConfirmContributionDialog,
     VueMarkdown,
     PoolProductHeader,
-    ContributionDeleteSection,
     PaymentConfirmationDialog
   },
   data () {
@@ -96,9 +79,6 @@ export default {
       'currentContribution',
       'transactionError'
     ]),
-    isContributionDraft () {
-      return this.currentContribution.status.toUpperCase() === 'DRAFT'
-    },
     isContributionAvailablePayout () {
       return this.currentContribution.status.toUpperCase() === 'AVAILABLEPAYOUT'
     },
@@ -112,7 +92,6 @@ export default {
   async mounted () {
     await this.$store.dispatch('pools/getContribution', this.$route.params.id)
     this.isDataLoaded = true
-
     this.headerInfo = {
       title: this.currentContribution.poolName
     }
@@ -120,16 +99,6 @@ export default {
   methods: {
     displayPaymentDialog (value) {
       this.isPaymentDialogVisible = value
-    },
-    async pay () {
-      this.isPaymentDialogVisible = true
-
-      await this.$store.dispatch('pools/addContribution', {
-        contributionId: this.currentContribution.id,
-        amount: this.currentContribution.amount,
-        poolId: this.currentContribution.poolId,
-        poolContractAddress: this.currentContribution.poolContractAddress
-      })
     },
     async payout () {
       this.isPaymentDialogVisible = true
