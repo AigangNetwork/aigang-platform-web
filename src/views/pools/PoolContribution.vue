@@ -93,7 +93,10 @@ export default {
     await this.$store.dispatch('pools/getContribution', this.$route.params.id)
     this.isDataLoaded = true
     this.headerInfo = {
-      title: this.currentContribution.poolName
+      title: this.currentContribution.poolName,
+      contributions: this.currentContribution.contributions,
+      currentPoolSize: this.currentContribution.currentPoolSize,
+      poolGoalSize: this.currentContribution.poolGoalSize
     }
   },
   methods: {

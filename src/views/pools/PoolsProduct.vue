@@ -88,7 +88,10 @@ export default {
     this.isDataLoaded = true
 
     this.headerInfo = {
-      title: this.currentPool.title
+      title: this.currentPool.title,
+      contributions: this.currentPool.contributions,
+      currentPoolSize: this.currentPool.currentPoolSize,
+      poolGoalSize: this.currentPool.goalPoolSize
     }
   },
   methods: {
