@@ -48,7 +48,7 @@
       </div>
     </Card>
     <Card class="aig-upload-card-step-2" v-if="secondStepActive" v-loading="loading">
-      <div slot="body" :element-loading-text="$t('general.loading')">
+      <div slot="body">
         <el-row>
           <el-col :span="24">
             <DatasetFileCard v-model="dataUploadForm.isPublic" :showUploadOption="false" />

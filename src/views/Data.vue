@@ -12,7 +12,7 @@
             </span>
           </transition>
           <ul>
-            <li v-for="item in dataMeniu" :key="item.name">
+            <li v-for="item in dataMenu" :key="item.name">
               <router-link :class="{'aig-link-disabled': item.disabled}" @click.native="collapseSideMenu" active-class="aig-menu-active"
                 :to="item.routeLink">{{ item.name }}</router-link>
             </li>
@@ -48,7 +48,7 @@ export default {
   name: 'DataView',
   data () {
     return {
-      dataMeniu: [{
+      dataMenu: [{
         name: this.$t('data.menu.all'),
         routeLink: {
           path: '/data/all'
@@ -76,10 +76,10 @@ export default {
   },
   methods: {
     selectMenu (index) {
-      this.dataMeniu.forEach(function (val, key) {
+      this.dataMenu.forEach(function (val, key) {
         val.active = false
       })
-      this.dataMeniu[index].active = true
+      this.dataMenu[index].active = true
     },
     openSideMenu () {
       this.isMenuOpen = !this.isMenuOpen

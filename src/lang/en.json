@@ -404,6 +404,7 @@
     "noPolicies": "You do not have any policies yet",
     "noPredictions": "Can not find any predictions",
     "noMyPredictions": "You do not have any predictions for selected filter type",
+    "noPools": "Can not find any pools",
     "upvote": "Upvote",
     "downvote": "Downvote",
     "aix": "AIX",
@@ -720,30 +721,107 @@
     }
   },
   "pools": {
-    "portfolio": "Portfolio",
-    "products": "Products",
-    "invest": "Invest",
+    "menu": {
+      "allPools": "All Pools",
+      "portfolio": "Portfolio"
+    },
+    "header": {
+      "contributions": "Contributions",
+      "currentPoolAmount": "Current amount"
+    },
+    "products": {
+      "invested": "Invested",
+      "start": "Starting",
+      "end": "Ending",
+      "currentPoolSize": "Current Pool Size",
+      "poolSizeGoal": "Pool Size Goal",
+      "status": "Status"
+    },
+    "pool": {
+      "termsAndConditions": "Terms and Conditions",
+      "agreeWithTermsAndConditions": "You have to read terms and conditions to invest",
+      "description": "Description",
+      "noDescription": "There is no description for this pool",
+      "marketAddress": "Market contract adress",
+      "invest": "Invest",
+      "paymentInfo": {
+        "title": "Payment Information",
+        "metamaskAlert": "Atention! Do not leave this page until you confirm your transaction. Otherwise your transaction will be lost and contribution won't be counted.",
+        "body": "Your payment transaction was created succesfully. When payment will be processed we will inform you via email notification message. You can see your transaction status by clicking on transaction address.",
+        "buttons": {
+          "goBack": "Go to Portfolio"
+        }
+      }
+    },
+    "contribution": {
+      "description": "Description",
+      "noDescription": "There is no description for this pool",
+      "delete": "Delete contribution",
+      "deleteMessage": "This contribution and all data associated with it will be deleted from the plaform. You won't be able to revert this action later on.",
+      "deleteButtonText": "Delete",
+      "deleteContributionDialog": {
+        "body": "Are you sure you want to delete this contribution?"
+      },
+      "payContribution": "Pay contribution",
+      "payoutContribution": "Get payout",
+      "payContributionDescription": "This contribution is not payed yet. Pay and participate in pool.",
+      "payoutContributionDescription": "Payout for your contribution is available.",
+      "payoutAmount": "Payout amount",
+      "amount": "Contribution amount",
+      "pay": "Pay",
+      "payout": "Get Payout",
+      "refundContribution": "Get refund",
+      "refundContributionDescription": "Payout for your contribution is available.",
+      "refundAmount": "Refund amount",
+      "refund": "Refund"
+    },
+    "poolStatuses": {
+      "active": "Active",
+      "distributing": "Distributing",
+      "funded": "Funded",
+      "paused": "Paused",
+      "canceled": "Canceled",
+      "closed": "Closed"
+    },
+    "poolContributionStatuses": {
+      "pendingPayment": "Pending payment",
+      "paid": "Paid",
+      "canceled": "Canceled",
+      "availablePayout": "Available Payout",
+      "pendingPayout": "Pending Payout",
+      "rewardPaidout": "Reward Paidout",
+      "availableRefund": "Available Refund",
+      "refundPaidout": "Refund Paidout"
+    },
+    "userNotLoggedIn": "User must be logged in and connected to web3 provider (Metamask, Mist, etc.)",
+    "contributions": {
+      "noData": "There is no contributions yet"
+    },
     "portfolioInfo": {
       "yourAddress": "Your address",
       "yourBalance": "Your balance",
-      "invested": "Invested",
       "claimedProfit": "Claimed profit",
       "insuranceType": "Insurance type",
       "investors": "Investors",
-      "policies": "Policies",
+      "myInvestment": "My investment",
       "investedAmount": "Invested Amount",
-      "amountPaid": "Amount paid for the insurance",
-      "profit": "Profit",
-      "predictedProfit": "Predicted Profit",
-      "currentPoolSize": "Current Pool Size",
-      "poolSizeGoal": "Pool Size Goal",
-      "totalInsuranceProducts": "Total insurance products",
-      "totalPolicies": "Total policies",
-      "totalInvestedAmount": "Total invested amount",
-      "totalAmountInReserves": "Total amount in reserves",
-      "totalPaidForClaims": "Total paid for the claims",
-      "totalInvestors": "Total investors",
-      "amountPaidForInsurance": "Amount paid for the insurance"
+      "goalAmount": "Pool goal",
+      "status": "Status"
+    },
+    "confirmationDialog": {
+      "title": "Add contribution amount",
+      "maxAllowedAmount": "Max allowed amount",
+      "amount": "Amount",
+      "buttons": {
+        "contribute": "Contribute"
+      },
+      "validation": {
+        "required": "Can not be empty",
+        "shouldBeNumber": "Should be number",
+        "amountInvalid": "Invalid amount. Value e.g. 000000.000000",
+        "shouldBeBiggerThanZero": "Should be greater than zero",
+        "shouldBeLowerOrEqualMaxAllowedAmount": "Exceeds pool amount goal"
+      }
     }
   }
 }
