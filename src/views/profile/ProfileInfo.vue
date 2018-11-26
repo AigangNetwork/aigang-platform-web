@@ -5,7 +5,7 @@
         {{ $store.state.user.profile.firstName.charAt(0) }}
       </div>
     </el-col>
-    <el-col v-loading="loading" :element-loading-text="$t('general.loading')" class="user-info-container form-container">
+    <el-col v-loading="loading" class="user-info-container form-container">
       <transition name="slideUp" mode="out-in">
         <el-row class="no-margin" v-if="!isProfileChangeOn">
           <h2 class="name-field">{{ profileForm.firstName }} {{ profileForm.lastName }}</h2>

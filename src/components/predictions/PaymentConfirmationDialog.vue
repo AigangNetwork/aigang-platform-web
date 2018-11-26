@@ -4,7 +4,7 @@
       <div key="1" v-if="!transactionHash">
         <p class="bold">{{ content }}</p>
       </div>
-      <div class="policy-dialog-info" v-if="transactionHash" key="2">
+      <div class="payment-dialog-info" v-if="transactionHash" key="2">
         <p>{{ $t('predictions.prediction.paymentInfo.body') }}</p>
         <a class="address" :href="txLink" target="_blank">
           <span class="contract-address">{{ transactionHash }}</span>
@@ -54,7 +54,7 @@ export default {
 
 </script>
 <style lang="scss" scoped>
-  .policy-dialog-info {
+  .payment-dialog-info {
     max-width: 100%;
     word-wrap: break-word;
 

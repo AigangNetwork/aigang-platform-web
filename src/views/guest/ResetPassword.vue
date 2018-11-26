@@ -3,7 +3,7 @@
     <div class="aig-card-container">
       <Card class="guest-card">
 
-        <div slot="body" v-loading="loading" :element-loading-text="$t('general.loading')">
+        <div slot="body" v-loading="loading">
 
           <el-row>
             <el-col>

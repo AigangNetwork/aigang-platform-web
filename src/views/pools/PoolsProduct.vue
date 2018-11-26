@@ -1,69 +1,122 @@
 <template>
-  <Card class="investment-product-card">
-    <div slot="body" v-loading="loading" class="investment-product-container">
-      <div class="flex-container">
-        <el-row class="title-section">
-          <router-link :to="{name: 'PoolsProducts'}" class="back-button">
-            <i class="back-icon el-icon-arrow-left"></i>
-          </router-link>
-
-          <h2>{{ product.title }} </h2>
-          {{ product.description}}
-        </el-row>
-        <el-row class="info-section">
-          <div>
-            <span class="investment-item-label">{{ $t('pools.portfolioInfo.totalPolicies') }}</span>
-            {{ product.policies }}
-          </div>
-          <div>
-            <span class="investment-item-label">{{ $t('pools.portfolioInfo.investedAmount') }}</span>
-            {{ product.currentPoolSize }}
-          </div>
-          <div>
-            <span class="investment-item-label">{{ $t('pools.portfolioInfo.insuranceType') }}</span>
-            {{ product.type }}
-          </div>
-          <div>
-            <span class="investment-item-label">{{ $t('pools.portfolioInfo.investors') }}</span>
-            {{ product.investors }}
-          </div>
-          <div>
-            <span class="investment-item-label">{{ $t('pools.portfolioInfo.amountPaidForInsurance') }}</span>
-            {{ product.paid }}
-          </div>
-          <div>
-            <span class="investment-item-label">{{ $t('pools.portfolioInfo.predictedProfit') }}</span>
-            {{ product.predictedProfit }}
-          </div>
-
-        </el-row>
+  <div class="aig-container aig-view aig-info" v-loading="$store.getters.loading">
+    <div class="aig-info-header" v-if="isDataLoaded">
+      <div class="back-button-container">
+        <router-link :to="{ name: 'PoolsProductsList' }" class="back-button">{{ $t('general.backToList')}}</router-link>
       </div>
-      <el-row>
-        <el-button class="aig-button" type="primary" @click.prevent.native="insure">{{ $t('pools.invest') }}</el-button>
-      </el-row>
+      <div class="aig-info-header-content">
+        <PoolProductHeader :info="headerInfo" />
+      </div>
     </div>
-  </Card>
+
+    <div class="aig-info-content-container" v-if="isDataLoaded">
+      <div class="aig-info-content">
+        <h4 class="info-title">{{ $t('pools.pool.description') }}</h4>
+        <vue-markdown class="markup-content" :html="false" :source="currentPool.description || $t('pools.pool.noDescription')"></vue-markdown>
+
+        <h4 class="info-title">{{ $t('pools.pool.marketAddress') }}</h4>
+        <p><a class="contract-address" target="_blank" :href="contractLink">{{ currentPool.poolContractAddress }}</a></p>
+
+        <h4 class="info-title">{{ $t('pools.pool.termsAndConditions') }}</h4>
+        <ScrollableMarkupText class="scrollable-text" :text="currentPool.termsAndConditions" @scrolledToBottom="onScrolledToBottom" />
+
+        <el-tooltip :disabled="!investButtonDisabled" :content="$t('pools.pool.agreeWithTermsAndConditions')">
+          <span class="wrapper el-button">
+            <el-button :disabled="investButtonDisabled" @click="contribute" class="aig-button" type="primary">
+              {{ $t('pools.pool.invest') }}
+            </el-button>
+          </span>
+        </el-tooltip>
+
+        <ConfirmContributionDialog
+          :isVisible="isConfirmContributionDialogVisible"
+          :displayDialog="displayConfirmContributionDialog"
+          :maxAllowedAmount="maxAllowedAmount"
+          @addContribution="onAddContribution"/>
+
+        <PaymentConfirmationDialog
+          :isVisible="isPaymentDialogVisible && !transactionError"
+          :displayDialog="displayPaymentDialog"
+          :content="$t('pools.pool.paymentInfo.metamaskAlert')" />
+      </div>
+    </div>
+  </div>
 </template>
+
 <script>
-import Card from '@/components/Card'
+import ConfirmContributionDialog from '@/components/pools/ConfirmContributionDialog'
+import VueMarkdown from 'vue-markdown'
+import PoolProductHeader from './PoolProductHeader'
+import ScrollableMarkupText from '@/components/insurance/ScrollableMarkupText'
+import PaymentConfirmationDialog from '@/components/pools/PaymentConfirmationDialog'
+
+import { createNamespacedHelpers } from 'vuex'
+const { mapGetters } = createNamespacedHelpers('pools')
+
 export default {
-  components: { Card },
+  components: {
+    ConfirmContributionDialog,
+    VueMarkdown,
+    PoolProductHeader,
+    ScrollableMarkupText,
+    PaymentConfirmationDialog
+  },
   data () {
     return {
-      loading: false,
-      product: {
-        title: 'Android Device Insurance',
-        description: '"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?"',
-        type: 'Android Device',
-        investedCount: Math.floor(Math.random() * 100),
-        poolSize: Math.floor(Math.random() * 14200),
-        currentPoolSize: Math.floor(Math.random() * 1420),
-        predictedProfit: Math.floor(Math.random() * 100),
-        status: 'Active',
-        paid: 132,
-        policies: Math.floor(Math.random() * 100),
-        investors: Math.floor((Math.random() * 1000))
-      }
+      isDataLoaded: false,
+      isConfirmContributionDialogVisible: false,
+      headerInfo: {},
+      investButtonDisabled: true,
+      isPaymentDialogVisible: false
+    }
+  },
+  computed: {
+    ...mapGetters([
+      'currentPool',
+      'transactionError'
+    ]),
+    maxAllowedAmount () {
+      const numbersAfterPointer = 6
+      return Math.round((this.currentPool.goalPoolSize - this.currentPool.currentPoolSize) * Math.pow(10, numbersAfterPointer)) / Math.pow(10, numbersAfterPointer)
+    },
+    contractLink () {
+      return process.env.ETHERSCAN_ADDRESS + process.env.ADDRESS_PATX + this.currentPool.poolContractAddress
+    }
+  },
+  async mounted () {
+    await this.$store.dispatch('pools/getPool', this.$route.params.id)
+    this.isDataLoaded = true
+
+    this.headerInfo = {
+      title: this.currentPool.title,
+      contributions: this.currentPool.contributions,
+      currentPoolSize: this.currentPool.currentPoolSize,
+      poolGoalSize: this.currentPool.goalPoolSize
+    }
+  },
+  methods: {
+    contribute () {
+      this.displayConfirmContributionDialog(true)
+    },
+    displayConfirmContributionDialog (value) {
+      this.isConfirmContributionDialogVisible = value
+    },
+    async onAddContribution (amount) {
+      this.displayConfirmContributionDialog(false)
+
+      await this.$store.dispatch('pools/addContribution', {
+        amount,
+        poolId: this.$route.params.id,
+        poolContractAddress: this.currentPool.poolContractAddress
+      })
+
+      this.displayPaymentDialog(true)
+    },
+    onScrolledToBottom () {
+      this.investButtonDisabled = false
+    },
+    displayPaymentDialog (value) {
+      this.isPaymentDialogVisible = value
     }
   }
 }
@@ -87,36 +140,33 @@ export default {
     }
   }
 
-  .investment-product-container {
+  .aig-button {
+    margin-top: 0;
+  }
 
-    .aig-button {
-      margin-top: 0;
+  .el-row {
+
+    &.info-section {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      width: 50%;
+      padding-top: 40px;
+      color: white;
+      background: $purple-gradient-top-down;
     }
 
-    .el-row {
-
-      &.info-section {
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-        width: 50%;
-        padding-top: 40px;
-        color: white;
-        background: $purple-gradient-top-down;
-      }
-
-      div {
-        padding: 23px;
-        font-family: $font-secondary;
-        font-weight: 600;
-        font-size: 20pt;
-        width: 33%;
-        font-weight: 600;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        text-align: center;
-      }
+    div {
+      padding: 23px;
+      font-family: $font-secondary;
+      font-weight: 600;
+      font-size: 20pt;
+      width: 33%;
+      font-weight: 600;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      text-align: center;
     }
   }
 
@@ -126,4 +176,16 @@ export default {
     font-size: 11pt;
     font-weight: 300;
   }
+
+  .aig-info-content-container {
+    .scrollable-text {
+      height: 200px;
+    }
+
+    .wrapper {
+      width: 100%;
+      margin-top: 10px;
+    }
+  }
+
 </style>

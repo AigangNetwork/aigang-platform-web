@@ -68,6 +68,7 @@ export default {
     padding: 20px;
     display: flex;
     position: fixed;
+    z-index: 1000;
     bottom: 0;
     width: 100%;
     height: 100px;

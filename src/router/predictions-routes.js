@@ -7,7 +7,6 @@ import ForecastInfo from '@/views/predictions/ForecastInfo'
 const routes = [
   {
     path: '/predictions',
-    name: 'Predictions',
     props: true,
     component: Predictions,
     children: [
