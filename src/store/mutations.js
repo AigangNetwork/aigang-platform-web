@@ -15,5 +15,9 @@ export default {
     state = rootState
     state.loading = false
     state.insufficientBalanceDialogVisible = false
+  },
+
+  setIsCookiesEnabled (state, value) {
+    state.isCookiesEnabled = value
   }
 }
