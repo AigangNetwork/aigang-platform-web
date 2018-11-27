@@ -112,7 +112,7 @@ export default {
     .filters-bar {
       margin-left: 25px;
       margin-right: 25px;
-      padding-bottom: 40px;
+      padding-bottom: 20px;
       .filter-item {
         display: flex;
         .filter-label {

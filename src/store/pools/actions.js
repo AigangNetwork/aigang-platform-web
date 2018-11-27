@@ -88,8 +88,23 @@ export default {
     commit('setLoading', false, { root: true })
   },
 
+  async getPortfolioSummary ({ commit }) {
+    commit('setPortfolioSummaryLoading', true)
+
+    try {
+      const response = await axios.get('/pools/portfoliosummary')
+      if (response.data) {
+        commit('setPortfolioSummary', response.data.summary)
+      }
+
+      commit('setPortfolioSummaryLoading', false)
+    } catch (ex) {
+      commit('setPortfolioSummaryLoading', false)
+    }
+  },
+
   async getUserContributions ({ commit }, payload) {
-    commit('setLoading', true, { root: true })
+    commit('setContributionsListLoading', true)
 
     try {
       const response = await axios.get(`/pools/mycontributions?page=${payload.page}&status=${payload.filters.status}`)
@@ -97,9 +112,9 @@ export default {
         commit('setUserContributions', response.data)
       }
 
-      commit('setLoading', false, { root: true })
+      commit('setContributionsListLoading', false)
     } catch (ex) {
-      commit('setLoading', false, { root: true })
+      commit('setContributionsListLoading', false)
     }
   },
 

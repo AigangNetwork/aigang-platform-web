@@ -14,19 +14,21 @@
         <h4 class="info-title">{{ $t('pools.pool.description') }}</h4>
         <vue-markdown class="markup-content" :html="false" :source="currentPool.description || $t('pools.pool.noDescription')"></vue-markdown>
 
-        <h4 class="info-title">{{ $t('pools.pool.marketAddress') }}</h4>
+        <h4 class="info-title">{{ $t('pools.pool.contractAddress') }}</h4>
         <p><a class="contract-address" target="_blank" :href="contractLink">{{ currentPool.poolContractAddress }}</a></p>
 
-        <h4 class="info-title">{{ $t('pools.pool.termsAndConditions') }}</h4>
-        <ScrollableMarkupText class="scrollable-text" :text="currentPool.termsAndConditions" @scrolledToBottom="onScrolledToBottom" />
+        <div v-if="status === 'active'">
+          <h4 class="info-title">{{ $t('pools.pool.termsAndConditions') }}</h4>
+          <ScrollableMarkupText class="scrollable-text" :text="currentPool.termsAndConditions" @scrolledToBottom="onScrolledToBottom" />
 
-        <el-tooltip :disabled="!investButtonDisabled" :content="$t('pools.pool.agreeWithTermsAndConditions')">
-          <span class="wrapper el-button">
-            <el-button :disabled="investButtonDisabled" @click="contribute" class="aig-button" type="primary">
-              {{ $t('pools.pool.invest') }}
-            </el-button>
-          </span>
-        </el-tooltip>
+          <el-tooltip :disabled="!investButtonDisabled" :content="$t('pools.pool.agreeWithTermsAndConditions')">
+            <span class="wrapper el-button">
+              <el-button :disabled="investButtonDisabled" @click="contribute" class="aig-button" type="primary">
+                {{ $t('pools.pool.invest') }}
+              </el-button>
+            </span>
+          </el-tooltip>
+        </div>
 
         <ConfirmContributionDialog
           :isVisible="isConfirmContributionDialogVisible"
@@ -88,10 +90,13 @@ export default {
     this.isDataLoaded = true
 
     this.headerInfo = {
+      status: this.currentPool.status,
       title: this.currentPool.title,
       contributions: this.currentPool.contributions,
       currentPoolSize: this.currentPool.currentPoolSize,
-      poolGoalSize: this.currentPool.goalPoolSize
+      poolGoalSize: this.currentPool.goalPoolSize,
+      startDateUtc: this.currentPool.startDateUtc,
+      endDateUtc: this.currentPool.endDateUtc
     }
   },
   methods: {
@@ -186,6 +191,42 @@ export default {
       width: 100%;
       margin-top: 10px;
     }
+  }
+
+    .aig-info {
+    .aig-info-content {
+      p.description {
+        margin-bottom: 40px;
+      }
+
+      .info-title {
+        margin-top: 0px;
+      }
+    }
+
+    .details {
+      margin-bottom: 20px;
+
+      p {
+        margin: 0px;
+      }
+
+      .value {
+        font-weight: 400;
+      }
+    }
+
+    .markup-content {
+      margin-bottom: 20px;
+    }
+  }
+
+  .no-margin-bottom {
+    margin-bottom: 0;
+  }
+
+  .no-margin-top {
+    margin-top: 0;
   }
 
 </style>

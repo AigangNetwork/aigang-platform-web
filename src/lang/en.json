@@ -730,7 +730,13 @@
     },
     "header": {
       "contributions": "Contributions",
-      "currentPoolAmount": "Current amount"
+      "currentPoolAmount": "Current amount",
+      "starts": "Starts",
+      "ends": "Ends",
+      "canceled": "Canceled",
+      "distributing": "Distributing",
+      "funded": "Funded",
+      "ended": "Ended"
     },
     "products": {
       "invested": "Invested",
@@ -742,6 +748,12 @@
     },
     "contributions" : {
       "noData": "There is no contributions yet",
+      "summary": {
+        "contributions": "Contributions",
+        "contributionsAmount": "Contributions amount",
+        "availableReward": "Available reward",
+        "rewardPaidOut": "Reward paid out"
+      },
       "filters": {
         "status": "Status"
       }
@@ -751,7 +763,7 @@
       "agreeWithTermsAndConditions": "You have to read terms and conditions to invest",
       "description": "Description",
       "noDescription": "There is no description for this pool",
-      "marketAddress": "Market contract adress",
+      "contractAddress": "Contract address",
       "invest": "Invest",
       "paymentInfo": {
         "title": "Payment Information",
@@ -764,6 +776,9 @@
     },
     "contribution": {
       "description": "Description",
+      "details": "Contribution details",
+      "contractAddress": "Contract address",
+      "yourAmount": "Your contributed amount",
       "noDescription": "There is no description for this pool",
       "delete": "Delete contribution",
       "deleteMessage": "This contribution and all data associated with it will be deleted from the plaform. You won't be able to revert this action later on.",
@@ -773,7 +788,7 @@
       },
       "payContribution": "Pay contribution",
       "payoutContribution": "Get payout",
-      "payContributionDescription": "This contribution is not payed yet. Pay and participate in pool.",
+      "payContributionDescription": "This contribution is not paid yet. Pay and participate in pool.",
       "payoutContributionDescription": "Payout for your contribution is available.",
       "payoutAmount": "Payout amount",
       "amount": "Contribution amount",

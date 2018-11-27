@@ -2,14 +2,44 @@
   <div class="header-content">
     <div class="prediction-title">{{ info.title | truncate(128) }}</div>
     <div class="info">
-      <div class="icon-container">
+      <div class="icon-container" v-if="info.status === 'paused'">
+        <img src="/static/icons/clock-white.svg" class="header-icon" />
+        <span>{{ $t('pools.header.starts') }}: <Date :dateUtc="info.startDateUtc" format="YYYY-MM-DD HH:mm (UTC Z)" /></span>
+      </div>
+
+      <div class="icon-container" v-if="info.status === 'active'">
+        <img src="/static/icons/finish-white.svg" class="header-icon" />
+        <span>{{ $t('pools.header.ends') }}: <Date :dateUtc="info.endDateUtc" format="YYYY-MM-DD HH:mm (UTC Z)" /></span>
+      </div>
+
+      <div class="icon-container" v-else-if="info.status === 'canceled'">
+        <img src="/static/icons/finish-white.svg" class="header-icon" />
+        <span>{{ $t('pools.header.canceled') }}</span>
+      </div>
+
+      <div class="icon-container" v-else-if="info.status === 'distributing'">
+        <img src="/static/icons/finish-white.svg" class="header-icon" />
+        <span>{{ $t('pools.header.distributing') }}</span>
+      </div>
+
+      <div class="icon-container" v-else-if="info.status === 'funded'">
+        <img src="/static/icons/finish-white.svg" class="header-icon" />
+        <span>{{ $t('pools.header.funded') }}</span>
+      </div>
+
+      <div class="icon-container" v-else-if="info.status === 'closed'">
+        <img src="/static/icons/finish-white.svg" class="header-icon" />
+        <span>{{ $t('pools.header.ended') }}</span>
+      </div>
+
+      <div class="icon-container" v-if="info.status !== 'canceled'">
         <img src="/static/icons/user-white.svg" class="header-icon" />
         <span>{{ $t('pools.header.contributions')}}: {{ info.contributions }}</span>
       </div>
 
-      <div class="icon-container">
+      <div class="icon-container" v-if="info.status !== 'canceled'">
         <img src="/static/icons/volume-white.svg" class="header-icon" />
-        <span>{{ $t('pools.header.currentPoolAmount')}}: {{ info.currentPoolSize }} / {{ info.poolGoalSize }} {{ $t('general.aix') }}</span>
+        <span>{{ $t('pools.header.currentPoolAmount') }}: {{ info.currentPoolSize }} / {{ info.poolGoalSize }} {{ $t('general.aix') }}</span>
       </div>
     </div>
   </div>
