@@ -314,6 +314,9 @@
         "addForecast": "Add Forecast",
         "forecastPayout": "Forecast Payout",
         "forecastRefund": "Forecast Refund",
+        "addContribution": "Add Contribution",
+        "contributionPayout": "Contribution Payout",
+        "contributionRefund": "Contribution Refund",
         "unknown": "Unknown"
       }
     },
