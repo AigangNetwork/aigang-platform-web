@@ -1,6 +1,12 @@
 <template>
   <el-row v-loading="$store.getters.loading">
-    <el-col v-if="isDataLoaded">
+    <el-col class="items-container" v-if="isDataLoaded">
+      <div class="filters-bar">
+        <div class="filter-item">
+          <div class="filter-label">{{ $t('pools.contributions.filters.status') }}:</div>
+          <Dropdown :items="items" @itemSelected="onFilterByStatusDropdownItemSelected" />
+        </div>
+      </div>
       <Card>
         <div slot="body" class="scrollable">
           <table>
@@ -31,6 +37,7 @@
 <script>
 import Card from '@/components/Card'
 import Pagination from '@/components/Pagination'
+import Dropdown from '@/components/common/Dropdown'
 import PoolsContributionsListItem from './PoolsContributionsListItem'
 
 import { createNamespacedHelpers } from 'vuex'
@@ -40,6 +47,7 @@ export default {
   components: {
     Card,
     Pagination,
+    Dropdown,
     PoolsContributionsListItem
   },
   computed: {
@@ -48,7 +56,36 @@ export default {
   data () {
     return {
       page: 1,
-      isDataLoaded: false
+      filters: {},
+      isDataLoaded: false,
+      items: [{
+        name: this.$t('predictions.forecast.statuses.all'),
+        value: ''
+      }, {
+        name: this.$t('pools.poolContributionStatuses.pendingPayment'),
+        value: '1'
+      }, {
+        name: this.$t('pools.poolContributionStatuses.paid'),
+        value: '2'
+      }, {
+        name: this.$t('pools.poolContributionStatuses.canceled'),
+        value: '3'
+      }, {
+        name: this.$t('pools.poolContributionStatuses.availablePayout'),
+        value: '4'
+      }, {
+        name: this.$t('pools.poolContributionStatuses.pendingPayout'),
+        value: '5'
+      }, {
+        name: this.$t('pools.poolContributionStatuses.rewardPaidout'),
+        value: '6'
+      }, {
+        name: this.$t('pools.poolContributionStatuses.availableRefund'),
+        value: '7'
+      }, {
+        name: this.$t('pools.poolContributionStatuses.refundPaidout'),
+        value: '8'
+      }]
     }
   },
   async beforeMount () {
@@ -58,9 +95,17 @@ export default {
     }
   },
   methods: {
+    async onFilterByStatusDropdownItemSelected (value) {
+      this.page = 1
+      this.filters = {
+        status: value
+      }
+
+      await this.loadPage(this.page)
+    },
     async loadPage (page) {
       this.page = page
-      await this.$store.dispatch('pools/getUserContributions', this.page)
+      await this.$store.dispatch('pools/getUserContributions', { page: this.page, filters: this.filters })
     }
   }
 }
@@ -68,6 +113,28 @@ export default {
 
 <style lang="scss" scoped>
   @import '~helpers/variables';
+
+  .items-container {
+    height: 100%;
+    display: inline-block;
+    width: 100%;
+    min-height: auto;
+
+    .filters-bar {
+      margin-right: 25px;
+      margin-bottom: 25px;
+
+      .filter-item {
+        display: flex;
+        .filter-label {
+          color: $light-grey;
+          margin-top: 5px;
+          font-size: 12pt;
+          margin-right: 10px;
+        }
+      }
+    }
+  }
 
   .aig-card {
     width: 100%;

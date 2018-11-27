@@ -88,11 +88,11 @@ export default {
     commit('setLoading', false, { root: true })
   },
 
-  async getUserContributions ({ commit }, page) {
+  async getUserContributions ({ commit }, payload) {
     commit('setLoading', true, { root: true })
 
     try {
-      const response = await axios.get('/pools/mycontributions?page=' + page)
+      const response = await axios.get(`/pools/mycontributions?page=${payload.page}&status=${payload.filters.status}`)
       if (response.data) {
         commit('setUserContributions', response.data)
       }

@@ -137,7 +137,7 @@ export default {
     })
 
     try {
-      const response = await axios.get(`/predictions/myforecasts?page=${payload.page}&status=${payload.filter.status}`)
+      const response = await axios.get(`/predictions/myforecasts?page=${payload.page}&status=${payload.filters.status}`)
 
       if (response.data) {
         commit('setUserForecasts', response.data)
