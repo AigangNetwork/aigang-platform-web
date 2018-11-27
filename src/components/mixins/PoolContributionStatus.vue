@@ -9,8 +9,6 @@ export default {
       }
 
       switch (this.contribution.status.toUpperCase()) {
-        case 'DRAFT':
-          return this.$t('pools.poolContributionStatuses.draft')
         case 'PENDINGPAYMENT':
           return this.$t('pools.poolContributionStatuses.pendingPayment')
         case 'PAID':
@@ -33,5 +31,4 @@ export default {
     }
   }
 }
-
 </script>

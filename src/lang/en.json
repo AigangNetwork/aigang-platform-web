@@ -787,7 +787,6 @@
       "closed": "Closed"
     },
     "poolContributionStatuses": {
-      "draft": "Draft",
       "pendingPayment": "Pending payment",
       "paid": "Paid",
       "canceled": "Canceled",
