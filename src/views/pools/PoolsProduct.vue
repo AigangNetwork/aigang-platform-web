@@ -17,7 +17,7 @@
         <h4 class="info-title">{{ $t('pools.pool.contractAddress') }}</h4>
         <p><a class="contract-address" target="_blank" :href="contractLink">{{ currentPool.poolContractAddress }}</a></p>
 
-        <div v-if="status === 'active'">
+        <div v-if="currentPool.status === 'active'">
           <h4 class="info-title">{{ $t('pools.pool.termsAndConditions') }}</h4>
           <ScrollableMarkupText class="scrollable-text" :text="currentPool.termsAndConditions" @scrolledToBottom="onScrolledToBottom" />
 
