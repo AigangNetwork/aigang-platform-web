@@ -25,7 +25,6 @@ export default {
       background: white;
       box-shadow: 0 0 30px 0 rgba(0, 0, 0, 0.06);
       border: 1px solid darken($gray, 2);
-      margin-top: 44px !important;
       margin-bottom: 30px;
     }
 

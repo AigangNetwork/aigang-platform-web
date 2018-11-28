@@ -14,6 +14,14 @@
         <h4 class="info-title">{{ $t('pools.contribution.description') }}</h4>
         <vue-markdown class="markup-content" :html="false" :source="currentContribution.poolDescription || $t('pools.contribution.noDescription')"></vue-markdown>
 
+        <h4 class="info-title">{{ $t('pools.contribution.contractAddress') }}</h4>
+        <p><a class="contract-address" target="_blank" :href="contractLink">{{ currentContribution.poolContractAddress }}</a></p>
+
+        <h4 class="info-title">{{ $t('pools.contribution.details') }}</h4>
+        <div class="details">
+          <p>{{ $t('pools.contribution.yourAmount') }}: <span class="value">{{ currentContribution.amount }} {{ $t('general.aix') }}</span></p>
+        </div>
+
         <div v-if="isContributionAvailableRefund">
           <h4 class="info-title">{{ $t('pools.contribution.refundContribution') }}</h4>
           <p>{{ $t('pools.contribution.refundContributionDescription')}}</p>
@@ -79,6 +87,9 @@ export default {
       'currentContribution',
       'transactionError'
     ]),
+    contractLink () {
+      return process.env.ETHERSCAN_ADDRESS + process.env.ADDRESS_PATX + this.currentContribution.poolContractAddress
+    },
     isContributionAvailablePayout () {
       return this.currentContribution.status.toUpperCase() === 'AVAILABLEPAYOUT'
     },
@@ -93,10 +104,13 @@ export default {
     await this.$store.dispatch('pools/getContribution', this.$route.params.id)
     this.isDataLoaded = true
     this.headerInfo = {
+      status: this.currentContribution.poolStatus,
       title: this.currentContribution.poolName,
       contributions: this.currentContribution.contributions,
       currentPoolSize: this.currentContribution.currentPoolSize,
-      poolGoalSize: this.currentContribution.poolGoalSize
+      poolGoalSize: this.currentContribution.poolGoalSize,
+      startDateUtc: this.currentContribution.poolStartDateUtc,
+      endDateUtc: this.currentContribution.poolEndDateUtc
     }
   },
   methods: {
@@ -190,4 +204,41 @@ export default {
       margin-top: 10px;
     }
   }
+
+  .aig-info {
+    .aig-info-content {
+      p.description {
+        margin-bottom: 40px;
+      }
+
+      .info-title {
+        margin-top: 0px;
+      }
+    }
+
+    .details {
+      margin-bottom: 20px;
+
+      p {
+        margin: 0px;
+      }
+
+      .value {
+        font-weight: 400;
+      }
+    }
+
+    .markup-content {
+      margin-bottom: 20px;
+    }
+  }
+
+  .no-margin-bottom {
+    margin-bottom: 0;
+  }
+
+  .no-margin-top {
+    margin-top: 0;
+  }
+
 </style>

@@ -22,7 +22,7 @@ module.exports = {
   FEATURE_TOGGLE: {
     DATA: true,
     PREDICTIONS: true,
-    POOLS: false,
+    POOLS: true,
     INSURANCE: true
   }
 }
