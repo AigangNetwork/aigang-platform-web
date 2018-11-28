@@ -13,8 +13,8 @@
         </el-button>
       </el-row>
     </el-row>
-    <Dialog :title="$t('profile.general.warning')" :body="$t('profile.general.confirmationText')" :on-confirm="deactivateAccount" :is-visible="dialogVisible"
-      :on-cancel="cancel" />
+    <Dialog :title="$t('profile.general.warning')" :body="$t('profile.general.confirmationText')" :on-confirm="deactivateAccount"
+      :is-visible="dialogVisible" :on-cancel="cancel" />
   </div>
 </template>
 <script>
@@ -39,7 +39,7 @@ export default {
           title: this.$t('data.upload.notifications.titles.success'),
           message: this.$t('profile.general.deactivationSuccessful')
         })
-        this.$store.dispatch('logOut')
+        this.$store.dispatch('user/logOut')
         this.$router.push('/data')
       }).catch(e => {
         this.deactivating = false

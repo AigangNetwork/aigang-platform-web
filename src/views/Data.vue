@@ -1,7 +1,7 @@
 <template>
   <div class="aig-container">
     <el-container class="aig-container">
-      <el-aside v-if="$store.state.user.authenticated" width="20%" class="aig-data-menu" :class="{ 'is-menu-open': isMenuOpen }">
+      <el-aside v-if="$store.getters['user/isAuthenticated']" width="20%" class="aig-data-menu" :class="{ 'is-menu-open': isMenuOpen }">
         <span>
           <transition name="fade">
             <span class="side-menu-button" v-if="!isMenuOpen" @click="openSideMenu">
@@ -12,25 +12,25 @@
             </span>
           </transition>
           <ul>
-            <li v-for="item in dataMeniu" :key="item.name">
-              <router-link
-                :class="{'aig-link-disabled': item.disabled}"
-                @click.native="collapseSideMenu"
-                active-class="aig-menu-active"
+            <li v-for="item in dataMenu" :key="item.name">
+              <router-link :class="{'aig-link-disabled': item.disabled}" @click.native="collapseSideMenu" active-class="aig-menu-active"
                 :to="item.routeLink">{{ item.name }}</router-link>
             </li>
           </ul>
         </span>
       </el-aside>
-      <el-main class="aig-data-container" :class="{ 'is-authenticated': $store.state.user.authenticated}">
+      <el-main class="aig-data-container" :class="{ 'is-authenticated': $store.getters['user/isAuthenticated']}">
         <el-row :gutter="26">
           <el-col class="data-search" :span="16">
             <el-input :disabled="true" placeholder="Search by name or keywords" v-model="searchInput"></el-input>
           </el-col>
           <el-col :span="8" class="data-upload-button-container">
-            <el-tooltip :disabled="$store.getters.isAuthenticated" effect="dark" :content="$t('data.toolbar.uploadDisabled')" placement="top">
+            <el-tooltip :disabled="$store.getters['user/isAuthenticated']" effect="dark" :content="$t('data.toolbar.uploadDisabled')"
+              placement="top">
               <span class="wrapper el-button">
-                <el-button :disabled="!$store.getters.isAuthenticated" type="primary" @click="$router.push({ name: 'Upload' })" class="aig-upload-btn">{{ $t('actions.upload_new_data')}}</el-button>
+                <el-button :disabled="!$store.getters['user/isAuthenticated']" type="primary" @click="$router.push({ name: 'Upload' })" class="aig-upload-btn">{{
+                  $t('actions.upload_new_data')}}
+                </el-button>
               </span>
             </el-tooltip>
           </el-col>
@@ -48,7 +48,7 @@ export default {
   name: 'DataView',
   data () {
     return {
-      dataMeniu: [{
+      dataMenu: [{
         name: this.$t('data.menu.all'),
         routeLink: {
           path: '/data/all'
@@ -76,10 +76,10 @@ export default {
   },
   methods: {
     selectMenu (index) {
-      this.dataMeniu.forEach(function (val, key) {
+      this.dataMenu.forEach(function (val, key) {
         val.active = false
       })
-      this.dataMeniu[index].active = true
+      this.dataMenu[index].active = true
     },
     openSideMenu () {
       this.isMenuOpen = !this.isMenuOpen
@@ -201,7 +201,7 @@ export default {
 
     .aig-container .aig-data-menu {
       position: absolute;
-      z-index: 1;
+      z-index: 1001;
       left: 0;
       overflow-x: hidden;
       height: 100%;

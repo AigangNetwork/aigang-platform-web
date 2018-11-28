@@ -7,9 +7,9 @@
         </transition>
       </div>
     </el-tooltip>
-    <el-tooltip :disabled="$store.getters.isAuthenticated" :content="$t('data.dataset.model.votingDisabled')">
+    <el-tooltip :disabled="$store.getters['user/isAuthenticated']" :content="$t('data.dataset.model.votingDisabled')">
       <span class="wrapper el-button">
-        <el-button :disabled="!$store.getters.isAuthenticated" class="vote-button" :class="{ 'active' : hasVoted, 'disabled': !$store.getters.isAuthenticated }"
+        <el-button :disabled="!$store.getters['user/isAuthenticated']" class="vote-button" :class="{ 'active' : hasVoted, 'disabled': !$store.getters['user/isAuthenticated'] }"
           @click="vote">
           <transition name="slideUp" mode="out-in">
             <span>
@@ -93,9 +93,9 @@ export default {
   },
   computed: {
     canVote () {
-      return this.$store.getters.dataset &&
-          this.$store.getters.dataset.state === 'active' &&
-          this.$store.getters.isAuthenticated
+      return this.$store.getters['data/dataset'] &&
+          this.$store.getters['data/dataset'].state === 'active' &&
+          this.$store.getters['user/isAuthenticated']
     }
   },
   mounted () {

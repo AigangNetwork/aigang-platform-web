@@ -1,5 +1,5 @@
 <template>
-  <div v-loading="loading" :element-loading-text="$t('general.loading')">
+  <div v-loading="$store.getters.loading">
     <el-row>
       <el-col>
         <p class="input-section-title">{{ $t('profile.transactions.title') }}</p>
@@ -7,11 +7,11 @@
       <el-col>
         <p>{{ $t('profile.transactions.description') }}</p>
       </el-col>
-      <el-row>
-        <el-table class="transactions" :data="transactions.blockchainTransactions" :empty-text="$t('profile.transactions.table.emptyText')">
-          <el-table-column prop="createdUtc" :label="$t('profile.transactions.table.titles.date')" width="160">
+      <el-row v-show="isDataLoaded">
+        <el-table class="transactions" :data="transactions.items" :empty-text="$t('profile.transactions.table.emptyText')">
+          <el-table-column prop="createdUtc" :label="$t('profile.transactions.table.titles.date')" width="220">
             <template slot-scope="scope">
-              <Date :dateUtc="scope.row.createdUtc" />
+              <Date :dateUtc="scope.row.createdUtc" format="YYYY-MM-DD HH:mm (UTC Z)"/>
             </template>
           </el-table-column>
           <el-table-column prop="txId" :label="$t('profile.transactions.table.titles.transaction')" min-width="250">
@@ -27,7 +27,7 @@
             </template>
           </el-table-column>
           <el-table-column prop="txType" :label="$t('profile.transactions.table.titles.type')">
-              <template slot-scope="scope">
+            <template slot-scope="scope">
               <span class="type">{{ formatTypeText(scope.row.txType) }}</span>
             </template>
           </el-table-column>
@@ -38,37 +38,53 @@
           </el-table-column>
         </el-table>
       </el-row>
+      <el-row v-show="isDataLoaded">
+        <el-col class="paging">
+          <Pagination v-if="transactions.totalPages > 1" :callback="loadPage" :total-page-count="transactions.totalPages" :current-page="page" />
+        </el-col>
+      </el-row>
     </el-row>
   </div>
 </template>
 <script>
-import {
-  mapGetters
-} from 'vuex'
+import { createNamespacedHelpers } from 'vuex'
 import Date from '@/components/Date'
 import Label from './Label'
+import Pagination from '@/components/Pagination'
+const { mapGetters } = createNamespacedHelpers('user')
 
 export default {
   components: {
     Date,
-    Label
+    Label,
+    Pagination
   },
   computed: {
-    ...mapGetters(['transactions', 'loading'])
+    ...mapGetters(['transactions'])
   },
   data () {
     return {
-      page: 1
+      page: 1,
+      isDataLoaded: false
     }
   },
-  async mounted () {
-    try {
-      await this.$store.dispatch('loadProfileTransactions', this.page)
-    } catch (error) {}
+  async beforeMount () {
+    if (!this.isDataLoaded) {
+      await this.loadPage(1)
+      this.isDataLoaded = true
+    }
   },
+
   methods: {
     formatTxLink (txId) {
       return process.env.ETHERSCAN_ADDRESS + process.env.TX_PATH + txId
+    },
+    async loadPage (page) {
+      this.page = page
+
+      try {
+        await this.$store.dispatch('user/loadProfileTransactions', this.page)
+      } catch (error) { }
     },
     formatTypeText (type) {
       switch (type.toUpperCase()) {
@@ -78,13 +94,18 @@ export default {
           return this.$t('profile.transactions.type.addpolicy')
         case 'ADDCLAIM':
           return this.$t('profile.transactions.type.addclaim')
+        case 'ADDFORECAST':
+          return this.$t('profile.transactions.type.addForecast')
+        case 'FORECASTPAYOUT':
+          return this.$t('profile.transactions.type.forecastPayout')
+        case 'FORECASTREFUND':
+          return this.$t('profile.transactions.type.forecastRefund')
         default:
           return this.$t('profile.transactions.type.unknown')
       }
     }
   }
 }
-
 </script>
 <style lang="scss" scoped>
   @import '~helpers/variables';
@@ -111,4 +132,7 @@ export default {
     }
   }
 
+  .paging {
+    margin-top: 15px;
+  }
 </style>

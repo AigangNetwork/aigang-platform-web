@@ -1,19 +1,24 @@
 <template>
   <div class="aig-app" :class="appClass" v-loading="loading">
-
-    <Navigation/>
-
+    <Navigation />
     <transition name="slideUp">
       <router-view class="aig-view"></router-view>
     </transition>
-
+    <CookiesBar />
     <notification></notification>
+
+    <InsufficientBalanceDialog :showDialog="isInsufficientBalanceDialogVisible" @onButtonClick="onInsufficientBalanceDialogClose"/>
+
+    <BugBountyPopup :showDialog="isBugBountyDialogVisible" @onButtonClick="onBugBountyDialogClose"/>
   </div>
 </template>
 
 <script>
 import Navigation from '@/components/navigation/Navigation'
 import Notification from '@/components/Notification'
+import BugBountyPopup from '@/components/BugBountyPopup'
+import CookiesBar from '@/components/CookiesBar'
+import InsufficientBalanceDialog from '@/components/InsufficientBalanceDialog'
 
 export default {
   name: 'App',
@@ -24,20 +29,37 @@ export default {
   },
   components: {
     Navigation,
-    Notification
+    Notification,
+    BugBountyPopup,
+    CookiesBar,
+    InsufficientBalanceDialog
+  },
+  methods: {
+    onInsufficientBalanceDialogClose () {
+      this.$store.dispatch('showInsufficientBalanceDialog', false)
+    },
+    onBugBountyDialogClose () {
+      this.$store.dispatch('showBugBountyDialog', false)
+    }
   },
   computed: {
+    isInsufficientBalanceDialogVisible () {
+      return this.$store.getters['insufficientBalanceDialogVisible']
+    },
+    isBugBountyDialogVisible () {
+      return this.$store.getters['bugBountyDialogVisible']
+    },
     appClass () {
       return {
-        'aig--authed': this.$store.getters.isAuthenticated,
-        'aig--notAuthed': !this.$store.getters.isAuthenticated
+        'aig--authed': this.$store.getters['user/isAuthenticated'],
+        'aig--notAuthed': !this.$store.getters['user/isAuthenticated']
       }
     }
   },
-  mounted () {
-    if (this.$store.getters.isAuthenticated) {
-      this.$store.dispatch('clearWeb3Instance')
-      this.$store.dispatch('registerWeb3Instance')
+  async mounted () {
+    if (this.$store.getters['user/isAuthenticated']) {
+      await this.$store.dispatch('user/clearWeb3Instance')
+      await this.$store.dispatch('user/registerWeb3')
     }
   }
 }

@@ -4,7 +4,7 @@
 
       <Card class="guest-card">
 
-        <div slot="body" v-loading="loading" :element-loading-text="$t('general.loading')">
+        <div slot="body" v-loading="loading">
 
           <el-row>
             <el-col>
@@ -39,7 +39,7 @@
                     <span class="label">{{ $t('login.password' )}}</span>
                   </el-col>
                   <el-col :span="12" style="text-align: right;">
-                    <router-link class="a-passive " to="/forgotPassword">{{ $t('login.forgotPassword') }}</router-link>
+                    <router-link class="a-passive" tabindex="-1" to="/forgotPassword">{{ $t('login.forgotPassword') }}</router-link>
                   </el-col>
                 </el-row>
 
@@ -125,7 +125,7 @@ export default {
     login () {
       this.loading = true
       this.axios.post('/account/login', this.loginForm).then(response => {
-        this.$store.dispatch('logIn', response)
+        this.$store.dispatch('user/logIn', response)
         this.$router.push('/data')
       }).catch(e => {
         this.loading = false

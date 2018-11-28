@@ -1,7 +1,7 @@
 <template>
   <div class="aig-container aig-view">
     <Card class="product-card">
-      <div slot="body" v-loading="loading">
+      <div slot="body" v-loading="$store.getters.loading">
         <transition-group name="slideUp" mode="out-in">
 
           <ProductHeader key="1" :product="product" v-if="!isPolicyLoadingVisible" />
@@ -20,23 +20,27 @@ import EndDate from '@/components/mixins/EndDate'
 import ProductHeader from '@/components/insurance/ProductHeader'
 import ProductDetails from '@/components/insurance/ProductDetails'
 import PolicyLoadingInfo from '@/components/insurance/PolicyLoadingInfo'
-
-import { mapGetters, mapMutations } from 'vuex'
+import { createNamespacedHelpers } from 'vuex'
+const { mapGetters, mapMutations } = createNamespacedHelpers('insurance')
 
 export default {
   components: { Card, ProductHeader, ProductDetails, PolicyLoadingInfo },
   mixins: [EndDate],
   computed: {
-    ...mapGetters(['product', 'loading', 'isPolicyLoadingVisible'])
+    ...mapGetters(['product', 'isPolicyLoadingVisible'])
   },
   methods: {
     ...mapMutations({
-      clearLoadingInfo: 'CLEAR_POLICY_LOADING_INFO',
-      setIsPolicyLoadingVisible: 'SET_IS_POLICY_LOADING_VISIBLE'
+      clearLoadingInfo: 'clearPolicyLoadingInfo',
+      setIsPolicyLoadingVisible: 'setIsPolicyLoadingVisible'
     })
   },
   async created () {
-    await this.$store.dispatch('loadCurrentProduct', this.$route.params.id)
+    await this.$store.dispatch('insurance/loadProduct', this.$route.params.id)
+  },
+  async beforeMount () {
+    this.clearLoadingInfo()
+    this.setIsPolicyLoadingVisible(false)
   },
   beforeRouteLeave (to, from, next) {
     this.clearLoadingInfo()
@@ -71,13 +75,6 @@ export default {
     max-height: 180px;
     border: 1px solid $light-blue;
     padding: 5px;
-  }
-
-  .contract-address {
-    font-size: 18px;
-    color: $light-blue;
-    font-family: $font-secondary;
-    word-wrap: break-word;
   }
 
   @media screen and (min-width: 100px) and (max-width: 710px) {

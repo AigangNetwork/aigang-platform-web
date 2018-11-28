@@ -25,6 +25,10 @@
     <transition-group name="slideUp" mode="out-in">
       <template v-if="policyLoadingInfo.notFound">
         <p class="info-text aig-error" key="1">{{ $t('insurance.policy.deviceIdNotFound') }}</p>
+        <p class="info-text" key="2">
+          <el-button type="primary" @click.prevent.native="setIsPolicyLoadingVisible(false)">{{ $t('general.back') }}
+          </el-button>
+        </p>
       </template>
     </transition-group>
 
@@ -33,12 +37,20 @@
         <p class="info-text aig-error" :key="index" v-for="(val, index) in policyLoadingInfo.validationReasons">
           {{ $t(val) }}
         </p>
+        <p class="info-text" key="200">
+          <el-button type="primary" @click.prevent.native="setIsPolicyLoadingVisible(false)">{{ $t('general.back') }}
+          </el-button>
+        </p>
       </template>
     </transition-group>
 
     <transition-group name="slideUp" mode="out-in">
       <template v-if="policyLoadingInfo.serverError">
         <p class="info-text aig-error" key="1">{{ $t('insurance.policy.serverError') }}</p>
+        <p class="info-text" key="2">
+          <el-button type="primary" @click.prevent.native="setIsPolicyLoadingVisible(false)">{{ $t('general.back') }}
+          </el-button>
+        </p>
       </template>
     </transition-group>
 
@@ -84,7 +96,8 @@
 </template>
 <script>
 import Card from '@/components/Card'
-import { mapGetters, mapMutations, mapActions } from 'vuex'
+import { createNamespacedHelpers } from 'vuex'
+const { mapGetters, mapMutations, mapActions } = createNamespacedHelpers('insurance')
 
 export default {
   components: { Card },
@@ -119,8 +132,8 @@ export default {
   },
   methods: {
     ...mapMutations({
-      clearLoadingInfo: 'CLEAR_POLICY_LOADING_INFO',
-      setIsPolicyLoadingVisible: 'SET_IS_POLICY_LOADING_VISIBLE'
+      clearLoadingInfo: 'clearPolicyLoadingInfo',
+      setIsPolicyLoadingVisible: 'setIsPolicyLoadingVisible'
     }),
     ...mapActions(['createNewPolicy']),
     async createPolicy () {
@@ -151,38 +164,5 @@ export default {
   @import '~helpers/mixins';
 
   @include loader;
-
-  .aig-container {
-    align-items: flex-start;
-  }
-
-  .info-text {
-    text-align: center;
-  }
-
-  .loader-container {
-    width: 100%;
-    height: 100%;
-    padding: 53px;
-  }
-
-  .loading-dots {
-    position: fixed;
-  }
-
-  .loading-text {
-    text-align: center;
-    color: #9370DB;
-    font-weight: 600;
-    font-family: $font-primary;
-  }
-
-  #preloader {
-    width: 100%;
-    height: 100%;
-  }
-
-  .el-button {
-    margin: 0 auto;
-  }
+  @include loader-container;
 </style>

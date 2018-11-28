@@ -1,6 +1,6 @@
 <template>
-  <div v-loading="loading" :element-loading-text="$t('general.loading')">
-    <el-row>
+  <div v-loading="$store.getters.loading">
+    <el-row v-show="isDataLoaded">
       <el-col>
         <p class="input-section-title">{{ $t('profile.notifications.title') }}</p>
       </el-col>
@@ -8,54 +8,79 @@
         <p>{{ $t('profile.notifications.description') }}</p>
       </el-col>
     </el-row>
-    <el-row v-for="(group, index) in emailPermissionGroups" v-bind:key="index">
+    <el-row v-show="isDataLoaded" v-for="(group, index) in emailPermissionGroups" v-bind:key="index">
       <div class="groups-container">
-        <PermissionsGroup :group="group" @changed="onChange"/>
+        <PermissionsGroup :group="group" @changed="onChange" />
       </div>
     </el-row>
   </div>
 </template>
 <script>
-import { mapGetters } from 'vuex'
+import { createNamespacedHelpers } from 'vuex'
 import PermissionsGroup from './PermissionsGroup'
+const { mapGetters } = createNamespacedHelpers('user')
 
 export default {
   components: {
     PermissionsGroup
   },
+  data () {
+    return {
+      isDataLoaded: false
+    }
+  },
+  props: ['activeTab'],
   computed: {
-    ...mapGetters(['emailPermissionGroups', 'loading'])
+    ...mapGetters(['emailPermissionGroups'])
   },
   methods: {
     async onChange (id, value) {
       try {
-        await this.$store.dispatch('setNotificationPermission', { id, value })
-      } catch (error) {}
+        await this.$store.dispatch('user/setNotificationPermission', { id, value })
+      } catch (error) { }
+    },
+    async loadNotifications () {
+      try {
+        let emailPermissionGroups = [{
+          title: this.$t('profile.notifications.permissions.general.title'),
+          items: [{
+            title: this.$t('profile.notifications.permissions.general.items.failedTransactions.title'),
+            id: 1,
+            value: true,
+            description: this.$t('profile.notifications.permissions.general.items.failedTransactions.description')
+          }]
+        }, {
+          title: this.$t('profile.notifications.permissions.predictions.title'),
+          items: [{
+            title: this.$t('profile.notifications.permissions.predictions.items.forecastPaymentReceived.title'),
+            id: 3,
+            value: true,
+            description: this.$t('profile.notifications.permissions.predictions.items.forecastPaymentReceived.description')
+          }, {
+            title: this.$t('profile.notifications.permissions.predictions.items.forecastWon.title'),
+            id: 4,
+            value: true,
+            description: this.$t('profile.notifications.permissions.predictions.items.forecastWon.description')
+          }]
+        }, {
+          title: this.$t('profile.notifications.permissions.insurance.title'),
+          items: [{
+            title: this.$t('profile.notifications.permissions.insurance.items.all.title'),
+            id: 2,
+            value: true,
+            description: this.$t('profile.notifications.permissions.insurance.items.all.description')
+          }]
+        }]
+
+        await this.$store.dispatch('user/loadNotificationPermissions', emailPermissionGroups)
+      } catch (error) { }
     }
   },
-
-  async mounted () {
-    try {
-      let emailPermissionGroups = [{
-        title: this.$t('profile.notifications.permissions.general.title'),
-        items: [{
-          title: this.$t('profile.notifications.permissions.general.items.failedTransactions.title'),
-          id: 1,
-          value: true,
-          description: this.$t('profile.notifications.permissions.general.items.failedTransactions.description')
-        }]
-      }, {
-        title: this.$t('profile.notifications.permissions.insurance.title'),
-        items: [{
-          title: this.$t('profile.notifications.permissions.insurance.items.all.title'),
-          id: 2,
-          value: true,
-          description: this.$t('profile.notifications.permissions.insurance.items.all.description')
-        }]
-      }]
-
-      await this.$store.dispatch('loadNotificationPermissions', emailPermissionGroups)
-    } catch (error) {}
+  async beforeMount () {
+    if (!this.isDataLoaded) {
+      await this.loadNotifications()
+      this.isDataLoaded = true
+    }
   }
 }
 

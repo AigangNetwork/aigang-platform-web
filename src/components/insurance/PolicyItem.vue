@@ -50,7 +50,7 @@ export default {
   components: {
     Date
   },
-  mixins: [ PolicyStatus ],
+  mixins: [PolicyStatus],
   props: ['policy']
 }
 </script>
@@ -125,6 +125,7 @@ export default {
           .content {
             font-family: "Roboto", sans-serif;
             font-weight: 300;
+            color: $purple;
           }
         }
       }
@@ -170,6 +171,22 @@ export default {
               margin: 2px 0px 0px 5px;
             }
           }
+        }
+      }
+    }
+  }
+
+  @media screen and (min-width: 100px) and (max-width: 465px) {
+    .aig-policy-item {
+      flex-direction: column;
+
+      .policy-list-item-img-container {
+        text-align: center;
+
+        .product-img {
+          padding: 8px;
+          width: 100px;
+          margin-top: 10px;
         }
       }
     }

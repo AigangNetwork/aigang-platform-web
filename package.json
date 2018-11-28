@@ -12,7 +12,9 @@
     "start": "npm run dev",
     "lint": "eslint --ext .js,.vue src",
     "build": "NODE_ENV=production node build/build.js",
-    "qabuild": "NODE_ENV=qa node build/build.js"
+    "qabuild": "NODE_ENV=qa node build/build.js",
+    "report": "npm run build --report",
+    "qareport": "npm run qabuild --report"
   },
   "dependencies": {
     "@johmun/vue-tags-input": "^1.5.4",

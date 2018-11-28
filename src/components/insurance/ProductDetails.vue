@@ -1,19 +1,27 @@
 <template>
 
   <div class="product-details-body">
-    <el-row class="input-section-title">{{ $t('insurance.product.description') }}</el-row>
+    <h4 class="info-title">{{ $t('insurance.product.description') }}</h4>
     <vue-markdown class="markup-content" :html="false" :source="product.description"></vue-markdown>
 
-    <el-row class="input-section-title">{{ $t('insurance.product.contractAddress') }}</el-row>
+    <h4 class="info-title">{{ $t('insurance.product.contractAddress') }}</h4>
     <a class="contract-address" target="_blank" :href="contractLink">{{ product.contractAddress }}</a>
 
-    <el-row class="input-section-title">{{ $t('insurance.product.termsAndConditions') }}</el-row>
+    <h4 class="info-title">{{ $t('insurance.product.termsAndConditions') }}</h4>
     <ScrollableMarkupText class="scrollable-text" :text="product.termsAndConditions" @scrolledToBottom="onScrolledToBottom" />
 
-    <el-tooltip v-if="!isAuthenticated" :disabled="isAuthenticated" :content="$t('insurance.product.logInToCalculateInsurancePrice')">
+    <el-tooltip v-if="!$store.getters['user/isAuthenticated']" :disabled="$store.getters['user/isAuthenticated']" :content="$t('insurance.product.logInToCalculateInsurancePrice')">
       <span class="wrapper el-button">
         <el-button :disabled="true" class="aig-button" type="primary">
           {{ $t('insurance.product.calculateInsurancePrice') }}
+        </el-button>
+      </span>
+    </el-tooltip>
+
+    <el-tooltip v-else-if="product.state != 'active'" :content="$t('insurance.product.productClosed')">
+      <span class="wrapper el-button">
+        <el-button :disabled="true" class="aig-button" type="primary">
+          {{ $t('insurance.product.productClosed') }}
         </el-button>
       </span>
     </el-tooltip>
@@ -50,9 +58,8 @@
 import ProductDialog from '@/components/insurance/ProductDialog'
 import ScrollableMarkupText from '@/components/insurance/ScrollableMarkupText'
 import VueMarkdown from 'vue-markdown'
-import {
-  mapGetters
-} from 'vuex'
+import { createNamespacedHelpers } from 'vuex'
+const { mapGetters } = createNamespacedHelpers('insurance')
 
 export default {
   components: {
@@ -75,7 +82,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['product', 'isAuthenticated']),
+    ...mapGetters(['product']),
     contractLink () {
       return process.env.ETHERSCAN_ADDRESS + process.env.ADDRESS_PATX + this.product.contractAddress
     }

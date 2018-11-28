@@ -5,7 +5,7 @@
         {{ $store.state.user.profile.firstName.charAt(0) }}
       </div>
     </el-col>
-    <el-col v-loading="loading" :element-loading-text="$t('general.loading')" class="name-container form-container">
+    <el-col v-loading="loading" class="user-info-container form-container">
       <transition name="slideUp" mode="out-in">
         <el-row class="no-margin" v-if="!isProfileChangeOn">
           <h2 class="name-field">{{ profileForm.firstName }} {{ profileForm.lastName }}</h2>
@@ -13,7 +13,8 @@
             <strong>{{ $t('profile.general.userName')}}: </strong>{{ profileForm.userName }}</div>
           <div class="no-margin name-field">
             <strong>{{ $t('profile.general.email')}}: </strong>{{ $store.state.user.profile.email }}</div>
-          <el-button @click="isProfileChangeOn = !isProfileChangeOn" class="profile-button change-button">{{ $t('general.change') }}</el-button>
+          <el-button @click="isProfileChangeOn = !isProfileChangeOn" class="profile-button change-button">{{ $t('general.change')
+            }}</el-button>
         </el-row>
         <el-form v-if="isProfileChangeOn" @keyup.enter.native="submitForm('profileForm', saveInfo)" :model="profileForm" :rules="profileFormRules"
           ref="profileForm">
@@ -42,7 +43,8 @@
                 <strong>{{ $t('profile.general.email')}}: </strong>{{ $store.state.user.profile.email }}</div>
             </el-row>
             <el-row>
-              <el-button @click="submitForm('profileForm', saveInfo)" type="submit" v-show="isProfileChangeOn" class="profile-button no-margin">{{ $t('general.save') }}</el-button>
+              <el-button @click="submitForm('profileForm', saveInfo)" type="submit" v-show="isProfileChangeOn" class="profile-button no-margin">{{
+                $t('general.save') }}</el-button>
             </el-row>
           </el-row>
         </el-form>
@@ -145,7 +147,7 @@ export default {
           this.loading = false
           this.isVerificationVisisble = true
           this.isProfileChangeOn = false
-          this.$store.dispatch('changeProfileNames', response)
+          this.$store.dispatch('user/changeProfileNames', response)
           this.updateInfo()
         })
         .catch(e => {
@@ -220,7 +222,12 @@ export default {
       width: 37%;
     }
 
-    .name-container {
+    .email-container {
+      margin-top: 25px;
+      margin-bottom: 10px;
+    }
+
+    .user-info-container {
       margin-left: 48px;
       margin-bottom: 20px;
       width: calc(100% - 96px);
@@ -271,14 +278,10 @@ export default {
       align-items: center;
       width: 100%;
 
-      form {
-        height: 200px
-      }
-      .name-container {
+      .user-info-container {
         margin-left: 0;
         text-align: center;
         width: 100%;
-        height: 200px;
 
         .col-3 {
           width: 100%;
@@ -299,7 +302,8 @@ export default {
       }
 
       .email-container {
-        margin-top: 20px;
+        margin-top: 30px;
+        margin-bottom: 10px;
       }
 
       .no-margin {

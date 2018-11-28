@@ -1,27 +1,18 @@
 <template>
   <div class="aig-container profile-container">
     <Card class="profile-card">
-      <div class="profile-content-container" slot="body" v-loading="loading" :element-loading-text="$t('general.loading')">
+      <div class="profile-content-container" slot="body">
         <div class="flex-container">
           <ProfileInfo/>
-          <el-button class="logout-button" type="warning" @click="logout()">{{ $t('profile.general.logout') }}</el-button>
+          <el-button class="logout-button" type="warning" @click="logOut">{{ $t('profile.general.logout') }}</el-button>
         </div>
-        <el-tabs type="card" class="profile-tabs">
-          <el-tab-pane :label="$t('profile.tabs.profile')">
-            <UpdatePassword/>
-            <div class="horizontal-line"></div>
-            <DeactivateAccount/>
-          </el-tab-pane>
-          <el-tab-pane :label="$t('profile.tabs.wallets')">
-            <Wallets/>
-          </el-tab-pane>
-          <el-tab-pane :label="$t('profile.tabs.transactions')">
-            <Transactions/>
-          </el-tab-pane>
-          <el-tab-pane :label="$t('profile.tabs.notifications')">
-            <Notifications/>
-          </el-tab-pane>
+        <el-tabs type="card" v-model="activeTab" class="profile-tabs" @tab-click="changeActiveTab">
+          <el-tab-pane :label="$t('profile.tabs.profile')" name="ProfileGeneral" />
+          <el-tab-pane :label="$t('profile.tabs.wallets')" name="ProfileWallets" />
+          <el-tab-pane :label="$t('profile.tabs.transactions')" name="ProfileTransactions" />
+          <el-tab-pane :label="$t('profile.tabs.notifications')" name="ProfileNotifications" />
         </el-tabs>
+        <router-view class="tab-content" key="test"></router-view>
       </div>
     </Card>
   </div>
@@ -30,34 +21,35 @@
 <script>
 import Card from '@/components/Card'
 import ProfileInfo from './profile/ProfileInfo'
-import UpdatePassword from './profile/UpdatePassword'
-import DeactivateAccount from './profile/DeactivateAccount'
-import Wallets from './profile/Wallets'
-import Transactions from './profile/Transactions'
-import Notifications from './profile/Notifications'
+import { createNamespacedHelpers } from 'vuex'
+const { mapActions } = createNamespacedHelpers('user')
 
 export default {
-  name: 'ProfileView',
   components: {
     Card,
-    ProfileInfo,
-    UpdatePassword,
-    DeactivateAccount,
-    Wallets,
-    Transactions,
-    Notifications
+    ProfileInfo
   },
   data () {
     return {
-      loading: false
+      activeTab: this.$route.name
     }
   },
   methods: {
-    logout () {
-      this.axios.post('/account/logout').then(response => {
-        this.$store.dispatch('logOut')
-        this.$router.push('/data')
-      })
+    ...mapActions(['logOut']),
+    changeActiveTab (tab) {
+      switch (tab.name) {
+        case 'ProfileWallets':
+          this.$router.push('/profile/wallets')
+          break
+        case 'ProfileTransactions':
+          this.$router.push('/profile/transactions')
+          break
+        case 'ProfileNotifications':
+          this.$router.push('/profile/notifications')
+          break
+        default:
+          this.$router.push('/profile/general')
+      }
     }
   }
 }
@@ -77,6 +69,10 @@ export default {
     }
     .profile-content-container {
       padding: 10px;
+      .tab-content {
+        margin-top: -20px;
+        min-height: 200px;
+      }
     }
   }
 

@@ -1,14 +1,14 @@
 <template>
-  <transition-group class="data-items-container" name="slideUp" v-loading="loading">
+  <transition-group class="items-container" name="slideUp" v-loading="loading">
     <el-col v-if="!loading" :xs="24" :sm="12" :md="12" :lg="8" v-for="productItem in productList" :key="productItem.id">
       <ProductItem :product="productItem" :key="productItem.id" />
     </el-col>
     <el-col v-if="!loading" :key="totalPageCount">
-      <Pagination v-if="totalPageCount > 0" :callback="loadPage" :total-page-count="totalPageCount" :current-page="page" />
+      <Pagination v-if="totalPageCount > 1" :callback="loadPage" :total-page-count="totalPageCount" :current-page="page" />
     </el-col>
     <el-col v-if="!loading && errorOccured && isMyPolicies">
       <h2>
-        {{ $t('general.unableToFindYourDatasets') }}
+        {{ $t('general.unableToFindAnyProducts') }}
       </h2>
     </el-col>
   </transition-group>
@@ -66,10 +66,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .data-items-container {
+  .items-container {
     height: 100%;
     display: inline-block;
     width: 100%;
-    min-height: 250px;
+    min-height: auto;
   }
 </style>

@@ -1,7 +1,7 @@
 <template>
   <div class="aig-container aig-view model-container">
     <Card class="model-card">
-      <div slot="body" v-loading="loading" :element-loading-text="$t('general.loading')">
+      <div slot="body" v-loading="loading">
         <DatasetModelHeader :model="model || {}" />
         <DataNavigation :show="true" :navigationBars="navigationBars">
           <li class="stick-to-right" key="DatasetModelVote">
@@ -24,8 +24,10 @@ import Card from '@/components/Card'
 import DatasetModelHeader from '@/components/data/model/DatasetModelHeader'
 import DataNavigation from '@/components/navigation/DataNavigation'
 import DatasetModelVote from '@/components/data/model/DatasetModelVote'
-import { mapGetters } from 'vuex'
 import eventHub from '@/utils/eventHub'
+import { createNamespacedHelpers } from 'vuex'
+
+const { mapGetters } = createNamespacedHelpers('data')
 
 export default {
   components: {
@@ -40,7 +42,7 @@ export default {
       navigationBars: [{
         name: this.$t('data.dataset.navigation.model'),
         routeLink: {
-          name: 'modelInfo',
+          name: 'ModelInfo',
           params: {
             id: this.$route.params.id,
             modelId: this.$route.params.modelId
@@ -52,7 +54,7 @@ export default {
       {
         name: this.$t('data.dataset.navigation.coefficients'),
         routeLink: {
-          name: 'modelTables',
+          name: 'ModelTables',
           params: {
             id: this.$route.params.id,
             modelId: this.$route.params.modelId
@@ -64,7 +66,7 @@ export default {
       {
         name: this.$t('data.dataset.navigation.comment'),
         routeLink: {
-          name: 'modelcomment',
+          name: 'ModelComment',
           params: {
             id: this.$route.params.id,
             modelId: this.$route.params.modelId
@@ -84,7 +86,7 @@ export default {
       this.loading = true
 
       try {
-        await this.$store.dispatch('loadCurrentModel', {
+        await this.$store.dispatch('data/loadModel', {
           datasetId,
           modelId
         })
@@ -97,7 +99,7 @@ export default {
     },
     printCommentsBar (commentsCount) {
       const commentBar = this.navigationBars.find(bar => {
-        return bar.routeLink.name === 'modelcomment'
+        return bar.routeLink.name === 'ModelComment'
       })
       commentBar.name = this.$t('data.dataset.navigation.comment')
       if (commentBar && commentsCount > 0) {
@@ -106,7 +108,7 @@ export default {
     }
   },
   mounted () {
-    this.$store.dispatch('clearCurrentModel')
+    this.$store.dispatch('data/clearModel')
     this.fetchModel(this.$route.params.id, this.$route.params.modelId)
     eventHub.$on(eventHub.eventChangeCommentsCountForDataModel, (commentsToAdd) => {
       this.model.commentsCount += commentsToAdd

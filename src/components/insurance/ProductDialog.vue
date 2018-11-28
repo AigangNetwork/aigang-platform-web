@@ -33,7 +33,8 @@
 </template>
 <script>
 import FormMixin from '@/components/mixins/FormMixin'
-import { mapGetters, mapActions, mapMutations } from 'vuex'
+import { createNamespacedHelpers } from 'vuex'
+const { mapGetters, mapActions, mapMutations } = createNamespacedHelpers('insurance')
 
 export default {
   props: ['displayDialog', 'isVisible', 'deviceId', ''],
@@ -74,8 +75,8 @@ export default {
   methods: {
     ...mapActions(['createNewPolicy']),
     ...mapMutations({
-      clearLoadingInfo: 'CLEAR_POLICY_LOADING_INFO',
-      setIsPolicyLoadingVisible: 'SET_IS_POLICY_LOADING_VISIBLE'
+      clearLoadingInfo: 'clearPolicyLoadingInfo',
+      setIsPolicyLoadingVisible: 'setIsPolicyLoadingVisible'
     }),
     async createPolicy () {
       this.show = false

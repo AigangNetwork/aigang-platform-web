@@ -1,5 +1,5 @@
 <template>
-  <div v-loading="loading" :element-loading-text="$t('general.loading')">
+  <div v-loading="loading">
     <el-row class="profile-password-container">
       <el-col>
         <p class="input-section-title">{{ $t('profile.general.changePassword') }}</p>

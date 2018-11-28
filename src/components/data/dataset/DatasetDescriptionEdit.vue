@@ -7,7 +7,7 @@
       </router-link>
     </div>
     <el-form-item prop="description" size="small">
-      <el-input :placeholder="$t('data.upload.input.placeholder.description')" type="textarea" :value="value" @change="value => $emit('input', value)"></el-input>
+      <el-input :placeholder="$t('data.upload.input.placeholder.description')" type="textarea" :value="value" @change="value => $emit('input', value)" rows="10"></el-input>
     </el-form-item>
   </el-row>
 </template>

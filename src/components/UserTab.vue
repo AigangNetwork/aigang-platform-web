@@ -1,11 +1,14 @@
 <template>
   <router-link to="/profile" active-class="aig-bar-active" class="aig-profile" exact>
     <div class="photo">
+
       {{ $store.state.user.profile.firstName.charAt(0) }}
-    </div>
+  </div>
     <div class="information">
       {{ $store.state.user.profile.firstName }}
-      <div v-if="$store.state.userWeb3.isInjected" class="balance">{{$store.state.userWeb3.aixBalance}} AIX</div>
+      <div v-if="$store.getters['user/isWeb3Enabled']" class="balance">
+        {{ $store.getters['user/aixBalance'] }} AIX
+      </div>
     </div>
   </router-link>
 </template>
@@ -26,6 +29,7 @@
     text-align: right;
     align-items: center;
     width: 100%;
+
     .photo {
       // pointer-events: none;
       flex-shrink: 0;
@@ -40,6 +44,7 @@
       text-align: center;
       margin-right: 17px;
     }
+
     .information {
       color: $white;
       margin-right: 10px;

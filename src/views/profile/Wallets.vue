@@ -1,5 +1,5 @@
 <template>
-  <div v-loading="loading" :element-loading-text=" $t('general.loading')">
+  <div v-loading="$store.getters.loading">
     <el-row>
       <el-col>
         <p class="input-section-title">{{ $t('profile.wallets.title') }}</p>
@@ -7,42 +7,58 @@
       <el-col>
         <p>{{ $t('profile.wallets.description') }}</p>
       </el-col>
-      <el-row>
-        <el-table :data="wallets.userWallets" :empty-text="$t('profile.wallets.table.emptyText')">
-          <el-table-column prop="createdUtc" :label="$t('profile.wallets.table.titles.date')" width="160">
+      <el-row  v-show="isDataLoaded">
+        <el-table :data="wallets.items" :empty-text="$t('profile.wallets.table.emptyText')">
+          <el-table-column prop="createdUtc" :label="$t('profile.wallets.table.titles.date')" width="220">
             <template slot-scope="scope">
-              <Date :dateUtc="scope.row.createdUtc" />
+              <Date :dateUtc="scope.row.createdUtc" format="YYYY-MM-DD HH:mm (UTC Z)"/>
             </template>
           </el-table-column>
           <el-table-column prop="address" :label="$t('profile.wallets.table.titles.wallet')"></el-table-column>
         </el-table>
       </el-row>
+      <el-row v-show="isDataLoaded">
+        <el-col class="paging">
+          <Pagination v-if="wallets.totalPages > 1" :callback="loadPage" :total-page-count="wallets.totalPages" :current-page="page" />
+        </el-col>
+      </el-row>
     </el-row>
   </div>
 </template>
 <script>
-import {
-  mapGetters
-} from 'vuex'
+import { createNamespacedHelpers } from 'vuex'
 import Date from '@/components/Date'
+import Pagination from '@/components/Pagination'
+const { mapGetters } = createNamespacedHelpers('user')
 
 export default {
   components: {
-    Date
+    Date,
+    Pagination
   },
   computed: {
-    ...mapGetters(['wallets', 'loading'])
+    ...mapGetters(['wallets'])
   },
   data () {
     return {
       page: 1,
-      isSuccessfullyUpdate: false
+      isDataLoaded: false
     }
   },
-  async mounted () {
-    try {
-      await this.$store.dispatch('loadProfileWallets', this.page)
-    } catch (error) {}
+  async beforeMount () {
+    if (!this.isDataLoaded) {
+      await this.loadPage(1)
+      this.isDataLoaded = true
+    }
+  },
+  methods: {
+    async loadPage (page) {
+      this.page = page
+
+      try {
+        await this.$store.dispatch('user/loadProfileWallets', this.page)
+      } catch (error) { }
+    }
   }
 }
 
@@ -52,4 +68,7 @@ export default {
     width: 100%;
   }
 
+  .paging {
+    margin-top: 15px;
+  }
 </style>

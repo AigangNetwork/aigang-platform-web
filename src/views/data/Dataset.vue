@@ -8,8 +8,8 @@
             <div class="uploaded">{{$t('data.dataset.updated')}}: {{ updated }}</div>
           </div>
           <div class="dataset-title">{{dataset.title}}</div>
-          <div class="dataset-state" v-if="dataset.state === 'created'">Status: {{ $t('data.card.notApproved') }}</div>
-          <div class="dataset-state" v-if="dataset.state === 'closed'">Status: {{ $t('data.card.closed') }}</div>
+          <div class="dataset-state" v-if="dataset.state === 'created'">{{ $t('data.card.status') }}: {{ $t('data.card.notApproved') }}</div>
+          <div class="dataset-state" v-if="dataset.state === 'closed'">{{ $t('data.card.status') }}: {{ $t('data.card.closed') }}</div>
           <div class="aig-dataset-header-btn-container">
             <button v-if="!dataset.remoteFileAccessPoint" @click="downloadDataset" class="aig-dataset-header-btn">
               <i class="el-icon-document button-icon"></i> {{$t('data.dataset.downloadDataset')}}
@@ -33,13 +33,13 @@
           </li>
 
           <li class="stick-to-right" key="upload-button">
-            <el-tooltip v-if="!uploadingModelActive" :disabled="$store.getters.isAuthenticated" :content="$t('data.dataset.uploadModelDisabled')">
+            <el-tooltip v-if="!uploadingModelActive" :disabled="$store.getters['user/isAuthenticated']" :content="$t('data.dataset.uploadModelDisabled')">
               <span class="wrapper el-button">
-                <el-button :disabled="!$store.getters.isAuthenticated" class="upload-model-button" @click="$router.push({name: 'uploadDataModel'})"
+                <el-button :disabled="!$store.getters['user/isAuthenticated']" class="upload-model-button" @click="$router.push({name: 'UploadDataModel'})"
                   type="warning">{{ $t('data.dataset.model.uploadModel') }}</el-button>
               </span>
             </el-tooltip>
-            <el-button :disabled="!$store.getters.isAuthenticated" v-if="uploadingModelActive" class="upload-model-button" @click="$router.push('/data/' + $route.params.id)"
+            <el-button :disabled="!$store.getters['user/isAuthenticated']" v-if="uploadingModelActive" class="upload-model-button" @click="$router.push('/data/' + $route.params.id)"
               type="warning">{{ $t('general.cancel') }}</el-button>
           </li>
         </template>
@@ -66,9 +66,9 @@ import DataNavigation from '@/components/navigation/DataNavigation'
 import Card from '@/components/Card'
 import eventHub from '@/utils/eventHub'
 import DatasetTag from '@/components/data/dataset/DatsetTag'
-import {
-  mapGetters
-} from 'vuex'
+import { createNamespacedHelpers } from 'vuex'
+
+const { mapGetters } = createNamespacedHelpers('data')
 
 export default {
   components: {
@@ -96,7 +96,7 @@ export default {
       navigationBars: [{
         name: this.$t('data.dataset.navigation.info'),
         routeLink: {
-          name: 'datasetInfo',
+          name: 'DatasetInfo',
           params: {
             id: this.$route.params.id
           }
@@ -107,7 +107,7 @@ export default {
       {
         name: this.$t('data.dataset.navigation.data'),
         routeLink: {
-          name: 'datasetData',
+          name: 'DatasetData',
           params: {
             id: this.$route.params.id
           }
@@ -118,7 +118,7 @@ export default {
       {
         name: this.$t('data.dataset.navigation.models'),
         routeLink: {
-          name: 'datasetModels',
+          name: 'DatasetModels',
           params: {
             id: this.$route.params.id
           }
@@ -129,7 +129,7 @@ export default {
       {
         name: this.$t('data.dataset.navigation.comment'),
         routeLink: {
-          name: 'datasetcomment',
+          name: 'DatasetComment',
           params: {
             id: this.$route.params.id
           }
@@ -152,7 +152,7 @@ export default {
   watch: {
     dataset (newCount, oldCount) {
       const modelsBar = this.navigationBars.find(bar => {
-        return bar.routeLink.name === 'datasetModels'
+        return bar.routeLink.name === 'DatasetModels'
       })
 
       modelsBar.name = this.$t('data.dataset.navigation.models')
@@ -167,7 +167,7 @@ export default {
       this.loading = true
 
       try {
-        await this.$store.dispatch('loadCurrentDataset', this.$route.params.id)
+        await this.$store.dispatch('data/loadDataset', this.$route.params.id)
       } catch (error) {
         this.loading = false
         return
@@ -182,7 +182,8 @@ export default {
         this.setComments(this.dataset.commentsCount)
       } else {
         this.$router.push({
-          name: 'NotFound'
+          name: 'NotFound',
+          params: { '0': 'notfound' }
         })
       }
 
@@ -190,7 +191,7 @@ export default {
     },
     setComments (commentsCount) {
       const commentBar = this.navigationBars.find(bar => {
-        return bar.routeLink.name === 'datasetcomment'
+        return bar.routeLink.name === 'DatasetComment'
       })
 
       commentBar.name = this.$t('data.dataset.navigation.comment')
@@ -331,5 +332,4 @@ export default {
       margin-bottom: 20px;
     }
   }
-
 </style>
