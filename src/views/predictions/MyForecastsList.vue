@@ -1,7 +1,7 @@
 <template>
   <transition-group class="items-container" name="slideUp" v-loading="$store.getters.loading">
     <el-row class="aig-items" key="predictions-list" v-show="isDataLoaded">
-      <div class="filter-bar">
+      <div class="filters-bar">
         <div class="filter-item">
           <div class="filter-label">{{ $t('predictions.forecast.status') }}:</div>
           <Dropdown :items="items" @itemSelected="onFilterByStatusDropdownItemSelected" />
@@ -39,7 +39,7 @@ export default {
   data () {
     return {
       page: 1,
-      filter: {},
+      filters: {},
       isDataLoaded: false,
       items: [{
         name: this.$t('predictions.forecast.statuses.all'),
@@ -86,7 +86,7 @@ export default {
   methods: {
     async onFilterByStatusDropdownItemSelected (value) {
       this.page = 1
-      this.filter = {
+      this.filters = {
         status: value
       }
 
@@ -94,7 +94,7 @@ export default {
     },
     async loadPage (page) {
       this.page = page
-      await this.$store.dispatch('predictions/getUserForecasts', { page: this.page, filter: this.filter })
+      await this.$store.dispatch('predictions/getUserForecasts', { page: this.page, filters: this.filters })
     }
   }
 }
@@ -109,10 +109,10 @@ export default {
     width: 100%;
     min-height: auto;
 
-    .filter-bar {
+    .filters-bar {
       margin-left: 25px;
       margin-right: 25px;
-      padding-bottom: 15px;
+      padding-bottom: 20px;
       .filter-item {
         display: flex;
         .filter-label {

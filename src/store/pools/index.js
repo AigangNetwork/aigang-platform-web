@@ -7,6 +7,9 @@ export default {
   state: {
     pools: [],
     currentPool: {},
+    portfolioSummary: {},
+    portfolioSummaryLoading: false,
+    contributionsListLoading: false,
     currentContribution: {},
     userContributions: [],
     transactionHash: '',

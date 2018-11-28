@@ -33,7 +33,7 @@
           </el-table-column>
           <el-table-column prop="status" :label="$t('profile.transactions.table.titles.status')" width="190">
             <template slot-scope="scope">
-              <Label :type="scope.row.status" size="small" />
+              <TransactionLabel :type="scope.row.status" size="small" />
             </template>
           </el-table-column>
         </el-table>
@@ -49,14 +49,14 @@
 <script>
 import { createNamespacedHelpers } from 'vuex'
 import Date from '@/components/Date'
-import Label from './Label'
+import TransactionLabel from './TransactionLabel'
 import Pagination from '@/components/Pagination'
 const { mapGetters } = createNamespacedHelpers('user')
 
 export default {
   components: {
     Date,
-    Label,
+    TransactionLabel,
     Pagination
   },
   computed: {
@@ -100,6 +100,12 @@ export default {
           return this.$t('profile.transactions.type.forecastPayout')
         case 'FORECASTREFUND':
           return this.$t('profile.transactions.type.forecastRefund')
+        case 'ADDCONTRIBUTION':
+          return this.$t('profile.transactions.type.addContribution')
+        case 'CONTRIBUTIONPAYOUT':
+          return this.$t('profile.transactions.type.contributionPayout')
+        case 'CONTRIBUTIONREFUND':
+          return this.$t('profile.transactions.type.contributionRefund')
         default:
           return this.$t('profile.transactions.type.unknown')
       }

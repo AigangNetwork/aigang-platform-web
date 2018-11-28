@@ -93,14 +93,19 @@ export default {
     }
   },
 
-  async updateWeb3Info ({ commit, state }) {
+  async updateWeb3Info ({ commit, state, rootState }) {
     const web3Instance = window.web3
     const networkId = await web3Instance.eth.net.getId()
 
     const requiredNetwork = networkResolver(process.env.NODE_ENV)
 
     if (requiredNetwork.networkId !== networkId) {
-      eventHub.$emit(eventHub.eventMetamaskNetworkError, requiredNetwork.networkName)
+      if (rootState.showMetamaskNetworkError) {
+        console.log('hello')
+        eventHub.$emit(eventHub.eventMetamaskNetworkError, requiredNetwork.networkName)
+        commit('setShowMetamaskNetworkError', false, { root: true })
+      }
+
       return
     }
 

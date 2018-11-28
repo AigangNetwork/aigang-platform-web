@@ -21,6 +21,18 @@ const mutations = {
 
   setTransactionError (state, value) {
     state.transactionError = value
+  },
+
+  setPortfolioSummary (state, value) {
+    state.portfolioSummary = value
+  },
+
+  setPortfolioSummaryLoading (state, value) {
+    state.portfolioSummaryLoading = value
+  },
+
+  setContributionsListLoading (state, value) {
+    state.contributionsListLoading = value
   }
 }
 

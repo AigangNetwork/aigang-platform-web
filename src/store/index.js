@@ -20,7 +20,8 @@ export default new Vuex.Store({
     loading: false,
     insufficientBalanceDialogVisible: false,
     bugBountyDialogVisible: true,
-    isCookiesEnabled: null
+    isCookiesEnabled: null,
+    showMetamaskNetworkError: true
   },
   mutations,
   getters,

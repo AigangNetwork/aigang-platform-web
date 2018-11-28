@@ -4,21 +4,21 @@
     <td>{{ contribution.investors }}</td>
     <td>{{ contribution.amount}} {{ $t('general.aix') }}</td>
     <td>{{ contribution.investedAmount }} {{ $t('general.aix') }}</td>
-    <td>{{ contribution.poolGoalAmount }} {{ $t('general.aix') }}</td>
+    <td>{{ contribution.goalAmount }} {{ $t('general.aix') }}</td>
     <td>
-      <span class="investment-list-item-status active">
-        {{ status | uppercase }}
-      </span>
+      <PoolContributionLabel :type="contribution.status" size="small" />
     </td>
   </tr>
 </template>
 
 <script>
-import PoolContributionStatus from '@/components/mixins/PoolContributionStatus'
+import PoolContributionLabel from './PoolContributionLabel'
 
 export default {
   props: ['contribution'],
-  mixins: [PoolContributionStatus],
+  components: {
+    PoolContributionLabel
+  },
   methods: {
     navigateToContribution (id) {
       this.$router.push({
@@ -68,15 +68,6 @@ export default {
     min-width: 80px;
     display: inline-block;
     text-transform: uppercase;
-
-    &.active {
-      color: $button-purple;
-    }
-
-    &.closed {
-      border: 1px dashed $gray;
-      color: $gray;
-    }
   }
 
   @media screen and (max-width: 680px) and (min-width: 100px) {
