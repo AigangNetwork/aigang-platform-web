@@ -354,6 +354,15 @@
               "description": "When this notification type is on you will get notifications after your forecast win."
             }
           }
+        },
+        "pools": {
+          "title": "Pools",
+          "items": {
+            "contributionReceived": {
+              "title": "Contribution received",
+              "description": "When this notification type is on you will get notifications after contirubtion payment information will be received in our system."
+            }
+          }
         }
       }
     }
