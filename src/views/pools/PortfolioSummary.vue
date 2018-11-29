@@ -17,7 +17,7 @@
               <span class="value">{{ portfolioSummary.availableRefund}} {{ $t('general.aix') }}</span>
               </div>
             <div class="details-item">
-              <div class="title">{{ $t('pools.contributions.summary.rewardPaidOut') }}</div> 
+              <div class="title">{{ $t('pools.contributions.summary.rewardPaidOut') }}</div>
               <span class="value">{{ portfolioSummary.rewardPaidOut}} {{ $t('general.aix') }}</span>
             </div>
           </div>
