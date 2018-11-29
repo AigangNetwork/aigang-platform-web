@@ -124,6 +124,7 @@ export default {
   methods: {
     createForecast () {
       if (this.$store.getters['user/aixBalance'] <= this.createForecastForm.amount) {
+        this.show = false
         this.$store.dispatch('showInsufficientBalanceDialog', true)
         return
       }

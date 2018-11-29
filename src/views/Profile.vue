@@ -1,10 +1,10 @@
 <template>
-  <div class="aig-container profile-container">
+  <div class="aig-container profile-container" v-loading="profileViewLoading">
     <Card class="profile-card">
       <div class="profile-content-container" slot="body">
         <div class="flex-container">
           <ProfileInfo/>
-          <el-button class="logout-button" type="warning" @click="logOut">{{ $t('profile.general.logout') }}</el-button>
+          <el-button class="logout-button" type="warning" @click="logoutHandler">{{ $t('profile.general.logout') }}</el-button>
         </div>
         <el-tabs type="card" v-model="activeTab" class="profile-tabs" @tab-click="changeActiveTab">
           <el-tab-pane :label="$t('profile.tabs.profile')" name="ProfileGeneral" />
@@ -31,11 +31,16 @@ export default {
   },
   data () {
     return {
-      activeTab: this.$route.name
+      activeTab: this.$route.name,
+      profileViewLoading: false
     }
   },
   methods: {
     ...mapActions(['logOut']),
+    logoutHandler () {
+      this.profileViewLoading = true
+      this.logOut()
+    },
     changeActiveTab (tab) {
       switch (tab.name) {
         case 'ProfileWallets':

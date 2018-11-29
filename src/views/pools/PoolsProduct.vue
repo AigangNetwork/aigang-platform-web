@@ -109,6 +109,11 @@ export default {
     async onAddContribution (amount) {
       this.displayConfirmContributionDialog(false)
 
+      if (amount >= this.$store.getters['user/aixBalance']) {
+        this.$store.dispatch('showInsufficientBalanceDialog', true)
+        return
+      }
+
       await this.$store.dispatch('pools/addContribution', {
         amount,
         poolId: this.$route.params.id,
