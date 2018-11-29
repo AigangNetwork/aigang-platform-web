@@ -748,12 +748,12 @@
       "ended": "Ended"
     },
     "products": {
-      "invested": "Invested",
-      "start": "Starting",
-      "end": "Ending",
-      "currentPoolSize": "Current Pool Size",
-      "poolSizeGoal": "Pool Size Goal",
-      "status": "Status"
+      "activeTill": "Active till",
+      "distributing": "Distributing",
+      "funded": "Funded",
+      "paused": "Paused",
+      "canceled": "Canceled",
+      "closed": "Closed"
     },
     "contributions" : {
       "noData": "There is no contributions yet",
