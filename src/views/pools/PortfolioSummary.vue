@@ -4,10 +4,22 @@
       <Card>
         <div slot="body" class="scrollable">
           <div class="details">
-            <p>{{ $t('pools.contributions.summary.contributions') }}: <span class="value">{{ portfolioSummary.contributions}}</span></p>
-            <p>{{ $t('pools.contributions.summary.contributionsAmount') }}: <span class="value">{{ portfolioSummary.contributionsAmount}} {{ $t('general.aix') }}</span></p>
-            <p>{{ $t('pools.contributions.summary.availableReward') }}: <span class="value">{{ portfolioSummary.availableRefund}} {{ $t('general.aix') }}</span></p>
-            <p>{{ $t('pools.contributions.summary.rewardPaidOut') }}: <span class="value">{{ portfolioSummary.rewardPaidOut}} {{ $t('general.aix') }}</span></p>
+            <div class="details-item">
+              <div class="title">{{ $t('pools.contributions.summary.contributions') }}</div>
+              <span class="value">{{ portfolioSummary.contributions}}</span>
+            </div>
+            <div class="details-item">
+              <div class="title">{{ $t('pools.contributions.summary.contributionsAmount') }}</div>
+              <span class="value">{{ portfolioSummary.contributionsAmount}} {{ $t('general.aix') }}</span>
+            </div>
+            <div class="details-item">
+              <div class="title">{{ $t('pools.contributions.summary.availableReward') }}</div>
+              <span class="value">{{ portfolioSummary.availableRefund}} {{ $t('general.aix') }}</span>
+              </div>
+            <div class="details-item">
+              <div class="title">{{ $t('pools.contributions.summary.rewardPaidOut') }}</div> 
+              <span class="value">{{ portfolioSummary.rewardPaidOut}} {{ $t('general.aix') }}</span>
+            </div>
           </div>
         </div>
       </Card>
@@ -45,14 +57,24 @@ export default {
     width: 100%;
 
     .details {
-      margin-bottom: 20px;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
 
-      p {
-        margin: 0px;
-      }
+      .details-item {
+        margin: 20px 15px;
+        text-align: center;
 
-      .value {
-        font-weight: 400;
+        .title {
+          text-transform: uppercase;
+          margin-bottom: 5px;
+        }
+
+        .value {
+          font-family: $font-secondary;
+          font-weight: 400;
+          font-size: 20pt;
+        }
       }
     }
   }

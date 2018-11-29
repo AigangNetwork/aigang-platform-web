@@ -1,22 +1,22 @@
 <template>
-  <div class="aig-data" :class="{ disabled: !isCampaignRunning || product.state != 'active' }">
+  <div class="aig-product-data" :class="{ disabled: !isCampaignRunning || product.state != 'active' }">
     <router-link :to="{ name: 'Product', params: { id: product.id}}">
-      <div class="aig-data-body-container">
-        <div class="aig-data-head" v-if="isCampaignRunning && product.state == 'active'">
+      <div class="aig-product-data-body-container">
+        <div class="aig-product-data-head" v-if="isCampaignRunning && product.state == 'active'">
           <div class="desc">{{ $t('insurance.product.productEnds') }}
             <Date :dateUtc="product.endDateUtc" />
           </div>
         </div>
-        <div class="aig-data-head" v-else-if="!isCampaignRunning && product.state == 'active'">
+        <div class="aig-product-data-head" v-else-if="!isCampaignRunning && product.state == 'active'">
           <div class="desc">{{ $t('insurance.product.productEnded') }}</div>
         </div>
-        <div class="aig-data-head" v-else>
+        <div class="aig-product-ata-head" v-else>
           <div class="desc">{{ $t('insurance.product.productClosed') }}</div>
         </div>
-        <div class="aig-data-head">
+        <div class="aig-product-data-head">
           <div class="title">{{ product.title | truncate(50) }}</div>
         </div>
-        <div class="aig-data-body">
+        <div class="aig-product-data-body">
           <div class="desc">
             <p>{{ product.description | truncate(80) }}</p>
           </div>
@@ -58,7 +58,7 @@ export default {
   @import '~helpers/variables';
   @import '~helpers/mixins';
 
-  .aig-data {
+  .aig-product-data {
     @include transition;
     background: white;
     box-shadow: 0 0 30px 0 #e9f0f6;
@@ -84,11 +84,11 @@ export default {
       pointer-events: none;
     }
 
-    .aig-data-body-container {
+    .aig-product-data-body-container {
       padding: 20px;
     }
 
-    .aig-data-body {
+    .aig-product-data-body {
       flex-grow: 1;
 
       p {
@@ -99,7 +99,7 @@ export default {
       }
     }
 
-    .aig-data-head {
+    .aig-product-data-head {
       display: flex;
       justify-content: space-between;
       margin-top: 0;
@@ -114,7 +114,7 @@ export default {
       }
     }
 
-    .aig-data-footer {
+    .aig-product-data-footer {
       border-top: 1px solid $light-border-blue;
       height: 40px;
       width: 100%;
@@ -126,7 +126,7 @@ export default {
       height: 30px;
       background: white;
 
-      .aig-footer-container {
+      .aig-product-footer-container {
         justify-content: left;
         display: flex;
         width: 50%;
@@ -142,9 +142,8 @@ export default {
           }
         }
       }
-      .aig-footer-container-right {
+      .aig-product-footer-container-right {
         justify-content: right;
-        @extend .aig-footer-container;
       }
     }
 
@@ -191,25 +190,25 @@ export default {
   }
 
   @media screen and (min-width: 680px) and (max-width: 1024px) {
-    .aig-data {
+    .aig-product-data {
       height: 480px;
 
-      .aig-data-footer .aig-footer-container-right {
+      .aig-product-data-footer .aig-product-footer-container-right {
         padding-left: 0px;
       }
     }
   }
 
   @media screen and (min-width: 100px) and (max-width: 680px) {
-    .aig-data {
+    .aig-product-data {
       height: 430px;
 
-      .aig-data-head .title {
+      .aig-product-data-head .title {
         width: 100%;
         word-wrap: break-word;
       }
 
-      .aig-data-body p {
+      .aig-product-data-body p {
         font-size: 13px;
       }
 
@@ -218,10 +217,10 @@ export default {
         font-weight: 500;
       }
 
-      .aig-data-footer {
+      .aig-product-data-footer {
         justify-content: space-between;
 
-        .aig-footer-container-right {
+        .aig-product-footer-container-right {
           padding-left: 0;
         }
       }

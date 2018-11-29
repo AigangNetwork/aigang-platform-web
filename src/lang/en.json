@@ -758,7 +758,7 @@
     "contributions" : {
       "noData": "There is no contributions yet",
       "summary": {
-        "contributions": "Contributions",
+        "contributions": "Your Contributions",
         "contributionsAmount": "Contributions amount",
         "availableReward": "Available reward",
         "rewardPaidOut": "Reward paid out"
