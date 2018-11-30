@@ -1,17 +1,19 @@
 <template>
-  <el-dialog :title="$t('insurance.policy.paymentInfo.title')" :visible.sync="show">
+  <el-dialog :title="title" :visible.sync="show">
     <transition-group name="slideDown">
       <div key="1" v-if="!txHash">
-        <p class="bold">{{ $t('insurance.policy.paymentInfo.metamaskAlert') }}</p>
+        <p class="bold">{{ content }}</p>
+        <div class="loader-box" v-loading="!txHash" :element-loading-text="$t('general.processingTransaction')"></div>
       </div>
-      <div class="payment-dialog-info" v-if="txHash" key="2">
-        <p>{{ $t('insurance.policy.paymentInfo.body') }}</p>
+
+      <div class="payment-dialog-info" v-if="txHash" key="3">
+        <p>{{ bodyText }}</p>
         <a class="address" :href="txLink" target="_blank">
-          <span class="contract-address">{{ this.txHash }}</span>
+          <span class="contract-address">{{ txHash }}</span>
         </a>
         <div class="buttons">
-          <router-link :to="policyListRoute">
-            <el-button class="button" type="primary">{{ $t('insurance.policy.paymentInfo.buttons.goBack')}}</el-button>
+          <router-link :to="route">
+            <el-button class="button" type="primary">{{ btnText }}</el-button>
           </router-link>
         </div>
       </div>
@@ -19,25 +21,16 @@
   </el-dialog>
 </template>
 <script>
-import { createNamespacedHelpers } from 'vuex'
-const { mapGetters } = createNamespacedHelpers('insurance')
-
 export default {
-  props: ['isVisible', 'displayDialog'],
-  data () {
-    return {
-      policyListRoute: '/insurance/policy/mypolicies'
-    }
-  },
+  props: ['isVisible', 'displayDialog', 'content', 'txHash', 'title', 'route', 'btnText', 'bodyText'],
   watch: {
-    txHash () {
+    transactionHash () {
       if (this.txHash) {
         this.show = true
       }
     }
   },
   computed: {
-    ...mapGetters(['txHash']),
     txLink () {
       return process.env.ETHERSCAN_ADDRESS + process.env.TX_PATH + this.txHash
     },
@@ -48,10 +41,12 @@ export default {
       set (value) {
         this.displayDialog(value)
       }
+    },
+    loading () {
+      return !this.txHash && this.txStarted
     }
   }
 }
-
 </script>
 <style lang="scss" scoped>
   .payment-dialog-info {
@@ -65,9 +60,16 @@ export default {
     .buttons {
       margin-top: 30px;
       text-align: center;
+
       .button {
         min-width: 200px;
       }
     }
+  }
+
+  .loader-box {
+    margin: 40px 0;
+    min-height: 30px;
+    display: block;
   }
 </style>

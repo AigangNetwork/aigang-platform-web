@@ -445,7 +445,8 @@
       "header": "Bug bounty program started!",
       "text": "Do not miss a chance and get AIX tokens for your bug reports.",
       "button": "Get started"
-    }
+    },
+    "processingTransaction": "Transaction is being processed..."
   },
   "errors": {
     "error": "Error",
@@ -755,7 +756,7 @@
       "canceled": "Canceled",
       "closed": "Closed"
     },
-    "contributions" : {
+    "contributions": {
       "noData": "There is no contributions yet",
       "summary": {
         "contributions": "Your Contributions",

@@ -41,10 +41,16 @@
       :fee="prediction.fee"
       @createForecast="onCreateForecast"/>
 
-    <PaymentConfirmationDialog
-      :isVisible="isPaymentDialogVisible && !transactionError"
-      :displayDialog="displayPaymentDialog"
-      :content="$t('predictions.prediction.paymentInfo.metamaskAlert')" />
+      <PaymentConfirmationDialog
+        :isVisible="isPaymentDialogVisible && !transactionError"
+        :displayDialog="displayPaymentDialog"
+        :content="$t('predictions.forecast.metamaskAlert')"
+        :txHash="transactionHash"
+        :title="$t('predictions.prediction.paymentInfo.title')"
+        :bodyText="$t('predictions.prediction.paymentInfo.body')"
+        :route="userForecastListRoute"
+        :btnText="$t('predictions.prediction.paymentInfo.buttons.goBack')" />
+
   </div>
 </template>
 
@@ -55,7 +61,7 @@ import Outcomes from '@/components/predictions/Outcomes'
 import CountPerOutcome from '@/components/predictions/CountPerOutcome'
 import AmountPerOutcome from '@/components/predictions/AmountPerOutcome'
 import ConfirmForecastDialog from '@/components/predictions/ConfirmForecastDialog'
-import PaymentConfirmationDialog from '@/components/predictions/PaymentConfirmationDialog'
+import PaymentConfirmationDialog from '@/components/common/PaymentConfirmationDialog'
 import VueMarkdown from 'vue-markdown'
 
 import { createNamespacedHelpers } from 'vuex'
@@ -79,7 +85,8 @@ export default {
       'amountPerOutcomeStatisticsLoading',
       'countPerOutcomeStatistics',
       'amountPerOutcomeStatistics',
-      'transactionError'
+      'transactionError',
+      'transactionHash'
     ]),
     contractLink () {
       return process.env.ETHERSCAN_ADDRESS + process.env.ADDRESS_PATX + this.prediction.marketAddress
@@ -105,7 +112,8 @@ export default {
       isPaymentDialogVisible: false,
       selectedOutcome: {},
       selectedOutcomeIndex: 0,
-      headerInfo: {}
+      headerInfo: {},
+      userForecastListRoute: '/predictions/myforecasts'
     }
   },
   async mounted () {

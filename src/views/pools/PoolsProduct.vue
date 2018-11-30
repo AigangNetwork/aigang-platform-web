@@ -39,7 +39,13 @@
         <PaymentConfirmationDialog
           :isVisible="isPaymentDialogVisible && !transactionError"
           :displayDialog="displayPaymentDialog"
-          :content="$t('pools.pool.paymentInfo.metamaskAlert')" />
+          :content="$t('pools.pool.paymentInfo.metamaskAlert')"
+          :txHash="transactionHash"
+          :title="$t('pools.pool.paymentInfo.title')"
+          :bodyText="$t('pools.pool.paymentInfo.body')"
+          :route="portfolioRoute"
+          :btnText="$t('pools.pool.paymentInfo.buttons.goBack')"/>
+
       </div>
     </div>
   </div>
@@ -50,7 +56,7 @@ import ConfirmContributionDialog from '@/components/pools/ConfirmContributionDia
 import VueMarkdown from 'vue-markdown'
 import PoolProductHeader from './PoolProductHeader'
 import ScrollableMarkupText from '@/components/insurance/ScrollableMarkupText'
-import PaymentConfirmationDialog from '@/components/pools/PaymentConfirmationDialog'
+import PaymentConfirmationDialog from '@/components/common/PaymentConfirmationDialog'
 
 import { createNamespacedHelpers } from 'vuex'
 const { mapGetters } = createNamespacedHelpers('pools')
@@ -69,13 +75,15 @@ export default {
       isConfirmContributionDialogVisible: false,
       headerInfo: {},
       investButtonDisabled: true,
-      isPaymentDialogVisible: false
+      isPaymentDialogVisible: false,
+      portfolioRoute: '/pools/portfolio'
     }
   },
   computed: {
     ...mapGetters([
       'currentPool',
-      'transactionError'
+      'transactionError',
+      'transactionHash'
     ]),
     maxAllowedAmount () {
       const numbersAfterPointer = 6
