@@ -1,7 +1,7 @@
 <template>
-  <div class="aig-data">
+  <div class="aig-data-item">
     <div>
-      <div class="aig-data-head">
+      <div class="aig-data-item-head">
         <div class="desc">{{ $t('data.card.added') }} {{ created }}</div>
         <el-tooltip v-if="data.state === 'closed'" :content="$t('data.dataset.closedTooltip')" placement="top-start">
           <div class="status-bubble grey"></div>
@@ -17,10 +17,10 @@
         </el-tooltip>
       </div>
       <router-link :to="{ name: 'DatasetInfo', params: { id: data.id}}">
-        <div class="aig-data-head">
+        <div class="aig-data-item-head">
           <div class="title">{{ data.title | truncate(35) }}</div>
         </div>
-        <div class="aig-data-body">
+        <div class="aig-data-item-body">
           <div class="desc">
             <p>{{ data.description | truncate(60) }}</p>
           </div>
@@ -32,7 +32,7 @@
         </div>
       </router-link>
     </div>
-    <div class="aig-data-footer">
+    <div class="aig-data-item-footer">
       <div class="aig-footer-container">
         <img src="/static/models24px.svg" alt="models">
         <router-link class="label" :to="{ name: 'DatasetModels', params: { id: data.id}}">
@@ -92,7 +92,7 @@ export default {
   @import '~helpers/variables';
   @import '~helpers/mixins';
 
-  .aig-data {
+  .aig-data-item {
     @include transition;
     padding: 20px;
     background: white;
@@ -103,7 +103,7 @@ export default {
     flex-direction: column;
     justify-content: space-between;
 
-    .aig-data-body {
+    .aig-data-item-body {
       height: 100%;
       max-height: 110px;
       p {
@@ -119,13 +119,13 @@ export default {
 
       }
     }
-    .aig-data-head {
+    .aig-data-item-head {
       display: flex;
       justify-content: space-between;
       margin-top: 0;
       width: 100%;
     }
-    .aig-data-footer {
+    .aig-data-item-footer {
       border-top: 1px solid $light-border-blue;
       height: 40px;
       width: 100%;
@@ -207,7 +207,7 @@ export default {
   /* Tablet */
 
   @media screen and (min-width: 680px) and (max-width: 1024px) {
-    .aig-data .aig-data-footer .aig-footer-container-right {
+    .aig-data .aig-data-item-footer .aig-footer-container-right {
       padding-left: 0px;
     }
   }
@@ -217,7 +217,7 @@ export default {
       height: 245px;
       padding: 18px;
 
-      .aig-data-head {
+      .aig-data-item-head {
         .title {
           width: 100%;
           word-wrap: break-word;
@@ -225,7 +225,7 @@ export default {
 
       }
 
-      .aig-data-body {
+      .aig-data-item-body {
         p {
           font-size: 13px;
         }
