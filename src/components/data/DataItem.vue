@@ -6,14 +6,18 @@
         <el-tooltip v-if="data.state === 'closed'" :content="$t('data.dataset.closedTooltip')" placement="top-start">
           <div class="status-bubble grey"></div>
         </el-tooltip>
-        <el-tooltip v-else-if="data.state === 'created'" :content="$t('data.dataset.notApprovedTooltip')" placement="top-start">
+        <el-tooltip
+          v-else-if="data.state === 'created'"
+          :content="$t('data.dataset.notApprovedTooltip')"
+          placement="top-start"
+        >
           <div class="status-bubble yellow"></div>
         </el-tooltip>
         <el-tooltip v-else-if="data.isPublic" :content="$t('data.dataset.publicTooltip')" placement="top-start">
-          <div class="status-bubble green"> </div>
+          <div class="status-bubble green"></div>
         </el-tooltip>
         <el-tooltip v-else :content="$t('data.dataset.privateTooltip')" placement="top-start">
-          <div class="status-bubble green-border"> </div>
+          <div class="status-bubble green-border"></div>
         </el-tooltip>
       </div>
       <router-link :to="{ name: 'DatasetInfo', params: { id: data.id}}">
@@ -25,26 +29,22 @@
             <p>{{ data.description | truncate(60) }}</p>
           </div>
           <div>
-            <span v-if="data.tags.length" class="tags-list">
-              {{formatTags | truncate(30)}}
-            </span>
+            <span v-if="data.tags.length" class="tags-list"> {{formatTags | truncate(30)}} </span>
           </div>
         </div>
       </router-link>
     </div>
     <div class="aig-data-item-footer">
       <div class="aig-footer-container">
-        <img src="/static/models24px.svg" alt="models">
+        <img src="/static/models24px.svg" alt="models" />
         <router-link class="label" :to="{ name: 'DatasetModels', params: { id: data.id}}">
-          {{ $t('data.card.models' )}}
-          <span v-if="data.modelsCount > 0"> ({{ data.modelsCount }})</span>
+          {{ $t('data.card.models') }} <span v-if="data.modelsCount > 0"> ({{ data.modelsCount }})</span>
         </router-link>
       </div>
       <div class="aig-footer-container-right">
-        <img src="/static/threads24px.svg" alt="comment">
+        <img src="/static/threads24px.svg" alt="comment" />
         <router-link class="label" :to="{ name: 'DatasetComment', params: { id: data.id}}">
-          {{ $t('data.card.comment' )}}
-          <span v-if="data.commentsCount > 0">({{ data.commentsCount }})</span>
+          {{ $t('data.card.comment') }} <span v-if="data.commentsCount > 0">({{ data.commentsCount }})</span>
         </router-link>
       </div>
     </div>
@@ -77,7 +77,7 @@ export default {
   computed: {
     formatTags () {
       if (this.data.tags.length) {
-        return this.data.tags.map(item => (`#${item}`)).join(' ')
+        return this.data.tags.map(item => `#${item}`).join(' ')
       }
     }
   },
@@ -85,7 +85,6 @@ export default {
     this.createdUtc = this.data.createdUtc
   }
 }
-
 </script>
 
 <style lang="scss" scoped>
@@ -116,7 +115,6 @@ export default {
         padding: 0px;
         font-size: 13px;
         color: #b2c1d2;
-
       }
     }
     .aig-data-item-head {
@@ -144,6 +142,7 @@ export default {
         height: 100%;
         .label {
           font-family: $font-secondary;
+          font-size: 14px;
           margin-left: 2px;
           display: flex;
           span {
@@ -186,21 +185,20 @@ export default {
       border-radius: 50%;
 
       &.green {
-        background: #87D37C;
+        background: #87d37c;
       }
 
       &.grey {
-        background: #DADFE1;
+        background: #dadfe1;
       }
 
       &.yellow {
-        background: #F4D03F;
+        background: #f4d03f;
       }
 
       &.green-border {
-        border: 3px solid #87D37C;
+        border: 3px solid #87d37c;
       }
-
     }
   }
 
@@ -222,7 +220,6 @@ export default {
           width: 100%;
           word-wrap: break-word;
         }
-
       }
 
       .aig-data-item-body {
