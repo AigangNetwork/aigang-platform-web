@@ -17,7 +17,7 @@
     "qareport": "npm run qabuild --report"
   },
   "dependencies": {
-    "@johmun/vue-tags-input": "^1.5.10",
+    "@johmun/vue-tags-input": "^1.6.0",
     "axios": "^0.18.0",
     "breakpoint-sass": "^2.7.1",
     "element-ui": "^2.4.11",
@@ -35,9 +35,9 @@
     "websocket": "^1.0.28"
   },
   "devDependencies": {
-    "autoprefixer": "^9.3.1",
+    "autoprefixer": "^9.4.0",
     "babel-core": "^6.26.3",
-    "babel-eslint": "^8.2.6",
+    "babel-eslint": "^10.0.1",
     "babel-helper-vue-jsx-merge-props": "^2.0.3",
     "babel-loader": "^7.1.5",
     "babel-plugin-syntax-jsx": "^6.18.0",
@@ -67,7 +67,7 @@
     "node-sass": "^4.10.0",
     "optimize-css-assets-webpack-plugin": "^5.0.1",
     "ora": "^3.0.0",
-    "portfinder": "^1.0.19",
+    "portfinder": "^1.0.20",
     "postcss-import": "^12.0.1",
     "postcss-loader": "^3.0.0",
     "postcss-url": "^8.0.0",
@@ -77,7 +77,7 @@
     "shelljs": "^0.8.3",
     "uglifyjs-webpack-plugin": "^2.0.1",
     "url-loader": "^1.1.2",
-    "vue-loader": "^14.2.3",
+    "vue-loader": "^15.4.2",
     "vue-style-loader": "^4.1.2",
     "vue-template-compiler": "^2.5.17",
     "webpack": "^4.26.1",
