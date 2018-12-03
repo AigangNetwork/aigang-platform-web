@@ -354,6 +354,15 @@
               "description": "When this notification type is on you will get notifications after your forecast win."
             }
           }
+        },
+        "pools": {
+          "title": "Pools",
+          "items": {
+            "contributionReceived": {
+              "title": "Contribution received",
+              "description": "When this notification type is on you will get notifications after contirubtion payment information will be received in our system."
+            }
+          }
         }
       }
     }
@@ -436,7 +445,8 @@
       "header": "Bug bounty program started!",
       "text": "Do not miss a chance and get AIX tokens for your bug reports.",
       "button": "Get started"
-    }
+    },
+    "processingTransaction": "Transaction is being processed..."
   },
   "errors": {
     "error": "Error",
@@ -739,17 +749,17 @@
       "ended": "Ended"
     },
     "products": {
-      "invested": "Invested",
-      "start": "Starting",
-      "end": "Ending",
-      "currentPoolSize": "Current Pool Size",
-      "poolSizeGoal": "Pool Size Goal",
-      "status": "Status"
+      "activeTill": "Active till",
+      "distributing": "Distributing",
+      "funded": "Funded",
+      "paused": "Paused",
+      "canceled": "Canceled",
+      "closed": "Closed"
     },
-    "contributions" : {
+    "contributions": {
       "noData": "There is no contributions yet",
       "summary": {
-        "contributions": "Contributions",
+        "contributions": "Your Contributions",
         "contributionsAmount": "Contributions amount",
         "availableReward": "Available reward",
         "rewardPaidOut": "Reward paid out"

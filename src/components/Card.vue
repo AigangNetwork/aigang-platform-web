@@ -1,8 +1,6 @@
 <template>
   <div class="aig-card">
-    <div class="aig-card-body">
-      <slot name="body"></slot>
-    </div>
+    <div class="aig-card-body"><slot name="body"></slot></div>
   </div>
 </template>
 
@@ -10,7 +8,6 @@
 export default {
   name: 'Card'
 }
-
 </script>
 
 <style lang="scss" scoped>
@@ -19,7 +16,7 @@ export default {
   .aig-card {
     color: darken($gray, 50);
     .aig-card-body {
-      margin: 0 auto;
+      margin: 40px auto;
       width: 100%;
       padding: 35px;
       background: white;
@@ -33,6 +30,5 @@ export default {
         padding: 10px;
       }
     }
-
   }
 </style>

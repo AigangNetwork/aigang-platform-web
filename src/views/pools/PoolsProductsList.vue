@@ -1,9 +1,11 @@
 <template>
   <transition-group class="items-container" name="slideUp" v-loading="$store.getters.loading">
-    <el-row key="pools-list" v-show="isDataLoaded">
-      <PoolsProductItem v-for="item in pools.items" :key="item.id" :product="item" />
+    <el-row class="aig-items" key="pools-list" v-show="isDataLoaded">
+      <el-col :xs="24" :sm="12" :md="12" :lg="8" v-for="pool in pools.items" :key="pool.id">
+        <PoolsProductItem :item="pool" />
+      </el-col>
       <el-col>
-        <Pagination v-if="pools && pools.totalPages > 1" :callback="loadPage" :total-page-count="pools.totalPages" :current-page="page" />
+        <Pagination v-if="pools.totalPages > 1" :callback="loadPage" :total-page-count="pools.totalPages" :current-page="page" />
       </el-col>
       <el-col v-if="!$store.getters.loading && pools && !pools.items">
         <h2>{{ $t('general.noPools') }}</h2>
@@ -13,7 +15,7 @@
 </template>
 
 <script>
-import PoolsProductItem from '@/components/pools/PoolsProductItem'
+import PoolsProductItem from './PoolsProductItem'
 import Pagination from '@/components/Pagination'
 
 import { createNamespacedHelpers } from 'vuex'

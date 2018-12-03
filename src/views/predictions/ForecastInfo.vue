@@ -56,7 +56,16 @@
 
         <ForecastDeleteSection v-if="isForecastDraft" />
 
-        <PaymentConfirmationDialog :isVisible="isPaymentDialogVisible && !transactionError" :displayDialog="displayPaymentDialog" :content="$t('predictions.forecast.metamaskAlert')" />
+        <PaymentConfirmationDialog
+          :isVisible="isPaymentDialogVisible && !transactionError"
+          :displayDialog="displayPaymentDialog"
+          :content="$t('predictions.forecast.metamaskAlert')"
+          :txHash="transactionHash"
+          :title="$t('predictions.prediction.paymentInfo.title')"
+          :bodyText="$t('predictions.prediction.paymentInfo.body')"
+          :route="userForecastListRoute"
+          :btnText="$t('predictions.prediction.paymentInfo.buttons.goBack')"/>
+
       </div>
     </div>
   </div>
@@ -70,7 +79,7 @@ import AmountPerOutcome from '@/components/predictions/AmountPerOutcome'
 import ForecastDeleteSection from '@/components/predictions/ForecastDeleteSection'
 import Card from '@/components/Card'
 import VueMarkdown from 'vue-markdown'
-import PaymentConfirmationDialog from '@/components/predictions/PaymentConfirmationDialog'
+import PaymentConfirmationDialog from '@/components/common/PaymentConfirmationDialog'
 import { createNamespacedHelpers } from 'vuex'
 const { mapGetters } = createNamespacedHelpers('predictions')
 
@@ -89,7 +98,8 @@ export default {
     return {
       isDataLoaded: false,
       isPaymentDialogVisible: false,
-      headerInfo: {}
+      headerInfo: {},
+      userForecastListRoute: '/predictions/myforecasts'
     }
   },
   methods: {
@@ -139,7 +149,8 @@ export default {
       'amountPerOutcomeStatisticsLoading',
       'countPerOutcomeStatistics',
       'amountPerOutcomeStatistics',
-      'transactionError'
+      'transactionError',
+      'transactionHash'
     ]),
     isPercentageVisible () {
       const status = this.userForecast.status.toUpperCase()

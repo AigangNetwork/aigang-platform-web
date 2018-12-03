@@ -64,12 +64,21 @@
       :isVisible="isDisplayLogInToEthereumClientDialogVisible"
       :displayDialog="displayLogInToEthereumClientDialog" />
 
-    <PaymentConfirmationDialog :isVisible="isPaymentDialogVisible && !transactionError" :displayDialog="displayPaymentDialog" />
+    <PaymentConfirmationDialog
+      :isVisible="isPaymentDialogVisible && !transactionError"
+      :displayDialog="displayPaymentDialog"
+      :content="$t('insurance.policy.paymentInfo.metamaskAlert')"
+      :txHash="txHash"
+      :title="$t('insurance.policy.paymentInfo.title')"
+      :bodyText="$t('insurance.policy.paymentInfo.body')"
+      :route="policyListRoute"
+      :btnText="$t('insurance.policy.paymentInfo.buttons.goBack')"/>
+
   </div>
 </template>
 <script>
 import Card from '@/components/Card'
-import PaymentConfirmationDialog from '@/components/insurance/PaymentConfirmationDialog'
+import PaymentConfirmationDialog from '@/components/common/PaymentConfirmationDialog'
 import TermsAndConditionsDialog from '@/components/insurance/TermsAndConditionsDialog'
 import LogInToEthereumClientDialog from '@/components/insurance/LogInToEthereumClientDialog'
 import PolicyDeleteSection from '@/components/insurance/PolicyDeleteSection'
@@ -151,7 +160,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['policy', 'isPolicyLoadingVisible', 'policyLoadingInfo', 'transactionError']),
+    ...mapGetters(['policy', 'isPolicyLoadingVisible', 'policyLoadingInfo', 'transactionError', 'txHash']),
     isMetamaskLoggedIn () {
       return this.$store.getters['user/isWeb3Enabled']
     },

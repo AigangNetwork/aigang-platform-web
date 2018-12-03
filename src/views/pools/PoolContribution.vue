@@ -54,7 +54,12 @@
     <PaymentConfirmationDialog
       :isVisible="isPaymentDialogVisible && !transactionError"
       :displayDialog="displayPaymentDialog"
-      :content="$t('pools.pool.paymentInfo.metamaskAlert')" />
+      :content="$t('pools.pool.paymentInfo.metamaskAlert')"
+      :txHash="transactionHash"
+      :title="$t('pools.pool.paymentInfo.title')"
+      :bodyText="$t('pools.pool.paymentInfo.body')"
+      :route="portfolioRoute"
+      :btnText="$t('pools.pool.paymentInfo.buttons.goBack')"/>
 
   </div>
 </template>
@@ -63,7 +68,7 @@
 import ConfirmContributionDialog from '@/components/pools/ConfirmContributionDialog'
 import VueMarkdown from 'vue-markdown'
 import PoolProductHeader from './PoolProductHeader'
-import PaymentConfirmationDialog from '@/components/pools/PaymentConfirmationDialog'
+import PaymentConfirmationDialog from '@/components/common/PaymentConfirmationDialog'
 
 import { createNamespacedHelpers } from 'vuex'
 const { mapGetters } = createNamespacedHelpers('pools')
@@ -79,13 +84,15 @@ export default {
     return {
       isDataLoaded: false,
       headerInfo: {},
-      isPaymentDialogVisible: false
+      isPaymentDialogVisible: false,
+      portfolioRoute: '/pools/portfolio'
     }
   },
   computed: {
     ...mapGetters([
       'currentContribution',
-      'transactionError'
+      'transactionError',
+      'transactionHash'
     ]),
     contractLink () {
       return process.env.ETHERSCAN_ADDRESS + process.env.ADDRESS_PATX + this.currentContribution.poolContractAddress

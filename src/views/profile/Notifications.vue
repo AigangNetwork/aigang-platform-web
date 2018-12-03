@@ -50,6 +50,14 @@ export default {
             description: this.$t('profile.notifications.permissions.general.items.failedTransactions.description')
           }]
         }, {
+          title: this.$t('profile.notifications.permissions.pools.title'),
+          items: [{
+            title: this.$t('profile.notifications.permissions.pools.items.contributionReceived.title'),
+            id: 5,
+            value: true,
+            description: this.$t('profile.notifications.permissions.pools.items.contributionReceived.description')
+          }]
+        }, {
           title: this.$t('profile.notifications.permissions.predictions.title'),
           items: [{
             title: this.$t('profile.notifications.permissions.predictions.items.forecastPaymentReceived.title'),
