@@ -26,6 +26,7 @@ module.exports = merge(prodEnv, {
     DATA: true,
     PREDICTIONS: true,
     POOLS: true,
-    INSURANCE: true
+    INSURANCE: true,
+    DISCUSSIONS: true
   }
 })

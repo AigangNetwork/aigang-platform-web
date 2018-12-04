@@ -75,7 +75,7 @@ export default {
       },
       {
         name: this.$t('navigation.predictions'),
-        routeLink: '/predictions/',
+        routeLink: '/predictions',
         type: 'internal',
         disabled: !process.env.FEATURE_TOGGLE.PREDICTIONS
       },
@@ -87,7 +87,7 @@ export default {
       },
       {
         name: this.$t('navigation.insurance'),
-        routeLink: '/insurance/',
+        routeLink: '/insurance',
         type: 'internal',
         disabled: !process.env.FEATURE_TOGGLE.INSURANCE
       },
@@ -95,6 +95,11 @@ export default {
         name: this.$t('navigation.wiki'),
         type: 'external',
         link: 'https://aigangnetwork.github.io/'
+      },
+      {
+        name: this.$t('navigation.discussions'),
+        type: 'internal',
+        routeLink: '/discussions'
       }
       ],
       dropDownMenuActive: false
@@ -144,7 +149,7 @@ export default {
       }
     }
 
-    @include breakpoint(min-width 780px) {
+    @include breakpoint(min-width 1000px) {
       display: none;
     }
   }
@@ -206,7 +211,7 @@ export default {
         margin-right: 15px;
       }
 
-      @include breakpoint(max-width 780px) {
+      @include breakpoint(max-width 1000px) {
         .aig-hamburger-wrapper {
           display: block;
           cursor: pointer;
@@ -276,7 +281,7 @@ export default {
       }
     }
 
-    @include breakpoint(max-width 780px) {
+    @include breakpoint(max-width 1000px) {
       ul {
         background: white;
       }
