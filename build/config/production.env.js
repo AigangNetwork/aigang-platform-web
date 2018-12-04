@@ -23,6 +23,7 @@ module.exports = {
     DATA: true,
     PREDICTIONS: false,
     POOLS: false,
-    INSURANCE: false
+    INSURANCE: false,
+    DISCUSSIONS: false
   }
 }
