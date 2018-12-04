@@ -19,7 +19,6 @@ export default new Vuex.Store({
   state: {
     loading: false,
     insufficientBalanceDialogVisible: false,
-    bugBountyDialogVisible: true,
     isCookiesEnabled: null,
     showMetamaskNetworkError: true
   },

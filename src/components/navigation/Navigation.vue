@@ -12,10 +12,10 @@
           <nav class="aig-navigation-menu">
             <ul>
               <li v-for="(bar, index) in navigationBars" :key="index">
-                <router-link v-if="bar.type === 'link'" active-class="aig-bar-active" :class="{'disabled': bar.disabled}" :to="bar.routeLink">
+                <router-link v-if="bar.type === 'internal'" active-class="aig-bar-active" :class="{'disabled': bar.disabled}" :to="bar.routeLink">
                   {{ bar.name }}
                 </router-link>
-                <a href="#" v-if="bar.type === 'action'" active-class="aig-bar-active" @click="bar.action" :class="{'disabled': bar.disabled}">
+                <a v-if="bar.type === 'external'" active-class="aig-bar-active" target="_blank" :href="bar.link" :class="{'disabled': bar.disabled}">
                   {{ bar.name }}
                 </a>
               </li>
@@ -34,11 +34,11 @@
     <div class="aig-dropdown" v-if="dropDownMenuActive">
       <ul>
         <li v-for="bar in navigationBars" :key="bar.name">
-          <router-link v-if="bar.type === 'link'" :class="{'disabled': bar.disabled}" active-class="aig-bar-active" :to="bar.routeLink"
+          <router-link v-if="bar.type === 'internal'" :class="{'disabled': bar.disabled}" active-class="aig-bar-active" :to="bar.routeLink"
             @click.native="dropDownMenuActive = false">
             {{ bar.name }}
           </router-link>
-          <a href="#" v-if="bar.type === 'action'" active-class="aig-bar-active" @click="bar.action" :class="{'disabled': bar.disabled}">
+          <a v-if="bar.type === 'external'" active-class="aig-bar-active" target="_blank" :href="bar.link" :class="{'disabled': bar.disabled}">
             {{ bar.name }}
           </a>
         </li>
@@ -70,34 +70,32 @@ export default {
       navigationBars: [{
         name: this.$t('navigation.data'),
         routeLink: '/data',
-        type: 'link',
+        type: 'internal',
         disabled: !process.env.FEATURE_TOGGLE.DATA
       },
       {
         name: this.$t('navigation.predictions'),
         routeLink: '/predictions/',
-        type: 'link',
+        type: 'internal',
         disabled: !process.env.FEATURE_TOGGLE.PREDICTIONS
       },
       {
         name: this.$t('navigation.pools'),
         routeLink: '/pools',
-        type: 'link',
+        type: 'internal',
         disabled: !process.env.FEATURE_TOGGLE.POOLS
       },
       {
 
         name: this.$t('navigation.insurance'),
         routeLink: '/insurance/',
-        type: 'link',
+        type: 'internal',
         disabled: !process.env.FEATURE_TOGGLE.INSURANCE
       },
       {
-        name: this.$t('navigation.bugbounty'),
-        type: 'action',
-        action: () => {
-          this.$store.dispatch('showBugBountyDialog', true)
-        }
+        name: this.$t('navigation.wiki'),
+        type: 'external',
+        link: 'https://aigangnetwork.github.io/'
       }
       ],
       dropDownMenuActive: false
