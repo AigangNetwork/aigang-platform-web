@@ -3,10 +3,6 @@ export default {
     commit('showInsufficientBalanceDialog', show)
   },
 
-  showBugBountyDialog ({ commit }, show) {
-    commit('showBugBountyDialog', show)
-  },
-
   resetRootState ({ dispatch }) {
     dispatch('user/resetState')
     dispatch('insurance/resetState')

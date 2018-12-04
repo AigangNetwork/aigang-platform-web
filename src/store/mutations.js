@@ -7,10 +7,6 @@ export default {
     state.insufficientBalanceDialogVisible = visible
   },
 
-  showBugBountyDialog (state, visible) {
-    state.bugBountyDialogVisible = visible
-  },
-
   resetRootState (state, rootState) {
     state = rootState
     state.loading = false
