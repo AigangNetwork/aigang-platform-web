@@ -1,6 +1,12 @@
 <template>
   <div class="aig-container">
-    <div id="reddit-widget"></div>
+    <div>
+      <div class="buttons">
+        <a href="https://www.reddit.com/r/AigangNetwork/submit" target="_blank" class="el-button button el-button--primary">{{ $t('discussions.buttons.create') }}</a>
+        <a href="https://www.reddit.com/r/AigangNetwork" target="_blank" class="el-button button el-button--primary">{{ $t('discussions.buttons.all') }}</a>
+      </div>
+      <div id="reddit-widget"></div>
+    </div>
   </div>
 </template>
 
@@ -25,8 +31,18 @@ export default {
 <style lang="scss" scoped>
   @import '~helpers/variables';
 
+  .buttons {
+    margin-top: 25px;
+    display: flex;
+
+    .button {
+      height: 40px;
+    }
+  }
+
   #reddit-widget{
-    margin: 40px 0;
+    clear: both;
+    margin: 25px 0px 40px 0px;
   }
 
 </style>
