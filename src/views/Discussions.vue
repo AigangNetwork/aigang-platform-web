@@ -3,7 +3,7 @@
     <div>
       <div class="buttons" v-if="isDataLoaded">
         <a href="https://www.reddit.com/r/AigangNetwork/submit" target="_blank" class="el-button button el-button--primary">{{ $t('discussions.buttons.create') }}</a>
-        <a href="https://www.reddit.com/r/AigangNetwork" target="_blank" class="el-button button el-button--primary">{{ $t('discussions.buttons.all') }}</a>
+        <a href="https://www.reddit.com/r/AigangNetwork" target="_blank" class="el-button button">{{ $t('discussions.buttons.all') }}</a>
       </div>
       <div id="reddit-widget"></div>
     </div>
