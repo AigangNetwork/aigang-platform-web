@@ -45,9 +45,6 @@ export default {
         name: this.$t('predictions.forecast.statuses.all'),
         value: ''
       }, {
-        name: this.$t('predictions.forecast.statuses.draft'),
-        value: '1'
-      }, {
         name: this.$t('predictions.forecast.statuses.pendingPayment'),
         value: '2'
       }, {

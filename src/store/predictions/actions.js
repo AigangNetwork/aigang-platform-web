@@ -208,52 +208,6 @@ export default {
     } catch (ex) {}
   },
 
-  async payForecast ({ commit, dispatch, rootState, state }, payload) {
-    commit('setTransactionHash', '')
-    commit('setTransactionError', false)
-
-    commit('setLoading', true, {
-      root: true
-    })
-
-    try {
-      const web3 = window.web3
-      const TokenInstance = new web3.eth.Contract(process.env.CONTRACT_INFO.ABI, process.env.CONTRACT_INFO.ADDRESS)
-      const paymentValue = web3.utils.toWei(payload.amount.toString())
-      const predictionIdHex = web3.utils.fromAscii(payload.predictionId)
-
-      let outcomeHex = Number(payload.outcome).toString(16)
-      if (outcomeHex.length === 1) {
-        outcomeHex = '0' + outcomeHex
-      }
-
-      const forecastIdHex = web3.utils.fromAscii(payload.forecastId)
-
-      commit('setLoading', false, {
-        root: true
-      })
-
-      const bytes = (predictionIdHex + forecastIdHex + outcomeHex).replace(/0x/g, '')
-
-      TokenInstance.methods
-        .approveAndCall(state.prediction.marketAddress, paymentValue, '0x' + bytes)
-        .send({
-          gas: process.env.GAS.ADD_FORECAST,
-          from: rootState.user.userWeb3.coinbase
-        })
-        .on('error', () => {
-          commit('setTransactionError', true)
-        })
-        .once('transactionHash', async txId => {
-          try {
-            await axios.post('/predictions/transaction/addForecast', { forecastId: payload.forecastId, txId })
-            commit('setTransactionHash', txId)
-            dispatch('getUserForecast', payload.forecastId)
-          } catch (ex) {}
-        })
-    } catch (ex) {}
-  },
-
   async getUserForecast ({ commit, dispatch }, forecastId) {
     commit('setLoading', true, { root: true })
 
@@ -363,15 +317,5 @@ export default {
           } catch (ex) {}
         })
     }
-  },
-
-  async deleteForecast ({ commit }, id) {
-    commit('setLoading', true, { root: true })
-
-    try {
-      await axios.delete(`/predictions/forecast/${id}`)
-    } catch (err) {}
-
-    commit('setLoading', false, { root: true })
   }
 }

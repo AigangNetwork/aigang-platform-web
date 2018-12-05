@@ -18,14 +18,12 @@
             :rules="formRules"
             :model="createForecastForm"
             class="create-forecast-form"
-            ref="createForecastForm"
-          >
+            ref="createForecastForm">
             <el-form-item prop="amount">
               <el-input
                 v-model.number="createForecastForm.amount"
                 v-on:keyup.enter="submitForm('createForecastForm', createForecast)"
-                class="amount-input"
-              >
+                class="amount-input">
                 <template slot="append">{{ $t('general.aix') }}</template>
               </el-input>
             </el-form-item>
@@ -38,15 +36,13 @@
             :disabled="forecastButtonEnabled"
             effect="dark"
             :content="$t('general.userNotLoggedIn')"
-            placement="top"
-          >
+            placement="top">
             <span class="wrapper el-button">
               <el-button
                 class="button"
                 :disabled="!forecastButtonEnabled"
                 type="primary"
-                @click.prevent.native="submitForm('createForecastForm', createForecast)"
-              >
+                @click.prevent.native="submitForm('createForecastForm', createForecast)">
                 {{ $t('predictions.prediction.confirmationDialog.buttons.forecast') }}
               </el-button>
             </span>

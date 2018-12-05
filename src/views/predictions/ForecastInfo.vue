@@ -38,14 +38,6 @@
           </span>
         </el-tooltip>
 
-        <el-tooltip v-if="payButtonVisible" :disabled="$store.getters['user/isWeb3Enabled']" :content="$t('predictions.forecast.logInToWeb3')">
-          <span class="wrapper el-button">
-            <el-button :disabled="!$store.getters['user/isWeb3Enabled']" class="aig-button" type="primary" @click="payDraft">
-              {{ $t('predictions.forecast.payForecast') }}
-            </el-button>
-          </span>
-        </el-tooltip>
-
         <el-tooltip v-if="isAvailableRefund" :disabled="$store.getters['user/isWeb3Enabled']" :content="$t('predictions.forecast.logInToWeb3')">
           <span class="wrapper el-button">
             <el-button :disabled="!$store.getters['user/isWeb3Enabled']" class="aig-button" type="primary" @click="payoutRefund">
@@ -53,8 +45,6 @@
             </el-button>
           </span>
         </el-tooltip>
-
-        <ForecastDeleteSection v-if="isForecastDraft" />
 
         <PaymentConfirmationDialog
           :isVisible="isPaymentDialogVisible && !transactionError"
@@ -65,7 +55,6 @@
           :bodyText="$t('predictions.prediction.paymentInfo.body')"
           :route="userForecastListRoute"
           :btnText="$t('predictions.prediction.paymentInfo.buttons.goBack')"/>
-
       </div>
     </div>
   </div>
@@ -76,7 +65,6 @@ import PredictionInfoHeader from './PredictionInfoHeader'
 import ForecastStatus from '@/components/predictions/ForecastStatus'
 import CountPerOutcome from '@/components/predictions/CountPerOutcome'
 import AmountPerOutcome from '@/components/predictions/AmountPerOutcome'
-import ForecastDeleteSection from '@/components/predictions/ForecastDeleteSection'
 import Card from '@/components/Card'
 import VueMarkdown from 'vue-markdown'
 import PaymentConfirmationDialog from '@/components/common/PaymentConfirmationDialog'
@@ -91,7 +79,6 @@ export default {
     ForecastStatus,
     Card,
     PaymentConfirmationDialog,
-    ForecastDeleteSection,
     VueMarkdown
   },
   data () {
@@ -103,19 +90,6 @@ export default {
     }
   },
   methods: {
-    async payDraft () {
-      const payload = {
-        forecastId: this.userForecast.id,
-        predictionId: this.userForecast.predictionId,
-        outcomeId: this.userForecast.outcomeId,
-        outcome: this.userForecast.outcomeIndex,
-        amount: this.userForecast.amount
-      }
-
-      await this.$store.dispatch('predictions/payForecast', payload)
-
-      this.displayPaymentDialog(true)
-    },
     async payoutWon () {
       const payload = {
         id: this.userForecast.id,
@@ -157,7 +131,7 @@ export default {
       const predictionStatus = this.userForecast.predictionStatus.toUpperCase()
 
       return (
-        (status !== 'DRAFT' && status !== 'NOTSET' && status !== 'PENDINGPAYMENT' && status !== 'AVAILABLEREFUND' && predictionStatus !== 'CANCELED') ||
+        (status !== 'NOTSET' && status !== 'PENDINGPAYMENT' && status !== 'AVAILABLEREFUND' && predictionStatus !== 'CANCELED') ||
         predictionStatus === 'RESOLVED'
       )
     },
@@ -166,9 +140,6 @@ export default {
     },
     isPredictionResolved () {
       return this.userForecast.predictionStatus.toUpperCase() === 'RESOLVED'
-    },
-    isForecastDraft () {
-      return this.userForecast.status.toUpperCase() === 'DRAFT'
     },
     isForecastsWon () {
       return this.userForecast.status.toUpperCase() === 'WON'
@@ -181,7 +152,7 @@ export default {
       return Math.round((this.userForecast.amount - this.userForecast.fee) * Math.pow(10, numbersAfterPointer)) / Math.pow(10, numbersAfterPointer)
     },
     payButtonVisible () {
-      return this.isForecastDraft && this.userForecast.predictionStatus === 'published'
+      return this.userForecast.predictionStatus === 'published'
     }
   },
   async mounted () {
