@@ -850,5 +850,11 @@
         "shouldBeLowerOrEqualMaxAllowedAmount": "Exceeds pool amount goal"
       }
     }
+  },
+  "discussions": {
+    "buttons": {
+      "create": "Create post",
+      "all": "All posts"
+    }
   }
 }
