@@ -32,7 +32,7 @@ export default {
     }
 
     oScript.src = 'https://www.reddit.com/r/AigangNetwork.embed?limit=20'
-    
+
     document.body.appendChild(oScript)
   }
 }
