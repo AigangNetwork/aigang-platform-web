@@ -1,7 +1,7 @@
 <template>
-  <div class="aig-container">
+  <div class="aig-container" v-loading="loading">
     <div>
-      <div class="buttons">
+      <div class="buttons" v-if="isDataLoaded">
         <a href="https://www.reddit.com/r/AigangNetwork/submit" target="_blank" class="el-button button el-button--primary">{{ $t('discussions.buttons.create') }}</a>
         <a href="https://www.reddit.com/r/AigangNetwork" target="_blank" class="el-button button el-button--primary">{{ $t('discussions.buttons.all') }}</a>
       </div>
@@ -12,6 +12,13 @@
 
 <script>
 export default {
+  data () {
+    return {
+      loading: true,
+      isDataLoaded: false
+    }
+  },
+
   beforeMount () {
     // Reddit lazy load hack
     let oScript = document.createElement('script')
@@ -20,9 +27,12 @@ export default {
       const updatedLinks = text.replace(/href=/g, 'target="_blank" href=')
 
       document.getElementById('reddit-widget').innerHTML += updatedLinks
+      this.loading = false
+      this.isDataLoaded = true
     }
 
     oScript.src = 'https://www.reddit.com/r/AigangNetwork.embed?limit=20'
+    
     document.body.appendChild(oScript)
   }
 }
