@@ -3,7 +3,7 @@
     <router-link :to="{ name: 'Product', params: { id: product.id}}">
       <div class="aig-product-data-body-container">
         <div class="aig-product-data-head" v-if="isCampaignRunning && product.state == 'active'">
-          <div class="desc">{{ $t('insurance.product.productEnds') }}
+          <div class="desc date">{{ $t('insurance.product.productEnds') }}
             <Date :dateUtc="product.endDateUtc" />
           </div>
         </div>
@@ -183,6 +183,10 @@ export default {
       font-size: 36px;
       font-weight: 500;
     }
+  }
+
+  .desc.date {
+    font-family: $font-secondary;
   }
 
   @media screen and (min-width: 680px) and (max-width: 1024px) {

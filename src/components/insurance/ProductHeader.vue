@@ -4,7 +4,7 @@
       <div class="header-left-section">
         <InsuranceProductImage :type="product.productType" />
         <h1>{{ product.title }}</h1>
-        <span v-if="product.endDateUtc">{{ $t('insurance.product.productEnds') }} <Date :dateUtc="product.endDateUtc" /></span>
+        <span class="date" v-if="product.endDateUtc">{{ $t('insurance.product.productEnds') }} <Date :dateUtc="product.endDateUtc" /></span>
       </div>
       <div class="header-right-section">
         <span class="text-small">{{ $t('insurance.product.basePremium') }}</span>
@@ -50,5 +50,9 @@ export default {
       height: 100px;
       margin: 0 auto;
     }
+  }
+
+  .date {
+    font-family: $font-secondary;
   }
 </style>
