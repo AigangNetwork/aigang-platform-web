@@ -1,8 +1,8 @@
-import Predictions from '@/views/Predictions'
-import PredictionsList from '@/views/predictions/PredictionsList'
-import MyForecastsList from '@/views/predictions/MyForecastsList'
-import PredictionInfo from '@/views/predictions/PredictionInfo'
-import ForecastInfo from '@/views/predictions/ForecastInfo'
+import Predictions from '@/components/predictions/Predictions'
+import PredictionsList from '@/components/predictions/PredictionsList'
+import MyForecastsList from '@/components/predictions/MyForecastsList'
+import PredictionInfo from '@/components/predictions/PredictionInfo'
+import ForecastInfo from '@/components/predictions/ForecastInfo'
 
 const routes = [
   {

@@ -15,7 +15,7 @@
           :percentage="row[3] | round" />
       </div>
       <div class="outcomes-percentage-values">
-        <p class="outcomes-percentage-value" v-for="(row, index) in statistics.rows" :key="index">{{ row[2] | round }} {{ $t('general.aix') }}</p>
+        <p class="outcomes-percentage-value" v-for="(row, index) in statistics.rows" :key="index">{{ row[2] | floor }} {{ $t('general.aix') }}</p>
       </div>
     </div>
     <div class="outcomes-percentage-legend-container" v-if="statistics.rows && resultOutcomeId">
@@ -36,6 +36,9 @@ export default {
   filters: {
     round (value) {
       return Math.round(value)
+    },
+    floor (value) {
+      return parseFloat(value).toFixed(2)
     }
   }
 }

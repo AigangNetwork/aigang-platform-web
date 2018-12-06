@@ -1,4 +1,5 @@
 'use strict'
+
 const path = require('path')
 const utils = require('./utils')
 const webpack = require('webpack')
@@ -9,6 +10,8 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+
 
 var env = require('./config/production.env.js')
 
@@ -51,7 +54,16 @@ const webpackConfig = merge(baseWebpackConfig, {
           chunks: "initial"
         }
       }
-    }
+    },
+    minimizer: [
+      new UglifyJsPlugin({
+        uglifyOptions: {
+          output: {
+            comments: false
+          }
+        }
+      })
+    ]
   },
   plugins: [
     // http://vuejs.github.io/vue-loader/en/workflow/production.html

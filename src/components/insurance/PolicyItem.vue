@@ -1,7 +1,7 @@
 <template>
   <div class="aig-policy-item">
     <div class="policy-list-item-img-container">
-      <img class="product-img" :src="policy.productImg">
+      <InsuranceProductImage :type="policy.productType" />
     </div>
     <div class="policy-list-item-content">
       <div class="policy-item-header">
@@ -45,11 +45,10 @@
 <script>
 import Date from '@/components/Date'
 import PolicyStatus from '@/components/mixins/PolicyStatus'
+import InsuranceProductImage from '@/components/insurance/InsuranceProductImage'
 
 export default {
-  components: {
-    Date
-  },
+  components: { Date, InsuranceProductImage },
   mixins: [PolicyStatus],
   props: ['policy']
 }

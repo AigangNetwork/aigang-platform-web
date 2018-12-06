@@ -600,6 +600,7 @@
       "downloadApp": "Download Aigang App",
       "instructionsIntro": "In order to calculate your insurance price you have to:",
       "instructionsDownloadApp": "Download Aigang app on your android device",
+      "instructionsDownloadAppLinkText": "download",
       "instructionsIMEI": "Enter your device ID below (you will see it in the app)",
       "instructionsConditions": "Your device's data will be read, press continue if you agree",
       "deviceIdPlaceholder": "ASVSF21D",

@@ -6,19 +6,19 @@
           <div class="details">
             <div class="details-item">
               <div class="title">{{ $t('pools.contributions.summary.contributions') }}</div>
-              <span class="value">{{ portfolioSummary.contributions}}</span>
+              <span class="value">{{ portfolioSummary.contributions }}</span>
             </div>
             <div class="details-item">
               <div class="title">{{ $t('pools.contributions.summary.contributionsAmount') }}</div>
-              <span class="value">{{ portfolioSummary.contributionsAmount}} {{ $t('general.aix') }}</span>
+              <span class="value">{{ portfolioSummary.contributionsAmount }} {{ $t('general.aix') }}</span>
             </div>
             <div class="details-item">
               <div class="title">{{ $t('pools.contributions.summary.availableReward') }}</div>
-              <span class="value">{{ portfolioSummary.availableRefund}} {{ $t('general.aix') }}</span>
-              </div>
+              <span class="value">{{ portfolioSummary.availableRefund }} {{ $t('general.aix') }}</span>
+            </div>
             <div class="details-item">
               <div class="title">{{ $t('pools.contributions.summary.rewardPaidOut') }}</div>
-              <span class="value">{{ portfolioSummary.rewardPaidOut}} {{ $t('general.aix') }}</span>
+              <span class="value">{{ portfolioSummary.rewardPaidOut }} {{ $t('general.aix') }}</span>
             </div>
           </div>
         </div>
@@ -53,8 +53,12 @@ export default {
 <style lang="scss">
   @import '~helpers/variables';
 
-  .aig-card {
+  .summary-container .aig-card {
     width: 100%;
+
+    .aig-card-body {
+      margin: 0 auto;
+    }
 
     .details {
       display: flex;
@@ -78,5 +82,4 @@ export default {
       }
     }
   }
-
 </style>

@@ -5,6 +5,7 @@ module.exports = {
   ETHERSCAN_ADDRESS: '"https://etherscan.io/"',
   TX_PATH: '"tx/"',
   ADDRESS_PATX: '"address/"',
+  ANDROID_APP_LOCATION: '"https://play.google.com/store/apps/details?id=com.aigang.aigangapp"',
   RETRY_COUNT: 10,
   GAS: {
     ADD_FORECAST: 400000,

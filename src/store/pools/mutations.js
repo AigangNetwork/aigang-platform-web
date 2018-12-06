@@ -1,14 +1,18 @@
 const mutations = {
+  resetState (state, newState) {
+    Object.assign(state, newState)
+  },
+
   setPools (state, payload) {
     state.pools = payload
   },
 
   setPool (state, payload) {
-    state.currentPool = payload
+    state.pool = payload
   },
 
   setContribution (state, payload) {
-    state.currentContribution = payload
+    state.contribution = payload
   },
 
   setUserContributions (state, payload) {

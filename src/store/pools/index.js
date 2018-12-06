@@ -2,19 +2,23 @@ import actions from './actions'
 import getters from './getters'
 import mutations from './mutations'
 
-export default {
-  namespaced: true,
-  state: {
+export const initialPoolState = () => {
+  return {
     pools: [],
-    currentPool: {},
+    pool: {},
     portfolioSummary: {},
     portfolioSummaryLoading: false,
     contributionsListLoading: false,
-    currentContribution: {},
+    contribution: {},
     userContributions: [],
     transactionHash: '',
     transactionError: false
-  },
+  }
+}
+
+export default {
+  namespaced: true,
+  state: initialPoolState(),
   mutations,
   actions,
   getters

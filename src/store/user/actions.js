@@ -101,7 +101,6 @@ export default {
 
     if (requiredNetwork.networkId !== networkId) {
       if (rootState.showMetamaskNetworkError) {
-        console.log('hello')
         eventHub.$emit(eventHub.eventMetamaskNetworkError, requiredNetwork.networkName)
         commit('setShowMetamaskNetworkError', false, { root: true })
       }
