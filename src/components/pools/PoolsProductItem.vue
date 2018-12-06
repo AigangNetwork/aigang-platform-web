@@ -70,6 +70,14 @@ export default {
     }
   }
 
+  .aig-footer-container, .aig-footer-container-right {
+    align-items: center;
+  }
+
+  .status {
+    font-family: $font-secondary;
+  }
+
   @media screen and (min-width: 100px) and (max-width: 680px) {
     .pools-product-item .item-icon {
       height: 90px;
