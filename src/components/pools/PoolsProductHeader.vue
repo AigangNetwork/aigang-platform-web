@@ -3,8 +3,8 @@
     <div class="header-title-container">
       <div class="header-left-section">
         <div class="back-button-container">
-            <router-link :to="{ name: backRouteName }" class="back-button"><i class="back-icon el-icon-arrow-left"></i>{{ $t('general.backToList')}}</router-link>
-         </div>
+          <router-link :to="{ name: backRouteName }" class="back-button"><i class="back-icon el-icon-arrow-left"></i>{{ $t('general.backToList')}}</router-link>
+        </div>
         <h1>{{ info.title | truncate(128) }}</h1>
         <div class="info">
 
