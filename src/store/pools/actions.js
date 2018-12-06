@@ -21,7 +21,8 @@ export default {
     }
   },
 
-  async getPool ({ commit, dispatch }, id) {
+  async getPool ({ commit }, id) {
+    commit('setPool', {})
     commit('setLoading', true, { root: true })
 
     try {
@@ -127,6 +128,7 @@ export default {
   },
 
   async getContribution ({ commit }, id) {
+    commit('setContribution', {})
     commit('setLoading', true, { root: true })
 
     try {

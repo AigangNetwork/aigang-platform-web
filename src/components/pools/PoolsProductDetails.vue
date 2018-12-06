@@ -1,5 +1,5 @@
 <template>
-      <div class="product-details-body" v-if="isDataLoaded">
+      <div class="product-details-body">
         <div class="aig-info-content">
           <h4 class="info-title">{{ $t('pools.pool.description') }}</h4>
           <vue-markdown class="markup-content" :html="false" :source="pool.description || $t('pools.pool.noDescription')"></vue-markdown>
@@ -47,7 +47,7 @@ export default {
     ScrollableMarkupText,
     PaymentConfirmationDialog
   },
-  props: ['pool', 'isDataLoaded'],
+  props: ['pool'],
   data () {
     return {
       isConfirmContributionDialogVisible: false,

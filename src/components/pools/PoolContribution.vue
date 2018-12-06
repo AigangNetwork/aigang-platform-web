@@ -1,10 +1,10 @@
 <template>
-  <div class="aig-container aig-view" v-loading="$store.getters.loading">
-    <Card class="pool-card product-card" v-if="!$store.getters.loading">
-      <div slot="body" >
+  <div class="aig-container aig-view" >
+    <Card class="pool-card product-card">
+      <div slot="body" v-loading="$store.getters.loading">
 
         <PoolsProductHeader :info="headerInfo" :backRouteName="backRouteName" />
-        <PoolsContributionDetails :contribution="contribution" :isDataLoaded="isDataLoaded" />
+        <PoolsContributionDetails :contribution="contribution" />
 
       </div>
     </Card>

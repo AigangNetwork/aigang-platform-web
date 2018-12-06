@@ -1,7 +1,7 @@
 <template>
   <div class="aig-container aig-view" v-loading="$store.getters.loading">
-    <Card class="product-card" v-if="!$store.getters.loading">
-      <div slot="body" >
+    <Card class="product-card">
+      <div slot="body" v-loading="$store.getters.loading">
         <transition-group name="slideUp" mode="out-in">
 
           <ProductHeader key="1" :product="product" v-if="!isPolicyLoadingVisible" />

@@ -1,6 +1,6 @@
 <template>
 
-  <div class="product-details-body" v-if="isDataLoaded">
+  <div class="product-details-body" >
     <div class="aig-info-content">
       <h4 class="info-title">{{ $t('pools.contribution.description') }}</h4>
       <vue-markdown class="markup-content" :html="false" :source="contribution.poolDescription || $t('pools.contribution.noDescription')"></vue-markdown>
@@ -66,7 +66,7 @@ export default {
     ScrollableMarkupText,
     PaymentConfirmationDialog
   },
-  props: ['contribution', 'isDataLoaded'],
+  props: ['contribution'],
   data () {
     return {
       isConfirmContributionDialogVisible: false,
@@ -81,10 +81,16 @@ export default {
       return process.env.ETHERSCAN_ADDRESS + process.env.ADDRESS_PATX + this.contribution.poolContractAddress
     },
     isContributionAvailablePayout () {
-      return this.contribution.status.toUpperCase() === 'AVAILABLEPAYOUT'
+      if (this.contribution.status) {
+        return this.contribution.status.toUpperCase() === 'AVAILABLEPAYOUT'
+      }
+      return ''
     },
     isContributionAvailableRefund () {
-      return this.contribution.status.toUpperCase() === 'AVAILABLEREFUND'
+      if (this.contribution.status) {
+        return this.contribution.status.toUpperCase() === 'AVAILABLEREFUND'
+      }
+      return ''
     },
     investButtonEnabled () {
       return !!((this.$store.getters['user/isAuthenticated'] && this.$store.getters['user/isWeb3Enabled']))
