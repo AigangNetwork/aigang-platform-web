@@ -1,9 +1,11 @@
 <template>
-  <div class="aig-container aig-view">
-    <Card class="pool-card product-card" >
-      <div slot="body" v-if="!$store.getters.loading">
+  <div class="aig-container aig-view" v-loading="$store.getters.loading">
+    <Card class="pool-card product-card" v-if="!$store.getters.loading">
+      <div slot="body" >
+
         <PoolsProductHeader :info="headerInfo" :backRouteName="backRouteName" />
         <PoolsContributionDetails :contribution="contribution" :isDataLoaded="isDataLoaded" />
+
       </div>
     </Card>
   </div>

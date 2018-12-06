@@ -1,7 +1,7 @@
 <template>
-  <div class="aig-container aig-view">
-    <Card class="product-card">
-      <div slot="body" v-loading="$store.getters.loading">
+  <div class="aig-container aig-view" v-loading="$store.getters.loading">
+    <Card class="product-card" v-if="!$store.getters.loading">
+      <div slot="body">
           <PoolsProductHeader :info="headerInfo" :backRouteName="backRouteName" />
           <PoolsProductDetails :pool="pool" :isDataLoaded="isDataLoaded" />
       </div>
