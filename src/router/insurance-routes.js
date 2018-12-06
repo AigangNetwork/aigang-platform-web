@@ -1,8 +1,8 @@
-import Insurance from '@/views/Insurance'
-import ProductItemsList from '@/views/insurance/ProductItemsList'
-import Policy from '@/views/insurance/policy/Policy'
-import Product from '@/views/insurance/Product'
-import MyPolicyList from '@/views/insurance/MyPolicyList'
+import Insurance from '@/components//insurance/Insurance'
+import ProductItemsList from '@/components/insurance/ProductItemsList'
+import Policy from '@/components/insurance/policy/Policy'
+import Product from '@/components/insurance/Product'
+import MyPolicyList from '@/components/insurance/MyPolicyList'
 
 export default [
   {

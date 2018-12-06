@@ -17,10 +17,7 @@
           <div class="title">{{ product.title | truncate(50) }}</div>
         </div>
         <div class="aig-product-data-body">
-          <div class="desc">
-            <p>{{ product.description | truncate(80) }}</p>
-          </div>
-          <img class="product-img" :src="product.imageUrl">
+          <InsuranceProductImage :type="product.productType" />
           <div class="premium-container">
             <p>{{ $t('insurance.product.basePremium') }}:</p>
             <p class="premium-amount">{{ product.basePremium }}</p>
@@ -36,11 +33,10 @@
 <script>
 import moment from 'moment'
 import Date from '@/components/Date'
+import InsuranceProductImage from '@/components/insurance/InsuranceProductImage'
 
 export default {
-  components: {
-    Date
-  },
+  components: { Date, InsuranceProductImage },
   props: ['product'],
   computed: {
     isCampaignRunning () {
@@ -63,7 +59,7 @@ export default {
     background: white;
     box-shadow: 0 0 30px 0 #e9f0f6;
     border: 1px solid $light-border-blue;
-    height: 500px;
+    height: 440px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;

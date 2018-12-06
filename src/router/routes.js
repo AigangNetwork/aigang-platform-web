@@ -1,7 +1,7 @@
-import NotFound from '@/views/general/NotFound'
-import AccessDenied from '@/views/general/AccessDenied'
-import ServiceUnavailable from '@/views/general/ServiceUnavailable'
-import CookiesPolicy from '@/views/general/CookiesPolicy'
+import NotFound from '@/components/general/NotFound'
+import AccessDenied from '@/components/general/AccessDenied'
+import ServiceUnavailable from '@/components/general/ServiceUnavailable'
+import CookiesPolicy from '@/components/general/CookiesPolicy'
 
 import DataRoutes from './data-routes'
 import InsuranceRoutes from './insurance-routes'

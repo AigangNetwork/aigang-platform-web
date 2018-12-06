@@ -8,11 +8,20 @@
         </div>
         <div>
           <h4 class="info-title">{{ $t('pools.confirmationDialog.amount') }}:</h4>
-          <el-form @submit.prevent.native="submitForm('addContributionForm', addContribution)" :rules="formRules" :model="addContributionForm"
-            class="add-contribution-form" ref="addContributionForm">
+          <el-form
+            @submit.prevent.native="submitForm('addContributionForm', addContribution)"
+            :rules="formRules"
+            :model="addContributionForm"
+            class="add-contribution-form"
+            ref="addContributionForm"
+          >
             <el-form-item prop="amount">
-              <el-input v-model.number="addContributionForm.amount" v-on:keyup.enter="submitForm('addContributionForm', addContribution)" class="amount-input">
-                <template slot="append">{{ $t('general.aix')}}</template>
+              <el-input
+                v-model.number="addContributionForm.amount"
+                v-on:keyup.enter="submitForm('addContributionForm', addContribution)"
+                class="amount-input"
+              >
+                <template slot="append">{{ $t('general.aix') }}</template>
               </el-input>
             </el-form-item>
           </el-form>
@@ -24,10 +33,16 @@
             :disabled="contributeButtonEnabled"
             effect="dark"
             :content="$t('pools.userNotLoggedIn')"
-            placement="top">
+            placement="top"
+          >
             <span class="wrapper el-button">
-              <el-button class="button" :disabled="!contributeButtonEnabled" type="primary" @click.prevent.native="submitForm('addContributionForm', addContribution)">
-                {{ $t('pools.confirmationDialog.buttons.contribute')}}
+              <el-button
+                class="button"
+                :disabled="!contributeButtonEnabled"
+                type="primary"
+                @click.prevent.native="submitForm('addContributionForm', addContribution)"
+              >
+                {{ $t('pools.confirmationDialog.buttons.contribute') }}
               </el-button>
             </span>
           </el-tooltip>
@@ -49,7 +64,9 @@ export default {
       }
 
       if (value > this.maxAllowedAmount) {
-        return callback(new Error(this.$t('pools.confirmationDialog.validation.shouldBeLowerOrEqualMaxAllowedAmount')))
+        return callback(
+          new Error(this.$t('pools.confirmationDialog.validation.shouldBeLowerOrEqualMaxAllowedAmount'))
+        )
       }
 
       callback()
@@ -60,25 +77,27 @@ export default {
         amount: ''
       },
       formRules: {
-        amount: [{
-          required: true,
-          message: this.$t('pools.confirmationDialog.validation.required'),
-          trigger: 'blur'
-        },
-        {
-          type: 'number',
-          message: this.$t('pools.confirmationDialog.validation.shouldBeNumber'),
-          trigger: 'blur'
-        },
-        {
-          validator: checkAmount,
-          trigger: 'blur'
-        },
-        {
-          pattern: /^(?:\d{1,6}\.\d{1,6}|[0-9]\d{0,5})$/,
-          message: this.$t('pools.confirmationDialog.validation.amountInvalid'),
-          trigger: 'blur'
-        }]
+        amount: [
+          {
+            required: true,
+            message: this.$t('pools.confirmationDialog.validation.required'),
+            trigger: 'blur'
+          },
+          {
+            type: 'number',
+            message: this.$t('pools.confirmationDialog.validation.shouldBeNumber'),
+            trigger: 'blur'
+          },
+          {
+            validator: checkAmount,
+            trigger: 'blur'
+          },
+          {
+            pattern: /^(?:\d{1,6}\.\d{1,6}|[0-9]\d{0,5})$/,
+            message: this.$t('pools.confirmationDialog.validation.amountInvalid'),
+            trigger: 'blur'
+          }
+        ]
       }
     }
   },
@@ -92,7 +111,7 @@ export default {
       }
     },
     contributeButtonEnabled () {
-      return !!((this.$store.getters['user/isAuthenticated'] && this.$store.getters['user/isWeb3Enabled']))
+      return !!(this.$store.getters['user/isAuthenticated'] && this.$store.getters['user/isWeb3Enabled'])
     }
   },
   methods: {
@@ -108,7 +127,6 @@ export default {
     }
   }
 }
-
 </script>
 <style lang="scss" scoped>
   .dialog-body {
@@ -122,6 +140,12 @@ export default {
 
     .dialog-footer {
       text-align: center;
+
+      span {
+        margin: 15px 0;
+        width: 150px;
+        display: inline-block;
+      }
     }
 
     .el-button {

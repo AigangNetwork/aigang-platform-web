@@ -20,7 +20,7 @@
 
 <script>
 import Card from '@/components/Card'
-import ProfileInfo from './profile/ProfileInfo'
+import ProfileInfo from '@/components/profile/ProfileInfo'
 import { createNamespacedHelpers } from 'vuex'
 const { mapActions } = createNamespacedHelpers('user')
 

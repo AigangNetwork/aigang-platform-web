@@ -6,11 +6,11 @@ export default {
   namespaced: true,
   state: {
     pools: [],
-    currentPool: {},
+    pool: {},
     portfolioSummary: {},
     portfolioSummaryLoading: false,
     contributionsListLoading: false,
-    currentContribution: {},
+    contribution: {},
     userContributions: [],
     transactionHash: '',
     transactionError: false

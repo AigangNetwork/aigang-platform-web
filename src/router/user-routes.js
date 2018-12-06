@@ -1,13 +1,13 @@
-import Login from '@/views/guest/Login'
-import Register from '@/views/guest/Register'
-import ForgotPassword from '@/views/guest/ForgotPassword'
-import ActivateEmail from '@/views/guest/ActivateEmail'
-import ResetPassword from '@/views/guest/ResetPassword'
-import Profile from '@/views/Profile'
-import General from '@/views/profile/General'
-import Wallets from '@/views/profile/Wallets'
-import Transactions from '@/views/profile/Transactions'
-import Notifications from '@/views/profile/Notifications'
+import Login from '@/components/guest/Login'
+import Register from '@/components/guest/Register'
+import ForgotPassword from '@/components/guest/ForgotPassword'
+import ActivateEmail from '@/components/guest/ActivateEmail'
+import ResetPassword from '@/components/guest/ResetPassword'
+import Profile from '@/components/profile/Profile'
+import General from '@/components/profile/General'
+import Wallets from '@/components/profile/Wallets'
+import Transactions from '@/components/profile/Transactions'
+import Notifications from '@/components/profile/Notifications'
 
 export default [
   {

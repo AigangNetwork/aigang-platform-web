@@ -1,7 +1,7 @@
 const getters = {
   pools: state => state.pools,
-  currentPool: state => state.currentPool,
-  currentContribution: state => state.currentContribution,
+  pool: state => state.pool,
+  contribution: state => state.contribution,
   userContributions: state => state.userContributions,
   transactionHash: state => state.transactionHash,
   transactionError: state => state.transactionError,

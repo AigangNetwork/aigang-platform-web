@@ -1,8 +1,8 @@
-import Pools from '@/views/Pools'
-import Portfolio from '@/views/pools/Portfolio'
-import PoolsProductsList from '@/views/pools/PoolsProductsList'
-import PoolsProduct from '@/views/pools/PoolsProduct'
-import PoolContribution from '@/views/pools/PoolContribution'
+import Pools from '@/components/pools/Pools'
+import Portfolio from '@/components/pools/Portfolio'
+import PoolsProductsList from '@/components/pools/PoolsProductsList'
+import PoolsProduct from '@/components/pools/PoolsProduct'
+import PoolContribution from '@/components/pools/PoolContribution'
 
 export default [
   {

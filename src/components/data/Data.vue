@@ -1,57 +1,103 @@
 <template>
   <div class="aig-container">
     <el-container class="aig-container">
-      <el-aside v-if="$store.state.user.authenticated" width="20%" class="aig-data-menu" :class="{ 'is-menu-open': isMenuOpen }">
+      <el-aside
+        v-if="$store.getters['user/isAuthenticated']"
+        width="20%"
+        class="aig-data-menu"
+        :class="{ 'is-menu-open': isMenuOpen }"
+      >
         <span>
           <transition name="fade">
             <span class="side-menu-button" v-if="!isMenuOpen" @click="openSideMenu">
-              <img src="../../static/right.svg">
+              <img src="/static/right.svg" />
             </span>
             <span class="side-menu-button" v-if="isMenuOpen" @click="openSideMenu">
-              <img src="../../static/left.svg">
+              <img src="/static/left.svg" />
             </span>
           </transition>
           <ul>
             <li v-for="item in dataMenu" :key="item.name">
-              <router-link :class="{'aig-link-disabled': item.disabled && !$store.state.user.authenticated}" @click.native="collapseSideMenu"
-                active-class="aig-menu-active" :to="item.routeLink">{{ item.name }}</router-link>
+              <router-link
+                :class="{'aig-link-disabled': item.disabled}"
+                @click.native="collapseSideMenu"
+                active-class="aig-menu-active"
+                :to="item.routeLink"
+                >{{ item.name }}</router-link
+              >
             </li>
           </ul>
         </span>
       </el-aside>
-      <el-main class="aig-data-container" :class="{ 'is-authenticated': $store.state.user.authenticated}">
-        <el-row :gutter="20" class="aig-items">
-          <router-view :key="$route.path"></router-view>
+      <el-main class="aig-data-container" :class="{ 'is-authenticated': $store.getters['user/isAuthenticated']}">
+        <el-row :gutter="26">
+          <el-col class="data-search" :span="16">
+            <el-input :disabled="true" placeholder="Search by name or keywords" v-model="searchInput"></el-input>
+          </el-col>
+          <el-col :span="8" class="data-upload-button-container">
+            <el-tooltip
+              :disabled="$store.getters['user/isAuthenticated']"
+              effect="dark"
+              :content="$t('data.toolbar.uploadDisabled')"
+              placement="top"
+            >
+              <span class="wrapper el-button">
+                <el-button
+                  :disabled="!$store.getters['user/isAuthenticated']"
+                  type="primary"
+                  @click="$router.push({ name: 'Upload' })"
+                  class="aig-upload-btn"
+                  >{{ $t('actions.upload_new_data') }}
+                </el-button>
+              </span>
+            </el-tooltip>
+          </el-col>
         </el-row>
+        <el-row :gutter="20" class="aig-items"> <router-view :key="$route.path"></router-view> </el-row>
       </el-main>
     </el-container>
   </div>
 </template>
 
 <script>
-
 export default {
+  name: 'DataView',
   data () {
     return {
-      dataMenu: [{
-        name: this.$t('predictions.menu.predictions'),
-        routeLink: {
-          path: '/predictions/all'
+      dataMenu: [
+        {
+          name: this.$t('data.menu.all'),
+          routeLink: {
+            path: '/data/all'
+          },
+          active: true
         },
-        active: true
-      },
-      {
-        name: this.$t('predictions.menu.myForecasts'),
-        routeLink: {
-          path: '/predictions/myforecasts'
+        {
+          name: this.$t('data.menu.uploaded'),
+          routeLink: {
+            path: '/data/uploaded'
+          },
+          active: false
         },
-        active: false,
-        disabled: true
-      }],
+        {
+          name: this.$t('data.menu.models'),
+          routeLink: '/data/models',
+          active: false
+        }
+      ],
+      searchInput: '',
+      showDialog: false,
+      msg: 'Data view',
       isMenuOpen: false
     }
   },
   methods: {
+    selectMenu (index) {
+      this.dataMenu.forEach(function (val, key) {
+        val.active = false
+      })
+      this.dataMenu[index].active = true
+    },
     openSideMenu () {
       this.isMenuOpen = !this.isMenuOpen
     },
@@ -99,7 +145,6 @@ export default {
     transition: all 200ms;
     &.is-menu-open {
       width: 200px !important;
-
     }
     .side-menu-button {
       display: none;
@@ -114,7 +159,7 @@ export default {
     }
     ul {
       font-size: 18pt;
-      padding: 45px;
+      padding: 45px 0 0 45px;
       list-style-type: none;
       a {
         color: #ccc9d6;
@@ -127,13 +172,13 @@ export default {
         &:before {
           display: inline-block;
           position: relative;
-          content: "";
+          content: '';
           height: 1px;
           width: 47px;
           background: purple;
           margin-bottom: 8px;
           margin-left: -55px;
-          margin-right: 8px
+          margin-right: 8px;
         }
       }
     }
@@ -208,7 +253,6 @@ export default {
 
     .aig-container {
       .aig-data-container {
-
         &.is-authenticated {
           margin-left: 20%;
         }
@@ -216,7 +260,7 @@ export default {
         .data-search {
           width: 100%;
           display: block;
-          margin-bottom: 20px
+          margin-bottom: 20px;
         }
 
         .data-upload-button-container {

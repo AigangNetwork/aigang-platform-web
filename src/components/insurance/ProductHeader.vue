@@ -2,7 +2,7 @@
   <div class="dataset-model-header-container">
     <div class="header-title-container">
       <div class="header-left-section">
-        <img :src="product.imageUrl" />
+        <InsuranceProductImage :type="product.productType" />
         <h1>{{ product.title }}</h1>
         <span v-if="product.endDateUtc">{{ $t('insurance.product.productEnds') }} <Date :dateUtc="product.endDateUtc" /></span>
       </div>
@@ -12,16 +12,14 @@
         <span class="text-medium">{{ $t('general.aix') }} </span>
       </div>
     </div>
-
   </div>
 </template>
 <script>
 import Date from '@/components/Date'
+import InsuranceProductImage from '@/components/insurance/InsuranceProductImage'
 
 export default {
-  components: {
-    Date
-  },
+  components: { Date, InsuranceProductImage },
   props: ['product'],
   computed: {
     isPremiumBig () {
