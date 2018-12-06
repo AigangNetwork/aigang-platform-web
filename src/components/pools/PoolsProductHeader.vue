@@ -103,4 +103,22 @@ export default {
     color: white;
   }
 
+  @media screen and (max-width: 700px) {
+    .back-button-container {
+      text-align: left;
+    }
+
+    .info {
+        margin-left: 0;
+    }
+
+    .header-title-container {
+      text-align: left;
+
+      h1 {
+        text-align: center;
+      }
+    }
+  }
+
 </style>

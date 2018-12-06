@@ -69,4 +69,10 @@ export default {
       margin: 10px auto;
     }
   }
+
+  @media screen and (min-width: 100px) and (max-width: 680px) {
+    .pools-product-item .item-icon {
+      height: 90px;
+    }
+  }
 </style>
