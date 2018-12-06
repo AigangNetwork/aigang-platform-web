@@ -1,9 +1,9 @@
 <template>
-  <div class="aig-container aig-view" v-loading="$store.getters.loading">
-    <Card class="product-card" v-if="!$store.getters.loading">
-      <div slot="body">
+  <div class="aig-container aig-view" >
+    <Card class="product-card">
+      <div slot="body" v-loading="$store.getters.loading">
           <PoolsProductHeader :info="headerInfo" :backRouteName="backRouteName" />
-          <PoolsProductDetails :pool="pool" :isDataLoaded="isDataLoaded" />
+          <PoolsProductDetails :pool="pool" />
       </div>
     </Card>
   </div>
@@ -20,7 +20,6 @@ export default {
   data () {
     return {
       headerInfo: {},
-      isDataLoaded: false,
       backRouteName: 'PoolsProductsList'
     }
   },
@@ -30,7 +29,6 @@ export default {
   },
   async mounted () {
     await this.$store.dispatch('pools/getPool', this.$route.params.id)
-    this.isDataLoaded = true
 
     this.headerInfo = {
       status: this.pool.status,

@@ -21,7 +21,8 @@ export default {
     }
   },
 
-  async getPool ({ commit, dispatch }, id) {
+  async getPool ({ commit }, id) {
+    commit('setPool', {})
     commit('setLoading', true, { root: true })
 
     try {
@@ -112,7 +113,10 @@ export default {
     commit('setContributionsListLoading', true)
 
     try {
-      const response = await axios.get(`/pools/mycontributions?page=${payload.page}&status=${payload.filters.status}`)
+      const page = payload.page ? `?page=${payload.page}` : ''
+      const status = payload.filters && payload.filters.status ? `&status=${payload.filters.status}` : ''
+
+      const response = await axios.get(`/pools/mycontributions${page}${status}`)
       if (response.data) {
         commit('setUserContributions', response.data)
       }
@@ -124,6 +128,7 @@ export default {
   },
 
   async getContribution ({ commit }, id) {
+    commit('setContribution', {})
     commit('setLoading', true, { root: true })
 
     try {
