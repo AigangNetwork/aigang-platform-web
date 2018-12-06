@@ -5,7 +5,7 @@
       <span>
         <p>{{ $t('insurance.product.instructionsIntro') }}</p>
         <ol>
-          <li>{{ $t('insurance.product.instructionsDownloadApp') }}</li>
+          <li>{{ $t('insurance.product.instructionsDownloadApp') }} (<a :href="apkLink" target="_blank">{{ $t('insurance.product.instructionsDownloadAppLinkText')}}</a>)</li>
           <li>{{ $t('insurance.product.instructionsIMEI') }}</li>
         </ol>
 
@@ -23,9 +23,7 @@
 
       <span slot="footer" class="dialog-footer">
         <el-button @click="show=false">{{ $t('general.cancel') }}</el-button>
-        <el-button type="primary" @click.prevent.native="submitForm('deviceIdForm', createPolicy)">{{ $t('general.continue')
-          }}
-        </el-button>
+        <el-button type="primary" @click.prevent.native="submitForm('deviceIdForm', createPolicy)">{{ $t('general.continue') }}</el-button>
       </span>
     </template>
 
@@ -70,6 +68,9 @@ export default {
     },
     title () {
       return this.$t('insurance.product.downloadApp')
+    },
+    apkLink () {
+      return process.env.ANDROID_APP_LOCATION
     }
   },
   methods: {
