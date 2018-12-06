@@ -5,8 +5,7 @@
         v-if="$store.state.user.authenticated"
         width="20%"
         class="aig-data-menu"
-        :class="{ 'is-menu-open': isMenuOpen }"
-      >
+        :class="{ 'is-menu-open': isMenuOpen }">
         <span>
           <transition name="fade">
             <span class="side-menu-button" v-if="!isMenuOpen" @click="openSideMenu">
@@ -22,9 +21,7 @@
                 :class="{'aig-link-disabled': item.disabled && !$store.getters['user/isAuthenticated']}"
                 @click.native="collapseSideMenu"
                 active-class="aig-menu-active"
-                :to="item.routeLink"
-                >{{ item.name }}</router-link
-              >
+                :to="item.routeLink">{{ item.name }}</router-link>
             </li>
           </ul>
         </span>

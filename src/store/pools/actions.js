@@ -1,6 +1,11 @@
 import axios from 'axios'
+import { initialPoolState } from './index'
 
 export default {
+  async resetState ({ commit }) {
+    commit('resetState', initialPoolState())
+  },
+
   async getPoolsList ({ commit }, page) {
     commit('setLoading', true, { root: true })
 

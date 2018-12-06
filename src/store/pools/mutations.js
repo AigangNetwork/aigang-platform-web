@@ -1,4 +1,8 @@
 const mutations = {
+  resetState (state, newState) {
+    Object.assign(state, newState)
+  },
+
   setPools (state, payload) {
     state.pools = payload
   },
