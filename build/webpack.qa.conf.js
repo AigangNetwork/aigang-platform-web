@@ -1,6 +1,6 @@
 'use strict'
 
-const env = require('./config/production.env.js')
+const env = require('./config/qa.env.js')
 
 const path = require('path')
 const utils = require('./utils')
@@ -18,14 +18,14 @@ const webpackConfig = merge(baseWebpackConfig, {
   mode: 'production',
   module: {
     rules: utils.styleLoaders({
-      sourceMap: config.production.productionSourceMap,
+      sourceMap: config.qa.productionSourceMap,
       extract: true,
       usePostCSS: true
     })
   },
-  devtool: config.production.productionSourceMap ? config.production.devtool : false,
+  devtool: config.qa.productionSourceMap ? config.qa.devtool : false,
   output: {
-    path: config.production.assetsRoot,
+    path: config.qa.assetsRoot,
     filename: utils.assetsPath('js/[name].[chunkhash].js'),
     chunkFilename: utils.assetsPath('js/[name].[chunkhash].js')
   },
@@ -73,7 +73,7 @@ const webpackConfig = merge(baseWebpackConfig, {
     // Compress extracted CSS. We are using this plugin so that possible
     // duplicated CSS from different components can be deduped.
     new OptimizeCSSPlugin({
-      cssProcessorOptions: config.production.productionSourceMap ? {
+      cssProcessorOptions: config.qa.productionSourceMap ? {
         safe: true,
         map: {
           inline: false
@@ -86,7 +86,7 @@ const webpackConfig = merge(baseWebpackConfig, {
     // you can customize output by editing /index.html
     // see https://github.com/ampedandwired/html-webpack-plugin
     new HtmlWebpackPlugin({
-      filename: config.production.index,
+      filename: config.qa.index,
       template: 'index.html',
       inject: true,
       minify: {
@@ -104,27 +104,27 @@ const webpackConfig = merge(baseWebpackConfig, {
     // copy custom static assets
     new CopyWebpackPlugin([{
       from: path.resolve(__dirname, '../static'),
-      to: config.production.assetsSubDirectory,
+      to: config.qa.assetsSubDirectory,
       ignore: ['.*']
     }])
   ]
 })
 
-if (config.production.productionGzip) {
+if (config.qa.productionGzip) {
   const CompressionWebpackPlugin = require('compression-webpack-plugin')
 
   webpackConfig.plugins.push(
     new CompressionWebpackPlugin({
       asset: '[path].gz[query]',
       algorithm: 'gzip',
-      test: new RegExp('\\.(' + config.production.productionGzipExtensions.join('|') + ')$'),
+      test: new RegExp('\\.(' + config.qa.productionGzipExtensions.join('|') + ')$'),
       threshold: 10240,
       minRatio: 0.8
     })
   )
 }
 
-if (config.production.bundleAnalyzerReport) {
+if (config.qa.bundleAnalyzerReport) {
   const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
   webpackConfig.plugins.push(new BundleAnalyzerPlugin())
 }

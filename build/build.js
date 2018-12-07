@@ -1,4 +1,5 @@
 'use strict'
+
 require('./check-versions')()
 
 const ora = require('ora')
@@ -8,12 +9,17 @@ const chalk = require('chalk')
 const webpack = require('webpack')
 const config = require('./config')
 
-const webpackConfig = require('./webpack.production.conf.js')
+const webpackQAConfig = require('./webpack.qa.conf.js')
+const webpackProductionConfig = require('./webpack.production.conf.js')
 
-const spinner = ora('building for production...')
+const webpackConfig = process.env.NODE_ENV === 'qa' ? webpackQAConfig : webpackProductionConfig
+const assetRoot = process.env.NODE_ENV === 'qa' ? config.qa.assetsRoot : config.production.assetsRoot
+const assetsSubDirectory = process.env.NODE_ENV === 'qa' ? config.qa.assetsSubDirectory : config.production.assetsSubDirectory
+
+const spinner = ora(`building for ${process.env.NODE_ENV}...`)
 spinner.start()
 
-rm(path.join(config.build.assetsRoot, config.build.assetsSubDirectory), err => {
+rm(path.join(assetRoot, assetsSubDirectory), err => {
   if (err) throw err
   webpack(webpackConfig, (err, stats) => {
     spinner.stop()
