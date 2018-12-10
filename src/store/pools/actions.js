@@ -37,14 +37,14 @@ export default {
     }
   },
 
-  async addContribution ({ commit, rootState }, payload) {
+  async addContribution ({ commit, rootState, dispatch }, payload) {
     commit('setTransactionHash', '')
     commit('setTransactionError', false)
 
     commit('setLoading', true, { root: true })
 
     try {
-      const response = await axios.post('/pools/pool/contribute', payload)
+      const response = await axios.post('/pools/contribute', payload)
 
       if (response.data) {
         const web3 = window.web3
@@ -53,7 +53,7 @@ export default {
         const paymentValue = web3.utils.toWei(payload.amount.toString())
         const poolIdHex = web3.utils.fromAscii(payload.poolId)
 
-        const contributionIdHex = web3.utils.fromAscii(response.data.contribution.id)
+        const contributionIdHex = web3.utils.fromAscii(response.data.id)
 
         commit('setLoading', false, { root: true })
 
@@ -66,29 +66,31 @@ export default {
             from: rootState.user.userWeb3.coinbase
           })
           .on('error', () => {
+            dispatch('deleteContribution', response.data.id)
+            commit('setLoading', false, { root: true })
             commit('setTransactionError', true)
           })
           .once('transactionHash', async txId => {
             try {
               const transactionPayload = {
-                contributionId: response.data.contribution.id,
+                contributionId: response.data.id,
                 txId
               }
 
               await axios.post('/pools/transaction/addContribution', transactionPayload)
 
               commit('setTransactionHash', txId)
-            } catch (ex) {}
+            } catch (ex) {
+              console.error(ex)
+            }
           })
       }
     } catch (ex) {}
   },
 
   async deleteContribution ({ commit }, id) {
-    commit('setLoading', true, { root: true })
-
     try {
-      await axios.delete(`/pools/pool/contribution/${id}`)
+      await axios.delete(`/pools/contribution/${id}`)
     } catch (err) {}
 
     commit('setLoading', false, { root: true })
@@ -132,7 +134,7 @@ export default {
     commit('setLoading', true, { root: true })
 
     try {
-      const response = await axios.get('/pools/pool/contribution/' + id)
+      const response = await axios.get('/pools/contribution/' + id)
 
       if (response.data && response.data.contribution) {
         commit('setContribution', response.data.contribution)
