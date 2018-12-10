@@ -156,7 +156,7 @@ export default {
     }
   },
 
-  async addForecast ({ commit, rootState, state }, payload) {
+  async addForecast ({ commit, rootState, state, dispatch }, payload) {
     commit('setTransactionHash', '')
     commit('setTransactionError', false)
 
@@ -193,6 +193,8 @@ export default {
             from: rootState.user.userWeb3.coinbase
           })
           .on('error', () => {
+            dispatch('deleteForecast', response.data.forecast.id)
+            commit('setLoading', false, { root: true })
             commit('setTransactionError', true)
           })
           .once('transactionHash', async txId => {
@@ -209,6 +211,12 @@ export default {
           })
       }
     } catch (ex) {}
+  },
+
+  async deleteForecast ({ commit }, id) {
+    try {
+      await axios.delete(`/predictions/forecast/${id}`)
+    } catch (err) {}
   },
 
   async getUserForecast ({ commit, dispatch }, forecastId) {

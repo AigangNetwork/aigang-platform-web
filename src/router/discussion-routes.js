@@ -1,4 +1,4 @@
-import Discussions from '@/views/Discussions'
+import Discussions from '@/components/discussions/Discussions'
 
 export default [
   {
