@@ -757,7 +757,11 @@
       },
       "filters": {
         "status": "Status"
-      }
+      },
+      "deleteContributionTitle": "Delete your contribution",
+      "deleteContributionBody": "This contribution hasn't recevice payment yet, you can remove it if you didn't intend to complete payment or payment transaction has failed.",
+      "deleteContribution": "Delete contribution",
+      "deleteContributionConfirmation": "Are you sure you want to delete this contribution?"
     },
     "pool": {
       "termsAndConditions": "Terms and Conditions",
