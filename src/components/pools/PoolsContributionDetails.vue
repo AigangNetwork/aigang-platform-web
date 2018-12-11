@@ -41,6 +41,9 @@
           </span>
         </el-tooltip>
       </div>
+
+      <ContributionDeleteSection v-if="isDeleteAllowed" />
+
     </div>
       <PaymentConfirmationDialog :isVisible="isPaymentDialogVisible && !transactionError" :displayDialog="displayPaymentDialog"
         :content="$t('pools.pool.paymentInfo.metamaskAlert')" :txHash="transactionHash" :title="$t('pools.pool.paymentInfo.title')"
@@ -55,6 +58,7 @@ import ConfirmContributionDialog from '@/components/pools/ConfirmContributionDia
 import VueMarkdown from 'vue-markdown'
 import ScrollableMarkupText from '@/components/insurance/ScrollableMarkupText'
 import PaymentConfirmationDialog from '@/components/common/PaymentConfirmationDialog'
+import ContributionDeleteSection from '@/components/pools/ContributionDeleteSection'
 
 import { createNamespacedHelpers } from 'vuex'
 const { mapGetters } = createNamespacedHelpers('pools')
@@ -64,7 +68,8 @@ export default {
     ConfirmContributionDialog,
     VueMarkdown,
     ScrollableMarkupText,
-    PaymentConfirmationDialog
+    PaymentConfirmationDialog,
+    ContributionDeleteSection
   },
   props: ['contribution'],
   data () {
@@ -94,6 +99,12 @@ export default {
     },
     investButtonEnabled () {
       return !!((this.$store.getters['user/isAuthenticated'] && this.$store.getters['user/isWeb3Enabled']))
+    },
+    isDeleteAllowed () {
+      if (this.contribution.status) {
+        return this.contribution.status.toUpperCase() === 'PENDINGPAYMENT' && !this.contribution.txId
+      }
+      return ''
     }
   },
   methods: {
@@ -124,4 +135,8 @@ export default {
 <style lang="scss" scoped>
   @import '~helpers/variables';
   @import '~helpers/mixins';
+
+  .product-details-body {
+    margin-bottom: 40px;
+  }
 </style>

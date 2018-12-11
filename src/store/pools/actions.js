@@ -58,15 +58,20 @@ export default {
         commit('setLoading', false, { root: true })
 
         const bytes = (poolIdHex + contributionIdHex).replace(/0x/g, '')
-
-        TokenInstance.methods
+        const callObject = TokenInstance.methods
           .approveAndCall(payload.poolContractAddress, paymentValue, '0x' + bytes)
           .send({
             gas: process.env.GAS.ADD_CONTRIBUTION,
             from: rootState.user.userWeb3.coinbase
           })
+
+        callObject.catch(() => {
+          commit('setLoading', false, { root: true })
+          commit('setTransactionError', true)
+        })
+
+        callObject
           .on('error', () => {
-            dispatch('deleteContribution', response.data.id)
             commit('setLoading', false, { root: true })
             commit('setTransactionError', true)
           })
@@ -85,10 +90,11 @@ export default {
             }
           })
       }
-    } catch (ex) {}
+    } catch (error) {}
   },
 
   async deleteContribution ({ commit }, id) {
+    commit('setLoading', true, { root: true })
     try {
       await axios.delete(`/pools/contribution/${id}`)
     } catch (err) {}

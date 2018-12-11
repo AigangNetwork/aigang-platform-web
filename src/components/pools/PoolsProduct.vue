@@ -48,4 +48,8 @@ export default {
  .aig-container {
     align-items: flex-start;
   }
+
+  .product-details-body {
+    margin-bottom: 40px;
+  }
 </style>
