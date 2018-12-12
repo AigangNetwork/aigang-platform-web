@@ -13,8 +13,8 @@ export default {
           return this.$t('pools.poolStatuses.active')
         case 'DISTRIBUTING':
           return this.$t('pools.poolStatuses.distributing')
-        case 'FUNDED':
-          return this.$t('pools.poolStatuses.funded')
+        case 'FUNDING':
+          return this.$t('pools.poolStatuses.funding')
         case 'PAUSED':
           return this.$t('pools.poolStatuses.paused')
         case 'CANCELED':

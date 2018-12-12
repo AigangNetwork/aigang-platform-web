@@ -736,13 +736,13 @@
       "ends": "Ends",
       "canceled": "Canceled",
       "distributing": "Distributing",
-      "funded": "Funded",
+      "funding": "Funding",
       "ended": "Ended"
     },
     "products": {
       "activeTill": "Active till",
       "distributing": "Distributing",
-      "funded": "Funded",
+      "funding": "Funding",
       "paused": "Paused",
       "canceled": "Canceled",
       "closed": "Closed"
@@ -807,7 +807,7 @@
     "poolStatuses": {
       "active": "Active",
       "distributing": "Distributing",
-      "funded": "Funded",
+      "funding": "Funding",
       "paused": "Paused",
       "canceled": "Canceled",
       "closed": "Closed"

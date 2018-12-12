@@ -5,7 +5,7 @@
         <div class="aig-data-head">
           <div class="status" v-if="item.status === 'active'">{{ $t('pools.products.activeTill') }}: <Date :dateUtc="item.endDateUtc" /></div>
           <div class="status" v-if="item.status === 'distributing'">{{ $t('pools.products.distributing') }}</div>
-          <div class="status" v-if="item.status === 'funded'">{{ $t('pools.products.funded') }}</div>
+          <div class="status" v-if="item.status === 'funding'">{{ $t('pools.products.funding') }}</div>
           <div class="status" v-if="item.status === 'paused'">{{ $t('pools.products.paused') }}</div>
           <div class="status" v-if="item.status === 'canceled'">{{ $t('pools.products.canceled') }}</div>
           <div class="status" v-if="item.status === 'closed'">{{ $t('pools.products.closed') }}</div>
