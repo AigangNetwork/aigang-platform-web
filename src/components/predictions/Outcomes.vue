@@ -1,7 +1,10 @@
 <template>
   <div class="outcomes">
     <a v-for="item in items" :key="item.id" @click="changeSelectedOutcome(item.index)">
-      <el-card class="box-card outcome" :class="{ 'active': !disabled, 'disabled': disabled, 'selected': isOutcomeSelected(item.index) }">
+      <el-card
+        class="box-card outcome"
+        :class="{ 'active': !disabled, 'disabled': disabled, 'selected': isOutcomeSelected(item.index) }"
+      >
         <div class="content">
           <div class="name">{{ item.name }}</div>
           <div class="index">{{ item.index }}</div>

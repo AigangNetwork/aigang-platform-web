@@ -12,11 +12,14 @@
             <ScrollableMarkupText class="scrollable-text" :text="pool.termsAndConditions" @scrolledToBottom="onScrolledToBottom" />
 
             <el-tooltip :disabled="!investButtonDisabled" :content="$t('pools.pool.agreeWithTermsAndConditions')">
+              {{ isContributingTimeEnded}}
+              <el-tooltip :disabled="!isContributingTimeEnded" :content="$t('pools.pool.poolHasEnded')">
               <span class="wrapper el-button">
-                <el-button :disabled="investButtonDisabled" @click="contribute" class="aig-button" type="primary">
+                <el-button :disabled="investButtonDisabled || isContributingTimeEnded" @click="contribute" class="aig-button" type="primary">
                   {{ $t('pools.pool.invest') }}
                 </el-button>
               </span>
+              </el-tooltip>
             </el-tooltip>
           </div>
 
@@ -67,6 +70,10 @@ export default {
     },
     contractLink () {
       return process.env.ETHERSCAN_ADDRESS + process.env.ADDRESS_PATX + this.pool.poolContractAddress
+    },
+    isContributingTimeEnded () {
+      const endTime = Date.parse(this.pool.endDateUtc)
+      return endTime <= Date.now()
     }
   },
   methods: {

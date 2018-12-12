@@ -518,7 +518,7 @@
     "fee": "Fee",
     "votesPerOutcome": "Votes per outcome",
     "amountPerOutcome": "Amount per outcome",
-
+    "predictionHasEnded": "Forecasting time has ended for this prediction.",
     "menu": {
       "predictions": "All Predictions",
       "myForecasts": "My Forecasts"
@@ -766,6 +766,7 @@
     "pool": {
       "termsAndConditions": "Terms and Conditions",
       "agreeWithTermsAndConditions": "You have to read terms and conditions to invest",
+      "poolHasEnded": "Contributing time has ended for this pool.",
       "description": "Description",
       "noDescription": "There is no description for this pool",
       "contractAddress": "Contract address",
