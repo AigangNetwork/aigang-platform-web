@@ -30,12 +30,12 @@ export default [
     ]
   },
   {
-    path: '/pools/products/:id',
+    path: '/pools/pool/:id',
     component: PoolsProduct,
     name: 'PoolsProduct'
   },
   {
-    path: '/pools/contributions/:id',
+    path: '/pools/contribution/:id',
     component: PoolContribution,
     name: 'PoolContribution'
   }
