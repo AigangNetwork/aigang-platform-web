@@ -767,6 +767,7 @@
       "termsAndConditions": "Terms and Conditions",
       "agreeWithTermsAndConditions": "You have to read terms and conditions to invest",
       "poolHasEnded": "Contributing time has ended for this pool.",
+      "poolCapacityReached": "Pool capacity has been reached",
       "description": "Description",
       "noDescription": "There is no description for this pool",
       "contractAddress": "Contract address",
