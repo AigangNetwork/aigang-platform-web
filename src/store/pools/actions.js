@@ -152,7 +152,7 @@ export default {
     }
   },
 
-  async payoutContribution ({ commit, rootState }, payload) {
+  async payoutContribution ({ commit, rootState, dispatch }, payload) {
     commit('setTransactionHash', '')
     commit('setTransactionError', false)
 
@@ -192,11 +192,12 @@ export default {
           await axios.post('/pools/transaction/addContributionPayout', transactionPayload)
 
           commit('setTransactionHash', txId)
+          await dispatch('getContribution', payload.contributionId)
         } catch (ex) {}
       })
   },
 
-  async refundContribution ({ commit, rootState }, payload) {
+  async refundContribution ({ commit, rootState, dispatch }, payload) {
     commit('setTransactionHash', '')
     commit('setTransactionError', false)
 
@@ -236,6 +237,7 @@ export default {
           await axios.post('/pools/transaction/addContributionRefund', transactionPayload)
 
           commit('setTransactionHash', txId)
+          await dispatch('getContribution', payload.contributionId)
         } catch (ex) {}
       })
   }

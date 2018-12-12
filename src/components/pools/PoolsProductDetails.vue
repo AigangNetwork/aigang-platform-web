@@ -11,25 +11,36 @@
             <h4 class="info-title">{{ $t('pools.pool.termsAndConditions') }}</h4>
             <ScrollableMarkupText class="scrollable-text" :text="pool.termsAndConditions" @scrolledToBottom="onScrolledToBottom" />
 
+            <el-tooltip :disabled="isUserAuthenticated" :content="$t('pools.userNotLoggedIn')">
             <el-tooltip :disabled="!investButtonDisabled" :content="$t('pools.pool.agreeWithTermsAndConditions')">
             <el-tooltip :disabled="!isContributingTimeEnded" :content="$t('pools.pool.poolHasEnded')">
             <el-tooltip :disabled="!isPoolCapacityReached" :content="$t('pools.pool.poolCapacityReached')">
               <span class="wrapper el-button">
-                <el-button :disabled="investButtonDisabled || isContributingTimeEnded || isPoolCapacityReached" @click="contribute" class="aig-button" type="primary">
+                <el-button :disabled="investButtonDisabled || isContributingTimeEnded || isPoolCapacityReached || !isUserAuthenticated" @click="contribute" class="aig-button" type="primary">
                   {{ $t('pools.pool.invest') }}
                 </el-button>
               </span>
             </el-tooltip>
             </el-tooltip>
             </el-tooltip>
+            </el-tooltip>
           </div>
 
-          <ConfirmContributionDialog :isVisible="isConfirmContributionDialogVisible" :displayDialog="displayConfirmContributionDialog"
-            :maxAllowedAmount="maxAllowedAmount" @addContribution="onAddContribution" />
+          <ConfirmContributionDialog
+            :isVisible="isConfirmContributionDialogVisible"
+            :displayDialog="displayConfirmContributionDialog"
+            :maxAllowedAmount="maxAllowedAmount"
+            @addContribution="onAddContribution" />
 
-          <PaymentConfirmationDialog :isVisible="isPaymentDialogVisible && !transactionError" :displayDialog="displayPaymentDialog"
-            :content="$t('pools.pool.paymentInfo.metamaskAlert')" :txHash="transactionHash" :title="$t('pools.pool.paymentInfo.title')"
-            :bodyText="$t('pools.pool.paymentInfo.body')" :route="portfolioRoute" :btnText="$t('pools.pool.paymentInfo.buttons.goBack')" />
+          <PaymentConfirmationDialog
+            :isVisible="isPaymentDialogVisible && !transactionError"
+            :displayDialog="displayPaymentDialog"
+            :content="$t('pools.pool.paymentInfo.metamaskAlert')"
+            :txHash="transactionHash"
+            :title="$t('pools.pool.paymentInfo.title')"
+            :bodyText="$t('pools.pool.paymentInfo.body')"
+            :route="portfolioRoute"
+            :btnText="$t('pools.pool.paymentInfo.buttons.goBack')" />
 
         </div>
       </div>
@@ -78,6 +89,9 @@ export default {
     },
     isPoolCapacityReached () {
       return this.pool.goalPoolSize === this.pool.currentPoolSize
+    },
+    isUserAuthenticated () {
+      return this.$store.getters['user/isAuthenticated'] && this.$store.getters['user/isWeb3Enabled']
     }
   },
   methods: {

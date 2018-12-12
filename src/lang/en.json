@@ -786,6 +786,7 @@
       "details": "Contribution details",
       "contractAddress": "Contract address",
       "yourAmount": "Your contributed amount",
+      "paidoutAmount": "Paidout amount",
       "noDescription": "There is no description for this pool",
       "delete": "Delete contribution",
       "deleteMessage": "This contribution and all data associated with it will be deleted from the plaform. You won't be able to revert this action later on.",
