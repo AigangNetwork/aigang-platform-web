@@ -5,8 +5,8 @@
         <div class="aig-navigation-body">
           <router-link to="/data/all" class="aig-logo">
             <img src="/static/logo.png" alt="">
-            <div class="alpha-container">
-              {{ $t('general.versionAlpha') }}
+            <div class="alpha-container" v-if="isDevEnv">
+              {{ $t('general.testPlatform') }}
             </div>
           </router-link>
           <nav class="aig-navigation-menu">
@@ -110,6 +110,11 @@ export default {
       this.$router.push({
         name: 'Login'
       })
+    }
+  },
+  computed: {
+    isDevEnv () {
+      return process.env.NODE_ENV !== 'production'
     }
   }
 }

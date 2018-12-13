@@ -411,6 +411,7 @@
     "continue": "Continue",
     "markupSupported": "VueMarkdown supported",
     "versionAlpha": "alpha",
+    "testPlatform": "Test Platform",
     "unableToFindYourDatasets": "Can not find your datasets",
     "unableToFindYourModels": "Can not find any datasets containing your models",
     "unableToFindAnyProducts": "Can not find any product",
