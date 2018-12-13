@@ -86,11 +86,15 @@ export default {
 
               commit('setTransactionHash', txId)
             } catch (ex) {
-              console.error(ex)
+              commit('setLoading', false, { root: true })
+              commit('setTransactionError', true)
             }
           })
       }
-    } catch (error) {}
+    } catch (error) {
+      commit('setLoading', false, { root: true })
+      commit('setTransactionError', true)
+    }
   },
 
   async deleteContribution ({ commit }, id) {
@@ -152,7 +156,7 @@ export default {
     }
   },
 
-  async payoutContribution ({ commit, rootState }, payload) {
+  async payoutContribution ({ commit, rootState, dispatch }, payload) {
     commit('setTransactionHash', '')
     commit('setTransactionError', false)
 
@@ -192,11 +196,16 @@ export default {
           await axios.post('/pools/transaction/addContributionPayout', transactionPayload)
 
           commit('setTransactionHash', txId)
-        } catch (ex) {}
+          await dispatch('getContribution', payload.contributionId)
+        } catch (error) {
+          console.error(error)
+          commit('setLoading', false, { root: true })
+          commit('setTransactionError', true)
+        }
       })
   },
 
-  async refundContribution ({ commit, rootState }, payload) {
+  async refundContribution ({ commit, rootState, dispatch }, payload) {
     commit('setTransactionHash', '')
     commit('setTransactionError', false)
 
@@ -236,7 +245,12 @@ export default {
           await axios.post('/pools/transaction/addContributionRefund', transactionPayload)
 
           commit('setTransactionHash', txId)
-        } catch (ex) {}
+          await dispatch('getContribution', payload.contributionId)
+        } catch (error) {
+          console.error(error)
+          commit('setLoading', false, { root: true })
+          commit('setTransactionError', true)
+        }
       })
   }
 }

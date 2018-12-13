@@ -10,8 +10,19 @@
 
       <h4 class="info-title">{{ $t('pools.contribution.details') }}</h4>
       <div>
-        <p>{{ $t('pools.contribution.yourAmount') }}: <span class="value">{{ contribution.amount }} {{
-            $t('general.aix') }}</span></p>
+        <p>{{ $t('pools.portfolioInfo.status') }}:
+          <ContributionStatus :status="contribution.status" />
+        </p>
+        <p>{{ $t('pools.contribution.yourAmount') }}:
+          <span class="value">{{ contribution.amount }} {{ $t('general.aix') }}</span>
+        </p>
+        <p>{{ $t('pools.contribution.yourAmount') }}:
+        <span class="value">{{ contribution.amount }}</span>
+        </p>
+        <p v-if="showPayout">{{ $t('pools.contribution.paidoutAmount') }}:
+          <span class="value">{{ contribution.payout }} {{ $t('general.aix') }}</span>
+        </p>
+
       </div>
 
       <div v-if="isContributionAvailableRefund">
@@ -45,10 +56,14 @@
       <ContributionDeleteSection v-if="isDeleteAllowed" />
 
     </div>
-      <PaymentConfirmationDialog :isVisible="isPaymentDialogVisible && !transactionError" :displayDialog="displayPaymentDialog"
-        :content="$t('pools.pool.paymentInfo.metamaskAlert')" :txHash="transactionHash" :title="$t('pools.pool.paymentInfo.title')"
-        :bodyText="$t('pools.pool.paymentInfo.body')" :route="portfolioRoute" :btnText="$t('pools.pool.paymentInfo.buttons.goBack')" />
-
+      <PaymentConfirmationDialog
+      :isVisible="isPaymentDialogVisible && !transactionError"
+      :displayDialog="displayPaymentDialog"
+      :content="$t('pools.pool.paymentInfo.metamaskAlert')"
+      :txHash="transactionHash" :title="$t('pools.pool.paymentInfo.title')"
+      :bodyText="$t('pools.pool.paymentInfo.body')"
+      :route="portfolioRoute"
+      :btnText="$t('pools.pool.paymentInfo.buttons.goBack')" />
   </div>
 
 </template>
@@ -59,6 +74,7 @@ import VueMarkdown from 'vue-markdown'
 import ScrollableMarkupText from '@/components/insurance/ScrollableMarkupText'
 import PaymentConfirmationDialog from '@/components/common/PaymentConfirmationDialog'
 import ContributionDeleteSection from '@/components/pools/ContributionDeleteSection'
+import ContributionStatus from './ContributionStatus'
 
 import { createNamespacedHelpers } from 'vuex'
 const { mapGetters } = createNamespacedHelpers('pools')
@@ -69,7 +85,8 @@ export default {
     VueMarkdown,
     ScrollableMarkupText,
     PaymentConfirmationDialog,
-    ContributionDeleteSection
+    ContributionDeleteSection,
+    ContributionStatus
   },
   props: ['contribution'],
   data () {
@@ -88,6 +105,13 @@ export default {
     isContributionAvailablePayout () {
       if (this.contribution.status) {
         return this.contribution.status.toUpperCase() === 'AVAILABLEPAYOUT'
+      }
+      return ''
+    },
+    showPayout () {
+      if (this.contribution.status) {
+        return this.contribution.status.toUpperCase() === 'PENDINGPAYOUT' ||
+        this.contribution.status.toUpperCase() === 'REWARDPAIDOUT'
       }
       return ''
     },

@@ -483,7 +483,14 @@
       "RemoteAccessPointNotSet": "Remote access point is not set.",
       "InvalidTags": "Invalid tags",
       "EmptyFileError": "File is empty",
-      "DeviceAlreadyInsured": "There is already policy with the same device id"
+      "DeviceAlreadyInsured": "There is already policy with the same device id",
+      "ContributionsEnded": "Contributing time has ended",
+      "ContributionsNotStarted": "Contributing time has not started yet",
+      "PoolNotActive": "Pool is not active",
+      "ProductPoolLimitReached": "Pool capacity has been reached",
+      "PredictionNotPublished": "Prediction status is not published",
+      "ForecastsNotStarted": "Forecasting has not started yet",
+      "ForecastsEnded": "ForecastsEnded"
     },
     "pagePathNotFound": "The page you are trying to access is not available",
     "validationError": "You have entered an invalid data",
@@ -518,7 +525,7 @@
     "fee": "Fee",
     "votesPerOutcome": "Votes per outcome",
     "amountPerOutcome": "Amount per outcome",
-
+    "predictionHasEnded": "Forecasting time has ended for this prediction.",
     "menu": {
       "predictions": "All Predictions",
       "myForecasts": "My Forecasts"
@@ -736,13 +743,13 @@
       "ends": "Ends",
       "canceled": "Canceled",
       "distributing": "Distributing",
-      "funded": "Funded",
+      "funding": "Funding",
       "ended": "Ended"
     },
     "products": {
       "activeTill": "Active till",
       "distributing": "Distributing",
-      "funded": "Funded",
+      "funding": "Funding",
       "paused": "Paused",
       "canceled": "Canceled",
       "closed": "Closed"
@@ -766,6 +773,8 @@
     "pool": {
       "termsAndConditions": "Terms and Conditions",
       "agreeWithTermsAndConditions": "You have to read terms and conditions to invest",
+      "poolHasEnded": "Contributing time has ended for this pool.",
+      "poolCapacityReached": "Pool capacity has been reached",
       "description": "Description",
       "noDescription": "There is no description for this pool",
       "contractAddress": "Contract address",
@@ -784,6 +793,7 @@
       "details": "Contribution details",
       "contractAddress": "Contract address",
       "yourAmount": "Your contributed amount",
+      "paidoutAmount": "Paidout amount",
       "noDescription": "There is no description for this pool",
       "delete": "Delete contribution",
       "deleteMessage": "This contribution and all data associated with it will be deleted from the plaform. You won't be able to revert this action later on.",
@@ -807,7 +817,7 @@
     "poolStatuses": {
       "active": "Active",
       "distributing": "Distributing",
-      "funded": "Funded",
+      "funding": "Funding",
       "paused": "Paused",
       "canceled": "Canceled",
       "closed": "Closed"

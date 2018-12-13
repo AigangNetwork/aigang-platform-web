@@ -30,9 +30,9 @@
             <span>{{ $t('pools.header.distributing') }}</span>
           </div>
 
-          <div class="icon-container" v-else-if="info.status === 'funded'">
+          <div class="icon-container" v-else-if="info.status === 'funding'">
             <img src="/static/icons/finish-white.svg" class="header-icon" />
-            <span>{{ $t('pools.header.funded') }}</span>
+            <span>{{ $t('pools.header.funding') }}</span>
           </div>
 
           <div class="icon-container" v-else-if="info.status === 'closed'">

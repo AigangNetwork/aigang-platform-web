@@ -22,7 +22,14 @@
 
         <div v-if="prediction.status !== 'resolved'">
           <h4 class="info-title">{{ $t('predictions.outcomes') }}</h4>
-          <Outcomes :selectedOutcomeIndex="selectedOutcomeIndex" :items="prediction.outcomes" :disabled="isOutcomesDisabled" @selected="onOutcomeSelected" />
+
+          <el-tooltip :disabled="!isPredictionTimeEnded" :content="$t('predictions.predictionHasEnded')">
+          <Outcomes
+            :selectedOutcomeIndex="selectedOutcomeIndex"
+            :items="prediction.outcomes"
+            :disabled="isOutcomesDisabled || isPredictionTimeEnded"
+            @selected="onOutcomeSelected" />
+            </el-tooltip>
         </div>
 
         <div v-if="isPercentageVisible">
@@ -103,6 +110,10 @@ export default {
         this.prediction.status === 'pendingPublish' ||
         this.prediction.status === 'pendingResolve'
       )
+    },
+    isPredictionTimeEnded () {
+      const endTime = Date.parse(this.prediction.forecastEndUtc)
+      return endTime <= Date.now()
     }
   },
   data () {

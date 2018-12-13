@@ -210,7 +210,10 @@ export default {
             } catch (ex) {}
           })
       }
-    } catch (ex) {}
+    } catch (ex) {
+      commit('setLoading', false, { root: true })
+      commit('setTransactionError', true)
+    }
   },
 
   async deleteForecast ({ commit }, id) {
