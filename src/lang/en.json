@@ -791,7 +791,9 @@
     "contribution": {
       "description": "Description",
       "details": "Contribution details",
+      "poolDetails": "Pool details",
       "contractAddress": "Contract address",
+      "poolId": "Pool ID",
       "yourAmount": "Your contributed amount",
       "paidoutAmount": "Paidout amount",
       "noDescription": "There is no description for this pool",
