@@ -6,7 +6,6 @@
       <vue-markdown class="markup-content" :html="false" :source="contribution.poolDescription || $t('pools.contribution.noDescription')"></vue-markdown>
 
       <h4 class="info-title">{{ $t('pools.contribution.poolDetails') }}</h4>
-      {{ $t('pools.contribution.contractAddress') }}
       <p>{{ $t('pools.contribution.contractAddress') }}: <span class="value"><a class="contract-address" target="_blank" :href="contractLink">{{ contribution.poolContractAddress }}</a></span></p>
       <p>{{ $t('pools.contribution.poolId') }}: <span class="value">{{ contribution.poolId }}</span></p>
 
