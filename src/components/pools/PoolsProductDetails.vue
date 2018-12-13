@@ -12,9 +12,9 @@
             <ScrollableMarkupText class="scrollable-text" :text="pool.termsAndConditions" @scrolledToBottom="onScrolledToBottom" />
 
             <el-tooltip :disabled="isUserAuthenticated" :content="$t('pools.userNotLoggedIn')">
-            <el-tooltip :disabled="!investButtonDisabled" :content="$t('pools.pool.agreeWithTermsAndConditions')">
-            <el-tooltip :disabled="!isContributingTimeEnded" :content="$t('pools.pool.poolHasEnded')">
-            <el-tooltip :disabled="!isPoolCapacityReached" :content="$t('pools.pool.poolCapacityReached')">
+            <el-tooltip :disabled="!investButtonDisabled || !isUserAuthenticated" :content="$t('pools.pool.agreeWithTermsAndConditions')">
+            <el-tooltip :disabled="!isContributingTimeEnded || investButtonDisabled || !isUserAuthenticated" :content="$t('pools.pool.poolHasEnded')">
+            <el-tooltip :disabled="!isPoolCapacityReached || ContributingTimeEnded || investButtonDisabled || !isUserAuthenticated" :content="$t('pools.pool.poolCapacityReached')">
               <span class="wrapper el-button">
                 <el-button :disabled="investButtonDisabled || isContributingTimeEnded || isPoolCapacityReached || !isUserAuthenticated" @click="contribute" class="aig-button" type="primary">
                   {{ $t('pools.pool.invest') }}
@@ -84,11 +84,13 @@ export default {
       return process.env.ETHERSCAN_ADDRESS + process.env.ADDRESS_PATX + this.pool.poolContractAddress
     },
     isContributingTimeEnded () {
-      const endTime = Date.parse(this.pool.endDateUtc)
+      // 'Z' to specify UTC timezone
+      const endTime = Date.parse(this.pool.endDateUtc + 'Z')
+      console.log(endTime)
       return endTime <= Date.now()
     },
     isPoolCapacityReached () {
-      return this.pool.goalPoolSize === this.pool.currentPoolSize
+      return this.pool.goalPoolSize <= this.pool.currentPoolSize
     },
     isUserAuthenticated () {
       return this.$store.getters['user/isAuthenticated'] && this.$store.getters['user/isWeb3Enabled']
