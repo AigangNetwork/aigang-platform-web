@@ -84,7 +84,9 @@ export default {
       return process.env.ETHERSCAN_ADDRESS + process.env.ADDRESS_PATX + this.pool.poolContractAddress
     },
     isContributingTimeEnded () {
-      const endTime = Date.parse(this.pool.endDateUtc)
+      // 'Z' to specify UTC timezone
+      const endTime = Date.parse(this.pool.endDateUtc + 'Z')
+      console.log(endTime)
       return endTime <= Date.now()
     },
     isPoolCapacityReached () {
