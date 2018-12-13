@@ -483,7 +483,14 @@
       "RemoteAccessPointNotSet": "Remote access point is not set.",
       "InvalidTags": "Invalid tags",
       "EmptyFileError": "File is empty",
-      "DeviceAlreadyInsured": "There is already policy with the same device id"
+      "DeviceAlreadyInsured": "There is already policy with the same device id",
+      "ContributionsEnded": "Contributing time has ended",
+      "ContributionsNotStarted": "Contributing time has not started yet",
+      "PoolNotActive": "Pool is not active",
+      "ProductPoolLimitReached": "Pool capacity has been reached",
+      "PredictionNotPublished": "Prediction status is not published",
+      "ForecastsNotStarted": "Forecasting has not started yet",
+      "ForecastsEnded": "ForecastsEnded"
     },
     "pagePathNotFound": "The page you are trying to access is not available",
     "validationError": "You have entered an invalid data",

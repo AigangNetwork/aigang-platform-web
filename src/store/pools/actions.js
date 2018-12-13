@@ -86,11 +86,15 @@ export default {
 
               commit('setTransactionHash', txId)
             } catch (ex) {
-              console.error(ex)
+              commit('setLoading', false, { root: true })
+              commit('setTransactionError', true)
             }
           })
       }
-    } catch (error) {}
+    } catch (error) {
+      commit('setLoading', false, { root: true })
+      commit('setTransactionError', true)
+    }
   },
 
   async deleteContribution ({ commit }, id) {
@@ -193,7 +197,11 @@ export default {
 
           commit('setTransactionHash', txId)
           await dispatch('getContribution', payload.contributionId)
-        } catch (ex) {}
+        } catch (error) {
+          console.error(error)
+          commit('setLoading', false, { root: true })
+          commit('setTransactionError', true)
+        }
       })
   },
 
@@ -238,7 +246,11 @@ export default {
 
           commit('setTransactionHash', txId)
           await dispatch('getContribution', payload.contributionId)
-        } catch (ex) {}
+        } catch (error) {
+          console.error(error)
+          commit('setLoading', false, { root: true })
+          commit('setTransactionError', true)
+        }
       })
   }
 }

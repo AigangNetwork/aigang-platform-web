@@ -10,8 +10,14 @@
 
       <h4 class="info-title">{{ $t('pools.contribution.details') }}</h4>
       <div>
+        <p>{{ $t('pools.portfolioInfo.status') }}:
+          <ContributionStatus :status="contribution.status" />
+        </p>
         <p>{{ $t('pools.contribution.yourAmount') }}:
           <span class="value">{{ contribution.amount }} {{ $t('general.aix') }}</span>
+        </p>
+        <p>{{ $t('pools.contribution.yourAmount') }}:
+        <span class="value">{{ contribution.amount }}</span>
         </p>
         <p v-if="showPayout">{{ $t('pools.contribution.paidoutAmount') }}:
           <span class="value">{{ contribution.payout }} {{ $t('general.aix') }}</span>
@@ -68,6 +74,7 @@ import VueMarkdown from 'vue-markdown'
 import ScrollableMarkupText from '@/components/insurance/ScrollableMarkupText'
 import PaymentConfirmationDialog from '@/components/common/PaymentConfirmationDialog'
 import ContributionDeleteSection from '@/components/pools/ContributionDeleteSection'
+import ContributionStatus from './ContributionStatus'
 
 import { createNamespacedHelpers } from 'vuex'
 const { mapGetters } = createNamespacedHelpers('pools')
@@ -78,7 +85,8 @@ export default {
     VueMarkdown,
     ScrollableMarkupText,
     PaymentConfirmationDialog,
-    ContributionDeleteSection
+    ContributionDeleteSection,
+    ContributionStatus
   },
   props: ['contribution'],
   data () {
