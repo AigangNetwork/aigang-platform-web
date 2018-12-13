@@ -17,7 +17,7 @@
           >
             <el-form-item prop="amount">
               <el-input
-                v-model.number="addContributionForm.amount"
+                v-model="addContributionForm.amount"
                 v-on:keyup.enter="submitForm('addContributionForm', addContribution)"
                 class="amount-input"
               >
@@ -59,11 +59,11 @@ export default {
   mixins: [FormMixin],
   data () {
     const checkAmount = (rule, value, callback) => {
-      if (value <= 0) {
+      if (Number(value) <= 0) {
         return callback(new Error(this.$t('pools.confirmationDialog.validation.shouldBeBiggerThanZero')))
       }
 
-      if (value > this.maxAllowedAmount) {
+      if (Number(value) > this.maxAllowedAmount) {
         return callback(
           new Error(this.$t('pools.confirmationDialog.validation.shouldBeLowerOrEqualMaxAllowedAmount'))
         )
@@ -81,11 +81,6 @@ export default {
           {
             required: true,
             message: this.$t('pools.confirmationDialog.validation.required'),
-            trigger: 'blur'
-          },
-          {
-            type: 'number',
-            message: this.$t('pools.confirmationDialog.validation.shouldBeNumber'),
             trigger: 'blur'
           },
           {

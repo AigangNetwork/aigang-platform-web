@@ -1,7 +1,7 @@
 
 <template>
   <router-link :to="{ name: 'PoolsProduct', params: { id: item.id }}">
-    <div class="aig-data pools-product-item">
+    <div class="aig-data pools-product-item" :class="{ active: item.status === 'active'}">
         <div class="aig-data-head">
           <div class="status" v-if="item.status === 'active'">{{ $t('pools.products.activeTill') }}: <Date :dateUtc="item.endDateUtc" /></div>
           <div class="status" v-if="item.status === 'distributing'">{{ $t('pools.products.distributing') }}</div>
@@ -43,8 +43,13 @@ export default {
   @import '~helpers/mixins';
 
   .pools-product-item {
-    background: $purple-gradient-down-top;
+    background: $grey-gradient-down-top;
+    border: none;
     text-align: center;
+
+    &.active {
+      background: $purple-gradient-down-top
+    }
 
     .title, .desc p, .label, .status {
       color: white;

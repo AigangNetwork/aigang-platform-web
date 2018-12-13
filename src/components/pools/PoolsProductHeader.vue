@@ -1,6 +1,6 @@
 <template>
   <div class="dataset-model-header-container">
-    <div class="header-title-container">
+    <div class="header-title-container" :class="{ active: info.status === 'active'}">
       <div class="header-left-section">
         <div class="back-button-container">
           <router-link :to="{ name: backRouteName }" class="back-button"><i class="back-icon el-icon-arrow-left"></i>{{ $t('general.backToList')}}</router-link>
@@ -73,7 +73,11 @@ export default {
   @include aig-header;
 
   .header-title-container {
-    background: $purple-gradient-down-top;
+    background: $grey-gradient-down-top;
+
+    &.active {
+      background: $purple-gradient-down-top;
+    }
   }
 
   .info {

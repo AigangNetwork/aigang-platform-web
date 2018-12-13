@@ -16,9 +16,6 @@
         <p>{{ $t('pools.contribution.yourAmount') }}:
           <span class="value">{{ contribution.amount }} {{ $t('general.aix') }}</span>
         </p>
-        <p>{{ $t('pools.contribution.yourAmount') }}:
-        <span class="value">{{ contribution.amount }}</span>
-        </p>
         <p v-if="showPayout">{{ $t('pools.contribution.paidoutAmount') }}:
           <span class="value">{{ contribution.payout }} {{ $t('general.aix') }}</span>
         </p>
