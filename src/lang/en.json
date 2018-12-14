@@ -351,7 +351,11 @@
             },
             "forecastWon": {
               "title": "Forecast won",
-              "description": "When this notification type is on you will get notifications after your forecast win."
+              "description": "When this notification type is on you will get notifications when your forecast win."
+            },
+            "forecastLost": {
+              "title": "Forecast lost",
+              "description": "When this notification type is on you will get notifications when your forecast lost."
             }
           }
         },

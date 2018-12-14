@@ -69,6 +69,11 @@ export default {
             id: 4,
             value: true,
             description: this.$t('profile.notifications.permissions.predictions.items.forecastWon.description')
+          }, {
+            title: this.$t('profile.notifications.permissions.predictions.items.forecastLost.title'),
+            id: 7,
+            value: true,
+            description: this.$t('profile.notifications.permissions.predictions.items.forecastLost.description')
           }]
         }, {
           title: this.$t('profile.notifications.permissions.insurance.title'),
