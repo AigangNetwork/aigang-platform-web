@@ -17,7 +17,7 @@
             <el-tooltip :disabled="!isPoolCapacityReached || ContributingTimeEnded || investButtonDisabled || !isUserAuthenticated" :content="$t('pools.pool.poolCapacityReached')">
               <span class="wrapper el-button">
                 <el-button :disabled="investButtonDisabled || isContributingTimeEnded || isPoolCapacityReached || !isUserAuthenticated" @click="contribute" class="aig-button" type="primary">
-                  {{ $t('pools.pool.invest') }}
+                  {{ $t('pools.pool.contribute') }}
                 </el-button>
               </span>
             </el-tooltip>
@@ -86,7 +86,6 @@ export default {
     isContributingTimeEnded () {
       // 'Z' to specify UTC timezone
       const endTime = Date.parse(this.pool.endDateUtc + 'Z')
-      console.log(endTime)
       return endTime <= Date.now()
     },
     isPoolCapacityReached () {

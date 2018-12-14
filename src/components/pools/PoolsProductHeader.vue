@@ -1,6 +1,6 @@
 <template>
   <div class="dataset-model-header-container">
-    <div class="header-title-container" :class="{ active: info.status === 'active'}">
+    <div class="header-title-container" :class="{ active: info.status === 'active' || isSingleColor}">
       <div class="header-left-section">
         <div class="back-button-container">
           <router-link :to="{ name: backRouteName }" class="back-button"><i class="back-icon el-icon-arrow-left"></i>{{ $t('general.backToList')}}</router-link>
@@ -62,7 +62,7 @@ import Date from '@/components/Date'
 
 export default {
   components: { Date },
-  props: ['info', 'backRouteName']
+  props: ['info', 'backRouteName', 'isSingleColor']
 }
 </script>
 

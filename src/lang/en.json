@@ -783,7 +783,7 @@
       "description": "Description",
       "noDescription": "There is no description for this pool",
       "contractAddress": "Contract address",
-      "invest": "Invest",
+      "contribute": "Contribute",
       "paymentInfo": {
         "title": "Payment Information",
         "metamaskAlert": "Atention! Do not leave this page until you confirm your transaction. Otherwise your transaction will be lost and contribution won't be counted.",
@@ -819,7 +819,8 @@
       "refundContribution": "Get refund",
       "refundContributionDescription": "Payout for your contribution is available.",
       "refundAmount": "Refund amount",
-      "refund": "Refund"
+      "refund": "Refund",
+      "createdDate": "Created Date"
     },
     "poolStatuses": {
       "active": "Active",
@@ -844,11 +845,9 @@
       "yourAddress": "Your address",
       "yourBalance": "Your balance",
       "claimedProfit": "Claimed profit",
-      "insuranceType": "Insurance type",
-      "investors": "Investors",
-      "myInvestment": "My investment",
-      "investedAmount": "Invested Amount",
-      "goalAmount": "Pool goal",
+      "pool": "Pool",
+      "contributedAmount": "Contributed Amount",
+      "createdDate": "Created",
       "status": "Status"
     },
     "confirmationDialog": {
