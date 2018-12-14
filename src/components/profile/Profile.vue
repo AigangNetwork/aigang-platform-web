@@ -56,6 +56,13 @@ export default {
           this.$router.push('/profile/general')
       }
     }
+  },
+  mounted () {
+    if (!this.$store.getters['user/isAuthenticated']) {
+      this.$router.push({
+        name: 'Login'
+      })
+    }
   }
 }
 
