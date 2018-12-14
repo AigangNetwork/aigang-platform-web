@@ -333,6 +333,15 @@
             }
           }
         },
+        "data": {
+          "title": "Data",
+          "items": {
+            "newModelAdded": {
+              "title": "Data model added",
+              "description": "When this notification type is on you will get notifications when someone adds model to your data set."
+            }
+          }
+        },
         "insurance": {
           "title": "Insurance",
           "items": {
