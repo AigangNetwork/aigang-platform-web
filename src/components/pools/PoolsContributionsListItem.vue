@@ -1,10 +1,8 @@
 <template>
   <tr @click="navigateToContribution(contribution.id)">
     <td class="title">{{ contribution.poolName }}</td>
-    <td>{{ contribution.investors }}</td>
-    <td>{{ contribution.amount}} {{ $t('general.aix') }}</td>
-    <td>{{ contribution.investedAmount }} {{ $t('general.aix') }}</td>
-    <td>{{ contribution.goalAmount }} {{ $t('general.aix') }}</td>
+    <td class="number">{{ contribution.amount}} {{ $t('general.aix') }}</td>
+    <td class="number"><Date  :dateUtc="contribution.createdUtc" format="YYYY-MM-DD HH:mm" /></td>
     <td>
       <PoolContributionLabel :type="contribution.status" size="small" />
     </td>
@@ -13,12 +11,11 @@
 
 <script>
 import PoolContributionLabel from './PoolContributionLabel'
+import Date from '@/components/Date'
 
 export default {
   props: ['contribution'],
-  components: {
-    PoolContributionLabel
-  },
+  components: { PoolContributionLabel, Date },
   methods: {
     navigateToContribution (id) {
       this.$router.push({
@@ -46,6 +43,11 @@ export default {
       text-align: center;
       min-width: 100px;
       height: 40px;
+
+      &.number {
+        font-family: $font-secondary;
+        letter-spacing: 0.5px;
+      }
 
       &.title {
         text-align: left;

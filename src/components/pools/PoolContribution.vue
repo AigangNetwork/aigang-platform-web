@@ -3,7 +3,7 @@
     <Card class="pool-card product-card">
       <div slot="body" v-loading="$store.getters.loading">
 
-        <PoolsProductHeader :info="headerInfo" :backRouteName="backRouteName" />
+        <PoolsProductHeader :info="headerInfo" :backRouteName="backRouteName" :isSingleColor="true"/>
         <PoolsContributionDetails :contribution="contribution" />
 
       </div>

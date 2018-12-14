@@ -14,11 +14,9 @@
             <table>
               <thead class="investments-table-header">
                 <tr>
-                  <th>{{ $t('pools.portfolioInfo.insuranceType') }}</th>
-                  <th>{{ $t('pools.portfolioInfo.investors') }}</th>
-                  <th>{{ $t('pools.portfolioInfo.myInvestment') }}</th>
-                  <th>{{ $t('pools.portfolioInfo.investedAmount') }}</th>
-                  <th>{{ $t('pools.portfolioInfo.goalAmount') }}</th>
+                  <th>{{ $t('pools.portfolioInfo.pool') }}</th>
+                  <th>{{ $t('pools.portfolioInfo.contributedAmount') }}</th>
+                  <th>{{ $t('pools.portfolioInfo.createdDate') }}</th>
                   <th>{{ $t('pools.portfolioInfo.status') }}</th>
                 </tr>
               </thead>
