@@ -6,12 +6,14 @@
       <vue-markdown class="markup-content" :html="false" :source="contribution.poolDescription || $t('pools.contribution.noDescription')"></vue-markdown>
 
       <h4 class="info-title">{{ $t('pools.contribution.poolDetails') }}</h4>
-      {{ $t('pools.contribution.contractAddress') }}
       <p>{{ $t('pools.contribution.contractAddress') }}: <span class="value"><a class="contract-address" target="_blank" :href="contractLink">{{ contribution.poolContractAddress }}</a></span></p>
       <p>{{ $t('pools.contribution.poolId') }}: <span class="value">{{ contribution.poolId }}</span></p>
 
       <h4 class="info-title">{{ $t('pools.contribution.details') }}</h4>
       <div>
+        <p>{{ $t('pools.contribution.createdDate') }}:
+          <Date class="value" :dateUtc="contribution.createdUtc" format="YYYY-MM-DD HH:mm (UTC Z)" />
+        </p>
         <p>{{ $t('pools.portfolioInfo.status') }}:
           <span class="value"><ContributionStatus :status="contribution.status" /></span>
         </p>
@@ -21,7 +23,6 @@
         <p v-if="showPayout">{{ $t('pools.contribution.paidoutAmount') }}:
           <span class="value">{{ contribution.payout }} {{ $t('general.aix') }}</span>
         </p>
-
       </div>
 
       <div v-if="isContributionAvailableRefund">
@@ -74,6 +75,7 @@ import ScrollableMarkupText from '@/components/insurance/ScrollableMarkupText'
 import PaymentConfirmationDialog from '@/components/common/PaymentConfirmationDialog'
 import ContributionDeleteSection from '@/components/pools/ContributionDeleteSection'
 import ContributionStatus from './ContributionStatus'
+import Date from '@/components/Date'
 
 import { createNamespacedHelpers } from 'vuex'
 const { mapGetters } = createNamespacedHelpers('pools')
@@ -85,7 +87,8 @@ export default {
     ScrollableMarkupText,
     PaymentConfirmationDialog,
     ContributionDeleteSection,
-    ContributionStatus
+    ContributionStatus,
+    Date
   },
   props: ['contribution'],
   data () {

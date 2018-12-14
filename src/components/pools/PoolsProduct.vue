@@ -2,7 +2,7 @@
   <div class="aig-container aig-view" >
     <Card class="product-card">
       <div slot="body" v-loading="$store.getters.loading">
-          <PoolsProductHeader :info="headerInfo" :backRouteName="backRouteName" />
+          <PoolsProductHeader :info="headerInfo" :backRouteName="backRouteName" :isSingleColor="false" />
           <PoolsProductDetails :pool="pool" />
       </div>
     </Card>
