@@ -91,6 +91,7 @@ import FormMixin from '@/components/mixins/FormMixin'
 
 export default {
   name: 'LoginView',
+  props: ['returnTo'],
   components: {
     Card
   },
@@ -137,7 +138,11 @@ export default {
         .post('/account/login', this.loginForm)
         .then(response => {
           this.$store.dispatch('user/logIn', response)
-          this.$router.push('/data')
+          if (this.returnTo) {
+            this.$router.push({ path: this.returnTo })
+          } else {
+            this.$router.push('/')
+          }
         })
         .catch(e => {
           this.loading = false
@@ -146,9 +151,7 @@ export default {
   },
   mounted () {
     if (this.$store.getters['user/isAuthenticated']) {
-      this.$router.push({
-        name: 'Data'
-      })
+      this.$router.push('/')
     }
   }
 }
