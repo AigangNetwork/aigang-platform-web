@@ -15,7 +15,6 @@ export default {
     commit('login', loginResponse.data)
     await dispatch('clearWeb3Instance')
     await dispatch('registerWeb3')
-    router.push('/')
   },
 
   async logOut ({ commit, dispatch }) {
@@ -28,10 +27,10 @@ export default {
     commit('setLoading', false, { root: true })
   },
 
-  handleNotLoggedIn ({ dispatch }) {
+  handleNotLoggedIn ({ dispatch }, path) {
     delete axios.defaults.headers.common['Authorization']
     dispatch('resetRootState', undefined, { root: true })
-    router.push({ name: 'Login' })
+    router.push({ name: 'Login', params: { returnTo: path } })
   },
 
   changeProfileNames ({ commit }, response) {

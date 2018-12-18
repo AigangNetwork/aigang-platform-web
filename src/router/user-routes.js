@@ -16,7 +16,8 @@ export default [
     component: Login,
     meta: {
       guestRequired: true
-    }
+    },
+    props: true
   },
   {
     path: '/register',
