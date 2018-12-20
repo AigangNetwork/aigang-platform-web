@@ -112,7 +112,8 @@ export default {
       )
     },
     isPredictionTimeEnded () {
-      const endTime = Date.parse(this.prediction.forecastEndUtc)
+      // 'Z' to specify UTC timezone
+      const endTime = Date.parse(this.prediction.forecastEndUtc + 'Z')
       return endTime <= Date.now()
     }
   },
