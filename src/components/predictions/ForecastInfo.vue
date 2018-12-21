@@ -185,7 +185,7 @@ export default {
       }
 
       .details {
-        margin-bottom: 20px;
+        margin-bottom: 40px;
 
         p {
           margin: 0px;
@@ -203,10 +203,6 @@ export default {
 
       .markup-content {
         margin-bottom: 20px;
-      }
-
-      .wrapper {
-        margin-bottom: 48px;
       }
     }
   }
