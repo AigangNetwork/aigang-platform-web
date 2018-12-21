@@ -1,6 +1,6 @@
 <template>
   <router-link :to="{ name: 'PredictionInfo', params: { id: item.id}}">
-    <div class="aig-data">
+    <div class="aig-data" :class="{ disabled: isDisabled }">
         <div class="aig-data-head">
           <div class="status" v-if="item.status === 'paused'">{{ $t('predictions.paused') }}</div>
           <div class="status" v-if="item.status === 'pendingPublish'">{{ $t('predictions.votingStarts') }}: <Date :dateUtc="item.forecastStartUtc" /></div>
@@ -34,7 +34,18 @@ export default {
   components: {
     Date
   },
-  props: ['item']
+  props: ['item'],
+  computed: {
+    isDisabled () {
+      return (
+        this.item.status === 'paused' ||
+        this.item.status === 'canceled' ||
+        this.item.status === 'pendingPublish' ||
+        this.item.status === 'pendingResolve' ||
+        this.item.status === 'resolved'
+      )
+    }
+  }
 }
 </script>
 
@@ -42,4 +53,7 @@ export default {
   @import '~helpers/variables';
   @import '~helpers/mixins';
 
+  .disabled {
+    filter: grayscale(100%);
+  }
 </style>
