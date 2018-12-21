@@ -1,6 +1,6 @@
 <template>
-  <div class="dataset-model-header-container">
-    <div class="header-title-container">
+  <div class="dataset-model-header-container" >
+    <div class="header-title-container" :class="{ disabled: !isCampaignRunning || product.state != 'active' }">
       <div class="header-left-section">
         <InsuranceProductImage :type="product.productType" />
         <h1>{{ product.title }}</h1>
@@ -15,6 +15,7 @@
   </div>
 </template>
 <script>
+import moment from 'moment'
 import Date from '@/components/Date'
 import InsuranceProductImage from '@/components/insurance/InsuranceProductImage'
 
@@ -24,6 +25,12 @@ export default {
   computed: {
     isPremiumBig () {
       return !(String(this.product.basePremium).length > 7)
+    },
+    isCampaignRunning () {
+      const currentDate = moment.utc()
+      const campaignStartDate = moment.utc(this.product.startDateUtc)
+      const campaignEndDate = moment.utc(this.product.endDateUtc)
+      return currentDate.isAfter(campaignStartDate) && currentDate.isBefore(campaignEndDate)
     }
   }
 }
@@ -38,6 +45,10 @@ export default {
   .header-title-container {
     background: rgba(148, 75, 200, 1);
     background: linear-gradient(to bottom, rgba(148, 75, 200, 1) 0%, rgba(98, 55, 187, 1) 100%);
+
+    &.disabled {
+      filter: grayscale(100%);
+    }
   }
 
   .header-right-section {
