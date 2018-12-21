@@ -136,7 +136,7 @@ export default {
       )
     },
     contractLink () {
-      return process.env.ETHERSCAN_ADDRESS + process.env.ADDRESS_PATX + this.userForecast.marketAddress
+      return process.env.ETHERSCAN_ADDRESS + process.env.ADDRESS_PATH + this.userForecast.marketAddress
     },
     isPredictionResolved () {
       return this.userForecast.predictionStatus.toUpperCase() === 'RESOLVED'

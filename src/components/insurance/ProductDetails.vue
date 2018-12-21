@@ -79,7 +79,7 @@ export default {
   computed: {
     ...mapGetters(['product']),
     contractLink () {
-      return process.env.ETHERSCAN_ADDRESS + process.env.ADDRESS_PATX + this.product.contractAddress
+      return process.env.ETHERSCAN_ADDRESS + process.env.ADDRESS_PATH + this.product.contractAddress
     }
   }
 }

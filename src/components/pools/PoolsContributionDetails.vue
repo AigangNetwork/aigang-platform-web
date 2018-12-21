@@ -102,7 +102,7 @@ export default {
   computed: {
     ...mapGetters([ 'transactionError', 'transactionHash' ]),
     contractLink () {
-      return process.env.ETHERSCAN_ADDRESS + process.env.ADDRESS_PATX + this.contribution.poolContractAddress
+      return process.env.ETHERSCAN_ADDRESS + process.env.ADDRESS_PATH + this.contribution.poolContractAddress
     },
     isContributionAvailablePayout () {
       if (this.contribution.status) {

@@ -81,7 +81,7 @@ export default {
       return Math.round((this.pool.goalPoolSize - this.pool.currentPoolSize) * Math.pow(10, numbersAfterPointer)) / Math.pow(10, numbersAfterPointer)
     },
     contractLink () {
-      return process.env.ETHERSCAN_ADDRESS + process.env.ADDRESS_PATX + this.pool.poolContractAddress
+      return process.env.ETHERSCAN_ADDRESS + process.env.ADDRESS_PATH + this.pool.poolContractAddress
     },
     isContributingTimeEnded () {
       // 'Z' to specify UTC timezone

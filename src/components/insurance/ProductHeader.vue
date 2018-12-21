@@ -47,7 +47,11 @@ export default {
     background: linear-gradient(to bottom, rgba(148, 75, 200, 1) 0%, rgba(98, 55, 187, 1) 100%);
 
     &.disabled {
-      filter: grayscale(100%);
+      background: $grey-gradient-down-top;
+
+      .header-right-section {
+      background: $grey-gradient-top-down;
+      }
     }
   }
 

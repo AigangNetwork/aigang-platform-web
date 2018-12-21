@@ -17,6 +17,7 @@
               <PolicyInfo :policy="policy" />
               <DeviceInfo :data="deviceData" />
               <ClaimInfo :data="claimProperties" />
+              <ProductDetailsInfo :data="policy" />
             </el-row>
 
             <el-row class="footer">
@@ -82,10 +83,11 @@ import PaymentConfirmationDialog from '@/components/common/PaymentConfirmationDi
 import TermsAndConditionsDialog from '@/components/insurance/TermsAndConditionsDialog'
 import LogInToEthereumClientDialog from '@/components/insurance/LogInToEthereumClientDialog'
 import PolicyDeleteSection from '@/components/insurance/PolicyDeleteSection'
-import PolicyInfo from './PolicyInfo'
-import DeviceInfo from './DeviceInfo'
-import ClaimInfo from './ClaimInfo'
+import PolicyInfo from '@/components/insurance/policy/PolicyInfo'
+import DeviceInfo from '@/components/insurance/policy/DeviceInfo'
+import ClaimInfo from '@/components/insurance/policy/ClaimInfo'
 import VerifyClaimLoadingInfo from '@/components/insurance/VerifyClaimLoadingInfo'
+import ProductDetailsInfo from '@/components/insurance/policy/ProductDetailsInfo'
 
 import { createNamespacedHelpers } from 'vuex'
 const { mapGetters, mapActions, mapMutations } = createNamespacedHelpers('insurance')
@@ -100,7 +102,8 @@ export default {
     DeviceInfo,
     ClaimInfo,
     PolicyDeleteSection,
-    VerifyClaimLoadingInfo
+    VerifyClaimLoadingInfo,
+    ProductDetailsInfo
   },
   data () {
     return {
