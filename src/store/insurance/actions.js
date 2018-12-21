@@ -254,6 +254,8 @@ const handlePolicyLoadingInfoError = async (error, policyLoadingInfo, commit, di
   } else if (error.response.status === 401) {
     dispatch('user/handleNotLoggedIn', null, { root: true })
     router.push({ name: 'Login' })
+  } else if (error.response.status) {
+    newPolicyLoadingInfo.serverError = true
   }
 
   commit('setPolicyLoadingInfo', newPolicyLoadingInfo)
