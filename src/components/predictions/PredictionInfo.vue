@@ -96,7 +96,7 @@ export default {
       'transactionHash'
     ]),
     contractLink () {
-      return process.env.ETHERSCAN_ADDRESS + process.env.ADDRESS_PATX + this.prediction.marketAddress
+      return process.env.ETHERSCAN_ADDRESS + process.env.ADDRESS_PATH + this.prediction.marketAddress
     },
     isPercentageVisible () {
       return (

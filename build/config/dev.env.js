@@ -8,7 +8,7 @@ module.exports = merge(prodEnv, {
   API_ADDRESS: '"http://localhost:5000/api"',
   ETHERSCAN_ADDRESS: '"https://ropsten.etherscan.io/"',
   TX_PATH: '"tx/"',
-  ADDRESS_PATX: '"address/"',
+  ADDRESS_PATH: '"address/"',
   ANDROID_APP_LOCATION: '"https://github.com/AigangNetwork/aigang-insurance-app/tree/master/android"',
   RETRY_COUNT: 10,
   GAS: {

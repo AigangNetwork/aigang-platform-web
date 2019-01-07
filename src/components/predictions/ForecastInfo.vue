@@ -136,7 +136,7 @@ export default {
       )
     },
     contractLink () {
-      return process.env.ETHERSCAN_ADDRESS + process.env.ADDRESS_PATX + this.userForecast.marketAddress
+      return process.env.ETHERSCAN_ADDRESS + process.env.ADDRESS_PATH + this.userForecast.marketAddress
     },
     isPredictionResolved () {
       return this.userForecast.predictionStatus.toUpperCase() === 'RESOLVED'
@@ -185,7 +185,7 @@ export default {
       }
 
       .details {
-        margin-bottom: 20px;
+        margin-bottom: 40px;
 
         p {
           margin: 0px;
@@ -203,10 +203,6 @@ export default {
 
       .markup-content {
         margin-bottom: 20px;
-      }
-
-      .wrapper {
-        margin-bottom: 48px;
       }
     }
   }

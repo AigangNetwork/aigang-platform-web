@@ -5,7 +5,7 @@ module.exports = {
   API_ADDRESS: '"https://api.aigang.network/api"',
   ETHERSCAN_ADDRESS: '"https://etherscan.io/"',
   TX_PATH: '"tx/"',
-  ADDRESS_PATX: '"address/"',
+  ADDRESS_PATH: '"address/"',
   ANDROID_APP_LOCATION: '"https://play.google.com/store/apps/details?id=com.aigang.aigangapp"',
   RETRY_COUNT: 10,
   GAS: {

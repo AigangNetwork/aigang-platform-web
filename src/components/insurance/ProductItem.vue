@@ -77,7 +77,6 @@ export default {
     &.disabled {
       opacity: 0.6;
       filter: grayscale(100%);
-      pointer-events: none;
     }
 
     .aig-product-data-body-container {

@@ -1,63 +1,77 @@
 <template>
   <el-container class="aig-container-dataset" v-loading="loading">
     <div class="aig-blue-bck-container">
+      <div class="back-button-container">
+        <router-link :to="{ name: 'Data' }" class="back-button"> {{ $t('general.backToList') }} </router-link>
+      </div>
       <div class="aig-dataset-header">
-        <div>
+        <div class="aig-info-header">
           <div class="creator-info">
-            <div class="creator">{{$t('data.dataset.createdBy')}} {{ dataset.createdBy }}</div>
-            <div class="uploaded">{{$t('data.dataset.updated')}}: {{ updated }}</div>
+            <div class="creator">{{ $t('data.dataset.createdBy') }} {{ dataset.createdBy }}</div>
+            <div class="uploaded">{{ $t('data.dataset.updated') }}: {{ updated }}</div>
           </div>
-          <div class="dataset-title">{{dataset.title}}</div>
-          <div class="dataset-state" v-if="dataset.state === 'created'">{{ $t('data.card.status') }}: {{ $t('data.card.notApproved') }}</div>
-          <div class="dataset-state" v-if="dataset.state === 'closed'">{{ $t('data.card.status') }}: {{ $t('data.card.closed') }}</div>
+          <div class="dataset-title">{{ dataset.title }}</div>
+          <div class="dataset-state" v-if="dataset.state === 'created'">
+            {{ $t('data.card.status') }}: {{ $t('data.card.notApproved') }}
+          </div>
+          <div class="dataset-state" v-if="dataset.state === 'closed'">
+            {{ $t('data.card.status') }}: {{ $t('data.card.closed') }}
+          </div>
           <div class="aig-dataset-header-btn-container">
             <button v-if="!dataset.remoteFileAccessPoint" @click="downloadDataset" class="aig-dataset-header-btn">
-              <i class="el-icon-document button-icon"></i> {{$t('data.dataset.downloadDataset')}}
+              <i class="el-icon-document button-icon"></i> {{ $t('data.dataset.downloadDataset') }}
             </button>
             <router-link v-if="isUserOwner" class="aig-dataset-header-btn fit edit" :to="editRoute" exact>
-              <i class="el-icon-edit button-icon"></i> {{$t('data.dataset.editDataset')}}
+              <i class="el-icon-edit button-icon"></i> {{ $t('data.dataset.editDataset') }}
             </router-link>
           </div>
         </div>
         <div class="dataset-tags-container">
-          <DatasetTag v-for="(tag, index) in dataset.tags" v-bind:key="index">
-            #{{tag}}
-          </DatasetTag>
+          <DatasetTag v-for="(tag, index) in dataset.tags" v-bind:key="index"> #{{ tag }} </DatasetTag>
         </div>
       </div>
       <DataNavigation :show="!uploadingModelActive" :navigationBars="navigationBars">
-
         <template v-if="showUpload">
           <li v-if="uploadingModelActive" class="upload-model-button" key="upload-title">
             <h3>{{ $t('data.dataset.model.submitModel') }}</h3>
           </li>
 
           <li class="stick-to-right" key="upload-button">
-            <el-tooltip v-if="!uploadingModelActive" :disabled="$store.getters['user/isAuthenticated']" :content="$t('data.dataset.uploadModelDisabled')">
+            <el-tooltip
+              v-if="!uploadingModelActive"
+              :disabled="$store.getters['user/isAuthenticated']"
+              :content="$t('data.dataset.uploadModelDisabled')"
+            >
               <span class="wrapper el-button">
-                <el-button :disabled="!$store.getters['user/isAuthenticated']" class="upload-model-button" @click="$router.push({name: 'UploadDataModel'})"
-                  type="warning">{{ $t('data.dataset.model.uploadModel') }}</el-button>
+                <el-button
+                  :disabled="!$store.getters['user/isAuthenticated']"
+                  class="upload-model-button"
+                  @click="$router.push({name: 'UploadDataModel'})"
+                  type="warning"
+                  >{{ $t('data.dataset.model.uploadModel') }}</el-button
+                >
               </span>
             </el-tooltip>
-            <el-button :disabled="!$store.getters['user/isAuthenticated']" v-if="uploadingModelActive" class="upload-model-button" @click="$router.push('/data/' + $route.params.id)"
-              type="warning">{{ $t('general.cancel') }}</el-button>
+            <el-button
+              :disabled="!$store.getters['user/isAuthenticated']"
+              v-if="uploadingModelActive"
+              class="upload-model-button"
+              @click="$router.push('/data/' + $route.params.id)"
+              type="warning"
+              >{{ $t('general.cancel') }}</el-button
+            >
           </li>
         </template>
         <template v-else>
-          <li class="stick-to-right" key="space">
-          </li>
+          <li class="stick-to-right" key="space"></li>
         </template>
       </DataNavigation>
-
     </div>
     <div class="dataset-content-container">
       <div class="dataset-content">
-        <transition name="slideUp">
-          <router-view></router-view>
-        </transition>
+        <transition name="slideUp"> <router-view></router-view> </transition>
       </div>
     </div>
-
   </el-container>
 </template>
 <script>
@@ -82,7 +96,7 @@ export default {
     if (this.dataset.state !== 'active') {
       this.showUpload = false
     }
-    eventHub.$on(eventHub.eventChangeCommentsCountForDataset, (commentsToAdd) => {
+    eventHub.$on(eventHub.eventChangeCommentsCountForDataset, commentsToAdd => {
       this.dataset.commentsCount += commentsToAdd
       this.setComments(this.dataset.commentsCount)
     })
@@ -93,50 +107,51 @@ export default {
       isUserOwner: false,
       editRoute: '/data/' + this.$route.params.id + '/edit',
       showUpload: true,
-      navigationBars: [{
-        name: this.$t('data.dataset.navigation.info'),
-        routeLink: {
-          name: 'DatasetInfo',
-          params: {
-            id: this.$route.params.id
-          }
+      navigationBars: [
+        {
+          name: this.$t('data.dataset.navigation.info'),
+          routeLink: {
+            name: 'DatasetInfo',
+            params: {
+              id: this.$route.params.id
+            }
+          },
+          imgSrc: '/static/dataset/info24px.svg',
+          disabled: false
         },
-        imgSrc: '/static/dataset/info24px.svg',
-        disabled: false
-      },
-      {
-        name: this.$t('data.dataset.navigation.data'),
-        routeLink: {
-          name: 'DatasetData',
-          params: {
-            id: this.$route.params.id
-          }
+        {
+          name: this.$t('data.dataset.navigation.data'),
+          routeLink: {
+            name: 'DatasetData',
+            params: {
+              id: this.$route.params.id
+            }
+          },
+          imgSrc: '/static/dataset/data24px.svg',
+          disabled: false
         },
-        imgSrc: '/static/dataset/data24px.svg',
-        disabled: false
-      },
-      {
-        name: this.$t('data.dataset.navigation.models'),
-        routeLink: {
-          name: 'DatasetModels',
-          params: {
-            id: this.$route.params.id
-          }
+        {
+          name: this.$t('data.dataset.navigation.models'),
+          routeLink: {
+            name: 'DatasetModels',
+            params: {
+              id: this.$route.params.id
+            }
+          },
+          imgSrc: '/static/models24px.svg',
+          disabled: false
         },
-        imgSrc: '/static/models24px.svg',
-        disabled: false
-      },
-      {
-        name: this.$t('data.dataset.navigation.comment'),
-        routeLink: {
-          name: 'DatasetComment',
-          params: {
-            id: this.$route.params.id
-          }
-        },
-        imgSrc: '/static/threads24px.svg',
-        disabled: false
-      }
+        {
+          name: this.$t('data.dataset.navigation.comment'),
+          routeLink: {
+            name: 'DatasetComment',
+            params: {
+              id: this.$route.params.id
+            }
+          },
+          imgSrc: '/static/threads24px.svg',
+          disabled: false
+        }
       ]
     }
   },
@@ -174,8 +189,7 @@ export default {
       }
 
       if (this.dataset && this.dataset.id) {
-        if (this.$store.state.user.profile &&
-            this.$store.state.user.profile.id === this.dataset.userId) {
+        if (this.$store.state.user.profile && this.$store.state.user.profile.id === this.dataset.userId) {
           this.isUserOwner = true
         }
 
@@ -201,22 +215,23 @@ export default {
     },
     downloadDataset () {
       this.loading = true
-      this.axios.get('data/' + this.$route.params.id + '/file', {
-        responseType: 'blob'
-      }).then((response) => {
-        const url = window.URL.createObjectURL(new Blob([response.data]))
-        const link = document.createElement('a')
-        link.href = url
-        link.setAttribute('download', this.$route.params.id + '.csv')
-        document.body.appendChild(link)
-        link.click()
-        document.body.removeChild(link)
-        this.loading = false
-      })
+      this.axios
+        .get('data/' + this.$route.params.id + '/file', {
+          responseType: 'blob'
+        })
+        .then(response => {
+          const url = window.URL.createObjectURL(new Blob([response.data]))
+          const link = document.createElement('a')
+          link.href = url
+          link.setAttribute('download', this.$route.params.id + '.csv')
+          document.body.appendChild(link)
+          link.click()
+          document.body.removeChild(link)
+          this.loading = false
+        })
     }
   }
 }
-
 </script>
 <style lang="scss" scoped>
   @import '~helpers/variables';
@@ -306,6 +321,23 @@ export default {
   .dataset-state {
     font-size: 18px;
     margin: 20px 0 20px 0;
+  }
+
+  .back-button-container {
+    width: 100%;
+    margin-top: 20px;
+    margin-left: 30px;
+
+    .back-button {
+      color: #fff;
+      padding: 5px 10px 5px 10px;
+      border: #fff 1px solid;
+      opacity: 0.6;
+    }
+
+    .back-button:hover {
+      opacity: 1;
+    }
   }
 
   @media screen and (min-width: 280px) and (max-width: 680px) {

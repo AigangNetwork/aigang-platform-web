@@ -74,4 +74,5 @@ export default {
       text-align: right;
     }
   }
+
 </style>
