@@ -831,7 +831,10 @@
       "refundContributionDescription": "Payout for your contribution is available.",
       "refundAmount": "Refund amount",
       "refund": "Refund",
-      "createdDate": "Created Date"
+      "createdDate": "Created Date",
+      "explanations": {
+        "canceled": "Some issue happened and refunds for this pool contributors will happen"
+      }
     },
     "poolStatuses": {
       "active": "Active",
