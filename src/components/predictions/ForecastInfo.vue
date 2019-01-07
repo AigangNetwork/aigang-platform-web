@@ -207,7 +207,7 @@ export default {
     }
   }
 
-  .wrapper {
+  .wrapper.el-button {
     margin-top: 48px;
     width: 100%;
   }
