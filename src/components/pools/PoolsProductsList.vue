@@ -7,7 +7,7 @@
       <el-col>
         <Pagination v-if="pools.totalPages > 1" :callback="loadPage" :total-page-count="pools.totalPages" :current-page="page" />
       </el-col>
-      <el-col v-if="!$store.getters.loading && pools && !pools.items">
+      <el-col v-if="!$store.getters.loading && pools && (!pools.items || pools.items.length === 0)">
         <h2>{{ $t('general.noPools') }}</h2>
       </el-col>
     </el-row>

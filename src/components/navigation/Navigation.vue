@@ -67,41 +67,7 @@ export default {
   },
   data () {
     return {
-      navigationBars: [{
-        name: this.$t('navigation.data'),
-        routeLink: '/data',
-        type: 'internal',
-        disabled: !process.env.FEATURE_TOGGLE.DATA
-      },
-      {
-        name: this.$t('navigation.predictions'),
-        routeLink: '/predictions',
-        type: 'internal',
-        disabled: !process.env.FEATURE_TOGGLE.PREDICTIONS
-      },
-      {
-        name: this.$t('navigation.pools'),
-        routeLink: '/pools',
-        type: 'internal',
-        disabled: !process.env.FEATURE_TOGGLE.POOLS
-      },
-      {
-        name: this.$t('navigation.insurance'),
-        routeLink: '/insurance',
-        type: 'internal',
-        disabled: !process.env.FEATURE_TOGGLE.INSURANCE
-      },
-      {
-        name: this.$t('navigation.wiki'),
-        type: 'external',
-        link: 'https://aigangnetwork.github.io/'
-      },
-      {
-        name: this.$t('navigation.discussions'),
-        type: 'internal',
-        routeLink: '/discussions'
-      }
-      ],
+      navigationBars: [],
       dropDownMenuActive: false
     }
   },
@@ -115,6 +81,55 @@ export default {
   computed: {
     isDevEnv () {
       return process.env.NODE_ENV !== 'production'
+    }
+  },
+  created () {
+    if (process.env.FEATURE_TOGGLE.DATA) {
+      this.navigationBars.push({
+        name: this.$t('navigation.data'),
+        routeLink: '/data',
+        type: 'internal'
+      })
+    }
+
+    if (process.env.FEATURE_TOGGLE.POOLS) {
+      this.navigationBars.push({
+        name: this.$t('navigation.pools'),
+        routeLink: '/pools',
+        type: 'internal'
+      })
+    }
+
+    if (process.env.FEATURE_TOGGLE.PREDICTIONS) {
+      this.navigationBars.push({
+        name: this.$t('navigation.predictions'),
+        routeLink: '/predictions',
+        type: 'internal'
+      })
+    }
+
+    if (process.env.FEATURE_TOGGLE.INSURANCE) {
+      this.navigationBars.push({
+        name: this.$t('navigation.insurance'),
+        routeLink: '/insurance',
+        type: 'internal'
+      })
+    }
+
+    if (process.env.FEATURE_TOGGLE.WIKI) {
+      this.navigationBars.push({
+        name: this.$t('navigation.wiki'),
+        type: 'external',
+        link: 'https://aigangnetwork.github.io/'
+      })
+    }
+
+    if (process.env.FEATURE_TOGGLE.DISCUSSIONS) {
+      this.navigationBars.push({
+        name: this.$t('navigation.discussions'),
+        type: 'internal',
+        routeLink: '/discussions'
+      })
     }
   }
 }

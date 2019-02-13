@@ -7,10 +7,14 @@ module.exports = merge(prodEnv, {
   NODE_ENV: '"dev"',
   API_ADDRESS: '"http://localhost:5000/api"',
   ETHERSCAN_ADDRESS: '"https://ropsten.etherscan.io/"',
+  ETHERSCAN_API_KEY: '"FVIK192HIJFEICSMVIFV5RUMQ1PBWXK8ZR"',
   TX_PATH: '"tx/"',
+  ABI_PATH: '"/api?module=contract&action=getabi"',
   ADDRESS_PATH: '"address/"',
   ANDROID_APP_LOCATION: '"https://github.com/AigangNetwork/aigang-insurance-app/tree/master/android"',
   RETRY_COUNT: 10,
+  POOLS_ITEMS_PER_PAGE: 9,
+  CONTRIBUTIONS_ITEMS_PER_PAGE: 9,
   GAS: {
     ADD_FORECAST: 400000,
     FORECAST_PAYOUT: 400000,
@@ -29,6 +33,7 @@ module.exports = merge(prodEnv, {
     PREDICTIONS: true,
     POOLS: true,
     INSURANCE: true,
+    WIKI: true,
     DISCUSSIONS: true
   }
 })

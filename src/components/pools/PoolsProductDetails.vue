@@ -8,19 +8,14 @@
           <p><a class="contract-address" target="_blank" :href="contractLink">{{ pool.poolContractAddress }}</a></p>
 
           <div v-if="pool.status === 'active'">
-            <h4 class="info-title">{{ $t('pools.pool.termsAndConditions') }}</h4>
-            <ScrollableMarkupText class="scrollable-text" :text="pool.termsAndConditions" @scrolledToBottom="onScrolledToBottom" />
-
             <el-tooltip :disabled="isUserAuthenticated" :content="$t('pools.userNotLoggedIn')">
-            <el-tooltip :disabled="!investButtonDisabled || !isUserAuthenticated" :content="$t('pools.pool.agreeWithTermsAndConditions')">
-            <el-tooltip :disabled="!isContributingTimeEnded || investButtonDisabled || !isUserAuthenticated" :content="$t('pools.pool.poolHasEnded')">
-            <el-tooltip :disabled="!isPoolCapacityReached || isContributingTimeEnded || investButtonDisabled || !isUserAuthenticated" :content="$t('pools.pool.poolCapacityReached')">
+            <el-tooltip :disabled="!isContributingTimeEnded || !isUserAuthenticated" :content="$t('pools.pool.poolHasEnded')">
+            <el-tooltip :disabled="!isPoolCapacityReached || isContributingTimeEnded || !isUserAuthenticated" :content="$t('pools.pool.poolCapacityReached')">
               <span class="wrapper el-button">
-                <el-button :disabled="investButtonDisabled || isContributingTimeEnded || isPoolCapacityReached || !isUserAuthenticated" @click="contribute" class="aig-button" type="primary">
+                <el-button :disabled="isContributingTimeEnded || isPoolCapacityReached || !isUserAuthenticated" @click="contribute" class="aig-button" type="primary">
                   {{ $t('pools.pool.contribute') }}
                 </el-button>
               </span>
-            </el-tooltip>
             </el-tooltip>
             </el-tooltip>
             </el-tooltip>
@@ -66,7 +61,6 @@ export default {
   data () {
     return {
       isConfirmContributionDialogVisible: false,
-      investButtonDisabled: true,
       isPaymentDialogVisible: false,
       portfolioRoute: '/pools/portfolio'
     }
@@ -117,9 +111,6 @@ export default {
       })
 
       this.displayPaymentDialog(true)
-    },
-    onScrolledToBottom () {
-      this.investButtonDisabled = false
     },
     displayPaymentDialog (value) {
       this.isPaymentDialogVisible = value

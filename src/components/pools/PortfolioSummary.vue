@@ -1,7 +1,6 @@
 <template>
   <div class="summary-container" v-loading="portfolioSummaryLoading">
-    <div v-if="isDataLoaded">
-      <Card>
+      <Card v-if="!portfolioSummaryLoading">
         <div slot="body" class="scrollable">
           <div class="details">
             <div class="details-item">
@@ -23,7 +22,6 @@
           </div>
         </div>
       </Card>
-    </div>
   </div>
 </template>
 
@@ -37,15 +35,6 @@ export default {
   components: { Card },
   computed: {
     ...mapGetters(['portfolioSummary', 'portfolioSummaryLoading'])
-  },
-  data () {
-    return {
-      isDataLoaded: false
-    }
-  },
-  async beforeMount () {
-    await this.$store.dispatch('pools/getPortfolioSummary')
-    this.isDataLoaded = true
   }
 }
 </script>

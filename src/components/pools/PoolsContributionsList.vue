@@ -1,6 +1,6 @@
 <template>
   <div v-loading="contributionsListLoading">
-    <div class="items-container" v-if="isDataLoaded">
+    <div class="items-container" v-if="!contributionsListLoading">
       <Card>
         <div slot="body">
           <div class="filters-bar">
@@ -16,7 +16,6 @@
                 <tr>
                   <th>{{ $t('pools.portfolioInfo.pool') }}</th>
                   <th>{{ $t('pools.portfolioInfo.contributedAmount') }}</th>
-                  <th>{{ $t('pools.portfolioInfo.createdDate') }}</th>
                   <th>{{ $t('pools.portfolioInfo.status') }}</th>
                 </tr>
               </thead>
@@ -59,7 +58,6 @@ export default {
     return {
       page: 1,
       filters: {},
-      isDataLoaded: false,
       items: [{
         name: this.$t('predictions.forecast.statuses.all'),
         value: ''
@@ -91,10 +89,7 @@ export default {
     }
   },
   async beforeMount () {
-    if (!this.isDataLoaded) {
-      await this.loadPage(1)
-      this.isDataLoaded = true
-    }
+    await this.loadPage(1)
   },
   methods: {
     async onFilterByStatusDropdownItemSelected (value) {

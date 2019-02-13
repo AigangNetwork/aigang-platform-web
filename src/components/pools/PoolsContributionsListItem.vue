@@ -2,7 +2,6 @@
   <tr @click="navigateToContribution(contribution.id)">
     <td class="title">{{ contribution.poolName }}</td>
     <td class="number">{{ contribution.amount}} {{ $t('general.aix') }}</td>
-    <td class="number"><Date  :dateUtc="contribution.createdUtc" format="YYYY-MM-DD HH:mm" /></td>
     <td>
       <PoolContributionLabel :type="contribution.status" size="small" />
     </td>

@@ -4,7 +4,9 @@ module.exports = {
   NODE_ENV: '"qa"',
   API_ADDRESS: '"https://testapi.aigang.network/api"',
   ETHERSCAN_ADDRESS: '"https://ropsten.etherscan.io/"',
+  ETHERSCAN_API_KEY: 'FVIK192HIJFEICSMVIFV5RUMQ1PBWXK8ZR',
   TX_PATH: '"tx/"',
+  ABI_PATH: '/api?module=contract&action=getabi',
   ADDRESS_PATH: '"address/"',
   ANDROID_APP_LOCATION: '"https://github.com/AigangNetwork/aigang-insurance-app/tree/master/android"',
   RETRY_COUNT: 10,
@@ -26,6 +28,7 @@ module.exports = {
     PREDICTIONS: true,
     POOLS: true,
     INSURANCE: true,
+    WIKI: true,
     DISCUSSIONS: true
   }
 }
