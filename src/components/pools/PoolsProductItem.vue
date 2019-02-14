@@ -1,6 +1,6 @@
 
 <template>
-  <router-link :to="{ name: 'PoolsProduct', params: { id: item.id }}">
+  <router-link :to="{ name: 'PoolsProduct', params: { id: item.id, address: item.poolContractAddress }}">
     <div class="aig-data pools-product-item" :class="{ active: item.status === 'active'}">
         <div class="aig-data-head">
           <div class="status" v-if="item.status === 'active'">{{ $t('pools.products.activeTill') }}: <Date :dateUtc="item.endDateUtc" /></div>
@@ -22,7 +22,6 @@
             <span class="label">{{ item.contributions || 0 }}</span>
           </div>
         </div>
-
     </div>
   </router-link>
 </template>

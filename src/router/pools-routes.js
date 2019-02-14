@@ -30,7 +30,7 @@ export default [
     ]
   },
   {
-    path: '/pools/pool/:id',
+    path: '/pools/pool/:address/:id',
     component: PoolsProduct,
     name: 'PoolsProduct'
   },

@@ -28,7 +28,7 @@ export default {
     ...mapGetters(['pool'])
   },
   async mounted () {
-    await this.$store.dispatch('pools/getPool', this.$route.params.id)
+    await this.$store.dispatch('pools/getPool', { id: this.$route.params.id, address: this.$route.params.address })
 
     this.headerInfo = {
       status: this.pool.status,

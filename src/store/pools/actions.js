@@ -14,6 +14,12 @@ export default {
   async getPoolsList ({ commit }, page) {
     commit('setLoading', true, { root: true })
 
+    const pools = {
+      items: [],
+      totalPages: 1
+    }
+    commit('setPools', pools)
+
     try {
       const contracts = await getContracts(process.env.CONTRACT_TYPES.POOLS)
       const itemsPerPage = process.env.POOLS_ITEMS_PER_PAGE
@@ -32,19 +38,25 @@ export default {
         totalPages: Math.ceil(totalPools / itemsPerPage)
       }
 
+      commit('setPools', pools)
+
       const startItem = page * itemsPerPage - itemsPerPage + 1
       const maxItems = page * itemsPerPage
 
       let poolsCounter = 0
 
+      // Iterating through contracts
       for (let index = 0; index < contracts.length; index++) {
         const poolsLength = parseInt(poolsSizes[index])
+
+        // Iterating through pools in a conctract
         for (
           let i = 1;
           i <= poolsLength && pools.items.length <= itemsPerPage && poolsCounter < maxItems;
           i++
         ) {
           poolsCounter++
+          
           if (poolsCounter < startItem) {
             continue
           }
@@ -61,35 +73,37 @@ export default {
             startDateUtc: moment.unix(data.contributionStartUtc).format('YYYY-MM-DD HH:mm'),
             endDateUtc: moment.unix(data.contributionEndUtc).format('YYYY-MM-DD HH:mm'),
             entityContractAddress: data.destination,
-            poolContractAddress: poolAddress,
+            poolContractAddress: contract._address,
             contributions: await contract.methods.getPoolContributionsLength(i).call(),
             currentPoolSize: window.web3.utils.fromWei(data.amountCollected),
             goalPoolSize: window.web3.utils.fromWei(data.amountLimit)
           }
 
-          pools.items.push(pool)
+          commit('addPoolToList', pool)
+          if (poolsCounter === startItem) {
+            commit('setLoading', false, { root: true })
+          }
         }
       }
 
       commit('setPools', pools)
-      commit('setLoading', false, { root: true })
     } catch (ex) {
       console.error(ex)
       commit('setLoading', false, { root: true })
     }
   },
 
-  async getPool ({ commit }, id) {
+  async getPool ({ commit }, payload) {
     commit('setPool', {})
     commit('setLoading', true, { root: true })
 
     try {
-      const abi = await getAbi(poolAddress)
-      const contract = new window.web3.eth.Contract(abi, poolAddress)
-      const data = await contract.methods.pools(id).call()
+      const abi = await getAbi(payload.address)
+      const contract = new window.web3.eth.Contract(abi, payload.address)
+      const data = await contract.methods.pools(payload.id).call()
 
       const pool = {
-        id: id,
+        id: payload.id,
         entityId: data.destination,
         title: data.title,
         description: data.description,
@@ -97,8 +111,8 @@ export default {
         startDateUtc: moment.unix(data.contributionStartUtc).format('YYYY-MM-DD HH:mm'),
         endDateUtc: moment.unix(data.contributionEndUtc).format('YYYY-MM-DD HH:mm'),
         entityContractAddress: data.destination,
-        poolContractAddress: poolAddress,
-        contributions: await contract.methods.getPoolContributionsLength(id).call(),
+        poolContractAddress: payload.address,
+        contributions: await contract.methods.getPoolContributionsLength(payload.id).call(),
         currentPoolSize: window.web3.utils.fromWei(data.amountCollected),
         goalPoolSize: window.web3.utils.fromWei(data.amountLimit)
       }
@@ -106,6 +120,7 @@ export default {
       commit('setPool', pool)
       commit('setLoading', false, { root: true })
     } catch (ex) {
+      console.error(ex)
       commit('setLoading', false, { root: true })
     }
   },
@@ -116,12 +131,9 @@ export default {
     commit('setLoading', true, { root: true })
 
     try {
-      // TODO: take ABI from etherscan
-      const TokenInstance = new window.web3.eth.Contract(
-        process.env.CONTRACT_INFO.ABI,
-        process.env.CONTRACT_INFO.ADDRESS
-      )
-
+      const tokenAddress = process.env.CONTRACTS_ADDRESSES.TOKEN
+      const tokenAbi = await getAbi(tokenAddress)
+      const TokenInstance = new window.web3.eth.Contract(tokenAbi, tokenAddress)
       const paymentValue = window.web3.utils.toWei(payload.amount.toString())
       const poolIdHex = getHex(payload.poolId)
 
@@ -148,6 +160,7 @@ export default {
         commit('setLoading', false, { root: true })
       })
     } catch (error) {
+      console.error(error)
       commit('setLoading', false, { root: true })
       commit('setTransactionError', true)
     }

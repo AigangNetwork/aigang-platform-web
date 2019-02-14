@@ -1,9 +1,12 @@
 <template>
-  <transition-group class="items-container" name="slideUp" v-loading="$store.getters.loading">
-    <el-row class="aig-items" key="pools-list" v-show="isDataLoaded">
-      <el-col :xs="24" :sm="12" :md="12" :lg="8" v-for="(pool, index) in pools.items" :key="index">
-        <PoolsProductItem :item="pool" />
-      </el-col>
+    <transition-group class="items-container" name="slideUp" v-loading="$store.getters.loading">
+
+    <el-row class="aig-items" key="pools-list">
+      <transition-group name="slideUp">
+        <el-col :xs="24" :sm="12" :md="12" :lg="8" v-for="(pool, index) in pools.items" :key="index">
+          <PoolsProductItem :item="pool" />
+        </el-col>
+        </transition-group>
       <el-col>
         <Pagination v-if="pools.totalPages > 1" :callback="loadPage" :total-page-count="pools.totalPages" :current-page="page" />
       </el-col>
@@ -11,7 +14,7 @@
         <h2>{{ $t('general.noPools') }}</h2>
       </el-col>
     </el-row>
-  </transition-group>
+    </transition-group>
 </template>
 
 <script>
