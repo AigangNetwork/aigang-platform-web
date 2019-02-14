@@ -1,7 +1,7 @@
 <template>
   <transition-group class="items-container" name="slideUp" v-loading="$store.getters.loading">
     <el-row class="aig-items" key="pools-list" v-show="isDataLoaded">
-      <el-col :xs="24" :sm="12" :md="12" :lg="8" v-for="pool in pools.items" :key="pool.id">
+      <el-col :xs="24" :sm="12" :md="12" :lg="8" v-for="(pool, index) in pools.items" :key="index">
         <PoolsProductItem :item="pool" />
       </el-col>
       <el-col>

@@ -83,7 +83,7 @@ export default {
       return endTime <= Date.now()
     },
     isPoolCapacityReached () {
-      return this.pool.goalPoolSize <= this.pool.currentPoolSize
+      return parseFloat(this.pool.goalPoolSize) <= parseFloat(this.pool.currentPoolSize)
     },
     isUserAuthenticated () {
       return this.$store.getters['user/isAuthenticated'] && this.$store.getters['user/isWeb3Enabled']

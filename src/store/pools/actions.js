@@ -2,6 +2,7 @@ import axios from 'axios'
 import moment from 'moment'
 import { initialPoolState } from './index'
 import getAbi from '@/utils/contract/getAbi'
+import getContracts from '@/utils/contract/getContracts'
 const poolAddress = '0xb8f2be4453511101d12bc1d667fcb3c2ebaa9b4c'
 const web3 = window.web3
 
@@ -12,46 +13,68 @@ export default {
 
   async getPoolsList ({ commit }, page) {
     commit('setLoading', true, { root: true })
-    try {
-      const abi = await getAbi(poolAddress)
-      const contract = new window.web3.eth.Contract(abi, poolAddress)
 
-      const poolsCount = await contract.methods.totalPools().call()
+    try {
+      const contracts = await getContracts(process.env.CONTRACT_TYPES.POOLS)
       const itemsPerPage = process.env.POOLS_ITEMS_PER_PAGE
+
+      const poolsSizes = await Promise.all(
+        contracts.map(async c => {
+          const result = await c.methods.totalPools().call()
+          return result
+        })
+      )
+
+      const totalPools = poolsSizes.reduce((sum, s) => sum + parseInt(s), 0) || 0
 
       const pools = {
         items: [],
-        totalPages: Math.ceil(poolsCount / itemsPerPage)
+        totalPages: Math.ceil(totalPools / itemsPerPage)
       }
 
       const startItem = page * itemsPerPage - itemsPerPage + 1
       const maxItems = page * itemsPerPage
 
-      for (let i = startItem; i <= poolsCount && i <= maxItems; i++) {
-        const data = await contract.methods.pools(i).call()
+      let poolsCounter = 0
 
-        const pool = {
-          id: i,
-          entityId: data.destination,
-          title: data.title,
-          description: data.description,
-          status: mapPoolStatus(data.status),
-          startDateUtc: moment.unix(data.contributionStartUtc).format('YYYY-MM-DD HH:mm'),
-          endDateUtc: moment.unix(data.contributionEndUtc).format('YYYY-MM-DD HH:mm'),
-          entityContractAddress: data.destination,
-          poolContractAddress: poolAddress,
-          contributions: await contract.methods.getPoolContributionsLength(i).call(),
-          currentPoolSize: window.web3.utils.fromWei(data.amountCollected),
-          goalPoolSize: window.web3.utils.fromWei(data.amountLimit)
+      for (let index = 0; index < contracts.length; index++) {
+        const poolsLength = parseInt(poolsSizes[index])
+        for (
+          let i = 1;
+          i <= poolsLength && pools.items.length <= itemsPerPage && poolsCounter < maxItems;
+          i++
+        ) {
+          poolsCounter++
+          if (poolsCounter < startItem) {
+            continue
+          }
+
+          const contract = contracts[index]
+          const data = await contract.methods.pools(i).call()
+
+          const pool = {
+            id: i,
+            entityId: data.destination,
+            title: data.title,
+            description: data.description,
+            status: mapPoolStatus(data.status),
+            startDateUtc: moment.unix(data.contributionStartUtc).format('YYYY-MM-DD HH:mm'),
+            endDateUtc: moment.unix(data.contributionEndUtc).format('YYYY-MM-DD HH:mm'),
+            entityContractAddress: data.destination,
+            poolContractAddress: poolAddress,
+            contributions: await contract.methods.getPoolContributionsLength(i).call(),
+            currentPoolSize: window.web3.utils.fromWei(data.amountCollected),
+            goalPoolSize: window.web3.utils.fromWei(data.amountLimit)
+          }
+
+          pools.items.push(pool)
         }
-
-        pools.items.push(pool)
       }
 
       commit('setPools', pools)
-
       commit('setLoading', false, { root: true })
     } catch (ex) {
+      console.error(ex)
       commit('setLoading', false, { root: true })
     }
   },
@@ -119,6 +142,11 @@ export default {
         commit('setLoading', false, { root: true })
         commit('setTransactionError', true)
       })
+
+      callObject.once('transactionHash', async txId => {
+        commit('setTransactionHash', txId)
+        commit('setLoading', false, { root: true })
+      })
     } catch (error) {
       commit('setLoading', false, { root: true })
       commit('setTransactionError', true)
@@ -181,22 +209,17 @@ export default {
 
       commit('setUserContributions', contributions)
 
+      const sumWithStatus = status => (sum, c) => {
+        if (c.status === status) {
+          return sum + c.amount
+        }
+      }
+
       const summary = {
         contributions: myContributionsLength,
-
         contributionsAmount: contributions.items.reduce((sum, c) => sum + c.amount, 0) || 0,
-
-        availableRefund: contributions.items.reduce((sum, c) => {
-          if (c.status === 'availablerefund') {
-            return sum + c.amount
-          }
-        }, 0) || 0,
-
-        rewardPaidOut: contributions.items.reduce((sum, c) => {
-          if (c.status === 'rewardpaidout') {
-            return sum + c.amount
-          }
-        }, 0) || 0
+        availableRefund: contributions.items.reduce(sumWithStatus('availablerefund'), 0) || 0,
+        rewardPaidOut: contributions.items.reduce(sumWithStatus('availablepayout'), 0) || 0
       }
 
       commit('setPortfolioSummary', summary)
@@ -251,102 +274,68 @@ export default {
     }
   },
 
-  async payoutContribution ({ commit, rootState, dispatch }, payload) {
+  async payoutContribution ({ commit, rootState }, payload) {
     commit('setTransactionHash', '')
     commit('setTransactionError', false)
-
     commit('setLoading', true, { root: true })
 
-    const response = await axios.get(`/contracts/${payload.poolContractAddress}`)
+    try {
+      const abi = await getAbi(poolAddress)
+      const PoolsInstance = new window.web3.eth.Contract(abi, payload.poolContractAddress)
 
-    if (!response.data) {
       commit('setLoading', false, { root: true })
-      return
-    }
 
-    const web3 = window.web3
-    const PoolsInstance = new web3.eth.Contract(JSON.parse(response.data.abi), payload.poolContractAddress)
+      PoolsInstance.methods
+        .payout(payload.contributionId)
+        .send({
+          gas: process.env.GAS.PAYOUT_CONTRIBUTION,
+          from: rootState.user.userWeb3.coinbase
+        })
 
-    const poolIdHex = web3.utils.fromAscii(payload.poolId)
-    const contributionIdHex = web3.utils.fromAscii(payload.contributionId)
-
-    commit('setLoading', false, { root: true })
-
-    PoolsInstance.methods
-      .payout(poolIdHex, contributionIdHex)
-      .send({
-        gas: process.env.GAS.PAYOUT_CONTRIBUTION,
-        from: rootState.user.userWeb3.coinbase
-      })
-      .on('error', () => {
-        commit('setTransactionError', true)
-      })
-      .once('transactionHash', async txId => {
-        try {
-          const transactionPayload = {
-            contributionId: payload.contributionId,
-            txId
-          }
-
-          await axios.post('/pools/transaction/addContributionPayout', transactionPayload)
-
-          commit('setTransactionHash', txId)
-          await dispatch('getContribution', payload.contributionId)
-        } catch (error) {
-          console.error(error)
-          commit('setLoading', false, { root: true })
+        .on('error', () => {
           commit('setTransactionError', true)
-        }
-      })
+          commit('setLoading', false, { root: true })
+        })
+
+        .once('transactionHash', async txId => {
+          commit('setTransactionHash', txId)
+          commit('setLoading', false, { root: true })
+        })
+    } catch (e) {
+      commit('setLoading', false, { root: true })
+    }
   },
 
   async refundContribution ({ commit, rootState, dispatch }, payload) {
     commit('setTransactionHash', '')
     commit('setTransactionError', false)
-
     commit('setLoading', true, { root: true })
 
-    const response = await axios.get(`/contracts/${payload.poolContractAddress}`)
+    try {
+      const abi = await getAbi(poolAddress)
+      const PoolsInstance = new window.web3.eth.Contract(abi, payload.poolContractAddress)
 
-    if (!response.data) {
       commit('setLoading', false, { root: true })
-      return
-    }
 
-    const web3 = window.web3
-    const PoolsInstance = new web3.eth.Contract(JSON.parse(response.data.abi), payload.poolContractAddress)
+      PoolsInstance.methods
+        .refund(payload.contributionId)
+        .send({
+          gas: process.env.GAS.PAYOUT_CONTRIBUTION,
+          from: rootState.user.userWeb3.coinbase
+        })
 
-    const poolIdHex = web3.utils.fromAscii(payload.poolId)
-    const contributionIdHex = web3.utils.fromAscii(payload.contributionId)
-
-    commit('setLoading', false, { root: true })
-
-    PoolsInstance.methods
-      .refund(poolIdHex, contributionIdHex)
-      .send({
-        gas: process.env.GAS.REFUND_CONTRIBUTION,
-        from: rootState.user.userWeb3.coinbase
-      })
-      .on('error', () => {
-        commit('setTransactionError', true)
-      })
-      .once('transactionHash', async txId => {
-        try {
-          const transactionPayload = {
-            contributionId: payload.contributionId,
-            txId
-          }
-
-          await axios.post('/pools/transaction/addContributionRefund', transactionPayload)
-
-          commit('setTransactionHash', txId)
-          await dispatch('getContribution', payload.contributionId)
-        } catch (error) {
-          console.error(error)
-          commit('setLoading', false, { root: true })
+        .on('error', () => {
           commit('setTransactionError', true)
-        }
-      })
+          commit('setLoading', false, { root: true })
+        })
+
+        .once('transactionHash', async txId => {
+          commit('setTransactionHash', txId)
+          commit('setLoading', false, { root: true })
+        })
+    } catch (e) {
+      commit('setLoading', false, { root: true })
+    }
   }
 }
 
@@ -381,17 +370,16 @@ const getHex = x => {
 }
 
 const mapContributionStatus = (isPaidoutValue, poolStatus) => {
-  const isPaidout = isPaidoutValue === '1'
-  console.log(isPaidout)
+  const isPaidout = isPaidoutValue !== '0'
   if (!isPaidout && poolStatus === '1') {
     return 'paid'
   } else if (!isPaidout && poolStatus === '2') {
-    return 'availablepayout'
+    return 'availablePayout'
   } else if (!isPaidout && poolStatus === '5') {
-    return 'availablerefund'
+    return 'availableRefund'
   } else if (isPaidout && poolStatus === '2') {
-    return 'rewardpaidout'
+    return 'rewardPaidout'
   } else if (isPaidout && poolStatus === '5') {
-    return 'refundpaidout'
+    return 'refundPaidout'
   }
 }

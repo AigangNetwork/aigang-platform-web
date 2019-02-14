@@ -7,6 +7,10 @@ const mutations = {
     state.pools = payload
   },
 
+  addPoolToList (state, pool) {
+    state.pools.items.push(pool)
+  },
+
   setPool (state, payload) {
     state.pool = payload
   },
