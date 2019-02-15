@@ -1,17 +1,23 @@
 import axios from 'axios'
+import store from '../../store'
 
 const getAbi = async address => {
-  const path =
-    process.env.ETHERSCAN_ADDRESS +
-    process.env.ABI_PATH +
-    `&address=${address}` +
-    `&apikey=${process.env.ETHERSCAN_API_KEY}`
+  let abi = store.getters['utils/getAbi'](address)
+
+  if (abi) {
+    return abi
+  }
+
+  const path = `${process.env.ETHERSCAN_ADDRESS}${process.env.ABI_PATH}&address=${address}&apikey=${
+    process.env.ETHERSCAN_API_KEY
+  }`
 
   // Need to delete because of CORS
   delete axios.defaults.headers.common['Authorization']
   const response = await axios.get(path)
-
-  return JSON.parse(response.data.result)
+  abi = JSON.parse(response.data.result)
+  store.dispatch('utils/addAbi', { address, abi })
+  return abi
 }
 
 export default getAbi

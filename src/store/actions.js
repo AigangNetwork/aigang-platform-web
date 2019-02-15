@@ -8,5 +8,6 @@ export default {
     dispatch('insurance/resetState')
     dispatch('predictions/resetState')
     dispatch('pools/resetState')
+    dispatch('utils/resetState')
   }
 }

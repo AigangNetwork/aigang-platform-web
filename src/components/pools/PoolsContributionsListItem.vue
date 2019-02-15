@@ -1,11 +1,16 @@
 <template>
-  <tr @click="navigateToContribution(contribution.id)">
-    <td class="title">{{ contribution.poolName }}</td>
-    <td class="number">{{ contribution.amount}} {{ $t('general.aix') }}</td>
-    <td>
-      <PoolContributionLabel :type="contribution.status" size="small" />
-    </td>
-  </tr>
+  <transition name="slideUp">
+    <tr @click="navigateToContribution(contribution.id, contribution.address)">
+      <td class="title">{{ contribution.poolName }}</td>
+      <td class="number">{{ contribution.amount}} {{ $t('general.aix') }}</td>
+      <td class="number">
+        <Date :dateUtc="contribution.createdUtc" format="YYYY-MM-DD HH:mm" />
+      </td>
+      <td>
+        <PoolContributionLabel :type="contribution.status" size="small" />
+      </td>
+    </tr>
+  </transition>
 </template>
 
 <script>
@@ -16,10 +21,10 @@ export default {
   props: ['contribution'],
   components: { PoolContributionLabel, Date },
   methods: {
-    navigateToContribution (id) {
+    navigateToContribution (id, address) {
       this.$router.push({
         name: 'PoolContribution',
-        params: { id }
+        params: { id, address }
       })
     }
   }

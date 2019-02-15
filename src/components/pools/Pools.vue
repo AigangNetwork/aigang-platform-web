@@ -50,6 +50,11 @@ export default {
           name: this.$t('pools.menu.portfolio'),
           routeLink: { name: 'Portfolio' },
           active: true
+        },
+        {
+          name: this.$t('pools.menu.myContributions'),
+          routeLink: { name: 'MyContributions' },
+          active: true
         }
       ],
       showDialog: false,

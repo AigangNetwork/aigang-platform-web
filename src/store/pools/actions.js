@@ -1,9 +1,8 @@
-import axios from 'axios'
 import moment from 'moment'
 import { initialPoolState } from './index'
 import getAbi from '@/utils/contract/getAbi'
 import getContracts from '@/utils/contract/getContracts'
-const poolAddress = '0xb8f2be4453511101d12bc1d667fcb3c2ebaa9b4c'
+import { parse } from 'querystring'
 const web3 = window.web3
 
 export default {
@@ -41,22 +40,17 @@ export default {
       commit('setPools', pools)
 
       const startItem = page * itemsPerPage - itemsPerPage + 1
-      const maxItems = page * itemsPerPage
 
       let poolsCounter = 0
 
       // Iterating through contracts
-      for (let index = 0; index < contracts.length; index++) {
+      for (let index = contracts.length - 1; index >= 0; index--) {
         const poolsLength = parseInt(poolsSizes[index])
 
         // Iterating through pools in a conctract
-        for (
-          let i = 1;
-          i <= poolsLength && pools.items.length <= itemsPerPage && poolsCounter < maxItems;
-          i++
-        ) {
+        for (let i = poolsLength; i > 0 && pools.items.length < itemsPerPage; i--) {
           poolsCounter++
-          
+
           if (poolsCounter < startItem) {
             continue
           }
@@ -166,79 +160,126 @@ export default {
     }
   },
 
-  async deleteContribution ({ commit }, id) {
-    commit('setLoading', true, { root: true })
-    try {
-      await axios.delete(`/pools/contribution/${id}`)
-    } catch (err) {}
-
-    commit('setLoading', false, { root: true })
-  },
-
-  async getUserContributions ({ commit, rootState }, payload) {
-    commit('setPortfolioSummaryLoading', true)
+  async getUserContributions ({ commit, rootState, state }, page) {
+    commit('setUserContributions', {
+      items: [],
+      totalPages: 0
+    })
     commit('setContributionsListLoading', true)
 
     try {
-      const abi = await getAbi(poolAddress)
-      const contract = new window.web3.eth.Contract(abi, poolAddress)
-      const myContributionsLengthResult = await contract.methods
-        .getMyContributionsLength()
-        .call({ from: rootState.user.userWeb3.coinbase })
-      const myContributionsLength = parseInt(myContributionsLengthResult)
-
-      const contributionsIds = []
-
-      for (let i = 0; i < myContributionsLength; i++) {
-        const id = await contract.methods.myContributions(rootState.user.userWeb3.coinbase, i).call()
-        contributionsIds.push(id)
-      }
-      const contributions = {
-        items: [],
-        totalPages: 0
-      }
-
+      const contracts = await getContracts(process.env.CONTRACT_TYPES.POOLS)
+      let totalContributions = 0
       const itemsPerPage = process.env.CONTRIBUTIONS_ITEMS_PER_PAGE
-      const startItem = payload.page * itemsPerPage - itemsPerPage
-      const maxItems = payload.page * itemsPerPage
+      const startItem = page * itemsPerPage - itemsPerPage + 1
 
-      for (let i = startItem; i < myContributionsLength && i <= maxItems; i++) {
-        const id = parseInt(contributionsIds[i])
+      let iterator = 0
+      for (let contractIndex = contracts.length - 1; contractIndex >= 0; contractIndex--) {
+        const contract = contracts[contractIndex]
+        const result = await contract.methods
+          .getMyContributionsLength()
+          .call({ from: rootState.user.userWeb3.coinbase })
+        let contributionsCount = parseInt(result)
+        totalContributions += contributionsCount
 
-        const contributionData = await contract.methods.getContribution(id).call()
-        const poolData = await contract.methods.pools(contributionData[1]).call()
+        for (
+          let i = contributionsCount - 1;
+          i >= 0 && state.userContributions.items.length < itemsPerPage;
+          i--
+        ) {
+          iterator++
+          if (iterator < startItem) {
+            continue
+          }
 
-        const contribution = {
-          id: id,
-          userId: contributionData[4],
-          poolName: poolData.title,
-          poolId: contributionData[1],
-          amount: parseFloat(window.web3.utils.fromWei(contributionData[2]), 2),
-          status: mapContributionStatus(contributionData[3], poolData.status)
+          const id = await contracts[contractIndex].methods
+            .myContributions(rootState.user.userWeb3.coinbase, i)
+            .call()
+          const contributionData = await contract.methods.getContribution(id).call()
+          const poolData = await contract.methods.pools(contributionData[1]).call()
+
+          const contribution = {
+            id: id,
+            userId: contributionData[4],
+            poolName: poolData.title,
+            poolId: contributionData[1],
+            amount: parseFloat(window.web3.utils.fromWei(contributionData[2]), 2),
+            status: mapContributionStatus(contributionData[3], poolData.status),
+            createdUtc: moment.unix(contributionData[5]).format('YYYY-MM-DD HH:mm'),
+            address: contract._address
+          }
+
+          commit('addContribution', contribution)
+          if (iterator === startItem) {
+            commit('setContributionsListLoading', false)
+          }
         }
 
-        contributions.items.push(contribution)
+        commit('setUserContributionsTotalPages', Math.ceil(totalContributions / itemsPerPage))
       }
+    } catch (ex) {
+      console.error(ex)
+      commit('setContributionsListLoading', false)
+    }
+  },
 
-      commit('setUserContributions', contributions)
+  async getPortfolioSummary ({ commit, rootState }) {
+    commit('setPortfolioSummaryLoading', true)
 
-      const sumWithStatus = status => (sum, c) => {
-        if (c.status === status) {
-          return sum + c.amount
+    commit('setPortfolioSummary', {
+      contributions: 0,
+      contributionsAmount: 0,
+      availableRefund: 0,
+      rewardPaidOut: 0
+    })
+
+    try {
+      const contracts = await getContracts(process.env.CONTRACT_TYPES.POOLS)
+      let totalContributions = 0
+      let contributionsAmount = 0
+      let availableRefundAmount = 0
+      let rewardPaidOutAmount = 0
+
+      for (let contractIndex = 0; contractIndex < contracts.length; contractIndex++) {
+        const contract = contracts[contractIndex]
+
+        const result = await contract.methods
+          .getMyContributionsLength()
+          .call({ from: rootState.user.userWeb3.coinbase })
+
+        let contributionsCount = parseInt(result)
+        totalContributions += contributionsCount
+
+        for (let i = 0; i < contributionsCount; i++) {
+          const id = await contract.methods.myContributions(rootState.user.userWeb3.coinbase, i).call()
+          const contributionData = await contract.methods.getContribution(id).call()
+          const poolData = await contract.methods.pools(contributionData[1]).call()
+
+          const contribution = {
+            amount: parseFloat(window.web3.utils.fromWei(contributionData[2]), 2),
+            status: mapContributionStatus(contributionData[3], poolData.status)
+          }
+          
+          contributionsAmount += contribution.amount
+
+          if (contribution.status === 'availablePayout') {
+            availableRefundAmount += contribution.amount
+          }
+
+          if (contribution.status === 'rewardPaidout') {
+            rewardPaidOutAmount += contribution.amount
+          }
         }
       }
 
-      const summary = {
-        contributions: myContributionsLength,
-        contributionsAmount: contributions.items.reduce((sum, c) => sum + c.amount, 0) || 0,
-        availableRefund: contributions.items.reduce(sumWithStatus('availablerefund'), 0) || 0,
-        rewardPaidOut: contributions.items.reduce(sumWithStatus('availablepayout'), 0) || 0
-      }
-
-      commit('setPortfolioSummary', summary)
+      commit('setPortfolioSummary', {
+        contributions: totalContributions,
+        contributionsAmount: contributionsAmount,
+        availableRefund: availableRefundAmount,
+        rewardPaidOut: rewardPaidOutAmount
+      })
 
       commit('setPortfolioSummaryLoading', false)
-      commit('setContributionsListLoading', false)
     } catch (ex) {
       console.error(ex)
       commit('setPortfolioSummaryLoading', false)
@@ -246,19 +287,18 @@ export default {
     }
   },
 
-  async getContribution ({ commit }, id) {
+  async getContribution ({ commit }, payload) {
     commit('setContribution', {})
     commit('setLoading', true, { root: true })
 
     try {
-      const abi = await getAbi(poolAddress)
-      const contract = new window.web3.eth.Contract(abi, poolAddress)
-      const contributionData = await contract.methods.getContribution(id).call()
+      const abi = await getAbi(payload.address)
+      const contract = new window.web3.eth.Contract(abi, payload.address)
+      const contributionData = await contract.methods.getContribution(payload.id).call()
       const poolData = await contract.methods.pools(contributionData[1]).call()
 
-      // TODO: add created date
       const contribution = {
-        id: id,
+        id: payload.id,
         poolId: contributionData[1],
         poolName: poolData.title,
         poolDescription: poolData.description,
@@ -266,12 +306,13 @@ export default {
         payout: 0,
         status: mapContributionStatus(contributionData[3], poolData.status),
         refundAmount: 0,
-        poolContractAddress: poolAddress,
+        poolContractAddress: payload.address,
         contributions: await contract.methods.getPoolContributionsLength(contributionData[1]).call(),
         currentPoolSize: parseFloat(window.web3.utils.fromWei(poolData.amountCollected), 2),
         poolGoalSize: window.web3.utils.fromWei(poolData.amountLimit),
         poolStatus: mapPoolStatus(poolData.status),
-        poolEndDateUtc: moment.unix(poolData.contributionEndUtc).format('YYYY-MM-DD HH:mm')
+        poolEndDateUtc: moment.unix(poolData.contributionEndUtc).format('YYYY-MM-DD HH:mm'),
+        createdUtc: moment.unix(contributionData[5]).format('YYYY-MM-DD HH:mm')
       }
 
       if (contribution.status === 'rewardpaidout') {
@@ -293,7 +334,7 @@ export default {
     commit('setLoading', true, { root: true })
 
     try {
-      const abi = await getAbi(poolAddress)
+      const abi = await getAbi(payload.poolContractAddress)
       const PoolsInstance = new window.web3.eth.Contract(abi, payload.poolContractAddress)
 
       commit('setLoading', false, { root: true })
@@ -325,7 +366,7 @@ export default {
     commit('setLoading', true, { root: true })
 
     try {
-      const abi = await getAbi(poolAddress)
+      const abi = await getAbi(payload.poolContractAddress)
       const PoolsInstance = new window.web3.eth.Contract(abi, payload.poolContractAddress)
 
       commit('setLoading', false, { root: true })
@@ -394,5 +435,13 @@ const mapContributionStatus = (isPaidoutValue, poolStatus) => {
     return 'rewardPaidout'
   } else if (isPaidout && poolStatus === '5') {
     return 'refundPaidout'
+  }
+}
+
+const sumWithStatus = status => (sum, c) => {
+  if (c.status === status) {
+    return sum + c.amount
+  } else {
+    return sum
   }
 }

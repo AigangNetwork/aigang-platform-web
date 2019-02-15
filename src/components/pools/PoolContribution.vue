@@ -27,14 +27,14 @@ export default {
       headerInfo: {},
       isPaymentDialogVisible: false,
       portfolioRoute: '/pools/portfolio',
-      backRouteName: 'Portfolio'
+      backRouteName: 'MyContributions'
     }
   },
   computed: {
     ...mapGetters([ 'contribution' ])
   },
   async mounted () {
-    await this.$store.dispatch('pools/getContribution', this.$route.params.id)
+    await this.$store.dispatch('pools/getContribution', { id: this.$route.params.id, address: this.$route.params.address })
     this.isDataLoaded = true
 
     this.headerInfo = {

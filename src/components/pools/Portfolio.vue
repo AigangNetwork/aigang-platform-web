@@ -1,18 +1,15 @@
 <template>
   <div class="portfolio-container">
     <PortfolioSummary />
-    <PoolsContributionsList/>
   </div>
 </template>
 
 <script>
 import PortfolioSummary from './PortfolioSummary'
-import PoolsContributionsList from './PoolsContributionsList'
 
 export default {
   components: {
-    PortfolioSummary,
-    PoolsContributionsList
+    PortfolioSummary
   }
 }
 </script>

@@ -1,6 +1,6 @@
 <template>
-  <div class="summary-container" v-loading="portfolioSummaryLoading">
-      <Card v-if="!portfolioSummaryLoading">
+  <div class="summary-container" v-loading="portfolioSummaryLoading" :element-loading-text="$t('pools.calculatingSummary')">
+      <Card >
         <div slot="body" class="scrollable">
           <div class="details">
             <div class="details-item">
@@ -35,6 +35,10 @@ export default {
   components: { Card },
   computed: {
     ...mapGetters(['portfolioSummary', 'portfolioSummaryLoading'])
+  },
+  async beforeMount () {
+    await this.$store.dispatch('pools/getPortfolioSummary')
+    this.isDataLoaded = true
   }
 }
 </script>

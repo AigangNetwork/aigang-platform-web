@@ -8,8 +8,10 @@
         </el-col>
         </transition-group>
       <el-col>
-        <Pagination v-if="pools.totalPages > 1" :callback="loadPage" :total-page-count="pools.totalPages" :current-page="page" />
-      </el-col>
+        <transition name="slideUp">
+            <Pagination v-if="pools.totalPages > 1  && isDataLoaded" :callback="loadPage" :total-page-count="pools.totalPages" :current-page="page"/>
+        </transition>
+        </el-col>
       <el-col v-if="!$store.getters.loading && pools && (!pools.items || pools.items.length === 0)">
         <h2>{{ $t('general.noPools') }}</h2>
       </el-col>
@@ -46,8 +48,10 @@ export default {
   },
   methods: {
     async loadPage (page) {
+      this.isDataLoaded = false
       this.page = page
       await this.$store.dispatch('pools/getPoolsList', this.page)
+      this.isDataLoaded = true
     }
   }
 }

@@ -7,6 +7,7 @@ import user from './user/index'
 import insurance from './insurance/index'
 import predictions from './predictions'
 import pools from './pools'
+import utils from './utils'
 
 import getters from './getters'
 import actions from './actions'
@@ -31,6 +32,7 @@ export default new Vuex.Store({
     data,
     insurance,
     predictions,
-    pools
+    pools,
+    utils
   }
 })

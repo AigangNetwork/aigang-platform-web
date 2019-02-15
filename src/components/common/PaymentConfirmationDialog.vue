@@ -2,7 +2,7 @@
   <el-dialog :title="title" :visible.sync="show">
     <transition-group name="slideDown">
       <div key="1" v-if="!txHash">
-        <p class="bold">{{ content }}</p>
+        <p v-if="content" class="bold">{{ content }}</p>
         <div class="loader-box" v-loading="!txHash" :element-loading-text="$t('general.processingTransaction')"></div>
       </div>
 

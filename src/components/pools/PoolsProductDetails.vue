@@ -30,7 +30,6 @@
           <PaymentConfirmationDialog
             :isVisible="isPaymentDialogVisible && !transactionError"
             :displayDialog="displayPaymentDialog"
-            :content="$t('pools.pool.paymentInfo.metamaskAlert')"
             :txHash="transactionHash"
             :title="$t('pools.pool.paymentInfo.title')"
             :bodyText="$t('pools.pool.paymentInfo.body')"
