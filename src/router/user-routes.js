@@ -5,8 +5,6 @@ import ActivateEmail from '@/components/guest/ActivateEmail'
 import ResetPassword from '@/components/guest/ResetPassword'
 import Profile from '@/components/profile/Profile'
 import General from '@/components/profile/General'
-import Wallets from '@/components/profile/Wallets'
-import Transactions from '@/components/profile/Transactions'
 import Notifications from '@/components/profile/Notifications'
 
 export default [
@@ -58,19 +56,6 @@ export default [
         name: 'ProfileGeneral',
         path: '/profile/general',
         component: General,
-        meta: {
-          authRequired: true
-        }
-      },
-      {
-        name: 'ProfileWallets',
-        path: '/profile/wallets',
-        component: Wallets
-      },
-      {
-        name: 'ProfileTransactions',
-        path: '/profile/transactions',
-        component: Transactions,
         meta: {
           authRequired: true
         }

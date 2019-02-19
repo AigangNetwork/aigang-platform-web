@@ -30,6 +30,9 @@ module.exports = merge(prodEnv, {
   CONTRACT_TYPES: {
     POOLS: 1
   },
+  CONTRACT_STATUS: {
+    CANCELED: 2
+  },
   FEATURE_TOGGLE: {
     DATA: true,
     PREDICTIONS: true,

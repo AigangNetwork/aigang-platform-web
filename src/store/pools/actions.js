@@ -2,7 +2,6 @@ import moment from 'moment'
 import { initialPoolState } from './index'
 import getAbi from '@/utils/contract/getAbi'
 import getContracts from '@/utils/contract/getContracts'
-import { parse } from 'querystring'
 const web3 = window.web3
 
 export default {
@@ -242,7 +241,6 @@ export default {
 
       for (let contractIndex = 0; contractIndex < contracts.length; contractIndex++) {
         const contract = contracts[contractIndex]
-
         const result = await contract.methods
           .getMyContributionsLength()
           .call({ from: rootState.user.userWeb3.coinbase })
@@ -259,7 +257,6 @@ export default {
             amount: parseFloat(window.web3.utils.fromWei(contributionData[2]), 2),
             status: mapContributionStatus(contributionData[3], poolData.status)
           }
-          
           contributionsAmount += contribution.amount
 
           if (contribution.status === 'availablePayout') {
@@ -435,13 +432,5 @@ const mapContributionStatus = (isPaidoutValue, poolStatus) => {
     return 'rewardPaidout'
   } else if (isPaidout && poolStatus === '5') {
     return 'refundPaidout'
-  }
-}
-
-const sumWithStatus = status => (sum, c) => {
-  if (c.status === status) {
-    return sum + c.amount
-  } else {
-    return sum
   }
 }

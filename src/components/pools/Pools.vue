@@ -2,7 +2,6 @@
   <div class="aig-container">
     <el-container class="aig-container">
       <el-aside
-        v-if="$store.state.user.authenticated"
         width="20%"
         class="aig-data-menu"
         :class="{ 'is-menu-open': isMenuOpen }">
@@ -18,7 +17,7 @@
           <ul>
             <li v-for="item in dataMenu" :key="item.name">
               <router-link
-                :class="{'aig-link-disabled': item.disabled && !$store.getters['user/isAuthenticated']}"
+                :class="{'aig-link-disabled': item.disabled}"
                 @click.native="collapseSideMenu"
                 active-class="aig-menu-active"
                 :to="item.routeLink">{{ item.name }}</router-link>
@@ -26,7 +25,7 @@
           </ul>
         </span>
       </el-aside>
-      <el-main class="aig-data-container" :class="{ 'is-authenticated': $store.getters['user/isAuthenticated']}">
+      <el-main class="aig-data-container">
         <el-row :gutter="20" class="aig-items"> <router-view :key="$route.path"></router-view> </el-row>
       </el-main>
     </el-container>
@@ -43,8 +42,7 @@ export default {
           routeLink: {
             name: 'PoolsProductsList'
           },
-          active: false,
-          disabled: true
+          active: false
         },
         {
           name: this.$t('pools.menu.portfolio'),

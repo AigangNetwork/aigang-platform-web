@@ -5,6 +5,11 @@ export default {
   },
 
   resetState (state, newState) {
+    // Let's keep web3
+    newState.userWeb3 = state.userWeb3
+    newState.userWeb3.aixBalance = parseInt(state.userWeb3.aixBalance, 10)
+    newState.insufficientBalance = state.userWeb3.aixBalance === 0
+    newState.isWeb3Enabled = !!state.userWeb3
     Object.assign(state, newState)
   },
 
@@ -51,13 +56,5 @@ export default {
 
   setAuthToken (state, value) {
     state.token = value
-  },
-
-  loadProfileWallets (state, payload) {
-    state.wallets = payload
-  },
-
-  loadProfileTransactions (state, payload) {
-    state.transactions = payload
   }
 }

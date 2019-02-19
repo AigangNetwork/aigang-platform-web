@@ -21,15 +21,19 @@
               </li>
             </ul>
           </nav>
-          <div class="aig-profile-wrapper" v-if="$store.getters['user/isAuthenticated']">
+          <div class="aig-profile-wrapper" v-if="$store.getters['user/isAuthenticated'] && showAccount">
             <UserTab />
           </div>
-          <el-button type="primary" class="aig--login" @click="selectLogin" v-else>{{ $t('navigation.login')}}</el-button>
+          <el-button type="primary" class="aig--login" @click="selectLogin" v-else-if="showAccount">{{ $t('navigation.login')}}</el-button>
+          <div class="aig-profile-wrapper" v-else>
+            <UserWalletTab  />
+          </div>
           <div v-on:click="dropDownMenuActive = !dropDownMenuActive" class="aig-hamburger-wrapper">
             <hamburger v-bind:menuActive="dropDownMenuActive"></hamburger>
           </div>
         </div>
       </div>
+
     </transition>
     <div class="aig-dropdown" v-if="dropDownMenuActive">
       <ul>
@@ -42,28 +46,31 @@
             {{ bar.name }}
           </a>
         </li>
-        <li v-if="$store.getters['user/isAuthenticated']">
+        <li v-if="$store.getters['user/isAuthenticated'] && showAccount">
           <router-link :to="'/profile'" active-class="aig-bar-active" @click.native="dropDownMenuActive = false">
             {{ $t('navigation.profile') }}
           </router-link>
         </li>
-        <li v-else>
+        <li >
           <router-link active-class="aig-bar-active" to="/login" @click.native="dropDownMenuActive = false" exact>{{
             $t('navigation.login')}}</router-link>
         </li>
+
       </ul>
     </div>
   </div>
 </template>
 <script>
 import UserTab from '@/components/UserTab'
+import UserWalletTab from '@/components/UserWalletTab'
 import Hamburger from './Hamburger'
 
 export default {
   name: 'Navigation',
   components: {
     UserTab,
-    Hamburger
+    Hamburger,
+    UserWalletTab
   },
   data () {
     return {
@@ -81,6 +88,12 @@ export default {
   computed: {
     isDevEnv () {
       return process.env.NODE_ENV !== 'production'
+    },
+    showAccount () {
+      // Temporary workaround, while we still have accounts
+      return this.$route.fullPath.indexOf('/data') > -1 ||
+        this.$route.fullPath.indexOf('/profile') > -1 ||
+        this.$route.fullPath.indexOf('/login') > -1
     }
   },
   created () {
@@ -88,7 +101,8 @@ export default {
       this.navigationBars.push({
         name: this.$t('navigation.data'),
         routeLink: '/data',
-        type: 'internal'
+        type: 'internal',
+        showAccount: true
       })
     }
 

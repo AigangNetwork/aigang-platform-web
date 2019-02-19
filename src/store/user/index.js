@@ -10,8 +10,6 @@ export const initialUserState = () => {
       firstName: '',
       userName: ''
     },
-    wallets: {},
-    transactions: {},
     emailPermissionGroups: {},
     userWeb3: {},
     isWeb3Enabled: false,

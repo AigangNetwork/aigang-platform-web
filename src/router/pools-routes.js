@@ -18,18 +18,12 @@ export default [
       {
         name: 'Portfolio',
         path: '/pools/portfolio',
-        component: Portfolio,
-        meta: {
-          authRequired: true
-        }
+        component: Portfolio
       },
       {
         name: 'MyContributions',
         path: '/pools/mycontributions',
-        component: PoolsContributionsList,
-        meta: {
-          authRequired: true
-        }
+        component: PoolsContributionsList
       },
       {
         name: 'PoolsProductsList',

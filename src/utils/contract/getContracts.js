@@ -11,9 +11,15 @@ const getContracts = async typeId => {
   const contracts = []
 
   for (let i = 0; i < length; i++) {
-    const address = await managerContract.methods.get(typeId, i).call()
-    const abi = await getAbi(address[0])
-    const contract = new window.web3.eth.Contract(abi, address[0])
+    const contractInfo = await managerContract.methods.get(typeId, i).call()
+
+    if (parseInt(contractInfo[2]) === process.env.CONTRACT_STATUS.CANCELED) {
+      continue
+    }
+
+    const abi = await getAbi(contractInfo[0])
+    const contract = new window.web3.eth.Contract(abi, contractInfo[0])
+
     contracts.push(contract)
   }
 

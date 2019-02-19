@@ -39,7 +39,7 @@ export default {
     cursor: pointer;
 
     &:hover {
-      background: $light-transparent-grey;
+      background-color: $light-transparent-grey;
     }
 
     td {
