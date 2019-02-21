@@ -1,12 +1,16 @@
 <template>
   <transition-group class="items-container" name="slideUp" v-loading="$store.getters.loading">
-    <el-row class="aig-items" key="predictions-list" v-show="isDataLoaded">
-      <el-col :xs="24" :sm="12" :md="12" :lg="8" v-for="prediction in predictions.items" :key="prediction.id">
+    <el-row class="aig-items" key="predictions-list">
+      <transition-group name="slideUp">
+      <el-col :xs="24" :sm="12" :md="12" :lg="8" v-for="(prediction, index) in predictions.items" :key="index">
         <PredictionListItem :item="prediction" />
       </el-col>
+      </transition-group>
+      <transition name="slideUp">
       <el-col>
-        <Pagination v-if="predictions.totalPages > 1" :callback="loadPage" :total-page-count="predictions.totalPages" :current-page="page" />
+        <Pagination v-if="predictions.totalPages > 1 && isDataLoaded" :callback="loadPage" :total-page-count="predictions.totalPages" :current-page="page" />
       </el-col>
+      </transition>
       <el-col v-if="!$store.getters.loading && predictions && !predictions.items">
         <h2>{{ $t('general.noPredictions') }}</h2>
       </el-col>

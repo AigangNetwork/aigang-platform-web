@@ -1,23 +1,23 @@
 <template>
-  <transition-group class="items-container" name="slideUp" v-loading="$store.getters.loading">
-    <el-row class="aig-items" key="predictions-list" v-show="isDataLoaded">
-      <div class="filters-bar">
-        <div class="filter-item">
-          <div class="filter-label">{{ $t('predictions.forecast.status') }}:</div>
-          <Dropdown :items="items" @itemSelected="onFilterByStatusDropdownItemSelected" />
+  <div class="items-container" v-loading="$store.getters.loading">
+    <el-row class="aig-items" key="predictions-list">
+    <div class="filters-bar">
+      </div>
+      <transition-group name="slideUp">
+        <div class="forecast-item" v-for="(forecast, index) in userForecasts.items" :key="index">
+          <ForecastListItem :item="forecast" />
         </div>
-      </div>
-      <div class="forecast-item" v-for="forecast in userForecasts.items" :key="forecast.id">
-        <ForecastListItem :item="forecast" />
-      </div>
+      </transition-group>
       <el-col>
-        <Pagination v-if="userForecasts.totalPages > 1" :callback="loadPage" :total-page-count="userForecasts.totalPages" :current-page="page" />
-      </el-col>
+        <transition name="slideUp">
+          <Pagination v-if="userForecasts.totalPages > 1 && isDataLoaded" :callback="loadPage" :total-page-count="userForecasts.totalPages" :current-page="page" />
+        </transition>
+        </el-col>
       <el-col v-if="!$store.getters.loading && userForecasts && !userForecasts.items">
         <h2>{{ $t('general.noMyPredictions') }}</h2>
       </el-col>
     </el-row>
-  </transition-group>
+  </div>
 </template>
 
 <script>
@@ -40,38 +40,7 @@ export default {
     return {
       page: 1,
       filters: {},
-      isDataLoaded: false,
-      items: [{
-        name: this.$t('predictions.forecast.statuses.all'),
-        value: ''
-      }, {
-        name: this.$t('predictions.forecast.statuses.pendingPayment'),
-        value: '2'
-      }, {
-        name: this.$t('predictions.forecast.statuses.paid'),
-        value: '3'
-      }, {
-        name: this.$t('predictions.forecast.statuses.canceled'),
-        value: '4'
-      }, {
-        name: this.$t('predictions.forecast.statuses.won'),
-        value: '5'
-      }, {
-        name: this.$t('predictions.forecast.statuses.lost'),
-        value: '6'
-      }, {
-        name: this.$t('predictions.forecast.statuses.wonPaidout'),
-        value: '7'
-      }, {
-        name: this.$t('predictions.forecast.statuses.availableRefund'),
-        value: '8'
-      }, {
-        name: this.$t('predictions.forecast.statuses.pendingPayout'),
-        value: '9'
-      }, {
-        name: this.$t('predictions.forecast.statuses.refundPaidout'),
-        value: '10'
-      }]
+      isDataLoaded: false
     }
   },
   async beforeMount () {
@@ -81,17 +50,9 @@ export default {
     }
   },
   methods: {
-    async onFilterByStatusDropdownItemSelected (value) {
-      this.page = 1
-      this.filters = {
-        status: value
-      }
-
-      await this.loadPage(this.page)
-    },
     async loadPage (page) {
       this.page = page
-      await this.$store.dispatch('predictions/getUserForecasts', { page: this.page, filters: this.filters })
+      await this.$store.dispatch('predictions/getUserForecasts', this.page)
     }
   }
 }

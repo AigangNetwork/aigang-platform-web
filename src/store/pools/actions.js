@@ -1,7 +1,8 @@
-import moment from 'moment'
 import { initialPoolState } from './index'
 import getAbi from '@/utils/contract/getAbi'
 import getContracts from '@/utils/contract/getContracts'
+import Pool from '@/domain/Pool'
+import Contribution from '@//domain/Contribution'
 const web3 = window.web3
 
 export default {
@@ -21,30 +22,15 @@ export default {
     try {
       const contracts = await getContracts(process.env.CONTRACT_TYPES.POOLS)
       const itemsPerPage = process.env.POOLS_ITEMS_PER_PAGE
-
-      const poolsSizes = await Promise.all(
-        contracts.map(async c => {
-          const result = await c.methods.totalPools().call()
-          return result
-        })
-      )
-
-      const totalPools = poolsSizes.reduce((sum, s) => sum + parseInt(s), 0) || 0
-
-      const pools = {
-        items: [],
-        totalPages: Math.ceil(totalPools / itemsPerPage)
-      }
-
-      commit('setPools', pools)
-
       const startItem = page * itemsPerPage - itemsPerPage + 1
-
+      let totalPools = 0
       let poolsCounter = 0
 
       // Iterating through contracts
       for (let index = contracts.length - 1; index >= 0; index--) {
-        const poolsLength = parseInt(poolsSizes[index])
+        const contract = contracts[index]
+        const poolsLength = parseInt(await contract.methods.totalPools().call())
+        totalPools += poolsLength
 
         // Iterating through pools in a conctract
         for (let i = poolsLength; i > 0 && pools.items.length < itemsPerPage; i--) {
@@ -54,32 +40,16 @@ export default {
             continue
           }
 
-          const contract = contracts[index]
-          const data = await contract.methods.pools(i).call()
-
-          const pool = {
-            id: i,
-            entityId: data.destination,
-            title: data.title,
-            description: data.description,
-            status: mapPoolStatus(data.status),
-            startDateUtc: moment.unix(data.contributionStartUtc).format('YYYY-MM-DD HH:mm'),
-            endDateUtc: moment.unix(data.contributionEndUtc).format('YYYY-MM-DD HH:mm'),
-            entityContractAddress: data.destination,
-            poolContractAddress: contract._address,
-            contributions: await contract.methods.getPoolContributionsLength(i).call(),
-            currentPoolSize: window.web3.utils.fromWei(data.amountCollected),
-            goalPoolSize: window.web3.utils.fromWei(data.amountLimit)
-          }
+          const pool = await Pool.create(contract, i)
 
           commit('addPoolToList', pool)
+
           if (poolsCounter === startItem) {
             commit('setLoading', false, { root: true })
           }
         }
       }
-
-      commit('setPools', pools)
+      commit('setPoolsTotalPages', Math.ceil(totalPools / itemsPerPage))
     } catch (ex) {
       console.error(ex)
       commit('setLoading', false, { root: true })
@@ -93,22 +63,7 @@ export default {
     try {
       const abi = await getAbi(payload.address)
       const contract = new window.web3.eth.Contract(abi, payload.address)
-      const data = await contract.methods.pools(payload.id).call()
-
-      const pool = {
-        id: payload.id,
-        entityId: data.destination,
-        title: data.title,
-        description: data.description,
-        status: mapPoolStatus(data.status),
-        startDateUtc: moment.unix(data.contributionStartUtc).format('YYYY-MM-DD HH:mm'),
-        endDateUtc: moment.unix(data.contributionEndUtc).format('YYYY-MM-DD HH:mm'),
-        entityContractAddress: data.destination,
-        poolContractAddress: payload.address,
-        contributions: await contract.methods.getPoolContributionsLength(payload.id).call(),
-        currentPoolSize: window.web3.utils.fromWei(data.amountCollected),
-        goalPoolSize: window.web3.utils.fromWei(data.amountLimit)
-      }
+      const pool = await Pool.create(contract, payload.id)
 
       commit('setPool', pool)
       commit('setLoading', false, { root: true })
@@ -187,27 +142,12 @@ export default {
           i--
         ) {
           iterator++
+
           if (iterator < startItem) {
             continue
           }
-
-          const id = await contracts[contractIndex].methods
-            .myContributions(rootState.user.userWeb3.coinbase, i)
-            .call()
-          const contributionData = await contract.methods.getContribution(id).call()
-          const poolData = await contract.methods.pools(contributionData[1]).call()
-
-          const contribution = {
-            id: id,
-            userId: contributionData[4],
-            poolName: poolData.title,
-            poolId: contributionData[1],
-            amount: parseFloat(window.web3.utils.fromWei(contributionData[2]), 2),
-            status: mapContributionStatus(contributionData[3], poolData.status),
-            createdUtc: moment.unix(contributionData[5]).format('YYYY-MM-DD HH:mm'),
-            address: contract._address
-          }
-
+          const id = await contract.methods.myContributions(rootState.user.userWeb3.coinbase, i).call()
+          const contribution = await Contribution.create(contract, id)
           commit('addContribution', contribution)
           if (iterator === startItem) {
             commit('setContributionsListLoading', false)
@@ -250,13 +190,7 @@ export default {
 
         for (let i = 0; i < contributionsCount; i++) {
           const id = await contract.methods.myContributions(rootState.user.userWeb3.coinbase, i).call()
-          const contributionData = await contract.methods.getContribution(id).call()
-          const poolData = await contract.methods.pools(contributionData[1]).call()
-
-          const contribution = {
-            amount: parseFloat(window.web3.utils.fromWei(contributionData[2]), 2),
-            status: mapContributionStatus(contributionData[3], poolData.status)
-          }
+          const contribution = await Contribution.create(contract, id)
           contributionsAmount += contribution.amount
 
           if (contribution.status === 'availablePayout') {
@@ -284,40 +218,15 @@ export default {
     }
   },
 
-  async getContribution ({ commit }, payload) {
+  async getContribution ({ commit, rootState }, payload) {
     commit('setContribution', {})
     commit('setLoading', true, { root: true })
 
     try {
       const abi = await getAbi(payload.address)
       const contract = new window.web3.eth.Contract(abi, payload.address)
-      const contributionData = await contract.methods.getContribution(payload.id).call()
-      const poolData = await contract.methods.pools(contributionData[1]).call()
-
-      const contribution = {
-        id: payload.id,
-        poolId: contributionData[1],
-        poolName: poolData.title,
-        poolDescription: poolData.description,
-        amount: parseFloat(window.web3.utils.fromWei(contributionData[2]), 2),
-        payout: 0,
-        status: mapContributionStatus(contributionData[3], poolData.status),
-        refundAmount: 0,
-        poolContractAddress: payload.address,
-        contributions: await contract.methods.getPoolContributionsLength(contributionData[1]).call(),
-        currentPoolSize: parseFloat(window.web3.utils.fromWei(poolData.amountCollected), 2),
-        poolGoalSize: window.web3.utils.fromWei(poolData.amountLimit),
-        poolStatus: mapPoolStatus(poolData.status),
-        poolEndDateUtc: moment.unix(poolData.contributionEndUtc).format('YYYY-MM-DD HH:mm'),
-        createdUtc: moment.unix(contributionData[5]).format('YYYY-MM-DD HH:mm')
-      }
-
-      if (contribution.status === 'rewardpaidout') {
-        contribution.payout = parseFloat(window.web3.utils.fromWei(contributionData[2]), 2)
-      } else if (contribution.status === 'refundpaidout') {
-        contribution.refundAmount = parseFloat(window.web3.utils.fromWei(contributionData[2]), 2)
-      }
-
+      const contribution = await Contribution.create(contract, payload.id)
+      
       commit('setContribution', contribution)
       commit('setLoading', false, { root: true })
     } catch (ex) {
@@ -390,25 +299,6 @@ export default {
   }
 }
 
-const mapPoolStatus = status => {
-  switch (status) {
-    case '0':
-      return 'notset'
-    case '1':
-      return 'active'
-    case '2':
-      return 'distributing'
-    case '3':
-      return 'funding'
-    case '4':
-      return 'paused'
-    case '5':
-      return 'canceled'
-    default:
-      return 'notset'
-  }
-}
-
 const getHex = x => {
   var result = web3.toHex(x)
 
@@ -418,19 +308,4 @@ const getHex = x => {
   }
 
   return result
-}
-
-const mapContributionStatus = (isPaidoutValue, poolStatus) => {
-  const isPaidout = isPaidoutValue !== '0'
-  if (!isPaidout && poolStatus === '1') {
-    return 'paid'
-  } else if (!isPaidout && poolStatus === '2') {
-    return 'availablePayout'
-  } else if (!isPaidout && poolStatus === '5') {
-    return 'availableRefund'
-  } else if (isPaidout && poolStatus === '2') {
-    return 'rewardPaidout'
-  } else if (isPaidout && poolStatus === '5') {
-    return 'refundPaidout'
-  }
 }

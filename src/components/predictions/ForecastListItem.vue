@@ -1,5 +1,5 @@
 <template>
-  <router-link :to="{ name: 'ForecastInfo', params: { id: item.id}}">
+  <router-link :to="{ name: 'ForecastInfo', params: { address: item.marketAddress, id: item.id}}">
     <div class="aig-list-item">
       <div class="title">{{ item.predictionTitle }}</div>
       <div class="aig-list-item-body">

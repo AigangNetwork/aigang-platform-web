@@ -17,7 +17,6 @@
           <ul>
             <li v-for="item in dataMenu" :key="item.name">
               <router-link
-                :class="{'aig-link-disabled': item.disabled}"
                 @click.native="collapseSideMenu"
                 active-class="aig-menu-active"
                 :to="item.routeLink">{{ item.name }}</router-link>

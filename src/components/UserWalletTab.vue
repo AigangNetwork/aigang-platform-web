@@ -33,7 +33,7 @@ export default {
     align-items: center;
     justify-content: flex-end;
     padding-right: 25px;
-    background: #6237bb;
+    background: linear-gradient(to right, #4f3b8e 0%, #6237bb 100%);
 
     span {
       display: block;

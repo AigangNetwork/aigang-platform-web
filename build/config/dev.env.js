@@ -14,9 +14,11 @@ module.exports = merge(prodEnv, {
   ANDROID_APP_LOCATION: '"https://github.com/AigangNetwork/aigang-insurance-app/tree/master/android"',
   RETRY_COUNT: 10,
   POOLS_ITEMS_PER_PAGE: 9,
+  PREDICTIONS_ITEMS_PER_PAGE: 9,
   CONTRIBUTIONS_ITEMS_PER_PAGE: 9,
+  FORECASTS_ITEMS_PER_PAGE: 9,
   GAS: {
-    ADD_FORECAST: 400000,
+    ADD_FORECAST: 600000,
     FORECAST_PAYOUT: 400000,
     POLICY_PAYMENT: 190000,
     ADD_CONTRIBUTION: 450000,
@@ -28,7 +30,8 @@ module.exports = merge(prodEnv, {
     TOKEN: '"0xFeEaed9eeb9bbf07E3bBB627CC736172CB04C776"'
   },
   CONTRACT_TYPES: {
-    POOLS: 1
+    POOLS: 1,
+    PREDICTIONS: 2
   },
   CONTRACT_STATUS: {
     CANCELED: 2

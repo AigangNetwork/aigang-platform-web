@@ -1,6 +1,6 @@
 <template>
   <transition name="slideUp">
-    <tr @click="navigateToContribution(contribution.id, contribution.address)">
+    <tr @click="navigateToContribution(contribution.id, contribution.poolContractAddress)">
       <td class="title">{{ contribution.poolName }}</td>
       <td class="number">{{ contribution.amount}} {{ $t('general.aix') }}</td>
       <td class="number">

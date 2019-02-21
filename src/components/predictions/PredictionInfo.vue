@@ -51,7 +51,6 @@
       <PaymentConfirmationDialog
         :isVisible="isPaymentDialogVisible && !transactionError"
         :displayDialog="displayPaymentDialog"
-        :content="$t('predictions.forecast.metamaskAlert')"
         :txHash="transactionHash"
         :title="$t('predictions.prediction.paymentInfo.title')"
         :bodyText="$t('predictions.prediction.paymentInfo.body')"
@@ -129,7 +128,7 @@ export default {
     }
   },
   async mounted () {
-    await this.$store.dispatch('predictions/getPrediction', this.$route.params.id)
+    await this.$store.dispatch('predictions/getPrediction', { id: this.$route.params.id, address: this.$route.params.address })
     this.isDataLoaded = true
     this.headerInfo = {
       title: this.prediction.title,
@@ -168,6 +167,7 @@ export default {
 
       const payload = {
         predictionId: this.prediction.id,
+        address: this.prediction.marketAddress,
         outcomeId: data.selectedOutcomeId,
         outcome: data.selectedOutcomeIndex,
         amount: data.amount

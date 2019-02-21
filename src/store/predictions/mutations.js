@@ -7,8 +7,24 @@ const mutations = {
     state.predictions = payload
   },
 
+  addPredictionToList (state, prediction) {
+    state.predictions.items.push(prediction)
+  },
+
+  setPredictionsTotalPages (state, totalPages) {
+    state.predictions.totalPages = totalPages
+  },
+
   setUserForecasts (state, payload) {
     state.userForecasts = payload
+  },
+
+  setUserForecastsTotalPages (state, totalPages) {
+    state.userForecasts.totalPages = totalPages
+  },
+
+  addForecast (state, forecast) {
+    state.userForecasts.items.push(forecast)
   },
 
   setPrediction (state, payload) {

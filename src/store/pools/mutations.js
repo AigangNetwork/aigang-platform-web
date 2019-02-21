@@ -15,6 +15,10 @@ const mutations = {
     state.pool = payload
   },
 
+  setPoolsTotalPages (state, totalPages) {
+    state.pools.totalPages = totalPages
+  },
+
   setContribution (state, payload) {
     state.contribution = payload
   },

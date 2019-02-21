@@ -9,12 +9,8 @@ export default {
       }
 
       switch (this.status.toUpperCase()) {
-        case 'PENDINGPAYMENT':
-          return this.$t('predictions.forecast.statuses.pendingPayment')
         case 'PAID':
           return this.$t('predictions.forecast.statuses.paid')
-        case 'CANCELED':
-          return this.$t('predictions.forecast.statuses.canceled')
         case 'WON':
           return this.$t('predictions.forecast.statuses.won')
         case 'LOST':
@@ -23,8 +19,6 @@ export default {
           return this.$t('predictions.forecast.statuses.wonPaidout')
         case 'AVAILABLEREFUND':
           return this.$t('predictions.forecast.statuses.availableRefund')
-        case 'PENDINGPAYOUT':
-          return this.$t('predictions.forecast.statuses.pendingPayout')
         case 'REFUNDPAIDOUT':
           return this.$t('predictions.forecast.statuses.refundPaidout')
         default:

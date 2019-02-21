@@ -2,7 +2,6 @@
   <div class="aig-container">
     <el-container class="aig-container">
       <el-aside
-        v-if="$store.state.user.authenticated"
         width="20%"
         class="aig-data-menu"
         :class="{ 'is-menu-open': isMenuOpen }"
@@ -19,7 +18,6 @@
           <ul>
             <li v-for="item in dataMenu" :key="item.name">
               <router-link
-                :class="{'aig-link-disabled': item.disabled && !$store.state.user.authenticated}"
                 @click.native="collapseSideMenu"
                 active-class="aig-menu-active"
                 :to="item.routeLink"

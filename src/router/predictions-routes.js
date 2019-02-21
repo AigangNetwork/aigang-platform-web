@@ -23,20 +23,17 @@ const routes = [
       {
         name: 'MyForecastsList',
         path: '/predictions/myforecasts',
-        component: MyForecastsList,
-        meta: {
-          authRequired: true
-        }
+        component: MyForecastsList
       }
     ]
   },
   {
-    path: '/predictions/prediction/:id',
+    path: '/predictions/prediction/:address/:id',
     name: 'PredictionInfo',
     component: PredictionInfo
   },
   {
-    path: '/predictions/forecast/:id',
+    path: '/predictions/forecast/:address/:id',
     name: 'ForecastInfo',
     component: ForecastInfo
   }

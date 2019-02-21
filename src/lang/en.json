@@ -463,7 +463,7 @@
 		"cookiesTitle": "Cookie Policy for Aigang Platform",
 		"readMoreCookies": "Read more.",
 		"insufficientBalance": "Insufficient balance",
-		"userNotLoggedIn": "User must be logged in and connected to web3 provider (Metamask, Mist, etc.)",
+		"userNotLoggedIn": "User must be connected to web3 provider (Metamask, Mist, etc.)",
 		"insufficientBalanceDialog": {
 			"title": "Insufficient balance",
 			"qaBody":
@@ -564,10 +564,7 @@
 		"prediction": {
 			"paymentInfo": {
 				"title": "Payment Information",
-				"metamaskAlert":
-					"Atention! Do not leave this page until you confirm your transaction. Otherwise your transaction will be lost and forecast won't be counted.",
-				"body":
-					"Your payment transaction was created succesfully. When payment will be processed we will inform you via email notification message. You can see your transaction status by clicking on transaction address.",
+				"body": "Your payment transaction was created succesfully.",
 				"buttons": {
 					"goBack": "Go to my forecasts list"
 				}
@@ -697,10 +694,7 @@
 			"serverError": "Something went wrong. Please contact support: info@aigang.network",
 			"paymentInfo": {
 				"title": "Payment Information",
-				"metamaskAlert":
-					"Atention! Do not leave this page until you confirm your transaction. Otherwise your transaction will be lost and policy won't be activated.",
-				"body":
-					"Your payment transaction was created succesfully. When payment will be processed we will inform you via email notification message. You can see your transaction status by clicking on transaction address. ",
+				"body": "Your payment transaction was created succesfully.",
 				"buttons": {
 					"goBack": "Go to policy list"
 				}
@@ -876,7 +870,7 @@
 			"availableRefund": "Available Refund",
 			"refundPaidout": "Refund Paidout"
 		},
-		"userNotLoggedIn": "User must be logged in and connected to web3 provider (Metamask, Mist, etc.)",
+		"userNotLoggedIn": "User must connected to web3 provider (Metamask, Mist, etc.)",
 		"calculatingSummary": "Calculating statistics. This might take a while.",
 		"portfolioInfo": {
 			"yourAddress": "Your address",

@@ -19,7 +19,7 @@
         <div class="details">
           <p>{{ $t('predictions.forecast.status') }}: <span class="value"><ForecastStatus :status="userForecast.status"/></span></p>
           <p>{{ $t('predictions.forecast.yourForecast') }}: <span class="value">{{ userForecast.outcomeTitle }} <span class="details">({{ $t('predictions.index') }}: {{ userForecast.outcomeIndex }})</span></span></p>
-          <p>{{ $t('predictions.forecast.yourAmount') }}: <span class="value">{{ userForecast.amount }} {{ $t('general.aix') }} <span class="details">({{ $t('predictions.forecast.forecastAmount') }}: {{ getForecastAmount }} {{ $t('general.aix') }}, {{ $t('predictions.fee')}}: {{ userForecast.fee }} {{ $t('general.aix') }})</span></span></p>
+          <p>{{ $t('predictions.forecast.yourAmount') }}: <span class="value">{{ getForecastAmount }} {{ $t('general.aix') }} <span class="details">({{ $t('predictions.forecast.forecastAmount') }}: {{ userForecast.amount }} {{ $t('general.aix') }}, {{ $t('predictions.fee')}}: {{ userForecast.fee }} {{ $t('general.aix') }})</span></span></p>
           <p v-if="isPredictionResolved">{{ $t('predictions.wonOutcome') }}: <span class="value">{{ userForecast.resultOutcomeName }} <span class="details">({{ $t('predictions.index') }}: {{ userForecast.resultOutcomeIndex }})</span></span></p>
           <p v-if="isPredictionResolved">{{ $t('predictions.wonAmount') }}: <span class="value">{{ userForecast.wonAmount }} {{ $t('general.aix') }}</span></p>
         </div>
@@ -49,7 +49,6 @@
         <PaymentConfirmationDialog
           :isVisible="isPaymentDialogVisible && !transactionError"
           :displayDialog="displayPaymentDialog"
-          :content="$t('predictions.forecast.metamaskAlert')"
           :txHash="transactionHash"
           :title="$t('predictions.prediction.paymentInfo.title')"
           :bodyText="$t('predictions.prediction.paymentInfo.body')"
@@ -94,7 +93,7 @@ export default {
       const payload = {
         id: this.userForecast.id,
         predictionId: this.userForecast.predictionId,
-        marketAddress: this.userForecast.marketAddress
+        address: this.userForecast.marketAddress
       }
 
       await this.$store.dispatch('predictions/payoutWon', payload)
@@ -149,14 +148,14 @@ export default {
     },
     getForecastAmount () {
       const numbersAfterPointer = 6
-      return Math.round((this.userForecast.amount - this.userForecast.fee) * Math.pow(10, numbersAfterPointer)) / Math.pow(10, numbersAfterPointer)
+      return Math.round((this.userForecast.amount + this.userForecast.fee) * Math.pow(10, numbersAfterPointer)) / Math.pow(10, numbersAfterPointer)
     },
     payButtonVisible () {
       return this.userForecast.predictionStatus === 'published'
     }
   },
   async mounted () {
-    await this.$store.dispatch('predictions/getUserForecast', this.$route.params.id)
+    await this.$store.dispatch('predictions/getUserForecast', { id: this.$route.params.id, address: this.$route.params.address })
     this.isDataLoaded = true
     this.headerInfo = {
       title: this.userForecast.predictionTitle,

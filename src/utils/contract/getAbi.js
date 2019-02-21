@@ -15,6 +15,9 @@ const getAbi = async address => {
   // Need to delete because of CORS
   delete axios.defaults.headers.common['Authorization']
   const response = await axios.get(path)
+
+  if (response.data.message === 'NOTOK') throw new Error('Cannot find abi with address: ' + address)
+
   abi = JSON.parse(response.data.result)
   store.dispatch('utils/addAbi', { address, abi })
   return abi
