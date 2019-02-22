@@ -4,7 +4,7 @@ import networkResolver from '@/utils/web3/networkResolver'
 import eventHub from '@/utils/eventHub'
 import loadWeb3Instance from '@/utils/web3/loadWeb3'
 import { initialUserState } from './index'
-import getAbi from '@/utils/contract/getAbi'
+import EthUtils from '@/utils/EthUtils'
 
 export default {
   async resetState ({ commit }) {
@@ -102,11 +102,7 @@ export default {
 
     const ethBalanceInWei = await web3Instance.eth.getBalance(coinbase)
     const ethBalance = web3Instance.utils.fromWei(ethBalanceInWei)
-
-    const address = process.env.CONTRACTS_ADDRESSES.TOKEN
-    const abi = await getAbi(address)
-
-    const aixContract = new window.web3.eth.Contract(abi, address)
+    const aixContract = await EthUtils.getContract(process.env.CONTRACTS_ADDRESSES.TOKEN)
 
     const aixBalanceInWei = await aixContract.methods.balanceOf(coinbase).call()
     const aixBalance = web3Instance.utils.fromWei(aixBalanceInWei)

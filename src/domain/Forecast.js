@@ -1,6 +1,6 @@
 import moment from 'moment'
 import Prediction from './Prediction'
-import getAbi from '@/utils/contract/getAbi'
+import EthUtils from '@/utils/EthUtils'
 
 export default class Forecast {
   async initializeItem (forecastData, prediction, outcomeData) {
@@ -9,7 +9,6 @@ export default class Forecast {
     this.predictionTitle = prediction.title
     this.outcomeTitle = outcomeData[1]
     this.amount = parseFloat(window.web3.utils.fromWei(forecastData[3]))
-    this.resultDateUtc = prediction.forecastEndUtc
     this.status = mapForecastStatus(forecastData[5], prediction.status, this.isWon)
     this.predictionStatus = prediction.status
     this.createdUtc = moment.unix(forecastData[6]).format('YYYY-MM-DD HH:mm')
@@ -22,7 +21,6 @@ export default class Forecast {
     this.fee = prediction.fee
     this.forecastStartUtc = prediction.forecastStartUtc
     this.forecastEndUtc = prediction.forecastEndUtc
-    this.resultDateUtc = prediction.resultDateUtc
     this.poolSize = prediction.poolSize
     this.forecastsCount = prediction.forecastsCount
     this.resultOutcomeId = prediction.resultOutcomeId
@@ -30,8 +28,7 @@ export default class Forecast {
     this.resultOutcomeName = prediction.resultOutcomeName
 
     if (this.isWon) {
-      const prizeCalculatorAbi = await getAbi(prediction.prizeCalculator)
-      const prizeCalculator = new window.web3.eth.Contract(prizeCalculatorAbi, prediction.prizeCalculator)
+      const prizeCalculator = await EthUtils.getContract(prediction.prizeCalculator)
       const amount = await prizeCalculator.methods
         .calculatePrizeAmount(window.web3.utils.toWei(this.poolSize), outcomeData[3], forecastData[3])
         .call()
@@ -45,7 +42,7 @@ export default class Forecast {
 
   static async createItem (contract, id) {
     const forecastData = await contract.methods.getForecast(id).call()
-    const prediction = await Prediction.create(contract, forecastData[1])
+    const prediction = await Prediction.create(contract._address, forecastData[1])
     const outcomeData = await contract.methods.getOutcome(forecastData[1], forecastData[4]).call()
     forecastData.id = id
 
@@ -54,9 +51,10 @@ export default class Forecast {
     return forecast
   }
 
-  static async create (contract, id) {
+  static async create (address, id) {
+    const contract = await EthUtils.getContract(address)
     const forecastData = await contract.methods.getForecast(id).call()
-    const prediction = await Prediction.create(contract, forecastData[1])
+    const prediction = await Prediction.create(address, forecastData[1])
     const outcomeData = await contract.methods.getOutcome(forecastData[1], forecastData[4]).call()
     forecastData.id = id
 
@@ -69,7 +67,7 @@ export default class Forecast {
 
 const mapForecastStatus = (isPaidoutValue, predictionStatus, isWon) => {
   const isPaidout = isPaidoutValue !== '0'
-  if (!isPaidout && predictionStatus === 'active') {
+  if (!isPaidout && predictionStatus === 'published') {
     return 'paid'
   } else if (!isPaidout && predictionStatus === 'canceled') {
     return 'availableRefund'

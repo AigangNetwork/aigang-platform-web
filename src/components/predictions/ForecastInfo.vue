@@ -21,7 +21,7 @@
           <p>{{ $t('predictions.forecast.yourForecast') }}: <span class="value">{{ userForecast.outcomeTitle }} <span class="details">({{ $t('predictions.index') }}: {{ userForecast.outcomeIndex }})</span></span></p>
           <p>{{ $t('predictions.forecast.yourAmount') }}: <span class="value">{{ getForecastAmount }} {{ $t('general.aix') }} <span class="details">({{ $t('predictions.forecast.forecastAmount') }}: {{ userForecast.amount }} {{ $t('general.aix') }}, {{ $t('predictions.fee')}}: {{ userForecast.fee }} {{ $t('general.aix') }})</span></span></p>
           <p v-if="isPredictionResolved">{{ $t('predictions.wonOutcome') }}: <span class="value">{{ userForecast.resultOutcomeName }} <span class="details">({{ $t('predictions.index') }}: {{ userForecast.resultOutcomeIndex }})</span></span></p>
-          <p v-if="isPredictionResolved">{{ $t('predictions.wonAmount') }}: <span class="value">{{ userForecast.wonAmount }} {{ $t('general.aix') }}</span></p>
+          <p v-if="isForecastsWon">{{ $t('predictions.wonAmount') }}: <span class="value">{{ userForecast.wonAmount }} {{ $t('general.aix') }}</span></p>
         </div>
 
         <div v-if="isPercentageVisible">
@@ -104,7 +104,7 @@ export default {
       const payload = {
         id: this.userForecast.id,
         predictionId: this.userForecast.predictionId,
-        marketAddress: this.userForecast.marketAddress
+        address: this.userForecast.marketAddress
       }
 
       await this.$store.dispatch('predictions/payoutRefund', payload)
@@ -162,7 +162,6 @@ export default {
       status: this.userForecast.predictionStatus,
       forecastStartUtc: this.userForecast.forecastStartUtc,
       forecastEndUtc: this.userForecast.forecastEndUtc,
-      resultDateUtc: this.userForecast.resultDateUtc,
       forecastsCount: this.userForecast.forecastsCount,
       poolSize: this.userForecast.poolSize
     }

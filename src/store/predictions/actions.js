@@ -1,11 +1,9 @@
 /* eslint-disable no-tabs */
 import { initialPredictionsState } from './index'
 import axios from 'axios'
-import getAbi from '@/utils/contract/getAbi'
-import getContracts from '@/utils/contract/getContracts'
 import Prediction from '@/domain/Prediction'
 import Forecast from '@/domain/Forecast'
-const web3 = window.web3
+import EthUtils from '@/utils/EthUtils'
 
 export default {
   async resetState ({ commit }) {
@@ -20,15 +18,14 @@ export default {
     })
 
     try {
-      const contracts = await getContracts(process.env.CONTRACT_TYPES.PREDICTIONS)
+      const contracts = await EthUtils.getContracts(process.env.CONTRACT_TYPES.PREDICTIONS)
       const itemsPerPage = process.env.PREDICTIONS_ITEMS_PER_PAGE
       const startItem = page * itemsPerPage - itemsPerPage + 1
       let totalPredictions = 0
       let predictionsCounter = 0
 
       // Iterating through contracts
-      for (let index = contracts.length - 1; index >= 0; index--) {
-        const contract = contracts[index]
+      for (const contract of contracts) {
         const predictionsLength = parseInt(await contract.methods.totalPredictions().call())
         totalPredictions += predictionsLength
 
@@ -42,6 +39,7 @@ export default {
 
           const prediction = await Prediction.createItem(contract, i)
           commit('addPredictionToList', prediction)
+
           if (predictionsCounter === startItem) {
             commit('setLoading', false, { root: true })
           }
@@ -55,7 +53,7 @@ export default {
     }
   },
 
-  async getPrediction ({ commit, dispatch }, payload) {
+  async getPrediction ({ commit }, payload) {
     commit('setPrediction', {
       item: {},
       predictionStatistics: {}
@@ -63,14 +61,13 @@ export default {
     commit('setLoading', true, { root: true })
 
     try {
-      const abi = await getAbi(payload.address)
-      const contract = new window.web3.eth.Contract(abi, payload.address)
-      const prediction = await Prediction.create(contract, payload.id)
+      const prediction = await Prediction.create(payload.address, payload.id)
 
       commit('setPrediction', {
         item: prediction,
         predictionStatistics: {}
       })
+
       commit('setLoading', false, { root: true })
     } catch (ex) {
       console.error(ex)
@@ -170,14 +167,13 @@ export default {
     commit('setLoading', true, { root: true })
 
     try {
-      const contracts = await getContracts(process.env.CONTRACT_TYPES.PREDICTIONS)
+      const contracts = await EthUtils.getContracts(process.env.CONTRACT_TYPES.PREDICTIONS)
       let totalForecasts = 0
       const itemsPerPage = process.env.FORECASTS_ITEMS_PER_PAGE
       const startItem = page * itemsPerPage - itemsPerPage + 1
 
       let iterator = 0
-      for (let contractIndex = contracts.length - 1; contractIndex >= 0; contractIndex--) {
-        const contract = contracts[contractIndex]
+      for (const contract of contracts) {
         const forecastsCount = parseInt(
           await contract.methods.getMyForecastsLength().call({
             from: rootState.user.userWeb3.coinbase
@@ -214,13 +210,11 @@ export default {
     commit('setLoading', true, { root: true })
 
     try {
-      const tokenAddress = process.env.CONTRACTS_ADDRESSES.TOKEN
-      const tokenAbi = await getAbi(tokenAddress)
-      const TokenInstance = new window.web3.eth.Contract(tokenAbi, tokenAddress)
+      const TokenInstance = await EthUtils.getContract(process.env.CONTRACTS_ADDRESSES.TOKEN)
 
       const paymentValue = window.web3.utils.toWei(payload.amount.toString())
-      const predictionIdHex = getHex(payload.predictionId)
-      let outcomeHex = getHex(payload.outcome)
+      const predictionIdHex = EthUtils.getHex(payload.predictionId)
+      let outcomeHex = EthUtils.getHex(payload.outcome)
       const bytes = outcomeHex + predictionIdHex.replace('0x', '')
 
       TokenInstance.methods
@@ -244,20 +238,12 @@ export default {
     }
   },
 
-  async deleteForecast ({ commit }, id) {
-    try {
-      await axios.delete(`/predictions/forecast/${id}`)
-    } catch (err) {}
-  },
-
   async getUserForecast ({ commit }, payload) {
     // commit('setUserForecast', {})
     commit('setLoading', true, { root: true })
 
     try {
-      const abi = await getAbi(payload.address)
-      const contract = new window.web3.eth.Contract(abi, payload.address)
-      const forecast = await Forecast.create(contract, payload.id)
+      const forecast = await Forecast.create(payload.address, payload.id)
       const predictionStatus = forecast.predictionStatus.toUpperCase()
       const forecastStatus = forecast.status.toUpperCase()
 
@@ -281,21 +267,23 @@ export default {
     }
   },
 
-  async payoutWon ({ commit, dispatch, rootState }, payload) {
+  async payoutWon ({ commit, rootState }, payload) {
     commit('setTransactionHash', '')
     commit('setTransactionError', false)
 
     try {
-      const abi = await getAbi(payload.address)
-      const MarketInstance = new window.web3.eth.Contract(abi, payload.address)
+      const MarketInstance = await EthUtils.getContract(payload.address)
+      const forecastIdHex = EthUtils.getHex(parseInt(payload.id))
+      const predictionIdHex = EthUtils.getHex(parseInt(payload.predictionId))
 
       MarketInstance.methods
-        .payout(getHex(parseInt(payload.predictionId)), getHex(parseInt(payload.id)))
+        .payout(predictionIdHex, forecastIdHex)
         .send({
           gas: process.env.GAS.FORECAST_PAYOUT,
           from: rootState.user.userWeb3.coinbase
         })
-        .on('error', () => {
+        .on('error', e => {
+          console.error(e)
           commit('setTransactionError', true)
         })
         .once('transactionHash', async txId => {
@@ -306,51 +294,30 @@ export default {
     }
   },
 
-  async payoutRefund ({ commit, dispatch, rootState }, payload) {
+  async payoutRefund ({ commit, rootState }, payload) {
     commit('setTransactionHash', '')
     commit('setTransactionError', false)
-    const response = await axios.get(`/contracts/${payload.marketAddress}`)
 
-    if (response.data) {
-      const web3 = window.web3
-      const MarketInstance = new web3.eth.Contract(JSON.parse(response.data.abi), payload.marketAddress)
-      const predictionIdHex = web3.utils.fromAscii(payload.predictionId)
-      const forecastIdHex = web3.utils.fromAscii(payload.id)
+    try {
+      const MarketInstance = await EthUtils.getContract(payload.address)
+      const forecastIdHex = EthUtils.getHex(parseInt(payload.id))
+      const predictionIdHex = EthUtils.getHex(parseInt(payload.predictionId))
 
       MarketInstance.methods
-        .refund(predictionIdHex, forecastIdHex)
+        .refund(forecastIdHex, predictionIdHex)
         .send({
           gas: process.env.GAS.FORECAST_PAYOUT,
           from: rootState.user.userWeb3.coinbase
         })
-        .on('error', () => {
+        .on('error', e => {
+          console.error(e)
           commit('setTransactionError', true)
         })
         .once('transactionHash', async txId => {
-          try {
-            const request = {
-              forecastId: payload.id,
-              predictionId: payload.predictionId,
-              txId
-            }
-
-            await axios.post('/predictions/transaction/forecastRefund', request)
-
-            commit('setTransactionHash', txId)
-            dispatch('getUserForecast', payload.id)
-          } catch (ex) {}
+          commit('setTransactionHash', txId)
         })
+    } catch (e) {
+      console.error(e)
     }
   }
-}
-
-const getHex = x => {
-  var result = web3.toHex(x)
-
-  if (result.length % 2 === 1) {
-    // bug https://github.com/ethereum/web3.js/issues/873
-    result = result.replace('0x', '0x0')
-  }
-
-  return result
 }

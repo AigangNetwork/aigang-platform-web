@@ -1,9 +1,7 @@
 import { initialPoolState } from './index'
-import getAbi from '@/utils/contract/getAbi'
-import getContracts from '@/utils/contract/getContracts'
 import Pool from '@/domain/Pool'
 import Contribution from '@//domain/Contribution'
-const web3 = window.web3
+import EthUtils from '@/utils/EthUtils'
 
 export default {
   async resetState ({ commit }) {
@@ -20,7 +18,7 @@ export default {
     commit('setPools', pools)
 
     try {
-      const contracts = await getContracts(process.env.CONTRACT_TYPES.POOLS)
+      const contracts = await EthUtils.getContracts(process.env.CONTRACT_TYPES.POOLS)
       const itemsPerPage = process.env.POOLS_ITEMS_PER_PAGE
       const startItem = page * itemsPerPage - itemsPerPage + 1
       let totalPools = 0
@@ -61,8 +59,7 @@ export default {
     commit('setLoading', true, { root: true })
 
     try {
-      const abi = await getAbi(payload.address)
-      const contract = new window.web3.eth.Contract(abi, payload.address)
+      const contract = await EthUtils.getContract(payload.address)
       const pool = await Pool.create(contract, payload.id)
 
       commit('setPool', pool)
@@ -79,11 +76,9 @@ export default {
     commit('setLoading', true, { root: true })
 
     try {
-      const tokenAddress = process.env.CONTRACTS_ADDRESSES.TOKEN
-      const tokenAbi = await getAbi(tokenAddress)
-      const TokenInstance = new window.web3.eth.Contract(tokenAbi, tokenAddress)
+      const TokenInstance = await EthUtils.getContract(process.env.CONTRACTS_ADDRESSES.TOKEN)
       const paymentValue = window.web3.utils.toWei(payload.amount.toString())
-      const poolIdHex = getHex(payload.poolId)
+      const poolIdHex = EthUtils.getHex(payload.poolId)
 
       const callObject = TokenInstance.methods
         .approveAndCall(payload.poolContractAddress, paymentValue, poolIdHex)
@@ -122,7 +117,7 @@ export default {
     commit('setContributionsListLoading', true)
 
     try {
-      const contracts = await getContracts(process.env.CONTRACT_TYPES.POOLS)
+      const contracts = await EthUtils.getContracts(process.env.CONTRACT_TYPES.POOLS)
       let totalContributions = 0
       const itemsPerPage = process.env.CONTRIBUTIONS_ITEMS_PER_PAGE
       const startItem = page * itemsPerPage - itemsPerPage + 1
@@ -173,7 +168,7 @@ export default {
     })
 
     try {
-      const contracts = await getContracts(process.env.CONTRACT_TYPES.POOLS)
+      const contracts = await EthUtils.getContracts(process.env.CONTRACT_TYPES.POOLS)
       let totalContributions = 0
       let contributionsAmount = 0
       let availableRefundAmount = 0
@@ -218,15 +213,13 @@ export default {
     }
   },
 
-  async getContribution ({ commit, rootState }, payload) {
+  async getContribution ({ commit }, payload) {
     commit('setContribution', {})
     commit('setLoading', true, { root: true })
 
     try {
-      const abi = await getAbi(payload.address)
-      const contract = new window.web3.eth.Contract(abi, payload.address)
+      const contract = await EthUtils.getContract(payload.address)
       const contribution = await Contribution.create(contract, payload.id)
-      
       commit('setContribution', contribution)
       commit('setLoading', false, { root: true })
     } catch (ex) {
@@ -240,8 +233,7 @@ export default {
     commit('setLoading', true, { root: true })
 
     try {
-      const abi = await getAbi(payload.poolContractAddress)
-      const PoolsInstance = new window.web3.eth.Contract(abi, payload.poolContractAddress)
+      const PoolsInstance = await EthUtils.getContract(payload.poolContractAddress)
 
       commit('setLoading', false, { root: true })
 
@@ -266,14 +258,13 @@ export default {
     }
   },
 
-  async refundContribution ({ commit, rootState, dispatch }, payload) {
+  async refundContribution ({ commit, rootState }, payload) {
     commit('setTransactionHash', '')
     commit('setTransactionError', false)
     commit('setLoading', true, { root: true })
 
     try {
-      const abi = await getAbi(payload.poolContractAddress)
-      const PoolsInstance = new window.web3.eth.Contract(abi, payload.poolContractAddress)
+      const PoolsInstance = await EthUtils.getContract(payload.poolContractAddress)
 
       commit('setLoading', false, { root: true })
 
@@ -297,15 +288,4 @@ export default {
       commit('setLoading', false, { root: true })
     }
   }
-}
-
-const getHex = x => {
-  var result = web3.toHex(x)
-
-  if (result.length % 2 === 1) {
-    // bug https://github.com/ethereum/web3.js/issues/873
-    result = result.replace('0x', '0x0')
-  }
-
-  return result
 }

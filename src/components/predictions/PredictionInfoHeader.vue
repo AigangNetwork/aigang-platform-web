@@ -2,26 +2,13 @@
   <div class="header-content">
     <div class="prediction-title">{{ info.title | truncate(128) }}</div>
     <div class="info">
-      <div class="icon-container" v-if="info.status === 'pendingPublish'">
-        <img src="/static/icons/clock-white.svg" class="header-icon" />
-        <span>{{ $t('predictions.votingStarts')}}: <Date :dateUtc="info.forecastStartUtc" format="YYYY-MM-DD HH:mm (UTC Z)" /></span>
-      </div>
-      <div class="icon-container" v-else-if="info.status === 'published'">
+      <div class="icon-container" v-if="info.status === 'published'">
         <img src="/static/icons/clock-white.svg" class="header-icon" />
         <span>{{ $t('predictions.votingTill')}}: <Date :dateUtc="info.forecastEndUtc" format="YYYY-MM-DD HH:mm (UTC Z)" /></span>
       </div>
-      <div class="icon-container" v-else-if="info.status === 'pendingResolve'">
-        <img src="/static/icons/clock-white.svg" class="header-icon" />
-        <span>{{ $t('predictions.votingEnded')}}</span>
-      </div>
-
       <div class="icon-container" v-if="info.status === 'paused'">
         <img src="/static/icons/finish-white.svg" class="header-icon" />
         <span>{{ $t('predictions.paused')}}</span>
-      </div>
-      <div class="icon-container" v-else-if="info.status === 'published' || info.status === 'pendingResolve'">
-        <img src="/static/icons/finish-white.svg" class="header-icon" />
-        <span>{{ $t('predictions.results')}}: <Date :dateUtc="info.resultDateUtc" format="YYYY-MM-DD HH:mm (UTC Z)" /></span>
       </div>
       <div class="icon-container" v-else-if="info.status === 'resolved'">
         <img src="/static/icons/finish-white.svg" class="header-icon" />
@@ -31,7 +18,6 @@
         <img src="/static/icons/finish-white.svg" class="header-icon" />
         <span>{{ $t('predictions.canceled')}}</span>
       </div>
-
       <div class="icon-container" v-if="info.status !== 'canceled'">
         <img src="/static/icons/user-white.svg" class="header-icon" />
         <span>{{ $t('predictions.forecastsCount')}}: {{ info.forecastsCount }}</span>

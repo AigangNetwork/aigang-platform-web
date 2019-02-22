@@ -1,5 +1,5 @@
 import moment from 'moment'
-import getAbi from '@/utils/contract/getAbi'
+import EthUtils from '@/utils/EthUtils'
 
 export default class Prediction {
   async initialize (data, details, outcomes) {
@@ -12,7 +12,6 @@ export default class Prediction {
     this.poolSize = window.web3.utils.fromWei(data.totalTokens)
     this.forecastStartUtc = moment.unix(data.forecastStartUtc).format('YYYY-MM-DD HH:mm')
     this.forecastEndUtc = moment.unix(data.forecastEndUtc).format('YYYY-MM-DD HH:mm')
-    this.resultDateUtc = moment.unix(data.forecastStartUtc).format('YYYY-MM-DD HH:mm')
     this.forecastsCount = data.totalForecasts
     this.resultStorage = data.resultStorage
     this.outcomes = outcomes
@@ -23,8 +22,7 @@ export default class Prediction {
     this.outcomes = outcomes
 
     if (this.status === 'resolved') {
-      const resultStorageAbi = await getAbi(this.resultStorage)
-      const resultContract = new window.web3.eth.Contract(resultStorageAbi, this.resultStorage)
+      const resultContract = await EthUtils.getContract(this.resultStorage)
       const result = await resultContract.methods.getResult(this.id).call()
 
       this.resultOutcomeId = parseInt(result)
@@ -33,7 +31,8 @@ export default class Prediction {
     }
   }
 
-  static async create (contract, id) {
+  static async create (address, id) {
+    const contract = await EthUtils.getContract(address)
     const data = await contract.methods.predictions(id).call()
     const details = await contract.methods.predictionDetails(id).call()
     const outcomes = []
@@ -47,7 +46,7 @@ export default class Prediction {
       })
     }
 
-    data.address = contract._address
+    data.address = address
     data.id = id
 
     const prediction = new Prediction()
@@ -74,7 +73,7 @@ const mapPredictionStatus = status => {
     case '0':
       return 'notset'
     case '1':
-      return 'active'
+      return 'published'
     case '2':
       return 'resolved'
     case '3':

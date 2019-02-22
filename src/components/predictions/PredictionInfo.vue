@@ -135,7 +135,6 @@ export default {
       status: this.prediction.status,
       forecastStartUtc: this.prediction.forecastStartUtc,
       forecastEndUtc: this.prediction.forecastEndUtc,
-      resultDateUtc: this.prediction.resultDateUtc,
       forecastsCount: this.prediction.forecastsCount,
       poolSize: this.prediction.poolSize
     }
