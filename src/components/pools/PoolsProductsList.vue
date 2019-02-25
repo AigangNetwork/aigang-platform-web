@@ -1,18 +1,20 @@
 <template>
     <transition-group class="items-container" name="slideUp" v-loading="$store.getters.loading">
-
     <el-row class="aig-items" key="pools-list">
       <transition-group name="slideUp">
-        <el-col :xs="24" :sm="12" :md="12" :lg="8" v-for="(pool, index) in pools.items" :key="index">
+        <el-col  v-if="isWeb3Enabled" :xs="24" :sm="12" :md="12" :lg="8" v-for="(pool, index) in pools.items" :key="index">
           <PoolsProductItem :item="pool" />
         </el-col>
         </transition-group>
-      <el-col>
+      <el-col v-if="isWeb3Enabled">
         <transition name="slideUp">
             <Pagination v-if="pools.totalPages > 1  && isDataLoaded" :callback="loadPage" :total-page-count="pools.totalPages" :current-page="page"/>
         </transition>
-        </el-col>
-      <el-col v-if="!$store.getters.loading && pools && (!pools.items || pools.items.length === 0)">
+      </el-col>
+      <el-col v-if="!isWeb3Enabled">
+        <h2>{{ $t('general.web3NotConnected') }}</h2>
+      </el-col>
+      <el-col v-else-if="!$store.getters.loading && pools && (!pools.items || pools.items.length === 0)">
         <h2>{{ $t('general.noPools') }}</h2>
       </el-col>
     </el-row>
@@ -32,7 +34,10 @@ export default {
     Pagination
   },
   computed: {
-    ...mapGetters(['pools'])
+    ...mapGetters(['pools']),
+    isWeb3Enabled () {
+      return this.$store.getters['user/isWeb3Enabled']
+    }
   },
   data () {
     return {
@@ -40,8 +45,16 @@ export default {
       isDataLoaded: false
     }
   },
+  watch: {
+    async isWeb3Enabled (newValue) {
+      if (newValue) {
+        await this.loadPage(1)
+        this.isDataLoaded = true
+      }
+    }
+  },
   async beforeMount () {
-    if (!this.isDataLoaded) {
+    if (!this.isDataLoaded && this.isWeb3Enabled) {
       await this.loadPage(1)
       this.isDataLoaded = true
     }

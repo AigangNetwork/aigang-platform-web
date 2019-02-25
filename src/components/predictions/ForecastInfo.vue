@@ -1,6 +1,6 @@
 <template>
   <div class="aig-container aig-view aig-info" v-loading="$store.getters.loading">
-    <div class="aig-info-header" v-if="isDataLoaded">
+    <div class="aig-info-header" v-if="isDataLoaded && isWeb3Enabled">
       <div class="back-button-container">
         <router-link :to="{ name: 'MyForecastsList' }" class="back-button">{{ $t('general.backToList')}}</router-link>
       </div>
@@ -9,7 +9,7 @@
       </div>
     </div>
 
-    <div class="aig-info-content-container" v-if="isDataLoaded">
+    <div class="aig-info-content-container" v-if="isDataLoaded && isWeb3Enabled">
       <div class="aig-info-content">
         <h4 class="info-title">{{ $t('predictions.description') }}</h4>
         <vue-markdown class="markup-content" :html="false" :source="userForecast.predictionDescription || $t('predictions.noDescription')"></vue-markdown>
@@ -56,6 +56,9 @@
           :btnText="$t('predictions.prediction.paymentInfo.buttons.goBack')"/>
       </div>
     </div>
+
+    <div class="wallet-message" v-else><h2>{{ $t('general.web3NotConnected') }}</h2></div>
+
   </div>
 </template>
 
@@ -113,6 +116,25 @@ export default {
     },
     displayPaymentDialog (value) {
       this.isPaymentDialogVisible = value
+    },
+    async loadData () {
+      await this.$store.dispatch('predictions/getUserForecast', { id: this.$route.params.id, address: this.$route.params.address })
+      this.isDataLoaded = true
+      this.headerInfo = {
+        title: this.userForecast.predictionTitle,
+        status: this.userForecast.predictionStatus,
+        forecastStartUtc: this.userForecast.forecastStartUtc,
+        forecastEndUtc: this.userForecast.forecastEndUtc,
+        forecastsCount: this.userForecast.forecastsCount,
+        poolSize: this.userForecast.poolSize
+      }
+    }
+  },
+  watch: {
+    async isWeb3Enabled (newValue) {
+      if (newValue) {
+        await this.loadData()
+      }
     }
   },
   computed: {
@@ -152,18 +174,14 @@ export default {
     },
     payButtonVisible () {
       return this.userForecast.predictionStatus === 'published'
+    },
+    isWeb3Enabled () {
+      return this.$store.getters['user/isWeb3Enabled']
     }
   },
   async mounted () {
-    await this.$store.dispatch('predictions/getUserForecast', { id: this.$route.params.id, address: this.$route.params.address })
-    this.isDataLoaded = true
-    this.headerInfo = {
-      title: this.userForecast.predictionTitle,
-      status: this.userForecast.predictionStatus,
-      forecastStartUtc: this.userForecast.forecastStartUtc,
-      forecastEndUtc: this.userForecast.forecastEndUtc,
-      forecastsCount: this.userForecast.forecastsCount,
-      poolSize: this.userForecast.poolSize
+    if (this.isWeb3Enabled) {
+      await this.loadData()
     }
   }
 }
@@ -207,6 +225,11 @@ export default {
 
   .wrapper.el-button {
     margin-top: 48px;
+    width: 100%;
+  }
+
+  .wallet-message {
+    text-align: center;
     width: 100%;
   }
 </style>

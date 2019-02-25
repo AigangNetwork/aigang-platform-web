@@ -6,7 +6,6 @@
     </transition>
     <CookiesBar />
     <notification></notification>
-
     <InsufficientBalanceDialog :showDialog="isInsufficientBalanceDialogVisible" @onButtonClick="onInsufficientBalanceDialogClose"/>
   </div>
 </template>

@@ -1,8 +1,10 @@
 <template>
-  <div class="aig-profile">
+  <div class="aig-profile" v-if="$store.getters['user/isWeb3Enabled']">
     <div class="container">
-        <span><a class="address" target="_blank" :href="contractLink">{{ $store.getters['user/coinbase'] | truncate(10) }}</a></span>
-        <span>{{ $store.getters['user/aixBalance'] }} AIX </span>
+      <a class="address" target="_blank" :href="contractLink">
+        <span>{{ $store.getters['user/coinbase'] | truncate(10) }}</span>
+        <span><transition name="slideUp"><span class="balance">{{ $store.getters['user/aixBalance'] }}</span></transition> AIX </span>
+      </a>
     </div>
   </div>
 </template>
@@ -28,25 +30,36 @@ export default {
     font-family: $font-secondary;
     font-weight: 500;
     width: 100%;
-    color: $gray;
     display: flex;
     align-items: center;
     justify-content: flex-end;
     padding-right: 25px;
     background: linear-gradient(to right, #4f3b8e 0%, #6237bb 100%);
 
+    &:hover {
+      span {
+        color: $gray;
+      }
+    }
+
     span {
+      transition: all 200ms;
       display: block;
       margin: 10px 0;
       text-align: right;
       font-size: 12px;
-      color: $gray;
+      color: white;
     }
 
     .address {
-      text-decoration: underline;
+      color: white
+    }
+
+    .balance {
+      font-weight: 600;
+      font-size: 18px;
       color: white;
-      color: $gray;
+      display: inline;
     }
   }
 

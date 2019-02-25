@@ -472,7 +472,8 @@
 			"productionBody": "Your wallet balance is insufficient. Please buy AIX tokens and try again.",
 			"button": "Got It"
 		},
-		"processingTransaction": "Transaction is being processed..."
+		"processingTransaction": "Transaction is being processed...",
+		"web3NotConnected": "Please connect to your wallet"
 	},
 	"errors": {
 		"error": "Error",

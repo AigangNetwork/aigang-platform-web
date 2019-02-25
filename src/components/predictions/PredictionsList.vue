@@ -2,16 +2,19 @@
   <transition-group class="items-container" name="slideUp" v-loading="$store.getters.loading">
     <el-row class="aig-items" key="predictions-list">
       <transition-group name="slideUp">
-      <el-col :xs="24" :sm="12" :md="12" :lg="8" v-for="(prediction, index) in predictions.items" :key="index">
+      <el-col :xs="24" :sm="12" :md="12" :lg="8" v-if="isWeb3Enabled" v-for="(prediction, index) in predictions.items" :key="index">
         <PredictionListItem :item="prediction" />
       </el-col>
       </transition-group>
       <transition name="slideUp">
-      <el-col>
+      <el-col v-if="isWeb3Enabled">
         <Pagination v-if="predictions.totalPages > 1 && isDataLoaded" :callback="loadPage" :total-page-count="predictions.totalPages" :current-page="page" />
       </el-col>
       </transition>
-      <el-col v-if="!$store.getters.loading && predictions && !predictions.items">
+      <el-col v-if="!isWeb3Enabled">
+        <h2>{{ $t('general.web3NotConnected') }}</h2>
+      </el-col>
+      <el-col v-else-if="!$store.getters.loading && predictions && !predictions.items">
         <h2>{{ $t('general.noPredictions') }}</h2>
       </el-col>
     </el-row>
@@ -30,7 +33,10 @@ export default {
     PredictionListItem
   },
   computed: {
-    ...mapGetters(['predictions'])
+    ...mapGetters(['predictions']),
+    isWeb3Enabled () {
+      return this.$store.getters['user/isWeb3Enabled']
+    }
   },
   data () {
     return {
@@ -39,9 +45,17 @@ export default {
     }
   },
   async beforeMount () {
-    if (!this.isDataLoaded) {
+    if (!this.isDataLoaded && this.isWeb3Enabled) {
       await this.loadPage(1)
       this.isDataLoaded = true
+    }
+  },
+  watch: {
+    async isWeb3Enabled (newValue) {
+      if (newValue) {
+        await this.loadPage(1)
+        this.isDataLoaded = true
+      }
     }
   },
   methods: {

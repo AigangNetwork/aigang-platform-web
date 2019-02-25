@@ -1,8 +1,6 @@
 <template>
   <div class="items-container" v-loading="$store.getters.loading">
-    <el-row class="aig-items" key="predictions-list">
-    <div class="filters-bar">
-      </div>
+    <el-row class="aig-items" key="predictions-list" v-if="isWeb3Enabled">
       <transition-group name="slideUp">
         <div class="forecast-item" v-for="(forecast, index) in userForecasts.items" :key="index">
           <ForecastListItem :item="forecast" />
@@ -15,6 +13,11 @@
         </el-col>
       <el-col v-if="!$store.getters.loading && userForecasts && !userForecasts.items">
         <h2>{{ $t('general.noMyPredictions') }}</h2>
+      </el-col>
+    </el-row>
+    <el-row v-else>
+      <el-col>
+        <h2>{{ $t('general.web3NotConnected') }}</h2>
       </el-col>
     </el-row>
   </div>
@@ -34,7 +37,10 @@ export default {
     ForecastListItem
   },
   computed: {
-    ...mapGetters(['userForecasts'])
+    ...mapGetters(['userForecasts']),
+    isWeb3Enabled () {
+      return this.$store.getters['user/isWeb3Enabled']
+    }
   },
   data () {
     return {
@@ -43,8 +49,16 @@ export default {
       isDataLoaded: false
     }
   },
+  watch: {
+    async isWeb3Enabled (newValue) {
+      if (newValue) {
+        await this.loadPage(1)
+        this.isDataLoaded = true
+      }
+    }
+  },
   async beforeMount () {
-    if (!this.isDataLoaded) {
+    if (!this.isDataLoaded && this.isWeb3Enabled) {
       await this.loadPage(1)
       this.isDataLoaded = true
     }
@@ -87,7 +101,7 @@ export default {
     }
 
     h2 {
-      margin: 20px;
+      margin-top: 35px;
     }
   }
 </style>

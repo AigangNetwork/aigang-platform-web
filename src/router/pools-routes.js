@@ -3,8 +3,6 @@ import Portfolio from '@/components/pools/Portfolio'
 import PoolsProductsList from '@/components/pools/PoolsProductsList'
 import PoolsProduct from '@/components/pools/PoolsProduct'
 import PoolContribution from '@/components/pools/PoolContribution'
-import PoolsContributionsList from '@/components/pools/PoolsContributionsList'
-
 export default [
   {
     path: '/pools',
@@ -19,11 +17,6 @@ export default [
         name: 'Portfolio',
         path: '/pools/portfolio',
         component: Portfolio
-      },
-      {
-        name: 'MyContributions',
-        path: '/pools/mycontributions',
-        component: PoolsContributionsList
       },
       {
         name: 'PoolsProductsList',
