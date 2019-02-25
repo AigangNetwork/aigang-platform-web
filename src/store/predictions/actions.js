@@ -53,7 +53,7 @@ export default {
     }
   },
 
-  async getPrediction ({ commit }, payload) {
+  async getPrediction ({ commit, dispatch }, payload) {
     commit('setPrediction', {
       item: {},
       predictionStatistics: {}
@@ -68,6 +68,10 @@ export default {
         predictionStatistics: {}
       })
 
+      if (prediction.status.toUpperCase() === 'RESOLVED') {
+        dispatch('getAmountPerOutcomeStatistics', prediction)
+      }
+
       commit('setLoading', false, { root: true })
     } catch (ex) {
       console.error(ex)
@@ -75,88 +79,19 @@ export default {
     }
   },
 
-  // TODO
-  async getPredictionStatistics ({ commit, dispatch }, predictionId) {
-    dispatch('getCountPerOutcomePredictionStatistics', predictionId)
-    dispatch('getAmountPerOutcomePredictionStatistics', predictionId)
-  },
-
-  // TODO
-  async getCountPerOutcomePredictionStatistics ({ commit }, predictionId) {
-    commit('setCountPerOutcomeStatistics', {})
-    commit('setCountPerOutcomeStatisticsLoading', true)
-
-    try {
-      const response = await axios.get(`/predictions/stats/prediction/${predictionId}/CountPerOutcome`)
-
-      if (response.data) {
-        commit('setCountPerOutcomeStatistics', response.data)
-      }
-
-      commit('setCountPerOutcomeStatisticsLoading', false)
-    } catch (ex) {
-      commit('setCountPerOutcomeStatisticsLoading', false)
-    }
-  },
-
-  // TODO
-  async getAmountPerOutcomePredictionStatistics ({ commit }, predictionId) {
+  async getAmountPerOutcomeStatistics ({ commit }, prediction) {
     commit('setAmountPerOutcomeStatistics', {})
     commit('setAmountPerOutcomeStatisticsLoading', true)
 
-    try {
-      const response = await axios.get(`/predictions/stats/prediction/${predictionId}/AmountPerOutcome`)
+    const rows = []
 
-      if (response.data) {
-        commit('setAmountPerOutcomeStatistics', response.data)
-      }
-
-      commit('setAmountPerOutcomeStatisticsLoading', false)
-    } catch (ex) {
-      commit('setAmountPerOutcomeStatisticsLoading', false)
+    for (let outcome of prediction.outcomes) {
+      const percentage = (100 * outcome.totalTokens) / (prediction.poolSize - prediction.initialTokens)
+      rows.push([outcome.id, outcome.name, outcome.index, percentage])
     }
-  },
 
-  // TODO
-  async getPredictionStatisticsForForecast ({ commit, dispatch }, forecastId) {
-    dispatch('getCountPerOutcomeForecastStatistics', forecastId)
-    dispatch('getAmountPerOutcomeForecastStatistics', forecastId)
-  },
-
-  //  TODO
-  async getCountPerOutcomeForecastStatistics ({ commit }, forecastId) {
-    commit('setCountPerOutcomeStatistics', {})
-    commit('setCountPerOutcomeStatisticsLoading', true)
-
-    try {
-      const response = await axios.get(`/predictions/stats/forecast/${forecastId}/CountPerOutcome`)
-
-      if (response.data) {
-        commit('setCountPerOutcomeStatistics', response.data)
-      }
-
-      commit('setCountPerOutcomeStatisticsLoading', false)
-    } catch (ex) {
-      commit('setCountPerOutcomeStatisticsLoading', false)
-    }
-  },
-
-  // TODO
-  async getAmountPerOutcomeForecastStatistics ({ commit }, forecastId) {
-    commit('setAmountPerOutcomeStatistics', {})
-    commit('setAmountPerOutcomeStatisticsLoading', true)
-
-    try {
-      const response = await axios.get(`/predictions/stats/forecast/${forecastId}/AmountPerOutcome`)
-
-      if (response.data) {
-        commit('setAmountPerOutcomeStatistics', response.data)
-      }
-
-      commit('setAmountPerOutcomeStatisticsLoading', false)
-    } catch (ex) {
-      commit('setAmountPerOutcomeStatisticsLoading', false)
-    }
+    commit('setAmountPerOutcomeStatistics', { rows })
+    commit('setAmountPerOutcomeStatisticsLoading', false)
   },
 
   async getUserForecasts ({ commit, state, rootState }, page) {
@@ -238,28 +173,20 @@ export default {
     }
   },
 
-  async getUserForecast ({ commit }, payload) {
-    // commit('setUserForecast', {})
+  async getUserForecast ({ commit, dispatch }, payload) {
+    commit('setUserForecast', {})
     commit('setLoading', true, { root: true })
 
     try {
       const forecast = await Forecast.create(payload.address, payload.id)
-      const predictionStatus = forecast.predictionStatus.toUpperCase()
-      const forecastStatus = forecast.status.toUpperCase()
+      commit('setUserForecast', { item: forecast })
 
-      // TODO
-      if (
-        (forecastStatus !== 'NOTSET' &&
-					forecastStatus !== 'DRAFT' &&
-					forecastStatus !== 'PENDINGPAYMENT' &&
-					forecastStatus !== 'AVAILABLEREFUND' &&
-					predictionStatus !== 'CANCELED') ||
-				predictionStatus === 'RESOLVED'
-      ) {
-        // dispatch('getPredictionStatisticsForForecast', forecastId)
+      const prediction = await forecast.getPrediction()
+
+      if (prediction.status.toUpperCase() === 'RESOLVED') {
+        dispatch('getAmountPerOutcomeStatistics', prediction)
       }
 
-      commit('setUserForecast', { item: forecast })
       commit('setLoading', false, { root: true })
     } catch (e) {
       console.error(e)

@@ -38,6 +38,8 @@ export default class Forecast {
     this.outcomeId = forecastData[4]
     this.outcomeTitle = outcomeData[1]
     this.outcomeIndex = forecastData[4]
+
+    this.getPrediction = () => prediction
   }
 
   static async createItem (contract, id) {

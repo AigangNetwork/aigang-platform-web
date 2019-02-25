@@ -16,6 +16,7 @@ export default class Prediction {
     this.resultStorage = data.resultStorage
     this.outcomes = outcomes
     this.prizeCalculator = data.prizeCalculator
+    this.initialTokens = window.web3.utils.fromWei(data.initialTokens)
   }
 
   async initializeOutcomes (outcomes) {
@@ -42,7 +43,8 @@ export default class Prediction {
       outcomes.push({
         id: i,
         name: outcome[1],
-        index: i
+        index: i,
+        totalTokens: window.web3.utils.fromWei(outcome[3])
       })
     }
 
