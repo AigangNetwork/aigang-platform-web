@@ -1,6 +1,5 @@
 /* eslint-disable no-tabs */
 import { initialPredictionsState } from './index'
-import axios from 'axios'
 import Prediction from '@/domain/Prediction'
 import Forecast from '@/domain/Forecast'
 import EthUtils from '@/utils/EthUtils'

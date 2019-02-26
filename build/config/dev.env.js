@@ -31,7 +31,8 @@ module.exports = merge(prodEnv, {
   },
   CONTRACT_TYPES: {
     POOLS: 1,
-    PREDICTIONS: 2
+    PREDICTIONS: 2,
+    INSURANCE: 3
   },
   CONTRACT_STATUS: {
     CANCELED: 2
