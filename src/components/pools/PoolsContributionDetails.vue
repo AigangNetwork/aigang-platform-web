@@ -53,13 +53,10 @@
         </el-tooltip>
       </div>
 
-      <ContributionDeleteSection v-if="isDeleteAllowed" />
-
     </div>
       <PaymentConfirmationDialog
       :isVisible="isPaymentDialogVisible && !transactionError"
       :displayDialog="displayPaymentDialog"
-      :content="$t('pools.pool.paymentInfo.metamaskAlert')"
       :txHash="transactionHash" :title="$t('pools.pool.paymentInfo.title')"
       :bodyText="$t('pools.pool.paymentInfo.body')"
       :route="portfolioRoute"
@@ -73,7 +70,6 @@ import ConfirmContributionDialog from '@/components/pools/ConfirmContributionDia
 import VueMarkdown from 'vue-markdown'
 import ScrollableMarkupText from '@/components/insurance/ScrollableMarkupText'
 import PaymentConfirmationDialog from '@/components/common/PaymentConfirmationDialog'
-import ContributionDeleteSection from '@/components/pools/ContributionDeleteSection'
 import ContributionStatus from './ContributionStatus'
 import Date from '@/components/Date'
 
@@ -86,7 +82,6 @@ export default {
     VueMarkdown,
     ScrollableMarkupText,
     PaymentConfirmationDialog,
-    ContributionDeleteSection,
     ContributionStatus,
     Date
   },
@@ -124,7 +119,7 @@ export default {
       return ''
     },
     investButtonEnabled () {
-      return !!((this.$store.getters['user/isAuthenticated'] && this.$store.getters['user/isWeb3Enabled']))
+      return this.$store.getters['user/isWeb3Enabled']
     },
     isDeleteAllowed () {
       if (this.contribution.status) {

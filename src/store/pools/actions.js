@@ -1,5 +1,7 @@
-import axios from 'axios'
 import { initialPoolState } from './index'
+import Pool from '@/domain/Pool'
+import Contribution from '@//domain/Contribution'
+import EthUtils from '@/utils/EthUtils'
 
 export default {
   async resetState ({ commit }) {
@@ -9,248 +11,281 @@ export default {
   async getPoolsList ({ commit }, page) {
     commit('setLoading', true, { root: true })
 
-    try {
-      const response = await axios.get('/pools/list?page=' + page)
-      if (response.data) {
-        commit('setPools', response.data)
-      }
+    const pools = {
+      items: [],
+      totalPages: 1
+    }
+    commit('setPools', pools)
 
-      commit('setLoading', false, { root: true })
+    try {
+      const contracts = await EthUtils.getContracts(process.env.CONTRACT_TYPES.POOLS)
+      const itemsPerPage = process.env.POOLS_ITEMS_PER_PAGE
+      const startItem = page * itemsPerPage - itemsPerPage + 1
+      let totalPools = 0
+      let poolsCounter = 0
+
+      // Iterating through contracts
+      for (let index = contracts.length - 1; index >= 0; index--) {
+        const contract = contracts[index]
+        const poolsLength = parseInt(await contract.methods.totalPools().call())
+        totalPools += poolsLength
+
+        // Iterating through pools in a conctract
+        for (let i = poolsLength; i > 0 && pools.items.length < itemsPerPage; i--) {
+          poolsCounter++
+
+          if (poolsCounter < startItem) {
+            continue
+          }
+
+          const pool = await Pool.create(contract, i)
+
+          commit('addPoolToList', pool)
+
+          if (poolsCounter === startItem) {
+            commit('setLoading', false, { root: true })
+          }
+        }
+      }
+      commit('setPoolsTotalPages', Math.ceil(totalPools / itemsPerPage))
     } catch (ex) {
+      console.error(ex)
       commit('setLoading', false, { root: true })
     }
   },
 
-  async getPool ({ commit }, id) {
+  async getPool ({ commit }, payload) {
     commit('setPool', {})
     commit('setLoading', true, { root: true })
 
     try {
-      const response = await axios.get('/pools/pool/' + id)
-      if (response.data && response.data.pool) {
-        commit('setPool', response.data.pool)
-      }
+      const contract = await EthUtils.getContract(payload.address)
+      const pool = await Pool.create(contract, payload.id)
 
+      commit('setPool', pool)
       commit('setLoading', false, { root: true })
     } catch (ex) {
+      console.error(ex)
       commit('setLoading', false, { root: true })
     }
   },
 
-  async addContribution ({ commit, rootState, dispatch }, payload) {
+  async addContribution ({ commit, rootState }, payload) {
     commit('setTransactionHash', '')
     commit('setTransactionError', false)
-
     commit('setLoading', true, { root: true })
 
     try {
-      const response = await axios.post('/pools/contribute', payload)
+      const TokenInstance = await EthUtils.getContract(process.env.CONTRACTS_ADDRESSES.TOKEN)
+      const paymentValue = window.web3.utils.toWei(payload.amount.toString())
+      const poolIdHex = EthUtils.getHex(payload.poolId)
 
-      if (response.data) {
-        const web3 = window.web3
-        const TokenInstance = new web3.eth.Contract(process.env.CONTRACT_INFO.ABI, process.env.CONTRACT_INFO.ADDRESS)
-
-        const paymentValue = web3.utils.toWei(payload.amount.toString())
-        const poolIdHex = web3.utils.fromAscii(payload.poolId)
-
-        const contributionIdHex = web3.utils.fromAscii(response.data.id)
-
-        commit('setLoading', false, { root: true })
-
-        const bytes = (poolIdHex + contributionIdHex).replace(/0x/g, '')
-        const callObject = TokenInstance.methods
-          .approveAndCall(payload.poolContractAddress, paymentValue, '0x' + bytes)
-          .send({
-            gas: process.env.GAS.ADD_CONTRIBUTION,
-            from: rootState.user.userWeb3.coinbase
-          })
-
-        callObject.catch(() => {
-          commit('setLoading', false, { root: true })
-          commit('setTransactionError', true)
+      const callObject = TokenInstance.methods
+        .approveAndCall(payload.poolContractAddress, paymentValue, poolIdHex)
+        .send({
+          gas: process.env.GAS.ADD_CONTRIBUTION,
+          from: rootState.user.userWeb3.coinbase
         })
 
-        callObject
-          .on('error', () => {
-            commit('setLoading', false, { root: true })
-            commit('setTransactionError', true)
-          })
-          .once('transactionHash', async txId => {
-            try {
-              const transactionPayload = {
-                contributionId: response.data.id,
-                txId
-              }
+      callObject.catch(e => {
+        console.error(e)
+        commit('setLoading', false, { root: true })
+        commit('setTransactionError', true)
+      })
 
-              await axios.post('/pools/transaction/addContribution', transactionPayload)
+      callObject.on('error', () => {
+        commit('setLoading', false, { root: true })
+        commit('setTransactionError', true)
+      })
 
-              commit('setTransactionHash', txId)
-            } catch (ex) {
-              commit('setLoading', false, { root: true })
-              commit('setTransactionError', true)
-            }
-          })
-      }
+      callObject.once('transactionHash', async txId => {
+        commit('setTransactionHash', txId)
+        commit('setLoading', false, { root: true })
+      })
     } catch (error) {
+      console.error(error)
       commit('setLoading', false, { root: true })
       commit('setTransactionError', true)
     }
   },
 
-  async deleteContribution ({ commit }, id) {
-    commit('setLoading', true, { root: true })
-    try {
-      await axios.delete(`/pools/contribution/${id}`)
-    } catch (err) {}
-
-    commit('setLoading', false, { root: true })
-  },
-
-  async getPortfolioSummary ({ commit }) {
-    commit('setPortfolioSummaryLoading', true)
-
-    try {
-      const response = await axios.get('/pools/portfoliosummary')
-      if (response.data) {
-        commit('setPortfolioSummary', response.data.summary)
-      }
-
-      commit('setPortfolioSummaryLoading', false)
-    } catch (ex) {
-      commit('setPortfolioSummaryLoading', false)
-    }
-  },
-
-  async getUserContributions ({ commit }, payload) {
+  async getUserContributions ({ commit, rootState, state }, page) {
+    commit('setUserContributions', {
+      items: [],
+      totalPages: 0
+    })
     commit('setContributionsListLoading', true)
 
     try {
-      const page = payload.page ? `?page=${payload.page}` : ''
-      const status = payload.filters && payload.filters.status ? `&status=${payload.filters.status}` : ''
+      const contracts = await EthUtils.getContracts(process.env.CONTRACT_TYPES.POOLS)
+      let totalContributions = 0
+      const itemsPerPage = process.env.CONTRIBUTIONS_ITEMS_PER_PAGE
+      const startItem = page * itemsPerPage - itemsPerPage + 1
 
-      const response = await axios.get(`/pools/mycontributions${page}${status}`)
-      if (response.data) {
-        commit('setUserContributions', response.data)
+      let iterator = 0
+      for (let contractIndex = contracts.length - 1; contractIndex >= 0; contractIndex--) {
+        const contract = contracts[contractIndex]
+        const result = await contract.methods
+          .getMyContributionsLength()
+          .call({ from: rootState.user.userWeb3.coinbase })
+        let contributionsCount = parseInt(result)
+        totalContributions += contributionsCount
+
+        for (
+          let i = contributionsCount - 1;
+          i >= 0 && state.userContributions.items.length < itemsPerPage;
+          i--
+        ) {
+          iterator++
+
+          if (iterator < startItem) {
+            continue
+          }
+          const id = await contract.methods.myContributions(rootState.user.userWeb3.coinbase, i).call()
+          const contribution = await Contribution.create(contract, id)
+          commit('addContribution', contribution)
+          if (iterator === startItem) {
+            commit('setContributionsListLoading', false)
+          }
+        }
+
+        commit('setUserContributionsTotalPages', Math.ceil(totalContributions / itemsPerPage))
       }
-
-      commit('setContributionsListLoading', false)
     } catch (ex) {
+      console.error(ex)
       commit('setContributionsListLoading', false)
     }
   },
 
-  async getContribution ({ commit }, id) {
+  async getPortfolioSummary ({ commit, rootState }) {
+    commit('setPortfolioSummaryLoading', true)
+
+    commit('setPortfolioSummary', {
+      contributions: 0,
+      contributionsAmount: 0,
+      availableRefund: 0,
+      rewardPaidOut: 0
+    })
+
+    try {
+      const contracts = await EthUtils.getContracts(process.env.CONTRACT_TYPES.POOLS)
+      let totalContributions = 0
+      let contributionsAmount = 0
+      let availableRefundAmount = 0
+      let rewardPaidOutAmount = 0
+
+      for (let contractIndex = 0; contractIndex < contracts.length; contractIndex++) {
+        const contract = contracts[contractIndex]
+        const result = await contract.methods
+          .getMyContributionsLength()
+          .call({ from: rootState.user.userWeb3.coinbase })
+
+        let contributionsCount = parseInt(result)
+        totalContributions += contributionsCount
+
+        for (let i = 0; i < contributionsCount; i++) {
+          const id = await contract.methods.myContributions(rootState.user.userWeb3.coinbase, i).call()
+          const contribution = await Contribution.create(contract, id)
+          contributionsAmount += contribution.amount
+
+          if (contribution.status === 'availablePayout') {
+            availableRefundAmount += contribution.amount
+          }
+
+          if (contribution.status === 'rewardPaidout') {
+            rewardPaidOutAmount += contribution.amount
+          }
+        }
+      }
+
+      commit('setPortfolioSummary', {
+        contributions: totalContributions,
+        contributionsAmount: contributionsAmount,
+        availableRefund: availableRefundAmount,
+        rewardPaidOut: rewardPaidOutAmount
+      })
+
+      commit('setPortfolioSummaryLoading', false)
+    } catch (ex) {
+      console.error(ex)
+      commit('setPortfolioSummaryLoading', false)
+      commit('setContributionsListLoading', false)
+    }
+  },
+
+  async getContribution ({ commit }, payload) {
     commit('setContribution', {})
     commit('setLoading', true, { root: true })
 
     try {
-      const response = await axios.get('/pools/contribution/' + id)
-
-      if (response.data && response.data.contribution) {
-        commit('setContribution', response.data.contribution)
-      }
-
+      const contract = await EthUtils.getContract(payload.address)
+      const contribution = await Contribution.create(contract, payload.id)
+      commit('setContribution', contribution)
       commit('setLoading', false, { root: true })
     } catch (ex) {
       commit('setLoading', false, { root: true })
     }
   },
 
-  async payoutContribution ({ commit, rootState, dispatch }, payload) {
+  async payoutContribution ({ commit, rootState }, payload) {
     commit('setTransactionHash', '')
     commit('setTransactionError', false)
-
     commit('setLoading', true, { root: true })
 
-    const response = await axios.get(`/contracts/${payload.poolContractAddress}`)
+    try {
+      const PoolsInstance = await EthUtils.getContract(payload.poolContractAddress)
 
-    if (!response.data) {
       commit('setLoading', false, { root: true })
-      return
-    }
 
-    const web3 = window.web3
-    const PoolsInstance = new web3.eth.Contract(JSON.parse(response.data.abi), payload.poolContractAddress)
+      PoolsInstance.methods
+        .payout(payload.contributionId)
+        .send({
+          gas: process.env.GAS.PAYOUT_CONTRIBUTION,
+          from: rootState.user.userWeb3.coinbase
+        })
 
-    const poolIdHex = web3.utils.fromAscii(payload.poolId)
-    const contributionIdHex = web3.utils.fromAscii(payload.contributionId)
-
-    commit('setLoading', false, { root: true })
-
-    PoolsInstance.methods
-      .payout(poolIdHex, contributionIdHex)
-      .send({
-        gas: process.env.GAS.PAYOUT_CONTRIBUTION,
-        from: rootState.user.userWeb3.coinbase
-      })
-      .on('error', () => {
-        commit('setTransactionError', true)
-      })
-      .once('transactionHash', async txId => {
-        try {
-          const transactionPayload = {
-            contributionId: payload.contributionId,
-            txId
-          }
-
-          await axios.post('/pools/transaction/addContributionPayout', transactionPayload)
-
-          commit('setTransactionHash', txId)
-          await dispatch('getContribution', payload.contributionId)
-        } catch (error) {
-          console.error(error)
-          commit('setLoading', false, { root: true })
+        .on('error', () => {
           commit('setTransactionError', true)
-        }
-      })
+          commit('setLoading', false, { root: true })
+        })
+
+        .once('transactionHash', async txId => {
+          commit('setTransactionHash', txId)
+          commit('setLoading', false, { root: true })
+        })
+    } catch (e) {
+      commit('setLoading', false, { root: true })
+    }
   },
 
-  async refundContribution ({ commit, rootState, dispatch }, payload) {
+  async refundContribution ({ commit, rootState }, payload) {
     commit('setTransactionHash', '')
     commit('setTransactionError', false)
-
     commit('setLoading', true, { root: true })
 
-    const response = await axios.get(`/contracts/${payload.poolContractAddress}`)
+    try {
+      const PoolsInstance = await EthUtils.getContract(payload.poolContractAddress)
 
-    if (!response.data) {
       commit('setLoading', false, { root: true })
-      return
-    }
 
-    const web3 = window.web3
-    const PoolsInstance = new web3.eth.Contract(JSON.parse(response.data.abi), payload.poolContractAddress)
+      PoolsInstance.methods
+        .refund(payload.contributionId)
+        .send({
+          gas: process.env.GAS.PAYOUT_CONTRIBUTION,
+          from: rootState.user.userWeb3.coinbase
+        })
 
-    const poolIdHex = web3.utils.fromAscii(payload.poolId)
-    const contributionIdHex = web3.utils.fromAscii(payload.contributionId)
-
-    commit('setLoading', false, { root: true })
-
-    PoolsInstance.methods
-      .refund(poolIdHex, contributionIdHex)
-      .send({
-        gas: process.env.GAS.REFUND_CONTRIBUTION,
-        from: rootState.user.userWeb3.coinbase
-      })
-      .on('error', () => {
-        commit('setTransactionError', true)
-      })
-      .once('transactionHash', async txId => {
-        try {
-          const transactionPayload = {
-            contributionId: payload.contributionId,
-            txId
-          }
-
-          await axios.post('/pools/transaction/addContributionRefund', transactionPayload)
-
-          commit('setTransactionHash', txId)
-          await dispatch('getContribution', payload.contributionId)
-        } catch (error) {
-          console.error(error)
-          commit('setLoading', false, { root: true })
+        .on('error', () => {
           commit('setTransactionError', true)
-        }
-      })
+          commit('setLoading', false, { root: true })
+        })
+
+        .once('transactionHash', async txId => {
+          commit('setTransactionHash', txId)
+          commit('setLoading', false, { root: true })
+        })
+    } catch (e) {
+      commit('setLoading', false, { root: true })
+    }
   }
 }

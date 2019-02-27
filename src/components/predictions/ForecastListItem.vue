@@ -1,5 +1,5 @@
 <template>
-  <router-link :to="{ name: 'ForecastInfo', params: { id: item.id}}">
+  <router-link :to="{ name: 'ForecastInfo', params: { address: item.marketAddress, id: item.id}}">
     <div class="aig-list-item">
       <div class="title">{{ item.predictionTitle }}</div>
       <div class="aig-list-item-body">
@@ -19,7 +19,7 @@
           <div class="title">
             <p class="title">{{$t('predictions.forecast.results')}}:</p>
           </div>
-          <div class="content" v-if="item.predictionStatus !== 'resolved'"><Date :dateUtc="item.resultDateUtc" /></div>
+          <div class="content" v-if="item.predictionStatus !== 'resolved'"><Date :dateUtc="item.forecastEndUtc" /></div>
           <div class="content" v-if="item.predictionStatus === 'resolved'">{{ $t('predictions.forecast.announced') | uppercase }}</div>
         </div>
         <div class="aig-list-info-item-status">

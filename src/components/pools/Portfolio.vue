@@ -1,8 +1,13 @@
 <template>
-  <div class="portfolio-container">
+  <div class="portfolio-container" v-if="isWeb3Enabled">
     <PortfolioSummary />
-    <PoolsContributionsList/>
+    <PoolsContributionsList />
   </div>
+  <el-row class="portfolio-container" v-else>
+    <el-col>
+      <h2>{{ $t('general.web3NotConnected') }}</h2>
+    </el-col>
+  </el-row>
 </template>
 
 <script>
@@ -13,6 +18,11 @@ export default {
   components: {
     PortfolioSummary,
     PoolsContributionsList
+  },
+  computed: {
+    isWeb3Enabled () {
+      return this.$store.getters['user/isWeb3Enabled']
+    }
   }
 }
 </script>
@@ -21,6 +31,12 @@ export default {
   @import '~helpers/variables';
 
   .portfolio-container {
-    margin: 20px;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 15px;
+    height: 100%;
+    display: inline-block;
+    width: calc(100% - 20px);
+    min-height: auto;
   }
 </style>

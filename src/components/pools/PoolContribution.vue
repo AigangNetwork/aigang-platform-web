@@ -1,6 +1,6 @@
 <template>
   <div class="aig-container aig-view" >
-    <Card class="pool-card product-card">
+    <Card class="pool-card product-card" v-if="isWeb3Enabled">
       <div slot="body" v-loading="$store.getters.loading">
 
         <PoolsProductHeader :info="headerInfo" :backRouteName="backRouteName" :isSingleColor="true"/>
@@ -8,6 +8,9 @@
 
       </div>
     </Card>
+    <div v-else>
+      <h2>{{ $t('general.web3NotConnected') }}</h2>
+    </div>
   </div>
 </template>
 
@@ -30,21 +33,38 @@ export default {
       backRouteName: 'Portfolio'
     }
   },
+  methods: {
+    async loadData () {
+      await this.$store.dispatch('pools/getContribution', { id: this.$route.params.id, address: this.$route.params.address })
+      this.isDataLoaded = true
+
+      this.headerInfo = {
+        status: this.contribution.poolStatus,
+        title: this.contribution.poolName,
+        contributions: this.contribution.contributions,
+        currentPoolSize: this.contribution.currentPoolSize,
+        poolGoalSize: this.contribution.poolGoalSize,
+        startDateUtc: this.contribution.poolStartDateUtc,
+        endDateUtc: this.contribution.poolEndDateUtc
+      }
+    }
+  },
+  watch: {
+    async isWeb3Enabled (newValue) {
+      if (newValue) {
+        await this.loadData()
+      }
+    }
+  },
   computed: {
-    ...mapGetters([ 'contribution' ])
+    ...mapGetters([ 'contribution' ]),
+    isWeb3Enabled () {
+      return this.$store.getters['user/isWeb3Enabled']
+    }
   },
   async mounted () {
-    await this.$store.dispatch('pools/getContribution', this.$route.params.id)
-    this.isDataLoaded = true
-
-    this.headerInfo = {
-      status: this.contribution.poolStatus,
-      title: this.contribution.poolName,
-      contributions: this.contribution.contributions,
-      currentPoolSize: this.contribution.currentPoolSize,
-      poolGoalSize: this.contribution.poolGoalSize,
-      startDateUtc: this.contribution.poolStartDateUtc,
-      endDateUtc: this.contribution.poolEndDateUtc
+    if (this.isWeb3Enabled) {
+      this.loadData()
     }
   }
 }

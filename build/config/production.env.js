@@ -26,6 +26,7 @@ module.exports = {
     PREDICTIONS: true,
     POOLS: true,
     INSURANCE: true,
+    WIKI: true,
     DISCUSSIONS: true
   }
 }

@@ -1,0 +1,54 @@
+import moment from 'moment'
+import Pool from './Pool'
+
+export default class Contribution {
+  async initialize (contributionData, pool) {
+    this.id = contributionData.id
+    this.poolId = contributionData[1]
+    this.poolName = pool.title
+    this.poolDescription = pool.description
+    this.amount = parseFloat(window.web3.utils.fromWei(contributionData[2]), 2)
+    this.payout = 0
+    this.status = mapContributionStatus(contributionData[3], pool.status)
+    this.refundAmount = 0
+    this.poolContractAddress = pool.poolContractAddress
+    this.contributions = pool.contributions
+    this.currentPoolSize = pool.amountCollected
+    this.poolGoalSize = pool.goalPoolSize
+    this.poolStatus = pool.status
+    this.poolEndDateUtc = pool.endDateUtc
+    this.createdUtc = moment.unix(contributionData[5]).format('YYYY-MM-DD HH:mm')
+
+    if (this.status === 'rewardpaidout') {
+      this.payout = parseFloat(window.web3.utils.fromWei(contributionData[2]), 2)
+    } else if (this.status === 'refundpaidout') {
+      this.refundAmount = parseFloat(window.web3.utils.fromWei(contributionData[2]), 2)
+    }
+  }
+
+  static async create (contract, id) {
+    const contributionData = await contract.methods.getContribution(id).call()
+    const pool = await Pool.create(contract, contributionData[1])
+    contributionData.id = id
+
+    const contribution = new Contribution()
+    await contribution.initialize(contributionData, pool)
+    return contribution
+  }
+}
+
+const mapContributionStatus = (isPaidoutValue, poolStatus) => {
+  const isPaidout = isPaidoutValue !== '0'
+
+  if (!isPaidout && poolStatus === 'active') {
+    return 'paid'
+  } else if (!isPaidout && poolStatus === 'distributing') {
+    return 'availablePayout'
+  } else if (!isPaidout && poolStatus === 'canceled') {
+    return 'availableRefund'
+  } else if (isPaidout && poolStatus === 'distributing') {
+    return 'rewardPaidout'
+  } else if (isPaidout && poolStatus === '') {
+    return 'refundPaidout'
+  }
+}

@@ -1,274 +1,206 @@
+/* eslint-disable no-tabs */
 import { initialPredictionsState } from './index'
-import axios from 'axios'
+import Prediction from '@/domain/Prediction'
+import Forecast from '@/domain/Forecast'
+import EthUtils from '@/utils/EthUtils'
 
 export default {
   async resetState ({ commit }) {
     commit('resetState', initialPredictionsState())
   },
 
-  async getPredictionsList ({ commit }, page) {
-    commit('setLoading', true, {
-      root: true
+  async getPredictionsList ({ commit, state }, page) {
+    commit('setLoading', true, { root: true })
+    commit('setPredictions', {
+      items: [],
+      totalPages: 1
     })
 
     try {
-      const response = await axios.get('/predictions/list?page=' + page)
-      if (response.data) {
-        commit('setPredictions', response.data)
-      }
+      const contracts = await EthUtils.getContracts(process.env.CONTRACT_TYPES.PREDICTIONS)
+      const itemsPerPage = process.env.PREDICTIONS_ITEMS_PER_PAGE
+      const startItem = page * itemsPerPage - itemsPerPage + 1
+      let totalPredictions = 0
+      let predictionsCounter = 0
 
-      commit('setLoading', false, {
-        root: true
-      })
-    } catch (ex) {
-      commit('setLoading', false, {
-        root: true
-      })
-    }
-  },
+      // Iterating through contracts
+      for (const contract of contracts) {
+        const predictionsLength = parseInt(await contract.methods.totalPredictions().call())
+        totalPredictions += predictionsLength
 
-  async getPrediction ({ commit, dispatch }, id) {
-    commit('setLoading', true, {
-      root: true
-    })
+        // Iterating through predictions in a conctract
+        for (let i = predictionsLength; i > 0 && state.predictions.items.length < itemsPerPage; i--) {
+          predictionsCounter++
 
-    try {
-      const response = await axios.get('/predictions/prediction/' + id)
-      if (response.data) {
-        commit('setPrediction', response.data)
-        const prediction = response.data.item
+          if (predictionsCounter < startItem) {
+            continue
+          }
 
-        if (prediction && prediction.status.toUpperCase() === 'RESOLVED') {
-          dispatch('getPredictionStatistics', id)
+          const prediction = await Prediction.createItem(contract, i)
+          commit('addPredictionToList', prediction)
+
+          if (predictionsCounter === startItem) {
+            commit('setLoading', false, { root: true })
+          }
         }
       }
 
-      commit('setLoading', false, {
-        root: true
-      })
+      commit('setPredictionsTotalPages', Math.ceil(totalPredictions / itemsPerPage))
     } catch (ex) {
-      commit('setLoading', false, {
-        root: true
-      })
+      console.error(ex)
+      commit('setLoading', false, { root: true })
     }
   },
 
-  async getPredictionStatistics ({ commit, dispatch }, predictionId) {
-    dispatch('getCountPerOutcomePredictionStatistics', predictionId)
-    dispatch('getAmountPerOutcomePredictionStatistics', predictionId)
-  },
-
-  async getCountPerOutcomePredictionStatistics ({ commit }, predictionId) {
-    commit('setCountPerOutcomeStatistics', {})
-    commit('setCountPerOutcomeStatisticsLoading', true)
+  async getPrediction ({ commit, dispatch }, payload) {
+    commit('setPrediction', {
+      item: {},
+      predictionStatistics: {}
+    })
+    commit('setLoading', true, { root: true })
 
     try {
-      const response = await axios.get(`/predictions/stats/prediction/${predictionId}/CountPerOutcome`)
+      const prediction = await Prediction.create(payload.address, payload.id)
 
-      if (response.data) {
-        commit('setCountPerOutcomeStatistics', response.data)
+      commit('setPrediction', {
+        item: prediction,
+        predictionStatistics: {}
+      })
+
+      if (prediction.status.toUpperCase() === 'RESOLVED') {
+        dispatch('getAmountPerOutcomeStatistics', prediction)
       }
 
-      commit('setCountPerOutcomeStatisticsLoading', false)
+      commit('setLoading', false, { root: true })
     } catch (ex) {
-      commit('setCountPerOutcomeStatisticsLoading', false)
+      console.error(ex)
+      commit('setLoading', false, { root: true })
     }
   },
 
-  async getAmountPerOutcomePredictionStatistics ({ commit }, predictionId) {
+  async getAmountPerOutcomeStatistics ({ commit }, prediction) {
     commit('setAmountPerOutcomeStatistics', {})
     commit('setAmountPerOutcomeStatisticsLoading', true)
 
-    try {
-      const response = await axios.get(`/predictions/stats/prediction/${predictionId}/AmountPerOutcome`)
+    const rows = []
 
-      if (response.data) {
-        commit('setAmountPerOutcomeStatistics', response.data)
-      }
-
-      commit('setAmountPerOutcomeStatisticsLoading', false)
-    } catch (ex) {
-      commit('setAmountPerOutcomeStatisticsLoading', false)
+    for (let outcome of prediction.outcomes) {
+      const percentage = (100 * outcome.totalTokens) / (prediction.poolSize - prediction.initialTokens)
+      rows.push([outcome.id, outcome.name, outcome.index, percentage])
     }
+
+    commit('setAmountPerOutcomeStatistics', { rows })
+    commit('setAmountPerOutcomeStatisticsLoading', false)
   },
 
-  async getPredictionStatisticsForForecast ({ commit, dispatch }, forecastId) {
-    dispatch('getCountPerOutcomeForecastStatistics', forecastId)
-    dispatch('getAmountPerOutcomeForecastStatistics', forecastId)
-  },
-
-  async getCountPerOutcomeForecastStatistics ({ commit }, forecastId) {
-    commit('setCountPerOutcomeStatistics', {})
-    commit('setCountPerOutcomeStatisticsLoading', true)
-
-    try {
-      const response = await axios.get(`/predictions/stats/forecast/${forecastId}/CountPerOutcome`)
-
-      if (response.data) {
-        commit('setCountPerOutcomeStatistics', response.data)
-      }
-
-      commit('setCountPerOutcomeStatisticsLoading', false)
-    } catch (ex) {
-      commit('setCountPerOutcomeStatisticsLoading', false)
-    }
-  },
-
-  async getAmountPerOutcomeForecastStatistics ({ commit }, forecastId) {
-    commit('setAmountPerOutcomeStatistics', {})
-    commit('setAmountPerOutcomeStatisticsLoading', true)
-
-    try {
-      const response = await axios.get(`/predictions/stats/forecast/${forecastId}/AmountPerOutcome`)
-
-      if (response.data) {
-        commit('setAmountPerOutcomeStatistics', response.data)
-      }
-
-      commit('setAmountPerOutcomeStatisticsLoading', false)
-    } catch (ex) {
-      commit('setAmountPerOutcomeStatisticsLoading', false)
-    }
-  },
-
-  async getUserForecasts ({ commit }, payload) {
-    commit('setLoading', true, {
-      root: true
+  async getUserForecasts ({ commit, state, rootState }, page) {
+    commit('setUserForecasts', {
+      items: [],
+      totalPages: 0
     })
+    commit('setLoading', true, { root: true })
 
     try {
-      const page = payload.page ? `?page=${payload.page}` : ''
-      const status = payload.filters && payload.filters.status ? `&status=${payload.filters.status}` : ''
+      const contracts = await EthUtils.getContracts(process.env.CONTRACT_TYPES.PREDICTIONS)
+      let totalForecasts = 0
+      const itemsPerPage = process.env.FORECASTS_ITEMS_PER_PAGE
+      const startItem = page * itemsPerPage - itemsPerPage + 1
 
-      const response = await axios.get(`/predictions/myforecasts${page}${status}`)
-
-      if (response.data) {
-        commit('setUserForecasts', response.data)
-      }
-
-      commit('setLoading', false, {
-        root: true
-      })
-    } catch (ex) {
-      commit('setLoading', false, {
-        root: true
-      })
-    }
-  },
-
-  async addForecast ({ commit, rootState, state, dispatch }, payload) {
-    commit('setTransactionHash', '')
-    commit('setTransactionError', false)
-
-    commit('setLoading', true, {
-      root: true
-    })
-
-    try {
-      const response = await axios.post('/predictions/forecast', payload)
-
-      if (response.data) {
-        const web3 = window.web3
-        const TokenInstance = new web3.eth.Contract(process.env.CONTRACT_INFO.ABI, process.env.CONTRACT_INFO.ADDRESS)
-        const paymentValue = web3.utils.toWei(payload.amount.toString())
-        const predictionIdHex = web3.utils.fromAscii(payload.predictionId)
-
-        let outcomeHex = Number(payload.outcome).toString(16)
-        if (outcomeHex.length === 1) {
-          outcomeHex = '0' + outcomeHex
-        }
-
-        const forecastIdHex = web3.utils.fromAscii(response.data.forecast.id)
-
-        commit('setLoading', false, {
-          root: true
-        })
-
-        const bytes = (predictionIdHex + forecastIdHex + outcomeHex).replace(/0x/g, '')
-
-        TokenInstance.methods
-          .approveAndCall(state.prediction.marketAddress, paymentValue, '0x' + bytes)
-          .send({
-            gas: process.env.GAS.ADD_FORECAST,
+      let iterator = 0
+      for (const contract of contracts) {
+        const forecastsCount = parseInt(
+          await contract.methods.getMyForecastsLength().call({
             from: rootState.user.userWeb3.coinbase
           })
-          .on('error', () => {
-            dispatch('deleteForecast', response.data.forecast.id)
+        )
+        totalForecasts += forecastsCount
+
+        for (let i = forecastsCount - 1; i >= 0 && state.userForecasts.items.length < itemsPerPage; i--) {
+          iterator++
+
+          if (iterator < startItem) {
+            continue
+          }
+
+          const id = await contract.methods.myForecasts(rootState.user.userWeb3.coinbase, i).call()
+          const forecast = await Forecast.createItem(contract, id)
+
+          commit('addForecast', forecast)
+          if (iterator === startItem) {
             commit('setLoading', false, { root: true })
-            commit('setTransactionError', true)
-          })
-          .once('transactionHash', async txId => {
-            try {
-              const payload = {
-                forecastId: response.data.forecast.id,
-                txId
-              }
-
-              await axios.post('/predictions/transaction/addForecast', payload)
-
-              commit('setTransactionHash', txId)
-            } catch (ex) {}
-          })
+          }
+        }
+        commit('setUserForecastsTotalPages', Math.ceil(totalForecasts / itemsPerPage))
       }
     } catch (ex) {
+      console.error(ex)
+      commit('setLoading', false, { root: true })
+    }
+  },
+
+  async addForecast ({ commit, rootState }, payload) {
+    commit('setTransactionHash', '')
+    commit('setTransactionError', false)
+    commit('setLoading', true, { root: true })
+
+    try {
+      const TokenInstance = await EthUtils.getContract(process.env.CONTRACTS_ADDRESSES.TOKEN)
+
+      const paymentValue = window.web3.utils.toWei(payload.amount.toString())
+      const predictionIdHex = EthUtils.getHex(payload.predictionId)
+      let outcomeHex = EthUtils.getHex(payload.outcome)
+      const bytes = outcomeHex + predictionIdHex.replace('0x', '')
+
+      TokenInstance.methods
+        .approveAndCall(payload.address, paymentValue, bytes)
+        .send({
+          gas: process.env.GAS.ADD_FORECAST,
+          from: rootState.user.userWeb3.coinbase
+        })
+        .on('error', () => {
+          commit('setLoading', false, { root: true })
+          commit('setTransactionError', true)
+        })
+        .once('transactionHash', async txId => {
+          commit('setLoading', false, { root: true })
+          commit('setTransactionHash', txId)
+        })
+    } catch (e) {
+      console.error(e)
       commit('setLoading', false, { root: true })
       commit('setTransactionError', true)
     }
   },
 
-  async deleteForecast ({ commit }, id) {
-    try {
-      await axios.delete(`/predictions/forecast/${id}`)
-    } catch (err) {}
-  },
-
-  async getUserForecast ({ commit, dispatch }, forecastId) {
+  async getUserForecast ({ commit, dispatch }, payload) {
+    commit('setUserForecast', {})
     commit('setLoading', true, { root: true })
 
     try {
-      const response = await axios.get('/predictions/forecast/' + forecastId)
-      if (response.data) {
-        commit('setUserForecast', response.data)
-        const forecast = response.data.item
+      const forecast = await Forecast.create(payload.address, payload.id)
+      commit('setUserForecast', { item: forecast })
 
-        if (forecast !== null) {
-          const forecastStatus = forecast.status.toUpperCase()
-          const predictionStatus = forecast.predictionStatus.toUpperCase()
+      const prediction = await forecast.getPrediction()
 
-          if (
-            (forecast.predictionId &&
-              forecastStatus !== 'NOTSET' &&
-              forecastStatus !== 'DRAFT' &&
-              forecastStatus !== 'PENDINGPAYMENT' &&
-              forecastStatus !== 'AVAILABLEREFUND' &&
-              predictionStatus !== 'CANCELED') ||
-            predictionStatus === 'RESOLVED'
-          ) {
-            dispatch('getPredictionStatisticsForForecast', forecastId)
-          }
-        }
-
-        commit('setLoading', false, {
-          root: true
-        })
+      if (prediction.status.toUpperCase() === 'RESOLVED') {
+        dispatch('getAmountPerOutcomeStatistics', prediction)
       }
-    } catch (ex) {
-      commit('setLoading', false, {
-        root: true
-      })
+
+      commit('setLoading', false, { root: true })
+    } catch (e) {
+      console.error(e)
+      commit('setLoading', false, { root: true })
     }
   },
 
-  async payoutWon ({ commit, dispatch, rootState }, payload) {
+  async payoutWon ({ commit, rootState }, payload) {
     commit('setTransactionHash', '')
     commit('setTransactionError', false)
-    const response = await axios.get(`/contracts/${payload.marketAddress}`)
 
-    if (response.data) {
-      const web3 = window.web3
-      const MarketInstance = new web3.eth.Contract(JSON.parse(response.data.abi), payload.marketAddress)
-      const predictionIdHex = web3.utils.fromAscii(payload.predictionId)
-      const forecastIdHex = web3.utils.fromAscii(payload.id)
+    try {
+      const MarketInstance = await EthUtils.getContract(payload.address)
+      const forecastIdHex = EthUtils.getHex(parseInt(payload.id))
+      const predictionIdHex = EthUtils.getHex(parseInt(payload.predictionId))
 
       MarketInstance.methods
         .payout(predictionIdHex, forecastIdHex)
@@ -276,60 +208,42 @@ export default {
           gas: process.env.GAS.FORECAST_PAYOUT,
           from: rootState.user.userWeb3.coinbase
         })
-        .on('error', () => {
+        .on('error', e => {
+          console.error(e)
           commit('setTransactionError', true)
         })
         .once('transactionHash', async txId => {
-          try {
-            const request = {
-              forecastId: payload.id,
-              predictionId: payload.predictionId,
-              txId
-            }
-
-            await axios.post('/predictions/transaction/forecastpayout', request)
-
-            commit('setTransactionHash', txId)
-            dispatch('getUserForecast', payload.id)
-          } catch (ex) {}
+          commit('setTransactionHash', txId)
         })
+    } catch (e) {
+      console.error(e)
     }
   },
 
-  async payoutRefund ({ commit, dispatch, rootState }, payload) {
+  async payoutRefund ({ commit, rootState }, payload) {
     commit('setTransactionHash', '')
     commit('setTransactionError', false)
-    const response = await axios.get(`/contracts/${payload.marketAddress}`)
 
-    if (response.data) {
-      const web3 = window.web3
-      const MarketInstance = new web3.eth.Contract(JSON.parse(response.data.abi), payload.marketAddress)
-      const predictionIdHex = web3.utils.fromAscii(payload.predictionId)
-      const forecastIdHex = web3.utils.fromAscii(payload.id)
+    try {
+      const MarketInstance = await EthUtils.getContract(payload.address)
+      const forecastIdHex = EthUtils.getHex(parseInt(payload.id))
+      const predictionIdHex = EthUtils.getHex(parseInt(payload.predictionId))
 
       MarketInstance.methods
-        .refund(predictionIdHex, forecastIdHex)
+        .refund(forecastIdHex, predictionIdHex)
         .send({
           gas: process.env.GAS.FORECAST_PAYOUT,
           from: rootState.user.userWeb3.coinbase
         })
-        .on('error', () => {
+        .on('error', e => {
+          console.error(e)
           commit('setTransactionError', true)
         })
         .once('transactionHash', async txId => {
-          try {
-            const request = {
-              forecastId: payload.id,
-              predictionId: payload.predictionId,
-              txId
-            }
-
-            await axios.post('/predictions/transaction/forecastRefund', request)
-
-            commit('setTransactionHash', txId)
-            dispatch('getUserForecast', payload.id)
-          } catch (ex) {}
+          commit('setTransactionHash', txId)
         })
+    } catch (e) {
+      console.error(e)
     }
   }
 }

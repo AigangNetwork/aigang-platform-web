@@ -6,7 +6,6 @@
     </transition>
     <CookiesBar />
     <notification></notification>
-
     <InsufficientBalanceDialog :showDialog="isInsufficientBalanceDialogVisible" @onButtonClick="onInsufficientBalanceDialogClose"/>
   </div>
 </template>
@@ -47,10 +46,8 @@ export default {
     }
   },
   async mounted () {
-    if (this.$store.getters['user/isAuthenticated']) {
-      await this.$store.dispatch('user/clearWeb3Instance')
-      await this.$store.dispatch('user/registerWeb3')
-    }
+    await this.$store.dispatch('user/clearWeb3Instance')
+    await this.$store.dispatch('user/registerWeb3')
   }
 }
 

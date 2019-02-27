@@ -1,889 +1,907 @@
 {
-  "data": {
-    "upload": {
-      "notifications": {
-        "upload_success": "Successfully uploaded data",
-        "upload_error": "Failed to upload data",
-        "titles": {
-          "success": "Success",
-          "error": "Error",
-          "info": "Info"
-        }
-      },
-      "titles": {
-        "upload": "Upload dataset",
-        "load": "Continue",
-        "title": "Title",
-        "tags": "Tags",
-        "description": "Description",
-        "preview": "Preview",
-        "structure": "Structure",
-        "fileUploadPreferences": "File preferences",
-        "fileVisibility": "File visibility",
-        "fileAccess": "By default datasets are with public access",
-        "fileDetails": "File details",
-        "remoteFileAccessPoint": "Remote file access point"
-      },
-      "rules": {
-        "rule0": "CSV files only",
-        "rule1": "Maximum size of file: 10MB",
-        "rule2": "Please provide remote access point to the file. (URL, Connection string etc.)",
-        "rule3": "Each record is on a separate line",
-        "rule4": "File must contain header line",
-        "rule5": "CSV file requirements"
-      },
-      "input": {
-        "placeholder": {
-          "fileAccess": "Enter access to the source file",
-          "title": "Set a title of dataset",
-          "description": "Describe dataset",
-          "column": "Describe a column",
-          "structure": "Please briefly describe your file structure",
-          "fileUploadPart0": "Drop file here or ",
-          "fileUploadPart1": "click to upload",
-          "dataType": "Data type",
-          "premium": "Amount in AIX"
-        },
-        "validation": {
-          "emptyInputError": "Please make sure you have filled all fields",
-          "fileLimitExceed": "You are able to upload only one .csv file. Please delete old file before uploading new one",
-          "unableAccessFileContent": "File can not be accessed. Please reupload correct file",
-          "invalidFile": "Invalid file content type. Please make sure you upload .csv files only!",
-          "fileTooLarge": "Please make sure you follow all file preferences. File is too large."
-        }
-      }
-    },
-    "toolbar": {
-      "uploadDisabled": "You have to log in to upload new datasets"
-    },
-    "menu": {
-      "all": "All",
-      "uploaded": "Uploaded",
-      "models": "Models"
-    },
-    "card": {
-      "status": "Status",
-      "models": "Models",
-      "comment": "Comments",
-      "added": "Added",
-      "notApproved": "waiting for approval",
-      "closed": "closed"
-    },
-    "dataset": {
-      "createdBy": "By",
-      "updated": "Last updated",
-      "downloadDataset": "Download dataset",
-      "deleteDataset": "Delete dataset",
-      "deleteDatasetTitle": "Delete your dataset",
-      "deleteDatasetDescription": "This dataset and all files, data, models and comments associated with it will be permanently deleted. You won't be able to recover it later on.",
-      "editDataset": "Edit dataset",
-      "successDelete": "Dataset was successfully deleted",
-      "deleteDialogBody": "Are you sure you want to delete this dataset?",
-      "invalidPreview": "This dataset does not contain visual preview.",
-      "notApprovedTooltip": "Dataset is waiting for approval",
-      "closedTooltip": "Dataset is closed",
-      "publicTooltip": "Dataset is visible for all visitors",
-      "privateTooltip": "Dataset is visible only for logged in users",
-      "uploadModelDisabled": "You have to log in to upload new model",
-      "navigation": {
-        "info": "Info",
-        "data": "Data",
-        "models": "Models",
-        "comment": "Comments",
-        "model": "Model",
-        "coefficients": "Coefficients"
-      },
-      "edit": {
-        "uploadNew": "Upload new",
-        "registeredOnly": "For registered users only",
-        "byDefaultPublicAccess": "By default datasets with public access",
-        "public": "Public",
-        "loggedIn": "Logged in",
-        "title": "Title",
-        "description": "Description",
-        "structure": "Structure",
-        "structureName": "Name",
-        "structureDescription": "Description",
-        "structureDataType": "Data type",
-        "file": "File",
-        "remoteAccessPoint": "Remote access point",
-        "describeRemoteAccessPoint": "Describe remote access point",
-        "edit_success": "Changes were successfully updated",
-        "fileAttached": "was attached."
-      },
-      "validation": {
-        "titleEmpty": "Title is required",
-        "titleTooShort": "Title must be at least 6 characters long",
-        "descriptionEmpty": "Description is required",
-        "descriptionTooShort": "Description must be at least 6 characters long",
-        "structureFieldEmpty": "Make sure you have filled all structure fields",
-        "remoteFileAccessPointEmpty": "Remote access point is required",
-        "remoteFileAccessPointTooShort": "Remote access must be at least 6 characters long",
-        "fileEmpty": "File is required",
-        "fileTooBig": "File is too large",
-        "premiumEmpty": "Premium is required",
-        "modelTitleEmpty": "Model title is required",
-        "tableCellEmpty": "Field is required",
-        "premiumInvalid": "Invalid base premium. Value e.g. 000000.000000",
-        "premiumZero": "Base premium cannot be zero",
-        "premiumMin": "Base premium cannot be less than 0.000001",
-        "premiumMax": "Base premium cannot be more than 100000",
-        "onlyIntegersAllowed": "Only integers allowed",
-        "tableTooBig": "Maximum size of the table is 10x50",
-        "tableTooSmall": "Minimum size of the table is 1x1",
-        "emptyModel": "Model table is required",
-        "emptyModelInput": "Make sure you have filled all table fields",
-        "titleTooLong": "Maximum 64 characters",
-        "invalidTag": "Invalid tag: only letters, numbers and \"-\" symbols are allowed",
-        "invalidTagLength": "Invalid tag: tag is too short",
-        "invalidTagCount ": "Maximum tag limit is 5"
-      },
-      "model": {
-        "models": "Models",
-        "model": "Model",
-        "tableTitle": "Table title",
-        "uploadModel": "Upload model",
-        "cancel": "Cancel",
-        "premium": "Base premium",
-        "submitModel": "Submit model",
-        "newTable": "New table",
-        "on": "on",
-        "create": "Create",
-        "basePremium": "Base premium",
-        "eth": "ETH",
-        "aix": "AIX",
-        "by": "By",
-        "successDelete": "Model was successfully deleted",
-        "editModel": "Edit model",
-        "deleteModel": "Delete model",
-        "deleteModelTitle": "Delete your model",
-        "deleteModelDescription": "This model and all data and comments associated with it will be permanently deleted. You won't be able to recover it later on.",
-        "modelsNotFound": "This dataset does not contain any models yet",
-        "deleteDialogBody": "Are you sure you want to delete this model?",
-        "usersVoted": "users upvoted this model",
-        "userVoted": "user upvoted this model",
-        "noUsersVoted": "Model does not have any upvotes yet",
-        "votingDisabled": "You have to log in to upvote",
-        "tableRows": "Table rows",
-        "tableColumns": "Table columns",
-        "placeholder": {
-          "modelTitle": "Set a title of model",
-          "title": "Title",
-          "data": "Data"
-        },
-        "notification": {
-          "title": {
-            "success": "Success"
-          },
-          "successfullyUploaded": "Data model was successfully uploaded",
-          "successfullyUpdated": "Data model was successfully updated"
-        },
-        "lastUpdated": "Last updated"
-      },
-      "comment": {
-        "comment": "Comments",
-        "commentPlaceholder": "Start typing to add comment",
-        "deleteCommentDialogContent": "Are you sure you want to delete your comment?",
-        "editTooltip": "Edit comment",
-        "edited": "Edited",
-        "removeTooltip": "Remove comment",
-        "postButton": "Post",
-        "update": "Update",
-        "commentButton": "Comment",
-        "successFullPost": "Your comment was successfully submited",
-        "successFullUpdate": "Your comment was successfully updated",
-        "successFullDelete": "Your comment was successfully deleted",
-        "replies": "replies",
-        "validation": {
-          "commentFieldRequired": "Comment is required",
-          "commentTooLong": "Comment lenght limit was reached"
-        }
-      }
-    }
-  },
-  "login": {
-    "login": "Log in",
-    "title": "Log in to Aigang Network",
-    "email": "Email",
-    "password": "Password",
-    "forgotPassword": "Forgot password?",
-    "dontHave": "Do not have account?"
-  },
-  "signUp": {
-    "signUp": "Sign Up",
-    "description": "Creating an account in aigang.network you will get access to all products such as Data, Prediction market, Invest and Insure",
-    "haveAccount": "Have Aigang Network Account?",
-    "rePassword": "Repeat password",
-    "emailSent": "Email was sent to {0}. Follow instructions provided in the email.",
-    "dontReceiveEmail": "If you didn't receive email, click: ",
-    "waitingVerification": "Verification email was sent."
-  },
-  "retrievePassword": {
-    "title": "Reset Your Aigang Password",
-    "backTo": "Back to",
-    "waitingVerification": "Reset email was sent.",
-    "dontReceiveEmail": "If you didn't receive email, click: ",
-    "description": "Enter your new password",
-    "retrievePassword": "Reset password",
-    "changeSuccessTitle": "Your password has been successfully updated"
-  },
-  "activateEmail": {
-    "title": "Email activation",
-    "activating": "Activating ...",
-    "activated": "Thank you for registration. Your account now is successfully activated and you can use all platform features. Please login to continue."
-  },
-  "notifications": {
-    "login_success": "Successfully signed in"
-  },
-  "account": {
-    "balance": "Balance"
-  },
-  "actions": {
-    "loginToAccount": "Login to account",
-    "upload_new_data": "Upload new data",
-    "retrievePassword": "Retrieve password"
-  },
-  "profile": {
-    "tabs": {
-      "profile": "Profile",
-      "wallets": "My Wallets",
-      "transactions": "My Transactions",
-      "notifications": "Notifications"
-    },
-    "general": {
-      "logout": "Logout",
-      "userName": "Nickname",
-      "email": "Email",
-      "firstName": "First name",
-      "lastName": "Last name",
-      "changePassword": "Change password",
-      "passwordDescription": "Minimum password length must be 8 characters and consist of at least 2 alpha characters, 1 number and 1 special character ",
-      "oldPassword": "Old password",
-      "newPassword": "New password",
-      "update": "Update",
-      "passwordUpdated": "Password succesfully updated",
-      "deactivateAccountTitle": "Deactivate your account",
-      "deactivateAccountDescription": "If you decide that you no longer want to use Aigang Platform, it's easy to deactivate your account. When you deactivate your account, you're no longer availible to log in or access your private uploaded datasets.",
-      "deactivateAccount": "Deactivate account",
-      "warning": "Warning",
-      "confirmationText": "Are you sure you want to deactivate your account?",
-      "confirm": "Confirm",
-      "cancel": "Cancel",
-      "deactivationSuccessful": "Your account was successfuly deactivated"
-    },
-    "wallets": {
-      "title": "Wallets",
-      "description": "You wallets list which were used by you on Aigang Platform",
-      "table": {
-        "emptyText": "No Wallets yet",
-        "titles": {
-          "date": "Date",
-          "wallet": "Wallet"
-        }
-      },
-      "buttons": {
-        "add": "Add Wallet"
-      }
-    },
-    "transactions": {
-      "title": "Transactions",
-      "description": "Transactions list which were submited by you on Aigang Platform",
-      "status": {
-        "blockchainPending": "Blockchain Pending",
-        "blockchainSuccessful": "Blockchain Successful",
-        "blockchainFailed": "Blockchain Failed",
-        "canceled": "Canceled",
-        "successful": "Successful",
-        "failed": "Failed",
-        "corrupt": "Corrupt"
-      },
-      "table": {
-        "emptyText": "No Transactions yet",
-        "titles": {
-          "date": "Date",
-          "transaction": "Transaction",
-          "fromSystem": "From System",
-          "type": "Type",
-          "status": "Status"
-        }
-      },
-      "type": {
-        "policypayment": "Policy Payment",
-        "addpolicy": "Add Policy",
-        "addclaim": "Add Claim",
-        "addForecast": "Add Forecast",
-        "forecastPayout": "Forecast Payout",
-        "forecastRefund": "Forecast Refund",
-        "addContribution": "Add Contribution",
-        "contributionPayout": "Contribution Payout",
-        "contributionRefund": "Contribution Refund",
-        "unknown": "Unknown"
-      }
-    },
-    "notifications": {
-      "title": "Notifications",
-      "description": "Settings for Aigang platform email notications",
-      "permissions": {
-        "general": {
-          "title": "General",
-          "items": {
-            "failedTransactions": {
-              "title": "Failed transactions",
-              "description": "When this notification type is on you will get notifications about failed transactions."
-            }
-          }
-        },
-        "data": {
-          "title": "Data",
-          "items": {
-            "newModelAdded": {
-              "title": "Data model added",
-              "description": "When this notification type is on you will get notifications when someone adds model to your data set."
-            }
-          }
-        },
-        "insurance": {
-          "title": "Insurance",
-          "items": {
-            "all": {
-              "title": "All",
-              "description": "When this notification type is on you will get all notifications related with Insurance."
-            }
-          }
-        },
-        "predictions": {
-          "title": "Predictions",
-          "items": {
-            "forecastPaymentReceived": {
-              "title": "Forecast payment received",
-              "description": "When this notification type is on you will get notifications after forecast payment information will be received in our system."
-            },
-            "forecastWon": {
-              "title": "Forecast won",
-              "description": "When this notification type is on you will get notifications when your forecast win."
-            },
-            "forecastLost": {
-              "title": "Forecast lost",
-              "description": "When this notification type is on you will get notifications when your forecast lost."
-            }
-          }
-        },
-        "pools": {
-          "title": "Pools",
-          "items": {
-            "contributionReceived": {
-              "title": "Contribution received",
-              "description": "When this notification type is on you will get notifications after contirubtion payment information will be received in our system."
-            }
-          }
-        }
-      }
-    }
-  },
-  "navigation": {
-    "profile": "Profile",
-    "data": "Data",
-    "predictions": "Predictions",
-    "pools": "Pools",
-    "insurance": "Insurance",
-    "wiki": "Wiki",
-    "discussions": "Discussions",
-    "login": "Sign Up/Log In"
-  },
-  "status": {
-    "active": "Active",
-    "closed": "Closed",
-    "pending": "Pending"
-  },
-  "validation": {
-    "emailEmpty": "Please input email address",
-    "emailNotValid": "Please input correct email address",
-    "passwordEmpty": "Password is required",
-    "passwordTooShort": "Password must be at least 6 characters long",
-    "firstNameEmpty": "First name is required",
-    "firstNameTooShort": "First name must be at least 2 characters long",
-    "firstNameInvalid": "First name contains invalid characters. Only A-z characters are allowed",
-    "lastNameEmpty": "Last name is required",
-    "lastNameTooShort": "Last name must be at least 2 characters long",
-    "nameTooLong": "Maximum 50 characters",
-    "lastNameInvalid": "Last name contains invalid characters. Only A-z characters are allowed",
-    "userNameEmpty": "Nickname is required",
-    "userNameTooShort": "Nickname must be at least 6 characters long",
-    "userNameInvalid": "Nickname contains invalid characters. Only A-z characters are allowed"
-  },
-  "general": {
-    "uploading": "Uploading ...",
-    "updating": "Updating ...",
-    "loading": "Loading ...",
-    "ok": "OK",
-    "here": "here",
-    "change": "Change",
-    "save": "Save",
-    "back": "Back",
-    "cancel": "Cancel",
-    "continue": "Continue",
-    "markupSupported": "VueMarkdown supported",
-    "versionAlpha": "alpha",
-    "testPlatform": "Test Platform",
-    "unableToFindYourDatasets": "Can not find your datasets",
-    "unableToFindYourModels": "Can not find any datasets containing your models",
-    "unableToFindAnyProducts": "Can not find any product",
-    "noPolicies": "You do not have any policies yet",
-    "noPredictions": "Can not find any predictions",
-    "noMyPredictions": "You do not have any predictions for selected filter type",
-    "noPools": "Can not find any pools",
-    "upvote": "Upvote",
-    "downvote": "Downvote",
-    "aix": "AIX",
-    "utc": "UTC",
-    "comingSoon": "Feature is coming soon",
-    "retry": "Retry",
-    "days": "days",
-    "day": "day",
-    "id": "ID",
-    "backToList": "Back to list",
-    "accept": "Accept",
-    "decline": "Decline",
-    "cookiesMessage": "This website uses cookies to ensure the best user experience on. If you want to continue using cookies, press accept.",
-    "cookiesTitle": "Cookie Policy for Aigang Platform",
-    "readMoreCookies": "Read more.",
-    "insufficientBalance": "Insufficient balance",
-    "userNotLoggedIn": "User must be logged in and connected to web3 provider (Metamask, Mist, etc.)",
-    "insufficientBalanceDialog": {
-      "title": "Insufficient balance",
-      "qaBody": "Your wallet balance is insufficient. Please generate test AIX tokens if you want to use this website functionality. You can generate them by using following link bellow:",
-      "qaFaucetLink": "https://aigangnetwork.github.io/testaix/",
-      "productionBody": "Your wallet balance is insufficient. Please buy AIX tokens and try again.",
-      "button": "Got It"
-    },
-    "processingTransaction": "Transaction is being processed..."
-  },
-  "errors": {
-    "error": "Error",
-    "information": "Information",
-    "400": "Bad Request",
-    "401": "Unauthorized",
-    "403": "Forbidden",
-    "404": "Not Found",
-    "408": "Request Timeout",
-    "500": "Internal Server Error",
-    "unhandled": "Unhandled error: ",
-    "validation": {
-      "DuplicateUserName": "User name is taken. Please make it unique",
-      "DuplicateEmail": "Email was registered earlier. Choose other email or use 'Forgot password'",
-      "InvalidEmail": "Email is not valid",
-      "InvalidPassword": "Old password is not correct.",
-      "InvalidEmailOrPassword": "The email address or password you entered is not valid",
-      "PasswordNotMatchRePassword": "Passwords are not matching",
-      "PasswordTooShort": "Password is too short",
-      "InvalidQuery": "Query is not valid",
-      "UserNotFound": "Email not found",
-      "EmailNotConfirmed": "Email is not comfirmed yet",
-      "ValidationFailed": "We are unable to proccess your request",
-      "EmptyRequest": "You sent an empty request. Please make sure all required values are set",
-      "FileTooLargeError": "Provided file is too large",
-      "BadFileContentType": "Bad file content type",
-      "BadRequest": "Bad Request was sent to back-end. Try again later.",
-      "GatewayTimeout": "Gateway time out",
-      "AccountIsLocked": "Your account is disabled",
-      "NameTooLong": "First name, last name or the username can not be longer than 200 characters.",
-      "NameInvalid": "First name, last name or the username contains invalid characters.",
-      "TitleTooLong": "Title can not be longer than 200 characters.",
-      "TitleOrDescriptionTooShort": "Title or description can not be shorter than 6 characters.",
-      "Forbidden": "You are trying to access forbidden resources",
-      "ServiceUnavailable": "Service is unavailable in your country",
-      "NotFound": "Not found",
-      "CommentTooLong": "Comment lenght limit was reached",
-      "RemoteAccessPointNotSet": "Remote access point is not set.",
-      "InvalidTags": "Invalid tags",
-      "EmptyFileError": "File is empty",
-      "DeviceAlreadyInsured": "There is already policy with the same device id",
-      "ContributionsEnded": "Contributing time has ended",
-      "ContributionsNotStarted": "Contributing time has not started yet",
-      "PoolNotActive": "Pool is not active",
-      "ProductPoolLimitReached": "Pool capacity has been reached",
-      "PredictionNotPublished": "Prediction status is not published",
-      "ForecastsNotStarted": "Forecasting has not started yet",
-      "ForecastsEnded": "ForecastsEnded"
-    },
-    "pagePathNotFound": "The page you are trying to access is not available",
-    "validationError": "You have entered an invalid data",
-    "serverNotFound": "Server not found.",
-    "serverNotFoundRule1": "Make sure you are connected to the Internet.",
-    "serverNotFoundRule2": "This might occur when the browser can not reach the server. Please try again later.",
-    "contactIfError": "If you see this error please contact us via email info@aigang.network",
-    "metamaskDetected": "We have detected that you are using metamask extension. In order to see your account AIX balance please switch your network to ",
-    "useMetamask": "To use all of our Platform features please Log in to Metamask Extension"
-  },
-  "predictions": {
-    "forecastsCount": "Forecasts",
-    "volume": "Volume",
-    "volumeInfoTooltip": "Prediction forecast amounts + Initial pool size",
-    "description": "Description",
-    "outcomes": "Outcomes",
-    "noDescription": "There is no description for this prediction",
-    "forecastDetails": "Forecast details",
-    "predictionDetails": "Prediction details",
-    "marketContractAddress": "Market contract address",
-    "predictionStatistics": "Statistics",
-    "votingTill": "Forecasting till",
-    "votingStarts": "Forecasting starts",
-    "votingEnded": "Forecasting has ended",
-    "results": "Results will be announced",
-    "wonOutcome": "Won outcome",
-    "wonAmount": "Won amount",
-    "index": "Index",
-    "paused": "Paused",
-    "canceled": "Canceled",
-    "ended": "Ended",
-    "fee": "Fee",
-    "votesPerOutcome": "Votes per outcome",
-    "amountPerOutcome": "Amount per outcome",
-    "predictionHasEnded": "Forecasting time has ended for this prediction.",
-    "menu": {
-      "predictions": "All Predictions",
-      "myForecasts": "My Forecasts"
-    },
-    "prediction": {
-      "paymentInfo": {
-        "title": "Payment Information",
-        "metamaskAlert": "Atention! Do not leave this page until you confirm your transaction. Otherwise your transaction will be lost and forecast won't be counted.",
-        "body": "Your payment transaction was created succesfully. When payment will be processed we will inform you via email notification message. You can see your transaction status by clicking on transaction address.",
-        "buttons": {
-          "goBack": "Go to my forecasts list"
-        }
-      },
-      "confirmationDialog": {
-        "title": "Confirm your forecast",
-        "buttons": {
-          "forecast": "Forecast"
-        },
-        "prediction": "Prediction",
-        "forecast": "Your Forecast",
-        "amount": "Amount",
-        "validation": {
-          "required": "Can not be empty",
-          "shouldBeNumber": "Should be number",
-          "shouldBeBiggerThanZero": "Should be greater than zero",
-          "shouldBeBiggerThanFee": "Should be greater than fee",
-          "amountInvalid": "Invalid amount. Value e.g. 000000.000000"
-        }
-      }
-    },
-    "forecast": {
-      "amount": "Amount",
-      "created": "Created",
-      "results": "Results",
-      "status": "Status",
-      "announced": "Announced",
-      "yourForecast": "Your forecast",
-      "yourAmount": "Your amount",
-      "forecastAmount": "Forecast",
-      "logInToWeb3": "User must be connected to web3 provider (Metamask, Mist, etc.)",
-      "metamaskAlert": "Atention! Do not leave this page until you confirm your transaction. Otherwise your transaction will be lost and forecast won't be paid out.",
-      "payout": "Get Payout",
-      "getRefund": "Get Refund",
-      "statuses": {
-        "all": "All",
-        "pendingPayment": "Pending payment",
-        "paid": "Paid",
-        "canceled": "Canceled",
-        "won": "Won",
-        "lost": "Lost",
-        "wonPaidout": "Won Paidout",
-        "availableRefund": "Available Refund",
-        "pendingPayout": "Pending Payout",
-        "refundPaidout": "Refund Paidout"
-      }
-    },
-    "statistics": {
-      "legend": {
-        "wonForecast": "Won forecast",
-        "otherForecasts": "Other forecasts"
-      }
-    }
-  },
-  "insurance": {
-    "menu": {
-      "products": "Products",
-      "myPolicies": "My Policies"
-    },
-    "product": {
-      "productEnds": "Campaign ends",
-      "productEnded": "Campaign ended",
-      "productClosed": "Product closed",
-      "basePremium": "Base Premium",
-      "details": "Details",
-      "description": "Description",
-      "termsAndConditions": "Terms and Conditions",
-      "productDetails": "Product details",
-      "calculateInsurancePrice": "Calculate Insurance Price",
-      "contractAddress": "Policy Contract Address",
-      "downloadApp": "Download Aigang App",
-      "instructionsIntro": "In order to calculate your insurance price you have to:",
-      "instructionsDownloadApp": "Download Aigang app on your android device",
-      "instructionsDownloadAppLinkText": "download",
-      "instructionsIMEI": "Enter your device ID below (you will see it in the app)",
-      "instructionsConditions": "Your device's data will be read, press continue if you agree",
-      "deviceIdPlaceholder": "ASVSF21D",
-      "currentWearLevel": "Current Wear level",
-      "startTime": "Start Time",
-      "endTime": "End Time",
-      "payout": "Payout",
-      "calculatedPrice": "Calculated Price",
-      "notImplemented": "Product is not implemented",
-      "logInToCalculateInsurancePrice": "You have to log in to calculate insurance price",
-      "agreeWithTermsAndConditions": "You have to read terms and conditions to calculate insurance price",
-      "productPoolLimitReacher": "Product premium pool limit has been reached",
-      "policiesLimitReached": "This product has reached maximum number of policies",
-      "insuranceTerm": "Insurance term",
-      "validation": {
-        "deviceIdRequired": "Device ID is required",
-        "deviceIdInvalid": "Must be 8 characters",
-        "deviceAlreadyInsured": "This device is already insured"
-      }
-    },
-    "policy": {
-      "pay": "Pay",
-      "deviceId": "Device id",
-      "policyId": "Policy id",
-      "startingTask": "Starting task",
-      "policyStatus": "Policy Status",
-      "contractAddress": "Contract address",
-      "taskId": "Task ID",
-      "readingDeviceDataAndCalculatingInsurancePrice": "Reading device data and calculating insurance price",
-      "readingDeviceDataAndVerifyingClaim": "Reading device data and verifying claim",
-      "readingDeviceDataTimeout": "Reading device data timed out",
-      "policyCreated": "Policy created",
-      "policyIs": "Policy is",
-      "redirecting": "Redirecting",
-      "androidBatteryInsurancePolicy": "Android Battery Insurance Policy",
-      "deletePolicyTitle": "Delete your policy",
-      "deletePolicyBody": "This policy and all data associated with it will be deleted from the plaform. You won't be able to revert this action later on.",
-      "deletePolicy": "Delete policy",
-      "deletePolicyConfirmation": "Are you sure you want to delete this policy?",
-      "termsAndConditions": {
-        "title": "Terms and Conditions",
-        "buttons": {
-          "agree": "Agree",
-          "disagree": "Disagree"
-        }
-      },
-      "startDate": "Start date",
-      "endDate": "End date",
-      "status": "Status",
-      "deviceIdNotFound": "Device with this ID was not found. Check your device for correct ID.",
-      "serverError": "Something went wrong. Please contact support: info@aigang.network",
-      "paymentInfo": {
-        "title": "Payment Information",
-        "metamaskAlert": "Atention! Do not leave this page until you confirm your transaction. Otherwise your transaction will be lost and policy won't be activated.",
-        "body": "Your payment transaction was created succesfully. When payment will be processed we will inform you via email notification message. You can see your transaction status by clicking on transaction address. ",
-        "buttons": {
-          "goBack": "Go to policy list"
-        }
-      },
-      "verifyForClaim": "Verify your device for claim",
-      "verifyForClaimRetry": "Retry verification",
-      "failedToVerifyDevice": {
-        "title": "Failed to verify your device:",
-        "tip1": "Check if your device is connected to internet,",
-        "tip2": "Check if your device still paired with our system,",
-        "tip3": "If you still have problems with verification please contact us via info@aigang.network."
-      },
-      "deviceClaimable": "We detected that your device is broken. You can claim your policy.",
-      "deviceNotClaimable": "We read your device data and all parameters are good. At this moment your device is not claimable.",
-      "claim": "Claim policy",
-      "notLoggedToEthereumClientDialog": {
-        "title": "Not logged in to Ethereum Client",
-        "content": "To insure your device, you need to have Ethereum Client in place. (Metamask, Parity, Ethereum Mist browser or any other client that supports Web3). For the best experience use Metamask.",
-        "buttons": {
-          "ok": "OK"
-        }
-      },
-      "deviceData": {
-        "title": "Device data",
-        "wearLevel": "Battery wear level",
-        "batteryDesignCapacity": "Battery Design Capacity",
-        "chargeLevel": "Charge level",
-        "ageInMonths": "Age in months",
-        "region": "Region",
-        "brand": "Brand",
-        "fetchDateTime": "Data fetch time"
-      },
-      "claimInfo": {
-        "title": "Claim info",
-        "wearLevel": "Battery wear level",
-        "batteryDesignCapacity": "Battery Design Capacity",
-        "chargeLevel": "Charge level",
-        "ageInMonths": "Age in months",
-        "region": "Region",
-        "brand": "Brand",
-        "fetchDateTime": "Data fetch time"
-      },
-      "validationResult": {
-        "BatteryDesignCapacity": "Battery design capacity is not valid for insurance",
-        "BatteryChargeLevel": "Battery charge level is not valid for insurance",
-        "DeviceAgeInMonths": "Device age in months is not valid for insurance",
-        "Region": "Your region is not valid for insurance",
-        "DeviceBrand": "This device brand is not valid for insurance",
-        "BatteryWearLevel": "Battery wear level is not valid for insurance"
-      },
-      "wearLevel": {
-        "good": "Good",
-        "overheated": "Overheated",
-        "overvoltage": "Overvoltage",
-        "dead": "Dead"
-      },
-      "statuses": {
-        "canceled": "Canceled",
-        "claimable": "Claimable",
-        "draft": "Draft",
-        "finished": "Finished",
-        "notset": "Not set",
-        "paid": "Paid",
-        "paidout": "Paid out",
-        "pendingpayment": "Pending payment",
-        "pendingpayout": "Pending payout"
-      }
-    }
-  },
-  "pools": {
-    "menu": {
-      "allPools": "All Pools",
-      "portfolio": "Portfolio"
-    },
-    "header": {
-      "contributions": "Contributions",
-      "currentPoolAmount": "Current amount",
-      "starts": "Starts",
-      "ends": "Ends",
-      "canceled": "Canceled",
-      "distributing": "Distributing",
-      "funding": "Funding",
-      "ended": "Ended"
-    },
-    "products": {
-      "activeTill": "Active till",
-      "distributing": "Distributing",
-      "funding": "Funding",
-      "paused": "Paused",
-      "canceled": "Canceled",
-      "closed": "Closed"
-    },
-    "contributions": {
-      "noData": "There is no contributions yet",
-      "summary": {
-        "contributions": "Your Contributions",
-        "contributionsAmount": "Contributions amount",
-        "availableReward": "Available reward",
-        "rewardPaidOut": "Reward paid out"
-      },
-      "filters": {
-        "status": "Status"
-      },
-      "deleteContributionTitle": "Delete your contribution",
-      "deleteContributionBody": "This contribution hasn't recevice payment yet, you can remove it if you didn't intend to complete payment or payment transaction has failed.",
-      "deleteContribution": "Delete contribution",
-      "deleteContributionConfirmation": "Are you sure you want to delete this contribution?"
-    },
-    "pool": {
-      "termsAndConditions": "Terms and Conditions",
-      "agreeWithTermsAndConditions": "You have to read terms and conditions to invest",
-      "poolHasEnded": "Contributing time has ended for this pool.",
-      "poolCapacityReached": "Pool capacity has been reached",
-      "description": "Description",
-      "noDescription": "There is no description for this pool",
-      "contractAddress": "Contract address",
-      "contribute": "Contribute",
-      "paymentInfo": {
-        "title": "Payment Information",
-        "metamaskAlert": "Atention! Do not leave this page until you confirm your transaction. Otherwise your transaction will be lost and contribution won't be counted.",
-        "body": "Your payment transaction was created succesfully. When payment will be processed we will inform you via email notification message. You can see your transaction status by clicking on transaction address.",
-        "buttons": {
-          "goBack": "Go to Portfolio"
-        }
-      }
-    },
-    "contribution": {
-      "description": "Description",
-      "details": "Contribution details",
-      "poolDetails": "Pool details",
-      "contractAddress": "Contract address",
-      "poolId": "Pool ID",
-      "yourAmount": "Your contributed amount",
-      "paidoutAmount": "Paidout amount",
-      "noDescription": "There is no description for this pool",
-      "delete": "Delete contribution",
-      "deleteMessage": "This contribution and all data associated with it will be deleted from the plaform. You won't be able to revert this action later on.",
-      "deleteButtonText": "Delete",
-      "deleteContributionDialog": {
-        "body": "Are you sure you want to delete this contribution?"
-      },
-      "payContribution": "Pay contribution",
-      "payoutContribution": "Get payout",
-      "payContributionDescription": "This contribution is not paid yet. Pay and participate in pool.",
-      "payoutContributionDescription": "Payout for your contribution is available.",
-      "payoutAmount": "Payout amount",
-      "amount": "Contribution amount",
-      "pay": "Pay",
-      "payout": "Get Payout",
-      "refundContribution": "Get refund",
-      "refundContributionDescription": "Payout for your contribution is available.",
-      "refundAmount": "Refund amount",
-      "refund": "Refund",
-      "createdDate": "Created Date",
-      "explanations": {
-        "canceled": "Some issue happened and refunds for this pool contributors will happen"
-      }
-    },
-    "poolStatuses": {
-      "active": "Active",
-      "distributing": "Distributing",
-      "funding": "Funding",
-      "paused": "Paused",
-      "canceled": "Canceled",
-      "closed": "Closed"
-    },
-    "poolContributionStatuses": {
-      "pendingPayment": "Pending payment",
-      "paid": "Paid",
-      "canceled": "Canceled",
-      "availablePayout": "Available Payout",
-      "pendingPayout": "Pending Payout",
-      "rewardPaidout": "Reward Paidout",
-      "availableRefund": "Available Refund",
-      "refundPaidout": "Refund Paidout"
-    },
-    "userNotLoggedIn": "User must be logged in and connected to web3 provider (Metamask, Mist, etc.)",
-    "portfolioInfo": {
-      "yourAddress": "Your address",
-      "yourBalance": "Your balance",
-      "claimedProfit": "Claimed profit",
-      "pool": "Pool",
-      "contributedAmount": "Contributed Amount",
-      "createdDate": "Created",
-      "status": "Status"
-    },
-    "confirmationDialog": {
-      "title": "Add contribution amount",
-      "maxAllowedAmount": "Max allowed amount",
-      "amount": "Amount",
-      "buttons": {
-        "contribute": "Contribute"
-      },
-      "validation": {
-        "required": "Can not be empty",
-        "shouldBeNumber": "Should be number",
-        "amountInvalid": "Invalid amount. Value e.g. 000000.000000",
-        "shouldBeBiggerThanZero": "Should be greater than zero",
-        "shouldBeLowerOrEqualMaxAllowedAmount": "Exceeds pool amount goal"
-      }
-    }
-  },
-  "discussions": {
-    "buttons": {
-      "create": "Create post",
-      "all": "All posts"
-    }
-  }
+	"data": {
+		"upload": {
+			"notifications": {
+				"upload_success": "Successfully uploaded data",
+				"upload_error": "Failed to upload data",
+				"titles": {
+					"success": "Success",
+					"error": "Error",
+					"info": "Info"
+				}
+			},
+			"titles": {
+				"upload": "Upload dataset",
+				"load": "Continue",
+				"title": "Title",
+				"tags": "Tags",
+				"description": "Description",
+				"preview": "Preview",
+				"structure": "Structure",
+				"fileUploadPreferences": "File preferences",
+				"fileVisibility": "File visibility",
+				"fileAccess": "By default datasets are with public access",
+				"fileDetails": "File details",
+				"remoteFileAccessPoint": "Remote file access point"
+			},
+			"rules": {
+				"rule0": "CSV files only",
+				"rule1": "Maximum size of file: 10MB",
+				"rule2": "Please provide remote access point to the file. (URL, Connection string etc.)",
+				"rule3": "Each record is on a separate line",
+				"rule4": "File must contain header line",
+				"rule5": "CSV file requirements"
+			},
+			"input": {
+				"placeholder": {
+					"fileAccess": "Enter access to the source file",
+					"title": "Set a title of dataset",
+					"description": "Describe dataset",
+					"column": "Describe a column",
+					"structure": "Please briefly describe your file structure",
+					"fileUploadPart0": "Drop file here or ",
+					"fileUploadPart1": "click to upload",
+					"dataType": "Data type",
+					"premium": "Amount in AIX"
+				},
+				"validation": {
+					"emptyInputError": "Please make sure you have filled all fields",
+					"fileLimitExceed":
+						"You are able to upload only one .csv file. Please delete old file before uploading new one",
+					"unableAccessFileContent": "File can not be accessed. Please reupload correct file",
+					"invalidFile": "Invalid file content type. Please make sure you upload .csv files only!",
+					"fileTooLarge": "Please make sure you follow all file preferences. File is too large."
+				}
+			}
+		},
+		"toolbar": {
+			"uploadDisabled": "You have to log in to upload new datasets"
+		},
+		"menu": {
+			"all": "All",
+			"uploaded": "Uploaded",
+			"models": "Models"
+		},
+		"card": {
+			"status": "Status",
+			"models": "Models",
+			"comment": "Comments",
+			"added": "Added",
+			"notApproved": "waiting for approval",
+			"closed": "closed"
+		},
+		"dataset": {
+			"createdBy": "By",
+			"updated": "Last updated",
+			"downloadDataset": "Download dataset",
+			"deleteDataset": "Delete dataset",
+			"deleteDatasetTitle": "Delete your dataset",
+			"deleteDatasetDescription":
+				"This dataset and all files, data, models and comments associated with it will be permanently deleted. You won't be able to recover it later on.",
+			"editDataset": "Edit dataset",
+			"successDelete": "Dataset was successfully deleted",
+			"deleteDialogBody": "Are you sure you want to delete this dataset?",
+			"invalidPreview": "This dataset does not contain visual preview.",
+			"notApprovedTooltip": "Dataset is waiting for approval",
+			"closedTooltip": "Dataset is closed",
+			"publicTooltip": "Dataset is visible for all visitors",
+			"privateTooltip": "Dataset is visible only for logged in users",
+			"uploadModelDisabled": "You have to log in to upload new model",
+			"navigation": {
+				"info": "Info",
+				"data": "Data",
+				"models": "Models",
+				"comment": "Comments",
+				"model": "Model",
+				"coefficients": "Coefficients"
+			},
+			"edit": {
+				"uploadNew": "Upload new",
+				"registeredOnly": "For registered users only",
+				"byDefaultPublicAccess": "By default datasets with public access",
+				"public": "Public",
+				"loggedIn": "Logged in",
+				"title": "Title",
+				"description": "Description",
+				"structure": "Structure",
+				"structureName": "Name",
+				"structureDescription": "Description",
+				"structureDataType": "Data type",
+				"file": "File",
+				"remoteAccessPoint": "Remote access point",
+				"describeRemoteAccessPoint": "Describe remote access point",
+				"edit_success": "Changes were successfully updated",
+				"fileAttached": "was attached."
+			},
+			"validation": {
+				"titleEmpty": "Title is required",
+				"titleTooShort": "Title must be at least 6 characters long",
+				"descriptionEmpty": "Description is required",
+				"descriptionTooShort": "Description must be at least 6 characters long",
+				"structureFieldEmpty": "Make sure you have filled all structure fields",
+				"remoteFileAccessPointEmpty": "Remote access point is required",
+				"remoteFileAccessPointTooShort": "Remote access must be at least 6 characters long",
+				"fileEmpty": "File is required",
+				"fileTooBig": "File is too large",
+				"premiumEmpty": "Premium is required",
+				"modelTitleEmpty": "Model title is required",
+				"tableCellEmpty": "Field is required",
+				"premiumInvalid": "Invalid base premium. Value e.g. 000000.000000",
+				"premiumZero": "Base premium cannot be zero",
+				"premiumMin": "Base premium cannot be less than 0.000001",
+				"premiumMax": "Base premium cannot be more than 100000",
+				"onlyIntegersAllowed": "Only integers allowed",
+				"tableTooBig": "Maximum size of the table is 10x50",
+				"tableTooSmall": "Minimum size of the table is 1x1",
+				"emptyModel": "Model table is required",
+				"emptyModelInput": "Make sure you have filled all table fields",
+				"titleTooLong": "Maximum 64 characters",
+				"invalidTag": "Invalid tag: only letters, numbers and \"-\" symbols are allowed",
+				"invalidTagLength": "Invalid tag: tag is too short",
+				"invalidTagCount ": "Maximum tag limit is 5"
+			},
+			"model": {
+				"models": "Models",
+				"model": "Model",
+				"tableTitle": "Table title",
+				"uploadModel": "Upload model",
+				"cancel": "Cancel",
+				"premium": "Base premium",
+				"submitModel": "Submit model",
+				"newTable": "New table",
+				"on": "on",
+				"create": "Create",
+				"basePremium": "Base premium",
+				"eth": "ETH",
+				"aix": "AIX",
+				"by": "By",
+				"successDelete": "Model was successfully deleted",
+				"editModel": "Edit model",
+				"deleteModel": "Delete model",
+				"deleteModelTitle": "Delete your model",
+				"deleteModelDescription":
+					"This model and all data and comments associated with it will be permanently deleted. You won't be able to recover it later on.",
+				"modelsNotFound": "This dataset does not contain any models yet",
+				"deleteDialogBody": "Are you sure you want to delete this model?",
+				"usersVoted": "users upvoted this model",
+				"userVoted": "user upvoted this model",
+				"noUsersVoted": "Model does not have any upvotes yet",
+				"votingDisabled": "You have to log in to upvote",
+				"tableRows": "Table rows",
+				"tableColumns": "Table columns",
+				"placeholder": {
+					"modelTitle": "Set a title of model",
+					"title": "Title",
+					"data": "Data"
+				},
+				"notification": {
+					"title": {
+						"success": "Success"
+					},
+					"successfullyUploaded": "Data model was successfully uploaded",
+					"successfullyUpdated": "Data model was successfully updated"
+				},
+				"lastUpdated": "Last updated"
+			},
+			"comment": {
+				"comment": "Comments",
+				"commentPlaceholder": "Start typing to add comment",
+				"deleteCommentDialogContent": "Are you sure you want to delete your comment?",
+				"editTooltip": "Edit comment",
+				"edited": "Edited",
+				"removeTooltip": "Remove comment",
+				"postButton": "Post",
+				"update": "Update",
+				"commentButton": "Comment",
+				"successFullPost": "Your comment was successfully submited",
+				"successFullUpdate": "Your comment was successfully updated",
+				"successFullDelete": "Your comment was successfully deleted",
+				"replies": "replies",
+				"validation": {
+					"commentFieldRequired": "Comment is required",
+					"commentTooLong": "Comment lenght limit was reached"
+				}
+			}
+		}
+	},
+	"login": {
+		"login": "Log in",
+		"title": "Log in to Aigang Network",
+		"email": "Email",
+		"password": "Password",
+		"forgotPassword": "Forgot password?",
+		"dontHave": "Do not have account?"
+	},
+	"signUp": {
+		"signUp": "Sign Up",
+		"description":
+			"Creating an account in aigang.network you will get access to all products such as Data, Prediction market, Invest and Insure",
+		"haveAccount": "Have Aigang Network Account?",
+		"rePassword": "Repeat password",
+		"emailSent": "Email was sent to {0}. Follow instructions provided in the email.",
+		"dontReceiveEmail": "If you didn't receive email, click: ",
+		"waitingVerification": "Verification email was sent."
+	},
+	"retrievePassword": {
+		"title": "Reset Your Aigang Password",
+		"backTo": "Back to",
+		"waitingVerification": "Reset email was sent.",
+		"dontReceiveEmail": "If you didn't receive email, click: ",
+		"description": "Enter your new password",
+		"retrievePassword": "Reset password",
+		"changeSuccessTitle": "Your password has been successfully updated"
+	},
+	"activateEmail": {
+		"title": "Email activation",
+		"activating": "Activating ...",
+		"activated":
+			"Thank you for registration. Your account now is successfully activated and you can use all platform features. Please login to continue."
+	},
+	"notifications": {
+		"login_success": "Successfully signed in"
+	},
+	"account": {
+		"balance": "Balance"
+	},
+	"actions": {
+		"loginToAccount": "Login to account",
+		"upload_new_data": "Upload new data",
+		"retrievePassword": "Retrieve password"
+	},
+	"profile": {
+		"tabs": {
+			"profile": "Profile",
+			"wallets": "My Wallets",
+			"transactions": "My Transactions",
+			"notifications": "Notifications"
+		},
+		"general": {
+			"logout": "Logout",
+			"userName": "Nickname",
+			"email": "Email",
+			"firstName": "First name",
+			"lastName": "Last name",
+			"changePassword": "Change password",
+			"passwordDescription":
+				"Minimum password length must be 8 characters and consist of at least 2 alpha characters, 1 number and 1 special character ",
+			"oldPassword": "Old password",
+			"newPassword": "New password",
+			"update": "Update",
+			"passwordUpdated": "Password succesfully updated",
+			"deactivateAccountTitle": "Deactivate your account",
+			"deactivateAccountDescription":
+				"If you decide that you no longer want to use Aigang Platform, it's easy to deactivate your account. When you deactivate your account, you're no longer availible to log in or access your private uploaded datasets.",
+			"deactivateAccount": "Deactivate account",
+			"warning": "Warning",
+			"confirmationText": "Are you sure you want to deactivate your account?",
+			"confirm": "Confirm",
+			"cancel": "Cancel",
+			"deactivationSuccessful": "Your account was successfuly deactivated"
+		},
+		"wallets": {
+			"title": "Wallets",
+			"description": "You wallets list which were used by you on Aigang Platform",
+			"table": {
+				"emptyText": "No Wallets yet",
+				"titles": {
+					"date": "Date",
+					"wallet": "Wallet"
+				}
+			},
+			"buttons": {
+				"add": "Add Wallet"
+			}
+		},
+		"transactions": {
+			"title": "Transactions",
+			"description": "Transactions list which were submited by you on Aigang Platform",
+			"status": {
+				"blockchainPending": "Blockchain Pending",
+				"blockchainSuccessful": "Blockchain Successful",
+				"blockchainFailed": "Blockchain Failed",
+				"canceled": "Canceled",
+				"successful": "Successful",
+				"failed": "Failed",
+				"corrupt": "Corrupt"
+			},
+			"table": {
+				"emptyText": "No Transactions yet",
+				"titles": {
+					"date": "Date",
+					"transaction": "Transaction",
+					"fromSystem": "From System",
+					"type": "Type",
+					"status": "Status"
+				}
+			},
+			"type": {
+				"policypayment": "Policy Payment",
+				"addpolicy": "Add Policy",
+				"addclaim": "Add Claim",
+				"addForecast": "Add Forecast",
+				"forecastPayout": "Forecast Payout",
+				"forecastRefund": "Forecast Refund",
+				"addContribution": "Add Contribution",
+				"contributionPayout": "Contribution Payout",
+				"contributionRefund": "Contribution Refund",
+				"unknown": "Unknown"
+			}
+		},
+		"notifications": {
+			"title": "Notifications",
+			"description": "Settings for Aigang platform email notications",
+			"permissions": {
+				"general": {
+					"title": "General",
+					"items": {
+						"failedTransactions": {
+							"title": "Failed transactions",
+							"description":
+								"When this notification type is on you will get notifications about failed transactions."
+						}
+					}
+				},
+				"data": {
+					"title": "Data",
+					"items": {
+						"newModelAdded": {
+							"title": "Data model added",
+							"description":
+								"When this notification type is on you will get notifications when someone adds model to your data set."
+						}
+					}
+				},
+				"insurance": {
+					"title": "Insurance",
+					"items": {
+						"all": {
+							"title": "All",
+							"description":
+								"When this notification type is on you will get all notifications related with Insurance."
+						}
+					}
+				},
+				"predictions": {
+					"title": "Predictions",
+					"items": {
+						"forecastPaymentReceived": {
+							"title": "Forecast payment received",
+							"description":
+								"When this notification type is on you will get notifications after forecast payment information will be received in our system."
+						},
+						"forecastWon": {
+							"title": "Forecast won",
+							"description":
+								"When this notification type is on you will get notifications when your forecast win."
+						},
+						"forecastLost": {
+							"title": "Forecast lost",
+							"description":
+								"When this notification type is on you will get notifications when your forecast lost."
+						}
+					}
+				},
+				"pools": {
+					"title": "Pools",
+					"items": {
+						"contributionReceived": {
+							"title": "Contribution received",
+							"description":
+								"When this notification type is on you will get notifications after contirubtion payment information will be received in our system."
+						}
+					}
+				}
+			}
+		}
+	},
+	"navigation": {
+		"profile": "Profile",
+		"data": "Data",
+		"predictions": "Predictions",
+		"pools": "Pools",
+		"insurance": "Insurance",
+		"wiki": "Wiki",
+		"discussions": "Discussions",
+		"login": "Sign Up/Log In"
+	},
+	"status": {
+		"active": "Active",
+		"closed": "Closed",
+		"pending": "Pending"
+	},
+	"validation": {
+		"emailEmpty": "Please input email address",
+		"emailNotValid": "Please input correct email address",
+		"passwordEmpty": "Password is required",
+		"passwordTooShort": "Password must be at least 6 characters long",
+		"firstNameEmpty": "First name is required",
+		"firstNameTooShort": "First name must be at least 2 characters long",
+		"firstNameInvalid": "First name contains invalid characters. Only A-z characters are allowed",
+		"lastNameEmpty": "Last name is required",
+		"lastNameTooShort": "Last name must be at least 2 characters long",
+		"nameTooLong": "Maximum 50 characters",
+		"lastNameInvalid": "Last name contains invalid characters. Only A-z characters are allowed",
+		"userNameEmpty": "Nickname is required",
+		"userNameTooShort": "Nickname must be at least 6 characters long",
+		"userNameInvalid": "Nickname contains invalid characters. Only A-z characters are allowed"
+	},
+	"general": {
+		"uploading": "Uploading ...",
+		"updating": "Updating ...",
+		"loading": "Loading ...",
+		"ok": "OK",
+		"here": "here",
+		"change": "Change",
+		"save": "Save",
+		"back": "Back",
+		"cancel": "Cancel",
+		"continue": "Continue",
+		"markupSupported": "VueMarkdown supported",
+		"versionAlpha": "alpha",
+		"testPlatform": "Test Platform",
+		"unableToFindYourDatasets": "Can not find your datasets",
+		"unableToFindYourModels": "Can not find any datasets containing your models",
+		"unableToFindAnyProducts": "Can not find any product",
+		"noPolicies": "You do not have any policies yet",
+		"noPredictions": "Can not find any predictions",
+		"noMyPredictions": "You do not have any predictions for selected filter type",
+		"noPools": "Can not find any pools",
+		"upvote": "Upvote",
+		"downvote": "Downvote",
+		"aix": "AIX",
+		"utc": "UTC",
+		"comingSoon": "Feature is coming soon",
+		"retry": "Retry",
+		"days": "days",
+		"day": "day",
+		"id": "ID",
+		"backToList": "Back to list",
+		"accept": "Accept",
+		"decline": "Decline",
+		"cookiesMessage":
+			"This website uses cookies to ensure the best user experience on. If you want to continue using cookies, press accept.",
+		"cookiesTitle": "Cookie Policy for Aigang Platform",
+		"readMoreCookies": "Read more.",
+		"insufficientBalance": "Insufficient balance",
+		"userNotLoggedIn": "User must be connected to web3 provider (Metamask, Mist, etc.)",
+		"insufficientBalanceDialog": {
+			"title": "Insufficient balance",
+			"qaBody":
+				"Your wallet balance is insufficient. Please generate test AIX tokens if you want to use this website functionality. You can generate them by using following link bellow:",
+			"qaFaucetLink": "https://aigangnetwork.github.io/testaix/",
+			"productionBody": "Your wallet balance is insufficient. Please buy AIX tokens and try again.",
+			"button": "Got It"
+		},
+		"processingTransaction": "Transaction is being processed...",
+		"web3NotConnected": "Please connect to your wallet"
+	},
+	"errors": {
+		"error": "Error",
+		"information": "Information",
+		"400": "Bad Request",
+		"401": "Unauthorized",
+		"403": "Forbidden",
+		"404": "Not Found",
+		"408": "Request Timeout",
+		"500": "Internal Server Error",
+		"unhandled": "Unhandled error: ",
+		"validation": {
+			"DuplicateUserName": "User name is taken. Please make it unique",
+			"DuplicateEmail": "Email was registered earlier. Choose other email or use 'Forgot password'",
+			"InvalidEmail": "Email is not valid",
+			"InvalidPassword": "Old password is not correct.",
+			"InvalidEmailOrPassword": "The email address or password you entered is not valid",
+			"PasswordNotMatchRePassword": "Passwords are not matching",
+			"PasswordTooShort": "Password is too short",
+			"InvalidQuery": "Query is not valid",
+			"UserNotFound": "Email not found",
+			"EmailNotConfirmed": "Email is not comfirmed yet",
+			"ValidationFailed": "We are unable to proccess your request",
+			"EmptyRequest": "You sent an empty request. Please make sure all required values are set",
+			"FileTooLargeError": "Provided file is too large",
+			"BadFileContentType": "Bad file content type",
+			"BadRequest": "Bad Request was sent to back-end. Try again later.",
+			"GatewayTimeout": "Gateway time out",
+			"AccountIsLocked": "Your account is disabled",
+			"NameTooLong": "First name, last name or the username can not be longer than 200 characters.",
+			"NameInvalid": "First name, last name or the username contains invalid characters.",
+			"TitleTooLong": "Title can not be longer than 200 characters.",
+			"TitleOrDescriptionTooShort": "Title or description can not be shorter than 6 characters.",
+			"Forbidden": "You are trying to access forbidden resources",
+			"ServiceUnavailable": "Service is unavailable in your country",
+			"NotFound": "Not found",
+			"CommentTooLong": "Comment lenght limit was reached",
+			"RemoteAccessPointNotSet": "Remote access point is not set.",
+			"InvalidTags": "Invalid tags",
+			"EmptyFileError": "File is empty",
+			"DeviceAlreadyInsured": "There is already policy with the same device id",
+			"ContributionsEnded": "Contributing time has ended",
+			"ContributionsNotStarted": "Contributing time has not started yet",
+			"PoolNotActive": "Pool is not active",
+			"ProductPoolLimitReached": "Pool capacity has been reached",
+			"PredictionNotPublished": "Prediction status is not published",
+			"ForecastsNotStarted": "Forecasting has not started yet",
+			"ForecastsEnded": "ForecastsEnded"
+		},
+		"pagePathNotFound": "The page you are trying to access is not available",
+		"validationError": "You have entered an invalid data",
+		"serverNotFound": "Server not found.",
+		"serverNotFoundRule1": "Make sure you are connected to the Internet.",
+		"serverNotFoundRule2": "This might occur when the browser can not reach the server. Please try again later.",
+		"contactIfError": "If you see this error please contact us via email info@aigang.network",
+		"metamaskDetected":
+			"We have detected that you are using metamask extension. In order to see your account AIX balance please switch your network to ",
+		"useMetamask": "To use all of our Platform features please Log in to Metamask Extension"
+	},
+	"predictions": {
+		"forecastsCount": "Forecasts",
+		"volume": "Volume",
+		"volumeInfoTooltip": "Prediction forecast amounts + Initial pool size",
+		"description": "Description",
+		"outcomes": "Outcomes",
+		"noDescription": "There is no description for this prediction",
+		"forecastDetails": "Forecast details",
+		"predictionDetails": "Prediction details",
+		"marketContractAddress": "Market contract address",
+		"predictionStatistics": "Statistics",
+		"votingTill": "Forecasting till",
+		"votingStarts": "Forecasting starts",
+		"votingEnded": "Forecasting has ended",
+		"results": "Results will be announced",
+		"wonOutcome": "Won outcome",
+		"wonAmount": "Won amount",
+		"index": "Index",
+		"paused": "Paused",
+		"canceled": "Canceled",
+		"ended": "Ended",
+		"fee": "Fee",
+		"votesPerOutcome": "Votes per outcome",
+		"amountPerOutcome": "Amount per outcome",
+		"predictionHasEnded": "Forecasting time has ended for this prediction.",
+		"menu": {
+			"predictions": "All Predictions",
+			"myForecasts": "My Forecasts"
+		},
+		"prediction": {
+			"paymentInfo": {
+				"title": "Payment Information",
+				"body": "Your payment transaction was created succesfully.",
+				"buttons": {
+					"goBack": "Go to my forecasts list"
+				}
+			},
+			"confirmationDialog": {
+				"title": "Confirm your forecast",
+				"buttons": {
+					"forecast": "Forecast"
+				},
+				"prediction": "Prediction",
+				"forecast": "Your Forecast",
+				"amount": "Amount",
+				"validation": {
+					"required": "Can not be empty",
+					"shouldBeNumber": "Should be number",
+					"shouldBeBiggerThanZero": "Should be greater than zero",
+					"shouldBeBiggerThanFee": "Should be greater than fee",
+					"amountInvalid": "Invalid amount. Value e.g. 000000.000000"
+				}
+			}
+		},
+		"forecast": {
+			"amount": "Amount",
+			"created": "Created",
+			"results": "Results",
+			"status": "Status",
+			"announced": "Announced",
+			"yourForecast": "Your forecast",
+			"yourAmount": "Your amount",
+			"forecastAmount": "Forecast",
+			"logInToWeb3": "User must be connected to web3 provider (Metamask, Mist, etc.)",
+			"metamaskAlert":
+				"Atention! Do not leave this page until you confirm your transaction. Otherwise your transaction will be lost and forecast won't be paid out.",
+			"payout": "Get Payout",
+			"getRefund": "Get Refund",
+			"statuses": {
+				"all": "All",
+				"pendingPayment": "Pending payment",
+				"paid": "Paid",
+				"canceled": "Canceled",
+				"won": "Won",
+				"lost": "Lost",
+				"wonPaidout": "Won Paidout",
+				"availableRefund": "Available Refund",
+				"pendingPayout": "Pending Payout",
+				"refundPaidout": "Refund Paidout"
+			}
+		},
+		"statistics": {
+			"legend": {
+				"wonForecast": "Won forecast",
+				"otherForecasts": "Other forecasts"
+			}
+		}
+	},
+	"insurance": {
+		"menu": {
+			"products": "Products",
+			"myPolicies": "My Policies"
+		},
+		"product": {
+			"productEnds": "Campaign ends",
+			"productEnded": "Campaign ended",
+			"productClosed": "Product closed",
+			"basePremium": "Base Premium",
+			"details": "Details",
+			"description": "Description",
+			"termsAndConditions": "Terms and Conditions",
+			"productDetails": "Product details",
+			"calculateInsurancePrice": "Calculate Insurance Price",
+			"contractAddress": "Policy Contract Address",
+			"downloadApp": "Download Aigang App",
+			"instructionsIntro": "In order to calculate your insurance price you have to:",
+			"instructionsDownloadApp": "Download Aigang app on your android device",
+			"instructionsDownloadAppLinkText": "download",
+			"instructionsIMEI": "Enter your device ID below (you will see it in the app)",
+			"instructionsConditions": "Your device's data will be read, press continue if you agree",
+			"deviceIdPlaceholder": "ASVSF21D",
+			"currentWearLevel": "Current Wear level",
+			"startTime": "Start Time",
+			"endTime": "End Time",
+			"payout": "Payout",
+			"calculatedPrice": "Calculated Price",
+			"notImplemented": "Product is not implemented",
+			"logInToCalculateInsurancePrice": "You have to log in to calculate insurance price",
+			"agreeWithTermsAndConditions": "You have to read terms and conditions to calculate insurance price",
+			"productPoolLimitReacher": "Product premium pool limit has been reached",
+			"policiesLimitReached": "This product has reached maximum number of policies",
+			"insuranceTerm": "Insurance term",
+			"validation": {
+				"deviceIdRequired": "Device ID is required",
+				"deviceIdInvalid": "Must be 8 characters",
+				"deviceAlreadyInsured": "This device is already insured"
+			}
+		},
+		"policy": {
+			"pay": "Pay",
+			"deviceId": "Device id",
+			"policyId": "Policy id",
+			"startingTask": "Starting task",
+			"policyStatus": "Policy Status",
+			"contractAddress": "Contract address",
+			"taskId": "Task ID",
+			"readingDeviceDataAndCalculatingInsurancePrice": "Reading device data and calculating insurance price",
+			"readingDeviceDataAndVerifyingClaim": "Reading device data and verifying claim",
+			"readingDeviceDataTimeout": "Reading device data timed out",
+			"policyCreated": "Policy created",
+			"policyIs": "Policy is",
+			"redirecting": "Redirecting",
+			"androidBatteryInsurancePolicy": "Android Battery Insurance Policy",
+			"deletePolicyTitle": "Delete your policy",
+			"deletePolicyBody":
+				"This policy and all data associated with it will be deleted from the plaform. You won't be able to revert this action later on.",
+			"deletePolicy": "Delete policy",
+			"deletePolicyConfirmation": "Are you sure you want to delete this policy?",
+			"termsAndConditions": {
+				"title": "Terms and Conditions",
+				"buttons": {
+					"agree": "Agree",
+					"disagree": "Disagree"
+				}
+			},
+			"startDate": "Start date",
+			"endDate": "End date",
+			"status": "Status",
+			"deviceIdNotFound": "Device with this ID was not found. Check your device for correct ID.",
+			"serverError": "Something went wrong. Please contact support: info@aigang.network",
+			"paymentInfo": {
+				"title": "Payment Information",
+				"body": "Your payment transaction was created succesfully.",
+				"buttons": {
+					"goBack": "Go to policy list"
+				}
+			},
+			"verifyForClaim": "Verify your device for claim",
+			"verifyForClaimRetry": "Retry verification",
+			"failedToVerifyDevice": {
+				"title": "Failed to verify your device:",
+				"tip1": "Check if your device is connected to internet,",
+				"tip2": "Check if your device still paired with our system,",
+				"tip3": "If you still have problems with verification please contact us via info@aigang.network."
+			},
+			"deviceClaimable": "We detected that your device is broken. You can claim your policy.",
+			"deviceNotClaimable":
+				"We read your device data and all parameters are good. At this moment your device is not claimable.",
+			"claim": "Claim policy",
+			"notLoggedToEthereumClientDialog": {
+				"title": "Not logged in to Ethereum Client",
+				"content":
+					"To insure your device, you need to have Ethereum Client in place. (Metamask, Parity, Ethereum Mist browser or any other client that supports Web3). For the best experience use Metamask.",
+				"buttons": {
+					"ok": "OK"
+				}
+			},
+			"deviceData": {
+				"title": "Device data",
+				"wearLevel": "Battery wear level",
+				"batteryDesignCapacity": "Battery Design Capacity",
+				"chargeLevel": "Charge level",
+				"ageInMonths": "Age in months",
+				"region": "Region",
+				"brand": "Brand",
+				"fetchDateTime": "Data fetch time"
+			},
+			"claimInfo": {
+				"title": "Claim info",
+				"wearLevel": "Battery wear level",
+				"batteryDesignCapacity": "Battery Design Capacity",
+				"chargeLevel": "Charge level",
+				"ageInMonths": "Age in months",
+				"region": "Region",
+				"brand": "Brand",
+				"fetchDateTime": "Data fetch time"
+			},
+			"validationResult": {
+				"BatteryDesignCapacity": "Battery design capacity is not valid for insurance",
+				"BatteryChargeLevel": "Battery charge level is not valid for insurance",
+				"DeviceAgeInMonths": "Device age in months is not valid for insurance",
+				"Region": "Your region is not valid for insurance",
+				"DeviceBrand": "This device brand is not valid for insurance",
+				"BatteryWearLevel": "Battery wear level is not valid for insurance"
+			},
+			"wearLevel": {
+				"good": "Good",
+				"overheated": "Overheated",
+				"overvoltage": "Overvoltage",
+				"dead": "Dead"
+			},
+			"statuses": {
+				"canceled": "Canceled",
+				"claimable": "Claimable",
+				"draft": "Draft",
+				"finished": "Finished",
+				"notset": "Not set",
+				"paid": "Paid",
+				"paidout": "Paid out",
+				"pendingpayment": "Pending payment",
+				"pendingpayout": "Pending payout"
+			}
+		}
+	},
+	"pools": {
+		"menu": {
+			"allPools": "All Pools",
+			"portfolio": "Portfolio",
+			"myContributions": "My Contributions"
+		},
+		"header": {
+			"contributions": "Contributions",
+			"currentPoolAmount": "Current amount",
+			"starts": "Starts",
+			"ends": "Ends",
+			"canceled": "Canceled",
+			"distributing": "Distributing",
+			"funding": "Funding",
+			"ended": "Ended"
+		},
+		"products": {
+			"activeTill": "Active till",
+			"distributing": "Distributing",
+			"funding": "Funding",
+			"paused": "Paused",
+			"canceled": "Canceled",
+			"closed": "Closed"
+		},
+		"contributions": {
+			"noData": "There is no contributions yet",
+			"summary": {
+				"contributions": "Your Contributions",
+				"contributionsAmount": "Contributions amount",
+				"availableReward": "Available reward",
+				"rewardPaidOut": "Reward paid out"
+			},
+			"filters": {
+				"status": "Status"
+			}
+		},
+		"pool": {
+			"termsAndConditions": "Terms and Conditions",
+			"agreeWithTermsAndConditions": "You have to read terms and conditions to invest",
+			"poolHasEnded": "Contributing time has ended for this pool.",
+			"poolCapacityReached": "Pool capacity has been reached",
+			"description": "Description",
+			"noDescription": "There is no description for this pool",
+			"contractAddress": "Contract address",
+			"contribute": "Contribute",
+			"paymentInfo": {
+				"title": "Payment Information",
+				"body": "Your payment transaction was created succesfully.",
+				"buttons": {
+					"goBack": "Go to Portfolio"
+				}
+			}
+		},
+		"contribution": {
+			"description": "Description",
+			"details": "Contribution details",
+			"poolDetails": "Pool details",
+			"contractAddress": "Contract address",
+			"poolId": "Pool ID",
+			"yourAmount": "Your contributed amount",
+			"paidoutAmount": "Paidout amount",
+			"noDescription": "There is no description for this pool",
+			"delete": "Delete contribution",
+			"deleteMessage":
+				"This contribution and all data associated with it will be deleted from the plaform. You won't be able to revert this action later on.",
+			"deleteButtonText": "Delete",
+			"deleteContributionDialog": {
+				"body": "Are you sure you want to delete this contribution?"
+			},
+			"payContribution": "Pay contribution",
+			"payoutContribution": "Get payout",
+			"payContributionDescription": "This contribution is not paid yet. Pay and participate in pool.",
+			"payoutContributionDescription": "Payout for your contribution is available.",
+			"payoutAmount": "Payout amount",
+			"amount": "Contribution amount",
+			"pay": "Pay",
+			"payout": "Get Payout",
+			"refundContribution": "Get refund",
+			"refundContributionDescription": "Payout for your contribution is available.",
+			"refundAmount": "Refund amount",
+			"refund": "Refund",
+			"createdDate": "Created Date",
+			"explanations": {
+				"canceled": "Some issue happened and refunds for this pool contributors will happen"
+			}
+		},
+		"poolStatuses": {
+			"active": "Active",
+			"distributing": "Distributing",
+			"funding": "Funding",
+			"paused": "Paused",
+			"canceled": "Canceled",
+			"closed": "Closed"
+		},
+		"poolContributionStatuses": {
+			"pendingPayment": "Pending payment",
+			"paid": "Paid",
+			"canceled": "Canceled",
+			"availablePayout": "Available Payout",
+			"pendingPayout": "Pending Payout",
+			"rewardPaidout": "Reward Paidout",
+			"availableRefund": "Available Refund",
+			"refundPaidout": "Refund Paidout"
+		},
+		"userNotLoggedIn": "User must connected to web3 provider (Metamask, Mist, etc.)",
+		"calculatingSummary": "Calculating statistics. This might take a while.",
+		"portfolioInfo": {
+			"yourAddress": "Your address",
+			"yourBalance": "Your balance",
+			"claimedProfit": "Claimed profit",
+			"pool": "Pool",
+			"contributedAmount": "Contributed Amount",
+			"createdDate": "Created",
+			"status": "Status"
+		},
+		"confirmationDialog": {
+			"title": "Add contribution amount",
+			"maxAllowedAmount": "Max allowed amount",
+			"amount": "Amount",
+			"buttons": {
+				"contribute": "Contribute"
+			},
+			"validation": {
+				"required": "Can not be empty",
+				"shouldBeNumber": "Should be number",
+				"amountInvalid": "Invalid amount. Value e.g. 000000.000000",
+				"shouldBeBiggerThanZero": "Should be greater than zero",
+				"shouldBeLowerOrEqualMaxAllowedAmount": "Exceeds pool amount goal"
+			}
+		}
+	},
+	"discussions": {
+		"buttons": {
+			"create": "Create post",
+			"all": "All posts"
+		}
+	}
 }

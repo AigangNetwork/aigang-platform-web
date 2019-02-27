@@ -21,7 +21,7 @@
             ref="createForecastForm">
             <el-form-item prop="amount">
               <el-input
-                v-model.number="createForecastForm.amount"
+                v-model="createForecastForm.amount"
                 v-on:keyup.enter="submitForm('createForecastForm', createForecast)"
                 class="amount-input">
                 <template slot="append">{{ $t('general.aix') }}</template>
@@ -87,17 +87,12 @@ export default {
             trigger: 'blur'
           },
           {
-            type: 'number',
-            message: this.$t('predictions.prediction.confirmationDialog.validation.shouldBeNumber'),
+            pattern: /^(?:\d{1,6}\.\d{1,6}|[0-9]\d{0,5})$/,
+            message: this.$t('predictions.prediction.confirmationDialog.validation.amountInvalid'),
             trigger: 'blur'
           },
           {
             validator: checkAmount,
-            trigger: 'blur'
-          },
-          {
-            pattern: /^(?:\d{1,6}\.\d{1,6}|[0-9]\d{0,5})$/,
-            message: this.$t('predictions.prediction.confirmationDialog.validation.amountInvalid'),
             trigger: 'blur'
           }
         ]
@@ -114,7 +109,7 @@ export default {
       }
     },
     forecastButtonEnabled () {
-      return !!(this.$store.getters['user/isAuthenticated'] && this.$store.getters['user/isWeb3Enabled'])
+      return this.$store.getters['user/isWeb3Enabled']
     }
   },
   methods: {

@@ -7,8 +7,16 @@ const mutations = {
     state.pools = payload
   },
 
+  addPoolToList (state, pool) {
+    state.pools.items.push(pool)
+  },
+
   setPool (state, payload) {
     state.pool = payload
+  },
+
+  setPoolsTotalPages (state, totalPages) {
+    state.pools.totalPages = totalPages
   },
 
   setContribution (state, payload) {
@@ -17,6 +25,10 @@ const mutations = {
 
   setUserContributions (state, payload) {
     state.userContributions = payload
+  },
+
+  setUserContributionsTotalPages (state, totalPages) {
+    state.userContributions.totalPages = totalPages
   },
 
   setTransactionHash (state, transactionHash) {
@@ -37,6 +49,10 @@ const mutations = {
 
   setContributionsListLoading (state, value) {
     state.contributionsListLoading = value
+  },
+
+  addContribution (state, contribution) {
+    state.userContributions.items.push(contribution)
   }
 }
 

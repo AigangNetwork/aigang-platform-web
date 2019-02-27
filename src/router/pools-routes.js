@@ -3,7 +3,6 @@ import Portfolio from '@/components/pools/Portfolio'
 import PoolsProductsList from '@/components/pools/PoolsProductsList'
 import PoolsProduct from '@/components/pools/PoolsProduct'
 import PoolContribution from '@/components/pools/PoolContribution'
-
 export default [
   {
     path: '/pools',
@@ -17,10 +16,7 @@ export default [
       {
         name: 'Portfolio',
         path: '/pools/portfolio',
-        component: Portfolio,
-        meta: {
-          authRequired: true
-        }
+        component: Portfolio
       },
       {
         name: 'PoolsProductsList',
@@ -30,12 +26,12 @@ export default [
     ]
   },
   {
-    path: '/pools/pool/:id',
+    path: '/pools/pool/:address/:id',
     component: PoolsProduct,
     name: 'PoolsProduct'
   },
   {
-    path: '/pools/contribution/:id',
+    path: '/pools/contribution/:address/:id',
     component: PoolContribution,
     name: 'PoolContribution'
   }

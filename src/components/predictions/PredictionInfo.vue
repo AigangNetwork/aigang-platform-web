@@ -1,5 +1,5 @@
 <template>
-  <div class="aig-container aig-view aig-info" v-loading="$store.getters.loading">
+  <div class="aig-container aig-view aig-info" v-loading="$store.getters.loading" v-if="isWeb3Enabled">
     <div class="aig-info-header" v-if="isDataLoaded">
       <div class="back-button-container">
         <router-link :to="{ name: 'PredictionsList' }" class="back-button">{{ $t('general.backToList')}}</router-link>
@@ -51,13 +51,15 @@
       <PaymentConfirmationDialog
         :isVisible="isPaymentDialogVisible && !transactionError"
         :displayDialog="displayPaymentDialog"
-        :content="$t('predictions.forecast.metamaskAlert')"
         :txHash="transactionHash"
         :title="$t('predictions.prediction.paymentInfo.title')"
         :bodyText="$t('predictions.prediction.paymentInfo.body')"
         :route="userForecastListRoute"
         :btnText="$t('predictions.prediction.paymentInfo.buttons.goBack')" />
 
+  </div>
+  <div class="wallet-message" v-else>
+      <h2>{{ $t('general.web3NotConnected') }}</h2>
   </div>
 </template>
 
@@ -115,6 +117,9 @@ export default {
       // 'Z' to specify UTC timezone
       const endTime = Date.parse(this.prediction.forecastEndUtc + 'Z')
       return endTime <= Date.now()
+    },
+    isWeb3Enabled () {
+      return this.$store.getters['user/isWeb3Enabled']
     }
   },
   data () {
@@ -128,20 +133,31 @@ export default {
       userForecastListRoute: '/predictions/myforecasts'
     }
   },
+  watch: {
+    async isWeb3Enabled (newValue) {
+      if (newValue) {
+        await this.loadData()
+      }
+    }
+  },
   async mounted () {
-    await this.$store.dispatch('predictions/getPrediction', this.$route.params.id)
-    this.isDataLoaded = true
-    this.headerInfo = {
-      title: this.prediction.title,
-      status: this.prediction.status,
-      forecastStartUtc: this.prediction.forecastStartUtc,
-      forecastEndUtc: this.prediction.forecastEndUtc,
-      resultDateUtc: this.prediction.resultDateUtc,
-      forecastsCount: this.prediction.forecastsCount,
-      poolSize: this.prediction.poolSize
+    if (this.isWeb3Enabled) {
+      await this.loadData()
     }
   },
   methods: {
+    async loadData () {
+      await this.$store.dispatch('predictions/getPrediction', { id: this.$route.params.id, address: this.$route.params.address })
+      this.isDataLoaded = true
+      this.headerInfo = {
+        title: this.prediction.title,
+        status: this.prediction.status,
+        forecastStartUtc: this.prediction.forecastStartUtc,
+        forecastEndUtc: this.prediction.forecastEndUtc,
+        forecastsCount: this.prediction.forecastsCount,
+        poolSize: this.prediction.poolSize
+      }
+    },
     onOutcomeSelected (index) {
       this.prediction.outcomes.map(o => {
         if (o.index === index) {
@@ -168,6 +184,7 @@ export default {
 
       const payload = {
         predictionId: this.prediction.id,
+        address: this.prediction.marketAddress,
         outcomeId: data.selectedOutcomeId,
         outcome: data.selectedOutcomeIndex,
         amount: data.amount
@@ -218,5 +235,10 @@ export default {
 
   .no-margin-top {
     margin-top: 0;
+  }
+
+  .wallet-message {
+    text-align: center;
+    width: 100%;
   }
 </style>

@@ -1,14 +1,8 @@
 <template>
-  <div v-loading="contributionsListLoading">
-    <div class="items-container" v-if="isDataLoaded">
+  <div class="contributions-container" v-loading="contributionsListLoading">
+    <div class="items-container">
       <Card>
         <div slot="body">
-          <div class="filters-bar">
-            <div class="filter-item">
-              <div class="filter-label">{{ $t('pools.contributions.filters.status') }}:</div>
-              <Dropdown :items="items" @itemSelected="onFilterByStatusDropdownItemSelected" />
-            </div>
-          </div>
 
           <div class="scrollable">
             <table>
@@ -28,8 +22,10 @@
           </div>
 
           <div class="pagination-container">
-            <Pagination v-if="userContributions && userContributions.totalPages > 1" :callback="loadPage" :total-page-count="userContributions.totalPages" :current-page="page" />
-          </div>
+            <transition name="slideUp">
+              <Pagination v-if="userContributions && userContributions.totalPages > 1 && isDataLoaded" :callback="loadPage" :total-page-count="userContributions.totalPages" :current-page="page"/>
+            </transition>
+            </div>
         </div>
       </Card>
     </div>
@@ -59,55 +55,18 @@ export default {
     return {
       page: 1,
       filters: {},
-      isDataLoaded: false,
-      items: [{
-        name: this.$t('predictions.forecast.statuses.all'),
-        value: ''
-      }, {
-        name: this.$t('pools.poolContributionStatuses.pendingPayment'),
-        value: '1'
-      }, {
-        name: this.$t('pools.poolContributionStatuses.paid'),
-        value: '2'
-      }, {
-        name: this.$t('pools.poolContributionStatuses.canceled'),
-        value: '3'
-      }, {
-        name: this.$t('pools.poolContributionStatuses.availablePayout'),
-        value: '4'
-      }, {
-        name: this.$t('pools.poolContributionStatuses.pendingPayout'),
-        value: '5'
-      }, {
-        name: this.$t('pools.poolContributionStatuses.rewardPaidout'),
-        value: '6'
-      }, {
-        name: this.$t('pools.poolContributionStatuses.availableRefund'),
-        value: '7'
-      }, {
-        name: this.$t('pools.poolContributionStatuses.refundPaidout'),
-        value: '8'
-      }]
+      isDataLoaded: false
     }
   },
   async beforeMount () {
-    if (!this.isDataLoaded) {
-      await this.loadPage(1)
-      this.isDataLoaded = true
-    }
+    await this.loadPage(1)
   },
   methods: {
-    async onFilterByStatusDropdownItemSelected (value) {
-      this.page = 1
-      this.filters = {
-        status: value
-      }
-
-      await this.loadPage(this.page)
-    },
     async loadPage (page) {
+      this.isDataLoaded = false
       this.page = page
-      await this.$store.dispatch('pools/getUserContributions', { page: this.page, filters: this.filters })
+      await this.$store.dispatch('pools/getUserContributions', this.page)
+      this.isDataLoaded = true
     }
   }
 }

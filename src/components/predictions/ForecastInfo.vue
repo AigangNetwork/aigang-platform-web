@@ -1,6 +1,6 @@
 <template>
   <div class="aig-container aig-view aig-info" v-loading="$store.getters.loading">
-    <div class="aig-info-header" v-if="isDataLoaded">
+    <div class="aig-info-header" v-if="isDataLoaded && isWeb3Enabled">
       <div class="back-button-container">
         <router-link :to="{ name: 'MyForecastsList' }" class="back-button">{{ $t('general.backToList')}}</router-link>
       </div>
@@ -9,7 +9,7 @@
       </div>
     </div>
 
-    <div class="aig-info-content-container" v-if="isDataLoaded">
+    <div class="aig-info-content-container" v-if="isDataLoaded && isWeb3Enabled">
       <div class="aig-info-content">
         <h4 class="info-title">{{ $t('predictions.description') }}</h4>
         <vue-markdown class="markup-content" :html="false" :source="userForecast.predictionDescription || $t('predictions.noDescription')"></vue-markdown>
@@ -19,9 +19,9 @@
         <div class="details">
           <p>{{ $t('predictions.forecast.status') }}: <span class="value"><ForecastStatus :status="userForecast.status"/></span></p>
           <p>{{ $t('predictions.forecast.yourForecast') }}: <span class="value">{{ userForecast.outcomeTitle }} <span class="details">({{ $t('predictions.index') }}: {{ userForecast.outcomeIndex }})</span></span></p>
-          <p>{{ $t('predictions.forecast.yourAmount') }}: <span class="value">{{ userForecast.amount }} {{ $t('general.aix') }} <span class="details">({{ $t('predictions.forecast.forecastAmount') }}: {{ getForecastAmount }} {{ $t('general.aix') }}, {{ $t('predictions.fee')}}: {{ userForecast.fee }} {{ $t('general.aix') }})</span></span></p>
+          <p>{{ $t('predictions.forecast.yourAmount') }}: <span class="value">{{ getForecastAmount }} {{ $t('general.aix') }} <span class="details">({{ $t('predictions.forecast.forecastAmount') }}: {{ userForecast.amount }} {{ $t('general.aix') }}, {{ $t('predictions.fee')}}: {{ userForecast.fee }} {{ $t('general.aix') }})</span></span></p>
           <p v-if="isPredictionResolved">{{ $t('predictions.wonOutcome') }}: <span class="value">{{ userForecast.resultOutcomeName }} <span class="details">({{ $t('predictions.index') }}: {{ userForecast.resultOutcomeIndex }})</span></span></p>
-          <p v-if="isPredictionResolved">{{ $t('predictions.wonAmount') }}: <span class="value">{{ userForecast.wonAmount }} {{ $t('general.aix') }}</span></p>
+          <p v-if="isForecastsWon">{{ $t('predictions.wonAmount') }}: <span class="value">{{ userForecast.wonAmount }} {{ $t('general.aix') }}</span></p>
         </div>
 
         <div v-if="isPercentageVisible">
@@ -49,7 +49,6 @@
         <PaymentConfirmationDialog
           :isVisible="isPaymentDialogVisible && !transactionError"
           :displayDialog="displayPaymentDialog"
-          :content="$t('predictions.forecast.metamaskAlert')"
           :txHash="transactionHash"
           :title="$t('predictions.prediction.paymentInfo.title')"
           :bodyText="$t('predictions.prediction.paymentInfo.body')"
@@ -57,6 +56,9 @@
           :btnText="$t('predictions.prediction.paymentInfo.buttons.goBack')"/>
       </div>
     </div>
+
+    <div class="wallet-message" v-else><h2>{{ $t('general.web3NotConnected') }}</h2></div>
+
   </div>
 </template>
 
@@ -94,7 +96,7 @@ export default {
       const payload = {
         id: this.userForecast.id,
         predictionId: this.userForecast.predictionId,
-        marketAddress: this.userForecast.marketAddress
+        address: this.userForecast.marketAddress
       }
 
       await this.$store.dispatch('predictions/payoutWon', payload)
@@ -105,7 +107,7 @@ export default {
       const payload = {
         id: this.userForecast.id,
         predictionId: this.userForecast.predictionId,
-        marketAddress: this.userForecast.marketAddress
+        address: this.userForecast.marketAddress
       }
 
       await this.$store.dispatch('predictions/payoutRefund', payload)
@@ -114,6 +116,25 @@ export default {
     },
     displayPaymentDialog (value) {
       this.isPaymentDialogVisible = value
+    },
+    async loadData () {
+      await this.$store.dispatch('predictions/getUserForecast', { id: this.$route.params.id, address: this.$route.params.address })
+      this.isDataLoaded = true
+      this.headerInfo = {
+        title: this.userForecast.predictionTitle,
+        status: this.userForecast.predictionStatus,
+        forecastStartUtc: this.userForecast.forecastStartUtc,
+        forecastEndUtc: this.userForecast.forecastEndUtc,
+        forecastsCount: this.userForecast.forecastsCount,
+        poolSize: this.userForecast.poolSize
+      }
+    }
+  },
+  watch: {
+    async isWeb3Enabled (newValue) {
+      if (newValue) {
+        await this.loadData()
+      }
     }
   },
   computed: {
@@ -149,23 +170,18 @@ export default {
     },
     getForecastAmount () {
       const numbersAfterPointer = 6
-      return Math.round((this.userForecast.amount - this.userForecast.fee) * Math.pow(10, numbersAfterPointer)) / Math.pow(10, numbersAfterPointer)
+      return Math.round((this.userForecast.amount + this.userForecast.fee) * Math.pow(10, numbersAfterPointer)) / Math.pow(10, numbersAfterPointer)
     },
     payButtonVisible () {
       return this.userForecast.predictionStatus === 'published'
+    },
+    isWeb3Enabled () {
+      return this.$store.getters['user/isWeb3Enabled']
     }
   },
   async mounted () {
-    await this.$store.dispatch('predictions/getUserForecast', this.$route.params.id)
-    this.isDataLoaded = true
-    this.headerInfo = {
-      title: this.userForecast.predictionTitle,
-      status: this.userForecast.predictionStatus,
-      forecastStartUtc: this.userForecast.forecastStartUtc,
-      forecastEndUtc: this.userForecast.forecastEndUtc,
-      resultDateUtc: this.userForecast.resultDateUtc,
-      forecastsCount: this.userForecast.forecastsCount,
-      poolSize: this.userForecast.poolSize
+    if (this.isWeb3Enabled) {
+      await this.loadData()
     }
   }
 }
@@ -209,6 +225,11 @@ export default {
 
   .wrapper.el-button {
     margin-top: 48px;
+    width: 100%;
+  }
+
+  .wallet-message {
+    text-align: center;
     width: 100%;
   }
 </style>

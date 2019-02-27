@@ -8,8 +8,6 @@
         </div>
         <el-tabs type="card" v-model="activeTab" class="profile-tabs" @tab-click="changeActiveTab">
           <el-tab-pane :label="$t('profile.tabs.profile')" name="ProfileGeneral" />
-          <el-tab-pane :label="$t('profile.tabs.wallets')" name="ProfileWallets" />
-          <el-tab-pane :label="$t('profile.tabs.transactions')" name="ProfileTransactions" />
           <el-tab-pane :label="$t('profile.tabs.notifications')" name="ProfileNotifications" />
         </el-tabs>
         <router-view class="tab-content" key="test"></router-view>
@@ -43,12 +41,6 @@ export default {
     },
     changeActiveTab (tab) {
       switch (tab.name) {
-        case 'ProfileWallets':
-          this.$router.push('/profile/wallets')
-          break
-        case 'ProfileTransactions':
-          this.$router.push('/profile/transactions')
-          break
         case 'ProfileNotifications':
           this.$router.push('/profile/notifications')
           break

@@ -1,20 +1,18 @@
 import router from '@/router'
 import axios from 'axios'
-import aixContractInfo from '@/utils/contract/aixContractInfo'
 import networkResolver from '@/utils/web3/networkResolver'
 import eventHub from '@/utils/eventHub'
 import loadWeb3Instance from '@/utils/web3/loadWeb3'
 import { initialUserState } from './index'
+import EthUtils from '@/utils/EthUtils'
 
 export default {
   async resetState ({ commit }) {
     commit('resetState', initialUserState())
   },
 
-  async logIn ({ commit, dispatch }, loginResponse) {
+  async logIn ({ commit }, loginResponse) {
     commit('login', loginResponse.data)
-    await dispatch('clearWeb3Instance')
-    await dispatch('registerWeb3')
   },
 
   async logOut ({ commit, dispatch }) {
@@ -35,24 +33,6 @@ export default {
 
   changeProfileNames ({ commit }, response) {
     commit('changeProfileNames', response)
-  },
-
-  async loadProfileWallets ({ commit }, page) {
-    commit('setLoading', true, { root: true })
-    const response = await axios.get('/transaction/mywallets?page=' + page)
-    if (response.data) {
-      commit('loadProfileWallets', response.data)
-      commit('setLoading', false, { root: true })
-    }
-  },
-
-  async loadProfileTransactions ({ commit }, page) {
-    commit('setLoading', true, { root: true })
-    const response = await axios.get('/transaction/mytransactions?page=' + page)
-    if (response.data) {
-      commit('loadProfileTransactions', response.data)
-      commit('setLoading', false, { root: true })
-    }
   },
 
   async setNotificationPermission ({ commit }, payload) {
@@ -94,6 +74,7 @@ export default {
 
   async updateWeb3Info ({ commit, state, rootState }) {
     const web3Instance = window.web3
+
     const networkId = await web3Instance.eth.net.getId()
 
     const requiredNetwork = networkResolver(process.env.NODE_ENV)
@@ -121,8 +102,7 @@ export default {
 
     const ethBalanceInWei = await web3Instance.eth.getBalance(coinbase)
     const ethBalance = web3Instance.utils.fromWei(ethBalanceInWei)
-
-    const aixContract = new web3Instance.eth.Contract(aixContractInfo.ABI, aixContractInfo.ADDRESS)
+    const aixContract = await EthUtils.getContract(process.env.CONTRACTS_ADDRESSES.TOKEN)
 
     const aixBalanceInWei = await aixContract.methods.balanceOf(coinbase).call()
     const aixBalance = web3Instance.utils.fromWei(aixBalanceInWei)
