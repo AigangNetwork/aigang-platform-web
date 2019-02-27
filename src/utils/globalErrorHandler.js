@@ -1,6 +1,4 @@
-import axios from 'axios'
-
-export default function (error, vm, info) {
+export default function (error) {
   var errorMessage = {
     messageNumber: new Date().getTime().toString(),
     url: window.location.href,
@@ -9,10 +7,5 @@ export default function (error, vm, info) {
     level: 'error'
   }
 
-  if (process.env.NODE_ENV !== 'production' || process.env.NODE_ENV !== 'qa') {
-    console.error(errorMessage.message)
-  } else {
-    console.log(`Error message number: ${errorMessage.messageNumber}`)
-    axios.post('log', errorMessage)
-  }
+  console.error(errorMessage.message)
 }

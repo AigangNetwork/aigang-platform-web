@@ -6,15 +6,15 @@
           <PoolsProductItem :item="pool" />
         </el-col>
         </transition-group>
-      <el-col v-if="isWeb3Enabled">
+      <el-col  v-if="isWeb3Enabled">
         <transition name="slideUp">
             <Pagination v-if="pools.totalPages > 1  && isDataLoaded" :callback="loadPage" :total-page-count="pools.totalPages" :current-page="page"/>
         </transition>
       </el-col>
-      <el-col v-if="!isWeb3Enabled">
+      <el-col class="failure-message" v-if="!isWeb3Enabled">
         <h2>{{ $t('general.web3NotConnected') }}</h2>
       </el-col>
-      <el-col v-else-if="!$store.getters.loading && pools && (!pools.items || pools.items.length === 0)">
+      <el-col class="failure-message" v-else-if="!$store.getters.loading && pools && (!pools.items || pools.items.length === 0)">
         <h2>{{ $t('general.noPools') }}</h2>
       </el-col>
     </el-row>

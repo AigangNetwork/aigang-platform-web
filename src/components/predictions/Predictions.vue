@@ -214,9 +214,7 @@ export default {
 
     .aig-container {
       .aig-data-container {
-        &.is-authenticated {
           margin-left: 20%;
-        }
 
         .data-search {
           width: 100%;

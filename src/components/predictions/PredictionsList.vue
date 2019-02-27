@@ -11,10 +11,10 @@
         <Pagination v-if="predictions.totalPages > 1 && isDataLoaded" :callback="loadPage" :total-page-count="predictions.totalPages" :current-page="page" />
       </el-col>
       </transition>
-      <el-col v-if="!isWeb3Enabled">
+      <el-col class="failure-message" v-if="!isWeb3Enabled">
         <h2>{{ $t('general.web3NotConnected') }}</h2>
       </el-col>
-      <el-col v-else-if="!$store.getters.loading && predictions && !predictions.items">
+      <el-col class="failure-message" v-else-if="!$store.getters.loading && predictions && !predictions.items">
         <h2>{{ $t('general.noPredictions') }}</h2>
       </el-col>
     </el-row>

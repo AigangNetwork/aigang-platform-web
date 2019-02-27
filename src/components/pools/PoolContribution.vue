@@ -30,7 +30,7 @@ export default {
       headerInfo: {},
       isPaymentDialogVisible: false,
       portfolioRoute: '/pools/portfolio',
-      backRouteName: 'Porfolio'
+      backRouteName: 'Portfolio'
     }
   },
   methods: {

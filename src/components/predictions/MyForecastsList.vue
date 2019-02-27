@@ -11,11 +11,11 @@
           <Pagination v-if="userForecasts.totalPages > 1 && isDataLoaded" :callback="loadPage" :total-page-count="userForecasts.totalPages" :current-page="page" />
         </transition>
         </el-col>
-      <el-col v-if="!$store.getters.loading && userForecasts && !userForecasts.items">
+      <el-col class="failure-message" v-if="!$store.getters.loading && userForecasts && !userForecasts.items">
         <h2>{{ $t('general.noMyPredictions') }}</h2>
       </el-col>
     </el-row>
-    <el-row v-else>
+    <el-row class="failure-message" v-else>
       <el-col>
         <h2>{{ $t('general.web3NotConnected') }}</h2>
       </el-col>
@@ -98,10 +98,6 @@ export default {
 
     .forecast-item {
       margin: 10px 0px 10px 0px;
-    }
-
-    h2 {
-      margin-top: 35px;
     }
   }
 </style>

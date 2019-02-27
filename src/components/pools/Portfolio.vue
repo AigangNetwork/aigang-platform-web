@@ -31,10 +31,12 @@ export default {
   @import '~helpers/variables';
 
   .portfolio-container {
+    margin-left: 10px;
+    margin-right: 10px;
     margin-top: 15px;
     height: 100%;
     display: inline-block;
-    width: 100%;
+    width: calc(100% - 20px);
     min-height: auto;
   }
 </style>
