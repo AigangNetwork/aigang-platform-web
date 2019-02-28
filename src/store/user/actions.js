@@ -94,7 +94,7 @@ export default {
     if (!coinbase) {
       if (state.isWeb3Enabled) {
         eventHub.$emit(eventHub.eventMetamaskAccountWasNotFound)
-        commit('clearWeb3Instance')
+        commit('turnOffWeb3Instance')
       }
 
       return

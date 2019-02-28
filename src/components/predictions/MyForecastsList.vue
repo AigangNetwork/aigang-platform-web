@@ -1,6 +1,6 @@
 <template>
-  <div class="items-container" v-loading="$store.getters.loading">
-    <el-row class="aig-items" key="predictions-list" v-if="isWeb3Enabled">
+  <div class="items-container" v-loading="$store.getters.loading || !isWeb3Loaded">
+    <el-row class="aig-items" key="predictions-list" v-if="isWeb3Enabled || !isWeb3Loaded">
       <transition-group name="slideUp">
         <div class="forecast-item" v-for="(forecast, index) in userForecasts.items" :key="index">
           <ForecastListItem :item="forecast" />
@@ -10,15 +10,13 @@
         <transition name="slideUp">
           <Pagination v-if="userForecasts.totalPages > 1 && isDataLoaded" :callback="loadPage" :total-page-count="userForecasts.totalPages" :current-page="page" />
         </transition>
-        </el-col>
-      <el-col class="failure-message" v-if="!$store.getters.loading && userForecasts && !userForecasts.items">
-        <h2>{{ $t('general.noMyPredictions') }}</h2>
       </el-col>
     </el-row>
-    <el-row class="failure-message" v-else>
-      <el-col>
+    <el-row class="failure-message aig-items" v-else-if="!$store.getters.loading && userForecasts && !userForecasts.items">
+        <h2>{{ $t('general.noMyPredictions') }}</h2>
+    </el-row>
+    <el-row class="failure-message aig-items" v-else>
         <h2>{{ $t('general.web3NotConnected') }}</h2>
-      </el-col>
     </el-row>
   </div>
 </template>
@@ -40,6 +38,9 @@ export default {
     ...mapGetters(['userForecasts']),
     isWeb3Enabled () {
       return this.$store.getters['user/isWeb3Enabled']
+    },
+    isWeb3Loaded () {
+      return this.$store.getters['user/isWeb3Loaded']
     }
   },
   data () {

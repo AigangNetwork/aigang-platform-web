@@ -1,22 +1,22 @@
 <template>
-    <transition-group class="items-container" name="slideUp" v-loading="$store.getters.loading">
-    <el-row class="aig-items" key="pools-list">
+    <transition-group class="items-container" name="slideUp" v-loading="$store.getters.loading || !$store.getters['user/isWeb3Loaded']">
+    <el-row class="aig-items" key="pools-list" v-if="isWeb3Enabled">
       <transition-group name="slideUp">
-        <el-col  v-if="isWeb3Enabled" :xs="24" :sm="12" :md="12" :lg="8" v-for="(pool, index) in pools.items" :key="index">
+        <el-col   :xs="24" :sm="12" :md="12" :lg="8" v-for="(pool, index) in pools.items" :key="index">
           <PoolsProductItem :item="pool" />
         </el-col>
         </transition-group>
-      <el-col  v-if="isWeb3Enabled">
+      <el-col v-if="isWeb3Enabled">
         <transition name="slideUp">
             <Pagination v-if="pools.totalPages > 1  && isDataLoaded" :callback="loadPage" :total-page-count="pools.totalPages" :current-page="page"/>
         </transition>
       </el-col>
-      <el-col class="failure-message" v-if="!isWeb3Enabled">
-        <h2>{{ $t('general.web3NotConnected') }}</h2>
-      </el-col>
-      <el-col class="failure-message" v-else-if="!$store.getters.loading && pools && (!pools.items || pools.items.length === 0)">
-        <h2>{{ $t('general.noPools') }}</h2>
-      </el-col>
+    </el-row>
+    <el-row class="failure-message" v-if="!isWeb3Enabled && $store.getters['user/isWeb3Loaded']" key="failure-message">
+      <h2>{{ $t('general.web3NotConnected') }}</h2>
+    </el-row>
+    <el-row class="failure-message" key="no-pools-message" v-else-if="$store.getters['user/isWeb3Loaded'] && !$store.getters.loading && pools && (!pools.items || pools.items.length === 0)">
+      <h2>{{ $t('general.noPools') }}</h2>
     </el-row>
     </transition-group>
 </template>

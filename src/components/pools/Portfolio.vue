@@ -1,12 +1,10 @@
 <template>
-  <div class="portfolio-container" v-if="isWeb3Enabled">
+  <div class="portfolio-container" v-if="isWeb3Enabled || !isWeb3Loaded">
     <PortfolioSummary />
     <PoolsContributionsList />
   </div>
-  <el-row class="portfolio-container" v-else>
-    <el-col>
+  <el-row class="failure-message" v-else>
       <h2>{{ $t('general.web3NotConnected') }}</h2>
-    </el-col>
   </el-row>
 </template>
 
@@ -22,6 +20,9 @@ export default {
   computed: {
     isWeb3Enabled () {
       return this.$store.getters['user/isWeb3Enabled']
+    },
+    isWeb3Loaded () {
+      return this.$store.getters['user/isWeb3Loaded']
     }
   }
 }

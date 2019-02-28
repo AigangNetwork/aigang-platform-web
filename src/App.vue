@@ -45,7 +45,7 @@ export default {
       }
     }
   },
-  async mounted () {
+  async beforeMount () {
     await this.$store.dispatch('user/clearWeb3Instance')
     await this.$store.dispatch('user/registerWeb3')
   }

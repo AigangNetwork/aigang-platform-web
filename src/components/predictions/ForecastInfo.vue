@@ -1,6 +1,6 @@
 <template>
-  <div class="aig-container aig-view aig-info" v-loading="$store.getters.loading">
-    <div class="aig-info-header" v-if="isDataLoaded && isWeb3Enabled">
+  <div class="aig-container aig-view aig-info" v-loading="$store.getters.loading || !isWeb3Loaded ||  !isDataLoaded">
+    <div class="aig-info-header" v-if="isWeb3Enabled || !isWeb3Loaded">
       <div class="back-button-container">
         <router-link :to="{ name: 'MyForecastsList' }" class="back-button">{{ $t('general.backToList')}}</router-link>
       </div>
@@ -9,7 +9,7 @@
       </div>
     </div>
 
-    <div class="aig-info-content-container" v-if="isDataLoaded && isWeb3Enabled">
+    <div class="aig-info-content-container" v-if="isWeb3Enabled || !isWeb3Loaded">
       <div class="aig-info-content">
         <h4 class="info-title">{{ $t('predictions.description') }}</h4>
         <vue-markdown class="markup-content" :html="false" :source="userForecast.predictionDescription || $t('predictions.noDescription')"></vue-markdown>
@@ -26,7 +26,6 @@
 
         <div v-if="isPercentageVisible">
           <h4 class="info-title">{{ $t('predictions.predictionStatistics') }}</h4>
-          <CountPerOutcome v-loading="countPerOutcomeStatisticsLoading" :statistics="countPerOutcomeStatistics" :resultOutcomeId="userForecast.resultOutcomeId" />
           <AmountPerOutcome v-loading="amountPerOutcomeStatisticsLoading" :statistics="amountPerOutcomeStatistics" :resultOutcomeId="userForecast.resultOutcomeId"/>
         </div>
 
@@ -57,9 +56,12 @@
       </div>
     </div>
 
-    <div class="wallet-message" v-else><h2>{{ $t('general.web3NotConnected') }}</h2></div>
+    <div class="wallet-message" v-else>
+      <h2>{{ $t('general.web3NotConnected') }}</h2>
+    </div>
 
   </div>
+
 </template>
 
 <script>
@@ -148,13 +150,9 @@ export default {
       'transactionHash'
     ]),
     isPercentageVisible () {
-      const status = this.userForecast.status.toUpperCase()
       const predictionStatus = this.userForecast.predictionStatus.toUpperCase()
 
-      return (
-        (status !== 'NOTSET' && status !== 'PENDINGPAYMENT' && status !== 'AVAILABLEREFUND' && predictionStatus !== 'CANCELED') ||
-        predictionStatus === 'RESOLVED'
-      )
+      return predictionStatus === 'RESOLVED'
     },
     contractLink () {
       return process.env.ETHERSCAN_ADDRESS + process.env.ADDRESS_PATH + this.userForecast.marketAddress
@@ -177,6 +175,9 @@ export default {
     },
     isWeb3Enabled () {
       return this.$store.getters['user/isWeb3Enabled']
+    },
+    isWeb3Loaded () {
+      return this.$store.getters['user/isWeb3Loaded']
     }
   },
   async mounted () {

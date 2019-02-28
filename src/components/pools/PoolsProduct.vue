@@ -1,7 +1,7 @@
 <template>
   <div class="aig-container aig-view" >
-    <Card class="product-card" v-if="isWeb3Enabled">
-      <div slot="body" v-loading="$store.getters.loading" >
+    <Card class="product-card" v-if="isWeb3Enabled || !isWeb3Loaded">
+      <div slot="body" v-loading="$store.getters.loading || !isWeb3Loaded" >
           <PoolsProductHeader :info="headerInfo" :backRouteName="backRouteName" :isSingleColor="false" />
           <PoolsProductDetails :pool="pool" />
       </div>
@@ -44,6 +44,9 @@ export default {
     ...mapGetters(['pool']),
     isWeb3Enabled () {
       return this.$store.getters['user/isWeb3Enabled']
+    },
+    isWeb3Loaded () {
+      return this.$store.getters['user/isWeb3Loaded']
     }
   },
   watch: {

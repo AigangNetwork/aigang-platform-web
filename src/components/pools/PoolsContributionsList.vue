@@ -1,5 +1,5 @@
 <template>
-  <div class="contributions-container" v-loading="contributionsListLoading">
+  <div class="contributions-container" v-loading="contributionsListLoading || !isWeb3Loaded">
     <div class="items-container">
       <Card>
         <div slot="body">
@@ -49,7 +49,10 @@ export default {
     PoolsContributionsListItem
   },
   computed: {
-    ...mapGetters(['userContributions', 'contributionsListLoading'])
+    ...mapGetters(['userContributions', 'contributionsListLoading']),
+    isWeb3Loaded () {
+      return this.$store.getters['user/isWeb3Loaded']
+    }
   },
   data () {
     return {
@@ -58,8 +61,17 @@ export default {
       isDataLoaded: false
     }
   },
+  watch: {
+    async isWeb3Loaded (newValue) {
+      if (newValue) {
+        await this.loadPage(1)
+      }
+    }
+  },
   async beforeMount () {
-    await this.loadPage(1)
+    if (this.isWeb3Loaded) {
+      await this.loadPage(1)
+    }
   },
   methods: {
     async loadPage (page) {

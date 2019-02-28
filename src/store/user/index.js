@@ -12,6 +12,7 @@ export const initialUserState = () => {
     },
     emailPermissionGroups: {},
     userWeb3: {},
+    isWeb3Loaded: false,
     isWeb3Enabled: false,
     insufficientBalance: false
   }

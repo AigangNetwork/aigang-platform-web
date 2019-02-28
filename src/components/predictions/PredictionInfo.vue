@@ -1,5 +1,5 @@
 <template>
-  <div class="aig-container aig-view aig-info" v-loading="$store.getters.loading" v-if="isWeb3Enabled">
+  <div class="aig-container aig-view aig-info" v-loading="$store.getters.loading || !isWeb3Loaded" v-if="isWeb3Enabled || !isWeb3Loaded">
     <div class="aig-info-header" v-if="isDataLoaded">
       <div class="back-button-container">
         <router-link :to="{ name: 'PredictionsList' }" class="back-button">{{ $t('general.backToList')}}</router-link>
@@ -120,6 +120,9 @@ export default {
     },
     isWeb3Enabled () {
       return this.$store.getters['user/isWeb3Enabled']
+    },
+    isWeb3Loaded () {
+      return this.$store.getters['user/isWeb3Loaded']
     }
   },
   data () {

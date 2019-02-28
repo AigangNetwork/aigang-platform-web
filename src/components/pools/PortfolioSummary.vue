@@ -1,5 +1,5 @@
 <template>
-  <div class="summary-container" v-loading="portfolioSummaryLoading" :element-loading-text="$t('pools.calculatingSummary')">
+  <div class="summary-container" v-loading="portfolioSummaryLoading || !isWeb3Loaded" :element-loading-text="$t('pools.calculatingSummary')">
       <Card >
         <div slot="body" class="scrollable">
           <div class="details">
@@ -34,11 +34,24 @@ const { mapGetters } = createNamespacedHelpers('pools')
 export default {
   components: { Card },
   computed: {
-    ...mapGetters(['portfolioSummary', 'portfolioSummaryLoading'])
+    ...mapGetters(['portfolioSummary', 'portfolioSummaryLoading']),
+    isWeb3Loaded () {
+      return this.$store.getters['user/isWeb3Loaded']
+    }
+  },
+  watch: {
+    async isWeb3Loaded (newValue) {
+      if (newValue) {
+        await this.$store.dispatch('pools/getPortfolioSummary')
+        this.isDataLoaded = true
+      }
+    }
   },
   async beforeMount () {
-    await this.$store.dispatch('pools/getPortfolioSummary')
-    this.isDataLoaded = true
+    if (this.isWeb3Loaded) {
+      await this.$store.dispatch('pools/getPortfolioSummary')
+      this.isDataLoaded = true
+    }
   }
 }
 </script>
