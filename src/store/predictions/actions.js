@@ -23,7 +23,6 @@ export default {
       let totalPredictions = 0
       let predictionsCounter = 0
 
-      // Iterating through contracts
       for (const contract of contracts) {
         const predictionsLength = parseInt(await contract.methods.totalPredictions().call())
         totalPredictions += predictionsLength

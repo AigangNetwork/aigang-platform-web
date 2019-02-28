@@ -8,7 +8,7 @@ export default {
     commit('resetState', initialPoolState())
   },
 
-  async getPoolsList ({ commit }, page) {
+  async getPoolsList ({ commit, state }, page) {
     commit('setLoading', true, { root: true })
 
     const pools = {
@@ -24,14 +24,12 @@ export default {
       let totalPools = 0
       let poolsCounter = 0
 
-      // Iterating through contracts
-      for (let index = contracts.length - 1; index >= 0; index--) {
-        const contract = contracts[index]
+      for (const contract of contracts) {
         const poolsLength = parseInt(await contract.methods.totalPools().call())
         totalPools += poolsLength
 
         // Iterating through pools in a conctract
-        for (let i = poolsLength; i > 0 && pools.items.length < itemsPerPage; i--) {
+        for (let i = poolsLength; i > 0 && state.pools.items.length < itemsPerPage; i--) {
           poolsCounter++
 
           if (poolsCounter < startItem) {
@@ -123,8 +121,7 @@ export default {
       const startItem = page * itemsPerPage - itemsPerPage + 1
 
       let iterator = 0
-      for (let contractIndex = contracts.length - 1; contractIndex >= 0; contractIndex--) {
-        const contract = contracts[contractIndex]
+      for (const contract of contracts) {
         const result = await contract.methods
           .getMyContributionsLength()
           .call({ from: rootState.user.userWeb3.coinbase })
@@ -174,8 +171,7 @@ export default {
       let availableRefundAmount = 0
       let rewardPaidOutAmount = 0
 
-      for (let contractIndex = 0; contractIndex < contracts.length; contractIndex++) {
-        const contract = contracts[contractIndex]
+      for (const contract of contracts) {
         const result = await contract.methods
           .getMyContributionsLength()
           .call({ from: rootState.user.userWeb3.coinbase })
