@@ -1,6 +1,6 @@
 <template>
-  <div class="aig-container aig-view aig-info" v-loading="$store.getters.loading || !isWeb3Loaded ||  !isDataLoaded">
-    <div class="aig-info-header" v-if="isWeb3Enabled || !isWeb3Loaded">
+  <div class="aig-container aig-view aig-info" v-loading="$store.getters.loading || !isWeb3Loaded">
+    <div class="aig-info-header" v-if="isDataLoaded">
       <div class="back-button-container">
         <router-link :to="{ name: 'MyForecastsList' }" class="back-button">{{ $t('general.backToList')}}</router-link>
       </div>
@@ -9,7 +9,7 @@
       </div>
     </div>
 
-    <div class="aig-info-content-container" v-if="isWeb3Enabled || !isWeb3Loaded">
+    <div class="aig-info-content-container" v-if="isDataLoaded">
       <div class="aig-info-content">
         <h4 class="info-title">{{ $t('predictions.description') }}</h4>
         <vue-markdown class="markup-content" :html="false" :source="userForecast.predictionDescription || $t('predictions.noDescription')"></vue-markdown>
@@ -56,7 +56,7 @@
       </div>
     </div>
 
-    <div class="wallet-message" v-else>
+    <div class="wallet-message" v-else-if="!isWeb3Enabled && isWeb3Loaded">
       <h2>{{ $t('general.web3NotConnected') }}</h2>
     </div>
 
@@ -136,6 +136,7 @@ export default {
     async isWeb3Enabled (newValue) {
       if (newValue) {
         await this.loadData()
+        this.isDataLoaded = true
       }
     }
   },
@@ -183,6 +184,7 @@ export default {
   async mounted () {
     if (this.isWeb3Enabled) {
       await this.loadData()
+      this.isDataLoaded = true
     }
   }
 }

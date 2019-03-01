@@ -3,6 +3,7 @@ import { initialPredictionsState } from './index'
 import Prediction from '@/domain/Prediction'
 import Forecast from '@/domain/Forecast'
 import EthUtils from '@/utils/EthUtils'
+import router from '@/router'
 
 export default {
   async resetState ({ commit }) {
@@ -68,6 +69,13 @@ export default {
 
       if (prediction.status.toUpperCase() === 'RESOLVED') {
         dispatch('getAmountPerOutcomeStatistics', prediction)
+      }
+
+      if (prediction.status.toUpperCase() === 'NOTSET') {
+        router.push({
+          name: 'NotFound',
+          params: { '0': 'notfound' }
+        })
       }
 
       commit('setLoading', false, { root: true })
@@ -182,6 +190,13 @@ export default {
 
       if (prediction.status.toUpperCase() === 'RESOLVED') {
         dispatch('getAmountPerOutcomeStatistics', prediction)
+      }
+
+      if (prediction.status.toUpperCase() === 'NOTSET') {
+        router.push({
+          name: 'NotFound',
+          params: { '0': 'notfound' }
+        })
       }
 
       commit('setLoading', false, { root: true })

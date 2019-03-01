@@ -2,6 +2,7 @@ import { initialPoolState } from './index'
 import Pool from '@/domain/Pool'
 import Contribution from '@//domain/Contribution'
 import EthUtils from '@/utils/EthUtils'
+import router from '@/router'
 
 export default {
   async resetState ({ commit }) {
@@ -59,6 +60,13 @@ export default {
     try {
       const contract = await EthUtils.getContract(payload.address)
       const pool = await Pool.create(contract, payload.id)
+
+      if (pool.status.toUpperCase() === 'NOTSET') {
+        router.push({
+          name: 'NotFound',
+          params: { '0': 'notfound' }
+        })
+      }
 
       commit('setPool', pool)
       commit('setLoading', false, { root: true })
@@ -216,6 +224,14 @@ export default {
     try {
       const contract = await EthUtils.getContract(payload.address)
       const contribution = await Contribution.create(contract, payload.id)
+      console.log(contribution)
+      if (contribution.poolStatus.toUpperCase() === 'NOTSET') {
+        router.push({
+          name: 'NotFound',
+          params: { '0': 'notfound' }
+        })
+      }
+
       commit('setContribution', contribution)
       commit('setLoading', false, { root: true })
     } catch (ex) {
