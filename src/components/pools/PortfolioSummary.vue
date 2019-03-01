@@ -1,5 +1,5 @@
 <template>
-  <div class="summary-container" v-loading="portfolioSummaryLoading || !isWeb3Loaded" :element-loading-text="$t('pools.calculatingSummary')">
+  <div class="summary-container" v-loading="portfolioSummaryLoading" :element-loading-text="$t('pools.calculatingSummary')">
       <Card >
         <div slot="body" class="scrollable">
           <div class="details">

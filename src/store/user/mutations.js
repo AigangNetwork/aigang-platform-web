@@ -5,12 +5,6 @@ export default {
   },
 
   resetState (state, newState) {
-    // Let's keep web3
-    newState.userWeb3 = state.userWeb3
-    newState.userWeb3.aixBalance = parseInt(state.userWeb3.aixBalance, 10)
-    newState.insufficientBalance = state.userWeb3.aixBalance === 0
-    newState.isWeb3Enabled = !!state.userWeb3
-    newState.isWeb3Loaded = true
     Object.assign(state, newState)
   },
 
@@ -32,6 +26,10 @@ export default {
     state.isWeb3Loaded = false
     state.userWeb3 = {}
     state.isWeb3Enabled = false
+  },
+
+  setIsWeb3Loaded (state, value) {
+    state.isWeb3Loaded = value
   },
 
   turnOffWeb3Instance (state) {

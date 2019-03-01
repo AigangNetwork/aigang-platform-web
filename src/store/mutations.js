@@ -17,7 +17,11 @@ export default {
     state.isCookiesEnabled = value
   },
 
-  setShowMetamaskNetworkError (state, value) {
-    state.showMetamaskNetworkError = value
+  setShowEthNetworkError (state, value) {
+    state.showEthNetworkError = value
+  },
+
+  setIsEthNetworkCorrect (state, value) {
+    state.isEthNetworkCorrect = value
   }
 }

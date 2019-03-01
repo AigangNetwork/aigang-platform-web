@@ -98,7 +98,6 @@ export default {
       totalPages: 0
     })
     commit('setLoading', true, { root: true })
-
     try {
       const contracts = await EthUtils.getContracts(process.env.CONTRACT_TYPES.PREDICTIONS)
       let totalForecasts = 0

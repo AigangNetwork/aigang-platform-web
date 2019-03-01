@@ -1,21 +1,21 @@
 <template>
     <transition-group class="items-container" name="slideUp" v-loading="$store.getters.loading || !$store.getters['user/isWeb3Loaded']">
-    <el-row class="aig-items" key="pools-list" v-if="isWeb3Enabled">
+    <el-row class="aig-items" key="pools-list" v-if="isWeb3Enabled && !$store.getters.loading">
       <transition-group name="slideUp">
         <el-col   :xs="24" :sm="12" :md="12" :lg="8" v-for="(pool, index) in pools.items" :key="index">
           <PoolsProductItem :item="pool" />
         </el-col>
-        </transition-group>
+      </transition-group>
       <el-col v-if="isWeb3Enabled">
         <transition name="slideUp">
             <Pagination v-if="pools.totalPages > 1  && isDataLoaded" :callback="loadPage" :total-page-count="pools.totalPages" :current-page="page"/>
         </transition>
       </el-col>
     </el-row>
-    <el-row class="failure-message" v-if="!isWeb3Enabled && $store.getters['user/isWeb3Loaded']" key="failure-message">
+    <el-row class="failure-message" v-else-if="showWeb3NotConnected" key="failure-message">
       <h2>{{ $t('general.web3NotConnected') }}</h2>
     </el-row>
-    <el-row class="failure-message" key="no-pools-message" v-else-if="$store.getters['user/isWeb3Loaded'] && !$store.getters.loading && pools && (!pools.items || pools.items.length === 0)">
+    <el-row class="failure-message" key="no-pools-message" v-else-if="showNoPools">
       <h2>{{ $t('general.noPools') }}</h2>
     </el-row>
     </transition-group>
@@ -24,7 +24,6 @@
 <script>
 import PoolsProductItem from './PoolsProductItem'
 import Pagination from '@/components/Pagination'
-
 import { createNamespacedHelpers } from 'vuex'
 const { mapGetters } = createNamespacedHelpers('pools')
 
@@ -37,6 +36,16 @@ export default {
     ...mapGetters(['pools']),
     isWeb3Enabled () {
       return this.$store.getters['user/isWeb3Enabled']
+    },
+    showWeb3NotConnected () {
+      return !this.isWeb3Enabled && this.$store.getters['user/isWeb3Loaded']
+    },
+    showNoPools () {
+      return this.isWeb3Enabled &&
+             this.$store.getters['user/isWeb3Loaded'] &&
+             !this.$store.getters.loading &&
+             this.pools &&
+             (!this.pools.items || this.pools.items.length === 0)
     }
   },
   data () {

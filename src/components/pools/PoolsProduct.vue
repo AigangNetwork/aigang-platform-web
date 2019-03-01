@@ -6,7 +6,7 @@
           <PoolsProductDetails :pool="pool" />
       </div>
     </Card>
-    <div v-else><h2>{{ $t('general.web3NotConnected') }}</h2></div>
+    <div v-else-if="showWeb3NotConnected"><h2>{{ $t('general.web3NotConnected') }}</h2></div>
   </div>
 </template>
 <script>
@@ -47,6 +47,9 @@ export default {
     },
     isWeb3Loaded () {
       return this.$store.getters['user/isWeb3Loaded']
+    },
+    showWeb3NotConnected () {
+      return !this.isWeb3Enabled && this.$store.getters['user/isWeb3Loaded']
     }
   },
   watch: {

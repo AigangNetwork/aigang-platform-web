@@ -1,9 +1,14 @@
 <template>
-  <div class="portfolio-container" v-if="isWeb3Enabled || !isWeb3Loaded">
+  <div class="portfolio-container" v-if="isWeb3Enabled && isWeb3Loaded">
     <PortfolioSummary />
     <PoolsContributionsList />
   </div>
-  <el-row class="failure-message" v-else>
+  <el-row
+    class="portfolio-container"
+    v-loading="!isWeb3Loaded"
+    v-else-if="!isWeb3Loaded">
+  </el-row>
+  <el-row class="failure-message" v-else-if="!isWeb3Enabled && isWeb3Loaded">
       <h2>{{ $t('general.web3NotConnected') }}</h2>
   </el-row>
 </template>

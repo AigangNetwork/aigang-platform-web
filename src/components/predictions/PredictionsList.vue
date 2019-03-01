@@ -1,6 +1,6 @@
 <template>
   <transition-group class="items-container" name="slideUp" v-loading="$store.getters.loading || !isWeb3Loaded">
-    <el-row class="aig-items" v-if="isWeb3Enabled" key="list">
+    <el-row class="aig-items" v-if="isWeb3Enabled && !$store.getters.loading" key="list">
       <transition-group name="slideUp">
       <el-col :xs="24" :sm="12" :md="12" :lg="8" v-for="(prediction, index) in predictions.items" :key="index">
         <PredictionListItem :item="prediction" />

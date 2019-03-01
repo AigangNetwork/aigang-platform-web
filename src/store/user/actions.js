@@ -1,10 +1,10 @@
 import router from '@/router'
 import axios from 'axios'
-import networkResolver from '@/utils/web3/networkResolver'
 import eventHub from '@/utils/eventHub'
 import loadWeb3Instance from '@/utils/web3/loadWeb3'
 import { initialUserState } from './index'
 import EthUtils from '@/utils/EthUtils'
+import networkResolver from '@/utils/web3/networkResolver'
 
 export default {
   async resetState ({ commit }) {
@@ -61,8 +61,13 @@ export default {
     }
   },
 
-  async registerWeb3 ({ dispatch }) {
-    await loadWeb3Instance()
+  async registerWeb3 ({ dispatch, commit }) {
+    const isLoaded = await loadWeb3Instance()
+    if (!isLoaded) {
+      commit('setIsWeb3Loaded', true)
+      return
+    }
+
     await dispatch('updateWeb3Info')
 
     if (window.web3 && window.web3.currentProvider.publicConfigStore) {
@@ -74,17 +79,12 @@ export default {
 
   async updateWeb3Info ({ commit, state, rootState }) {
     const web3Instance = window.web3
-
     const networkId = await web3Instance.eth.net.getId()
-
     const requiredNetwork = networkResolver(process.env.NODE_ENV)
 
     if (requiredNetwork.networkId !== networkId) {
-      if (rootState.showMetamaskNetworkError) {
-        eventHub.$emit(eventHub.eventMetamaskNetworkError, requiredNetwork.networkName)
-        commit('setShowMetamaskNetworkError', false, { root: true })
-      }
-
+      commit('setShowEthNetworkError', true, { root: true })
+      commit('setIsEthNetworkCorrect', false, { root: true })
       return
     }
 
@@ -113,6 +113,8 @@ export default {
       ethBalance,
       aixBalance
     })
+    commit('setShowEthNetworkError', false, { root: true })
+    commit('setIsEthNetworkCorrect', true, { root: true })
   },
 
   clearWeb3Instance ({ commit }, response) {

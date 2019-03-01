@@ -31,6 +31,12 @@ router.beforeEach((to, from, next) => {
     }
   }
 
+  if (!store.state.isEthNetworkCorrect) {
+    if (to.path.includes('/pools') || to.path.includes('/predictions') || to.path.includes('/insurance')) {
+      store.commit('setShowEthNetworkError', true)
+    }
+  }
+
   next()
 })
 

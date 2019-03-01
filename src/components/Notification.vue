@@ -110,13 +110,6 @@ export default {
       this.messages = []
       this.notifyRequestError(event)
     })
-    eventHub.$on(eventHub.eventMetamaskNetworkError, requiredNetworkName => {
-      this.$notify({
-        title: this.$t('errors.information'),
-        message: this.$t('errors.metamaskDetected') + requiredNetworkName,
-        type: 'warning'
-      })
-    })
     eventHub.$on(eventHub.eventMetamaskAccountWasNotFound, () => {
       this.$notify({
         title: this.$t('errors.information'),

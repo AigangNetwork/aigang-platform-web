@@ -1,5 +1,6 @@
 <template>
   <div class="aig-app" :class="appClass" v-loading="loading">
+    <WrongNetworkDialog :isVisible="showWrongNetworkDialog" :displayDialog="displayWrongNetworkDialog" />
     <Navigation />
     <transition name="slideUp">
       <router-view class="aig-view"></router-view>
@@ -15,23 +16,29 @@ import Navigation from '@/components/navigation/Navigation'
 import Notification from '@/components/Notification'
 import CookiesBar from '@/components/CookiesBar'
 import InsufficientBalanceDialog from '@/components/InsufficientBalanceDialog'
+import WrongNetworkDialog from '@/components/WrongNetworkDialog'
 
 export default {
   name: 'App',
   data () {
     return {
-      loading: false
+      loading: false,
+      isWrongNetwork: true
     }
   },
   components: {
     Navigation,
     Notification,
     CookiesBar,
-    InsufficientBalanceDialog
+    InsufficientBalanceDialog,
+    WrongNetworkDialog
   },
   methods: {
     onInsufficientBalanceDialogClose () {
       this.$store.dispatch('showInsufficientBalanceDialog', false)
+    },
+    displayWrongNetworkDialog (value) {
+      this.$store.commit('setShowEthNetworkError', value)
     }
   },
   computed: {
@@ -43,10 +50,13 @@ export default {
         'aig--authed': this.$store.getters['user/isAuthenticated'],
         'aig--notAuthed': !this.$store.getters['user/isAuthenticated']
       }
+    },
+    showWrongNetworkDialog () {
+      return this.$store.state.showEthNetworkError
     }
   },
   async beforeMount () {
-    await this.$store.dispatch('user/clearWeb3Instance')
+    await this.$store.dispatch('resetRootState')
     await this.$store.dispatch('user/registerWeb3')
   }
 }
