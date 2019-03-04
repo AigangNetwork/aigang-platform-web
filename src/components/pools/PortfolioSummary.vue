@@ -1,5 +1,5 @@
 <template>
-  <div class="summary-container" v-loading="portfolioSummaryLoading" :element-loading-text="$t('pools.calculatingSummary')">
+  <div class="summary-container" v-loading="portfolioSummaryLoading" :element-loading-text="$t('pools.calculatingSummary')" v-if="isVisible">
       <Card >
         <div slot="body" class="scrollable">
           <div class="details">
@@ -33,6 +33,12 @@ const { mapGetters } = createNamespacedHelpers('pools')
 
 export default {
   components: { Card },
+  props: ['isVisible'],
+  data () {
+    return {
+      isDataLoaded: false
+    }
+  },
   computed: {
     ...mapGetters(['portfolioSummary', 'portfolioSummaryLoading']),
     isWeb3Loaded () {

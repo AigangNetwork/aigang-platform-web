@@ -47,6 +47,7 @@ export default {
         }
       }
       commit('setPoolsTotalPages', Math.ceil(totalPools / itemsPerPage))
+      commit('setLoading', false, { root: true })
     } catch (ex) {
       console.error(ex)
       commit('setLoading', false, { root: true })
@@ -156,6 +157,7 @@ export default {
 
         commit('setUserContributionsTotalPages', Math.ceil(totalContributions / itemsPerPage))
       }
+      commit('setContributionsListLoading', false)
     } catch (ex) {
       console.error(ex)
       commit('setContributionsListLoading', false)

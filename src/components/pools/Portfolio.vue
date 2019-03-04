@@ -1,6 +1,6 @@
 <template>
   <div class="portfolio-container" v-if="isWeb3Enabled && isWeb3Loaded">
-    <PortfolioSummary />
+    <PortfolioSummary :isVisible="isSummaryVisible" />
     <PoolsContributionsList />
   </div>
   <el-row
@@ -28,6 +28,11 @@ export default {
     },
     isWeb3Loaded () {
       return this.$store.getters['user/isWeb3Loaded']
+    },
+    isSummaryVisible () {
+      return this.$store.getters['pools/contributionsListLoading'] ||
+            !this.isWeb3Loaded ||
+            this.$store.getters['pools/userContributions'].items.length !== 0
     }
   }
 }

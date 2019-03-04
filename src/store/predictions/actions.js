@@ -46,6 +46,7 @@ export default {
       }
 
       commit('setPredictionsTotalPages', Math.ceil(totalPredictions / itemsPerPage))
+      commit('setLoading', false, { root: true })
     } catch (ex) {
       console.error(ex)
       commit('setLoading', false, { root: true })
@@ -138,6 +139,7 @@ export default {
         }
         commit('setUserForecastsTotalPages', Math.ceil(totalForecasts / itemsPerPage))
       }
+      commit('setLoading', false, { root: true })
     } catch (ex) {
       console.error(ex)
       commit('setLoading', false, { root: true })

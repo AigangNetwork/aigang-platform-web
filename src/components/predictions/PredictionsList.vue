@@ -1,6 +1,6 @@
 <template>
   <transition-group class="items-container" name="slideUp" v-loading="$store.getters.loading || !isWeb3Loaded">
-    <el-row class="aig-items" v-if="isWeb3Enabled && !$store.getters.loading" key="list">
+    <el-row class="aig-items" v-if="showPredictions" key="list">
       <transition-group name="slideUp">
       <el-col :xs="24" :sm="12" :md="12" :lg="8" v-for="(prediction, index) in predictions.items" :key="index">
         <PredictionListItem :item="prediction" />
@@ -16,7 +16,7 @@
       <h2>{{ $t('general.web3NotConnected') }}</h2>
     </el-row>
     <el-row class="failure-message"
-      v-else-if="!$store.getters.loading && predictions && !predictions.items && isWeb3Loaded" key="no-predictions">
+      v-else-if="!showPredictions  && isDataLoaded" key="no-predictions">
       <h2>{{ $t('general.noPredictions') }}</h2>
     </el-row>
   </transition-group>
@@ -40,6 +40,13 @@ export default {
     },
     isWeb3Loaded () {
       return this.$store.getters['user/isWeb3Loaded']
+    },
+    showPredictions () {
+      return this.isWeb3Enabled &&
+          (!this.$store.getters.loading ||
+            this.$store.getters['user/isWeb3Loaded']) &&
+          this.predictions &&
+          (this.predictions.items && this.predictions.items.length !== 0)
     }
   },
   data () {

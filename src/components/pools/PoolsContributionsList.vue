@@ -1,5 +1,6 @@
 <template>
-  <div class="contributions-container" v-loading="contributionsListLoading || !isWeb3Loaded">
+  <transition-group name="slideUp">
+  <div class="contributions-container" v-loading="contributionsListLoading || !isWeb3Loaded"  key="contributions" v-if="showContributions">
     <div class="items-container">
       <Card>
         <div slot="body">
@@ -18,18 +19,21 @@
                 <PoolsContributionsListItem v-for="(contribution, index) in userContributions.items" :key="index" :contribution="contribution" />
               </tbody>
             </table>
-            <div class="no-data-message" v-if="!userContributions.items">{{ $t('pools.contributions.noData')}}</div>
           </div>
 
           <div class="pagination-container">
             <transition name="slideUp">
               <Pagination v-if="userContributions && userContributions.totalPages > 1 && isDataLoaded" :callback="loadPage" :total-page-count="userContributions.totalPages" :current-page="page"/>
             </transition>
-            </div>
+          </div>
         </div>
       </Card>
     </div>
   </div>
+  <el-row class="failure-message" v-else-if="!showContributions" key="failure-message">
+    <h2>{{ $t('pools.contributions.noData')}}</h2>
+  </el-row>
+</transition-group>
 </template>
 
 <script>
@@ -52,6 +56,9 @@ export default {
     ...mapGetters(['userContributions', 'contributionsListLoading']),
     isWeb3Loaded () {
       return this.$store.getters['user/isWeb3Loaded']
+    },
+    showContributions () {
+      return this.contributionsListLoading || !this.isWeb3Loaded || this.userContributions.items.length !== 0
     }
   },
   data () {

@@ -39,7 +39,7 @@ export default class Prediction {
     const outcomes = []
 
     for (let i = 1; i <= data.outcomesCount; i++) {
-      const outcome = await await contract.methods.getOutcome(id, i).call()
+      const outcome = await contract.methods.getOutcome(id, i).call()
       outcomes.push({
         id: i,
         name: outcome[1],

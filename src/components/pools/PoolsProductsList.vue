@@ -1,6 +1,6 @@
 <template>
     <transition-group class="items-container" name="slideUp" v-loading="$store.getters.loading || !$store.getters['user/isWeb3Loaded']">
-    <el-row class="aig-items" key="pools-list" v-if="isWeb3Enabled && !$store.getters.loading">
+    <el-row class="aig-items" key="pools-list" v-if="showPools">
       <transition-group name="slideUp">
         <el-col   :xs="24" :sm="12" :md="12" :lg="8" v-for="(pool, index) in pools.items" :key="index">
           <PoolsProductItem :item="pool" />
@@ -15,7 +15,7 @@
     <el-row class="failure-message" v-else-if="showWeb3NotConnected" key="failure-message">
       <h2>{{ $t('general.web3NotConnected') }}</h2>
     </el-row>
-    <el-row class="failure-message" key="no-pools-message" v-else-if="showNoPools">
+    <el-row class="failure-message" key="no-pools-message" v-else-if="!showPools && isDataLoaded">
       <h2>{{ $t('general.noPools') }}</h2>
     </el-row>
     </transition-group>
@@ -40,12 +40,12 @@ export default {
     showWeb3NotConnected () {
       return !this.isWeb3Enabled && this.$store.getters['user/isWeb3Loaded']
     },
-    showNoPools () {
+    showPools () {
       return this.isWeb3Enabled &&
-             this.$store.getters['user/isWeb3Loaded'] &&
-             !this.$store.getters.loading &&
+             (!this.$store.getters.loading ||
+             this.$store.getters['user/isWeb3Loaded']) &&
              this.pools &&
-             (!this.pools.items || this.pools.items.length === 0)
+             (this.pools.items && this.pools.items.length !== 0)
     }
   },
   data () {

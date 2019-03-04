@@ -444,7 +444,7 @@
 		"unableToFindAnyProducts": "Can not find any product",
 		"noPolicies": "You do not have any policies yet",
 		"noPredictions": "Can not find any predictions",
-		"noMyPredictions": "You do not have any predictions for selected filter type",
+		"noMyForecasts": "You do not have any forecasts yet",
 		"noPools": "Can not find any pools",
 		"upvote": "Upvote",
 		"downvote": "Downvote",
