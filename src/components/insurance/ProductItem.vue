@@ -1,13 +1,13 @@
 <template>
-  <div class="aig-product-data" :class="{ disabled: !isCampaignRunning || product.state != 'active' }">
+  <div class="aig-product-data" :class="{ disabled: !isCampaignRunning }">
     <router-link :to="{ name: 'Product', params: { id: product.id}}">
       <div class="aig-product-data-body-container">
-        <div class="aig-product-data-head" v-if="isCampaignRunning && product.state == 'active'">
+        <div class="aig-product-data-head" v-if="isCampaignRunning">
           <div class="desc date">{{ $t('insurance.product.productEnds') }}
             <Date :dateUtc="product.endDateUtc" />
           </div>
         </div>
-        <div class="aig-product-data-head" v-else-if="!isCampaignRunning && product.state == 'active'">
+        <div class="aig-product-data-head" v-else-if="!isCampaignRunning">
           <div class="desc">{{ $t('insurance.product.productEnded') }}</div>
         </div>
         <div class="aig-product-ata-head" v-else>

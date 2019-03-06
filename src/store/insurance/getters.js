@@ -1,4 +1,6 @@
 export default {
+  products: state => state.products,
+
   product: state => state.product,
   policy: state => state.policy,
   userPolicies: state => state.userPolicies,

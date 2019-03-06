@@ -2,11 +2,9 @@
   <div class="aig-container">
     <el-container class="aig-container">
       <el-aside
-        v-if="$store.state.user.authenticated"
         width="20%"
         class="aig-data-menu"
-        :class="{ 'is-menu-open': isMenuOpen }"
-      >
+        :class="{ 'is-menu-open': isMenuOpen }">
         <span>
           <transition name="fade">
             <span class="side-menu-button" v-if="!isMenuOpen" @click="openSideMenu">
@@ -19,18 +17,17 @@
           <ul>
             <li v-for="item in dataMenu" :key="item.name">
               <router-link
-                :class="{'aig-link-disabled': item.disabled && !$store.getters['user/isAuthenticated']}"
                 @click.native="collapseSideMenu"
                 active-class="aig-menu-active"
-                :to="item.routeLink"
-                >{{ item.name }}</router-link
-              >
+                :to="item.routeLink">{{ item.name }}</router-link>
             </li>
           </ul>
         </span>
       </el-aside>
       <el-main class="aig-data-container" :class="{ 'is-authenticated': $store.getters['user/isAuthenticated']}">
-        <el-row :gutter="20" class="aig-items"> <router-view :key="$route.path"></router-view> </el-row>
+        <el-row :gutter="20" class="aig-items">
+          <router-view :key="$route.path" />
+        </el-row>
       </el-main>
     </el-container>
   </div>

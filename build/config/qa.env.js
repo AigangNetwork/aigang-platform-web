@@ -10,6 +10,7 @@ module.exports = {
   ADDRESS_PATH: '"address/"',
   ANDROID_APP_LOCATION: '"https://github.com/AigangNetwork/aigang-insurance-app/tree/master/android"',
   RETRY_COUNT: 10,
+  INSURANCE_PRODUCT_ITEMS_PER_PAGE: 9,
   POOLS_ITEMS_PER_PAGE: 9,
   PREDICTIONS_ITEMS_PER_PAGE: 9,
   CONTRIBUTIONS_ITEMS_PER_PAGE: 9,
@@ -29,7 +30,9 @@ module.exports = {
   CONTRACT_TYPES: {
     POOLS: 1,
     PREDICTIONS: 2,
-    INSURANCE: 3
+    INSURANCE: {
+      ANDROID_BATTERY: 3
+    }
   },
   CONTRACT_STATUS: {
     CANCELED: 2

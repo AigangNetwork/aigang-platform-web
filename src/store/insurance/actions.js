@@ -3,19 +3,59 @@ import axios from 'axios'
 import { sleep } from '@/utils/methods'
 import router from '@/router/index'
 
+import EthUtils from '@/utils/EthUtils'
+import InsuranceProduct from '@/domain/InsuranceProduct'
+
 export default {
   async resetState ({ commit }) {
     commit('resetState', initialInsuranceState())
   },
 
-  async loadProduct ({ commit }, id) {
+  async getProductsList ({ commit, state }, page) {
+    commit('setLoading', true, { root: true })
+
+    commit('setProducts', {
+      items: [],
+      totalPages: 1
+    })
+
+    try {
+      const contracts = await EthUtils.getContracts(process.env.CONTRACT_TYPES.INSURANCE.ANDROID_BATTERY)
+      const itemsPerPage = process.env.INSURANCE_PRODUCT_ITEMS_PER_PAGE
+      const startItem = page * itemsPerPage - itemsPerPage + 1
+
+      let productsCounter = 0
+
+      // Iterating through contracts
+      for (const contract of contracts) {
+        productsCounter += 1
+
+        if (productsCounter >= startItem && productsCounter < startItem + itemsPerPage) {
+          console.log(contract._address)
+          const product = await InsuranceProduct.createItem(contract, process.env.CONTRACT_TYPES.INSURANCE.ANDROID_BATTERY)
+          commit('addProductToList', product)
+        }
+      }
+
+      commit('setProductsTotalPages', Math.ceil(contracts.length / itemsPerPage))
+
+      commit('setLoading', false, { root: true })
+    } catch (ex) {
+      console.error(ex)
+      commit('setLoading', false, { root: true })
+    }
+  },
+
+  // ---------------------------------------------------
+
+  async getProduct ({ commit }, id) {
     commit('clearCurrentProduct')
     commit('setLoading', true, { root: true })
 
     let response = null
 
     try {
-      response = await axios.get('insurance/products/' + id)
+      response = await axios.get(`insurance/products/${id}`)
     } catch (e) {
       commit('setLoading', false, { root: true })
     }

@@ -27,10 +27,7 @@ export default [
       {
         name: 'MyPolicyList',
         path: '/insurance/policy/mypolicies',
-        component: MyPolicyList,
-        meta: {
-          authRequired: true
-        }
+        component: MyPolicyList
       }
     ]
   },

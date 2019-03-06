@@ -28,6 +28,7 @@ export default {
     },
     isCampaignRunning () {
       const currentDate = moment.utc()
+      debugger
       const campaignStartDate = moment.utc(this.product.startDateUtc)
       const campaignEndDate = moment.utc(this.product.endDateUtc)
       return currentDate.isAfter(campaignStartDate) && currentDate.isBefore(campaignEndDate)

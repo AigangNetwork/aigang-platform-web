@@ -3,11 +3,9 @@
     <Card class="product-card">
       <div slot="body" v-loading="$store.getters.loading">
         <transition-group name="slideUp" mode="out-in">
-
           <ProductHeader key="1" :product="product" v-if="!isPolicyLoadingVisible" />
           <ProductDetails key="2" v-if="!isPolicyLoadingVisible" />
           <PolicyLoadingInfo v-else key="3" />
-
         </transition-group>
       </div>
     </Card>
@@ -36,7 +34,7 @@ export default {
     })
   },
   async created () {
-    await this.$store.dispatch('insurance/loadProduct', this.$route.params.id)
+    await this.$store.dispatch('insurance/getProduct', this.$route.params.id)
   },
   async beforeMount () {
     this.clearLoadingInfo()

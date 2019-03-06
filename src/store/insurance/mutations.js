@@ -3,6 +3,20 @@ export default {
     Object.assign(state, newState)
   },
 
+  setProducts (state, payload) {
+    state.products = payload
+  },
+
+  addProductToList (state, pool) {
+    state.products.items.push(pool)
+  },
+
+  setProductsTotalPages (state, totalPages) {
+    state.products.totalPages = totalPages
+  },
+
+  // --------
+
   loadCurrentProduct (state, payload) {
     state.product = payload.product
   },
