@@ -40,7 +40,7 @@ export default {
 
       this.headerInfo = {
         status: this.contribution.poolStatus,
-        title: this.contribution.poolName,
+        title: this.contribution.title,
         contributions: this.contribution.contributions,
         currentPoolSize: this.contribution.currentPoolSize,
         poolGoalSize: this.contribution.poolGoalSize,

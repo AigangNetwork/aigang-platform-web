@@ -32,7 +32,7 @@ export default {
     isSummaryVisible () {
       return this.$store.getters['pools/contributionsListLoading'] ||
             !this.isWeb3Loaded ||
-            this.$store.getters['pools/userContributions'].items.length !== 0
+            (this.$store.getters['pools/userContributions'].items && this.$store.getters['pools/userContributions'].items.length !== 0)
     }
   }
 }

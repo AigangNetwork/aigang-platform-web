@@ -5,7 +5,7 @@ export default class Contribution {
   async initialize (contributionData, pool) {
     this.id = contributionData.id
     this.poolId = contributionData[1]
-    this.poolName = pool.titled
+    this.title = pool.title
     this.poolDescription = pool.description
     this.amount = parseFloat(window.web3.utils.fromWei(contributionData[2]), 2)
     this.payout = 0

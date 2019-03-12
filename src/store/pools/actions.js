@@ -226,7 +226,7 @@ export default {
     try {
       const contract = await EthUtils.getContract(payload.address)
       const contribution = await Contribution.create(contract, payload.id)
-      console.log(contribution)
+
       if (contribution.poolStatus.toUpperCase() === 'NOTSET') {
         router.push({
           name: 'NotFound',

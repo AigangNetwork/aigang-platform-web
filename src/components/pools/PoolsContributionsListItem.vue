@@ -1,7 +1,7 @@
 <template>
   <transition name="slideUp">
     <tr @click="navigateToContribution(contribution.id, contribution.poolContractAddress)">
-      <td class="title">{{ contribution.poolName }}</td>
+      <td class="title">{{ contribution.title }}</td>
       <td class="number">{{ contribution.amount}} {{ $t('general.aix') }}</td>
       <td class="number">
         <Date :dateUtc="contribution.createdUtc" format="YYYY-MM-DD HH:mm" />
