@@ -57,7 +57,14 @@ export default class EthUtils {
   }
 
   static getHex (x) {
-    var result = web3.toHex(x)
+    let result
+
+    // Some wallets use older web3, that does not have toHex()
+    if (web3 && web3.toHex) {
+      result = web3.toHex(x)
+    } else {
+      result = '0x' + parseInt(x).toString(16)
+    }
 
     if (result.length % 2 === 1) {
       // bug https://github.com/ethereum/web3.js/issues/873
