@@ -1,8 +1,8 @@
 import moment from 'moment'
 
 export default class InsuranceProduct {
-  async initialize (contract, details) {
-    this.id = details.address
+  async initialize (details) {
+    this.address = details.address
     this.premiumCalculatorAddress = details[0]
     this.investorsPoolAddress = details[1]
     this.startDateUtc = moment.unix(details[2]).format('YYYY-MM-DD HH:mm')
@@ -16,27 +16,29 @@ export default class InsuranceProduct {
     this.policiesLimit = details[10]
     this.productPoolLimit = details[11]
     this.createdUtc = moment.unix(details[12]).format('YYYY-MM-DD HH:mm')
-    this.productType = mapContractTypeToProductType(details.contractType)
+    this.type = details.type
   }
 
-  static async createItem (contract, contractType) {
+  static async createItem (contract, type) {
     const details = await contract.methods.getProductDetails().call()
 
     details.address = contract._address
-    details.contractType = contractType
+    details.type = type
 
     const product = new InsuranceProduct()
-    await product.initialize(contract, details)
+    await product.initialize(details)
 
     return product
   }
-}
 
-const mapContractTypeToProductType = contractType => {
-  switch (contractType) {
-    case process.env.CONTRACT_TYPES.INSURANCE.ANDROID_BATTERY:
-      return 'ANDROIDDEVICEINSURANCE'
-    default:
-      return ''
+  static async create (contract, type) {
+    const details = await contract.methods.getProductDetails().call()
+
+    details.address = contract._address
+    details.type = type
+    const product = new InsuranceProduct()
+    await product.initialize(details)
+
+    return product
   }
 }

@@ -31,7 +31,6 @@ export default {
         productsCounter += 1
 
         if (productsCounter >= startItem && productsCounter < startItem + itemsPerPage) {
-          console.log(contract._address)
           const product = await InsuranceProduct.createItem(contract, process.env.CONTRACT_TYPES.INSURANCE.ANDROID_BATTERY)
           commit('addProductToList', product)
         }
@@ -46,38 +45,33 @@ export default {
     }
   },
 
-  // ---------------------------------------------------
-
-  async getProduct ({ commit }, id) {
-    commit('clearCurrentProduct')
+  async getProduct ({ commit }, payload) {
     commit('setLoading', true, { root: true })
 
-    let response = null
-
     try {
-      response = await axios.get(`insurance/products/${id}`)
-    } catch (e) {
-      commit('setLoading', false, { root: true })
-    }
+      const contract = await EthUtils.getContract(payload.address)
+      const product = await InsuranceProduct.create(contract, payload.type)
 
-    if (response && response.data.product) {
-      commit('loadCurrentProduct', response.data)
+      commit('setProduct', product)
+
       commit('setLoading', false, { root: true })
-    } else {
-      commit('clearCurrentProduct')
+    } catch (e) {
       commit('setLoading', false, { root: true })
     }
   },
 
-  async createNewPolicy ({ commit, state, dispatch }, { deviceId, productId }) {
+  // ---------------------------------------------------
+
+  async createNewPolicy ({ commit, state, dispatch }, { productAddress, productTypeId, deviceId }) {
     commit('clearPolicyLoadingInfo')
     commit('setIsPolicyLoadingVisible', true)
 
     try {
       await loadTaskId(commit, {
-        DeviceId: deviceId,
-        ProductId: productId,
-        IsCreatePolicy: true
+        productAddress,
+        productTypeId,
+        isCreatePolicy: true,
+        deviceId
       })
     } catch (error) {
       handlePolicyLoadingInfoError(error, state.policyLoadingInfo, commit, dispatch)
@@ -260,12 +254,12 @@ const loadTaskId = async (commit, request) => {
   })
 
   const policyLoadingInfo = {
-    deviceId: request.DeviceId
+    deviceId: request.deviceId
   }
 
   commit('setPolicyLoadingInfo', policyLoadingInfo)
 
-  const response = await customAxios.post('insurance/policy/android/pair', request)
+  const response = await customAxios.post('insurance/pair', request)
 
   commit('clearPolicyLoadingInfo')
   policyLoadingInfo.taskId = response.data.taskId

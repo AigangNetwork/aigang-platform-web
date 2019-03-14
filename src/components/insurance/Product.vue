@@ -1,6 +1,6 @@
 <template>
   <div class="aig-container aig-view" v-loading="$store.getters.loading">
-    <Card class="product-card">
+    <Card class="product-card" v-if="isWeb3Enabled || !isWeb3Loaded">
       <div slot="body" v-loading="$store.getters.loading">
         <transition-group name="slideUp" mode="out-in">
           <ProductHeader key="1" :product="product" v-if="!isPolicyLoadingVisible" />
@@ -10,8 +10,8 @@
       </div>
     </Card>
   </div>
-
 </template>
+
 <script>
 import Card from '@/components/Card'
 import EndDate from '@/components/mixins/EndDate'
@@ -24,17 +24,45 @@ const { mapGetters, mapMutations } = createNamespacedHelpers('insurance')
 export default {
   components: { Card, ProductHeader, ProductDetails, PolicyLoadingInfo },
   mixins: [EndDate],
+  data () {
+    return {
+      isDataLoaded: false
+    }
+  },
   computed: {
-    ...mapGetters(['product', 'isPolicyLoadingVisible'])
+    ...mapGetters(['product', 'isPolicyLoadingVisible']),
+    isWeb3Enabled () {
+      return this.$store.getters['user/isWeb3Enabled']
+    },
+    isWeb3Loaded () {
+      return this.$store.getters['user/isWeb3Loaded']
+    }
   },
   methods: {
     ...mapMutations({
       clearLoadingInfo: 'clearPolicyLoadingInfo',
       setIsPolicyLoadingVisible: 'setIsPolicyLoadingVisible'
-    })
+    }),
+    async loadData () {
+      const payload = {
+        address: this.$route.params.address,
+        type: this.$route.params.type
+      }
+
+      await this.$store.dispatch('insurance/getProduct', payload)
+    }
   },
-  async created () {
-    await this.$store.dispatch('insurance/getProduct', this.$route.params.id)
+  watch: {
+    async isWeb3Enabled (newValue) {
+      if (newValue) {
+        await this.loadData()
+      }
+    }
+  },
+  async mounted () {
+    if (this.$store.getters['user/isWeb3Enabled']) {
+      await this.loadData()
+    }
   },
   async beforeMount () {
     this.clearLoadingInfo()
@@ -46,8 +74,8 @@ export default {
     next()
   }
 }
-
 </script>
+
 <style lang="scss">
   @import '~helpers/variables';
 

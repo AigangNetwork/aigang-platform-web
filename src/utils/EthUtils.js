@@ -48,6 +48,7 @@ export default class EthUtils {
     }
 
     const abi = await this.getAbi(address)
+
     if (!window.web3 || !window.web3.eth.Contract) return null
     contract = new window.web3.eth.Contract(abi, address)
 

@@ -1,6 +1,6 @@
 <template>
   <div class="aig-product-data" :class="{ disabled: !isCampaignRunning }">
-    <router-link :to="{ name: 'Product', params: { id: product.id}}">
+    <router-link :to="{ name: 'Product', params: { address: product.address, type: product.type }}">
       <div class="aig-product-data-body-container">
         <div class="aig-product-data-head" v-if="isCampaignRunning">
           <div class="desc date">{{ $t('insurance.product.productEnds') }}
@@ -17,7 +17,7 @@
           <div class="title">{{ product.title | truncate(50) }}</div>
         </div>
         <div class="aig-product-data-body">
-          <InsuranceProductImage :type="product.productType" />
+          <InsuranceProductImage :type="product.type" />
           <div class="premium-container">
             <p>{{ $t('insurance.product.basePremium') }}:</p>
             <p class="premium-amount">{{ product.basePremium }}</p>

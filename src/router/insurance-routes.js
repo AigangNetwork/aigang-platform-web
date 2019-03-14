@@ -33,7 +33,7 @@ export default [
   },
   {
     name: 'Product',
-    path: '/insurance/products/:id',
+    path: '/insurance/products/:address/:type',
     component: Product
   },
   {

@@ -7,18 +7,20 @@ export default {
   props: ['type'],
   computed: {
     imageUrl () {
+      console.log(this.type);
+      
       if (!this.type) {
         return
       }
 
-      switch (this.type.toUpperCase()) {
-        case 'ANDROIDDEVICEINSURANCE':
+      switch (parseInt(this.type)) {
+        case 3:
           return '/static/battery.svg'
-        case 'TESLAINSURANCE':
+        case 4:
           return '/static/car.svg'
-        case 'CROPSINSURANCE':
+        case 5:
           return '/static/crops.svg'
-        case 'DRONEINSURANCE':
+        case 6:
           return '/static/drone.svg'
       }
     }

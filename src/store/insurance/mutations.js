@@ -15,10 +15,14 @@ export default {
     state.products.totalPages = totalPages
   },
 
+  setProduct (state, payload) {
+    state.product = payload
+  },
+
   // --------
 
-  loadCurrentProduct (state, payload) {
-    state.product = payload.product
+  setIsPolicyLoadingVisible (state, value) {
+    state.isPolicyLoadingVisible = value
   },
 
   clearCurrentProduct (state) {
@@ -48,10 +52,6 @@ export default {
 
   setPolicyLoadingFailed (state, value) {
     state.policyLoadingInfo.failed = value
-  },
-
-  setIsPolicyLoadingVisible (state, value) {
-    state.isPolicyLoadingVisible = value
   },
 
   loadUserPolicies (state, policies) {

@@ -1,8 +1,8 @@
 <template>
   <div class="dataset-model-header-container" >
-    <div class="header-title-container" :class="{ disabled: !isCampaignRunning || product.state != 'active' }">
+    <div class="header-title-container" :class="{ disabled: !isCampaignRunning }">
       <div class="header-left-section">
-        <InsuranceProductImage :type="product.productType" />
+        <InsuranceProductImage :type="product.type" />
         <h1>{{ product.title }}</h1>
         <span class="date" v-if="product.endDateUtc">{{ $t('insurance.product.productEnds') }} <Date :dateUtc="product.endDateUtc" /></span>
       </div>
@@ -14,6 +14,7 @@
     </div>
   </div>
 </template>
+
 <script>
 import moment from 'moment'
 import Date from '@/components/Date'
@@ -28,15 +29,14 @@ export default {
     },
     isCampaignRunning () {
       const currentDate = moment.utc()
-      debugger
       const campaignStartDate = moment.utc(this.product.startDateUtc)
       const campaignEndDate = moment.utc(this.product.endDateUtc)
       return currentDate.isAfter(campaignStartDate) && currentDate.isBefore(campaignEndDate)
     }
   }
 }
-
 </script>
+
 <style lang="scss" scoped>
   @import '~helpers/variables';
   @import '~helpers/mixins';

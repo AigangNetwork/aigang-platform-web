@@ -1,7 +1,7 @@
 <template>
   <div class="aig-policy-item">
     <div class="policy-list-item-img-container">
-      <InsuranceProductImage :type="policy.productType" />
+      <InsuranceProductImage :type="policy.type" />
     </div>
     <div class="policy-list-item-content">
       <div class="policy-item-header">
