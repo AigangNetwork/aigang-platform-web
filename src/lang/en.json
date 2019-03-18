@@ -664,7 +664,7 @@
 		},
 		"policy": {
 			"pay": "Pay",
-			"deviceId": "Device id",
+			"productAddress": "Product address",
 			"policyId": "Policy id",
 			"startingTask": "Starting task",
 			"policyStatus": "Policy Status",

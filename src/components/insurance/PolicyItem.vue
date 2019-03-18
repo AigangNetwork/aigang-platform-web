@@ -11,16 +11,16 @@
       <div class="policy-item-body">
         <div class="policy-info-item">
           <div class="title">
-            <p class="title">{{$t('insurance.policy.deviceId')}}:</p>
+            <p class="title">{{$t('insurance.policy.productAddress')}}:</p>
           </div>
-          <div class="content">{{policy.deviceId}}</div>
+          <div class="content">{{policy.address}}</div>
         </div>
         <div class="policy-info-item-date">
           <div class="title">
             <p class="title">{{$t('insurance.policy.startDate')}}:</p>
           </div>
           <div class="content">
-            <Date :dateUtc="policy.startUtc" />
+            <Date :dateUtc="policy.startUtc" format="YYYY-MM-DD" />
           </div>
         </div>
         <div class="policy-info-item-date">
@@ -28,7 +28,7 @@
             <p class="title">{{$t('insurance.policy.endDate')}}:</p>
           </div>
           <div class="content">
-            <Date :dateUtc="policy.endUtc" />
+            <Date :dateUtc="policy.endUtc" format="YYYY-MM-DD"/>
           </div>
         </div>
         <div class="policy-info-item-status">

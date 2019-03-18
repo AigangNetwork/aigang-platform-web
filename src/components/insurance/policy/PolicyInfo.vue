@@ -1,3 +1,4 @@
+
 <template>
   <el-row class="policy-data">
     <p>
@@ -6,8 +7,8 @@
     </p>
 
     <p>
-      <label>{{ $t('insurance.policy.deviceId') }}:</label>
-      {{ policy.deviceId }}
+      <label>{{ $t('insurance.policy.productAddress') }}:</label>
+      {{ policy.address }}
     </p>
 
     <p>

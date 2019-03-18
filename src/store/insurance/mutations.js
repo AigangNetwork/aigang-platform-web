@@ -29,9 +29,8 @@ export default {
     state.product = {}
   },
 
-  setPolicy (state, payload) {
-    state.policy = payload.policy
-    state.policy.isClaimable = true
+  setPolicy (state, policy) {
+    state.policy = policy
   },
 
   clearPolicy (state) {
@@ -54,8 +53,16 @@ export default {
     state.policyLoadingInfo.failed = value
   },
 
-  loadUserPolicies (state, policies) {
-    state.userPolicies = policies
+  setUserPolicies (state, payload) {
+    state.userPolicies = payload
+  },
+
+  setUserPoliciesTotalPages (state, totalPages) {
+    state.userPolicies.totalPages = totalPages
+  },
+
+  addPolicy (state, policy) {
+    state.userPolicies.items.push(policy)
   },
 
   setTransactionError (state, value) {

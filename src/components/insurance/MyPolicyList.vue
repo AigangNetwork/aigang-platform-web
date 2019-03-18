@@ -1,23 +1,33 @@
 <template>
   <transition-group class="items-container" name="slideUp" v-loading="$store.getters.loading || !$store.getters['user/isWeb3Loaded']">
-    <el-row v-loading="$store.getters.loading">
+    <el-row v-loading="$store.getters.loading" v-if="showPolicies" key='policy-items-container'>
       <el-col v-if="!$store.getters.loading">
-        <!-- <div class="policy-item" v-for="(item, index) in userPolicies" :key="index">
-          <router-link :to="{ name: 'Policy', params: { policyId: item.id } }">
-            <PolicyItem :policy="item" />
-          </router-link>
-        </div>
-        <div v-if="userPolicies && userPolicies.length === 0">
-          <h2>{{ $t('general.noPolicies') }}</h2>
-        </div> -->
+        <transition-group name="slideUp">
+        <div class="policy-item" v-for="(item, index) in userPolicies.items" :key="index">
+            <router-link :to="{ name: 'Policy', params: { address: item.address, type: item.type, id: item.id } }" :key="index">
+              <PolicyItem :policy="item" />
+            </router-link>
+          </div>
+        </transition-group>
+        <el-col v-if="isWeb3Enabled">
+          <transition name="slideUp">
+            <Pagination v-if="userPolicies.totalPages > 1  && isDataLoaded" :callback="loadPage" :total-page-count="userPolicies.totalPages"
+              :current-page="page" />
+          </transition>
+        </el-col>
       </el-col>
     </el-row>
 
-    <el-row class="failure-message" v-if="!isWeb3Enabled && $store.getters['user/isWeb3Loaded']" key="failure-message">
+    <el-row class="failure-message" v-if="showWeb3NotConnected" key="failure-message">
       <h2>{{ $t('general.web3NotConnected') }}</h2>
+    </el-row>
+
+    <el-row class="failure-message" key="no-pools-message" v-else-if="!showPolicies && isDataLoaded ">
+      <h2>{{ $t('general.noPolicies') }}</h2>
     </el-row>
   </transition-group>
 </template>
+
 <script>
 import PolicyItem from '@/components/insurance/PolicyItem.vue'
 import { createNamespacedHelpers } from 'vuex'
@@ -27,19 +37,42 @@ export default {
   components: {
     PolicyItem
   },
+  data () {
+    return {
+      isDataLoaded: false
+    }
+  },
   computed: {
     ...mapGetters(['userPolicies']),
     isWeb3Enabled () {
       return this.$store.getters['user/isWeb3Enabled']
+    },
+    showWeb3NotConnected () {
+      return !this.isWeb3Enabled && this.$store.getters['user/isWeb3Loaded']
+    },
+    showPolicies () {
+      return this.isWeb3Enabled &&
+        (!this.$store.getters.loading || this.$store.getters['user/isWeb3Loaded']) &&
+        this.userPolicies &&
+        (this.userPolicies.items && this.userPolicies.items.length !== 0)
     }
   },
   methods: {
-    // ...mapActions(['loadUserPolicies'])
+    ...mapActions(['loadUserPolicies'])
   },
-  async mounted () {
-    try {
+  watch: {
+    async isWeb3Enabled (newValue) {
+      if (newValue) {
+        await this.loadUserPolicies(1)
+        this.isDataLoaded = true
+      }
+    }
+  },
+  async beforeMount () {
+    if (this.isWeb3Enabled) {
       await this.loadUserPolicies(1)
-    } catch (error) { }
+      this.isDataLoaded = true
+    }
   }
 }
 

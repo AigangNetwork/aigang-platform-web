@@ -5,13 +5,15 @@ import getters from './getters'
 export const initialInsuranceState = () => {
   return {
     products: {},
-
     policy: {},
-    userPolicies: {},
     txHash: null,
     policyLoadingInfo: {},
     isPolicyLoadingVisible: false,
-    transactionError: false
+    transactionError: false,
+    userPolicies: {
+      items: [],
+      totalPages: 0
+    }
   }
 }
 

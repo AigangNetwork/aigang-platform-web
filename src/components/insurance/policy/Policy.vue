@@ -9,7 +9,6 @@
               <router-link :to="policyListRoute" class="back-button">
                 <i class="back-icon el-icon-arrow-left"></i>
               </router-link>
-
               <h2>{{ $t('insurance.policy.androidBatteryInsurancePolicy') }}</h2>
             </el-row>
 
@@ -17,7 +16,6 @@
               <PolicyInfo :policy="policy" />
               <DeviceInfo :data="deviceData" />
               <ClaimInfo :data="claimProperties" />
-              <ProductDetailsInfo :data="policy" />
             </el-row>
 
             <el-row class="footer">
@@ -46,20 +44,12 @@
                 </el-button>
               </el-col>
             </el-row>
-
-            <PolicyDeleteSection v-if="isPolicyDraft" />
           </div>
 
           <VerifyClaimLoadingInfo v-else key="2" />
         </transition-group>
       </div>
     </Card>
-
-    <TermsAndConditionsDialog
-      :termsAndConditions="policy.termsAndConditions"
-      :isVisible="isTermsAndConditionsDialogVisible"
-      :displayDialog="displayTermsAndConditionsDialog"
-      @agreed="makePayment" />
 
     <LogInToEthereumClientDialog
       :isVisible="isDisplayLogInToEthereumClientDialogVisible"
@@ -68,7 +58,6 @@
     <PaymentConfirmationDialog
       :isVisible="isPaymentDialogVisible && !transactionError"
       :displayDialog="displayPaymentDialog"
-      :content="$t('insurance.policy.paymentInfo.metamaskAlert')"
       :txHash="txHash"
       :title="$t('insurance.policy.paymentInfo.title')"
       :bodyText="$t('insurance.policy.paymentInfo.body')"
@@ -82,12 +71,10 @@ import Card from '@/components/Card'
 import PaymentConfirmationDialog from '@/components/common/PaymentConfirmationDialog'
 import TermsAndConditionsDialog from '@/components/insurance/TermsAndConditionsDialog'
 import LogInToEthereumClientDialog from '@/components/insurance/LogInToEthereumClientDialog'
-import PolicyDeleteSection from '@/components/insurance/PolicyDeleteSection'
 import PolicyInfo from '@/components/insurance/policy/PolicyInfo'
 import DeviceInfo from '@/components/insurance/policy/DeviceInfo'
 import ClaimInfo from '@/components/insurance/policy/ClaimInfo'
 import VerifyClaimLoadingInfo from '@/components/insurance/VerifyClaimLoadingInfo'
-import ProductDetailsInfo from '@/components/insurance/policy/ProductDetailsInfo'
 
 import { createNamespacedHelpers } from 'vuex'
 const { mapGetters, mapActions, mapMutations } = createNamespacedHelpers('insurance')
@@ -101,9 +88,7 @@ export default {
     PolicyInfo,
     DeviceInfo,
     ClaimInfo,
-    PolicyDeleteSection,
-    VerifyClaimLoadingInfo,
-    ProductDetailsInfo
+    VerifyClaimLoadingInfo
   },
   data () {
     return {
@@ -164,14 +149,25 @@ export default {
   },
   computed: {
     ...mapGetters(['policy', 'isPolicyLoadingVisible', 'policyLoadingInfo', 'transactionError', 'txHash']),
-    isMetamaskLoggedIn () {
+    isWeb3Enabled () {
       return this.$store.getters['user/isWeb3Enabled']
     },
+    showWeb3NotConnected () {
+      return !this.isWeb3Enabled && this.$store.getters['user/isWeb3Loaded']
+    },
     deviceData () {
-      return this.policy.properties ? JSON.parse(this.policy.properties) : null
+      try {
+        return JSON.parse(this.policy.properties)
+      } catch (e) {
+        return null
+      }
     },
     claimProperties () {
-      return this.policy.claimProperties ? JSON.parse(this.policy.claimProperties) : null
+      try {
+        return JSON.parse(this.policy.claimProperties)
+      } catch (e) {
+        return null
+      }
     },
     isPolicyDraft () {
       if (this.policy.status) {
@@ -180,12 +176,27 @@ export default {
       }
     }
   },
-  async mounted () {
-    await this.getPolicy(this.$route.params.policyId)
+  watch: {
+    async isWeb3Enabled (newValue) {
+      if (newValue) {
+        await this.getPolicy({
+          address: this.$route.params.address,
+          type: this.$route.params.type,
+          id: this.$route.params.id
+        })
+      }
+    }
   },
   async beforeMount () {
     this.clearLoadingInfo()
     this.setIsPolicyLoadingVisible(false)
+    if (this.isWeb3Enabled) {
+      await this.getPolicy({
+        address: this.$route.params.address,
+        type: this.$route.params.type,
+        id: this.$route.params.id
+      })
+    }
   },
   beforeRouteLeave (to, from, next) {
     this.clearLoadingInfo()

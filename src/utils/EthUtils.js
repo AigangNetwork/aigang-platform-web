@@ -74,4 +74,12 @@ export default class EthUtils {
 
     return result
   }
+
+  static fromHex (value) {
+    return web3.toAscii(value)
+  }
+
+  static fromWei (value) {
+    return window.web3.utils.fromWei(value)
+  }
 }

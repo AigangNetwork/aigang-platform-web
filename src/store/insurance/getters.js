@@ -5,6 +5,7 @@ export default {
   // -----------
   isPolicyLoadingVisible: state => state.isPolicyLoadingVisible,
   policy: state => state.policy,
+
   userPolicies: state => state.userPolicies,
   policyLoadingInfo: state => state.policyLoadingInfo,
   txHash: state => state.txHash,

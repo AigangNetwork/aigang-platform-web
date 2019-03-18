@@ -38,7 +38,7 @@ export default [
   },
   {
     name: 'Policy',
-    path: '/insurance/policy/:policyId',
+    path: '/insurance/policy/:address/:type/:id',
     component: Policy
   }
 ]

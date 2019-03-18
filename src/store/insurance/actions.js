@@ -5,6 +5,7 @@ import router from '@/router/index'
 
 import EthUtils from '@/utils/EthUtils'
 import InsuranceProduct from '@/domain/InsuranceProduct'
+import Policy from '../../domain/Policy'
 
 export default {
   async resetState ({ commit }) {
@@ -31,7 +32,10 @@ export default {
         productsCounter += 1
 
         if (productsCounter >= startItem && productsCounter < startItem + itemsPerPage) {
-          const product = await InsuranceProduct.createItem(contract, process.env.CONTRACT_TYPES.INSURANCE.ANDROID_BATTERY)
+          const product = await InsuranceProduct.createItem(
+            contract,
+            process.env.CONTRACT_TYPES.INSURANCE.ANDROID_BATTERY
+          )
           commit('addProductToList', product)
         }
       }
@@ -63,70 +67,61 @@ export default {
   // ---------------------------------------------------
 
   async createNewPolicy ({ commit, state, dispatch }, { productAddress, productTypeId, deviceId }) {
-    commit('clearPolicyLoadingInfo')
-    commit('setIsPolicyLoadingVisible', true)
-
-    try {
-      await loadTaskId(commit, {
-        productAddress,
-        productTypeId,
-        isCreatePolicy: true,
-        deviceId
-      })
-    } catch (error) {
-      handlePolicyLoadingInfoError(error, state.policyLoadingInfo, commit, dispatch)
-      return
-    }
-
-    // Creating policy
-    let retryCount = process.env.RETRY_COUNT || 10
-    let response = null
-    while (
-      state.isPolicyLoadingVisible &&
-      (!response || (!response.data.policyId && !response.data.validationResultCode))
-    ) {
-      try {
-        response = await axios.post('insurance/policy', {
-          DeviceId: deviceId,
-          TaskId: state.policyLoadingInfo.taskId,
-          ProductId: productId
-        })
-      } catch (error) {
-        handlePolicyLoadingInfoError(error, state.policyLoadingInfo, commit, dispatch)
-        return
-      }
-
-      retryCount--
-
-      if (retryCount === 0) {
-        commit('setPolicyLoadingFailed', true)
-        break
-      }
-
-      await sleep(1000)
-    }
-
-    let newPolicyLoadingInfo = Object.assign({}, state.policyLoadingInfo)
-
-    if (response.data.validationResultCode) {
-      newPolicyLoadingInfo.validationResultCode = response.data.validationResultCode
-    } else {
-      newPolicyLoadingInfo.policyId = response.data.policyId
-    }
-
-    commit('setPolicyLoadingInfo', newPolicyLoadingInfo)
+    // commit('clearPolicyLoadingInfo')
+    // commit('setIsPolicyLoadingVisible', true)
+    // try {
+    //   await loadTaskId(commit, {
+    //     productAddress,
+    //     productTypeId,
+    //     isCreatePolicy: true,
+    //     deviceId
+    //   })
+    // } catch (error) {
+    //   handlePolicyLoadingInfoError(error, state.policyLoadingInfo, commit, dispatch)
+    //   return
+    // }
+    // // Creating policy
+    // let retryCount = process.env.RETRY_COUNT || 10
+    // let response = null
+    // // while (
+    // //   state.isPolicyLoadingVisible &&
+    // //   (!response || (!response.data.policyId && !response.data.validationResultCode))
+    // // ) {
+    // //   try {
+    // //     response = await axios.post('insurance/policy', {
+    // //       DeviceId: deviceId,
+    // //       TaskId: state.policyLoadingInfo.taskId,
+    // //       ProductId: productId
+    // //     })
+    // //   } catch (error) {
+    // //     handlePolicyLoadingInfoError(error, state.policyLoadingInfo, commit, dispatch)
+    // //     return
+    // //   }
+    //   retryCount--
+    //   if (retryCount === 0) {
+    //     commit('setPolicyLoadingFailed', true)
+    //     break
+    //   }
+    //   await sleep(1000)
+    // }
+    // let newPolicyLoadingInfo = Object.assign({}, state.policyLoadingInfo)
+    // if (response.data.validationResultCode) {
+    //   newPolicyLoadingInfo.validationResultCode = response.data.validationResultCode
+    // } else {
+    //   newPolicyLoadingInfo.policyId = response.data.policyId
+    // }
+    // commit('setPolicyLoadingInfo', newPolicyLoadingInfo)
   },
 
-  async getPolicy ({ commit }, policyId) {
+  async getPolicy ({ commit, rootState }, payload) {
     commit('setLoading', true, { root: true })
     commit('clearPolicy')
 
-    const response = await axios.get('insurance/policy/' + policyId)
+    const contract = await EthUtils.getContract(payload.address)
+    const policyId = EthUtils.getHex(payload.id)
+    const policy = await Policy.create(contract, payload.type, policyId, rootState.user.userWeb3.coinbase)
 
-    if (response && response.data) {
-      commit('setPolicy', response.data)
-    }
-
+    commit('setPolicy', policy)
     commit('setLoading', false, { root: true })
   },
 
@@ -162,12 +157,51 @@ export default {
       })
   },
 
-  async loadUserPolicies ({ commit }, page) {
+  async loadUserPolicies ({ commit, rootState, state }, page) {
     commit('setLoading', true, { root: true })
+    commit('setUserPolicies', {
+      items: [],
+      totalPages: 0
+    })
 
-    const response = await axios.get('/insurance/policy/mypolicies?page=' + page)
-    if (response.data) {
-      commit('loadUserPolicies', response.data.policies)
+    try {
+      const type = process.env.CONTRACT_TYPES.INSURANCE.ANDROID_BATTERY
+      const contracts = await EthUtils.getContracts(type)
+      const itemsPerPage = process.env.INSURANCE_PRODUCT_ITEMS_PER_PAGE
+      const startItem = page * itemsPerPage - itemsPerPage + 1
+
+      let totalPolicies = 0
+      let iterator = 0
+      // Iterating through products
+      for (const contract of contracts) {
+        const policiesLength = await contract.methods.myPoliciesLength(rootState.user.userWeb3.coinbase).call()
+        let policiesCount = parseInt(policiesLength)
+        totalPolicies += policiesCount
+
+        // Iterating through policies
+        for (let i = policiesCount - 1; i >= 0 && state.userPolicies.items.length < itemsPerPage; i--) {
+          iterator++
+
+          if (iterator < startItem) {
+            continue
+          }
+
+          const id = await contract.methods.myPolicies(rootState.user.userWeb3.coinbase, i).call()
+          const policy = await Policy.createItem(contract, type, id)
+
+          commit('addPolicy', policy)
+
+          if (iterator === startItem) {
+            commit('setLoading', false, { root: true })
+          }
+        }
+
+        commit('setUserPoliciesTotalPages', Math.ceil(totalPolicies / itemsPerPage))
+      }
+
+      commit('setLoading', false, { root: true })
+    } catch (ex) {
+      console.error(ex)
       commit('setLoading', false, { root: true })
     }
   },

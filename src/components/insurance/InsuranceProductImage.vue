@@ -7,8 +7,6 @@ export default {
   props: ['type'],
   computed: {
     imageUrl () {
-      console.log(this.type);
-      
       if (!this.type) {
         return
       }
