@@ -30,16 +30,19 @@
 
 <script>
 import PolicyItem from '@/components/insurance/PolicyItem.vue'
+import Pagination from '@/components/Pagination'
 import { createNamespacedHelpers } from 'vuex'
 const { mapGetters, mapActions } = createNamespacedHelpers('insurance')
 
 export default {
   components: {
-    PolicyItem
+    PolicyItem,
+    Pagination
   },
   data () {
     return {
-      isDataLoaded: false
+      isDataLoaded: false,
+      page: 1
     }
   },
   computed: {
@@ -58,7 +61,13 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['loadUserPolicies'])
+    ...mapActions(['loadUserPolicies']),
+    async loadPage (page) {
+      this.isDataLoaded = false
+      this.page = page
+      await this.loadUserPolicies(page)
+      this.isDataLoaded = true
+    }
   },
   watch: {
     async isWeb3Enabled (newValue) {

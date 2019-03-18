@@ -167,7 +167,7 @@ export default {
     try {
       const type = process.env.CONTRACT_TYPES.INSURANCE.ANDROID_BATTERY
       const contracts = await EthUtils.getContracts(type)
-      const itemsPerPage = process.env.INSURANCE_PRODUCT_ITEMS_PER_PAGE
+      const itemsPerPage = process.env.POLICY_ITEMS_PER_PAGE
       const startItem = page * itemsPerPage - itemsPerPage + 1
 
       let totalPolicies = 0

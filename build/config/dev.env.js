@@ -14,6 +14,7 @@ module.exports = merge(prodEnv, {
   ANDROID_APP_LOCATION: '"https://github.com/AigangNetwork/aigang-insurance-app/tree/master/android"',
   RETRY_COUNT: 10,
   INSURANCE_PRODUCT_ITEMS_PER_PAGE: 9,
+  POLICY_ITEMS_PER_PAGE: 12,
   POOLS_ITEMS_PER_PAGE: 9,
   PREDICTIONS_ITEMS_PER_PAGE: 9,
   CONTRIBUTIONS_ITEMS_PER_PAGE: 9,
