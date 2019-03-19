@@ -69,8 +69,10 @@ export default {
   },
   methods: {
     async loadPage (page) {
+      this.isDataLoaded = false
       this.page = page
       await this.$store.dispatch('predictions/getUserForecasts', this.page)
+      this.isDataLoaded = true
     }
   }
 }

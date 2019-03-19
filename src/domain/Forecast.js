@@ -8,7 +8,7 @@ export default class Forecast {
     this.id = forecastData.id
     this.predictionTitle = prediction.title
     this.outcomeTitle = outcomeData[1]
-    this.amount = parseFloat(window.web3.utils.fromWei(forecastData[3]))
+    this.amount = parseFloat(EthUtils.fromWei(forecastData[3]))
     this.status = mapForecastStatus(forecastData[5], prediction.status, this.isWon)
     this.predictionStatus = prediction.status
     this.createdUtc = moment.unix(forecastData[6]).format('YYYY-MM-DD HH:mm')
@@ -30,9 +30,9 @@ export default class Forecast {
     if (this.isWon) {
       const prizeCalculator = await EthUtils.getContract(prediction.prizeCalculator)
       const amount = await prizeCalculator.methods
-        .calculatePrizeAmount(window.web3.utils.toWei(this.poolSize), outcomeData[3], forecastData[3])
+        .calculatePrizeAmount(EthUtils.toWei(this.poolSize), outcomeData[3], forecastData[3])
         .call()
-      this.wonAmount = window.web3.utils.fromWei(amount)
+      this.wonAmount = EthUtils.fromWei(amount)
     }
 
     this.outcomeId = forecastData[4]

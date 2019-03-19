@@ -106,7 +106,9 @@ export default {
       items: [],
       totalPages: 0
     })
+
     commit('setLoading', true, { root: true })
+
     try {
       const contracts = await EthUtils.getContracts(process.env.CONTRACT_TYPES.PREDICTIONS)
       let totalForecasts = 0
@@ -125,9 +127,7 @@ export default {
         for (let i = forecastsCount - 1; i >= 0 && state.userForecasts.items.length < itemsPerPage; i--) {
           iterator++
 
-          if (iterator < startItem) {
-            continue
-          }
+          if (iterator < startItem) continue
 
           const id = await contract.methods.myForecasts(rootState.user.userWeb3.coinbase, i).call()
           const forecast = await Forecast.createItem(contract, id)
@@ -154,7 +154,7 @@ export default {
     try {
       const TokenInstance = await EthUtils.getContract(process.env.CONTRACTS_ADDRESSES.TOKEN)
 
-      const paymentValue = window.web3.utils.toWei(payload.amount.toString())
+      const paymentValue = EthUtils.toWei(payload.amount.toString())
       const predictionIdHex = EthUtils.getHex(payload.predictionId)
       let outcomeHex = EthUtils.getHex(payload.outcome)
       const bytes = outcomeHex + predictionIdHex.replace('0x', '')

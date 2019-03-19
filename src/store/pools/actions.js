@@ -84,7 +84,7 @@ export default {
 
     try {
       const TokenInstance = await EthUtils.getContract(process.env.CONTRACTS_ADDRESSES.TOKEN)
-      const paymentValue = window.web3.utils.toWei(payload.amount.toString())
+      const paymentValue = EthUtils.toWei(payload.amount.toString())
       const poolIdHex = EthUtils.getHex(payload.poolId)
 
       const callObject = TokenInstance.methods
