@@ -132,16 +132,20 @@ export default {
 
   async sendPolicyPayment ({ commit, rootState }, { productAddress, policy }) {
     const web3 = window.web3
-    const TokenInstance = new web3.eth.Contract(process.env.CONTRACT_INFO.ABI, productAddress)
-    const paymentValue = web3.utils.toWei(policy.premium.toString())
+    const TokenInstance = new web3.eth.Contract(process.env.CONTRACT_INFO.ABI, process.env.CONTRACT_INFO.ADDRESS)
+    const paymentValue = EthUtils.toWei(policy.premium.toString())
     const policyIdBytes = web3.utils.fromAscii(policy.id)
 
     commit('setTransactionError', false)
 
+    const gasLimit = await TokenInstance.methods
+      .approveAndCall(productAddress, paymentValue, policyIdBytes)
+      .estimateGas({ from: rootState.user.userWeb3.coinbase })
+
     TokenInstance.methods
       .addPolicy(policyIdBytes, paymentValue, policyIdBytes)
       .send({
-        gas: process.env.GAS.POLICY_PAYMENT,
+        gas: gasLimit,
         from: rootState.user.userWeb3.coinbase
       })
       .on('error', () => {

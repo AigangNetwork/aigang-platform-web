@@ -82,4 +82,8 @@ export default class EthUtils {
   static fromWei (value) {
     return window.web3.utils.fromWei(value)
   }
+
+  static toWei (value) {
+    return window.web3.utils.toWei(value)
+  }
 }

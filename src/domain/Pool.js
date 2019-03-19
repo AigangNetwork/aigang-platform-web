@@ -1,4 +1,5 @@
 import moment from 'moment'
+import EthUtils from '@/utils/EthUtils'
 
 export default class Pool {
   async initialize (data) {
@@ -12,8 +13,8 @@ export default class Pool {
     this.entityContractAddress = data.destination
     this.poolContractAddress = data.address
     this.contributions = data.contributions
-    this.currentPoolSize = window.web3.utils.fromWei(data.amountCollected)
-    this.goalPoolSize = window.web3.utils.fromWei(data.amountLimit)
+    this.currentPoolSize = EthUtils.fromWei(data.amountCollected)
+    this.goalPoolSize = EthUtils.fromWei(data.amountLimit)
   }
 
   static async create (contract, id) {

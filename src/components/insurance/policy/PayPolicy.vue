@@ -40,7 +40,7 @@
 import Card from '@/components/Card'
 import PaymentConfirmationDialog from '@/components/common/PaymentConfirmationDialog'
 import { createNamespacedHelpers } from 'vuex'
-const { mapGetters, mapActions, mapMutations } = createNamespacedHelpers('insurance')
+const { mapGetters, mapMutations } = createNamespacedHelpers('insurance')
 
 export default {
   components: {

@@ -5,18 +5,18 @@ export default class Prediction {
   async initialize (data, details, outcomes) {
     this.id = data.id
     this.status = mapPredictionStatus(data.status)
-    this.fee = parseFloat(window.web3.utils.fromWei(data.fee))
+    this.fee = parseFloat(EthUtils.fromWei(data.fee))
     this.marketAddress = data.address
     this.title = details[0]
     this.description = details[1]
-    this.poolSize = window.web3.utils.fromWei(data.totalTokens)
+    this.poolSize = EthUtils.fromWei(data.totalTokens)
     this.forecastStartUtc = moment.unix(data.forecastStartUtc).format('YYYY-MM-DD HH:mm')
     this.forecastEndUtc = moment.unix(data.forecastEndUtc).format('YYYY-MM-DD HH:mm')
     this.forecastsCount = data.totalForecasts
     this.resultStorage = data.resultStorage
     this.outcomes = outcomes
     this.prizeCalculator = data.prizeCalculator
-    this.initialTokens = window.web3.utils.fromWei(data.initialTokens)
+    this.initialTokens = EthUtils.fromWei(data.initialTokens)
   }
 
   async initializeOutcomes (outcomes) {
@@ -44,7 +44,7 @@ export default class Prediction {
         id: i,
         name: outcome[1],
         index: i,
-        totalTokens: window.web3.utils.fromWei(outcome[3])
+        totalTokens: EthUtils.fromWei(outcome[3])
       })
     }
 

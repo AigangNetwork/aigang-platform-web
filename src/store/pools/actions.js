@@ -84,13 +84,17 @@ export default {
 
     try {
       const TokenInstance = await EthUtils.getContract(process.env.CONTRACTS_ADDRESSES.TOKEN)
-      const paymentValue = window.web3.utils.toWei(payload.amount.toString())
+      const paymentValue = EthUtils.toWei(payload.amount.toString())
       const poolIdHex = EthUtils.getHex(payload.poolId)
+
+      const gasLimit = await TokenInstance.methods
+        .approveAndCall(payload.poolContractAddress, paymentValue, poolIdHex)
+        .estimateGas({ from: rootState.user.userWeb3.coinbase })
 
       const callObject = TokenInstance.methods
         .approveAndCall(payload.poolContractAddress, paymentValue, poolIdHex)
         .send({
-          gas: process.env.GAS.ADD_CONTRIBUTION,
+          gas: gasLimit,
           from: rootState.user.userWeb3.coinbase
         })
 
@@ -251,10 +255,14 @@ export default {
 
       commit('setLoading', false, { root: true })
 
+      const gasLimit = await PoolsInstance.methods
+        .payout(payload.contributionId)
+        .estimateGas({ from: rootState.user.userWeb3.coinbase })
+
       PoolsInstance.methods
         .payout(payload.contributionId)
         .send({
-          gas: process.env.GAS.PAYOUT_CONTRIBUTION,
+          gas: gasLimit,
           from: rootState.user.userWeb3.coinbase
         })
 
@@ -282,10 +290,14 @@ export default {
 
       commit('setLoading', false, { root: true })
 
+      const gasLimit = await PoolsInstance.methods
+        .refund(payload.contributionId)
+        .estimateGas({ from: rootState.user.userWeb3.coinbase })
+
       PoolsInstance.methods
         .refund(payload.contributionId)
         .send({
-          gas: process.env.GAS.PAYOUT_CONTRIBUTION,
+          gas: gasLimit,
           from: rootState.user.userWeb3.coinbase
         })
 

@@ -1,5 +1,6 @@
 import moment from 'moment'
 import Pool from './Pool'
+import EthUtils from '@/utils/EthUtils'
 
 export default class Contribution {
   async initialize (contributionData, pool) {
@@ -7,7 +8,7 @@ export default class Contribution {
     this.poolId = contributionData[1]
     this.title = pool.title
     this.poolDescription = pool.description
-    this.amount = parseFloat(window.web3.utils.fromWei(contributionData[2]), 2)
+    this.amount = parseFloat(EthUtils.fromWei(contributionData[2]), 2)
     this.payout = 0
     this.status = mapContributionStatus(contributionData[3], pool.status)
     this.refundAmount = 0
@@ -20,9 +21,9 @@ export default class Contribution {
     this.createdUtc = moment.unix(contributionData[5]).format('YYYY-MM-DD HH:mm')
 
     if (this.status === 'rewardpaidout') {
-      this.payout = parseFloat(window.web3.utils.fromWei(contributionData[2]), 2)
+      this.payout = parseFloat(EthUtils.fromWei(contributionData[2]), 2)
     } else if (this.status === 'refundpaidout') {
-      this.refundAmount = parseFloat(window.web3.utils.fromWei(contributionData[2]), 2)
+      this.refundAmount = parseFloat(EthUtils.fromWei(contributionData[2]), 2)
     }
   }
 

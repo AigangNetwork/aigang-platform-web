@@ -1,4 +1,5 @@
 import moment from 'moment'
+import EthUtils from '@/utils/EthUtils'
 
 export default class InsuranceProduct {
   async initialize (details) {
@@ -10,8 +11,8 @@ export default class InsuranceProduct {
     this.title = details[4]
     this.description = details[5]
     this.policyTermInSeconds = details[6]
-    this.basePremium = window.web3.utils.fromWei(details[7])
-    this.payout = window.web3.utils.fromWei(details[8])
+    this.basePremium = EthUtils.fromWei(details[7])
+    this.payout = EthUtils.fromWei(details[8])
     this.fee = details[9]
     this.policiesLimit = details[10]
     this.productPoolLimit = details[11]
