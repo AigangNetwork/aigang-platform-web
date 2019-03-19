@@ -92,7 +92,7 @@ export default {
         this.setIsPolicyLoadingVisible(false)
       }
 
-      if (this.policyLoadingInfo.policyId) {
+      if (this.policyLoadingInfo.policy) {
         setTimeout(() => {
           this.setIsPolicyLoadingVisible(false)
           this.$router.push({ name: 'PayPolicy' })

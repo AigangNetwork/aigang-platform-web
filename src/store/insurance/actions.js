@@ -143,7 +143,7 @@ export default {
       .estimateGas({ from: rootState.user.userWeb3.coinbase })
 
     TokenInstance.methods
-      .addPolicy(policyIdBytes, paymentValue, policyIdBytes)
+      .approveAndCall(productAddress, paymentValue, policyIdBytes)
       .send({
         gas: gasLimit,
         from: rootState.user.userWeb3.coinbase
