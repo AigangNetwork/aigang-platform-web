@@ -135,10 +135,14 @@ export default {
 
     commit('setTransactionError', false)
 
+    const gasLimit = await TokenInstance.methods
+      .approveAndCall(productAddress, paymentValue, policyIdBytes)
+      .estimateGas({ from: rootState.user.userWeb3.coinbase })
+
     TokenInstance.methods
       .approveAndCall(productAddress, paymentValue, policyIdBytes)
       .send({
-        gas: process.env.GAS.POLICY_PAYMENT,
+        gas: gasLimit,
         from: rootState.user.userWeb3.coinbase
       })
       .on('error', () => {

@@ -159,10 +159,14 @@ export default {
       let outcomeHex = EthUtils.getHex(payload.outcome)
       const bytes = outcomeHex + predictionIdHex.replace('0x', '')
 
+      const gasLimit = await TokenInstance.methods
+        .approveAndCall(payload.address, paymentValue, bytes)
+        .estimateGas({ from: rootState.user.userWeb3.coinbase })
+
       TokenInstance.methods
         .approveAndCall(payload.address, paymentValue, bytes)
         .send({
-          gas: process.env.GAS.ADD_FORECAST,
+          gas: gasLimit,
           from: rootState.user.userWeb3.coinbase
         })
         .on('error', () => {
@@ -217,10 +221,14 @@ export default {
       const forecastIdHex = EthUtils.getHex(parseInt(payload.id))
       const predictionIdHex = EthUtils.getHex(parseInt(payload.predictionId))
 
+      const gasLimit = await MarketInstance.methods
+        .payout(predictionIdHex, forecastIdHex)
+        .estimateGas({ from: rootState.user.userWeb3.coinbase })
+
       MarketInstance.methods
         .payout(predictionIdHex, forecastIdHex)
         .send({
-          gas: process.env.GAS.FORECAST_PAYOUT,
+          gas: gasLimit,
           from: rootState.user.userWeb3.coinbase
         })
         .on('error', e => {
@@ -244,10 +252,14 @@ export default {
       const forecastIdHex = EthUtils.getHex(parseInt(payload.id))
       const predictionIdHex = EthUtils.getHex(parseInt(payload.predictionId))
 
+      const gasLimit = await MarketInstance.methods
+        .refund(forecastIdHex, predictionIdHex)
+        .estimateGas({ from: rootState.user.userWeb3.coinbase })
+
       MarketInstance.methods
         .refund(forecastIdHex, predictionIdHex)
         .send({
-          gas: process.env.GAS.FORECAST_PAYOUT,
+          gas: gasLimit,
           from: rootState.user.userWeb3.coinbase
         })
         .on('error', e => {

@@ -14,11 +14,11 @@ module.exports = merge(prodEnv, {
     INSURANCE: true,
     WIKI: true,
     DISCUSSIONS: true
-  }
+  },
 
   API_ADDRESS: '"http://localhost:5000/api"', // TODO: refactor to aigang api address and Insurance company
-  //INSURANCE_API_ADDRESS: '"http://localhost:5000/api"'
-  //AIGANG_API_ADDRESS: '"https://testapi.aigang.network/api"'
+  // INSURANCE_API_ADDRESS: '"http://localhost:5000/api"'
+  // AIGANG_API_ADDRESS: '"https://testapi.aigang.network/api"'
 
   // Configure ABI reading parameters and transactions paths
   ETHERSCAN_ADDRESS: '"https://ropsten.etherscan.io/"',
@@ -26,7 +26,6 @@ module.exports = merge(prodEnv, {
   TX_PATH: '"tx/"',
   ABI_PATH: '"/api?module=contract&action=getabi"',
   ADDRESS_PATH: '"address/"',
- 
 
   // List items per pages
   INSURANCE_PRODUCT_ITEMS_PER_PAGE: 9,
@@ -35,17 +34,6 @@ module.exports = merge(prodEnv, {
   PREDICTIONS_ITEMS_PER_PAGE: 9,
   CONTRIBUTIONS_ITEMS_PER_PAGE: 9,
   FORECASTS_ITEMS_PER_PAGE: 9,
-  
-  // Set gas limit for default ethereum transanctions
-  // TODO refactor to calculate it automaticaly
-  GAS: { 
-    ADD_FORECAST: 600000,
-    FORECAST_PAYOUT: 400000,
-    POLICY_PAYMENT: 190000,
-    ADD_CONTRIBUTION: 450000,
-    PAYOUT_CONTRIBUTION: 200000,
-    REFUND_CONTRIBUTION: 200000
-  },
 
   // Setup deployed contract addresses
   CONTRACTS_ADDRESSES: {
