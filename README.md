@@ -4,7 +4,10 @@
 
 This is presentation layer of [aigang.network](https://aigang.network) product for Iot insurance.
 
-## Build Setup
+# Development
+
+* Check out project to the desktop
+* Update configuration file 
 
 ``` bash
 # install dependencies
