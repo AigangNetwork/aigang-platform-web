@@ -1,7 +1,6 @@
 import { initialInsuranceState } from './index'
 import axios from 'axios'
 import { sleep } from '@/utils/methods'
-import router from '@/router/index'
 
 import EthUtils from '@/utils/EthUtils'
 import InsuranceProduct from '@/domain/InsuranceProduct'
@@ -64,53 +63,59 @@ export default {
     }
   },
 
-  // ---------------------------------------------------
-
   async createNewPolicy ({ commit, state, dispatch }, { productAddress, productTypeId, deviceId }) {
-    // commit('clearPolicyLoadingInfo')
-    // commit('setIsPolicyLoadingVisible', true)
-    // try {
-    //   await loadTaskId(commit, {
-    //     productAddress,
-    //     productTypeId,
-    //     isCreatePolicy: true,
-    //     deviceId
-    //   })
-    // } catch (error) {
-    //   handlePolicyLoadingInfoError(error, state.policyLoadingInfo, commit, dispatch)
-    //   return
-    // }
-    // // Creating policy
-    // let retryCount = process.env.RETRY_COUNT || 10
-    // let response = null
-    // // while (
-    // //   state.isPolicyLoadingVisible &&
-    // //   (!response || (!response.data.policyId && !response.data.validationResultCode))
-    // // ) {
-    // //   try {
-    // //     response = await axios.post('insurance/policy', {
-    // //       DeviceId: deviceId,
-    // //       TaskId: state.policyLoadingInfo.taskId,
-    // //       ProductId: productId
-    // //     })
-    // //   } catch (error) {
-    // //     handlePolicyLoadingInfoError(error, state.policyLoadingInfo, commit, dispatch)
-    // //     return
-    // //   }
-    //   retryCount--
-    //   if (retryCount === 0) {
-    //     commit('setPolicyLoadingFailed', true)
-    //     break
-    //   }
-    //   await sleep(1000)
-    // }
-    // let newPolicyLoadingInfo = Object.assign({}, state.policyLoadingInfo)
-    // if (response.data.validationResultCode) {
-    //   newPolicyLoadingInfo.validationResultCode = response.data.validationResultCode
-    // } else {
-    //   newPolicyLoadingInfo.policyId = response.data.policyId
-    // }
-    // commit('setPolicyLoadingInfo', newPolicyLoadingInfo)
+    commit('clearPolicyLoadingInfo')
+    commit('setIsPolicyLoadingVisible', true)
+
+    try {
+      await loadTaskId(commit, {
+        productAddress,
+        productTypeId,
+        deviceId
+      })
+    } catch (error) {
+      handlePolicyLoadingInfoError(error, state.policyLoadingInfo, commit, dispatch)
+      return
+    }
+
+    // Creating policy
+    let retryCount = process.env.RETRY_COUNT || 10
+    let response = null
+    while (
+      state.isPolicyLoadingVisible && (!response || (!response.data.policy && !response.data.validationResultCode))
+    ) {
+      try {
+        response = await axios.post('insurance/policy', {
+          productAddress,
+          productTypeId,
+          deviceId,
+          taskId: state.policyLoadingInfo.taskId
+        })
+      } catch (error) {
+        handlePolicyLoadingInfoError(error, state.policyLoadingInfo, commit, dispatch)
+        return
+      }
+
+      retryCount--
+
+      if (retryCount === 0) {
+        commit('setPolicyLoadingFailed', true)
+        break
+      }
+
+      await sleep(1000)
+    }
+
+    let newPolicyLoadingInfo = Object.assign({}, state.policyLoadingInfo)
+
+    if (response.data.validationResultCode) {
+      newPolicyLoadingInfo.validationResultCode = response.data.validationResultCode
+    } else {
+      newPolicyLoadingInfo.policy = response.data.policy
+      newPolicyLoadingInfo.productAddress = productAddress
+    }
+
+    commit('setPolicyLoadingInfo', newPolicyLoadingInfo)
   },
 
   async getPolicy ({ commit, rootState }, payload) {
@@ -125,18 +130,16 @@ export default {
     commit('setLoading', false, { root: true })
   },
 
-  async sendPolicyPayment ({ commit, dispatch, state, rootState }) {
+  async sendPolicyPayment ({ commit, rootState }, { productAddress, policy }) {
     const web3 = window.web3
-    const productAddress = state.policy.contractAddress
-    const TokenInstance = new web3.eth.Contract(process.env.CONTRACT_INFO.ABI, process.env.CONTRACT_INFO.ADDRESS)
-    const paymentValue = web3.utils.toWei(state.policy.premium.toString())
-    const policyId = state.policy.id
-    const policyIdBytes = web3.utils.fromAscii(policyId)
+    const TokenInstance = new web3.eth.Contract(process.env.CONTRACT_INFO.ABI, productAddress)
+    const paymentValue = web3.utils.toWei(policy.premium.toString())
+    const policyIdBytes = web3.utils.fromAscii(policy.id)
 
     commit('setTransactionError', false)
 
     TokenInstance.methods
-      .approveAndCall(productAddress, paymentValue, policyIdBytes)
+      .addPolicy(policyIdBytes, paymentValue, policyIdBytes)
       .send({
         gas: process.env.GAS.POLICY_PAYMENT,
         from: rootState.user.userWeb3.coinbase
@@ -145,15 +148,7 @@ export default {
         commit('setTransactionError', true)
       })
       .once('transactionHash', async txHash => {
-        const request = {
-          policyId,
-          txId: txHash
-        }
         commit('setTxHash', txHash)
-
-        await axios.post('/insurance/transaction', request)
-
-        dispatch('getPolicy', policyId)
       })
   },
 
@@ -214,8 +209,7 @@ export default {
     try {
       await loadTaskId(commit, {
         DeviceId: state.policy.deviceId,
-        ProductId: state.policy.productId,
-        IsCreatePolicy: false
+        ProductId: state.policy.productId
       })
     } catch (error) {
       handlePolicyLoadingInfoError(error, state.policyLoadingInfo, commit)
@@ -302,7 +296,7 @@ const loadTaskId = async (commit, request) => {
   return response
 }
 
-const handlePolicyLoadingInfoError = async (error, policyLoadingInfo, commit, dispatch) => {
+const handlePolicyLoadingInfoError = async (error, policyLoadingInfo, commit) => {
   let newPolicyLoadingInfo = Object.assign({}, policyLoadingInfo)
 
   if (error.response.status === 404) {
@@ -319,9 +313,6 @@ const handlePolicyLoadingInfoError = async (error, policyLoadingInfo, commit, di
     }
   } else if (error.response.status === 503 || error.response.status === 500) {
     newPolicyLoadingInfo.serverError = true
-  } else if (error.response.status === 401) {
-    dispatch('user/handleNotLoggedIn', null, { root: true })
-    router.push({ name: 'Login' })
   } else if (error.response.status) {
     newPolicyLoadingInfo.serverError = true
   }

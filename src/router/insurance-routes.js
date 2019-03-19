@@ -1,6 +1,7 @@
 import Insurance from '@/components//insurance/Insurance'
 import ProductItemsList from '@/components/insurance/ProductItemsList'
 import Policy from '@/components/insurance/policy/Policy'
+import PayPolicy from '@/components/insurance/policy/PayPolicy'
 import Product from '@/components/insurance/Product'
 import MyPolicyList from '@/components/insurance/MyPolicyList'
 
@@ -40,5 +41,10 @@ export default [
     name: 'Policy',
     path: '/insurance/policy/:address/:type/:id',
     component: Policy
+  },
+  {
+    name: 'PayPolicy',
+    path: '/insurance/pay',
+    component: PayPolicy
   }
 ]

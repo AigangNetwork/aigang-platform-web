@@ -85,22 +85,17 @@ export default {
       try {
         await this.createNewPolicy({
           deviceId: this.deviceIdForm.id.toUpperCase(),
-          productId: this.$route.params.id
+          productTypeId: this.$route.params.type,
+          productAddress: this.$route.params.address
         })
       } catch (e) {
         this.setIsPolicyLoadingVisible(false)
       }
 
       if (this.policyLoadingInfo.policyId) {
-        const policyId = this.policyLoadingInfo.policyId
-
         setTimeout(() => {
           this.setIsPolicyLoadingVisible(false)
-          this.clearLoadingInfo()
-          this.$router.push({
-            name: 'Policy',
-            params: { policyId }
-          })
+          this.$router.push({ name: 'PayPolicy' })
         }, 1000)
       }
     }

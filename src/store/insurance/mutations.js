@@ -19,8 +19,6 @@ export default {
     state.product = payload
   },
 
-  // --------
-
   setIsPolicyLoadingVisible (state, value) {
     state.isPolicyLoadingVisible = value
   },

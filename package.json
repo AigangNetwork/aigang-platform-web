@@ -5,8 +5,8 @@
   "author": "Aigang Team",
   "private": true,
   "scripts": {
-    "dev": "API_ADDRESS='\"https://testapi.aigang.network/api\"' webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
-    "windowsdev": "set API_ADDRESS='https://testapi.aigang.network/api'&&webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
+    "dev": "API_ADDRESS='\"https://aigang-qa-api-2.azurewebsites.net/api\"' webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
+    "windowsdev": "set API_ADDRESS='https://aigang-qa-api-2.azurewebsites.net/api'&&webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
     "localdev": "API_ADDRESS='\"http://localhost:5000/api\"' webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
     "windowslocaldev": "set API_ADDRESS='http://localhost:5000/api'&&webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
     "start": "npm run dev",

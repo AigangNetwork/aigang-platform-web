@@ -94,6 +94,7 @@
     </div>
   </div>
 </template>
+
 <script>
 import Card from '@/components/Card'
 import { createNamespacedHelpers } from 'vuex'
@@ -132,33 +133,23 @@ export default {
   },
   methods: {
     ...mapMutations({
-      clearLoadingInfo: 'clearPolicyLoadingInfo',
       setIsPolicyLoadingVisible: 'setIsPolicyLoadingVisible'
     }),
     ...mapActions(['createNewPolicy']),
     async createPolicy () {
+      const productTypeId = this.$route.params.type
+      const productAddress = this.$route.params.address
+
       await this.createNewPolicy({
         deviceId: this.policyLoadingInfo.deviceId,
-        productId: this.$route.params.id
+        productTypeId,
+        productAddress
       })
-
-      if (this.policyLoadingInfo.policyId) {
-        const policyId = this.policyLoadingInfo.policyId
-
-        setTimeout(() => {
-          this.setIsPolicyLoadingVisible(false)
-          this.clearLoadingInfo()
-          this.$router.push({
-            name: 'Policy',
-            params: { policyId }
-          })
-        }, 1000)
-      }
     }
   }
 }
-
 </script>
+
 <style lang="scss">
   @import '~helpers/variables';
   @import '~helpers/mixins';

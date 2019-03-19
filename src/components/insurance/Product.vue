@@ -69,7 +69,6 @@ export default {
     this.setIsPolicyLoadingVisible(false)
   },
   beforeRouteLeave (to, from, next) {
-    this.clearLoadingInfo()
     this.setIsPolicyLoadingVisible(false)
     next()
   }

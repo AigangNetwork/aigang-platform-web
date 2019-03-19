@@ -19,17 +19,7 @@
             </el-row>
 
             <el-row class="footer">
-
-              <el-tooltip v-if="policy.status && policy.status.toUpperCase() === 'DRAFT'" :disabled="$store.getters['user/isWeb3Enabled']" effect="dark"
-                :content="$t('general.userNotLoggedIn')" placement="top">
-                <span class="wrapper el-button">
-                  <el-button :disabled="!$store.getters['user/isWeb3Enabled']" class="aig-button" type="primary" @click.prevent.native="insure">
-                    {{ $t('insurance.policy.pay') }}
-                  </el-button>
-                  </span>
-              </el-tooltip>
-
-              <el-col v-else-if="policy.status && policy.status.toUpperCase() === 'PAID'">
+              <el-col v-if="policy.status && policy.status.toUpperCase() === 'PAID'">
                 <el-button class="aig-button" type="primary" @click.prevent.native="verifyClaim">
                   {{ policy.isVerifyForClaimFailed ? $t('insurance.policy.verifyForClaimRetry') : $t('insurance.policy.verifyForClaim') }}
                 </el-button>

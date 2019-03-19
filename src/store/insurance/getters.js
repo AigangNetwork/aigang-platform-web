@@ -2,7 +2,6 @@ export default {
   products: state => state.products,
   product: state => state.product,
 
-  // -----------
   isPolicyLoadingVisible: state => state.isPolicyLoadingVisible,
   policy: state => state.policy,
 
