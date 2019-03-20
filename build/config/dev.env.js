@@ -6,7 +6,7 @@ const prodEnv = require('./production.env.js') // TODO: why do we need this merg
 module.exports = merge(prodEnv, {
   NODE_ENV: '"dev"',
 
-  // Select which tabs should be active
+  // Select which tabs should be active and visible
   FEATURE_TOGGLE: {
     DATA: true,
     PREDICTIONS: true,

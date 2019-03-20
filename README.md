@@ -1,14 +1,39 @@
 # Aigang Platform [WEB]
-[![Chat](https://badges.gitter.im/org.png)](https://gitter.im/AigangNetwork/Lobby?utm_source=share-link&utm_medium=link&utm_campaign=share-link) [![Documentation](https://readthedocs.org/projects/ansicolortags/badge/?version=latest)](http://aigang.readthedocs.io/en/latest/)
+[![Chat](https://badges.gitter.im/org.png)](https://gitter.im/AigangNetwork/Lobby?utm_source=share-link&utm_medium=link&utm_campaign=share-link)
+
+This repository is presentation layer of [aigang.network](https://aigang.network) Framework for Iot insurance.
 
 
-This is presentation layer of [aigang.network](https://aigang.network) product for Iot insurance.
+Framework includes:
+ - Centralized Data section, Wiki, Discusions. These featutes can be turned on in web project configuration.
+ - Prediction Markets. [How to run](docs/PredictionMarket.md)
+ - Pools. [How to run](docs/Pools.md)
+ - Insurance Product. [How to run](docs/InsuranceProduct.md)
+
+Full framework is composed from these parts:
+ - [Vue.js] Web (this repository)
+ - [Solidity] [Contracts](https://github.com/AigangNetwork/aigang-contracts)
+ - [C#] [Insurance] [API](https://github.com/AigangNetwork/aigang-api)
+ - [C#] [Insurance] [Contracts Executor service](https://github.com/AigangNetwork/aigang-contracts-executor-public)
+ - [C#] [Insurance] [Policies listener service](https://github.com/AigangNetwork/aigang-policies-listener-public)
+
+All architecture:
+![Architecture](docs/images/architecture.png?raw=true "Architecture")
+
 
 # Development
 
-* Check out project to the desktop
-* Update configuration file 
+Recommended IDE:
+- Visual Studio Code for Web project ans solidity  
+- Jet Brains Rider or Visual studio for c# projects  
+  
 
+* Clone or download project to your machine
+* Update configuration file in destination */build/config/*  
+    * *dev.env.js* - for development environment  
+    * *qa.env.js* - for qa environment  
+    * *production.env.js* - for production environment  
+* build project:  
 ``` bash
 # install dependencies
 npm install
@@ -29,11 +54,9 @@ npm run build --report
 ## Environments
 **Production**
 API (production branch) - [https://api.aigang.network/swagger](https://api.aigang.network/swagger)
-WEB (production branch) - [https://platform.aigang.network](https://platform.aigang.network/)
 
 **QA**
 API (qa branch) - [https://testapi.aigang.network/swagger](https://testapi.aigang.network/swagger)
-WEB (qa branch) - [https://testplatform.aigang.network](https://testplatform.aigang.network/)
 
 ## Documentation
 
