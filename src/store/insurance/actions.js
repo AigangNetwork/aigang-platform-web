@@ -132,7 +132,7 @@ export default {
 
   async sendPolicyPayment ({ commit, rootState }, { productAddress, policy }) {
     const web3 = window.web3
-    const TokenInstance = new web3.eth.Contract(process.env.CONTRACT_INFO.ABI, process.env.CONTRACT_INFO.ADDRESS)
+    const TokenInstance = await EthUtils.getContract(process.env.CONTRACTS_ADDRESSES.TOKEN)
     const paymentValue = EthUtils.toWei(policy.premium.toString())
     const policyIdBytes = web3.utils.fromAscii(policy.id)
 

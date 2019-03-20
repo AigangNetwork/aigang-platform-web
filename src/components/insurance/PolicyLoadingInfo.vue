@@ -145,6 +145,13 @@ export default {
         productTypeId,
         productAddress
       })
+
+      if (this.policyLoadingInfo.policy) {
+        setTimeout(() => {
+          this.setIsPolicyLoadingVisible(false)
+          this.$router.push({ name: 'PayPolicy' })
+        }, 1000)
+      }
     }
   }
 }
