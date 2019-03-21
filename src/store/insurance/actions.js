@@ -5,6 +5,7 @@ import { sleep } from '@/utils/methods'
 import EthUtils from '@/utils/EthUtils'
 import InsuranceProduct from '@/domain/InsuranceProduct'
 import Policy from '../../domain/Policy'
+
 /* eslint-disable */
 
 export default {
@@ -81,6 +82,7 @@ export default {
 		// Creating policy
 		let retryCount = process.env.RETRY_COUNT || 10
 		let response = null
+
 		while (
 			state.isPolicyLoadingVisible &&
 			(!response || (!response.data.policy && !response.data.validationResultCode))
@@ -283,16 +285,6 @@ export default {
 		} catch (err) {}
 
 		commit('setLoading', false, { root: true })
-	},
-
-	async deletePolicy({ commit }, id) {
-		commit('setLoading', true, { root: true })
-
-		try {
-			await axios.delete(`/insurance/deletepolicy/${id}`)
-		} catch (err) {}
-
-		commit('setLoading', false, { root: true })
 	}
 }
 
@@ -318,25 +310,29 @@ const loadTaskId = async (commit, request) => {
 }
 
 const handlePolicyLoadingInfoError = async (error, policyLoadingInfo, commit) => {
-	let newPolicyLoadingInfo = Object.assign({}, policyLoadingInfo)
+  let newPolicyLoadingInfo = Object.assign({}, policyLoadingInfo)
 
-	if (error.response.status === 404) {
-		newPolicyLoadingInfo.notFound = true
-	} else if (error.response.status === 400) {
-		newPolicyLoadingInfo.validationReasons = []
+  if (error.response) {
+    if (error.response.status === 404) {
+      newPolicyLoadingInfo.notFound = true
+    } else if (error.response.status === 400) {
+      newPolicyLoadingInfo.validationReasons = []
 
-		if (error.response.data.params) {
-			error.response.data.params.ValidationFailed.forEach(val =>
-				newPolicyLoadingInfo.validationReasons.push('errors.validation.' + val.reason)
-			)
-		} else if (error.response.data.reason) {
-			newPolicyLoadingInfo.validationReasons.push('errors.validation.' + error.response.data.reason)
-		}
-	} else if (error.response.status === 503 || error.response.status === 500) {
-		newPolicyLoadingInfo.serverError = true
-	} else if (error.response.status) {
-		newPolicyLoadingInfo.serverError = true
-	}
+      if (error.response.data.params) {
+        error.response.data.params.ValidationFailed.forEach(val =>
+          newPolicyLoadingInfo.validationReasons.push('errors.validation.' + val.reason)
+        )
+      } else if (error.response.data.reason) {
+        newPolicyLoadingInfo.validationReasons.push('errors.validation.' + error.response.data.reason)
+      }
+    } else if (error.response.status === 503 || error.response.status === 500) {
+      newPolicyLoadingInfo.serverError = true
+    } else if (error.response.status) {
+      newPolicyLoadingInfo.serverError = true
+    }
+  } else {
+    newPolicyLoadingInfo.serverNotAvailable = true
+  }
 
-	commit('setPolicyLoadingInfo', newPolicyLoadingInfo)
+  commit('setPolicyLoadingInfo', newPolicyLoadingInfo)
 }

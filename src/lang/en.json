@@ -693,6 +693,7 @@
 			"status": "Status",
 			"deviceIdNotFound": "Device with this ID was not found. Check your device for correct ID.",
 			"serverError": "Something went wrong. Please contact support: info@aigang.network",
+			"serverNotAvailable": "API cannot be reached. Please contact support: info@aigang.network",
 			"paymentInfo": {
 				"title": "Payment Information",
 				"body": "Your payment transaction was created succesfully.",

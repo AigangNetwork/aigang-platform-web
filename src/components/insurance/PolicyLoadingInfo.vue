@@ -55,6 +55,16 @@
     </transition-group>
 
     <transition-group name="slideUp" mode="out-in">
+      <template v-if="policyLoadingInfo.serverNotAvailable">
+        <p class="info-text aig-error" key="1">{{ $t('insurance.policy.serverNotAvailable') }}</p>
+        <p class="info-text" key="2">
+          <el-button type="primary" @click.prevent.native="setIsPolicyLoadingVisible(false)">{{ $t('general.back') }}
+          </el-button>
+        </p>
+      </template>
+    </transition-group>
+
+    <transition-group name="slideUp" mode="out-in">
       <template v-if="policyLoadingInfo.policyId">
         <p class="info-text" key="1">{{ $t('insurance.policy.policyCreated') }}</p>
         <p class="info-text" key="2">{{ $t('insurance.policy.redirecting') }}</p>
@@ -126,9 +136,15 @@ export default {
       }
     },
     showLoader () {
-      return !this.policyLoadingInfo.policyId && !this.policyLoadingInfo.validationResultCode &&
-          !this.policyLoadingInfo.notFound && !this.policyLoadingInfo.serverError && !this.policyLoadingInfo.failed &&
-          (!this.policyLoadingInfo.validationReasons || this.policyLoadingInfo.validationReasons.length === 0)
+      return (
+        !this.policyLoadingInfo.policyId &&
+        !this.policyLoadingInfo.validationResultCode &&
+        !this.policyLoadingInfo.notFound &&
+        !this.policyLoadingInfo.serverError &&
+        !this.policyLoadingInfo.serverNotAvailable &&
+        !this.policyLoadingInfo.failed &&
+        (!this.policyLoadingInfo.validationReasons || this.policyLoadingInfo.validationReasons.length === 0)
+      )
     }
   },
   methods: {

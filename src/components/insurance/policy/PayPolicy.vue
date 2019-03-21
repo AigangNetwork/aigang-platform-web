@@ -12,6 +12,11 @@
               <h2>{{ $t('insurance.policy.androidBatteryInsurancePolicy') }}</h2>
             </el-row>
 
+            <el-row class="content">
+              <PolicyInfo :policy="policy" />
+              <DeviceInfo :data="deviceData" />
+            </el-row>
+
             <el-row class="footer">
               <el-col>
                 <el-button class="aig-button" type="primary" @click.prevent.native="insure">
@@ -39,13 +44,17 @@
 <script>
 import Card from '@/components/Card'
 import PaymentConfirmationDialog from '@/components/common/PaymentConfirmationDialog'
+import PolicyInfo from '@/components/insurance/policy/PolicyInfo'
+import DeviceInfo from '@/components/insurance/policy/DeviceInfo'
 import { createNamespacedHelpers } from 'vuex'
 const { mapGetters, mapMutations } = createNamespacedHelpers('insurance')
 
 export default {
   components: {
     Card,
-    PaymentConfirmationDialog
+    PaymentConfirmationDialog,
+    PolicyInfo,
+    DeviceInfo
   },
   data () {
     return {
@@ -55,7 +64,8 @@ export default {
   },
   methods: {
     ...mapMutations({
-      setTxHash: 'setTxHash'
+      setTxHash: 'setTxHash',
+      clearLoadingInfo: 'clearPolicyLoadingInfo'
     }),
     displayPaymentDialog (value) {
       this.isPaymentDialogVisible = value
@@ -78,7 +88,33 @@ export default {
     },
     showWeb3NotConnected () {
       return !this.isWeb3Enabled && this.$store.getters['user/isWeb3Loaded']
+    },
+    policy () {
+      try {
+        let policy = this.policyLoadingInfo.policy
+        policy.address = policy.productAddress
+
+        return policy
+      } catch (e) {
+        return null
+      }
+    },
+    deviceData () {
+      try {
+        return JSON.parse(this.policyLoadingInfo.policy.properties)
+      } catch (e) {
+        return null
+      }
     }
+  },
+  beforeMount () {
+    if (!this.policyLoadingInfo.policy) {
+      this.$router.push({ name: 'InsuranceProducts' })
+    }
+  },
+  beforeRouteLeave (to, from, next) {
+    this.clearLoadingInfo()
+    next()
   }
 }
 
