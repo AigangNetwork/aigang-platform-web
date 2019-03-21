@@ -1,16 +1,22 @@
 <template>
   <div class="loader-container">
     <transition-group name="slideUp" appear>
+
       <template v-if="showLoader">
         <div id="preloader" key="loader">
           <div id="loader"></div>
         </div>
         <p class="loading-text" key="loadingText">{{ loadingText }} </p>
       </template>
-      <p class="info-text" key="deviceId"> {{ $t('insurance.policy.deviceId') }}:
-        <span class="bold">{{ policyLoadingInfo.deviceId }}</span>
+
+      <p class="info-text" key="deviceId">
+         {{ $t('insurance.policy.deviceId') }}: <span class="bold">{{ policyLoadingInfo.deviceId }}</span>
       </p>
-      <p class="info-text" key="startingTaskText"> {{ $t('insurance.policy.startingTask') }}</p>
+
+      <p class="info-text" if="!policyLoadingInfo.isClaimable" key="startingTaskText">
+         {{ $t('insurance.policy.startingTask') }}
+      </p>
+
     </transition-group>
 
     <transition-group name="slideUp" mode="out-in">
@@ -36,9 +42,27 @@
 
     <transition-group name="slideUp" mode="out-in">
       <template v-if="policyLoadingInfo.isClaimable">
-        <p class="info-text bold" key="1">{{ $t('insurance.policy.policyIs') }} <span class="big-attention">{{ $t('insurance.policy.statuses.claimable')
-            | uppercase }}</span> </p>
-        <p class="info-text" key="2">{{ $t('insurance.policy.redirecting') }}</p>
+
+        <p class="info-text bold" key="1">
+          {{ $t('insurance.policy.policyIs') }}
+          <span class="bold orange">{{ $t('insurance.policy.statuses.claimable') | uppercase }}</span> </p>
+        <p class="info-text" key="2">{{ $t('insurance.policy.paymentInitiated') }}</p>
+
+        <p class="info-text" key="3">{{ $t('insurance.policy.loadingTransaction') }}</p>
+
+        <p v-if="policyLoadingInfo.txHash" class="info-text" key="4">
+          <a class="address" :href="txLink" target="_blank">
+            <span class="contract-address">{{ policyLoadingInfo.txHash }}</span>
+          </a>
+        </p>
+
+        <p v-if="policyLoadingInfo.txHash" class="info-text" key="5">{{ $t('insurance.policy.statusWillChange') }}</p>
+
+        <p v-if="policyLoadingInfo.txHash" class="info-text" key="6">
+          <el-button type="primary" @click.prevent.native="$router.push({ name: 'MyPolicyList' })">{{ $t('insurance.policy.backToMyPolicies') }}
+          </el-button>
+        </p>
+
       </template>
     </transition-group>
 
@@ -92,30 +116,29 @@ const { mapGetters, mapMutations, mapActions } = createNamespacedHelpers('insura
 export default {
   components: { Card },
   computed: {
-    ...mapGetters(['policyLoadingInfo']),
+    ...mapGetters(['policyLoadingInfo', 'isPolicyLoadingVisible']),
     loadingText () {
       return this.$t('general.loading').slice(0, -4)
     },
+    txLink () {
+      return process.env.ETHERSCAN_ADDRESS + process.env.TX_PATH + this.policyLoadingInfo.txHash
+    },
     showLoader () {
-      return !this.policyLoadingInfo.isTaskFinished && !this.policyLoadingInfo.serverError && !this.policyLoadingInfo.failed
+      return (!this.policyLoadingInfo.isTaskFinished && !this.policyLoadingInfo.serverError && !this.policyLoadingInfo.failed) ||
+      (this.policyLoadingInfo.isClaimable && !this.policyLoadingInfo.txHash)
     }
   },
   methods: {
     ...mapMutations({
-      clearLoadingInfo: 'clearPolicyLoadingInfo',
       setIsPolicyLoadingVisible: 'setIsPolicyLoadingVisible'
     }),
     ...mapActions(['verifyClaim', 'getPolicy']),
     async verifyPolicyForClaim () {
-      await this.verifyClaim()
-
-      if (this.policyLoadingInfo.isClaimable) {
-        setTimeout(() => {
-          this.getPolicy(this.$route.params.policyId)
-          this.setIsPolicyLoadingVisible(false)
-          this.clearLoadingInfo()
-        }, 3000)
-      }
+      await this.verifyClaim({
+        deviceId: this.policyLoadingInfo.deviceId.toUpperCase(),
+        productTypeId: this.$route.params.type,
+        productAddress: this.$route.params.address
+      })
     }
   }
 }
@@ -127,4 +150,8 @@ export default {
 
   @include loader;
   @include loader-container;
+
+  .orange {
+    color: $orange;
+  }
 </style>

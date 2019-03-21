@@ -20,7 +20,7 @@
 
             <el-row class="footer">
               <el-col v-if="policy.status && policy.status.toUpperCase() === 'PAID'">
-                <el-button class="aig-button" type="primary" @click.prevent.native="verifyClaim">
+                <el-button class="aig-button" type="primary" @click.prevent.native="displayClaimDialog(true)">
                   {{ policy.isVerifyForClaimFailed ? $t('insurance.policy.verifyForClaimRetry') : $t('insurance.policy.verifyForClaim') }}
                 </el-button>
               </el-col>
@@ -40,6 +40,8 @@
         </transition-group>
       </div>
     </Card>
+
+    <ClaimDialog :displayDialog="displayClaimDialog" :isVisible="isClaimDialogVisible" />
 
     <LogInToEthereumClientDialog
       :isVisible="isDisplayLogInToEthereumClientDialogVisible"
@@ -65,6 +67,7 @@ import PolicyInfo from '@/components/insurance/policy/PolicyInfo'
 import DeviceInfo from '@/components/insurance/policy/DeviceInfo'
 import ClaimInfo from '@/components/insurance/policy/ClaimInfo'
 import VerifyClaimLoadingInfo from '@/components/insurance/VerifyClaimLoadingInfo'
+import ClaimDialog from '@/components/insurance/ClaimDialog'
 
 import { createNamespacedHelpers } from 'vuex'
 const { mapGetters, mapActions, mapMutations } = createNamespacedHelpers('insurance')
@@ -78,13 +81,15 @@ export default {
     PolicyInfo,
     DeviceInfo,
     ClaimInfo,
-    VerifyClaimLoadingInfo
+    VerifyClaimLoadingInfo,
+    ClaimDialog
   },
   data () {
     return {
       isTermsAndConditionsDialogVisible: false,
       isPaymentDialogVisible: false,
       isDisplayLogInToEthereumClientDialogVisible: false,
+      isClaimDialogVisible: false,
       policyListRoute: '/insurance/policy/mypolicies'
     }
   },
@@ -95,6 +100,9 @@ export default {
       setIsPolicyLoadingVisible: 'setIsPolicyLoadingVisible',
       setTxHash: 'setTxHash'
     }),
+    displayClaimDialog (value) {
+      this.isClaimDialogVisible = value
+    },
     displayPaymentDialog (value) {
       this.isPaymentDialogVisible = value
     },
@@ -121,17 +129,6 @@ export default {
       this.setTxHash(null)
       this.displayPaymentDialog(true)
       await this.sendPolicyPayment()
-    },
-    async verifyClaim () {
-      await this.$store.dispatch('insurance/verifyClaim')
-
-      if (this.policyLoadingInfo.isClaimable) {
-        setTimeout(() => {
-          this.getPolicy(this.$route.params.policyId)
-          this.setIsPolicyLoadingVisible(false)
-          this.clearLoadingInfo()
-        }, 3000)
-      }
     },
     claim () {
       this.$store.dispatch('insurance/claim')

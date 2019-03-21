@@ -60,7 +60,7 @@ export default {
     }
   },
   async mounted () {
-    if (this.$store.getters['user/isWeb3Enabled']) {
+    if (this.isWeb3Enabled) {
       await this.loadData()
     }
   },
