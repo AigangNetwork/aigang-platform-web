@@ -19,7 +19,7 @@
             </el-row>
 
             <el-row class="footer">
-              <el-col v-if="policy.status && policy.status.toUpperCase() === 'PAID'">
+              <el-col v-if="policy.status && policy.status.toUpperCase() === 'PAID' && policy.payout !== '0'">
                 <el-button class="aig-button" type="primary" @click.prevent.native="displayClaimDialog(true)">
                   {{ policy.isVerifyForClaimFailed ? $t('insurance.policy.verifyForClaimRetry') : $t('insurance.policy.verifyForClaim') }}
                 </el-button>
