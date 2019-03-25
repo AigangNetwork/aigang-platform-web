@@ -11,7 +11,7 @@ export default class Forecast {
     this.amount = parseFloat(EthUtils.fromWei(forecastData[3]))
     this.status = mapForecastStatus(forecastData[5], prediction.status, this.isWon)
     this.predictionStatus = prediction.status
-    this.createdUtc = moment.unix(forecastData[6]).format('YYYY-MM-DD HH:mm')
+    this.createdUtc = moment.unix(forecastData[6]).utc().format('YYYY-MM-DD HH:mm')
     this.marketAddress = prediction.marketAddress
   }
 

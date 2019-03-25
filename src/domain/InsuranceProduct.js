@@ -6,8 +6,8 @@ export default class InsuranceProduct {
     this.address = details.address
     this.premiumCalculatorAddress = details[0]
     this.investorsPoolAddress = details[1]
-    this.startDateUtc = moment.unix(details[2]).format('YYYY-MM-DD HH:mm')
-    this.endDateUtc = moment.unix(details[3]).format('YYYY-MM-DD HH:mm')
+    this.startDateUtc = moment.unix(details[2]).utc().format('YYYY-MM-DD HH:mm')
+    this.endDateUtc = moment.unix(details[3]).utc().format('YYYY-MM-DD HH:mm')
     this.title = details[4]
     this.description = details[5]
     this.policyTermInSeconds = details[6]
@@ -16,7 +16,7 @@ export default class InsuranceProduct {
     this.fee = details[9]
     this.policiesLimit = details[10]
     this.productPoolLimit = details[11]
-    this.createdUtc = moment.unix(details[12]).format('YYYY-MM-DD HH:mm')
+    this.createdUtc = moment.unix(details[12]).utc().format('YYYY-MM-DD HH:mm')
     this.type = details.type
   }
 

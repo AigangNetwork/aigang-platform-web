@@ -56,7 +56,6 @@ export default {
 		try {
 			const contract = await EthUtils.getContract(payload.address)
 			const product = await InsuranceProduct.create(contract, payload.type)
-
 			commit('setProduct', product)
 			commit('setLoading', false, { root: true })
 		} catch (e) {

@@ -18,7 +18,7 @@ export default class Contribution {
     this.poolGoalSize = pool.goalPoolSize
     this.poolStatus = pool.status
     this.poolEndDateUtc = pool.endDateUtc
-    this.createdUtc = moment.unix(contributionData[5]).format('YYYY-MM-DD HH:mm')
+    this.createdUtc = moment.unix(contributionData[5]).utc().format('YYYY-MM-DD HH:mm')
 
     if (this.status === 'rewardpaidout') {
       this.payout = parseFloat(EthUtils.fromWei(contributionData[2]), 2)

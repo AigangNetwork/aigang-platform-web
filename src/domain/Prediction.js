@@ -10,8 +10,8 @@ export default class Prediction {
     this.title = details[0]
     this.description = details[1]
     this.poolSize = EthUtils.fromWei(data.totalTokens)
-    this.forecastStartUtc = moment.unix(data.forecastStartUtc).format('YYYY-MM-DD HH:mm')
-    this.forecastEndUtc = moment.unix(data.forecastEndUtc).format('YYYY-MM-DD HH:mm')
+    this.forecastStartUtc = moment.unix(data.forecastStartUtc).utc().format('YYYY-MM-DD HH:mm')
+    this.forecastEndUtc = moment.unix(data.forecastEndUtc).utc().format('YYYY-MM-DD HH:mm')
     this.forecastsCount = data.totalForecasts
     this.resultStorage = data.resultStorage
     this.outcomes = outcomes

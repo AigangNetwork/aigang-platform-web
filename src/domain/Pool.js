@@ -8,8 +8,8 @@ export default class Pool {
     this.title = data.title
     this.description = data.description
     this.status = mapPoolStatus(data.status)
-    this.startDateUtc = moment.unix(data.contributionStartUtc).format('YYYY-MM-DD HH:mm')
-    this.endDateUtc = moment.unix(data.contributionEndUtc).format('YYYY-MM-DD HH:mm')
+    this.startDateUtc = moment.unix(data.contributionStartUtc).utc().format('YYYY-MM-DD HH:mm')
+    this.endDateUtc = moment.unix(data.contributionEndUtc).utc().format('YYYY-MM-DD HH:mm')
     this.entityContractAddress = data.destination
     this.poolContractAddress = data.address
     this.contributions = data.contributions
