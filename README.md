@@ -14,7 +14,7 @@ Full framework is composed from these parts:
  - [Vue.js] Web (this repository)
  - [Solidity] [Contracts](https://github.com/AigangNetwork/aigang-contracts)
  - [C#] [Insurance] [API](https://github.com/AigangNetwork/aigang-api)
- - [C#] [Insurance] [Contracts Executor service](https://github.com/AigangNetwork/aigang-contracts-executor-public)
+ - [C#] [Insurance] [Contracts Executor API](https://github.com/AigangNetwork/aigang-contracts-executor-public)
  - [C#] [Insurance] [Policies listener service](https://github.com/AigangNetwork/aigang-policies-listener-public)
 
 All architecture:
@@ -54,14 +54,14 @@ npm run build --report
 ```
 ## Environments
 **Production**
+
+WEB (production branch) - [https://aigang.network](https://aigang.network)  
 API (production branch) - [https://api.aigang.network/swagger](https://api.aigang.network/swagger)
 
-**QA**
-API (qa branch) - [https://testapi.aigang.network/swagger](https://testapi.aigang.network/swagger)
+**QA**  
 
-## Documentation
-
-Read the  [manual](https://aigang.readthedocs.io/en/latest/)  for more details. Latest whitepaper can be found [here](https://aigang.network/whitepaper). Documentation repository can be found [here](https://github.com/AigangNetwork/aigang-docs). For a detailed explanation on how Vue work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+WEB (qa branch) - [https://testplatform.aigang.network](https://testplatform.aigang.network)  
+API (qa branch) - [https://testapi.aigang.network/swagger](https://testapi.aigang.network/swagger)  
 
 ## Backlog
 Our github backlog can be found [here](https://github.com/AigangNetwork/aigang-platform-web/projects/1)

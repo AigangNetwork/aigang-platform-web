@@ -2,7 +2,7 @@
 
 This API should be product specific and this used interface works only as example. Device Api should be 100% trustable by insurance company.
 
-This interface example serves battery insurance product for android phones as a workaround. To make this example work users should install Android Battery insurance APP form [here](https://github.com/AigangNetwork/aigang-contracts) 
+This interface example serves battery insurance product for android phones as a workaround. To make this example work users should install Android Battery insurance APP form [here](https://github.com/AigangNetwork/aigang-contracts)  
 
 ## API Architecture
 

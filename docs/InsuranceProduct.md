@@ -38,7 +38,7 @@ In API configuration review and update:
 
 ## 3. Policies listener service Deployment
 
-Clone service code from [repository](hhttps://github.com/AigangNetwork/aigang-policies-listener-publici) and follow building instructions to get running service.  
+Clone service code from [repository](hhttps://github.com/AigangNetwork/aigang-policies-listener-public) and follow building instructions to get running service.  
 In service configuration review and update:  
 
 - Generic settings *appsettings.keys.json*
@@ -48,7 +48,7 @@ In service configuration review and update:
 Clone Api code from [repository](https://github.com/AigangNetwork/aigang-api) and follow building instructions to get running DB and API.  
 In API configuration review and update:  
 
-- Device API address which fits [requirements](DeviceAPI.md)
+- Device API address which fits [requirements](DeviceApi.md)
 - DB connection string which should be deployed in this step  
 - Contracts Executor API address  
 
