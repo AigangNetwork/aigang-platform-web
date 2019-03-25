@@ -65,7 +65,7 @@ export default {
       }
     },
     title () {
-      return this.$t('insurance.product.downloadApp')
+      return this.$t('insurance.policy.claimPolicy')
     }
   },
   methods: {

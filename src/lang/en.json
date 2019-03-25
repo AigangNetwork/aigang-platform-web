@@ -681,6 +681,7 @@
 			"statusWillChange": "Policy status will change after the transaction is mined",
 			"androidBatteryInsurancePolicy": "Android Battery Insurance Policy",
 			"backToMyPolicies": "Back To My Policies",
+			"claimPolicy": "Claim your policy",
 			"termsAndConditions": {
 				"title": "Terms and Conditions",
 				"buttons": {
