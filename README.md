@@ -18,22 +18,23 @@ Full framework is composed from these parts:
  - [C#] [Insurance] [Policies listener service](https://github.com/AigangNetwork/aigang-policies-listener-public)
 
 All architecture:
-![Architecture](docs/images/architecture.png?raw=true "Architecture")
+![Architecture](docs/images/Architecture.png?raw=true "Architecture")
 
 
 # Development
 
 Recommended IDE:
-- Visual Studio Code for Web project ans solidity  
+
+- Visual Studio Code for Web project and solidity  
 - Jet Brains Rider or Visual studio for c# projects  
   
+- Clone or download project to your machine
+- Update configuration file in destination */build/config/*  
+  - *dev.env.js* - for development environment  
+  - *qa.env.js* - for qa environment  
+  - *production.env.js* - for production environment  
+- build project:  
 
-* Clone or download project to your machine
-* Update configuration file in destination */build/config/*  
-    * *dev.env.js* - for development environment  
-    * *qa.env.js* - for qa environment  
-    * *production.env.js* - for production environment  
-* build project:  
 ``` bash
 # install dependencies
 npm install

@@ -12,8 +12,8 @@ Parts participating in insurance product for devices:
 - [Contracts executor API](https://github.com/AigangNetwork/aigang-contracts-executor-public). This api is responsible for communication between background services and blockchain contracts.
 - [Policies listener service](https://github.com/AigangNetwork/aigang-policies-listener-public) - adds policies to blockchain and helps to maintain local Policies database.
 
-
 ## 1. Contracts Deployment
+
 Clone contracts from [Contracts repository](https://github.com/AigangNetwork/aigang-contracts)  
 Make flat versions of contracts (*sh ./make_flat.sh*)  
 Create Ethereum wallet for Contracts Executor service and deposit this wallet with some ETH for transactions fees.
@@ -29,30 +29,38 @@ Create Ethereum wallet for Contracts Executor service and deposit this wallet wi
 - Add Product address to AddressManager using function **Add** with type example: CONTRACT_TYPES.INSURANCE.ANDROID_BATTERY (3)
 
 ## 2. Contracts Executor API Deployment
+
 Clone Api code from [repository](https://github.com/AigangNetwork/aigang-contracts-executor-public) and follow building instructions to get API.  
-In API configuration update:  
-- Executor wallet public and private keys  
+In API configuration review and update:  
+
+- Generic settings *appsettings.keys.json*
+- Executor wallet public and private keys in *appsettings.json*
 
 ## 3. Policies listener service Deployment
+
 Clone service code from [repository](hhttps://github.com/AigangNetwork/aigang-policies-listener-publici) and follow building instructions to get running service.  
-In serive configuration update:
-- DB connection string: TODO:
+In service configuration review and update:  
+
+- Generic settings *appsettings.keys.json*
 
 ## 4. API Deployment
-Clone Api code from [repository](https://github.com/AigangNetwork/aigang-api) and follow building instructions to get running DB and API.  
-In API configuration update:
 
-- Device API address which fits [requirements](DeviceApi.md)
-- DB connection string: TODO:
-- Contracts Executor API address: TODO: 
+Clone Api code from [repository](https://github.com/AigangNetwork/aigang-api) and follow building instructions to get running DB and API.  
+In API configuration review and update:  
+
+- Device API address which fits [requirements](DeviceAPI.md)
+- DB connection string which should be deployed in this step  
+- Contracts Executor API address  
 
 ## 5. Web Deployment
-Clone UI from [Web repository](https://github.com/AigangNetwork/aigang-platform-web)
- - update web project configuration:
-    - FEATURE_TOGGLE.INSURANCE - true  
-    - CONTRACTS_ADDRESSES.ADDRESS_MANAGER - change to your contract manager contract  
-    - CONTRACTS_ADDRESSES.TOKEN - use AIX token in test environment  
- - build (*npm install*) and run project (*npm run localdev*)
+
+Clone UI from [repository](https://github.com/AigangNetwork/aigang-platform-web)  
+
+- update web project configuration:
+  - FEATURE_TOGGLE.INSURANCE - true  
+  - CONTRACTS_ADDRESSES.ADDRESS_MANAGER - change to your contract manager contract  
+  - CONTRACTS_ADDRESSES.TOKEN - use AIX token in test environment  
+- build (*npm install*) and run project (*npm run localdev*)
  
 ## 6. Test your web project in the browser  
 
