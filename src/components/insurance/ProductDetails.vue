@@ -7,7 +7,7 @@
     <a class="contract-address" target="_blank" :href="contractLink">{{ product.address }}</a>
 
     <template>
-      <el-tooltip v-if="product.isPoolLimitReached" :content="$t('insurance.product.productPoolLimitReacher')">
+      <el-tooltip v-if="product.isPoolLimitReached" :content="$t('insurance.product.productPoolLimitReached')">
         <span class="wrapper el-button">
           <el-button :disabled="true" class="aig-button" type="primary">
             {{ $t('insurance.product.calculateInsurancePrice') }}
@@ -23,9 +23,23 @@
         </span>
       </el-tooltip>
 
-      <!-- Check if logged in to metamask -->
+      <el-tooltip v-else-if="isCampaignNotStartedYet" :content="$t('insurance.product.campaignNotStartedYet')">
+        <span class="wrapper el-button">
+          <el-button :disabled="true" @click="displayDialog(true)" class="aig-button" type="primary">
+            {{ $t('insurance.product.calculateInsurancePrice') }}
+          </el-button>
+        </span>
+      </el-tooltip>
 
-      <span class="wrapper el-button">
+      <el-tooltip v-else-if="isCampaignEnded" :content="$t('insurance.product.campaignEnded')">
+        <span class="wrapper el-button">
+          <el-button :disabled="true" @click="displayDialog(true)" class="aig-button" type="primary">
+            {{ $t('insurance.product.calculateInsurancePrice') }}
+          </el-button>
+        </span>
+      </el-tooltip>
+
+      <span class="wrapper el-button" v-else-if="isCampaignIsRunning">
         <el-button @click="displayDialog(true)" class="aig-button" type="primary">
           {{ $t('insurance.product.calculateInsurancePrice') }}
         </el-button>
@@ -37,6 +51,7 @@
 </template>
 
 <script>
+import moment from 'moment'
 import ProductDialog from '@/components/insurance/ProductDialog'
 import ScrollableMarkupText from '@/components/insurance/ScrollableMarkupText'
 import VueMarkdown from 'vue-markdown'
@@ -63,6 +78,22 @@ export default {
     ...mapGetters(['product']),
     contractLink () {
       return process.env.ETHERSCAN_ADDRESS + process.env.ADDRESS_PATH + this.product.address
+    },
+    isCampaignIsRunning () {
+      const currentDate = moment.utc()
+      const campaignStartDate = moment.utc(this.product.startDateUtc)
+      const campaignEndDate = moment.utc(this.product.endDateUtc)
+      return currentDate.isAfter(campaignStartDate) && currentDate.isBefore(campaignEndDate)
+    },
+    isCampaignEnded () {
+      const currentDate = moment.utc()
+      const campaignEndDate = moment.utc(this.product.endDateUtc)
+      return currentDate.isAfter(campaignEndDate)
+    },
+    isCampaignNotStartedYet () {
+      const currentDate = moment.utc()
+      const campaignStartDate = moment.utc(this.product.startDateUtc)
+      return currentDate.isBefore(campaignStartDate)
     }
   }
 }

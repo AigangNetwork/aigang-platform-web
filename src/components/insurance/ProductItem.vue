@@ -2,17 +2,27 @@
   <div class="aig-product-data" :class="{ disabled: !isCampaignRunning }">
     <router-link :to="{ name: 'Product', params: { address: product.address, type: product.type }}">
       <div class="aig-product-data-body-container">
-        <div class="aig-product-data-head" v-if="isCampaignRunning">
+
+        <div class="aig-product-data-head" v-if="!isCampaignRunning && isCampaignNotStartedYet">
+          <div class="desc date">{{ $t('insurance.product.productWillStart') }}
+            <Date :dateUtc="product.startDateUtc" />
+          </div>
+        </div>
+
+        <div class="aig-product-data-head" v-else-if="isCampaignRunning">
           <div class="desc date">{{ $t('insurance.product.productEnds') }}
             <Date :dateUtc="product.endDateUtc" />
           </div>
         </div>
+
         <div class="aig-product-data-head" v-else-if="!isCampaignRunning">
           <div class="desc">{{ $t('insurance.product.productEnded') }}</div>
         </div>
+
         <div class="aig-product-ata-head" v-else>
           <div class="desc">{{ $t('insurance.product.productClosed') }}</div>
         </div>
+
         <div class="aig-product-data-head">
           <div class="title">{{ product.title | truncate(50) }}</div>
         </div>
@@ -44,6 +54,12 @@ export default {
       const campaignStartDate = moment.utc(this.product.startDateUtc)
       const campaignEndDate = moment.utc(this.product.endDateUtc)
       return currentDate.isAfter(campaignStartDate) && currentDate.isBefore(campaignEndDate)
+    },
+    isCampaignNotStartedYet () {
+      const currentDate = moment.utc()
+      const campaignStartDate = moment.utc(this.product.startDateUtc)
+
+      return currentDate.isBefore(campaignStartDate)
     }
   }
 }

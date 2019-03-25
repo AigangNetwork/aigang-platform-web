@@ -628,8 +628,10 @@
 			"myPolicies": "My Policies"
 		},
 		"product": {
-			"productEnds": "Campaign ends",
+			"productStart": "Campaign start",
+			"productEnd": "Campaign end",
 			"productEnded": "Campaign ended",
+			"productWillStart": "Campaign will start",
 			"productClosed": "Product closed",
 			"basePremium": "Base Premium",
 			"details": "Details",
@@ -653,8 +655,10 @@
 			"notImplemented": "Product is not implemented",
 			"logInToCalculateInsurancePrice": "You have to log in to calculate insurance price",
 			"agreeWithTermsAndConditions": "You have to read terms and conditions to calculate insurance price",
-			"productPoolLimitReacher": "Product premium pool limit has been reached",
+			"productPoolLimitReached": "Product premium pool limit has been reached",
 			"policiesLimitReached": "This product has reached maximum number of policies",
+			"campaignNotStartedYet": "This product not started yet",
+			"campaignEnded": "This product ended",
 			"insuranceTerm": "Insurance term",
 			"validation": {
 				"deviceIdRequired": "Device ID is required",
