@@ -630,6 +630,7 @@
 		"product": {
 			"productStart": "Campaign start",
 			"productEnd": "Campaign end",
+			"productEnds": "Campaign ends",
 			"productEnded": "Campaign ended",
 			"productWillStart": "Campaign will start",
 			"productClosed": "Product closed",
