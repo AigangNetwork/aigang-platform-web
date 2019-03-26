@@ -1,14 +1,12 @@
 <template>
     <transition-group class="items-container" name="slideUp" v-loading="$store.getters.loading || !$store.getters['user/isWeb3Loaded']">
     <el-row class="aig-items" key="pools-list" v-if="showPools">
-      <transition-group name="slideUp">
-        <el-col   :xs="24" :sm="12" :md="12" :lg="8" v-for="(pool, index) in pools.items" :key="index">
-          <PoolsProductItem :item="pool" />
+        <el-col   :xs="24" :sm="12" :md="12" :lg="8" v-for="(pool, index) in itemsList" :key="index">
+            <PoolsProductItem :item="pool" />
         </el-col>
-      </transition-group>
       <el-col v-if="isWeb3Enabled">
         <transition name="slideUp">
-            <Pagination v-if="pools.totalPages > 1  && isDataLoaded" :callback="loadPage" :total-page-count="pools.totalPages" :current-page="page"/>
+            <Pagination v-if="pools.totalPages > 1" :callback="loadPage" :total-page-count="pools.totalPages" :current-page="page"/>
         </transition>
       </el-col>
     </el-row>
@@ -46,6 +44,11 @@ export default {
              this.$store.getters['user/isWeb3Loaded']) &&
              this.pools &&
              (this.pools.items && this.pools.items.length !== 0)
+    },
+    itemsList () {
+      const placeholders = new Array(this.pools.totalItems - this.pools.items.length)
+      debugger
+      return this.pools.items.concat(placeholders)
     }
   },
   data () {
