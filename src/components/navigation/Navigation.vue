@@ -106,6 +106,22 @@ export default {
       })
     }
 
+    if (process.env.FEATURE_TOGGLE.WIKI) {
+      this.navigationBars.push({
+        name: this.$t('navigation.wiki'),
+        type: 'external',
+        link: 'https://aigangnetwork.github.io/'
+      })
+    }
+
+    if (process.env.FEATURE_TOGGLE.DISCUSSIONS) {
+      this.navigationBars.push({
+        name: this.$t('navigation.discussions'),
+        type: 'internal',
+        routeLink: '/discussions'
+      })
+    }
+
     if (process.env.FEATURE_TOGGLE.POOLS) {
       this.navigationBars.push({
         name: this.$t('navigation.pools'),
@@ -127,22 +143,6 @@ export default {
         name: this.$t('navigation.insurance'),
         routeLink: '/insurance',
         type: 'internal'
-      })
-    }
-
-    if (process.env.FEATURE_TOGGLE.WIKI) {
-      this.navigationBars.push({
-        name: this.$t('navigation.wiki'),
-        type: 'external',
-        link: 'https://aigangnetwork.github.io/'
-      })
-    }
-
-    if (process.env.FEATURE_TOGGLE.DISCUSSIONS) {
-      this.navigationBars.push({
-        name: this.$t('navigation.discussions'),
-        type: 'internal',
-        routeLink: '/discussions'
       })
     }
   }
