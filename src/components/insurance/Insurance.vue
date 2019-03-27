@@ -24,11 +24,13 @@
           </ul>
         </span>
       </el-aside>
-      <el-main class="aig-data-container" :class="{ 'is-authenticated': $store.getters['user/isAuthenticated']}">
+
+      <el-main class="aig-data-container">
         <el-row :gutter="20" class="aig-items">
           <router-view :key="$route.path" />
         </el-row>
       </el-main>
+
     </el-container>
   </div>
 </template>
