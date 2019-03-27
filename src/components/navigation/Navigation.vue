@@ -11,13 +11,15 @@
           </router-link>
           <nav class="aig-navigation-menu">
             <ul>
-              <li v-for="(bar, index) in navigationBars" :key="index">
+              <li v-for="(bar, index) in navigationBars" v-if="!bar.disabled" :key="index">
+
                 <router-link v-if="bar.type === 'internal'" active-class="aig-bar-active" :class="{'disabled': bar.disabled}" :to="bar.routeLink">
                   {{ bar.name }}
                 </router-link>
                 <a v-if="bar.type === 'external'" active-class="aig-bar-active" target="_blank" :href="bar.link" :class="{'disabled': bar.disabled}">
                   {{ bar.name }}
                 </a>
+
               </li>
             </ul>
           </nav>
