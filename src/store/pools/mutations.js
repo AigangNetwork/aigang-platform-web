@@ -15,8 +15,9 @@ const mutations = {
     state.pool = payload
   },
 
-  setPoolsTotalPages (state, totalPages) {
-    state.pools.totalPages = totalPages
+  setPoolsPagesAndItems (state, payload) {
+    state.pools.totalPages = payload.totalPages
+    state.pools.totalItems = payload.totalItems
   },
 
   setContribution (state, payload) {
@@ -27,8 +28,9 @@ const mutations = {
     state.userContributions = payload
   },
 
-  setUserContributionsTotalPages (state, totalPages) {
-    state.userContributions.totalPages = totalPages
+  setContributionsPagesAndItems (state, payload) {
+    state.userContributions.totalPages = payload.totalPages
+    state.userContributions.totalItems = payload.totalItems
   },
 
   setTransactionHash (state, transactionHash) {

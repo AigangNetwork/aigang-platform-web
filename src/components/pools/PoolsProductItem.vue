@@ -1,6 +1,8 @@
 
 <template>
-  <router-link :to="{ name: 'PoolsProduct', params: { id: item.id, address: item.poolContractAddress }}">
+
+  <transition name="fade" mode="out-in" appear>
+  <router-link v-if="item && item.id" :to="{ name: 'PoolsProduct', params: { id: item.id, address: item.poolContractAddress }}" key="first">
     <div class="aig-data pools-product-item" :class="{ active: item.status === 'active'}">
         <div class="aig-data-head">
           <div class="status" v-if="item.status === 'active'">{{ $t('pools.products.activeTill') }}: <Date :dateUtc="item.endDateUtc" /></div>
@@ -24,17 +26,34 @@
         </div>
     </div>
   </router-link>
+
+  <div v-else>
+    <div class="aig-data pools-product-item placeholder-item">
+      <div class="aig-data-head">
+        <div class="status">
+          <PlaceholderBar class="placeholder" />
+        </div>
+        <div class="title">
+          <PlaceholderBar class="placeholder" />
+        </div>
+      </div>
+      <div class="aig-data-footer">
+        <PlaceholderBar class="placeholder" />
+      </div>
+    </div>
+  </div>
+  </transition>
+
 </template>
 <script>
 import Date from '@/components/Date'
 import PoolStatus from '@/components/mixins/PoolStatus'
+import PlaceholderBar from '@/components/common/PlaceholderBar'
 
 export default {
   props: ['item'],
   mixins: [PoolStatus],
-  components: {
-    Date
-  }
+  components: { Date, PlaceholderBar }
 }
 </script>
 <style lang="scss" scoped>
@@ -50,6 +69,10 @@ export default {
       background: $purple-gradient-down-top
     }
 
+    &.placeholder-item {
+      background: white;
+    }
+
     .title, .desc p, .label, .status {
       color: white;
     }
@@ -61,6 +84,10 @@ export default {
       .aig-data-footer-container {
         display: flex;
         align-items: center;
+      }
+
+      .placeholder {
+        height: 15px;
       }
     }
 
@@ -80,6 +107,11 @@ export default {
 
   .status {
     font-family: $font-secondary;
+
+    .placeholder {
+      height: 10px;
+      width: 70%
+    }
   }
 
   @media screen and (min-width: 100px) and (max-width: 680px) {
@@ -87,4 +119,15 @@ export default {
       height: 90px;
     }
   }
+
+  .animated-background {
+    width: 100%;
+    height: 100%;
+  }
+
+  .placeholder {
+    border-radius: 5px;
+    margin: initial;
+  }
+
 </style>

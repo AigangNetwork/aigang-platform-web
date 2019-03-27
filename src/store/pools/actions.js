@@ -22,14 +22,31 @@ export default {
       const contracts = await EthUtils.getContracts(process.env.CONTRACT_TYPES.POOLS)
       const itemsPerPage = process.env.POOLS_ITEMS_PER_PAGE
       const startItem = page * itemsPerPage - itemsPerPage + 1
-      let totalPools = 0
-      let poolsCounter = 0
+      const poolsLengths = []
 
       for (const contract of contracts) {
         const poolsLength = parseInt(await contract.methods.totalPools().call())
-        totalPools += poolsLength
+        poolsLengths.push(poolsLength)
+      }
 
-        // Iterating through pools in a conctract
+      const totalPools = poolsLengths.reduce((total, current) => total + current)
+      const totalPages = Math.ceil(totalPools / itemsPerPage)
+
+      let poolsCounter = 0
+      let totalItems = 0
+
+      if (page === totalPages) {
+        totalItems = totalPools - itemsPerPage * (totalPages - 1)
+      } else {
+        totalItems = itemsPerPage
+      }
+
+      commit('setPoolsPagesAndItems', { totalPages, totalItems })
+
+      for (let contractIndex = 0; contractIndex < contracts.length; contractIndex++) {
+        const poolsLength = poolsLengths[contractIndex]
+        const contract = contracts[contractIndex]
+
         for (let i = poolsLength; i > 0 && state.pools.items.length < itemsPerPage; i--) {
           poolsCounter++
 
@@ -46,7 +63,7 @@ export default {
           }
         }
       }
-      commit('setPoolsTotalPages', Math.ceil(totalPools / itemsPerPage))
+
       commit('setLoading', false, { root: true })
     } catch (ex) {
       console.error(ex)
@@ -123,23 +140,42 @@ export default {
   async getUserContributions ({ commit, rootState, state }, page) {
     commit('setUserContributions', {
       items: [],
-      totalPages: 0
+      totalPages: 0,
+      totalItems: 0
     })
     commit('setContributionsListLoading', true)
 
     try {
       const contracts = await EthUtils.getContracts(process.env.CONTRACT_TYPES.POOLS)
-      let totalContributions = 0
       const itemsPerPage = process.env.CONTRIBUTIONS_ITEMS_PER_PAGE
       const startItem = page * itemsPerPage - itemsPerPage + 1
 
-      let iterator = 0
+      const contributionsLengths = []
+
       for (const contract of contracts) {
-        const result = await contract.methods
+        const contributionsLength = await contract.methods
           .getMyContributionsLength()
           .call({ from: rootState.user.userWeb3.coinbase })
-        let contributionsCount = parseInt(result)
-        totalContributions += contributionsCount
+        contributionsLengths.push(parseInt(contributionsLength))
+      }
+
+      const totalContributions = contributionsLengths.reduce((total, current) => total + current)
+      const totalPages = Math.ceil(totalContributions / itemsPerPage)
+
+      let totalItems = 0
+
+      if (page === totalPages) {
+        totalItems = totalContributions - itemsPerPage * (totalPages - 1)
+      } else {
+        totalItems = itemsPerPage
+      }
+
+      commit('setContributionsPagesAndItems', { totalPages, totalItems })
+
+      let iterator = 0
+      for (let contractIndex = 0; contractIndex < contracts.length; contractIndex++) {
+        const contract = contracts[contractIndex]
+        const contributionsCount = contributionsLengths[contractIndex]
 
         for (
           let i = contributionsCount - 1;
@@ -158,8 +194,6 @@ export default {
             commit('setContributionsListLoading', false)
           }
         }
-
-        commit('setUserContributionsTotalPages', Math.ceil(totalContributions / itemsPerPage))
       }
       commit('setContributionsListLoading', false)
     } catch (ex) {
