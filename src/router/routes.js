@@ -3,7 +3,6 @@ import AccessDenied from '@/components/general/AccessDenied'
 import ServiceUnavailable from '@/components/general/ServiceUnavailable'
 import CookiesPolicy from '@/components/general/CookiesPolicy'
 
-import DataRoutes from './data-routes'
 import InsuranceRoutes from './insurance-routes'
 import UserRoutes from './user-routes'
 import PoolsRoutes from './pools-routes'
@@ -33,10 +32,6 @@ let routes = [
     component: CookiesPolicy
   }
 ]
-
-if (process.env.FEATURE_TOGGLE.DATA) {
-  routes = [...routes, ...DataRoutes]
-}
 
 if (process.env.FEATURE_TOGGLE.INSURANCE) {
   routes = [...routes, ...InsuranceRoutes]

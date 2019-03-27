@@ -3,7 +3,7 @@
     <transition name="slideDown">
       <div class="aig-navigation">
         <div class="aig-navigation-body">
-          <router-link to="/data/all" class="aig-logo">
+          <router-link to="/insurance/products" class="aig-logo">
             <img src="/static/logo.png" alt="">
             <div class="alpha-container" v-if="isDevEnv">
               {{ $t('general.testPlatform') }}
@@ -21,9 +21,11 @@
               </li>
             </ul>
           </nav>
+
           <div class="aig-profile-wrapper" v-if="$store.getters['user/isAuthenticated'] && showAccount">
             <UserTab />
           </div>
+
           <el-button type="primary" class="aig--login" @click="selectLogin" v-else-if="showAccount">{{ $t('navigation.login')}}</el-button>
           <div class="aig-profile-wrapper" v-else>
             <UserWalletTab  />
@@ -100,9 +102,8 @@ export default {
     if (process.env.FEATURE_TOGGLE.DATA) {
       this.navigationBars.push({
         name: this.$t('navigation.data'),
-        routeLink: '/data',
-        type: 'internal',
-        showAccount: true
+        type: 'external',
+        link: process.env.NAVIGATION_DATA_URL
       })
     }
 
