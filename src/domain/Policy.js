@@ -19,7 +19,7 @@ export default class Policy {
     this.status = mapStatus(details)
     this.premium = EthUtils.fromWei(details.premium)
     this.payout = EthUtils.fromWei(details.payout)
-    this.payoutUtc = moment.unix(details[2]).format(details.utcPayoutDate).utc()
+    this.payoutUtc = moment.unix(details[2]).utc().format(details.utcPayoutDate)
     this.properties = details.properties
     this.claimProperties = details.claimProperties
     this.address = details.address

@@ -1,5 +1,5 @@
 <template>
-  <div class="dataset-model-header-container" >
+  <div class="dataset-model-header-container">
     <div class="header-title-container" :class="{ disabled: !isCampaignRunning }">
       <div class="header-left-section">
         <InsuranceProductImage :type="product.type" />
@@ -20,11 +20,13 @@
 import moment from 'moment'
 import Date from '@/components/Date'
 import InsuranceProductImage from '@/components/insurance/InsuranceProductImage'
+import { createNamespacedHelpers } from 'vuex'
+const { mapGetters } = createNamespacedHelpers('insurance')
 
 export default {
   components: { Date, InsuranceProductImage },
-  props: ['product'],
   computed: {
+    ...mapGetters(['product']),
     isPremiumBig () {
       return !(String(this.product.basePremium).length > 7)
     },

@@ -5,6 +5,7 @@ import getters from './getters'
 export const initialInsuranceState = () => {
   return {
     products: {},
+    product: {},
     policy: {},
     txHash: null,
     policyLoadingInfo: {},

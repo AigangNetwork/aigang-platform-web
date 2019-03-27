@@ -33,7 +33,7 @@ export default {
 				productsCounter += 1
 
 				if (productsCounter >= startItem && productsCounter < startItem + itemsPerPage) {
-					const product = await InsuranceProduct.createItem(
+					const product = await InsuranceProduct.create(
 						contract,
 						process.env.CONTRACT_TYPES.INSURANCE.ANDROID_BATTERY
 					)
@@ -56,6 +56,7 @@ export default {
 		try {
 			const contract = await EthUtils.getContract(payload.address)
 			const product = await InsuranceProduct.create(contract, payload.type)
+
 			commit('setProduct', product)
 			commit('setLoading', false, { root: true })
 		} catch (e) {

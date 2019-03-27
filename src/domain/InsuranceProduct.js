@@ -20,23 +20,12 @@ export default class InsuranceProduct {
     this.type = details.type
   }
 
-  static async createItem (contract, type) {
-    const details = await contract.methods.getProductDetails().call()
-
-    details.address = contract._address
-    details.type = type
-
-    const product = new InsuranceProduct()
-    await product.initialize(details)
-
-    return product
-  }
-
   static async create (contract, type) {
     const details = await contract.methods.getProductDetails().call()
 
     details.address = contract._address
     details.type = type
+
     const product = new InsuranceProduct()
     await product.initialize(details)
 

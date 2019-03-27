@@ -1,9 +1,9 @@
 <template>
-  <div class="aig-container aig-view" v-loading="$store.getters.loading">
-    <Card class="product-card" v-if="isWeb3Enabled || !isWeb3Loaded">
-      <div slot="body" v-loading="$store.getters.loading">
+  <div class="aig-container aig-view" v-loading="$store.getters.loading || !isWeb3Loaded">
+    <Card class="product-card" v-if="isWeb3Loaded && product">
+      <div slot="body">
         <transition-group name="slideUp" mode="out-in">
-          <ProductHeader key="1" :product="product" v-if="!isPolicyLoadingVisible" />
+          <ProductHeader key="1" v-if="!isPolicyLoadingVisible" />
           <ProductDetails key="2" v-if="!isPolicyLoadingVisible" />
           <PolicyLoadingInfo v-else key="3" />
         </transition-group>
@@ -14,7 +14,6 @@
 
 <script>
 import Card from '@/components/Card'
-import EndDate from '@/components/mixins/EndDate'
 import ProductHeader from '@/components/insurance/ProductHeader'
 import ProductDetails from '@/components/insurance/ProductDetails'
 import PolicyLoadingInfo from '@/components/insurance/PolicyLoadingInfo'
@@ -23,12 +22,6 @@ const { mapGetters, mapMutations } = createNamespacedHelpers('insurance')
 
 export default {
   components: { Card, ProductHeader, ProductDetails, PolicyLoadingInfo },
-  mixins: [EndDate],
-  data () {
-    return {
-      isDataLoaded: false
-    }
-  },
   computed: {
     ...mapGetters(['product', 'isPolicyLoadingVisible']),
     isWeb3Enabled () {
@@ -60,7 +53,7 @@ export default {
     }
   },
   async mounted () {
-    if (this.isWeb3Enabled) {
+    if (this.$store.getters['user/isWeb3Enabled']) {
       await this.loadData()
     }
   },
