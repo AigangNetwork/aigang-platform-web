@@ -21,7 +21,7 @@ export const initialInsuranceState = () => {
 export default {
   namespaced: true,
   state: initialInsuranceState(),
-  actions,
+  actions: actions,
   mutations,
   getters
 }

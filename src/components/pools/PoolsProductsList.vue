@@ -46,9 +46,12 @@ export default {
              (this.pools.items && this.pools.items.length !== 0)
     },
     itemsList () {
-      const placeholders = new Array(this.pools.totalItems - this.pools.items.length)
-      debugger
-      return this.pools.items.concat(placeholders)
+      if (this.pools.items.length < this.pools.totalItems) {
+        const placeholders = new Array(this.pools.totalItems - this.pools.items.length)
+        return this.pools.items.concat(placeholders)
+      } else {
+        return this.pools.items
+      }
     }
   },
   data () {

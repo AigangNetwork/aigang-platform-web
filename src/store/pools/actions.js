@@ -11,10 +11,12 @@ export default {
 
   async getPoolsList ({ commit, state }, page) {
     commit('setLoading', true, { root: true })
+    const timestamp = new Date().getTime()
 
     const pools = {
       items: [],
-      totalPages: 1
+      totalPages: 1,
+      timestamp: timestamp
     }
     commit('setPools', pools)
 
@@ -48,6 +50,9 @@ export default {
         const contract = contracts[contractIndex]
 
         for (let i = poolsLength; i > 0 && state.pools.items.length < itemsPerPage; i--) {
+          // Thread safety
+          if (state.pools.timestamp !== timestamp) return
+
           poolsCounter++
 
           if (poolsCounter < startItem) {
@@ -138,12 +143,15 @@ export default {
   },
 
   async getUserContributions ({ commit, rootState, state }, page) {
+    commit('setContributionsListLoading', true)
+    const timestamp = new Date().getTime()
+
     commit('setUserContributions', {
       items: [],
       totalPages: 0,
-      totalItems: 0
+      totalItems: 0,
+      timestamp: timestamp
     })
-    commit('setContributionsListLoading', true)
 
     try {
       const contracts = await EthUtils.getContracts(process.env.CONTRACT_TYPES.POOLS)
@@ -182,11 +190,15 @@ export default {
           i >= 0 && state.userContributions.items.length < itemsPerPage;
           i--
         ) {
+          // Thread safety
+          if (timestamp !== state.userContributions.timestamp) return
+
           iterator++
 
           if (iterator < startItem) {
             continue
           }
+
           const id = await contract.methods.myContributions(rootState.user.userWeb3.coinbase, i).call()
           const contribution = await Contribution.create(contract, id)
           commit('addContribution', contribution)
