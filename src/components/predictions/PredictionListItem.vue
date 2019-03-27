@@ -1,5 +1,6 @@
 <template>
-  <router-link :to="{ name: 'PredictionInfo', params: { id: item.id, address: item.marketAddress}}">
+  <transition name="list" mode="out-in" appear>
+  <router-link :to="{ name: 'PredictionInfo', params: { id: item.id, address: item.marketAddress}}" v-if="item && item.id">
     <div class="aig-data" :class="{ disabled: isDisabled }">
         <div class="aig-data-head">
           <div class="status" v-if="item.status === 'paused'">{{ $t('predictions.paused') }}</div>
@@ -23,15 +24,31 @@
         </div>
       </div>
   </router-link>
+
+  <div v-else>
+    <div class="aig-data pools-product-item placeholder-item">
+      <div class="aig-data-head">
+        <div class="status">
+          <PlaceholderBar class="placeholder" />
+        </div>
+        <div class="title">
+          <PlaceholderBar class="placeholder" />
+        </div>
+      </div>
+      <div class="aig-data-footer">
+        <PlaceholderBar class="placeholder" />
+      </div>
+    </div>
+  </div>
+  </transition>
 </template>
 
 <script>
 import Date from '@/components/Date'
+import PlaceholderBar from '@/components/common/PlaceholderBar'
 
 export default {
-  components: {
-    Date
-  },
+  components: { Date, PlaceholderBar },
   props: ['item'],
   computed: {
     isDisabled () {
@@ -53,5 +70,29 @@ export default {
 
   .disabled {
     filter: grayscale(100%);
+  }
+
+  .status {
+
+    .placeholder {
+      height: 10px;
+      width: 70%
+    }
+  }
+
+  .aig-data-footer {
+    .placeholder {
+      height: 15px;
+    }
+  }
+
+  .animated-background {
+    width: 100%;
+    height: 100%;
+  }
+
+  .placeholder {
+    border-radius: 5px;
+    margin: initial;
   }
 </style>
