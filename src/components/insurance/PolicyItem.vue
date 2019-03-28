@@ -1,54 +1,82 @@
 <template>
-  <div class="aig-policy-item">
-    <div class="policy-list-item-img-container">
-      <InsuranceProductImage :type="policy.type" />
+  <transition name="fade" mode="out-in" appear>
+  <router-link :to="{ name: 'Policy', params: { address: policy.address, type: policy.type, id: policy.id } }" v-if="policy && policy.id">
+    <div class="aig-policy-item" >
+      <div class="policy-list-item-img-container">
+        <InsuranceProductImage :type="policy.type" />
+      </div>
+      <div class="policy-list-item-content">
+        <div class="policy-item-header">
+          <div class="text">{{$t('insurance.policy.policyId')}}:</div>
+          <div class="id">{{policy.id}}</div>
+        </div>
+        <div class="policy-item-body">
+          <div class="policy-info-item">
+            <div class="title">
+              <p class="title">{{$t('insurance.policy.productAddress')}}:</p>
+            </div>
+            <div class="content">{{policy.address}}</div>
+          </div>
+          <div class="policy-info-item-date">
+            <div class="title">
+              <p class="title">{{$t('insurance.policy.startDate')}}:</p>
+            </div>
+            <div class="content">
+              <Date :dateUtc="policy.startUtc" format="YYYY-MM-DD" />
+            </div>
+          </div>
+          <div class="policy-info-item-date">
+            <div class="title">
+              <p class="title">{{$t('insurance.policy.endDate')}}:</p>
+            </div>
+            <div class="content">
+              <Date :dateUtc="policy.endUtc" format="YYYY-MM-DD"/>
+            </div>
+          </div>
+          <div class="policy-info-item-status">
+            <div class="title">
+              <p class="title">{{$t('insurance.policy.status')}}:</p>
+            </div>
+            <div class="content">{{ status | uppercase }}</div>
+          </div>
+        </div>
+      </div>
     </div>
+  </router-link>
+
+  <div class="aig-policy-item placeholder-container" v-else>
+    <div class="policy-list-item-img-container "> </div>
     <div class="policy-list-item-content">
       <div class="policy-item-header">
-        <div class="text">{{$t('insurance.policy.policyId')}}:</div>
-        <div class="id">{{policy.id}}</div>
+          <PlaceholderBar class="placeholder" />
       </div>
       <div class="policy-item-body">
         <div class="policy-info-item">
-          <div class="title">
-            <p class="title">{{$t('insurance.policy.productAddress')}}:</p>
-          </div>
-          <div class="content">{{policy.address}}</div>
+          <PlaceholderBar class="placeholder" />
         </div>
         <div class="policy-info-item-date">
-          <div class="title">
-            <p class="title">{{$t('insurance.policy.startDate')}}:</p>
-          </div>
-          <div class="content">
-            <Date :dateUtc="policy.startUtc" format="YYYY-MM-DD" />
-          </div>
+          <PlaceholderBar class="placeholder" />
         </div>
         <div class="policy-info-item-date">
-          <div class="title">
-            <p class="title">{{$t('insurance.policy.endDate')}}:</p>
-          </div>
-          <div class="content">
-            <Date :dateUtc="policy.endUtc" format="YYYY-MM-DD"/>
-          </div>
+          <PlaceholderBar class="placeholder" />
         </div>
         <div class="policy-info-item-status">
-          <div class="title">
-            <p class="title">{{$t('insurance.policy.status')}}:</p>
-          </div>
-          <div class="content">{{ status | uppercase }}</div>
+          <PlaceholderBar class="placeholder" />
         </div>
       </div>
     </div>
   </div>
+  </transition>
 </template>
 
 <script>
 import Date from '@/components/Date'
 import PolicyStatus from '@/components/mixins/PolicyStatus'
 import InsuranceProductImage from '@/components/insurance/InsuranceProductImage'
+import PlaceholderBar from '@/components/common/PlaceholderBar'
 
 export default {
-  components: { Date, InsuranceProductImage },
+  components: { Date, InsuranceProductImage, PlaceholderBar },
   mixins: [PolicyStatus],
   props: ['policy']
 }
@@ -190,4 +218,86 @@ export default {
       }
     }
   }
+
+  .placeholder-container {
+      min-height: 96px;
+
+      .policy-list-item-content .policy-item-header .placeholder {
+        margin-top: 5px;
+        width: 220px;
+        margin-left: 40px;
+      }
+
+      .policy-list-item-content .placeholder {
+        max-height: 15px;
+        width: 100%;
+      }
+
+      .policy-list-item-content .policy-info-item  {
+        width: 100%;
+
+        .placeholder{
+          margin-left: 38px;
+          max-height: 15px;
+        }
+      }
+
+      .policy-item-body {
+        margin-top: 30px;
+      }
+
+      .policy-info-item-date .placeholder, .policy-info-item-status .placeholder  {
+
+        margin-left: 0;
+      }
+
+      .policy-info-item-date, .policy-info-item-status {
+        max-width: 15%;
+      }
+  }
+
+  @media screen and (min-width: 100px) and (max-width: 680px) {
+
+    .placeholder-container {
+        min-height: 275px;
+
+        .policy-list-item-content .policy-item-header .placeholder {
+          margin-top: 40px;
+          width: 100%;;
+          margin-left: 0px;
+        }
+
+        .policy-list-item-content .placeholder {
+          max-height: 15px;
+          width: 100%;
+          margin: 10px;
+        }
+
+        .policy-list-item-content .policy-info-item  {
+
+          .placeholder{
+            margin-left: 0px;
+            max-height: 15px;
+          }
+        }
+
+        .policy-item-body {
+          margin-top: 30px;
+        }
+
+        .policy-info-item-date, .policy-info-item-status  {
+          width: 100%;
+        }
+
+        .policy-info-item-date .placeholder, .policy-info-item-status .placeholder  {
+          margin-left: 0;
+          width: 50%;
+        }
+
+        .policy-info-item-date, .policy-info-item-status {
+          max-width: 100%;
+        }
+    }
+  }
+
 </style>

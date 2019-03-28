@@ -56,8 +56,9 @@ export default {
     state.userPolicies = payload
   },
 
-  setUserPoliciesTotalPages (state, totalPages) {
+  setPoliciesPagesAndItems (state, { totalPages, totalItems }) {
     state.userPolicies.totalPages = totalPages
+    state.userPolicies.totalItems = totalItems
   },
 
   addPolicy (state, policy) {

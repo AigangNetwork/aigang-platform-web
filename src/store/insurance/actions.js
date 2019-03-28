@@ -177,9 +177,12 @@ export default {
 
 	async loadUserPolicies({ commit, rootState, state }, page) {
 		commit('setLoading', true, { root: true })
+		const timestamp = new Date().getTime()
+
 		commit('setUserPolicies', {
 			items: [],
-			totalPages: 0
+			totalPages: 0,
+			timestamp: timestamp
 		})
 
 		try {
@@ -188,16 +191,38 @@ export default {
 			const itemsPerPage = process.env.POLICY_ITEMS_PER_PAGE
 			const startItem = page * itemsPerPage - itemsPerPage + 1
 
-			let totalPolicies = 0
-			let iterator = 0
-			// Iterating through products
+			const policiesLengths = []
+
 			for (const contract of contracts) {
 				const policiesLength = await contract.methods.myPoliciesLength(rootState.user.userWeb3.coinbase).call()
-				let policiesCount = parseInt(policiesLength)
-				totalPolicies += policiesCount
+
+				policiesLengths.push(parseInt(policiesLength))
+			}
+
+			const totalPolicies = policiesLengths.reduce((total, current) => total + current)
+			const totalPages = Math.ceil(totalPolicies / itemsPerPage)
+
+			let totalItems = 0
+
+			if (page === totalPages) {
+				totalItems = contracts.length - itemsPerPage * (totalPages - 1)
+			} else {
+				totalItems = itemsPerPage
+			}
+
+			commit('setPoliciesPagesAndItems', { totalPages, totalItems })
+
+			let iterator = 0
+			// Iterating through products
+			for (let contractIndex = 0; contractIndex < contracts.length; contractIndex++) {
+				const contract = contracts[contractIndex]
+				const policiesCount = policiesLengths[contractIndex]
 
 				// Iterating through policies
 				for (let i = policiesCount - 1; i >= 0 && state.userPolicies.items.length < itemsPerPage; i--) {
+					// Thread safety
+					if (timestamp !== state.userPolicies.timestamp) return
+
 					iterator++
 
 					if (iterator < startItem) {
@@ -213,8 +238,6 @@ export default {
 						commit('setLoading', false, { root: true })
 					}
 				}
-
-				commit('setUserPoliciesTotalPages', Math.ceil(totalPolicies / itemsPerPage))
 			}
 
 			commit('setLoading', false, { root: true })
