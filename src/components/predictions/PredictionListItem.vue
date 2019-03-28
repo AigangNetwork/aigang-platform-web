@@ -95,4 +95,5 @@ export default {
     border-radius: 5px;
     margin: initial;
   }
+
 </style>

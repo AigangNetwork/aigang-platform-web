@@ -109,7 +109,15 @@ export default {
       td {
         &.title, h2 {
           font-size: 10pt !important;
+
         }
+      }
+    }
+
+    tr.placeholder-container {
+      .placeholder {
+        margin-top: 6px;
+        margin-bottom: 6px;
       }
     }
   }

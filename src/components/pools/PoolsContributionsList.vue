@@ -63,6 +63,7 @@ export default {
     userContributionsList () {
       if (this.userContributions.items.length < this.userContributions.totalItems) {
         const placeholders = new Array(this.userContributions.totalItems - this.userContributions.items.length)
+        debugger
         return this.userContributions.items.concat(placeholders)
       } else {
         return this.userContributions.items

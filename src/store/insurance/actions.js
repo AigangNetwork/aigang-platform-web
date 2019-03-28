@@ -15,10 +15,12 @@ export default {
 
 	async getProductsList({ commit, state }, page) {
 		commit('setLoading', true, { root: true })
+		const timestamp = new Date().getTime()
 
 		commit('setProducts', {
 			items: [],
-			totalPages: 1
+			totalPages: 1,
+			timestamp: timestamp
 		})
 
 		try {
@@ -28,20 +30,35 @@ export default {
 
 			let productsCounter = 0
 
+			let totalItems = 0
+			const totalPages = Math.ceil(contracts.length / itemsPerPage)
+
+			if (page === totalPages) {
+				totalItems = contracts.length - itemsPerPage * (totalPages - 1)
+			} else {
+				totalItems = itemsPerPage
+			}
+
+			commit('setProductsPagesAndItems', { totalPages, totalItems })
+
 			// Iterating through contracts
 			for (const contract of contracts) {
 				productsCounter += 1
+
+				// Thread safety
+				if (timestamp !== state.products.timestamp) return
+
+				if (productsCounter === startItem) commit('setLoading', false, { root: true })
 
 				if (productsCounter >= startItem && productsCounter < startItem + itemsPerPage) {
 					const product = await InsuranceProduct.create(
 						contract,
 						process.env.CONTRACT_TYPES.INSURANCE.ANDROID_BATTERY
 					)
+
 					commit('addProductToList', product)
 				}
 			}
-
-			commit('setProductsTotalPages', Math.ceil(contracts.length / itemsPerPage))
 
 			commit('setLoading', false, { root: true })
 		} catch (ex) {
@@ -310,29 +327,29 @@ const loadTaskId = async (commit, request) => {
 }
 
 const handlePolicyLoadingInfoError = async (error, policyLoadingInfo, commit) => {
-  let newPolicyLoadingInfo = Object.assign({}, policyLoadingInfo)
+	let newPolicyLoadingInfo = Object.assign({}, policyLoadingInfo)
 
-  if (error.response) {
-    if (error.response.status === 404) {
-      newPolicyLoadingInfo.notFound = true
-    } else if (error.response.status === 400) {
-      newPolicyLoadingInfo.validationReasons = []
+	if (error.response) {
+		if (error.response.status === 404) {
+			newPolicyLoadingInfo.notFound = true
+		} else if (error.response.status === 400) {
+			newPolicyLoadingInfo.validationReasons = []
 
-      if (error.response.data.params) {
-        error.response.data.params.ValidationFailed.forEach(val =>
-          newPolicyLoadingInfo.validationReasons.push('errors.validation.' + val.reason)
-        )
-      } else if (error.response.data.reason) {
-        newPolicyLoadingInfo.validationReasons.push('errors.validation.' + error.response.data.reason)
-      }
-    } else if (error.response.status === 503 || error.response.status === 500) {
-      newPolicyLoadingInfo.serverError = true
-    } else if (error.response.status) {
-      newPolicyLoadingInfo.serverError = true
-    }
-  } else {
-    newPolicyLoadingInfo.serverNotAvailable = true
-  }
+			if (error.response.data.params) {
+				error.response.data.params.ValidationFailed.forEach(val =>
+					newPolicyLoadingInfo.validationReasons.push('errors.validation.' + val.reason)
+				)
+			} else if (error.response.data.reason) {
+				newPolicyLoadingInfo.validationReasons.push('errors.validation.' + error.response.data.reason)
+			}
+		} else if (error.response.status === 503 || error.response.status === 500) {
+			newPolicyLoadingInfo.serverError = true
+		} else if (error.response.status) {
+			newPolicyLoadingInfo.serverError = true
+		}
+	} else {
+		newPolicyLoadingInfo.serverNotAvailable = true
+	}
 
-  commit('setPolicyLoadingInfo', newPolicyLoadingInfo)
+	commit('setPolicyLoadingInfo', newPolicyLoadingInfo)
 }

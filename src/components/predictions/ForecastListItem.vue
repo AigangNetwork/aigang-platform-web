@@ -112,4 +112,34 @@ export default {
       }
   }
 
+  @media screen and (min-width: 100px) and (max-width: 680px) {
+    .title .title .placeholder {
+      display: none
+    }
+
+    div.title > .placeholder {
+      margin-left: 2px;
+      margin-bottom: 5px;
+    }
+
+    .placeholder-container .aig-list-info-item-status .content {
+
+      .placeholder {
+        margin-left: 2px;
+      }
+
+      .title {
+          display: none
+      }
+    }
+
+    .aig-list-item-body {
+        min-height: 10px;
+    }
+
+    .aig-list-item.placeholder-container {
+      min-height: 167px;
+    }
+  }
+
 </style>
