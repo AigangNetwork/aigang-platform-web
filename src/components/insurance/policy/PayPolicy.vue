@@ -71,7 +71,7 @@ export default {
       this.isPaymentDialogVisible = value
     },
     async insure () {
-      if (this.policyLoadingInfo.premium >= this.$store.getters['user/aixBalance']) {
+      if (this.policyLoadingInfo.policy.premium >= this.$store.getters['user/aixBalance']) {
         await this.$store.dispatch('showInsufficientBalanceDialog', true)
         return
       }
