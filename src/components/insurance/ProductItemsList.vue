@@ -2,14 +2,14 @@
   <transition-group class="items-container" name="slideUp" v-loading="$store.getters.loading || !$store.getters['user/isWeb3Loaded']">
     <el-row class="aig-items" key="insurance-produts-list">
       <transition-group v-if="isWeb3Enabled" name="slideUp">
-        <el-col :xs="24" :sm="12" :md="12" :lg="8" v-for="(product, index) in products.items" :key="index">
-          <ProductItem :product="product" :key="product.id" />
+        <el-col :xs="24" :sm="12" :md="12" :lg="8" v-for="(product, index) in itemsList" :key="index">
+          <ProductItem :product="product" :key="index" />
         </el-col>
       </transition-group>
 
       <el-col v-if="isWeb3Enabled">
         <transition name="slideUp">
-            <Pagination v-if="products.totalPages > 1  && isDataLoaded" :callback="loadPage" :total-page-count="products.totalPages" :current-page="page"/>
+            <Pagination v-if="products.totalPages > 1" :callback="loadPage" :total-page-count="products.totalPages" :current-page="page"/>
         </transition>
       </el-col>
     </el-row>
@@ -44,6 +44,14 @@ export default {
     },
     isProductsExist () {
       return this.products && this.products.items && this.products.items.length > 0
+    },
+    itemsList () {
+      if (this.products.items.length < this.products.totalItems) {
+        const placeholders = new Array(this.products.totalItems - this.products.items.length)
+        return this.products.items.concat(placeholders)
+      } else {
+        return this.products.items
+      }
     }
   },
   data () {

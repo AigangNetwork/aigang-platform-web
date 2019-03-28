@@ -7,6 +7,10 @@ import MyPolicyList from '@/components/insurance/MyPolicyList'
 
 export default [
   {
+    path: '/',
+    redirect: '/insurance/products'
+  },
+  {
     path: '/insurance',
     component: Insurance,
     props: true,

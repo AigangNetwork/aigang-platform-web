@@ -204,47 +204,11 @@
 			}
 		}
 	},
-	"login": {
-		"login": "Log in",
-		"title": "Log in to Aigang Network",
-		"email": "Email",
-		"password": "Password",
-		"forgotPassword": "Forgot password?",
-		"dontHave": "Do not have account?"
-	},
-	"signUp": {
-		"signUp": "Sign Up",
-		"description":
-			"Creating an account in aigang.network you will get access to all products such as Data, Prediction market, Invest and Insure",
-		"haveAccount": "Have Aigang Network Account?",
-		"rePassword": "Repeat password",
-		"emailSent": "Email was sent to {0}. Follow instructions provided in the email.",
-		"dontReceiveEmail": "If you didn't receive email, click: ",
-		"waitingVerification": "Verification email was sent."
-	},
-	"retrievePassword": {
-		"title": "Reset Your Aigang Password",
-		"backTo": "Back to",
-		"waitingVerification": "Reset email was sent.",
-		"dontReceiveEmail": "If you didn't receive email, click: ",
-		"description": "Enter your new password",
-		"retrievePassword": "Reset password",
-		"changeSuccessTitle": "Your password has been successfully updated"
-	},
-	"activateEmail": {
-		"title": "Email activation",
-		"activating": "Activating ...",
-		"activated":
-			"Thank you for registration. Your account now is successfully activated and you can use all platform features. Please login to continue."
-	},
-	"notifications": {
-		"login_success": "Successfully signed in"
-	},
+
 	"account": {
 		"balance": "Balance"
 	},
 	"actions": {
-		"loginToAccount": "Login to account",
 		"upload_new_data": "Upload new data",
 		"retrievePassword": "Retrieve password"
 	},
@@ -256,27 +220,10 @@
 			"notifications": "Notifications"
 		},
 		"general": {
-			"logout": "Logout",
-			"userName": "Nickname",
-			"email": "Email",
-			"firstName": "First name",
-			"lastName": "Last name",
-			"changePassword": "Change password",
-			"passwordDescription":
-				"Minimum password length must be 8 characters and consist of at least 2 alpha characters, 1 number and 1 special character ",
-			"oldPassword": "Old password",
-			"newPassword": "New password",
 			"update": "Update",
-			"passwordUpdated": "Password succesfully updated",
-			"deactivateAccountTitle": "Deactivate your account",
-			"deactivateAccountDescription":
-				"If you decide that you no longer want to use Aigang Platform, it's easy to deactivate your account. When you deactivate your account, you're no longer availible to log in or access your private uploaded datasets.",
-			"deactivateAccount": "Deactivate account",
 			"warning": "Warning",
-			"confirmationText": "Are you sure you want to deactivate your account?",
 			"confirm": "Confirm",
-			"cancel": "Cancel",
-			"deactivationSuccessful": "Your account was successfuly deactivated"
+			"cancel": "Cancel"
 		},
 		"wallets": {
 			"title": "Wallets",
@@ -401,8 +348,7 @@
 		"pools": "Pools",
 		"insurance": "Insurance",
 		"wiki": "Wiki",
-		"discussions": "Discussions",
-		"login": "Sign Up/Log In"
+		"discussions": "Discussions"
 	},
 	"status": {
 		"active": "Active",

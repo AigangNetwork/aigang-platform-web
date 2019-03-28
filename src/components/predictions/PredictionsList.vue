@@ -2,13 +2,13 @@
   <transition-group class="items-container" name="slideUp" v-loading="$store.getters.loading || !isWeb3Loaded">
     <el-row class="aig-items" v-if="showPredictions" key="list">
       <transition-group name="slideUp">
-      <el-col :xs="24" :sm="12" :md="12" :lg="8" v-for="(prediction, index) in predictions.items" :key="index">
+      <el-col :xs="24" :sm="12" :md="12" :lg="8" v-for="(prediction, index) in itemsList" :key="index">
         <PredictionListItem :item="prediction" />
       </el-col>
       </transition-group>
       <transition name="slideUp">
       <el-col v-if="isWeb3Enabled">
-        <Pagination v-if="predictions.totalPages > 1 && isDataLoaded" :callback="loadPage" :total-page-count="predictions.totalPages" :current-page="page" />
+        <Pagination v-if="predictions.totalPages > 1" :callback="loadPage" :total-page-count="predictions.totalPages" :current-page="page" />
       </el-col>
       </transition>
     </el-row>
@@ -47,6 +47,14 @@ export default {
             this.$store.getters['user/isWeb3Loaded']) &&
           this.predictions &&
           (this.predictions.items && this.predictions.items.length !== 0)
+    },
+    itemsList () {
+      if (this.predictions.items.length < this.predictions.totalItems) {
+        const placeholders = new Array(this.predictions.totalItems - this.predictions.items.length)
+        return this.predictions.items.concat(placeholders)
+      } else {
+        return this.predictions.items
+      }
     }
   },
   data () {

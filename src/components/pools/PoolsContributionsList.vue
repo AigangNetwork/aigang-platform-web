@@ -16,14 +16,14 @@
                 </tr>
               </thead>
               <tbody>
-                <PoolsContributionsListItem v-for="(contribution, index) in userContributions.items" :key="index" :contribution="contribution" />
+                <PoolsContributionsListItem v-for="(contribution, index) in userContributionsList" :key="index" :contribution="contribution" />
               </tbody>
             </table>
           </div>
 
           <div class="pagination-container">
             <transition name="slideUp">
-              <Pagination v-if="userContributions && userContributions.totalPages > 1 && isDataLoaded" :callback="loadPage" :total-page-count="userContributions.totalPages" :current-page="page"/>
+              <Pagination v-if="userContributions && userContributions.totalPages > 1" :callback="loadPage" :total-page-count="userContributions.totalPages" :current-page="page"/>
             </transition>
           </div>
         </div>
@@ -58,7 +58,16 @@ export default {
       return this.$store.getters['user/isWeb3Loaded']
     },
     showContributions () {
-      return this.contributionsListLoading || !this.isWeb3Loaded || this.userContributions.items.length !== 0
+      return this.contributionsListLoading || !this.isWeb3Loaded || this.userContributionsList.length !== 0
+    },
+    userContributionsList () {
+      if (this.userContributions.items.length < this.userContributions.totalItems) {
+        const placeholders = new Array(this.userContributions.totalItems - this.userContributions.items.length)
+        debugger
+        return this.userContributions.items.concat(placeholders)
+      } else {
+        return this.userContributions.items
+      }
     }
   },
   data () {

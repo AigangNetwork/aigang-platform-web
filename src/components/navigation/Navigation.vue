@@ -3,7 +3,7 @@
     <transition name="slideDown">
       <div class="aig-navigation">
         <div class="aig-navigation-body">
-          <router-link to="/data/all" class="aig-logo">
+          <router-link to="/insurance/products" class="aig-logo">
             <img src="/static/logo.png" alt="">
             <div class="alpha-container" v-if="isDevEnv">
               {{ $t('general.testPlatform') }}
@@ -21,11 +21,8 @@
               </li>
             </ul>
           </nav>
-          <div class="aig-profile-wrapper" v-if="$store.getters['user/isAuthenticated'] && showAccount">
-            <UserTab />
-          </div>
-          <el-button type="primary" class="aig--login" @click="selectLogin" v-else-if="showAccount">{{ $t('navigation.login')}}</el-button>
-          <div class="aig-profile-wrapper" v-else>
+
+          <div class="aig-profile-wrapper">
             <UserWalletTab  />
           </div>
           <div v-on:click="dropDownMenuActive = !dropDownMenuActive" class="aig-hamburger-wrapper">
@@ -46,16 +43,6 @@
             {{ bar.name }}
           </a>
         </li>
-        <li v-if="$store.getters['user/isAuthenticated'] && showAccount">
-          <router-link :to="'/profile'" active-class="aig-bar-active" @click.native="dropDownMenuActive = false">
-            {{ $t('navigation.profile') }}
-          </router-link>
-        </li>
-        <li >
-          <router-link active-class="aig-bar-active" to="/login" @click.native="dropDownMenuActive = false" exact>{{
-            $t('navigation.login')}}</router-link>
-        </li>
-
       </ul>
     </div>
   </div>
@@ -78,13 +65,6 @@ export default {
       dropDownMenuActive: false
     }
   },
-  methods: {
-    selectLogin () {
-      this.$router.push({
-        name: 'Login'
-      })
-    }
-  },
   computed: {
     isDevEnv () {
       return process.env.NODE_ENV !== 'production'
@@ -100,9 +80,8 @@ export default {
     if (process.env.FEATURE_TOGGLE.DATA) {
       this.navigationBars.push({
         name: this.$t('navigation.data'),
-        routeLink: '/data',
-        type: 'internal',
-        showAccount: true
+        type: 'external',
+        link: process.env.NAVIGATION_DATA_URL
       })
     }
 

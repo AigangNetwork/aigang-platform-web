@@ -1,9 +1,6 @@
 'use strict'
 
-const merge = require('webpack-merge') // TODO: why do we need this merge? Remove
-const prodEnv = require('./production.env.js') // TODO: why do we need this merge? Remove
-
-module.exports = merge(prodEnv, {
+module.exports = {
   NODE_ENV: '"dev"',
 
   // Select which tabs should be active and visible
@@ -15,10 +12,11 @@ module.exports = merge(prodEnv, {
     WIKI: true,
     DISCUSSIONS: true
   },
+  // If Data Feature toggle enabled set navigation link
+  NAVIGATION_DATA_URL: '"https://testdata.aigang.network"',
 
-  API_ADDRESS: '"http://localhost:5000/api"', // TODO: refactor to aigang api address and Insurance company
-  // INSURANCE_API_ADDRESS: '"http://localhost:5000/api"'
-  // AIGANG_API_ADDRESS: '"https://testapi.aigang.network/api"'
+  // Set insurance api address
+  API_ADDRESS: '"http://localhost:5000/api"', 
 
   // Configure ABI reading parameters and transactions paths
   ETHERSCAN_ADDRESS: '"https://ropsten.etherscan.io/"',
@@ -57,4 +55,4 @@ module.exports = merge(prodEnv, {
   // Insurance Configuration. Product Type 3
   RETRY_COUNT: 10,
   ANDROID_APP_LOCATION: '"https://github.com/AigangNetwork/aigang-insurance-app/tree/master/android"'
-})
+}

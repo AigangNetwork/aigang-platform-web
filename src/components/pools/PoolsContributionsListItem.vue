@@ -1,6 +1,6 @@
 <template>
-  <transition name="slideUp">
-    <tr @click="navigateToContribution(contribution.id, contribution.poolContractAddress)">
+  <transition name="list" mode="out-in" appear>
+    <tr @click="navigateToContribution(contribution.id, contribution.poolContractAddress)" v-if="contribution && contribution.id">
       <td class="title">{{ contribution.title }}</td>
       <td class="number">{{ contribution.amount}} {{ $t('general.aix') }}</td>
       <td class="number">
@@ -10,16 +10,32 @@
         <PoolContributionLabel :type="contribution.status" size="small" />
       </td>
     </tr>
+
+    <tr class="placeholder-container"  v-else>
+      <td class="title">
+        <PlaceholderBar class="placeholder" />
+      </td>
+      <td class="number">
+        <PlaceholderBar class="placeholder" />
+      </td>
+      <td class="number">
+        <PlaceholderBar class="placeholder" />
+      </td>
+      <td>
+        <PlaceholderBar />
+      </td>
+    </tr>
   </transition>
 </template>
 
 <script>
 import PoolContributionLabel from './PoolContributionLabel'
 import Date from '@/components/Date'
+import PlaceholderBar from '@/components/common/PlaceholderBar'
 
 export default {
   props: ['contribution'],
-  components: { PoolContributionLabel, Date },
+  components: { PoolContributionLabel, Date, PlaceholderBar },
   methods: {
     navigateToContribution (id, address) {
       this.$router.push({
@@ -42,11 +58,23 @@ export default {
       background-color: $light-transparent-grey;
     }
 
+    &.placeholder-container {
+      td {
+        max-width: 100px;
+      }
+
+      .placeholder {
+        margin-top: 2px;
+        margin-bottom: 2px;
+      }
+    }
+
     td {
       padding: 10px 5px 10px 0;
       text-align: center;
       min-width: 100px;
       height: 40px;
+      max-width: 25%;
 
       &.number {
         font-family: $font-secondary;
@@ -81,7 +109,15 @@ export default {
       td {
         &.title, h2 {
           font-size: 10pt !important;
+
         }
+      }
+    }
+
+    tr.placeholder-container {
+      .placeholder {
+        margin-top: 6px;
+        margin-bottom: 6px;
       }
     }
   }

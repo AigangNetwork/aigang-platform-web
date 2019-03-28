@@ -11,16 +11,18 @@ const mutations = {
     state.predictions.items.push(prediction)
   },
 
-  setPredictionsTotalPages (state, totalPages) {
+  setPredictionsPagesAndItems (state, { totalPages, totalItems }) {
     state.predictions.totalPages = totalPages
+    state.predictions.totalItems = totalItems
   },
 
   setUserForecasts (state, payload) {
     state.userForecasts = payload
   },
 
-  setUserForecastsTotalPages (state, totalPages) {
+  setForecastsPagesAndItems (state, { totalPages, totalItems }) {
     state.userForecasts.totalPages = totalPages
+    state.userForecasts.totalItems = totalItems
   },
 
   addForecast (state, forecast) {

@@ -2,13 +2,13 @@
   <div class="items-container" v-loading="$store.getters.loading || !isWeb3Loaded">
     <el-row class="aig-items" key="predictions-list" v-if="showForecasts">
       <transition-group name="slideUp">
-        <div class="forecast-item" v-for="(forecast, index) in userForecasts.items" :key="index">
+        <div class="forecast-item" v-for="(forecast, index) in itemsList" :key="index">
           <ForecastListItem :item="forecast" />
         </div>
       </transition-group>
       <el-col>
         <transition name="slideUp">
-          <Pagination v-if="userForecasts.totalPages > 1 && isDataLoaded" :callback="loadPage" :total-page-count="userForecasts.totalPages" :current-page="page" />
+          <Pagination v-if="userForecasts.totalPages > 1" :callback="loadPage" :total-page-count="userForecasts.totalPages" :current-page="page" />
         </transition>
       </el-col>
     </el-row>
@@ -44,6 +44,14 @@ export default {
     },
     showForecasts () {
       return (!this.$store.getters.loading || this.isWeb3Loaded) && this.isWeb3Enabled && this.userForecasts && this.userForecasts.items.length !== 0
+    },
+    itemsList () {
+      if (this.userForecasts.items.length < this.userForecasts.totalItems) {
+        const placeholders = new Array(this.userForecasts.totalItems - this.userForecasts.items.length)
+        return this.userForecasts.items.concat(placeholders)
+      } else {
+        return this.userForecasts.items
+      }
     }
   },
   data () {

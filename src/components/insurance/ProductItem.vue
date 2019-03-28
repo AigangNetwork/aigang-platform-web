@@ -1,5 +1,5 @@
 <template>
-  <div class="aig-product-data" :class="{ disabled: !isCampaignRunning }">
+  <div class="aig-product-data" :class="{ disabled: !isCampaignRunning }" v-if="product && product.address">
     <router-link :to="{ name: 'Product', params: { address: product.address, type: product.type }}">
       <div class="aig-product-data-body-container">
 
@@ -38,15 +38,35 @@
     </router-link>
 
   </div>
+
+  <div class="aig-product-data placeholder-container" v-else>
+      <div class="aig-product-data-body-container">
+
+        <div class="aig-product-data-head">
+          <div class="desc date"><PlaceholderBar class="placeholder" />
+          </div>
+        </div>
+
+        <div class="aig-product-data-head">
+          <div class="title"><PlaceholderBar class="placeholder" /></div>
+        </div>
+        <div class="aig-product-data-body">
+          <div class="premium-container">
+            <PlaceholderBar class="placeholder" />
+          </div>
+        </div>
+      </div>
+  </div>
 </template>
 
 <script>
 import moment from 'moment'
 import Date from '@/components/Date'
 import InsuranceProductImage from '@/components/insurance/InsuranceProductImage'
+import PlaceholderBar from '@/components/common/PlaceholderBar'
 
 export default {
-  components: { Date, InsuranceProductImage },
+  components: { Date, InsuranceProductImage, PlaceholderBar },
   props: ['product'],
   computed: {
     isCampaignRunning () {
@@ -72,7 +92,6 @@ export default {
 
   .aig-product-data {
     @include transition;
-    background: white;
     box-shadow: 0 0 30px 0 #e9f0f6;
     border: 1px solid $light-border-blue;
     height: 440px;
@@ -244,6 +263,28 @@ export default {
         height: 150px;
       }
 
+    }
+  }
+
+  .placeholder-container.aig-product-data {
+    background: white;
+
+    .desc.date {
+      margin: 0 auto;
+
+      .placeholder {
+        max-height: 15px;
+        max-width: 70%;
+      }
+    }
+
+    .premium-container {
+      margin-top: 90%;
+
+      .placeholder {
+        margin: 10px auto;
+        max-width: 50%;
+      }
     }
   }
 </style>

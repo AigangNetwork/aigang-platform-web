@@ -12,21 +12,44 @@ export default {
 
   async getPredictionsList ({ commit, state }, page) {
     commit('setLoading', true, { root: true })
+    const timestamp = new Date().getTime()
+
     commit('setPredictions', {
       items: [],
-      totalPages: 1
+      totalPages: 1,
+      timestamp: timestamp
     })
 
     try {
       const contracts = await EthUtils.getContracts(process.env.CONTRACT_TYPES.PREDICTIONS)
       const itemsPerPage = process.env.PREDICTIONS_ITEMS_PER_PAGE
       const startItem = page * itemsPerPage - itemsPerPage + 1
-      let totalPredictions = 0
       let predictionsCounter = 0
 
+      const predictionsLengths = []
+
       for (const contract of contracts) {
-        const predictionsLength = parseInt(await contract.methods.totalPredictions().call())
-        totalPredictions += predictionsLength
+        const predictionsLength = await contract.methods.totalPredictions().call()
+
+        predictionsLengths.push(parseInt(predictionsLength))
+      }
+
+      const totalPredictions = predictionsLengths.reduce((total, current) => total + current)
+      const totalPages = Math.ceil(totalPredictions / itemsPerPage)
+
+      let totalItems = 0
+
+      if (page === totalPages) {
+        totalItems = totalPredictions - itemsPerPage * (totalPages - 1)
+      } else {
+        totalItems = itemsPerPage
+      }
+
+      commit('setPredictionsPagesAndItems', { totalPages, totalItems })
+
+      for (let contractIndex = 0; contractIndex < contracts.length; contractIndex++) {
+        const contract = contracts[contractIndex]
+        const predictionsLength = predictionsLengths[contractIndex]
 
         // Iterating through predictions in a conctract
         for (let i = predictionsLength; i > 0 && state.predictions.items.length < itemsPerPage; i--) {
@@ -44,8 +67,6 @@ export default {
           }
         }
       }
-
-      commit('setPredictionsTotalPages', Math.ceil(totalPredictions / itemsPerPage))
       commit('setLoading', false, { root: true })
     } catch (ex) {
       console.error(ex)
@@ -102,29 +123,53 @@ export default {
   },
 
   async getUserForecasts ({ commit, state, rootState }, page) {
+    const timestamp = new Date().getTime()
+
     commit('setUserForecasts', {
       items: [],
-      totalPages: 0
+      totalPages: 0,
+      timestamp: timestamp
     })
 
     commit('setLoading', true, { root: true })
 
     try {
       const contracts = await EthUtils.getContracts(process.env.CONTRACT_TYPES.PREDICTIONS)
-      let totalForecasts = 0
       const itemsPerPage = process.env.FORECASTS_ITEMS_PER_PAGE
       const startItem = page * itemsPerPage - itemsPerPage + 1
 
-      let iterator = 0
+      const forecastsLengths = []
+
       for (const contract of contracts) {
-        const forecastsCount = parseInt(
-          await contract.methods.getMyForecastsLength().call({
-            from: rootState.user.userWeb3.coinbase
-          })
-        )
-        totalForecasts += forecastsCount
+        const forecastsLength = await contract.methods.getMyForecastsLength().call({
+          from: rootState.user.userWeb3.coinbase
+        })
+
+        forecastsLengths.push(parseInt(forecastsLength))
+      }
+
+      const totalForecasts = forecastsLengths.reduce((total, current) => total + current)
+      const totalPages = Math.ceil(totalForecasts / itemsPerPage)
+
+      let totalItems = 0
+
+      if (page === totalPages) {
+        totalItems = totalForecasts - itemsPerPage * (totalPages - 1)
+      } else {
+        totalItems = itemsPerPage
+      }
+
+      commit('setForecastsPagesAndItems', { totalPages, totalItems })
+
+      let iterator = 0
+      for (let contractIndex = 0; contractIndex < contracts.length; contractIndex++) {
+        const contract = contracts[contractIndex]
+        const forecastsCount = forecastsLengths[contractIndex]
 
         for (let i = forecastsCount - 1; i >= 0 && state.userForecasts.items.length < itemsPerPage; i--) {
+          // Thread safety
+          if (timestamp !== state.userForecasts.timestamp) return
+
           iterator++
 
           if (iterator < startItem) continue
@@ -137,7 +182,6 @@ export default {
             commit('setLoading', false, { root: true })
           }
         }
-        commit('setUserForecastsTotalPages', Math.ceil(totalForecasts / itemsPerPage))
       }
       commit('setLoading', false, { root: true })
     } catch (ex) {

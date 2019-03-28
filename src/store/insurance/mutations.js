@@ -11,8 +11,9 @@ export default {
     state.products.items.push(pool)
   },
 
-  setProductsTotalPages (state, totalPages) {
+  setProductsPagesAndItems (state, { totalPages, totalItems }) {
     state.products.totalPages = totalPages
+    state.products.totalItems = totalItems
   },
 
   setProduct (state, payload) {

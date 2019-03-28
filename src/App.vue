@@ -1,5 +1,5 @@
 <template>
-  <div class="aig-app" :class="appClass" v-loading="loading">
+  <div class="aig-app aig--notAuthed" v-loading="loading">
     <WrongNetworkDialog :isVisible="showWrongNetworkDialog" :displayDialog="displayWrongNetworkDialog" />
     <Navigation />
     <transition name="slideUp">
@@ -44,12 +44,6 @@ export default {
   computed: {
     isInsufficientBalanceDialogVisible () {
       return this.$store.getters['insufficientBalanceDialogVisible']
-    },
-    appClass () {
-      return {
-        'aig--authed': this.$store.getters['user/isAuthenticated'],
-        'aig--notAuthed': !this.$store.getters['user/isAuthenticated']
-      }
     },
     showWrongNetworkDialog () {
       return this.$store.state.showEthNetworkError
