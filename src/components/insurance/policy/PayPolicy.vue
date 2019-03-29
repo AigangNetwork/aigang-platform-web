@@ -82,7 +82,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['isPolicyLoadingVisible', 'policyLoadingInfo', 'transactionError', 'txHash']),
+    ...mapGetters(['isPolicyLoadingVisible', 'policyLoadingInfo', 'product', 'transactionError', 'txHash']),
     isWeb3Enabled () {
       return this.$store.getters['user/isWeb3Enabled']
     },
@@ -93,6 +93,7 @@ export default {
       try {
         let policy = this.policyLoadingInfo.policy
         policy.address = policy.productAddress
+        policy.policyTermInDays = this.product.policyTermInDays
 
         return policy
       } catch (e) {
