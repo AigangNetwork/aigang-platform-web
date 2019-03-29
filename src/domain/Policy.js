@@ -5,8 +5,8 @@ export default class Policy {
   async initializeItem (details) {
     this.id = EthUtils.fromHex(details.id)
     this.deviceId = 'UNKNOW'
-    this.startUtc = moment.unix(details.utcStart).utc()
-    this.endUtc = moment.unix(details.utcEnd).utc()
+    this.startUtc = details.utcStart !== '0' ? moment.unix(details.utcStart).utc() : null
+    this.endUtc = details.utcEnd !== '0' ? moment.unix(details.utcEnd).utc() : null
     this.status = mapStatus(details)
     this.address = details.address
     this.type = details.type
@@ -14,8 +14,8 @@ export default class Policy {
 
   async initialize (details) {
     this.id = EthUtils.fromHex(details.id)
-    this.startUtc = moment.unix(details.utcStart).utc()
-    this.endUtc = moment.unix(details.utcEnd).utc()
+    this.startUtc = details.utcStart !== '0' ? moment.unix(details.utcStart).utc() : null
+    this.endUtc = details.utcEnd !== '0' ? moment.unix(details.utcEnd).utc() : null
     this.status = mapStatus(details)
     this.premium = EthUtils.fromWei(details.premium)
     this.payout = EthUtils.fromWei(details.calculatedPayout)
