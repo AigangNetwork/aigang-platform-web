@@ -143,7 +143,6 @@ export default {
           }
         }
 
-
         h2 {
           flex-grow: 0;
         }

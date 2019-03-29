@@ -10,7 +10,7 @@ export default class InsuranceProduct {
     this.endDateUtc = moment.unix(details[3]).utc().format('YYYY-MM-DD HH:mm')
     this.title = details[4]
     this.description = details[5]
-    this.policyTermInDays = Math.floor(parseInt(details[6]) / (60 * 60 * 24)) 
+    this.policyTermInDays = Math.floor(parseInt(details[6]) / (60 * 60 * 24))
     this.basePremium = EthUtils.fromWei(details[7])
     this.payout = EthUtils.fromWei(details[8])
     this.fee = details[9]
