@@ -159,7 +159,7 @@ export default {
     }
   }
 
-  @media screen and (min-width: 100px) and (max-width: 765px) {
+  @media screen and (min-width: 100px) and (max-width: 1024px) {
     .aig-policy-item {
       .policy-list-item-img-container {
         .product-img {
@@ -176,10 +176,6 @@ export default {
           .id {
             overflow: auto;
           }
-
-            .text {
-              margin-right: 0;
-            }
         }
 
         .policy-item-body {
