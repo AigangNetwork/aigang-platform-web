@@ -6,9 +6,9 @@
 
           <div key="1" v-if="!isPolicyLoadingVisible && !policyLoadingInfo.isClaimable && !$store.getters.loading">
             <el-row class="header">
-              <router-link :to="policyListRoute" class="back-button">
+              <a @click="$router.go(-1)" class="back-button">
                 <i class="back-icon el-icon-arrow-left"></i>
-              </router-link>
+              </a>
               <h2>{{ $t('insurance.policy.androidBatteryInsurancePolicy') }}</h2>
             </el-row>
 
@@ -17,7 +17,7 @@
               <DeviceInfo :data="deviceData" />
             </el-row>
 
-            <el-row class="footer">
+            <el-row class="footer" v-if="!txHash">
               <el-col>
                 <el-button class="aig-button" type="primary" @click.prevent.native="insure">
                   {{ $t('insurance.policy.pay') }}
@@ -134,10 +134,15 @@ export default {
         display: flex;
         flex-direction: row;
 
-        .back-icon {
-          margin-top: 28px;
-          margin-right: 10px;
+        .back-button {
+          cursor: pointer;
+
+          .back-icon {
+            margin-top: 28px;
+            margin-right: 10px;
+          }
         }
+
 
         h2 {
           flex-grow: 0;
