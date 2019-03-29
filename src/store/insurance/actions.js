@@ -205,7 +205,7 @@ export default {
 			let totalItems = 0
 
 			if (page === totalPages) {
-				totalItems = contracts.length - itemsPerPage * (totalPages - 1)
+				totalItems = totalPolicies - itemsPerPage * (totalPages - 1)
 			} else {
 				totalItems = itemsPerPage
 			}

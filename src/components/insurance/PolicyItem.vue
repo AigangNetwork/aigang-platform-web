@@ -159,7 +159,7 @@ export default {
     }
   }
 
-  @media screen and (min-width: 100px) and (max-width: 765px) {
+  @media screen and (min-width: 100px) and (max-width: 1024px) {
     .aig-policy-item {
       .policy-list-item-img-container {
         .product-img {
@@ -195,7 +195,10 @@ export default {
             }
 
             .content {
-              margin: 2px 0px 0px 5px;
+              margin: 2px 10px 0px 5px;
+              word-wrap: break-word;
+              /* max-width: calc(100% - 42px); */
+              overflow: auto;
             }
           }
         }
