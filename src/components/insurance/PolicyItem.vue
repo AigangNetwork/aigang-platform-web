@@ -176,6 +176,10 @@ export default {
           .id {
             overflow: auto;
           }
+
+            .text {
+              margin-right: 0;
+            }
         }
 
         .policy-item-body {
@@ -195,7 +199,10 @@ export default {
             }
 
             .content {
-              margin: 2px 0px 0px 5px;
+              margin: 2px 10px 0px 5px;
+              word-wrap: break-word;
+              /* max-width: calc(100% - 42px); */
+              overflow: auto;
             }
           }
         }
