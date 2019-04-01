@@ -11,7 +11,7 @@
           </router-link>
           <nav class="aig-navigation-menu">
             <ul>
-              <li v-for="(bar, index) in navigationBars" :key="index">
+              <li v-for="(bar, index) in navigationBars" :key="index" :class="{ 'marginRight': index === 2 }">
                 <router-link v-if="bar.type === 'internal'" active-class="aig-bar-active" :class="{'disabled': bar.disabled}" :to="bar.routeLink">
                   {{ bar.name }}
                 </router-link>
@@ -165,6 +165,10 @@ export default {
     @include breakpoint(min-width 1000px) {
       display: none;
     }
+  }
+
+  .marginRight {
+    margin-right: 70px;
   }
 
   .aig-hamburger-wrapper {
