@@ -5,7 +5,7 @@ This repository is presentation layer of [aigang.network](https://aigang.network
 
 
 Framework includes:
- - Centralized Data section, Wiki, Discusions. These featutes can be turned on in web project configuration.
+ - Centralized [Data](docs/Data.md) section, Wiki, Discusions. These featutes can be turned on in web project configuration.
  - Prediction Markets. [How to run](docs/PredictionMarket.md)
  - Pools. [How to run](docs/Pools.md)
  - Insurance Product. [How to run](docs/InsuranceProduct.md)
