@@ -31,7 +31,7 @@
     "vue-router": "^3.0.2",
     "vuex": "^3.0.1",
     "vuex-persistedstate": "^2.5.4",
-    "web3": "^1.0.0-beta.36",
+    "web3": "^1.0.0-beta.52",
     "websocket": "^1.0.28"
   },
   "devDependencies": {
